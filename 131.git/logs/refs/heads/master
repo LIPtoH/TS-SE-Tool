@@ -1,5 +1,0 @@
-0000000000000000000000000000000000000000 13b72d3bdf449e2004c1186a78e2c767c8de372e LIPtoH <LIPtoH@LIPTOH-PC> 1545916312 +0500	commit (initial): Add .gitignore and .gitattributes.
-13b72d3bdf449e2004c1186a78e2c767c8de372e 98a9160272c6eff81d4c2639b5bcfb133a70a428 Gaev Kirill <liptoh890@gmail.com> 1545917608 +0500	commit: Initial commit
-98a9160272c6eff81d4c2639b5bcfb133a70a428 9a6f05ff875dd3801a5f8579134cbe02de2e5ce1 Gaev Kirill <liptoh890@gmail.com> 1545917716 +0500	commit: license added
-9a6f05ff875dd3801a5f8579134cbe02de2e5ce1 9e2fc7131480f08c4d587ed04dfd2a59ead477de Gaev Kirill <liptoh890@gmail.com> 1546255628 +0500	merge testbuild_39: Fast-forward
-9e2fc7131480f08c4d587ed04dfd2a59ead477de a4a5b06a830e827e0f0e447534183a53cf45b1d9 Gaev Kirill <liptoh890@gmail.com> 1546257578 +0500	reset: moving to a4a5b06a830e827e0f0e447534183a53cf45b1d9
