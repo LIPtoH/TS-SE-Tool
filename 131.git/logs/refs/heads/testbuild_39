@@ -1,0 +1,3 @@
+0000000000000000000000000000000000000000 896116f925d5f470e4771bcacc0afb1c3d200d7b Gaev Kirill <liptoh890@gmail.com> 1546157231 +0500	branch: Created from 896116f925d5f470e4771bcacc0afb1c3d200d7b
+896116f925d5f470e4771bcacc0afb1c3d200d7b 57d5e83833f4042bd1f65b1ead876cae4554f3f7 Gaev Kirill <liptoh890@gmail.com> 1546207195 +0500	commit: Read 39 save + Initial Cargo DB save
+57d5e83833f4042bd1f65b1ead876cae4554f3f7 9e2fc7131480f08c4d587ed04dfd2a59ead477de Gaev Kirill <liptoh890@gmail.com> 1546255391 +0500	commit: Initial Saving Cargo data to DB + Fixes
