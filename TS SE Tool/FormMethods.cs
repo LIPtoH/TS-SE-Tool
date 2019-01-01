@@ -33,6 +33,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Resources;
 using System.Windows;
+using Microsoft.Win32;
 using TS_SE_Tool.CustomClasses;
 
 namespace TS_SE_Tool
@@ -1003,10 +1004,72 @@ namespace TS_SE_Tool
 
         public void FillAllProfilesPaths()
         {
-            comboBoxPrevProfiles.Items.Clear();
+            //comboBoxPrevProfiles.Items.Clear();
 
             string MyDocumentsPath = "";
             MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame;
+            string RemoteUserdataDirectory = "";
+
+            try
+            {
+                //string SteamInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", null).ToString();
+                //if (SteamInstallPath == null)
+                string SteamInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam", "InstallPath", null).ToString();
+
+                if (SteamInstallPath == null)
+                {
+                    //unknown steam path
+                }
+                else
+                {
+
+                    string SteamCloudPath = SteamInstallPath + @"\userdata";
+                    if (!Directory.Exists(SteamCloudPath))
+                    {
+                        //no userdata
+                    }
+                    else
+                    {
+                        string[] userdatadirectories = Directory.GetDirectories(SteamCloudPath);
+
+                        if(userdatadirectories.Length == 0)
+                        {
+                            //no steam user directories
+                        }
+                        else
+                        {
+                            DateTime lastHigh = DateTime.Now;
+
+                            string CurrentUserDir = Directory.GetDirectories(SteamCloudPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray()[0];//null;
+                            /*
+                            foreach (string dir in userdatadirectories)
+                            {
+                                DirectoryInfo di = new DirectoryInfo(dir);
+                                DateTime current = di.LastWriteTime;
+
+                                if (current > lastHigh)
+                                {
+                                    CurrentUserDir = dir;
+                                    lastHigh = current;
+                                }
+                            }
+                            */
+                            string GameID = "";
+                            if (GameType == "ETS")
+                                GameID = @"\227300"; //ETS2
+                            else
+                                GameID = @"\270880"; //ATS
+
+                            RemoteUserdataDirectory = CurrentUserDir + GameID + @"\remote";
+
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
 
             if (!Directory.Exists(MyDocumentsPath))
             {
@@ -1016,17 +1079,86 @@ namespace TS_SE_Tool
 
             if (checkBoxProfileBackups.Checked)
             {
+                DataTable combDT = new DataTable();
+                DataColumn dc = new DataColumn("ProfileID", typeof(string));
+                combDT.Columns.Add(dc);
+
+                dc = new DataColumn("ProfileName", typeof(string));
+                combDT.Columns.Add(dc);
+
+                List<string> tempList = new List<string>();
+
+                int index = 0;
                 foreach (string folder in Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame))
                 {
-                    if (Path.GetFileName(folder).StartsWith("profiles"))
+                    if (Path.GetFileName(folder).StartsWith("profiles")) //Documents
                     {
-                        comboBoxPrevProfiles.Items.Add(Path.GetFileName(folder));
+                        //comboBoxPrevProfiles.Items.Add(Path.GetFileName(folder));
+                        combDT.Rows.Add(index, "[L] " + Path.GetFileName(folder));
+
+                        tempList.Add(folder);
+                        index++;
                     }
                 }
+
+                //string RemoteUserdataDirectory Steam Profiles
+                foreach (string folder in Directory.GetDirectories(RemoteUserdataDirectory))
+                {
+                    if (Path.GetFileName(folder).StartsWith("profiles")) //Steam
+                    {
+                        combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
+
+                        tempList.Add(folder);
+                        index++;
+                    }
+                }
+
+                Globals.ProfilesPaths = tempList.ToArray();
+
+                comboBoxPrevProfiles.ValueMember = "ProfileID";
+                comboBoxPrevProfiles.DisplayMember = "ProfileName";
+                comboBoxPrevProfiles.DataSource = combDT;
+
             }
             else
-                if(Directory.Exists(MyDocumentsPath + "\\profiles" ))
-                    comboBoxPrevProfiles.Items.Add("profiles");
+            {
+                DataTable combDT = new DataTable();
+                DataColumn dc = new DataColumn("ProfileID", typeof(string));
+                combDT.Columns.Add(dc);
+
+                dc = new DataColumn("ProfileName", typeof(string));
+                combDT.Columns.Add(dc);
+
+                int index = 0;
+                List<string> tempList = new List<string>();
+                string folder = MyDocumentsPath + @"\profiles";
+
+                if (Directory.Exists(folder))
+                {
+                    combDT.Rows.Add(index, "[L] profiles");
+
+                    tempList.Add(folder);
+                    index++;
+                    //comboBoxPrevProfiles.Items.Add("[L] profiles");
+                }
+
+                folder = RemoteUserdataDirectory + @"\profiles";
+
+                if (Directory.Exists(folder))
+                {
+                    combDT.Rows.Add(index, "[S] profiles");
+
+                    tempList.Add(folder);
+                    index++;
+                    //comboBoxPrevProfiles.Items.Add("[S] profiles");
+                }
+
+                Globals.ProfilesPaths = tempList.ToArray();
+                comboBoxPrevProfiles.ValueMember = "ProfileID";
+                comboBoxPrevProfiles.DisplayMember = "ProfileName";
+                comboBoxPrevProfiles.DataSource = combDT;
+            }
+                
 
             if(comboBoxPrevProfiles.Items.Count > 0)
             {
@@ -1042,7 +1174,7 @@ namespace TS_SE_Tool
                 buttonOpenSaveFolder.Enabled = false;
                 buttonDecryptSave.Enabled = false;
                 buttonLoadSave.Enabled = false;
-            }                
+            }
         }
 
         public void FillProfiles()
@@ -1051,7 +1183,8 @@ namespace TS_SE_Tool
             comboBoxProfiles.Items.Clear();
             
             string MyDocumentsPath = "";
-            MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame + "\\" + comboBoxPrevProfiles.Items[comboBoxPrevProfiles.SelectedIndex];//@"\profiles";
+            //MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame + "\\" + comboBoxPrevProfiles.Items[comboBoxPrevProfiles.SelectedIndex];//@"\profiles";
+            MyDocumentsPath = Globals.ProfilesPaths[int.Parse(comboBoxPrevProfiles.SelectedValue.ToString())];
             /*
             if (!Directory.Exists(MyDocumentsPath))
             {
