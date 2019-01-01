@@ -1005,6 +1005,15 @@ namespace TS_SE_Tool
         {
             comboBoxPrevProfiles.Items.Clear();
 
+            string MyDocumentsPath = "";
+            MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame;
+
+            if (!Directory.Exists(MyDocumentsPath))
+            {
+                MessageBox.Show("Standart Game Save folder don't exist");
+                return;
+            }
+
             if (checkBoxProfileBackups.Checked)
             {
                 foreach (string folder in Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame))
@@ -1016,37 +1025,62 @@ namespace TS_SE_Tool
                 }
             }
             else
-                comboBoxPrevProfiles.Items.Add("profiles");
+                if(Directory.Exists(MyDocumentsPath + "\\profiles" ))
+                    comboBoxPrevProfiles.Items.Add("profiles");
 
-            comboBoxPrevProfiles.SelectedIndex = 0;
+            if(comboBoxPrevProfiles.Items.Count > 0)
+            {
+                comboBoxPrevProfiles.SelectedIndex = 0;
+                buttonOpenSaveFolder.Enabled = true;
+                buttonDecryptSave.Enabled = true;
+                buttonLoadSave.Enabled = true;
+            }                
+            else
+            {
+                MessageBox.Show("No profiles found");
+
+                buttonOpenSaveFolder.Enabled = false;
+                buttonDecryptSave.Enabled = false;
+                buttonLoadSave.Enabled = false;
+            }                
         }
 
         public void FillProfiles()
         {
             string Profile = "";
             comboBoxProfiles.Items.Clear();
-
+            
             string MyDocumentsPath = "";
-
             MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame + "\\" + comboBoxPrevProfiles.Items[comboBoxPrevProfiles.SelectedIndex];//@"\profiles";
-
+            /*
             if (!Directory.Exists(MyDocumentsPath))
             {
                 MessageBox.Show("Standart Save files don't exist");
                 return;
             }
-
+            */
             Globals.ProfilesHex = Directory.GetDirectories(MyDocumentsPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
 
-            foreach (string profile in Globals.ProfilesHex)
+            if(Globals.ProfilesHex.Length > 0)
             {
-
-                Profile = FromHexToString(Path.GetFileName(profile));
-
-                comboBoxProfiles.Items.Add(Profile);
+                foreach (string profile in Globals.ProfilesHex)
+                {
+                    Profile = FromHexToString(Path.GetFileName(profile));
+                    comboBoxProfiles.Items.Add(Profile);
+                }
+                comboBoxProfiles.SelectedIndex = 0;
+                buttonOpenSaveFolder.Enabled = true;
+                buttonDecryptSave.Enabled = true;
+                buttonLoadSave.Enabled = true;
             }
+            else
+            {
+                MessageBox.Show("No profiles found");
 
-            comboBoxProfiles.SelectedIndex = 0;
+                buttonOpenSaveFolder.Enabled = false;
+                buttonDecryptSave.Enabled = false;
+                buttonLoadSave.Enabled = false;
+            }
         }
 
         public void FillProfileSaves()
@@ -1057,12 +1091,26 @@ namespace TS_SE_Tool
 
             Globals.SavesHex = Directory.GetDirectories(savePath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
 
-            foreach (string profile in Globals.SavesHex)
+            if(Globals.SavesHex.Length > 0)
             {
-                comboBoxSaves.Items.Add(Path.GetFileName(profile));
-            }
+                foreach (string profile in Globals.SavesHex)
+                {
+                    comboBoxSaves.Items.Add(Path.GetFileName(profile));
+                }
 
-            comboBoxSaves.SelectedIndex = 0;
+                comboBoxSaves.SelectedIndex = 0;
+                buttonOpenSaveFolder.Enabled = true;
+                buttonDecryptSave.Enabled = true;
+                buttonLoadSave.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("No save file folders found");
+
+                buttonOpenSaveFolder.Enabled = false;
+                buttonDecryptSave.Enabled = false;
+                buttonLoadSave.Enabled = false;
+            }
         }
 
         public void FillVisitedCities()
@@ -1127,8 +1175,17 @@ namespace TS_SE_Tool
 
             // Draw the text.
             string txt = "";
-            if (CitiesLngDict.TryGetValue(vc.CityName, out string value))
+
+            CitiesLngDict.TryGetValue(vc.CityName, out string value);
+            if (value != null && value != "")
                 txt = value;
+            else
+            {
+                txt = vc.CityName + " -n";
+            }
+
+            //if (CitiesLngDict.TryGetValue(vc.CityName, out string value))
+            //    txt = value;
             e.Graphics.DrawString(txt, Font, br, layout_rect);
 
             // Draw the focus rectangle if appropriate.
@@ -1335,6 +1392,14 @@ namespace TS_SE_Tool
 
                 // Draw the background.
                 e.DrawBackground();
+
+                // See if the item is selected.
+                Brush br;
+                if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                    br = SystemBrushes.HighlightText;
+                else
+                    br = new SolidBrush(e.ForeColor);
+
                 Image SourceCompIcon = null, DestinationCompIcon = null;
                 if (File.Exists(@"img\" + GameType + @"\companies\" + Job.SourceCompany + ".dds"))
                     SourceCompIcon = ExtImgLoader(new string[] { @"img\" + GameType + @"\companies\" + Job.SourceCompany + ".dds" }, 100, 32, 0, 0)[0];
@@ -1343,7 +1408,13 @@ namespace TS_SE_Tool
                     string currentDirName = Directory.GetCurrentDirectory() + @"\img\" + GameType + @"\companies";
                     string searchpattern = Job.SourceCompany.Split(new char[] { '_' })[0] + "*.dds";
                     string[] files = Directory.GetFiles(currentDirName, searchpattern);
-                    SourceCompIcon = ExtImgLoader(new string[] { files[0] }, 100, 32, 0, 0)[0];
+
+                    if (files.Length > 0)
+                        SourceCompIcon = ExtImgLoader(new string[] { files[0] }, 100, 32, 0, 0)[0];
+                    else
+                    {
+                        SourceCompIcon = DrawCompanyText(Job.SourceCompany, 100, 32, br);
+                    }
                 }
                 if (File.Exists(@"img\" + GameType + @"\companies\" + Job.DestinationCompany + ".dds"))
                     DestinationCompIcon = ExtImgLoader(new string[] { @"img\" + GameType + @"\companies\" + Job.DestinationCompany + ".dds" }, 100, 32, 0, 0)[0];
@@ -1352,7 +1423,13 @@ namespace TS_SE_Tool
                     string currentDirName = Directory.GetCurrentDirectory() + @"\img\" + GameType + @"\companies";
                     string searchpattern = Job.DestinationCompany.Split(new char[] { '_' })[0] + "*.dds";
                     string[] files = Directory.GetFiles(currentDirName, searchpattern);
-                    DestinationCompIcon = ExtImgLoader(new string[] { files[0] }, 100, 32, 0, 0)[0];
+                    //DestinationCompIcon = ExtImgLoader(new string[] { files[0] }, 100, 32, 0, 0)[0];
+                    if (files.Length > 0)
+                        DestinationCompIcon = ExtImgLoader(new string[] { files[0] }, 100, 32, 0, 0)[0];
+                    else
+                    {
+                        DestinationCompIcon = DrawCompanyText(Job.SourceCompany, 100, 32, br);
+                    }
                 }
 
                 // Draw the Source comp. picture
@@ -1382,16 +1459,27 @@ namespace TS_SE_Tool
                 e.Graphics.DrawImage(UrgencyImg[Job.Urgency], dest_rect, source_rect, GraphicsUnit.Pixel);
                 ////
 
-                // See if the item is selected.
-                Brush br;
-                if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-                    br = SystemBrushes.HighlightText;
-                else
-                    br = new SolidBrush(e.ForeColor);
-
                 // Draw the text.
-                CitiesLngDict.TryGetValue(Job.SourceCity, out string SourceCityName);
-                CitiesLngDict.TryGetValue(Job.DestinationCity, out string DestinationCityName);
+
+                string value = "", SourceCityName="", DestinationCityName="";
+
+                CitiesLngDict.TryGetValue(Job.SourceCity, out value);
+                if (value != null && value != "")
+                    SourceCityName = value;
+                else
+                {
+                    SourceCityName = Job.SourceCity + " -n";
+                }
+                CitiesLngDict.TryGetValue(Job.DestinationCity, out value);
+                if (value != null && value != "")
+                    DestinationCityName = value;
+                else
+                {
+                    DestinationCityName = Job.DestinationCity + " -n";
+                }
+
+                //CitiesLngDict.TryGetValue(Job.SourceCity, out string SourceCityName);
+                //CitiesLngDict.TryGetValue(Job.DestinationCity, out string DestinationCityName);
 
                 // Find the area in which to put the text.
                 float x = e.Bounds.Left + JobsItemMargin;
@@ -1445,6 +1533,26 @@ namespace TS_SE_Tool
             }
         }
 
+        public Bitmap DrawCompanyText(string _companyName, int _width, int _height, Brush _brush)
+        {
+            Bitmap bmp = new Bitmap(100, 32);
+            RectangleF rectf = new RectangleF(5, 5, 90, 22);
+
+            Graphics g = Graphics.FromImage(bmp);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            StringFormat format = new StringFormat();
+            format.Alignment = StringAlignment.Center;
+            format.LineAlignment = StringAlignment.Center;
+
+            g.DrawString(_companyName, new Font(Font.FontFamily, 16) , _brush, rectf, format);
+            g.Flush();
+
+            return bmp;
+        }
+
         public void FillcomboBoxCountries()
         {
             foreach (string str in CountriesList)
@@ -1495,7 +1603,7 @@ namespace TS_SE_Tool
 
             foreach (string tempitem in tempCompList)
                 if (CompaniesLngDict.TryGetValue(tempitem, out string value))
-                    if (value != "")
+                    if (value != null && value != "")
                     {
                         combDT.Rows.Add(tempitem, value);
                     }
@@ -1537,15 +1645,16 @@ namespace TS_SE_Tool
                                       where !x.Disabled
                                       select x)
             {
-                if (CitiesLngDict.TryGetValue(tempcity.CityName, out string value))
-                    if (value != "")
-                    {
-                        combDT.Rows.Add(tempcity.CityName, value);
-                    }
-                    else
-                    {
-                        combDT.Rows.Add(tempcity.CityName, tempcity.CityName);
-                    }
+                //if (CitiesLngDict.TryGetValue(tempcity.CityName, out string value))
+                CitiesLngDict.TryGetValue(tempcity.CityName, out string value);
+                if (value != null && value != "")
+                {
+                    combDT.Rows.Add(tempcity.CityName, value);
+                }
+                else
+                {
+                    combDT.Rows.Add(tempcity.CityName, tempcity.CityName + " -n");
+                }
             }
             combDT.DefaultView.Sort = "CityName ASC";
 
@@ -1693,11 +1802,12 @@ namespace TS_SE_Tool
                                       where !x.Disabled
                                       select x)
             {
-                if (CitiesLngDict.TryGetValue(tempcity.CityName, out string value))
+                CitiesLngDict.TryGetValue(tempcity.CityName, out string value);
+                if (value != null && value != "")
                     combDT.Rows.Add(tempcity.CityName, value);
                 else
                 {
-                    combDT.Rows.Add(tempcity.CityName, tempcity.CityName);
+                    combDT.Rows.Add(tempcity.CityName, tempcity.CityName + " -n");
                 }
 
                 //comboBoxSourceCity.Items.Add(tempcity.CityName); //Source
@@ -1765,14 +1875,14 @@ namespace TS_SE_Tool
                     companyList = companyList.FindAll(x => x.CompanyName == comboBoxCompanies.SelectedValue.ToString());
                 }
 
-                if(companyList.Count > 0)
-                if (CitiesLngDict.TryGetValue(city.CityName, out string CityNamevalue))
-                    if (CityNamevalue != "")
-                        combDT.Rows.Add(city.CityName, CityNamevalue);
-                    else
-                    {
-                        combDT.Rows.Add(city.CityName, city.CityName + " -n" );
-                    }
+                if (companyList.Count > 0)
+                    if (CitiesLngDict.TryGetValue(city.CityName, out string CityNamevalue))
+                        if (CityNamevalue != null && CityNamevalue != "")
+                            combDT.Rows.Add(city.CityName, CityNamevalue);
+                        else
+                        {
+                            combDT.Rows.Add(city.CityName, city.CityName + " -n");
+                        }
                 /*
                 foreach (Company company in companyList)
                 {
@@ -1853,14 +1963,18 @@ namespace TS_SE_Tool
             combDT.Columns.Add(dc);
 
             foreach (Company company in RealCompanies)
-                if (CompaniesLngDict.TryGetValue(company.CompanyName, out string value))
+            {
+                CompaniesLngDict.TryGetValue(company.CompanyName, out string value);
+                if (value != null && value != "")
+                {
+                    combDT.Rows.Add(company.CompanyName, value);
+                }                    
+                else
+                {
+                    combDT.Rows.Add(company.CompanyName, company.CompanyName);
+                }
+            }
 
-                        combDT.Rows.Add(company.CompanyName, value);
-                    
-                    else
-                    {
-                        combDT.Rows.Add(company.CompanyName, company.CompanyName);
-                    }
 
             combDT.DefaultView.Sort = "CompanyName ASC";
 

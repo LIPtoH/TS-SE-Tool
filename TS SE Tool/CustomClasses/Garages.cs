@@ -50,7 +50,9 @@ namespace TS_SE_Tool
 
             string trueGarageName = "";
 
-            if (FormMain.CitiesLngDict.TryGetValue(GarageName, out string value))
+            FormMain.CitiesLngDict.TryGetValue(GarageName, out string value);
+
+            if (value != null && value != "")
                 trueGarageName = value;
             else
             {

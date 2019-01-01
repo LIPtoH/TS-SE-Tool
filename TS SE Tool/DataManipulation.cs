@@ -986,6 +986,8 @@ namespace TS_SE_Tool
                 {
                     if (city.Visited)
                         VisitedCities.Add(new VisitedCity(city.CityName, 1, true));
+                    else
+                        VisitedCities.Add(new VisitedCity(city.CityName, 0, false));
                 }
             }
                 
