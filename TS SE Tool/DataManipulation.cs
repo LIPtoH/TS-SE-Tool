@@ -420,9 +420,11 @@ namespace TS_SE_Tool
                         string sourcecompany = tempSavefileInMemory[line].Split(new char[] { '.' })[2].Split(new char[] { ' ' })[0]; //Source company
 
                         int index = line + 1;
-                        int numOfJobOffers = 0;
+                        int numOfJobOffers = 0, numOfCargoOffers = 0, cargoseed = 0 ;
+                        List<int> cargoseeds = new List<int>();
                         string deliveredTrailer = "";
                         bool CompanyJobStructureEnded = false;
+
 
                         while (!CompanyJobStructureEnded)
                         {
@@ -430,7 +432,7 @@ namespace TS_SE_Tool
                             {
                                 deliveredTrailer = tempSavefileInMemory[index].Split(new char[] { ' ' })[2];
                             }
-
+                            else
                             if (tempSavefileInMemory[index].StartsWith(" job_offer:")) //number of jobs in company
                             {
                                 numOfJobOffers = int.Parse(tempSavefileInMemory[index].Split(new char[] { ' ' })[2]);
@@ -441,9 +443,25 @@ namespace TS_SE_Tool
                                     tempcity.UpdateCompany(sourcecompany, numOfJobOffers);
                                 }
                             }
+                            else
+                            if (tempSavefileInMemory[index].StartsWith(" cargo_offer_seeds:")) //number of cargo offers in company
+                            {
+                                numOfCargoOffers = int.Parse(tempSavefileInMemory[index].Split(new char[] { ' ' })[2]);
 
+                                //Array.Resize(ref cargoseeds, numOfCargoOffers);
+                                CitiesList.Find(x => x.CityName == sourcecity).UpdateCompanyCargoOfferCount(sourcecompany, numOfCargoOffers);
+                            }
+                            else
+                            if (tempSavefileInMemory[index].StartsWith(" cargo_offer_seeds[")) //number of cargo offers in company
+                            {
+                                cargoseed = int.Parse(tempSavefileInMemory[index].Split(new char[] { ' ' })[2]);
+
+                                cargoseeds.Add(cargoseed);
+                            }
+                            else
                             if (tempSavefileInMemory[index].StartsWith("}"))
                             {
+                                CitiesList.Find(x => x.CityName == sourcecity).Companies.Find(x => x.CompanyName == sourcecompany).CragoSeeds = cargoseeds.ToArray();
                                 CompanyJobStructureEnded = true;
                             }
                             index++;

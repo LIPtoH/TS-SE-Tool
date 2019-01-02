@@ -130,9 +130,6 @@ namespace TS_SE_Tool
 
                 CountryDictionary = new CountryDictionary();
 
-                Globals.PlayerLevelUps = new int[] {200, 500, 700, 900, 1000, 1100, 1300, 1600, 1700, 1900, 2100, 2300, 2600, 2700,
-                    2900, 3000, 3100, 3400, 3700, 4000, 4300, 4600, 4700, 4900, 5200, 5700, 5900, 6000, 6200, 6600, 6900};
-
                 PlayerLevelNames = new List<LevelNames>();
 
                 LevelNames lvl_name0 = new LevelNames(0, "Newbie", "FFE0E0E0");
@@ -188,6 +185,15 @@ namespace TS_SE_Tool
             tempInfoFileInMemory = null;
             tempSavefileInMemory = null;
             tempProfileFileInMemory = null;
+
+            //string ATSexp = "";
+            
+            if(GameType == "ETS")
+                Globals.PlayerLevelUps = new int[] {200, 500, 700, 900, 1000, 1100, 1300, 1600, 1700, 1900, 2100, 2300, 2600, 2700,
+                    2900, 3000, 3100, 3400, 3700, 4000, 4300, 4600, 4700, 4900, 5200, 5700, 5900, 6000, 6200, 6600, 6900};
+            else
+                Globals.PlayerLevelUps = new int[] {200, 500, 700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300, 2500, 2700,
+                    2900, 3100, 3300, 3500, 3700, 4000, 4300, 4600, 4900, 5200, 5500, 5800, 6100, 6400, 6700, 7000, 7300};
 
             PlayerProfileData = new PlayerProfile("", 0, new byte[] { 0, 0, 0, 0, 0, 0 }, 0);
 
@@ -297,9 +303,11 @@ namespace TS_SE_Tool
             FillcomboBoxCountries();
             FillcomboBoxCompanies();
             FillcomboBoxSourceCityDestinationCity();
+
+            FillFormCargoOffersControls();
         }
 
-        private void FillUserCompanyTrucksList()
+    private void FillUserCompanyTrucksList()
         {
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("UserTruckNameless", typeof(string));
@@ -1008,6 +1016,7 @@ namespace TS_SE_Tool
 
             string MyDocumentsPath = "";
             MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame;
+
             string RemoteUserdataDirectory = "";
 
             try
@@ -1060,8 +1069,19 @@ namespace TS_SE_Tool
                             else
                                 GameID = @"\270880"; //ATS
 
-                            RemoteUserdataDirectory = CurrentUserDir + GameID + @"\remote";
+                            if (!Directory.Exists(MyDocumentsPath) && !Directory.Exists(CurrentUserDir + GameID))
+                            {
+                                MessageBox.Show("Standart Game Save folders don't exist");
+                                return;
+                            }
 
+                            //if ()
+                            //{
+                            //    MessageBox.Show("Standart Game Save folder don't exist");
+                            //    return;
+                            //}
+
+                            RemoteUserdataDirectory = CurrentUserDir + GameID + @"\remote";
                         }
                     }
                 }
@@ -1069,12 +1089,6 @@ namespace TS_SE_Tool
             catch
             {
 
-            }
-
-            if (!Directory.Exists(MyDocumentsPath))
-            {
-                MessageBox.Show("Standart Game Save folder don't exist");
-                return;
             }
 
             if (checkBoxProfileBackups.Checked)
@@ -1089,7 +1103,7 @@ namespace TS_SE_Tool
                 List<string> tempList = new List<string>();
 
                 int index = 0;
-                foreach (string folder in Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame))
+                foreach (string folder in Directory.GetDirectories(MyDocumentsPath))
                 {
                     if (Path.GetFileName(folder).StartsWith("profiles")) //Documents
                     {
@@ -1534,6 +1548,7 @@ namespace TS_SE_Tool
                     br = new SolidBrush(e.ForeColor);
 
                 Image SourceCompIcon = null, DestinationCompIcon = null;
+
                 if (File.Exists(@"img\" + GameType + @"\companies\" + Job.SourceCompany + ".dds"))
                     SourceCompIcon = ExtImgLoader(new string[] { @"img\" + GameType + @"\companies\" + Job.SourceCompany + ".dds" }, 100, 32, 0, 0)[0];
                 else
@@ -1549,6 +1564,7 @@ namespace TS_SE_Tool
                         SourceCompIcon = DrawCompanyText(Job.SourceCompany, 100, 32, br);
                     }
                 }
+
                 if (File.Exists(@"img\" + GameType + @"\companies\" + Job.DestinationCompany + ".dds"))
                     DestinationCompIcon = ExtImgLoader(new string[] { @"img\" + GameType + @"\companies\" + Job.DestinationCompany + ".dds" }, 100, 32, 0, 0)[0];
                 else
@@ -1561,7 +1577,7 @@ namespace TS_SE_Tool
                         DestinationCompIcon = ExtImgLoader(new string[] { files[0] }, 100, 32, 0, 0)[0];
                     else
                     {
-                        DestinationCompIcon = DrawCompanyText(Job.SourceCompany, 100, 32, br);
+                        DestinationCompIcon = DrawCompanyText(Job.DestinationCompany, 100, 32, br);
                     }
                 }
 
@@ -1679,8 +1695,9 @@ namespace TS_SE_Tool
             StringFormat format = new StringFormat();
             format.Alignment = StringAlignment.Center;
             format.LineAlignment = StringAlignment.Center;
+            
 
-            g.DrawString(_companyName, new Font(Font.FontFamily, 16) , _brush, rectf, format);
+            g.DrawString(_companyName, new Font(Font.FontFamily, 12) , _brush, rectf, format);
             g.Flush();
 
             return bmp;
@@ -2226,6 +2243,131 @@ namespace TS_SE_Tool
             FormUpdatePlayerLevel();
         }
 
+        private void FillFormCargoOffersControls()
+        {
+            FillCargoMarketCities();
+            
+            //textBoxMoneyAccount.Text = PlayerProfileData.AccountMoney.ToString();
+            //comboBoxHQcity.SelectedValue = PlayerProfileData.HQcity;
+            //textBoxUserCompanyName.Text = PlayerProfileData.CompanyName;
+        }
+
+        private void FillCargoMarketCities()
+        {
+            DataTable combDT = new DataTable();
+            DataColumn dc = new DataColumn("City", typeof(string));
+            combDT.Columns.Add(dc);
+
+            dc = new DataColumn("CityName", typeof(string));
+            combDT.Columns.Add(dc);
+
+            //start filling
+
+            //fill source and destination cities
+            foreach (City tempcity in from x in CitiesList
+                                      where !x.Disabled
+                                      select x)
+            {
+                CitiesLngDict.TryGetValue(tempcity.CityName, out string value);
+                if (value != null && value != "")
+                    combDT.Rows.Add(tempcity.CityName, value);
+                else
+                {
+                    combDT.Rows.Add(tempcity.CityName, tempcity.CityName + " -n");
+                }
+
+                //comboBoxSourceCity.Items.Add(tempcity.CityName); //Source
+                //comboBoxDestinationCity.Items.Add(tempcity.CityName); //Destination
+            }
+
+            comboBoxSourceCityCM.ValueMember = "City";
+            comboBoxSourceCityCM.DisplayMember = "CityName";
+            comboBoxSourceCityCM.DataSource = combDT;
+        }
+
+        private void comboBoxSourceCityCM_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxSourceCityCM.SelectedIndex >= 0)
+            {
+                comboBoxSourceCompanyCM.SelectedIndex = -1;
+                comboBoxSourceCompanyCM.Text = "";
+
+                SetupSourceCompaniesCM();
+            }
+
+            if (comboBoxSourceCompanyCM.Items.Count > 0)
+            {
+                comboBoxSourceCompanyCM.SelectedIndex = RandomValue.Next(comboBoxSourceCompanyCM.Items.Count);
+                /*
+                if ((comboBoxSourceCompanyCM.Items.Count != 1) && (comboBoxSourceCityCM.SelectedValue == comboBoxDestinationCity.SelectedValue))
+                {
+                    int rnd = 0;
+                    while (true)
+                    {
+                        rnd = RandomValue.Next(comboBoxDestinationCompany.Items.Count);
+                        if (comboBoxSourceCompany.SelectedIndex != rnd)
+                        {
+                            comboBoxDestinationCompany.SelectedIndex = rnd;
+                            break;
+                        }
+                    }
+                }
+                */
+            }
+        }
+
+        private void SetupSourceCompaniesCM()
+        {
+            List<Company> CityCompanies = CitiesList.Find(x => x.CityName == comboBoxSourceCityCM.SelectedValue.ToString()).ReturnCompanies();
+            List<Company> RealCompanies = CityCompanies.FindAll(x => !x.Excluded);
+            /*
+            if (_company_selected && checkBoxFilterDestination.Checked)
+            {
+                RealCompanies = RealCompanies.FindAll(x => (x.CompanyName == comboBoxCompanies.SelectedValue.ToString()));
+            }
+            */
+            DataTable combDT = new DataTable();
+            DataColumn dc = new DataColumn("Company", typeof(string));
+            combDT.Columns.Add(dc);
+
+            dc = new DataColumn("CompanyName", typeof(string));
+            combDT.Columns.Add(dc);
+
+            foreach (Company company in RealCompanies)
+            {
+                CompaniesLngDict.TryGetValue(company.CompanyName, out string value);
+                if (value != null && value != "")
+                {
+                    combDT.Rows.Add(company.CompanyName, value);
+                }
+                else
+                {
+                    combDT.Rows.Add(company.CompanyName, company.CompanyName);
+                }
+            }
+
+
+            combDT.DefaultView.Sort = "CompanyName ASC";
+
+            comboBoxSourceCompanyCM.ValueMember = "Company";
+            comboBoxSourceCompanyCM.DisplayMember = "CompanyName";
+
+            comboBoxSourceCompanyCM.DataSource = combDT;
+        }
+
+        private void comboBoxSourceCompanyCM_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBoxSourceCargoSeeds.Items.Clear();
+
+            if (comboBoxSourceCompanyCM.SelectedValue != null)
+                foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxSourceCityCM.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).CragoSeeds)
+                {
+                    listBoxSourceCargoSeeds.Items.Add(cargoseed);
+                }
+            //comboBoxSourceCompanyCM.SelectedValue
+        }
+
+
         private void ToggleVisibility(bool visible)
         {
             foreach (TabPage tp in tabControlMain.TabPages)
@@ -2287,6 +2429,16 @@ namespace TS_SE_Tool
 
         private void ChangeLanguage()
         {
+            try
+            {
+                if (ProgSettingsV.Language != "Default")
+                    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(ProgSettingsV.Language);//CultureInfo.GetCultureInfo("en-US");
+            }
+            catch
+            {
+                LogWriter("Wrong language setting format");
+            }
+
             CultureInfo ci = Thread.CurrentThread.CurrentUICulture;
 
             try

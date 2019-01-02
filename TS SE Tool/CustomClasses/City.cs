@@ -15,6 +15,7 @@
 */
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace TS_SE_Tool
 {
@@ -22,7 +23,7 @@ namespace TS_SE_Tool
     {
         public string Country { get; set; }
         public string CityName;
-        private List<Company> Companies = new List<Company>();
+        public List<Company> Companies = new List<Company>();
         public bool Disabled = false;
         public bool Visited = false;
 
@@ -46,6 +47,11 @@ namespace TS_SE_Tool
                     company.JobsOffers = _jobsoffer;
                 }
             }
+        }
+
+        public void UpdateCompanyCargoOfferCount(string _companyName, int _cargooffers)
+        {
+            Array.Resize(ref Companies.Find(x => x.CompanyName == _companyName).CragoSeeds, _cargooffers);
         }
 
         public void ExcludeCompany()

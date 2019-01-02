@@ -477,7 +477,7 @@ namespace TS_SE_Tool
 
         private void LoadSaveFile_Click(object sender, EventArgs e)
         {
-            SetDefaultValues(false);
+            //SetDefaultValues(false);
 
             buttonDecryptSave.Enabled = false;
             buttonLoadSave.Enabled = false;

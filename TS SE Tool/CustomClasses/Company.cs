@@ -37,11 +37,10 @@ namespace TS_SE_Tool
 
         private List<string> inCargo = new List<string>();
         private List<string> outCargo = new List<string>();
+        public int[] CragoSeeds = new int[0];
 
         public string CompanyName { get; set; }
-
         public int JobsOffers { get; set; } = 0;
-
         public bool Excluded { get; set; } = false;
     }
 }

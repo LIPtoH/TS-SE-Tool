@@ -29,6 +29,7 @@ namespace TS_SE_Tool
         public AboutBox()
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.MainIco;
 
             var MainForm = Application.OpenForms.OfType<FormMain>().Single();
             //MainForm.ClearDatabase();

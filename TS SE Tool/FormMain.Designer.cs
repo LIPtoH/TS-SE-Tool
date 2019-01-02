@@ -130,6 +130,13 @@
             this.comboBoxSourceCompany = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxSourceCity = new System.Windows.Forms.ComboBox();
+            this.tabPageCargoMarket = new System.Windows.Forms.TabPage();
+            this.listBoxSourceCargoSeeds = new System.Windows.Forms.ListBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.comboBoxSourceCityCM = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.comboBoxSourceCompanyCM = new System.Windows.Forms.ComboBox();
             this.tabPageConvoyControl = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
             this.button29 = new System.Windows.Forms.Button();
@@ -167,6 +174,7 @@
             this.tabPageTrailer.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPageJobs.SuspendLayout();
+            this.tabPageCargoMarket.SuspendLayout();
             this.tabPageConvoyControl.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileAvatar)).BeginInit();
@@ -262,9 +270,9 @@
             // 
             // buttonRefreshAll
             // 
-            this.buttonRefreshAll.Location = new System.Drawing.Point(333, 19);
+            this.buttonRefreshAll.Location = new System.Drawing.Point(327, 19);
             this.buttonRefreshAll.Name = "buttonRefreshAll";
-            this.buttonRefreshAll.Size = new System.Drawing.Size(60, 52);
+            this.buttonRefreshAll.Size = new System.Drawing.Size(66, 52);
             this.buttonRefreshAll.TabIndex = 2;
             this.buttonRefreshAll.Text = "Refresh";
             this.buttonRefreshAll.UseVisualStyleBackColor = true;
@@ -296,6 +304,7 @@
             this.tabControlMain.Controls.Add(this.tabPageTruck);
             this.tabControlMain.Controls.Add(this.tabPageTrailer);
             this.tabControlMain.Controls.Add(this.tabPageJobs);
+            this.tabControlMain.Controls.Add(this.tabPageCargoMarket);
             this.tabControlMain.Controls.Add(this.tabPageConvoyControl);
             this.tabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabControlMain.ItemSize = new System.Drawing.Size(82, 24);
@@ -1215,6 +1224,74 @@
             this.comboBoxSourceCity.TabIndex = 0;
             this.comboBoxSourceCity.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCity_SelectedIndexChanged);
             // 
+            // tabPageCargoMarket
+            // 
+            this.tabPageCargoMarket.Controls.Add(this.listBoxSourceCargoSeeds);
+            this.tabPageCargoMarket.Controls.Add(this.label19);
+            this.tabPageCargoMarket.Controls.Add(this.label18);
+            this.tabPageCargoMarket.Controls.Add(this.comboBoxSourceCityCM);
+            this.tabPageCargoMarket.Controls.Add(this.label17);
+            this.tabPageCargoMarket.Controls.Add(this.comboBoxSourceCompanyCM);
+            this.tabPageCargoMarket.Location = new System.Drawing.Point(4, 28);
+            this.tabPageCargoMarket.Name = "tabPageCargoMarket";
+            this.tabPageCargoMarket.Size = new System.Drawing.Size(480, 470);
+            this.tabPageCargoMarket.TabIndex = 6;
+            this.tabPageCargoMarket.Text = "CargoMarket";
+            this.tabPageCargoMarket.UseVisualStyleBackColor = true;
+            // 
+            // listBoxSourceCargoSeeds
+            // 
+            this.listBoxSourceCargoSeeds.FormattingEnabled = true;
+            this.listBoxSourceCargoSeeds.Location = new System.Drawing.Point(7, 57);
+            this.listBoxSourceCargoSeeds.Name = "listBoxSourceCargoSeeds";
+            this.listBoxSourceCargoSeeds.Size = new System.Drawing.Size(429, 147);
+            this.listBoxSourceCargoSeeds.TabIndex = 7;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(3, 33);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(41, 13);
+            this.label19.TabIndex = 6;
+            this.label19.Text = "Source";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(287, 14);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(51, 13);
+            this.label18.TabIndex = 5;
+            this.label18.Text = "Company";
+            // 
+            // comboBoxSourceCityCM
+            // 
+            this.comboBoxSourceCityCM.FormattingEnabled = true;
+            this.comboBoxSourceCityCM.Location = new System.Drawing.Point(111, 30);
+            this.comboBoxSourceCityCM.Name = "comboBoxSourceCityCM";
+            this.comboBoxSourceCityCM.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxSourceCityCM.TabIndex = 2;
+            this.comboBoxSourceCityCM.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCityCM_SelectedIndexChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(118, 14);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(24, 13);
+            this.label17.TabIndex = 1;
+            this.label17.Text = "City";
+            // 
+            // comboBoxSourceCompanyCM
+            // 
+            this.comboBoxSourceCompanyCM.FormattingEnabled = true;
+            this.comboBoxSourceCompanyCM.Location = new System.Drawing.Point(278, 30);
+            this.comboBoxSourceCompanyCM.Name = "comboBoxSourceCompanyCM";
+            this.comboBoxSourceCompanyCM.Size = new System.Drawing.Size(158, 21);
+            this.comboBoxSourceCompanyCM.TabIndex = 0;
+            this.comboBoxSourceCompanyCM.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCompanyCM_SelectedIndexChanged);
+            // 
             // tabPageConvoyControl
             // 
             this.tabPageConvoyControl.Controls.Add(this.label5);
@@ -1495,6 +1572,8 @@
             this.groupBox1.PerformLayout();
             this.tabPageJobs.ResumeLayout(false);
             this.tabPageJobs.PerformLayout();
+            this.tabPageCargoMarket.ResumeLayout(false);
+            this.tabPageCargoMarket.PerformLayout();
             this.tabPageConvoyControl.ResumeLayout(false);
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
@@ -1632,6 +1711,13 @@
         private System.Windows.Forms.Button buttonProfileShareColors;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TabPage tabPageCargoMarket;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox comboBoxSourceCityCM;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox comboBoxSourceCompanyCM;
+        private System.Windows.Forms.ListBox listBoxSourceCargoSeeds;
     }
 }
 

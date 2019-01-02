@@ -34,6 +34,7 @@ namespace TS_SE_Tool
         public FormSettings()
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.MainIco;
 
             DataTable combDT = new DataTable();
             combDT.Columns.Add("ID");
