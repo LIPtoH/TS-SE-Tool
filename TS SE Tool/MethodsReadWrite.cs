@@ -27,6 +27,7 @@ using System.Drawing.Imaging;
 using System.ComponentModel;
 using System.Reflection;
 using System.Diagnostics;
+using System.Text;
 
 namespace TS_SE_Tool
 {
@@ -239,7 +240,7 @@ namespace TS_SE_Tool
             imgpaths = new string[] { @"img\skill_adr.dds", @"img\skill_distance.dds", @"img\skill_heavy.dds", @"img\skill_fragile.dds", @"img\skill_jit.dds", @"img\skill_mechanical.dds" };
             SkillImgS = ExtImgLoader(imgpaths, 64, 64, 64, 0);
 
-            imgpaths = new string[] { @"img\profiles.dds", @"img\comp_man.dds", @"img\truck_service.dds", @"img\trailers.dds", @"img\job_market.dds", @"img\maps.dds" };
+            imgpaths = new string[] { @"img\profiles.dds", @"img\comp_man.dds", @"img\truck_service.dds", @"img\trailers.dds", @"img\company_job.dds", @"img\cargo_market.dds", @"img\maps.dds" };
             TabpagesImages.Images.AddRange (ExtImgLoader(imgpaths, 64, 64, 64, 0));
 
             imgpaths = new string[] { @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_small_ico.dds", @"img\garage_large_ico.dds", @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_tiny_ico.dds" };
@@ -716,7 +717,7 @@ namespace TS_SE_Tool
             toolStripProgressBarMain.Value = 0;
             PopulateFormControlsk();
 
-            buttonDecryptSave.Enabled = true;
+            buttonDecryptSave.Enabled = false;
             buttonLoadSave.Enabled = true;
 
             ToggleGame(GameType);
@@ -1134,6 +1135,101 @@ namespace TS_SE_Tool
             }
 
             LogWriter("Import finished");
+        }
+
+        private void GetTranslationFiles()
+        {
+            if (Directory.Exists(Directory.GetCurrentDirectory() + @"\lang"))
+            {
+                string[] langfiles = Directory.GetFiles(Directory.GetCurrentDirectory() + @"\lang", "??-??.txt");
+                string langTag;
+
+                string langNameShort;
+                string countryShort;
+
+                string flagpath;
+
+                foreach (string lang in langfiles)
+                {
+                    langTag = File.ReadAllLines(lang, Encoding.UTF8)[0].Split(new char[] { '[', ']' })[1];
+
+                    langNameShort = langTag.Split('-')[0];
+                    countryShort = langTag.Split('-')[1];
+
+                    CultureInfo ci = new CultureInfo(langTag, false);
+
+                    char[] a = ci.NativeName.ToCharArray();
+                    a[0] = char.ToUpper(a[0]);
+                    string CorrectedNativeName = new string(a);
+
+                    ToolStripItem TSitem = new ToolStripMenuItem();
+                    TSitem.Name = langNameShort + "_" + countryShort + "_ToolStripMenuItem";
+                    TSitem.Text = CorrectedNativeName;
+
+                    TSitem.Click += new EventHandler(toolstripChangeLanguage);//+= ChangeLanguage(TSitem,);
+
+                    flagpath = Directory.GetCurrentDirectory() + @"\lang\flags\" + countryShort + ".png";
+
+                    if (File.Exists(flagpath))
+                    {
+                        TSitem.Image = new Bitmap(flagpath);
+                        TSitem.ImageScaling = ToolStripItemImageScaling.None;
+                    }
+
+                    languageToolStripMenuItem.DropDownItems.Add(TSitem);
+
+                    byte[] bytes = Encoding.UTF8.GetBytes(flagpath);
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\lang");
+            }
+        }
+
+        private void GetCompaniesCargoInOut()
+        {
+            if (Directory.Exists(Directory.GetCurrentDirectory() + @"\gameref"))
+            {
+                string[] dlcFolders = Directory.GetDirectories(Directory.GetCurrentDirectory() + @"\gameref\" + GameType);
+
+                foreach(string dlcFolder in dlcFolders)
+                {
+                    if (Directory.Exists(dlcFolder + @"\def\company"))
+                    {
+                        string[] companyFolders = Directory.GetDirectories(dlcFolder + @"\def\company");
+
+                        foreach (string companyFolder in companyFolders)
+                        {
+                            if (Directory.Exists(companyFolder + @"\out"))
+                            {
+                                string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+                                string[] cargoes = Directory.GetFiles(companyFolder + @"\out", "*.sii");
+                                List<string> tempOutCargo = new List<string>();
+
+                                foreach (string cargo in cargoes)
+                                {
+                                    string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
+
+                                    tempOutCargo.Add(tempcargo);
+                                }
+
+                                if(!ExternalCompanies.Exists(x => x.CompanyName == company))
+                                {
+                                    ExternalCompanies.Add(new ExtCompany(company));
+                                }
+
+                                ExternalCompanies.Find(x => x.CompanyName == company).AddCargoOut(tempOutCargo);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\gameref");
+            }
         }
     }
 }

@@ -796,7 +796,7 @@ namespace TS_SE_Tool
 
             //GetDataFrom Database
 
-            GetDataFromDatabase("CargoesTable", GameType);
+            //GetDataFromDatabase("CargoesTable", GameType);
             GetDataFromDatabase("CitysTable", GameType);
             GetDataFromDatabase("CompaniesTable", GameType);
             GetDataFromDatabase("TrucksTable", GameType);
@@ -932,6 +932,7 @@ namespace TS_SE_Tool
             //end save data
 
             AddDistances_DataTableToDB_Bulk(DistancesTable);
+            GetCompaniesCargoInOut();
             worker.ReportProgress(90);
             GetAllDistancesFromDB();
             worker.ReportProgress(100);

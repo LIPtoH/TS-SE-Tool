@@ -221,6 +221,8 @@ namespace TS_SE_Tool
             CitiesListDiff = new List<string>();
             CompaniesListDiff = new List<string>();
 
+            ExternalCompanies = new List<ExtCompany>();
+
             EconomyEventQueueList = new string[0];
             EconomyEventsTable = new string[0, 0];
             EconomyEventUnitLinkStringList = new string[0];
@@ -307,7 +309,7 @@ namespace TS_SE_Tool
             FillFormCargoOffersControls();
         }
 
-    private void FillUserCompanyTrucksList()
+        private void FillUserCompanyTrucksList()
         {
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("UserTruckNameless", typeof(string));
@@ -2283,6 +2285,8 @@ namespace TS_SE_Tool
             comboBoxSourceCityCM.ValueMember = "City";
             comboBoxSourceCityCM.DisplayMember = "CityName";
             comboBoxSourceCityCM.DataSource = combDT;
+
+            comboBoxSourceCityCM.SelectedValue = LastVisitedCity;
         }
 
         private void comboBoxSourceCityCM_SelectedIndexChanged(object sender, EventArgs e)
@@ -2346,13 +2350,13 @@ namespace TS_SE_Tool
                 }
             }
 
-
             combDT.DefaultView.Sort = "CompanyName ASC";
 
             comboBoxSourceCompanyCM.ValueMember = "Company";
             comboBoxSourceCompanyCM.DisplayMember = "CompanyName";
 
             comboBoxSourceCompanyCM.DataSource = combDT;
+
         }
 
         private void comboBoxSourceCompanyCM_SelectedIndexChanged(object sender, EventArgs e)
@@ -2360,10 +2364,17 @@ namespace TS_SE_Tool
             listBoxSourceCargoSeeds.Items.Clear();
 
             if (comboBoxSourceCompanyCM.SelectedValue != null)
+            {
+                List<string> tempOutCargo = ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).outCargo;
                 foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxSourceCityCM.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).CragoSeeds)
                 {
-                    listBoxSourceCargoSeeds.Items.Add(cargoseed);
+                    int Cargoreminder = cargoseed % tempOutCargo.Count();
+                    int Cargoreminder2 = (cargoseed - InGameTime + 840) % tempOutCargo.Count();
+                    tempOutCargo.Sort();
+
+                    listBoxSourceCargoSeeds.Items.Add("Seed " + cargoseed.ToString() + " | Time left " + (cargoseed - InGameTime).ToString() + " | Cargo " + tempOutCargo[Cargoreminder] + " | 1 " + Cargoreminder.ToString() + " | 2 " + Cargoreminder2.ToString());
                 }
+            }
             //comboBoxSourceCompanyCM.SelectedValue
         }
 
@@ -2487,56 +2498,6 @@ namespace TS_SE_Tool
             }
         }
 
-        private void GetTranslationFiles()
-        {
-            if (Directory.Exists(Directory.GetCurrentDirectory() + @"\lang") )
-            {
-                string[] langfiles = Directory.GetFiles(Directory.GetCurrentDirectory() + @"\lang","??-??.txt");
-                string langTag;
-
-                string langNameShort;
-                string countryShort;
-
-                string flagpath;
-
-                foreach (string lang in langfiles)
-                {
-                    langTag = File.ReadAllLines(lang, Encoding.UTF8)[0].Split(new char[] { '[', ']' })[1];
-
-                    langNameShort = langTag.Split('-')[0];
-                    countryShort = langTag.Split('-')[1];
-
-                    CultureInfo ci = new CultureInfo(langTag, false);
-
-                    char[] a = ci.NativeName.ToCharArray();
-                    a[0] = char.ToUpper(a[0]);
-                    string CorrectedNativeName = new string(a);
-
-                    ToolStripItem TSitem = new ToolStripMenuItem();
-                    TSitem.Name = langNameShort + "_" + countryShort + "_ToolStripMenuItem";
-                    TSitem.Text = CorrectedNativeName;
-
-                    TSitem.Click += new EventHandler(toolstripChangeLanguage);//+= ChangeLanguage(TSitem,);
-
-                    flagpath = Directory.GetCurrentDirectory() + @"\lang\flags\" + countryShort + ".png";
-
-                    if (File.Exists(flagpath))
-                    {
-                        TSitem.Image = new Bitmap(flagpath);
-                        TSitem.ImageScaling = ToolStripItemImageScaling.None;
-                    }
-
-                    languageToolStripMenuItem.DropDownItems.Add(TSitem);
-
-                    byte[] bytes = Encoding.UTF8.GetBytes(flagpath);
-                }
-            }
-            else
-            {
-                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\lang");
-            }
-        }        
-
         private void ClearJobData()
         {
             JobsTotalDistance = 0;
@@ -2579,25 +2540,8 @@ namespace TS_SE_Tool
 
         private void UpdateUserColorsButtons()
         {
-            
             int padding = 6, width = 23;//, colorcount = 8;
-            /*
-            for (int i = 0; i < 5; i++)
-            {
-                Panel pnl = null;
-                string pnlname = "progressbarTruck" + i.ToString();
 
-                if (groupBoxTruckDetails.Controls.ContainsKey(pnlname))
-                {
-                    pnl = groupBoxTruckDetails.Controls[pnlname] as Panel;
-                }
-
-                if (pnl != null)
-                {
-
-                }
-            }
-            */
             for (int i = 0; i < UserColorsList.Count; i++)
             {
                 Button btn = null;

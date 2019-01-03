@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="CustomClasses\Cargo.cs" />
     <Compile Include="CustomClasses\City.cs" />
+    <Compile Include="CustomClasses\ExtCompany.cs" />
     <Compile Include="CustomClasses\JobAdded.cs" />
     <Compile Include="CustomClasses\Company.cs" />
     <Compile Include="CustomClasses\CompanyTruck.cs" />
@@ -230,7 +231,7 @@ xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\Nativ
 if not exist "$(TargetDir)libs\amd64\" md "$(TargetDir)libs\amd64\"
 xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)libs\amd64\"
 
-ROBOCOPY "$(TargetDir) " "$(TargetDir)libs\ " /XF *.exe *.sdf *.config *.manifest *.cfg *.csv *.log *.pdb  /XD img libs logs lang /E /IS /MOVE
+ROBOCOPY "$(TargetDir) " "$(TargetDir)libs\ " /XF *.exe *.sdf *.config *.manifest *.cfg *.csv *.log *.pdb  /XD gameref img libs logs lang /E /IS /MOVE
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
 </Project>

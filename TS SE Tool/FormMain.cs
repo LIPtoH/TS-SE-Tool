@@ -99,6 +99,8 @@ namespace TS_SE_Tool
         private List<CompanyTruck> CompanyTruckListDB;
         private List<CompanyTruck> CompanyTruckListDiff;
 
+        private List<ExtCompany> ExternalCompanies;
+
         private List<Color> UserColorsList;
 
         private SqlCeConnection DBconnection;
@@ -145,7 +147,6 @@ namespace TS_SE_Tool
 
             //buttonGameETS.Enabled = true;
             //buttonGameATS.Enabled = false;
-
             GetTranslationFiles();
 
             SetDefaultValues(true);
@@ -158,6 +159,7 @@ namespace TS_SE_Tool
 
             ToggleGame(GameType);
             LoadExtImages();
+            //GetCompaniesCargoInOut();
 
             CreateProfilePanelControls();
             CreateTruckPanelControls();

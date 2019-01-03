@@ -17,17 +17,36 @@ using System.Collections.Generic;
 
 namespace TS_SE_Tool
 {
-    class Company
+    class ExtCompany
     {
-        public Company(string _companyName, int _jobs)
+        public string CompanyName { get; set; }
+        public List<string> inCargo = new List<string>();
+        public List<string> outCargo = new List<string>();
+
+        public ExtCompany(string _companyName)
         {
             CompanyName = _companyName;
-            JobsOffers = _jobs;
         }
-        public int[] CragoSeeds = new int[0];
 
-        public string CompanyName { get; set; }
-        public int JobsOffers { get; set; } = 0;
-        public bool Excluded { get; set; } = false;
+        public void AddCargoIn(string _CargoName)
+        {
+            inCargo.Add(_CargoName);
+        }
+
+        public void AddCargoOut(string _CargoName)
+        {
+            outCargo.Add(_CargoName);
+        }
+
+        public void AddCargoIn(List<string> _CargoName)
+        {
+            inCargo.AddRange(_CargoName);
+        }
+
+        public void AddCargoOut(List<string> _CargoName)
+        {
+            outCargo.AddRange(_CargoName);
+        }
+
     }
 }
