@@ -357,7 +357,7 @@ namespace TS_SE_Tool
         {
             tabControlMain.ImageList = TabpagesImages;
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < TabpagesImages.Images.Count; i++)
             {
                 tabControlMain.TabPages[i].ImageIndex = i;
             }
@@ -2361,6 +2361,26 @@ namespace TS_SE_Tool
 
         private void comboBoxSourceCompanyCM_SelectedIndexChanged(object sender, EventArgs e)
         {
+            listBox1.Items.Clear();
+            if (comboBoxSourceCompanyCM.SelectedValue != null)
+            foreach(string cargo in ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).outCargo)
+                listBox1.Items.Add(cargo);
+
+            PrintCargoSeeds();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            PrintCargoSeeds();
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            PrintCargoSeeds();
+        }
+
+        private void PrintCargoSeeds()
+        {
             listBoxSourceCargoSeeds.Items.Clear();
 
             if (comboBoxSourceCompanyCM.SelectedValue != null)
@@ -2368,16 +2388,15 @@ namespace TS_SE_Tool
                 List<string> tempOutCargo = ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).outCargo;
                 foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxSourceCityCM.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).CragoSeeds)
                 {
-                    int Cargoreminder = cargoseed % tempOutCargo.Count();
-                    int Cargoreminder2 = (cargoseed - InGameTime + 840) % tempOutCargo.Count();
-                    tempOutCargo.Sort();
+                    //int Cargoreminder = cargoseed % (tempOutCargo.Count() - (int)numericUpDown1.Value);
+                    //int Cargoreminder2 = (cargoseed - InGameTime + (int)numericUpDown2.Value) % (tempOutCargo.Count() - (int)numericUpDown1.Value);
+                    //tempOutCargo.Sort();
 
-                    listBoxSourceCargoSeeds.Items.Add("Seed " + cargoseed.ToString() + " | Time left " + (cargoseed - InGameTime).ToString() + " | Cargo " + tempOutCargo[Cargoreminder] + " | 1 " + Cargoreminder.ToString() + " | 2 " + Cargoreminder2.ToString());
+                    //listBoxSourceCargoSeeds.Items.Add("" + cargoseed.ToString() + " | TL " + ((cargoseed - InGameTime) / 60).ToString() + "h "  + ((cargoseed - InGameTime) % 60).ToString() + "m " + " | Cargo " + "1 " + tempOutCargo[Cargoreminder] + " | 2 " + tempOutCargo[Cargoreminder2]);
+                    listBoxSourceCargoSeeds.Items.Add("" + cargoseed.ToString() + " | Time left " + ((cargoseed - InGameTime) / 60).ToString() + "h " + ((cargoseed - InGameTime) % 60).ToString() + "m ");
                 }
             }
-            //comboBoxSourceCompanyCM.SelectedValue
         }
-
 
         private void ToggleVisibility(bool visible)
         {

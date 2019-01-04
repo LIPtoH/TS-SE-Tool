@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="CustomClasses\Cargo.cs" />
     <Compile Include="CustomClasses\City.cs" />
+    <Compile Include="CustomClasses\ExtCargo.cs" />
     <Compile Include="CustomClasses\ExtCompany.cs" />
     <Compile Include="CustomClasses\JobAdded.cs" />
     <Compile Include="CustomClasses\Company.cs" />

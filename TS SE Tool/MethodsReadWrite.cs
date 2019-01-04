@@ -1224,6 +1224,59 @@ namespace TS_SE_Tool
                             }
                         }
                     }
+                    //Scan cargo files
+                    /*
+                    if (Directory.Exists(dlcFolder + @"\def\cargo"))
+                    {
+                        string cargoFolder = dlcFolder + @"\def\cargo";
+                        string[] cargoFiles = Directory.GetFiles(cargoFolder, "*.sii");
+
+                        foreach (string cargo in cargoFiles)
+                        {
+                            string[] tempCargoFile = File.ReadAllLines(cargo);
+
+                            foreach(string line in tempCargoFile)
+                            {
+                                ExtCargo tempExtCargo = null;
+                                if (line.StartsWith("cargo_data:"))
+                                {
+                                    tempExtCargo = new ExtCargo(line.Split(new char[] { '.' })[1]);
+                                    continue;
+                                }
+                                if (line.StartsWith("	fragility:"))
+                                {
+                                    tempExtCargo.Fragility = int.Parse( line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
+                                if (line.StartsWith("	adr_class:"))
+                                {
+                                    tempExtCargo.ADRclass = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
+                                if (line.StartsWith("	adr_class:"))
+                                {
+                                    tempExtCargo.ADRclass = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
+                                if (line.StartsWith("	unit_reward_per_km:"))
+                                {
+                                    tempExtCargo.UnitRewardpPerKM = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
+                                if (line.StartsWith("	group[]:"))
+                                {
+                                    tempExtCargo.Groups.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
+                                if (line.StartsWith("	body_types[]:"))
+                                {
+                                    tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                    */
                 }
             }
             else
