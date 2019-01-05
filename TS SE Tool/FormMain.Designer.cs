@@ -97,6 +97,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.buttonUserTrailerSelectCurrent = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -131,6 +133,10 @@
             this.labelFreightMarketSource = new System.Windows.Forms.Label();
             this.comboBoxSourceCity = new System.Windows.Forms.ComboBox();
             this.tabPageCargoMarket = new System.Windows.Forms.TabPage();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBoxSourceCargoSeeds = new System.Windows.Forms.ListBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -161,12 +167,6 @@
             this.checkBoxProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxProfilesAndSaves = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -900,6 +900,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Details";
             // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(103, 222);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(300, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "0 000 00";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(17, 222);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "License plate";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1253,6 +1270,42 @@
             this.tabPageCargoMarket.Text = "CargoMarket";
             this.tabPageCargoMarket.UseVisualStyleBackColor = true;
             // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(239, 79);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(161, 23);
+            this.button9.TabIndex = 16;
+            this.button9.Text = "Randomize Cargo list";
+            this.button9.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(72, 79);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(161, 23);
+            this.button8.TabIndex = 15;
+            this.button8.Text = "Randomize Cargo list";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(239, 50);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(161, 23);
+            this.button7.TabIndex = 14;
+            this.button7.Text = "Reset Cargo list";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(72, 50);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(161, 23);
+            this.button6.TabIndex = 13;
+            this.button6.Text = "Reset Cargo list";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
@@ -1335,9 +1388,9 @@
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(6, 64);
+            this.label5.Location = new System.Drawing.Point(6, 61);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(468, 148);
+            this.label5.Size = new System.Drawing.Size(468, 151);
             this.label5.TabIndex = 6;
             this.label5.Text = "Work In Progres";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1348,7 +1401,7 @@
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(231, 52);
             this.button29.TabIndex = 5;
-            this.button29.Text = "Create or paste to multiple saves different positions";
+            this.button29.Text = "Create multiple saves with different truck positions";
             this.button29.UseVisualStyleBackColor = true;
             // 
             // button28
@@ -1357,7 +1410,7 @@
             this.button28.Name = "button28";
             this.button28.Size = new System.Drawing.Size(231, 52);
             this.button28.TabIndex = 4;
-            this.button28.Text = "Copy current position from multiple saves";
+            this.button28.Text = "Copy truck position from multiple saves";
             this.button28.UseVisualStyleBackColor = true;
             // 
             // buttonGPSCurrentPositionPaste
@@ -1368,6 +1421,7 @@
             this.buttonGPSCurrentPositionPaste.TabIndex = 3;
             this.buttonGPSCurrentPositionPaste.Text = "Paste current position";
             this.buttonGPSCurrentPositionPaste.UseVisualStyleBackColor = true;
+            this.buttonGPSCurrentPositionPaste.Click += new System.EventHandler(this.buttonGPSCurrentPositionPaste_Click);
             // 
             // buttonGPSCurrentPositionCopy
             // 
@@ -1377,6 +1431,7 @@
             this.buttonGPSCurrentPositionCopy.TabIndex = 2;
             this.buttonGPSCurrentPositionCopy.Text = "Copy current position";
             this.buttonGPSCurrentPositionCopy.UseVisualStyleBackColor = true;
+            this.buttonGPSCurrentPositionCopy.Click += new System.EventHandler(this.buttonGPSCurrentPositionCopy_Click);
             // 
             // buttonGPSStoredGPSPathPaste
             // 
@@ -1386,6 +1441,7 @@
             this.buttonGPSStoredGPSPathPaste.TabIndex = 1;
             this.buttonGPSStoredGPSPathPaste.Text = "Paste GPS path";
             this.buttonGPSStoredGPSPathPaste.UseVisualStyleBackColor = true;
+            this.buttonGPSStoredGPSPathPaste.Click += new System.EventHandler(this.buttonGPSStoredGPSPathPaste_Click);
             // 
             // buttonGPSStoredGPSPathCopy
             // 
@@ -1395,6 +1451,7 @@
             this.buttonGPSStoredGPSPathCopy.TabIndex = 0;
             this.buttonGPSStoredGPSPathCopy.Text = "Copy GPS path";
             this.buttonGPSStoredGPSPathCopy.UseVisualStyleBackColor = true;
+            this.buttonGPSStoredGPSPathCopy.Click += new System.EventHandler(this.buttonGPSStoredGPSPathCopy_Click);
             // 
             // buttonWriteSave
             // 
@@ -1547,59 +1604,6 @@
             this.groupBoxProfilesAndSaves.TabIndex = 21;
             this.groupBoxProfilesAndSaves.TabStop = false;
             this.groupBoxProfilesAndSaves.Text = "Profiles And Saves";
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(72, 50);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(161, 23);
-            this.button6.TabIndex = 13;
-            this.button6.Text = "Reset Cargo list";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(239, 50);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(161, 23);
-            this.button7.TabIndex = 14;
-            this.button7.Text = "Reset Cargo list";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(72, 79);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(161, 23);
-            this.button8.TabIndex = 15;
-            this.button8.Text = "Randomize Cargo list";
-            this.button8.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(239, 79);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(161, 23);
-            this.button9.TabIndex = 16;
-            this.button9.Text = "Randomize Cargo list";
-            this.button9.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(103, 222);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(300, 13);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "0 000 00";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(17, 222);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(70, 13);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "License plate";
             // 
             // FormMain
             // 

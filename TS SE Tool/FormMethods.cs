@@ -94,8 +94,6 @@ namespace TS_SE_Tool
                 dictionaryProfiles.Add("ETS2", ProfileETS2);
                 dictionaryProfiles.Add("ATS", ProfileATS);
 
-                UserCompanyAssignedTruck = "";
-
                 CompaniesLngDict = new Dictionary<string, string>();
                 CitiesLngDict = new Dictionary<string, string>();
 
@@ -197,6 +195,10 @@ namespace TS_SE_Tool
 
             PlayerProfileData = new PlayerProfile("", 0, new byte[] { 0, 0, 0, 0, 0, 0 }, 0);
 
+            UserCompanyAssignedTruck = "";
+            UserCompanyAssignedTrailer = "";
+            UserCompanyAssignedTruckPlacement = "";
+
             CompaniesList = new List<string>();
             CitiesList = new List<City>();
 
@@ -236,6 +238,9 @@ namespace TS_SE_Tool
             JobsListAdded = new string[0];
             LastModifiedTimestamp = new DateTime();
             ListSavefileCompanysString = new string[0];
+
+            GPSbehind = new Dictionary<string, List<string>>();
+            GPSahead = new Dictionary<string, List<string>>();
 
             //game = "ETS";
             JobsTotalDistance = 0;
@@ -2397,6 +2402,28 @@ namespace TS_SE_Tool
                 }
             }
         }
+
+
+        private void buttonGPSCurrentPositionCopy_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonGPSCurrentPositionPaste_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonGPSStoredGPSPathCopy_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonGPSStoredGPSPathPaste_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
         private void ToggleVisibility(bool visible)
         {

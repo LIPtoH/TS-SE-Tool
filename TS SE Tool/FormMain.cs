@@ -58,6 +58,8 @@ namespace TS_SE_Tool
         private string LoopStartCompany;
 
         private string UserCompanyAssignedTruck;
+        private string UserCompanyAssignedTrailer;
+        private string UserCompanyAssignedTruckPlacement;
 
         private string ProfileETS2;
         private string ProfileATS;
@@ -122,7 +124,9 @@ namespace TS_SE_Tool
         public static Dictionary<string, string> CitiesLngDict;
         //private Dictionary<string, UserCompanyTruck> UserTruckList;
         private Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
+        private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary;
 
+        private Dictionary<string, List<string>> GPSbehind, GPSahead;
 
         internal Dictionary<string, double> DistanceMultipliers;
 

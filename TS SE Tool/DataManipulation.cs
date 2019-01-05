@@ -237,6 +237,43 @@ namespace TS_SE_Tool
                             continue;
                         }
 
+                        //GPS
+                        if (tempSavefileInMemory[line].StartsWith(" stored_nav_start_pos:"))
+                        {
+                            //string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            //PlayerProfileData.PlayerSkills[5] = byte.Parse(LineArray[2]);
+                            continue;
+                        }
+                        if (tempSavefileInMemory[line].StartsWith(" stored_nav_start_pos:"))
+                        {
+                            //string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            //PlayerProfileData.PlayerSkills[5] = byte.Parse(LineArray[2]);
+                            continue;
+                        }
+                        if (tempSavefileInMemory[line].StartsWith(" stored_gps_behind_waypoints:"))
+                        {
+                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            int gpscount = int.Parse(LineArray[2]);
+
+                            for (int i = 0; i < gpscount; i++)
+                            {
+                                line++;
+                                GPSbehind.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2], new List<string>());
+                            }
+                            continue;
+                        }
+                        if (tempSavefileInMemory[line].StartsWith(" stored_gps_ahead_waypoints:"))
+                        {
+                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            int gpscount = int.Parse(LineArray[2]);
+
+                            for (int i = 0; i < gpscount; i++)
+                            {
+                                GPSahead.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2], new List<string>());
+                            }
+                            continue;
+                        }
+
                         //Find last visited city
                         if (tempSavefileInMemory[line].StartsWith(" last_visited_city:"))
                         {
@@ -298,9 +335,58 @@ namespace TS_SE_Tool
                             UserTruckDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
                             continue;
                         }
+
+                        if(tempSavefileInMemory[line].StartsWith(" assigned_trailer:"))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            UserCompanyAssignedTrailer = chunkOfline[2];
+                            continue;
+                        }
+
+                        if (tempSavefileInMemory[line].StartsWith(" truck_placement:"))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
+                            UserCompanyAssignedTruckPlacement = chunkOfline[1];
+                            continue;
+                        }
+
+                        if (tempSavefileInMemory[line].StartsWith(" trailers["))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            //UserTruckList.Add(chunkOfline[2], new UserCompanyTruck());
+
+                            UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
+                            continue;
+                        }
+                    }
+                    //Populate GPS
+                    if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage:"))
+                    {
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                        if( GPSbehind.ContainsKey(nameless))
+                        {
+                            line++;
+                            while (!tempSavefileInMemory[line].StartsWith("}"))
+                            {
+                                GPSbehind[nameless].Add(tempSavefileInMemory[line]);
+                                line++;
+                            }
+                            
+                        }
+                        else
+                        if (GPSahead.ContainsKey(nameless))
+                        {
+                                line++;
+                                while (!tempSavefileInMemory[line].StartsWith("}"))
+                                {
+                                    GPSbehind[nameless].Add(tempSavefileInMemory[line]);
+                                    line++;
+                                }
+                        }
                     }
 
-                    //find vehicles
+                    //find vehicles Truck
                     if (tempSavefileInMemory[line].StartsWith("vehicle :"))
                     {
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
@@ -389,7 +475,7 @@ namespace TS_SE_Tool
                                                 {
                                                     UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("transmission"));
                                                 }
-                                                else if (truckpart.Contains("tire") || truckpart.Contains("wheel"))
+                                                else if (truckpart.Contains("/f_tire/") || truckpart.Contains("/r_tire/"))
                                                 {
                                                     UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("tire"));
                                                 }
@@ -408,6 +494,154 @@ namespace TS_SE_Tool
 
                                 //accessoriespool = accessoriespool.Where(val => val != accessorynameless).ToArray();
                                 line++;
+                            }
+                        }
+                        continue;
+                    }
+
+                    //find vehicles Trailer
+                    TrailerSearchStart:
+                    if (tempSavefileInMemory[line].StartsWith("trailer :"))
+                    {
+                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                        string vehiclenameless = chunkOfline[2];
+
+                        if (UserTrailerDictionary.ContainsKey(vehiclenameless))//UserTruckList.ContainsKey(vehiclenameless))
+                        {
+                            UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("trailerdata"));
+                            line++;
+
+                            int[] accessoriescount = new int[1];
+                            string[] trailernamelessArray = new string[1];
+                            int slavetrailerscount = 0;
+                            //string[] accessoriespool = null;
+
+                            while (!tempSavefileInMemory[line].StartsWith("}"))
+                            {
+                                if (tempSavefileInMemory[line].StartsWith(" cargo_mass:"))
+                                {
+                                    UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(tempSavefileInMemory[line]);
+                                }
+                                else
+                                if (tempSavefileInMemory[line].StartsWith(" cargo_damage:"))
+                                {
+                                    UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(tempSavefileInMemory[line]);
+                                }
+                                else
+                                if (tempSavefileInMemory[line].StartsWith(" license_plate:"))
+                                {
+                                    UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(tempSavefileInMemory[line]);
+                                }
+                                else
+                                if (tempSavefileInMemory[line].StartsWith(" slave_trailer:"))
+                                {
+                                    //UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(tempSavefileInMemory[line]);
+                                    if (tempSavefileInMemory[line].Contains("_nameless"))
+                                    {
+                                        slavetrailerscount++;
+                                        Array.Resize(ref accessoriescount, slavetrailerscount);
+                                        Array.Resize(ref trailernamelessArray, slavetrailerscount);
+
+                                        UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("slavetrailer"));
+                                        UserTrailerDictionary[vehiclenameless].Parts.Last().PartNameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                                    }
+                                    else
+                                    {
+                                        slavetrailerscount++;
+                                        Array.Resize(ref accessoriescount, slavetrailerscount);
+                                        Array.Resize(ref trailernamelessArray, slavetrailerscount);
+
+
+                                        trailernamelessArray[slavetrailerscount - 1] = vehiclenameless;
+                                    }
+                                }
+                                else
+                                if (tempSavefileInMemory[line].StartsWith(" accessories:"))
+                                {
+                                    accessoriescount[slavetrailerscount]  = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
+                                    //accessoriespool = new string[accessoriescount];
+                                    line++;
+                                    /*
+                                    for (int i = 0; i < accessoriescount; i++)
+                                    {
+                                        accessoriespool[i] = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                                        line++;
+                                    }
+                                    */
+                                }
+                                line++;
+                            }
+
+                            if (UserTrailerDictionary[vehiclenameless].Parts.Exists(x => x.PartType == "slavetrailer"))
+                            {
+                                while (!tempSavefileInMemory[line].StartsWith("trailer :"))
+                                {
+                                    line++;
+                                }
+                                goto TrailerSearchStart;
+                            }
+                            else
+                            {
+                                int trailerindex = accessoriescount.Length - 1;
+
+                                while (accessoriescount[trailerindex] > 0)//(accessoriespool.Length > 0)
+                                {
+                                    if (tempSavefileInMemory[line].StartsWith("vehicle_"))
+                                    {
+                                        string accessorynameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                                        bool paintadded = false;
+                                        if (tempSavefileInMemory[line].StartsWith("vehicle_paint_job_accessory :"))
+                                        {
+                                            UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("paintjob"));
+                                            paintadded = true;
+                                        }
+                                        line++;
+
+                                        List<string> tempPartData = new List<string>();
+
+                                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                                        {
+                                            tempPartData.Add(tempSavefileInMemory[line]);
+
+                                            if (!paintadded)
+                                                if (tempSavefileInMemory[line].StartsWith(" data_path:"))
+                                                {
+                                                    chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                                                    string truckpart = chunkOfline[2].Split(new char[] { '"' })[1];
+
+                                                    if (truckpart.Contains("data.sii"))
+                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("trailerchassistype"));
+                                                    else if (truckpart.Contains("/body/"))
+                                                    {
+                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("body"));
+                                                    }
+                                                    else if (truckpart.Contains("/chassis/"))
+                                                    {
+                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("chassis"));
+                                                    }
+                                                    else if (truckpart.Contains("/r_tire/"))
+                                                    {
+                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("tire"));
+                                                    }
+                                                    else
+                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("generalpart"));
+                                                }
+                                            line++;
+                                        }
+
+                                        if (paintadded)
+                                            paintadded = false;
+
+                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Last().PartNameless = accessorynameless;
+                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Last().PartData = tempPartData;
+                                        accessoriescount[0]--;
+                                    }
+
+                                    //accessoriespool = accessoriespool.Where(val => val != accessorynameless).ToArray();
+                                    line++;
+                                    if (trailerindex != 0)
+                                        trailerindex--;
+                                }
                             }
                         }
                         continue;
