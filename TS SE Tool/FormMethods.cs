@@ -198,6 +198,7 @@ namespace TS_SE_Tool
             UserCompanyAssignedTruck = "";
             UserCompanyAssignedTrailer = "";
             UserCompanyAssignedTruckPlacement = "";
+            UserCompanyAssignedTruckPlacementEdited = false;
 
             CompaniesList = new List<string>();
             CitiesList = new List<City>();
@@ -211,8 +212,8 @@ namespace TS_SE_Tool
 
             UserColorsList = new List<Color>();
             GaragesList = new List<Garages>();
-            //UserTruckList = new Dictionary<string, UserCompanyTruck>();
             UserTruckDictionary = new Dictionary<string, UserCompanyTruckData>();
+            UserTrailerDictionary = new Dictionary<string, UserCompanyTruckData>();
 
             VisitedCities = new List<VisitedCity>();
 
@@ -241,7 +242,7 @@ namespace TS_SE_Tool
 
             GPSbehind = new Dictionary<string, List<string>>();
             GPSahead = new Dictionary<string, List<string>>();
-
+            namelessList = new List<string>();
             //game = "ETS";
             JobsTotalDistance = 0;
             LoopStartCity = "";
@@ -254,43 +255,6 @@ namespace TS_SE_Tool
             components = null;
         }
 
-        private void CreateProgressBarBitmap()
-        {
-            ProgressBarGradient = new Bitmap(100, 1);
-
-            LinearGradientBrush br = new LinearGradientBrush(new RectangleF(0, 0, 100, 1), Color.Black, Color.Black, 0, false);
-            ColorBlend cb = new ColorBlend();
-            cb.Positions = new[] { 0.0f, 0.5f, 1f };
-            cb.Colors = new[] { Color.FromArgb(255, 255, 0, 0), Color.FromArgb(255, 255, 255, 0), Color.FromArgb(255, 0, 255, 0), };
-            br.InterpolationColors = cb;
-
-            //puts the gradient scale onto a bitmap which allows for getting a color from pixel
-            Graphics g = Graphics.FromImage(ProgressBarGradient);
-            g.FillRectangle(br, new RectangleF(0, 0, ProgressBarGradient.Width, ProgressBarGradient.Height));
-        }
-
-        private Color GetProgressbarColor(decimal value)
-        {
-            return ProgressBarGradient.GetPixel(Convert.ToInt32((1 - value) * 100) - 1, 0);
-        }
-
-        private Bitmap ImageFromDDS(string _path)
-        {
-            Bitmap bitmap = null;
-
-            if (File.Exists(_path))
-            {
-                FileStream fsimage = new FileStream(_path, FileMode.Open);
-
-                S16.Drawing.DDSImage asd = new S16.Drawing.DDSImage(fsimage);
-
-                bitmap = asd.BitmapImage;
-
-                return bitmap;
-            }
-            else
-                return bitmap;
-        }
 
         private void PopulateFormControlsk()
         {
@@ -299,6 +263,13 @@ namespace TS_SE_Tool
 
             string t1 = "Trucking since:\n\r" + DateTimeOffset.FromUnixTimeSeconds(PlayerProfileData.CreationTime).DateTime.ToLocalTime().ToString();
             toolTipMain.SetToolTip(pictureBoxProfileAvatar, t1);
+
+            tabControlMain.ImageList = TabpagesImages;
+
+            for (int i = 0; i < TabpagesImages.Images.Count; i++)
+            {
+                tabControlMain.TabPages[i].ImageIndex = i;
+            }
 
             FillFormProfileControls();
             UpdateUserColorsButtons();
@@ -314,59 +285,270 @@ namespace TS_SE_Tool
             FillFormCargoOffersControls();
         }
 
-        private void FillUserCompanyTrucksList()
+        //Main part controls
+
+
+        //Profile and Saves groupbox
+        private void checkBoxProfileBackups_CheckedChanged(object sender, EventArgs e)
         {
-            DataTable combDT = new DataTable();
-            DataColumn dc = new DataColumn("UserTruckNameless", typeof(string));
-            combDT.Columns.Add(dc);
+            FillAllProfilesPaths();
+        }
 
-            dc = new DataColumn("UserTruckName", typeof(string));
-            combDT.Columns.Add(dc);
+        public void FillAllProfilesPaths()
+        {
+            //comboBoxPrevProfiles.Items.Clear();
 
-            foreach (KeyValuePair<string, UserCompanyTruckData> UserTruck in UserTruckDictionary)
+            string MyDocumentsPath = "";
+            MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame;
+
+            string RemoteUserdataDirectory = "";
+
+            try
             {
-                string templine = UserTruck.Value.Parts.Find(x => x.PartType == "truckbrandname").PartData.Find(xline => xline.StartsWith(" data_path:"));
-                string truckname = templine.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
+                //string SteamInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", null).ToString();
+                //if (SteamInstallPath == null)
+                string SteamInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam", "InstallPath", null).ToString();
 
-                combDT.Rows.Add(UserTruck.Key, truckname); ////.TruckName);
+                if (SteamInstallPath == null)
+                {
+                    //unknown steam path
+                }
+                else
+                {
+
+                    string SteamCloudPath = SteamInstallPath + @"\userdata";
+                    if (!Directory.Exists(SteamCloudPath))
+                    {
+                        //no userdata
+                    }
+                    else
+                    {
+                        string[] userdatadirectories = Directory.GetDirectories(SteamCloudPath);
+
+                        if (userdatadirectories.Length == 0)
+                        {
+                            //no steam user directories
+                        }
+                        else
+                        {
+                            DateTime lastHigh = DateTime.Now;
+
+                            string CurrentUserDir = Directory.GetDirectories(SteamCloudPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray()[0];//null;
+                            /*
+                            foreach (string dir in userdatadirectories)
+                            {
+                                DirectoryInfo di = new DirectoryInfo(dir);
+                                DateTime current = di.LastWriteTime;
+
+                                if (current > lastHigh)
+                                {
+                                    CurrentUserDir = dir;
+                                    lastHigh = current;
+                                }
+                            }
+                            */
+                            string GameID = "";
+                            if (GameType == "ETS")
+                                GameID = @"\227300"; //ETS2
+                            else
+                                GameID = @"\270880"; //ATS
+
+                            if (!Directory.Exists(MyDocumentsPath) && !Directory.Exists(CurrentUserDir + GameID))
+                            {
+                                MessageBox.Show("Standart Game Save folders don't exist");
+                                return;
+                            }
+
+                            //if ()
+                            //{
+                            //    MessageBox.Show("Standart Game Save folder don't exist");
+                            //    return;
+                            //}
+
+                            RemoteUserdataDirectory = CurrentUserDir + GameID + @"\remote";
+                        }
+                    }
+                }
             }
-            /*
-            foreach (KeyValuePair<string, UserCompanyTruck> UserTruck in UserTruckList)
+            catch
             {
-                combDT.Rows.Add(UserTruck.Key, UserTruck.Value.TruckName);
+
+            }
+
+            if (checkBoxProfileBackups.Checked)
+            {
+                DataTable combDT = new DataTable();
+                DataColumn dc = new DataColumn("ProfileID", typeof(string));
+                combDT.Columns.Add(dc);
+
+                dc = new DataColumn("ProfileName", typeof(string));
+                combDT.Columns.Add(dc);
+
+                List<string> tempList = new List<string>();
+
+                int index = 0;
+                foreach (string folder in Directory.GetDirectories(MyDocumentsPath))
+                {
+                    if (Path.GetFileName(folder).StartsWith("profiles")) //Documents
+                    {
+                        //comboBoxPrevProfiles.Items.Add(Path.GetFileName(folder));
+                        combDT.Rows.Add(index, "[L] " + Path.GetFileName(folder));
+
+                        tempList.Add(folder);
+                        index++;
+                    }
+                }
+
+                //string RemoteUserdataDirectory Steam Profiles
+                foreach (string folder in Directory.GetDirectories(RemoteUserdataDirectory))
+                {
+                    if (Path.GetFileName(folder).StartsWith("profiles")) //Steam
+                    {
+                        combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
+
+                        tempList.Add(folder);
+                        index++;
+                    }
+                }
+
+                Globals.ProfilesPaths = tempList.ToArray();
+
+                comboBoxPrevProfiles.ValueMember = "ProfileID";
+                comboBoxPrevProfiles.DisplayMember = "ProfileName";
+                comboBoxPrevProfiles.DataSource = combDT;
+
+            }
+            else
+            {
+                DataTable combDT = new DataTable();
+                DataColumn dc = new DataColumn("ProfileID", typeof(string));
+                combDT.Columns.Add(dc);
+
+                dc = new DataColumn("ProfileName", typeof(string));
+                combDT.Columns.Add(dc);
+
+                int index = 0;
+                List<string> tempList = new List<string>();
+                string folder = MyDocumentsPath + @"\profiles";
+
+                if (Directory.Exists(folder))
+                {
+                    combDT.Rows.Add(index, "[L] profiles");
+
+                    tempList.Add(folder);
+                    index++;
+                    //comboBoxPrevProfiles.Items.Add("[L] profiles");
+                }
+
+                folder = RemoteUserdataDirectory + @"\profiles";
+
+                if (Directory.Exists(folder))
+                {
+                    combDT.Rows.Add(index, "[S] profiles");
+
+                    tempList.Add(folder);
+                    index++;
+                    //comboBoxPrevProfiles.Items.Add("[S] profiles");
+                }
+
+                Globals.ProfilesPaths = tempList.ToArray();
+                comboBoxPrevProfiles.ValueMember = "ProfileID";
+                comboBoxPrevProfiles.DisplayMember = "ProfileName";
+                comboBoxPrevProfiles.DataSource = combDT;
+            }
+
+
+            if (comboBoxPrevProfiles.Items.Count > 0)
+            {
+                comboBoxPrevProfiles.SelectedIndex = 0;
+                buttonOpenSaveFolder.Enabled = true;
+                buttonDecryptSave.Enabled = true;
+                buttonLoadSave.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("No profiles found");
+
+                buttonOpenSaveFolder.Enabled = false;
+                buttonDecryptSave.Enabled = false;
+                buttonLoadSave.Enabled = false;
+            }
+        }
+
+        public void FillProfiles()
+        {
+            string Profile = "";
+            comboBoxProfiles.Items.Clear();
+
+            string MyDocumentsPath = "";
+            //MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame + "\\" + comboBoxPrevProfiles.Items[comboBoxPrevProfiles.SelectedIndex];//@"\profiles";
+            MyDocumentsPath = Globals.ProfilesPaths[int.Parse(comboBoxPrevProfiles.SelectedValue.ToString())];
+            /*
+            if (!Directory.Exists(MyDocumentsPath))
+            {
+                MessageBox.Show("Standart Save files don't exist");
+                return;
             }
             */
-            //combDT.DefaultView.Sort = "UserTruckName ASC";
-            comboBoxCompanyTrucks.ValueMember = "UserTruckNameless";
-            comboBoxCompanyTrucks.DisplayMember = "UserTruckName";
+            Globals.ProfilesHex = Directory.GetDirectories(MyDocumentsPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
 
-            comboBoxCompanyTrucks.DataSource = combDT;
-
-            //UserTruckList.TryGetValue(comboBoxCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruck SelectedUserCompanyTruck);
-
-            comboBoxCompanyTrucks.SelectedValue = UserCompanyAssignedTruck;
-        }
-
-        private void comboBoxCompanyTrucks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBox cmbbx = sender as ComboBox;
-
-            if (cmbbx.SelectedIndex != -1)
+            if (Globals.ProfilesHex.Length > 0)
             {
-                UpdateTruckPanelProgressBars();
-                //UpdateTruckPanelProgressTitles();
+                foreach (string profile in Globals.ProfilesHex)
+                {
+                    Profile = FromHexToString(Path.GetFileName(profile));
+                    comboBoxProfiles.Items.Add(Profile);
+                }
+                comboBoxProfiles.SelectedIndex = 0;
+                buttonOpenSaveFolder.Enabled = true;
+                buttonDecryptSave.Enabled = true;
+                buttonLoadSave.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("No profiles found");
+
+                buttonOpenSaveFolder.Enabled = false;
+                buttonDecryptSave.Enabled = false;
+                buttonLoadSave.Enabled = false;
             }
         }
 
+        public void FillProfileSaves()
+        {
+            comboBoxSaves.Items.Clear();
+
+            string savePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\save";
+
+            Globals.SavesHex = Directory.GetDirectories(savePath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
+
+            if (Globals.SavesHex.Length > 0)
+            {
+                foreach (string profile in Globals.SavesHex)
+                {
+                    comboBoxSaves.Items.Add(Path.GetFileName(profile));
+                }
+
+                comboBoxSaves.SelectedIndex = 0;
+                buttonOpenSaveFolder.Enabled = true;
+                buttonDecryptSave.Enabled = true;
+                buttonLoadSave.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("No save file folders found");
+
+                buttonOpenSaveFolder.Enabled = false;
+                buttonDecryptSave.Enabled = false;
+                buttonLoadSave.Enabled = false;
+            }
+        }
+        //end Profile and Saves groupbox
+        //end Main part controls
+
+        //Profile tab
         private void CreateProfilePanelControls()
         {
-            tabControlMain.ImageList = TabpagesImages;
-
-            for (int i = 0; i < TabpagesImages.Images.Count; i++)
-            {
-                tabControlMain.TabPages[i].ImageIndex = i;
-            }
-
             int pSkillsNameHeight = 56, pSkillsNameWidth = 56, pSkillsNameOffset = 5, pSkillsNamelOffset = 12;
 
             string[] toolskillimgtooltip = new string[] { "ADR", "Long Distance", "High Value Cargo", "Fragile Cargo", "Just-In-Time Delivery", "Ecodriving" };
@@ -459,15 +641,181 @@ namespace TS_SE_Tool
             CreateUserColorsButtons();
         }
 
-        private void ClearProfilePage()
+        private void FillFormProfileControls()
         {
-            foreach (CheckBox temp in ADRbuttonArray)
-                temp.Checked = false;
+            FormUpdatePlayerLevel();
 
-            foreach (CheckBox temp in SkillButtonArray)
-                temp.Checked = false;
+            char[] ADR = Convert.ToString(PlayerProfileData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+
+            for (int i = 0; i < ADR.Length; i++)
+            {
+                if (ADR[i] == '1')
+                    ADRbuttonArray[i].Checked = true;
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < PlayerProfileData.PlayerSkills[i + 1]; j++)
+                {
+                    SkillButtonArray[i, j].Checked = true;
+                }
+            }
         }
 
+        private void FormUpdatePlayerLevel()
+        {
+            int playerlvl = PlayerProfileData.getPlayerLvl()[0];
+            labelPlayerLevelNumber.Text = playerlvl.ToString();
+
+            for (int i = PlayerLevelNames.Count - 1; i >= 0; i--)
+                if (PlayerLevelNames[i].LevelLimit <= playerlvl)
+                {
+                    labelPlayerLevelName.Text = PlayerLevelNames[i].LevelName;
+                    panelPlayerLevel.BackColor = PlayerLevelNames[i].NameColor;
+                    break;
+                }
+
+            textBoxPlayerExperience.Text = PlayerProfileData.ExperiencePoints.ToString();
+            labelExperienceNxtLvlThreshhold.Text = "/   " + PlayerProfileData.getPlayerLvl()[1].ToString();
+
+        }
+
+        private void CreateUserColorsButtons()
+        {
+            int padding = 6, width = 40, colorcount = 8;
+            //UserColorsList.Count
+
+            for (int i = 0; i < colorcount; i++)
+            {
+                Button rb = new Button();
+                rb.Name = "buttonUC" + i.ToString();
+                rb.Text = null;
+                rb.Location = new Point(15, 32 + (padding + width) * (i));
+                rb.Size = new Size(width, width);
+                rb.FlatStyle = FlatStyle.Flat;
+                rb.Enabled = false;
+
+                rb.Click += new EventHandler(SelectColor);
+
+                groupBoxUserColors.Controls.Add(rb);
+            }
+        }
+
+        private void buttonProfileShareColors_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UpdateUserColorsButtons()
+        {
+            int padding = 6, width = 23;//, colorcount = 8;
+
+            for (int i = 0; i < UserColorsList.Count; i++)
+            {
+                Button btn = null;
+                string btnname = "buttonUC" + i.ToString();
+
+                if (groupBoxUserColors.Controls.ContainsKey(btnname))
+                {
+                    btn = groupBoxUserColors.Controls[btnname] as Button;
+                }
+                else
+                {
+                    //Button rb = new Button();
+                    btn.Name = "buttonUC" + i.ToString();
+                    btn.Text = null;
+                    btn.Location = new Point(6 + (padding + width) * (i), 19);
+                    btn.Size = new Size(width, 23);
+                    btn.FlatStyle = FlatStyle.Flat;
+                    //rb.BackColor = UserColorsList[i];
+                    btn.Enabled = false;
+                    //if (UserColorsList[i].A == 0)
+                    //    rb.Text = "X";
+
+                    btn.Click += new EventHandler(SelectColor);
+
+                    groupBoxUserColors.Controls.Add(btn);
+                }
+
+                if (btn != null)
+                {
+                    btn.BackColor = UserColorsList[i];
+                    btn.Enabled = true;
+                    if (UserColorsList[i].A == 0)
+                        btn.Text = "X";
+                }
+            }
+        }
+
+        private void SelectColor(object sender, EventArgs e)
+        {
+            Button obj = sender as Button;
+
+            OpenPainter.ColorPicker.frmColorPicker frm = new OpenPainter.ColorPicker.frmColorPicker(obj.BackColor);
+
+            frm.Font = SystemFonts.DialogFont;
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                obj.BackColor = frm.PrimaryColor;
+
+                int index = int.Parse(obj.Name.Substring(8, 1));
+
+                UserColorsList[index] = frm.PrimaryColor;
+
+                if (frm.PrimaryColor.A != 0)
+                    obj.Text = "";
+                else
+                    obj.Text = "X";
+
+            }
+        }
+
+        //Profile buttons
+        private void buttonPlayerLvlPlus01_Click(object sender, EventArgs e)
+        {
+            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
+
+            FormUpdatePlayerLevel();
+        }
+
+        private void buttonPlayerLvlPlus10_Click(object sender, EventArgs e)
+        {
+            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
+
+            FormUpdatePlayerLevel();
+        }
+
+        private void buttonPlayerLvlMax_Click(object sender, EventArgs e)
+        {
+            PlayerProfileData.getPlayerExp(150);
+
+            FormUpdatePlayerLevel();
+        }
+
+        private void buttonPlayerLvlMinus01_Click(object sender, EventArgs e)
+        {
+            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
+
+            FormUpdatePlayerLevel();
+        }
+
+        private void buttonPlayerLvlMinus10_Click(object sender, EventArgs e)
+        {
+            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
+
+            FormUpdatePlayerLevel();
+        }
+
+        private void buttonPlayerLvlMin_Click(object sender, EventArgs e)
+        {
+            PlayerProfileData.getPlayerExp(0);
+
+            FormUpdatePlayerLevel();
+        }
+        // end profile buttons
+        
+        //Skill buttons
         private void Skillbutton_Click(object sender, EventArgs e)
         {
             CheckBox thisbutton = sender as CheckBox;
@@ -625,6 +973,18 @@ namespace TS_SE_Tool
             }
         }
 
+        private void ClearProfilePage()
+        {
+            foreach (CheckBox temp in ADRbuttonArray)
+                temp.Checked = false;
+
+            foreach (CheckBox temp in SkillButtonArray)
+                temp.Checked = false;
+        }
+        //end Skill buttons
+        //end Profile tab
+
+        //User Trucks tab
         private void CreateTruckPanelControls()
         {
             CreateTruckPanelProgressBars();
@@ -894,6 +1254,50 @@ namespace TS_SE_Tool
             buttonF.Click += new EventHandler(buttonTruckReFuel_Click);
         }
 
+        private void FillUserCompanyTrucksList()
+        {
+            DataTable combDT = new DataTable();
+            DataColumn dc = new DataColumn("UserTruckNameless", typeof(string));
+            combDT.Columns.Add(dc);
+
+            dc = new DataColumn("UserTruckName", typeof(string));
+            combDT.Columns.Add(dc);
+
+            foreach (KeyValuePair<string, UserCompanyTruckData> UserTruck in UserTruckDictionary)
+            {
+                string templine = UserTruck.Value.Parts.Find(x => x.PartType == "truckbrandname").PartData.Find(xline => xline.StartsWith(" data_path:"));
+                string truckname = templine.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
+
+                combDT.Rows.Add(UserTruck.Key, truckname); ////.TruckName);
+            }
+            /*
+            foreach (KeyValuePair<string, UserCompanyTruck> UserTruck in UserTruckList)
+            {
+                combDT.Rows.Add(UserTruck.Key, UserTruck.Value.TruckName);
+            }
+            */
+            //combDT.DefaultView.Sort = "UserTruckName ASC";
+            comboBoxCompanyTrucks.ValueMember = "UserTruckNameless";
+            comboBoxCompanyTrucks.DisplayMember = "UserTruckName";
+
+            comboBoxCompanyTrucks.DataSource = combDT;
+
+            //UserTruckList.TryGetValue(comboBoxCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruck SelectedUserCompanyTruck);
+
+            comboBoxCompanyTrucks.SelectedValue = UserCompanyAssignedTruck;
+        }
+
+        private void comboBoxCompanyTrucks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cmbbx = sender as ComboBox;
+
+            if (cmbbx.SelectedIndex != -1)
+            {
+                UpdateTruckPanelProgressBars();
+                //UpdateTruckPanelProgressTitles();
+            }
+        }
+
         public void buttonTruckReFuel_Click(object sender, EventArgs e)
         {
             int i = 0;
@@ -962,7 +1366,7 @@ namespace TS_SE_Tool
 
             UpdateTruckPanelProgressBars();
         }
-        
+        //Share buttons
         private void buttonTruckPaintCopy_Click(object sender, EventArgs e)
         {
             string tempPaint = "TruckPaint\r\n";
@@ -1011,260 +1415,53 @@ namespace TS_SE_Tool
                 MessageBox.Show("Something gone wrong with decoding.");
             }
         }
+        //end Share buttons
+        //end User Trucks tab
 
-        private void checkBoxProfileBackups_CheckedChanged(object sender, EventArgs e)
+        //User Company tab
+        private void FillFormCompanyControls()
         {
-            FillAllProfilesPaths();
+            FillHQcities();
+
+            FillGaragesList();
+            FillVisitedCities();
+
+            textBoxMoneyAccount.Text = PlayerProfileData.AccountMoney.ToString();
+            comboBoxHQcity.SelectedValue = PlayerProfileData.HQcity;
+            textBoxUserCompanyName.Text = PlayerProfileData.CompanyName;
         }
 
-        public void FillAllProfilesPaths()
+        private void FillHQcities()
         {
-            //comboBoxPrevProfiles.Items.Clear();
+            DataTable combDT = new DataTable();
+            DataColumn dc = new DataColumn("City", typeof(string));
+            combDT.Columns.Add(dc);
 
-            string MyDocumentsPath = "";
-            MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame;
+            dc = new DataColumn("CityName", typeof(string));
+            combDT.Columns.Add(dc);
 
-            string RemoteUserdataDirectory = "";
+            //start filling
 
-            try
+            //fill source and destination cities
+            foreach (City tempcity in from x in CitiesList
+                                      where !x.Disabled
+                                      select x)
             {
-                //string SteamInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", null).ToString();
-                //if (SteamInstallPath == null)
-                string SteamInstallPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam", "InstallPath", null).ToString();
-
-                if (SteamInstallPath == null)
-                {
-                    //unknown steam path
-                }
+                CitiesLngDict.TryGetValue(tempcity.CityName, out string value);
+                if (value != null && value != "")
+                    combDT.Rows.Add(tempcity.CityName, value);
                 else
                 {
-
-                    string SteamCloudPath = SteamInstallPath + @"\userdata";
-                    if (!Directory.Exists(SteamCloudPath))
-                    {
-                        //no userdata
-                    }
-                    else
-                    {
-                        string[] userdatadirectories = Directory.GetDirectories(SteamCloudPath);
-
-                        if(userdatadirectories.Length == 0)
-                        {
-                            //no steam user directories
-                        }
-                        else
-                        {
-                            DateTime lastHigh = DateTime.Now;
-
-                            string CurrentUserDir = Directory.GetDirectories(SteamCloudPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray()[0];//null;
-                            /*
-                            foreach (string dir in userdatadirectories)
-                            {
-                                DirectoryInfo di = new DirectoryInfo(dir);
-                                DateTime current = di.LastWriteTime;
-
-                                if (current > lastHigh)
-                                {
-                                    CurrentUserDir = dir;
-                                    lastHigh = current;
-                                }
-                            }
-                            */
-                            string GameID = "";
-                            if (GameType == "ETS")
-                                GameID = @"\227300"; //ETS2
-                            else
-                                GameID = @"\270880"; //ATS
-
-                            if (!Directory.Exists(MyDocumentsPath) && !Directory.Exists(CurrentUserDir + GameID))
-                            {
-                                MessageBox.Show("Standart Game Save folders don't exist");
-                                return;
-                            }
-
-                            //if ()
-                            //{
-                            //    MessageBox.Show("Standart Game Save folder don't exist");
-                            //    return;
-                            //}
-
-                            RemoteUserdataDirectory = CurrentUserDir + GameID + @"\remote";
-                        }
-                    }
-                }
-            }
-            catch
-            {
-
-            }
-
-            if (checkBoxProfileBackups.Checked)
-            {
-                DataTable combDT = new DataTable();
-                DataColumn dc = new DataColumn("ProfileID", typeof(string));
-                combDT.Columns.Add(dc);
-
-                dc = new DataColumn("ProfileName", typeof(string));
-                combDT.Columns.Add(dc);
-
-                List<string> tempList = new List<string>();
-
-                int index = 0;
-                foreach (string folder in Directory.GetDirectories(MyDocumentsPath))
-                {
-                    if (Path.GetFileName(folder).StartsWith("profiles")) //Documents
-                    {
-                        //comboBoxPrevProfiles.Items.Add(Path.GetFileName(folder));
-                        combDT.Rows.Add(index, "[L] " + Path.GetFileName(folder));
-
-                        tempList.Add(folder);
-                        index++;
-                    }
+                    combDT.Rows.Add(tempcity.CityName, tempcity.CityName + " -n");
                 }
 
-                //string RemoteUserdataDirectory Steam Profiles
-                foreach (string folder in Directory.GetDirectories(RemoteUserdataDirectory))
-                {
-                    if (Path.GetFileName(folder).StartsWith("profiles")) //Steam
-                    {
-                        combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
-
-                        tempList.Add(folder);
-                        index++;
-                    }
-                }
-
-                Globals.ProfilesPaths = tempList.ToArray();
-
-                comboBoxPrevProfiles.ValueMember = "ProfileID";
-                comboBoxPrevProfiles.DisplayMember = "ProfileName";
-                comboBoxPrevProfiles.DataSource = combDT;
-
+                //comboBoxSourceCity.Items.Add(tempcity.CityName); //Source
+                //comboBoxDestinationCity.Items.Add(tempcity.CityName); //Destination
             }
-            else
-            {
-                DataTable combDT = new DataTable();
-                DataColumn dc = new DataColumn("ProfileID", typeof(string));
-                combDT.Columns.Add(dc);
 
-                dc = new DataColumn("ProfileName", typeof(string));
-                combDT.Columns.Add(dc);
-
-                int index = 0;
-                List<string> tempList = new List<string>();
-                string folder = MyDocumentsPath + @"\profiles";
-
-                if (Directory.Exists(folder))
-                {
-                    combDT.Rows.Add(index, "[L] profiles");
-
-                    tempList.Add(folder);
-                    index++;
-                    //comboBoxPrevProfiles.Items.Add("[L] profiles");
-                }
-
-                folder = RemoteUserdataDirectory + @"\profiles";
-
-                if (Directory.Exists(folder))
-                {
-                    combDT.Rows.Add(index, "[S] profiles");
-
-                    tempList.Add(folder);
-                    index++;
-                    //comboBoxPrevProfiles.Items.Add("[S] profiles");
-                }
-
-                Globals.ProfilesPaths = tempList.ToArray();
-                comboBoxPrevProfiles.ValueMember = "ProfileID";
-                comboBoxPrevProfiles.DisplayMember = "ProfileName";
-                comboBoxPrevProfiles.DataSource = combDT;
-            }
-                
-
-            if(comboBoxPrevProfiles.Items.Count > 0)
-            {
-                comboBoxPrevProfiles.SelectedIndex = 0;
-                buttonOpenSaveFolder.Enabled = true;
-                buttonDecryptSave.Enabled = true;
-                buttonLoadSave.Enabled = true;
-            }                
-            else
-            {
-                MessageBox.Show("No profiles found");
-
-                buttonOpenSaveFolder.Enabled = false;
-                buttonDecryptSave.Enabled = false;
-                buttonLoadSave.Enabled = false;
-            }
-        }
-
-        public void FillProfiles()
-        {
-            string Profile = "";
-            comboBoxProfiles.Items.Clear();
-            
-            string MyDocumentsPath = "";
-            //MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame + "\\" + comboBoxPrevProfiles.Items[comboBoxPrevProfiles.SelectedIndex];//@"\profiles";
-            MyDocumentsPath = Globals.ProfilesPaths[int.Parse(comboBoxPrevProfiles.SelectedValue.ToString())];
-            /*
-            if (!Directory.Exists(MyDocumentsPath))
-            {
-                MessageBox.Show("Standart Save files don't exist");
-                return;
-            }
-            */
-            Globals.ProfilesHex = Directory.GetDirectories(MyDocumentsPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
-
-            if(Globals.ProfilesHex.Length > 0)
-            {
-                foreach (string profile in Globals.ProfilesHex)
-                {
-                    Profile = FromHexToString(Path.GetFileName(profile));
-                    comboBoxProfiles.Items.Add(Profile);
-                }
-                comboBoxProfiles.SelectedIndex = 0;
-                buttonOpenSaveFolder.Enabled = true;
-                buttonDecryptSave.Enabled = true;
-                buttonLoadSave.Enabled = true;
-            }
-            else
-            {
-                MessageBox.Show("No profiles found");
-
-                buttonOpenSaveFolder.Enabled = false;
-                buttonDecryptSave.Enabled = false;
-                buttonLoadSave.Enabled = false;
-            }
-        }
-
-        public void FillProfileSaves()
-        {
-            comboBoxSaves.Items.Clear();
-
-            string savePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\save";
-
-            Globals.SavesHex = Directory.GetDirectories(savePath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
-
-            if(Globals.SavesHex.Length > 0)
-            {
-                foreach (string profile in Globals.SavesHex)
-                {
-                    comboBoxSaves.Items.Add(Path.GetFileName(profile));
-                }
-
-                comboBoxSaves.SelectedIndex = 0;
-                buttonOpenSaveFolder.Enabled = true;
-                buttonDecryptSave.Enabled = true;
-                buttonLoadSave.Enabled = true;
-            }
-            else
-            {
-                MessageBox.Show("No save file folders found");
-
-                buttonOpenSaveFolder.Enabled = false;
-                buttonDecryptSave.Enabled = false;
-                buttonLoadSave.Enabled = false;
-            }
+            comboBoxHQcity.ValueMember = "City";
+            comboBoxHQcity.DisplayMember = "CityName";
+            comboBoxHQcity.DataSource = combDT;
         }
 
         public void FillVisitedCities()
@@ -1525,7 +1722,9 @@ namespace TS_SE_Tool
 
             FillGaragesList();
         }
-        
+        //end User Company tab
+
+        //Freight market tab
         private int JobsItemMargin = 3;
         private const float JobsPictureHeight = 32, JobsTextHeigh = 23, JobsItemHeight = 64;
 
@@ -1943,39 +2142,6 @@ namespace TS_SE_Tool
                 SetupDestinationCities(!(comboBoxCountries.Text == "All"), !(comboBoxCompanies.SelectedValue.ToString() == "All"));// .Text == "All"));
         }
 
-        private void FillHQcities()
-        {
-            DataTable combDT = new DataTable();
-            DataColumn dc = new DataColumn("City", typeof(string));
-            combDT.Columns.Add(dc);
-
-            dc = new DataColumn("CityName", typeof(string));
-            combDT.Columns.Add(dc);
-
-            //start filling
-
-            //fill source and destination cities
-            foreach (City tempcity in from x in CitiesList
-                                      where !x.Disabled
-                                      select x)
-            {
-                CitiesLngDict.TryGetValue(tempcity.CityName, out string value);
-                if (value != null && value != "")
-                    combDT.Rows.Add(tempcity.CityName, value);
-                else
-                {
-                    combDT.Rows.Add(tempcity.CityName, tempcity.CityName + " -n");
-                }
-
-                //comboBoxSourceCity.Items.Add(tempcity.CityName); //Source
-                //comboBoxDestinationCity.Items.Add(tempcity.CityName); //Destination
-            }
-
-            comboBoxHQcity.ValueMember = "City";
-            comboBoxHQcity.DisplayMember = "CityName";
-            comboBoxHQcity.DataSource = combDT;
-        }
-
         private void SetupDestinationCities(bool _country_selected, bool _company_selected)
         {
             DataTable combDT = new DataTable();
@@ -2157,106 +2323,31 @@ namespace TS_SE_Tool
             }
         }
 
-        private void FillFormProfileControls()
+        private void ClearJobData()
         {
-            FormUpdatePlayerLevel();
+            JobsTotalDistance = 0;
+            JobsAmountAdded = 0;
 
-            char[] ADR = Convert.ToString(PlayerProfileData.PlayerSkills[0], 2).PadLeft(6,'0').ToCharArray();
-            
-            for (int i = 0; i < ADR.Length; i++)
-            {
-                if (ADR[i] == '1')
-                    ADRbuttonArray[i].Checked = true;
-            }
+            Array.Resize(ref JobsListAdded, 0);
+            Array.Resize(ref ListSavefileCompanysString, 0);
+            Array.Resize(ref EconomyEventUnitLinkStringList, 0);
 
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < PlayerProfileData.PlayerSkills[i+1]; j++)
-                {
-                    SkillButtonArray[i, j].Checked = true;
-                }
-            }
+            listBoxAddedJobs.Items.Clear();
+            labelJobsListDistance.Text = "Jobs Distance";
+            buttonClearJobList.Enabled = false;
         }
 
-        private void FormUpdatePlayerLevel()
+        private void checkBoxRandomDest_CheckedChanged(object sender, EventArgs e)
         {
-            int playerlvl = PlayerProfileData.getPlayerLvl()[0];
-            labelPlayerLevelNumber.Text = playerlvl.ToString();
-
-            for (int i = PlayerLevelNames.Count - 1; i >= 0; i--)
-                if (PlayerLevelNames[i].LevelLimit <= playerlvl)
-                {
-                    labelPlayerLevelName.Text = PlayerLevelNames[i].LevelName;
-                    panelPlayerLevel.BackColor = PlayerLevelNames[i].NameColor;
-                    break;
-                }
-
-            textBoxPlayerExperience.Text = PlayerProfileData.ExperiencePoints.ToString();
-            labelExperienceNxtLvlThreshhold.Text = "/   " + PlayerProfileData.getPlayerLvl()[1].ToString();
-
+            ProgSettingsV.ProposeRandom = checkBoxRandomDest.Checked;
         }
 
-        private void FillFormCompanyControls()
-        {
-            FillHQcities();
+        //end Freight market tab
 
-            FillGaragesList();
-            FillVisitedCities();
-
-            textBoxMoneyAccount.Text = PlayerProfileData.AccountMoney.ToString();
-            comboBoxHQcity.SelectedValue = PlayerProfileData.HQcity;
-            textBoxUserCompanyName.Text = PlayerProfileData.CompanyName;
-        }
-
-        private void buttonPlayerLvlPlus01_Click(object sender, EventArgs e)
-        {
-            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
-
-            FormUpdatePlayerLevel();
-        }
-
-        private void buttonPlayerLvlPlus10_Click(object sender, EventArgs e)
-        {
-            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
-
-            FormUpdatePlayerLevel();
-        }
-
-        private void buttonPlayerLvlMax_Click(object sender, EventArgs e)
-        {
-            PlayerProfileData.getPlayerExp(150);
-
-            FormUpdatePlayerLevel();
-        }
-
-        private void buttonPlayerLvlMinus01_Click(object sender, EventArgs e)
-        {
-            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
-
-            FormUpdatePlayerLevel();
-        }
-
-        private void buttonPlayerLvlMinus10_Click(object sender, EventArgs e)
-        {
-            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
-
-            FormUpdatePlayerLevel();
-        }
-
-        private void buttonPlayerLvlMin_Click(object sender, EventArgs e)
-        {
-            PlayerProfileData.getPlayerExp(0);
-
-            FormUpdatePlayerLevel();
-        }
-
+        //Cargo Market tab
         private void FillFormCargoOffersControls()
         {
             FillCargoMarketCities();
-            
-            //textBoxMoneyAccount.Text = PlayerProfileData.AccountMoney.ToString();
-            //comboBoxHQcity.SelectedValue = PlayerProfileData.HQcity;
-            //textBoxUserCompanyName.Text = PlayerProfileData.CompanyName;
         }
 
         private void FillCargoMarketCities()
@@ -2402,16 +2493,47 @@ namespace TS_SE_Tool
                 }
             }
         }
+        //end Cargo Market tab
 
-
+        //Convoy tools tab
         private void buttonGPSCurrentPositionCopy_Click(object sender, EventArgs e)
         {
+            string tempString = "GPS_TruckPosition\r\n";
 
+            tempString += UserCompanyAssignedTruckPlacement;
+            string asd = BitConverter.ToString(zipText(tempString)).Replace("-", "");
+            Clipboard.SetText(asd);
+            MessageBox.Show("Truck GPS position has been copied.");
         }
 
         private void buttonGPSCurrentPositionPaste_Click(object sender, EventArgs e)
         {
+            //UserCompanyAssignedTruckPlacement
+            try
+            {
+                string inputData = unzipText(Clipboard.GetText());
+                string[] Lines = inputData.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
+                if (Lines[0] == "GPS_TruckPosition")
+                {
+                    List<string> tempstr = new List<string>();
+                    for (int i = 1; i < Lines.Length; i++)
+                    {
+                        tempstr.Add(Lines[i]);
+                    }
+
+                    UserCompanyAssignedTruckPlacement = tempstr[0];
+
+                    MessageBox.Show("Truck GPS position has been inserted.");
+                    UserCompanyAssignedTruckPlacementEdited = true;
+                }
+                else
+                    MessageBox.Show("Wrong data. Expected Truck GPS data but\r\n" + Lines[0] + "\r\nwas found.");
+            }
+            catch
+            {
+                MessageBox.Show("Something gone wrong with decoding.");
+            }
         }
 
         private void buttonGPSStoredGPSPathCopy_Click(object sender, EventArgs e)
@@ -2423,8 +2545,9 @@ namespace TS_SE_Tool
         {
 
         }
+        //end Convoy Tools tab
 
-
+        //Form methods
         private void ToggleVisibility(bool visible)
         {
             foreach (TabPage tp in tabControlMain.TabPages)
@@ -2544,115 +2667,25 @@ namespace TS_SE_Tool
             }
         }
 
-        private void ClearJobData()
+        private void CreateProgressBarBitmap()
         {
-            JobsTotalDistance = 0;
-            JobsAmountAdded = 0;
+            ProgressBarGradient = new Bitmap(100, 1);
 
-            Array.Resize(ref JobsListAdded, 0);
-            Array.Resize(ref ListSavefileCompanysString, 0);
-            Array.Resize(ref EconomyEventUnitLinkStringList, 0);
+            LinearGradientBrush br = new LinearGradientBrush(new RectangleF(0, 0, 100, 1), Color.Black, Color.Black, 0, false);
+            ColorBlend cb = new ColorBlend();
+            cb.Positions = new[] { 0.0f, 0.5f, 1f };
+            cb.Colors = new[] { Color.FromArgb(255, 255, 0, 0), Color.FromArgb(255, 255, 255, 0), Color.FromArgb(255, 0, 255, 0), };
+            br.InterpolationColors = cb;
 
-            listBoxAddedJobs.Items.Clear();
-            labelJobsListDistance.Text = "Jobs Distance";
-            buttonClearJobList.Enabled = false;
+            //puts the gradient scale onto a bitmap which allows for getting a color from pixel
+            Graphics g = Graphics.FromImage(ProgressBarGradient);
+            g.FillRectangle(br, new RectangleF(0, 0, ProgressBarGradient.Width, ProgressBarGradient.Height));
         }
 
-        private void CreateUserColorsButtons()
+        private Color GetProgressbarColor(decimal value)
         {
-            int padding = 6, width = 40, colorcount = 8;
-            //UserColorsList.Count
-
-            for (int i = 0; i < colorcount; i++)
-            {
-                Button rb = new Button();
-                rb.Name = "buttonUC" + i.ToString();
-                rb.Text = null;
-                rb.Location = new Point(15, 32 + (padding + width) * (i));
-                rb.Size = new Size(width, width);
-                rb.FlatStyle = FlatStyle.Flat;
-                rb.Enabled = false;
-
-                rb.Click += new EventHandler(SelectColor);
-
-                groupBoxUserColors.Controls.Add(rb);                
-            }
+            return ProgressBarGradient.GetPixel(Convert.ToInt32((1 - value) * 100) - 1, 0);
         }
-
-        private void buttonProfileShareColors_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void UpdateUserColorsButtons()
-        {
-            int padding = 6, width = 23;//, colorcount = 8;
-
-            for (int i = 0; i < UserColorsList.Count; i++)
-            {
-                Button btn = null;
-                string btnname = "buttonUC" + i.ToString();
-
-                if (groupBoxUserColors.Controls.ContainsKey(btnname))
-                {
-                    btn = groupBoxUserColors.Controls[btnname] as Button;
-                }
-                else
-                {
-                    //Button rb = new Button();
-                    btn.Name = "buttonUC" + i.ToString();
-                    btn.Text = null;
-                    btn.Location = new Point(6 + (padding + width) * (i), 19);
-                    btn.Size = new Size(width, 23);
-                    btn.FlatStyle = FlatStyle.Flat;
-                    //rb.BackColor = UserColorsList[i];
-                    btn.Enabled = false;
-                    //if (UserColorsList[i].A == 0)
-                    //    rb.Text = "X";
-
-                    btn.Click += new EventHandler(SelectColor);
-
-                    groupBoxUserColors.Controls.Add(btn);
-                }
-
-                if (btn != null)
-                {
-                    btn.BackColor = UserColorsList[i];
-                    btn.Enabled = true;
-                    if (UserColorsList[i].A == 0)
-                        btn.Text = "X";
-                }
-            }
-        }
-
-        private void SelectColor(object sender, EventArgs e)
-        {
-            Button obj = sender as Button;
-
-            OpenPainter.ColorPicker.frmColorPicker frm = new OpenPainter.ColorPicker.frmColorPicker(obj.BackColor);
-
-            frm.Font = SystemFonts.DialogFont;
-
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                obj.BackColor = frm.PrimaryColor;
-
-                int index = int.Parse( obj.Name.Substring(8, 1));
-
-                UserColorsList[index] = frm.PrimaryColor;
-
-                if (frm.PrimaryColor.A != 0)
-                    obj.Text = "";
-                else
-                    obj.Text = "X";
-
-            }
-        }
-
-        private void checkBoxRandomDest_CheckedChanged(object sender, EventArgs e)
-        {
-            ProgSettingsV.ProposeRandom = checkBoxRandomDest.Checked;
-        }
-
+        //end Form methods
     }
 }

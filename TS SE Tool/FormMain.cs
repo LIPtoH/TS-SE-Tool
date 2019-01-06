@@ -60,6 +60,7 @@ namespace TS_SE_Tool
         private string UserCompanyAssignedTruck;
         private string UserCompanyAssignedTrailer;
         private string UserCompanyAssignedTruckPlacement;
+        private bool UserCompanyAssignedTruckPlacementEdited;
 
         private string ProfileETS2;
         private string ProfileATS;
@@ -125,6 +126,8 @@ namespace TS_SE_Tool
         //private Dictionary<string, UserCompanyTruck> UserTruckList;
         private Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
         private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary;
+
+        private List<string> namelessList;
 
         private Dictionary<string, List<string>> GPSbehind, GPSahead;
 

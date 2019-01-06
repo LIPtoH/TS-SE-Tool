@@ -62,6 +62,20 @@ namespace TS_SE_Tool
                     string destinationcity;
                     string destinationcompany;
 
+
+                    if (tempSavefileInMemory[line].Contains("_nameless"))
+                    {
+                        string asd = tempSavefileInMemory[line].Substring(tempSavefileInMemory[line].IndexOf("_nameless"));
+                        int dsa = asd.IndexOf(" ");
+                        string nameless;
+                        if (dsa == -1)
+                            nameless = asd.Substring(10);
+                        else
+                            nameless = asd.Substring(10, dsa - 10);
+                        namelessList.Add(nameless);
+                        //EconomySection = true;
+                    }
+
                     if (tempSavefileInMemory[line].StartsWith("economy : _nameless"))
                     {
                         EconomySection = true;
@@ -345,8 +359,8 @@ namespace TS_SE_Tool
 
                         if (tempSavefileInMemory[line].StartsWith(" truck_placement:"))
                         {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            UserCompanyAssignedTruckPlacement = chunkOfline[1];
+                            //chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
+                            UserCompanyAssignedTruckPlacement = tempSavefileInMemory[line];//chunkOfline[1];
                             continue;
                         }
 
@@ -500,6 +514,7 @@ namespace TS_SE_Tool
                     }
 
                     //find vehicles Trailer
+                    /*
                     TrailerSearchStart:
                     if (tempSavefileInMemory[line].StartsWith("trailer :"))
                     {
@@ -567,7 +582,7 @@ namespace TS_SE_Tool
                                         accessoriespool[i] = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
                                         line++;
                                     }
-                                    */
+                                    /////
                                 }
                                 line++;
                             }
@@ -646,6 +661,7 @@ namespace TS_SE_Tool
                         }
                         continue;
                     }
+                    */
 
                     //find existing jobs
                     if (tempSavefileInMemory[line].StartsWith("company : company.volatile."))
@@ -977,12 +993,14 @@ namespace TS_SE_Tool
                 catch (Exception ex)
                 {
                     ShowStatusMessages("i", "error_exception");
-                    MessageBox.Show(ex.Message, "Exception. " + line.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Exception.\r\n" + line.ToString() + " | " + tempSavefileInMemory[line], MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
             //end scan
 
+            namelessList.Sort();
+            namelessList = namelessList.Distinct().ToList();
             //Exclude company from city if no jobs assigned by game
             foreach (City city in CitiesList)
             {

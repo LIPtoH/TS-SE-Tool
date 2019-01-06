@@ -313,6 +313,23 @@ namespace TS_SE_Tool
             return tempImgarray;
         }
 
+        private Bitmap ImageFromDDS(string _path)
+        {
+            Bitmap bitmap = null;
+
+            if (File.Exists(_path))
+            {
+                FileStream fsimage = new FileStream(_path, FileMode.Open);
+
+                S16.Drawing.DDSImage asd = new S16.Drawing.DDSImage(fsimage);
+
+                bitmap = asd.BitmapImage;
+
+                return bitmap;
+            }
+            else
+                return bitmap;
+        }
         private void SaveCompaniesLng()
         {
             CompaniesList = CompaniesList.Distinct().OrderBy(x => x).ToList();
@@ -919,6 +936,33 @@ namespace TS_SE_Tool
                             if (SaveInMemLine.StartsWith(" hq_city:"))
                             {
                                 writer.WriteLine(" hq_city: " + PlayerProfileData.HQcity);
+                                continue;
+                            }
+                            
+                            if (SaveInMemLine.StartsWith(" assigned_truck:"))
+                            {
+                                writer.WriteLine(" assigned_truck: " + UserCompanyAssignedTruck);
+                                line++;
+                                writer.WriteLine(" my_truck: " + UserCompanyAssignedTruck);
+                                //Garage driver switch
+                                continue;
+                            }
+                            if (SaveInMemLine.StartsWith(" truck_placement:") && UserCompanyAssignedTruckPlacementEdited)
+                            {
+                                writer.WriteLine(" truck_placement: " + UserCompanyAssignedTruckPlacement);
+                                line++;
+                                writer.WriteLine(" trailer_placement: (0, 0, 0) (1; 0, 0, 0)");
+                                line++;
+                                int slave_trailers = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
+                                writer.WriteLine(tempSavefileInMemory[line]);
+                                if (slave_trailers > 0)
+                                    {
+                                        for (int i = 0; i < slave_trailers; i++)
+                                        {
+                                            writer.WriteLine(" slave_trailer_placements[" + i + "]: (0, 0, 0) (1; 0, 0, 0)");
+                                            line++;
+                                        }
+                                    }
                                 continue;
                             }
                         }
