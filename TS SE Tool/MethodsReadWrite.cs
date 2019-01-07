@@ -754,6 +754,7 @@ namespace TS_SE_Tool
 
         private void WriteSaveFile()
         {
+            string[] chunkOfline;
             string SiiSavePath = SavefilePath + @"\game.sii";
 
             ShowStatusMessages("i", "message_saving_file");
@@ -944,9 +945,10 @@ namespace TS_SE_Tool
                                 writer.WriteLine(" assigned_truck: " + UserCompanyAssignedTruck);
                                 line++;
                                 writer.WriteLine(" my_truck: " + UserCompanyAssignedTruck);
-                                //Garage driver switch
+                                //Garage driver switch needed
                                 continue;
                             }
+
                             if (SaveInMemLine.StartsWith(" truck_placement:") && UserCompanyAssignedTruckPlacementEdited)
                             {
                                 writer.WriteLine(" truck_placement: " + UserCompanyAssignedTruckPlacement);
@@ -965,6 +967,62 @@ namespace TS_SE_Tool
                                     }
                                 continue;
                             }
+                        }
+
+                        //Garages
+                        if (SaveInMemLine.StartsWith("garage : garage."))
+                        {
+                            chunkOfline = SaveInMemLine.Split(new char[] { '.', '{' });
+                            Garages tempGarage = GaragesList.Find(x => x.GarageName == chunkOfline[1].TrimEnd(new char[] { ' ' }));
+
+                            int capacity = 0;
+
+                            if (tempGarage.GarageStatus == 0)
+                            {
+                            }   
+                            else if (tempGarage.GarageStatus == 2)
+                            {
+                                capacity = 3;
+                            }
+                            else if (tempGarage.GarageStatus == 3)
+                            {
+                                capacity = 5;
+                            }
+                            else if (tempGarage.GarageStatus == 6)
+                            {
+                                capacity = 1;
+                            }
+                            writer.WriteLine(SaveInMemLine);
+                            writer.WriteLine(" vehicles: " + capacity);
+                            //tempGarage.Vehicles
+                            for (int i = 0; i < capacity; i++)
+                            {
+                                writer.WriteLine(" vehicles[" + i + "]: " + tempGarage.Vehicles[i]);
+                            }
+                            writer.WriteLine(" drivers: " + capacity);
+                            //tempGarage.Drivers
+                            for (int i = 0; i < capacity; i++)
+                            {
+                                writer.WriteLine(" drivers[" + i + "]: " + tempGarage.Drivers[i]);
+                            }
+                            writer.WriteLine(" trailers: " + tempGarage.Trailers.Count);
+
+                            int index = 0;
+                            foreach (string temp in tempGarage.Trailers)
+                            {
+                                writer.WriteLine(" trailers[" + index + "]: " + temp);
+                                index++;
+                            }
+                            writer.WriteLine(" status: " + tempGarage.GarageStatus);
+
+                            while (true)
+                            {
+                                if (tempSavefileInMemory[line].StartsWith(" profit_log:"))
+                                    break;
+                                line++;
+                            }
+                            SaveInMemLine = tempSavefileInMemory[line];
+                            continue;
                         }
 
                         //fill queue

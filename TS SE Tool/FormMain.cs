@@ -128,6 +128,7 @@ namespace TS_SE_Tool
         private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary;
 
         private List<string> namelessList;
+        private string namelessLast;
 
         private Dictionary<string, List<string>> GPSbehind, GPSahead;
 

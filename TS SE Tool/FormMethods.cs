@@ -243,6 +243,7 @@ namespace TS_SE_Tool
             GPSbehind = new Dictionary<string, List<string>>();
             GPSahead = new Dictionary<string, List<string>>();
             namelessList = new List<string>();
+            namelessLast = "";
             //game = "ETS";
             JobsTotalDistance = 0;
             LoopStartCity = "";
@@ -270,6 +271,8 @@ namespace TS_SE_Tool
             {
                 tabControlMain.TabPages[i].ImageIndex = i;
             }
+
+            string temptest = GetSpareNameless();
 
             FillFormProfileControls();
             UpdateUserColorsButtons();
@@ -516,7 +519,7 @@ namespace TS_SE_Tool
 
         public void FillProfileSaves()
         {
-            comboBoxSaves.Items.Clear();
+            //comboBoxSaves.Items.Clear();
 
             string savePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\save";
 
@@ -524,10 +527,50 @@ namespace TS_SE_Tool
 
             if (Globals.SavesHex.Length > 0)
             {
+                DataTable combDT = new DataTable();
+                DataColumn dc = new DataColumn("savePath", typeof(string));
+                combDT.Columns.Add(dc);
+
+                dc = new DataColumn("saveName", typeof(string));
+                combDT.Columns.Add(dc);
+
+                bool NotANumber = false;
+
                 foreach (string profile in Globals.SavesHex)
                 {
-                    comboBoxSaves.Items.Add(Path.GetFileName(profile));
+                    string[] fold = profile.Split(new string[] { "\\" }, StringSplitOptions.None);
+
+                    foreach (char c in fold[fold.Length - 1])
+                    {
+                        if (c < '0' || c > '9')
+                        {
+                            NotANumber = true;
+                            break;
+                        }
+                    }
+
+                    if (NotANumber)
+                    {
+                        string[] namearr = fold[fold.Length - 1].Split(new char[] { '_' });
+                        string ProfileName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(namearr[0]);
+
+                        for (int i = 1; i < namearr.Length; i++)
+                        {
+                            ProfileName += " " + namearr[i];
+                        }
+
+                        combDT.Rows.Add(profile, ProfileName);
+                    }
+                    else
+                        combDT.Rows.Add(profile, GetCustomSaveFilename(profile));
+
+                    NotANumber = false;
                 }
+
+                comboBoxSaves.ValueMember = "savePath";
+                comboBoxSaves.DisplayMember = "saveName";
+
+                comboBoxSaves.DataSource = combDT;
 
                 comboBoxSaves.SelectedIndex = 0;
                 buttonOpenSaveFolder.Enabled = true;
@@ -2685,6 +2728,51 @@ namespace TS_SE_Tool
         private Color GetProgressbarColor(decimal value)
         {
             return ProgressBarGradient.GetPixel(Convert.ToInt32((1 - value) * 100) - 1, 0);
+        }
+
+        private string GetSpareNameless()
+        {
+            if (namelessLast == "")
+                namelessLast = namelessList.Last(); //nameless = namelessList.Last();
+
+            string[] namelessNumbers = namelessLast.Split(new char[] { '.' });
+
+            int firstNum = UInt16.Parse(namelessNumbers[0], NumberStyles.HexNumber);
+            int secondNum = UInt16.Parse(namelessNumbers[1], NumberStyles.HexNumber);
+            int thirdNum = UInt16.Parse(namelessNumbers[2], NumberStyles.HexNumber);
+
+            try
+            {
+                thirdNum = checked(thirdNum + 16);
+            }
+            catch (OverflowException)
+            {
+                thirdNum = 16;
+                try
+                {
+                    secondNum++;
+                }
+                catch (OverflowException)
+                {
+                    secondNum = 1;
+                    try
+                    {
+                        firstNum++;
+                    }
+                    catch (OverflowException)
+                    {
+                        firstNum = 1;
+                    }
+                }
+            }
+
+            namelessNumbers[0] = firstNum.ToString("x");
+            namelessNumbers[1] = secondNum.ToString("x");
+            namelessNumbers[2] = thirdNum.ToString("x");
+            namelessLast = namelessNumbers[0] + "." + namelessNumbers[1] + "." + namelessNumbers[2];
+
+            //namelessLast
+            return namelessLast;
         }
         //end Form methods
     }

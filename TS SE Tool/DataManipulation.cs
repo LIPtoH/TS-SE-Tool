@@ -98,21 +98,25 @@ namespace TS_SE_Tool
                     //Find garages status
                     if (tempSavefileInMemory[line].StartsWith("garage : garage."))
                     {
-                        bool garageinfoended = false;
+                        //bool garageinfoended = false;
 
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { '.', '{' });
                         Garages tempGarage = GaragesList.Find(x => x.GarageName == chunkOfline[1].TrimEnd(new char[] { ' ' }));
 
-                        int tempoffset = 1;
+                        line++;
 
-                        while (!garageinfoended)
+                        while (true)//(!garageinfoended)
                         {
-                            if (tempSavefileInMemory[line + tempoffset].StartsWith(" status:"))
-                                tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line + tempoffset].Split(new char[] { ':' })[1]);
-                            else if (tempSavefileInMemory[line + tempoffset].StartsWith("}"))
-                                garageinfoended = true;
+                            if (tempSavefileInMemory[line].StartsWith(" vehicles["))
+                                tempGarage.Vehicles.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
+                            else if (tempSavefileInMemory[line].StartsWith(" drivers["))
+                                tempGarage.Drivers.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
+                            else if (tempSavefileInMemory[line].StartsWith(" status:"))
+                                tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
+                            else if (tempSavefileInMemory[line].StartsWith("}"))
+                                break;//garageinfoended = true;
 
-                            tempoffset++;
+                            line++;
                         }
 
                         continue;
@@ -1205,12 +1209,82 @@ namespace TS_SE_Tool
                 {
                     chunkOfline = tempInfoFileInMemory[line].Split(new char[] { ' ' });
                     SavefileVersion = int.Parse(chunkOfline[2]);
-                    break; //searching only version
+                    continue; //searching only version
+                }
+
+                if (tempInfoFileInMemory[line].StartsWith(" dependencies["))
+                {
+                    chunkOfline = tempInfoFileInMemory[line].Split(new char[] { '"' });
+                    //SavefileDependencies.Add(chunkOfline[1]);
+                    continue;
                 }
             }
 
             if (SavefileVersion == 0)
                 ShowStatusMessages("e", "error_save_version_not_detected");
+        }
+
+        private string GetCustomSaveFilename(string _tempSaveFilePath)
+        {
+            string chunkOfline;
+
+            string tempSiiInfoPath = _tempSaveFilePath + @"\info.sii";
+            string[] tempFile = null;
+            //////
+            if (!File.Exists(tempSiiInfoPath))
+            {
+                LogWriter("File does not exist in " + tempSiiInfoPath);
+                ShowStatusMessages("e", "error_could_not_find_file");
+            }
+            else
+            {
+                FileDecoded = false;
+                try
+                {
+                    int decodeAttempt = 0;
+                    while (decodeAttempt < 5)
+                    {
+                        tempFile = DecodeFile(tempSiiInfoPath);
+
+                        if (FileDecoded)
+                        {
+                            break;
+                        }
+
+                        decodeAttempt++;
+                    }
+
+                    if (decodeAttempt == 5)
+                    {
+                        ShowStatusMessages("e", "error_could_not_decode_file");
+                        LogWriter("Could not decrypt after 5 attempts");
+                    }
+                }
+                catch
+                {
+                    LogWriter("Could not read: " + tempSiiInfoPath);
+                }
+
+                if ((tempFile == null) || (tempFile[0] != "SiiNunit"))
+                {
+                    LogWriter("Wrongly decoded Info file or wrong file format");
+                    ShowStatusMessages("e", "error_file_not_decoded");
+                }
+                else if (tempFile != null)
+                {
+                    for (int line = 0; line < tempFile.Length; line++)
+                    {
+                        if (tempFile[line].StartsWith(" name:"))
+                        {
+                            chunkOfline = tempFile[line];
+                            //SavefileVersion = int.Parse(chunkOfline[2]);
+                            return chunkOfline.Substring(7);
+                        }
+                    }
+                }
+            }
+            //////
+            return "<!>Error<!>";
         }
 
         private void CheckProfileInfoData()

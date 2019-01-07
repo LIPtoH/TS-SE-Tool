@@ -33,6 +33,12 @@ namespace TS_SE_Tool
 
         public int GarageStatus { get; set; }
 
+        public List<string> Vehicles { get; set; } = new List<string>();
+
+        public List<string> Drivers { get; set; } = new List<string>();
+
+        public List<string> Trailers { get; set; } = new List<string>();
+
         public bool IgnoreStatus { get; set; } = true;
 
         public override string ToString() {
