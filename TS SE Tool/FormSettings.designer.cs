@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBoxSettingDistanceMesSelect = new System.Windows.Forms.ComboBox();
             this.comboBoxSettingCurrencySelect = new System.Windows.Forms.ComboBox();
@@ -68,7 +67,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.label6);
             this.splitContainer1.Panel1.Controls.Add(this.label5);
             this.splitContainer1.Panel1.Controls.Add(this.comboBoxSettingDistanceMesSelect);
             this.splitContainer1.Panel1.Controls.Add(this.comboBoxSettingCurrencySelect);
@@ -91,15 +89,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(264, 241);
             this.splitContainer1.SplitterDistance = 187;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(165, 14);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(13, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "=";
             // 
             // label5
             // 
@@ -157,7 +146,7 @@
             // labelHour
             // 
             this.labelHour.AutoSize = true;
-            this.labelHour.Location = new System.Drawing.Point(231, 14);
+            this.labelHour.Location = new System.Drawing.Point(218, 14);
             this.labelHour.Name = "labelHour";
             this.labelHour.Size = new System.Drawing.Size(13, 13);
             this.labelHour.TabIndex = 5;
@@ -241,7 +230,7 @@
             // 
             // numericUpDownSettingPickTimeH
             // 
-            this.numericUpDownSettingPickTimeH.Location = new System.Drawing.Point(185, 12);
+            this.numericUpDownSettingPickTimeH.Location = new System.Drawing.Point(172, 12);
             this.numericUpDownSettingPickTimeH.Maximum = new decimal(new int[] {
             24,
             0,
@@ -338,6 +327,5 @@
         private System.Windows.Forms.Label labelDay;
         private System.Windows.Forms.Label labelHour;
         private System.Windows.Forms.NumericUpDown numericUpDownSettingPickTimeD;
-        private System.Windows.Forms.Label label6;
     }
 }

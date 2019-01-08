@@ -28,7 +28,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Deployment.Application;
-using ICSharpCode.SharpZipLib.GZip;
 
 
 namespace TS_SE_Tool
@@ -104,7 +103,7 @@ namespace TS_SE_Tool
 
         private List<ExtCompany> ExternalCompanies;
 
-        private List<Color> UserColorsList;
+        internal List<Color> UserColorsList;
 
         private SqlCeConnection DBconnection;
 
@@ -173,69 +172,27 @@ namespace TS_SE_Tool
             CreateTruckPanelControls();
             CreateProgressBarBitmap();
 
+            tabControlMain.ImageList = TabpagesImages;
+
+            for (int i = 0; i < TabpagesImages.Images.Count; i++)
+            {
+                tabControlMain.TabPages[i].ImageIndex = i;
+            }
+
             listBoxAddedJobs.DrawMode = DrawMode.OwnerDrawVariable;
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
             FillAllProfilesPaths();
-            FillProfiles();
-        }
-
-        private void comboBoxProfiles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            FillProfileSaves();
-
-            try
-            {
-                string AvatarPath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\avatar.png";
-
-                Bitmap Source = new Bitmap(AvatarPath);
-                Rectangle SourceRect = new Rectangle(0, 0, 95, 95);
-                Bitmap Cropped = Source.Clone(SourceRect, Source.PixelFormat);
-
-                pictureBoxProfileAvatar.Image = Cropped;
-            }
-            catch
-            {
-                string[] imgpaths = new string[] { @"img\unknown.dds" };
-                pictureBoxProfileAvatar.Image = ExtImgLoader(imgpaths, 95, 95, 0, 0)[0];// new Bitmap(95, 95);
-            }
-
-            //DateTime CreationDate = (new DateTime(1970, 1, 1, 0, 0, 0, 0)).AddSeconds(CreationTime); //trucking since
+            //FillProfiles();
         }
 
         private void buttonRefreshAll_Click(object sender, EventArgs e)
         {
             FillAllProfilesPaths();
-            FillProfiles();
-            FillProfileSaves();
-        }
-
-        private void buttonDecryptSave_Click(object sender, EventArgs e)
-        {
-            //SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
-            SetDefaultValues(false);
-
-            buttonDecryptSave.Enabled = false;
-            buttonLoadSave.Enabled = false;
-            buttonGameETS.Enabled = false;
-            buttonGameATS.Enabled = false;
-
-            SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
-            string SiiSavePath = SavefilePath + @"\game.sii";
-            DecodeFile(SiiSavePath);
-            //LoadSaveFile(); //Load save file
-
-            //GC
-            GC.Collect();
-            //GC.WaitForPendingFinalizers();
-            //WriteSaveFile();
-        }
-
-        private void buttonOpenSaveFolder_Click(object sender, EventArgs e)
-        {
-            Process.Start(Globals.SavesHex[comboBoxSaves.SelectedIndex]);
+            //FillProfiles();
+            //FillProfileSaves();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -243,164 +200,15 @@ namespace TS_SE_Tool
 
         }
 
-        private void buttonGameCustomPath_Click(object sender, EventArgs e)
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void AddCustomFolder_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.Filter = "Save files (game.sii)|game.sii";
-            openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            DialogResult result = openFileDialog1.ShowDialog();
-
-            comboBoxProfiles.Items.Add("Custom");
-
-            string DirectoryPath = Path.GetDirectoryName(openFileDialog1.FileName);
-
-            string DirectoryName = openFileDialog1.FileName.Substring((DirectoryPath.LastIndexOf('\\') + 1), (DirectoryPath.Length - (DirectoryPath.LastIndexOf('\\')) - 1));
-
-            comboBoxSaves.Items.Add(DirectoryName);
-
-            Globals.SavesHex[0] = DirectoryName;
-        }
-
-        private void buttonClearJobList_Click(object sender, EventArgs e)
-        {
-            ClearJobData();
-        }
-
-        private void buttonAddJob_Click(object sender, EventArgs e)
-        {
-            AddCargo();
+            FormSettings FormWindow = new FormSettings();
+            FormWindow.ShowDialog();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void makeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ExportFormControlstoLanguageFile();
-        }
-
-        private byte[] zipText(string text)
-        {
-            if (text == null)
-                return null;
-
-            using (Stream memOutput = new MemoryStream())
-            {
-                using (GZipOutputStream zipOut = new GZipOutputStream(memOutput))
-                {
-                    using (StreamWriter writer = new StreamWriter(zipOut))
-                    {
-                        writer.Write(text);
-
-                        writer.Flush();
-                        zipOut.Finish();
-
-                        byte[] bytes = new byte[memOutput.Length];
-                        memOutput.Seek(0, SeekOrigin.Begin);
-                        memOutput.Read(bytes, 0, bytes.Length);
-
-                        return bytes;
-                    }
-                }
-            }
-        }
-
-        private string unzipText(string _sbytes)
-        {
-            string[] pairs = new string[_sbytes.Length / 2];
-            byte[] bytes;// = new byte[0];
-
-            for (int i = 0; i < _sbytes.Length / 2; i++)
-            {
-                pairs[i] = _sbytes.Substring(i * 2, 2);
-            }
-
-            bytes = new byte[pairs.Length];
-
-            for (int j = 0; j < pairs.Length; j++)
-                bytes[j] = Convert.ToByte(pairs[j], 16);
-
-            if (bytes == null)
-                return null;
-
-            using (Stream memInput = new MemoryStream(bytes))
-            using (GZipInputStream zipInput = new GZipInputStream(memInput))
-            using (StreamReader reader = new StreamReader(zipInput))
-            {
-                string text = reader.ReadToEnd();
-
-                return text;
-            }
-        }
-
-        private void comboBoxPrevProfiles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            FillProfiles();
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AboutBox aboutWindow = new AboutBox();
-            aboutWindow.ShowDialog();
-        }
-
-        private void comboBoxHQcity_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            if (comboBoxHQcity.SelectedValue != null)
-                PlayerProfileData.HQcity = comboBoxHQcity.SelectedValue.ToString();
-        }
-
-        private void buttonUserTruckSelectCurrent_Click(object sender, EventArgs e)
-        {
-            comboBoxCompanyTrucks.SelectedValue = UserCompanyAssignedTruck;
-        }
-
-        private void buttonUserTruckSwitchCurrent_Click(object sender, EventArgs e)
-        {
-            UserCompanyAssignedTruck = comboBoxCompanyTrucks.SelectedValue.ToString();
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxMoneyAccount_TextChanged(object sender, EventArgs e)
-        {
-            TextBox txtcur = sender as TextBox;
-
-            if (!string.IsNullOrEmpty(txtcur.Text))
-            {
-                UInt64 valueBefore = UInt64.Parse(txtcur.Text, NumberStyles.AllowThousands);
-                txtcur.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
-                txtcur.Select(txtcur.Text.Length, 0);
-
-                PlayerProfileData.AccountMoney = UInt32.Parse(txtcur.Text, NumberStyles.AllowThousands);
-            }
-        }
-
-        private void textBoxMoneyAccount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            TextBox txtcur = sender as TextBox;
-            UInt64 valueBefore = 0;
-
-            if (!string.IsNullOrEmpty(txtcur.Text))
-            {
-                valueBefore = UInt64.Parse(txtcur.Text, NumberStyles.AllowThousands);
-            }
-
-            if (!Char.IsDigit(e.KeyChar) && !(valueBefore <= 999999999))
-            {
-                txtcur.Text = valueBefore.ToString();
-                e.Handled = true;
-            }
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -423,10 +231,15 @@ namespace TS_SE_Tool
             }
         }
 
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void makeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormSettings FormWindow = new FormSettings();
-            FormWindow.ShowDialog();
+            ExportFormControlstoLanguageFile();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox aboutWindow = new AboutBox();
+            aboutWindow.ShowDialog();
         }
     }
 

@@ -33,6 +33,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Resources;
 using System.Windows;
+using ICSharpCode.SharpZipLib.GZip;
 using Microsoft.Win32;
 using TS_SE_Tool.CustomClasses;
 
@@ -265,13 +266,6 @@ namespace TS_SE_Tool
             string t1 = "Trucking since:\n\r" + DateTimeOffset.FromUnixTimeSeconds(PlayerProfileData.CreationTime).DateTime.ToLocalTime().ToString();
             toolTipMain.SetToolTip(pictureBoxProfileAvatar, t1);
 
-            tabControlMain.ImageList = TabpagesImages;
-
-            for (int i = 0; i < TabpagesImages.Images.Count; i++)
-            {
-                tabControlMain.TabPages[i].ImageIndex = i;
-            }
-
             string temptest = GetSpareNameless();
 
             FillFormProfileControls();
@@ -290,6 +284,52 @@ namespace TS_SE_Tool
 
         //Main part controls
 
+        private void buttonOpenSaveFolder_Click(object sender, EventArgs e)
+        {
+            Process.Start(Globals.SavesHex[comboBoxSaves.SelectedIndex]);
+        }
+
+        private void buttonGameCustomPath_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddCustomFolder_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "Save files (game.sii)|game.sii";
+            openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            DialogResult result = openFileDialog1.ShowDialog();
+
+            comboBoxProfiles.Items.Add("Custom");
+
+            string DirectoryPath = Path.GetDirectoryName(openFileDialog1.FileName);
+
+            string DirectoryName = openFileDialog1.FileName.Substring((DirectoryPath.LastIndexOf('\\') + 1), (DirectoryPath.Length - (DirectoryPath.LastIndexOf('\\')) - 1));
+
+            comboBoxSaves.Items.Add(DirectoryName);
+
+            Globals.SavesHex[0] = DirectoryName;
+        }
+
+        private void buttonDecryptSave_Click(object sender, EventArgs e)
+        {
+            //SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
+            SetDefaultValues(false);
+
+            buttonDecryptSave.Enabled = false;
+            buttonLoadSave.Enabled = false;
+            buttonGameETS.Enabled = false;
+            buttonGameATS.Enabled = false;
+
+            SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
+            string SiiSavePath = SavefilePath + @"\game.sii";
+            DecodeFile(SiiSavePath);
+
+            //GC
+            GC.Collect();
+            //GC.WaitForPendingFinalizers();
+        }
 
         //Profile and Saves groupbox
         private void checkBoxProfileBackups_CheckedChanged(object sender, EventArgs e)
@@ -478,6 +518,11 @@ namespace TS_SE_Tool
             }
         }
 
+        private void comboBoxPrevProfiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillProfiles();
+        }
+
         public void FillProfiles()
         {
             string Profile = "";
@@ -515,6 +560,29 @@ namespace TS_SE_Tool
                 buttonDecryptSave.Enabled = false;
                 buttonLoadSave.Enabled = false;
             }
+        }
+
+        private void comboBoxProfiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillProfileSaves();
+
+            try
+            {
+                string AvatarPath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\avatar.png";
+
+                Bitmap Source = new Bitmap(AvatarPath);
+                Rectangle SourceRect = new Rectangle(0, 0, 95, 95);
+                Bitmap Cropped = Source.Clone(SourceRect, Source.PixelFormat);
+
+                pictureBoxProfileAvatar.Image = Cropped;
+            }
+            catch
+            {
+                string[] imgpaths = new string[] { @"img\unknown.dds" };
+                pictureBoxProfileAvatar.Image = ExtImgLoader(imgpaths, 95, 95, 0, 0)[0];// new Bitmap(95, 95);
+            }
+
+            //DateTime CreationDate = (new DateTime(1970, 1, 1, 0, 0, 0, 0)).AddSeconds(CreationTime); //trucking since
         }
 
         public void FillProfileSaves()
@@ -586,6 +654,7 @@ namespace TS_SE_Tool
                 buttonLoadSave.Enabled = false;
             }
         }
+
         //end Profile and Saves groupbox
         //end Main part controls
 
@@ -746,7 +815,9 @@ namespace TS_SE_Tool
 
         private void buttonProfileShareColors_Click(object sender, EventArgs e)
         {
-
+            FormShareUserColors FormWindow = new FormShareUserColors();
+            FormWindow.ShowDialog();
+            UpdateUserColorsButtons();
         }
 
         private void UpdateUserColorsButtons()
@@ -790,7 +861,7 @@ namespace TS_SE_Tool
             }
         }
 
-        private void SelectColor(object sender, EventArgs e)
+        internal void SelectColor(object sender, EventArgs e)
         {
             Button obj = sender as Button;
 
@@ -1341,6 +1412,16 @@ namespace TS_SE_Tool
             }
         }
 
+        private void buttonUserTruckSelectCurrent_Click(object sender, EventArgs e)
+        {
+            comboBoxCompanyTrucks.SelectedValue = UserCompanyAssignedTruck;
+        }
+
+        private void buttonUserTruckSwitchCurrent_Click(object sender, EventArgs e)
+        {
+            UserCompanyAssignedTruck = comboBoxCompanyTrucks.SelectedValue.ToString();
+        }
+
         public void buttonTruckReFuel_Click(object sender, EventArgs e)
         {
             int i = 0;
@@ -1505,6 +1586,43 @@ namespace TS_SE_Tool
             comboBoxHQcity.ValueMember = "City";
             comboBoxHQcity.DisplayMember = "CityName";
             comboBoxHQcity.DataSource = combDT;
+        }
+
+        private void comboBoxHQcity_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (comboBoxHQcity.SelectedValue != null)
+                PlayerProfileData.HQcity = comboBoxHQcity.SelectedValue.ToString();
+        }
+
+        private void textBoxMoneyAccount_TextChanged(object sender, EventArgs e)
+        {
+            TextBox txtcur = sender as TextBox;
+
+            if (!string.IsNullOrEmpty(txtcur.Text))
+            {
+                UInt64 valueBefore = UInt64.Parse(txtcur.Text, NumberStyles.AllowThousands);
+                txtcur.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
+                txtcur.Select(txtcur.Text.Length, 0);
+
+                PlayerProfileData.AccountMoney = UInt32.Parse(txtcur.Text, NumberStyles.AllowThousands);
+            }
+        }
+
+        private void textBoxMoneyAccount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox txtcur = sender as TextBox;
+            UInt64 valueBefore = 0;
+
+            if (!string.IsNullOrEmpty(txtcur.Text))
+            {
+                valueBefore = UInt64.Parse(txtcur.Text, NumberStyles.AllowThousands);
+            }
+
+            if (!Char.IsDigit(e.KeyChar) && !(valueBefore <= 999999999))
+            {
+                txtcur.Text = valueBefore.ToString();
+                e.Handled = true;
+            }
         }
 
         public void FillVisitedCities()
@@ -2366,6 +2484,16 @@ namespace TS_SE_Tool
             }
         }
 
+        private void buttonAddJob_Click(object sender, EventArgs e)
+        {
+            AddCargo();
+        }
+
+        private void buttonClearJobList_Click(object sender, EventArgs e)
+        {
+            ClearJobData();
+        }
+
         private void ClearJobData()
         {
             JobsTotalDistance = 0;
@@ -2501,7 +2629,7 @@ namespace TS_SE_Tool
         private void comboBoxSourceCompanyCM_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            if (comboBoxSourceCompanyCM.SelectedValue != null)
+            if (comboBoxSourceCompanyCM.SelectedValue != null && ExternalCompanies.Count > 0)
             foreach(string cargo in ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).outCargo)
                 listBox1.Items.Add(cargo);
 
@@ -2522,9 +2650,10 @@ namespace TS_SE_Tool
         {
             listBoxSourceCargoSeeds.Items.Clear();
 
-            if (comboBoxSourceCompanyCM.SelectedValue != null)
+            if (comboBoxSourceCompanyCM.SelectedValue != null) //&& ExternalCompanies.Count > 0)
             {
-                List<string> tempOutCargo = ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).outCargo;
+                //List<string> tempOutCargo = ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).outCargo;
+
                 foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxSourceCityCM.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).CragoSeeds)
                 {
                     //int Cargoreminder = cargoseed % (tempOutCargo.Count() - (int)numericUpDown1.Value);
@@ -2774,6 +2903,61 @@ namespace TS_SE_Tool
             //namelessLast
             return namelessLast;
         }
+        
+        internal byte[] zipText(string text)
+        {
+            if (text == null)
+                return null;
+
+            using (Stream memOutput = new MemoryStream())
+            {
+                using (GZipOutputStream zipOut = new GZipOutputStream(memOutput))
+                {
+                    using (StreamWriter writer = new StreamWriter(zipOut))
+                    {
+                        writer.Write(text);
+
+                        writer.Flush();
+                        zipOut.Finish();
+
+                        byte[] bytes = new byte[memOutput.Length];
+                        memOutput.Seek(0, SeekOrigin.Begin);
+                        memOutput.Read(bytes, 0, bytes.Length);
+
+                        return bytes;
+                    }
+                }
+            }
+        }
+
+        internal string unzipText(string _sbytes)
+        {
+            string[] pairs = new string[_sbytes.Length / 2];
+            byte[] bytes;// = new byte[0];
+
+            for (int i = 0; i < _sbytes.Length / 2; i++)
+            {
+                pairs[i] = _sbytes.Substring(i * 2, 2);
+            }
+
+            bytes = new byte[pairs.Length];
+
+            for (int j = 0; j < pairs.Length; j++)
+                bytes[j] = Convert.ToByte(pairs[j], 16);
+
+            if (bytes == null)
+                return null;
+
+            using (Stream memInput = new MemoryStream(bytes))
+            using (GZipInputStream zipInput = new GZipInputStream(memInput))
+            using (StreamReader reader = new StreamReader(zipInput))
+            {
+                string text = reader.ReadToEnd();
+
+                return text;
+            }
+        }
+
         //end Form methods
     }
 }

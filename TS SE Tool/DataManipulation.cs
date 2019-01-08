@@ -345,11 +345,16 @@ namespace TS_SE_Tool
                             continue;
                         }
 
+                        if (tempSavefileInMemory[line].StartsWith(" drivers[0]:"))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            PlayerProfileData.UserDriver = chunkOfline[2];
+                            continue;
+                        }
+
                         if (tempSavefileInMemory[line].StartsWith(" trucks["))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            //UserTruckList.Add(chunkOfline[2], new UserCompanyTruck());
-
                             UserTruckDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
                             continue;
                         }
@@ -1188,7 +1193,7 @@ namespace TS_SE_Tool
             //end save data
 
             AddDistances_DataTableToDB_Bulk(DistancesTable);
-            GetCompaniesCargoInOut();
+            //GetCompaniesCargoInOut();
             worker.ReportProgress(90);
             GetAllDistancesFromDB();
             worker.ReportProgress(100);

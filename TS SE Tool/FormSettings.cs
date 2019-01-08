@@ -50,6 +50,8 @@ namespace TS_SE_Tool
 
             numericUpDownSettingPickTimeD.Value = Math.Floor((decimal)(MainForm.ProgSettingsV.JobPickupTime / 24));
             numericUpDownSettingPickTimeH.Value = MainForm.ProgSettingsV.JobPickupTime - numericUpDownSettingPickTimeD.Value * 24;
+
+            numericUpDownSettingLoopCitys.Value = MainForm.ProgSettingsV.LoopEvery;
         }
 
         private void buttonSettingDBClear_Click(object sender, EventArgs e)

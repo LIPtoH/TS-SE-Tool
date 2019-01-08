@@ -17,7 +17,14 @@ namespace TS_SE_Tool
 {
     class PlayerProfile
     {
-        //private byte[] PlayerSkills = new byte[6];
+        public string UserDriver { get; set; }
+        public string HQcity { get; set; }
+        public uint ExperiencePoints { get; set; }
+        public uint AccountMoney { get; set; }
+        public byte[] PlayerSkills { get; set; }
+        public string CompanyName { get; set; }
+        public int CreationTime { get; set; }
+
 
         public PlayerProfile(string _HQcity, uint _Expirience, byte[] _PlayerSkills, uint _AccountMoney)
         {
@@ -94,18 +101,6 @@ namespace TS_SE_Tool
 
             return experience;
         }
-
-        public string HQcity { get; set; }
-
-        public uint ExperiencePoints { get; set; }
-
-        public uint AccountMoney { get; set; }
-
-        public byte[] PlayerSkills { get; set; }
-
-        public string CompanyName { get; set; }
-
-        public int CreationTime { get; set; }
 
     }
 }
