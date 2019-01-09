@@ -256,18 +256,21 @@ namespace TS_SE_Tool
                         }
 
                         //GPS
+                        /*
                         if (tempSavefileInMemory[line].StartsWith(" stored_nav_start_pos:"))
                         {
                             //string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
                             //PlayerProfileData.PlayerSkills[5] = byte.Parse(LineArray[2]);
                             continue;
                         }
+
                         if (tempSavefileInMemory[line].StartsWith(" stored_nav_start_pos:"))
                         {
                             //string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
                             //PlayerProfileData.PlayerSkills[5] = byte.Parse(LineArray[2]);
                             continue;
                         }
+                        */
                         if (tempSavefileInMemory[line].StartsWith(" stored_gps_behind_waypoints:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
@@ -287,6 +290,7 @@ namespace TS_SE_Tool
 
                             for (int i = 0; i < gpscount; i++)
                             {
+                                line++;
                                 GPSahead.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2], new List<string>());
                             }
                             continue;
@@ -383,7 +387,7 @@ namespace TS_SE_Tool
                         }
                     }
                     //Populate GPS
-                    if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage:"))
+                    if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage"))
                     {
                         string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
 
@@ -403,7 +407,7 @@ namespace TS_SE_Tool
                                 line++;
                                 while (!tempSavefileInMemory[line].StartsWith("}"))
                                 {
-                                    GPSbehind[nameless].Add(tempSavefileInMemory[line]);
+                                    GPSahead[nameless].Add(tempSavefileInMemory[line]);
                                     line++;
                                 }
                         }
@@ -1499,19 +1503,6 @@ namespace TS_SE_Tool
                     "\n units_count: ", TrailerVariant.Value
                  });
 
-                /*
-                JobsListAdded[JobsAmountAdded - 1] = string.Concat(new object[] {
-                    " cargo: cargo.", Cargo,
-                    "\n company_truck: ", TruckName,
-                    "\n variant: ", variant,
-                    "\n target: \"", DestinationCompany, ".", DestinationCity, "\"" +
-                    "\n expiration_time: ", ExpirationTime.ToString(),
-                    "\n urgency: ", Urgency,
-                    "\n shortest_distance_km: ", TrueDistance,
-                    "\n ferry_time: ", FerryTime,
-                    "\n ferry_price: ", FerryPrice
-                 });
-                */
                 LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName+ " To " + DestinationCityName + " | " + DestinationCompanyName + "\n-----------\n" + JobsListAdded[JobsAmountAdded - 1] + "\n-----------");
 
                 buttonWriteSave.Enabled = true;
@@ -1524,10 +1515,7 @@ namespace TS_SE_Tool
                     JobsTotalDistance += int.Parse(distance);
                 }
 
-                labelJobsListDistance.Text = "Total path length: " + (JobsTotalDistance * DistanceMultiplier).ToString() + " " + ProgSettingsV.DistanceMes; //km";
-
-                //comboBoxSourceCity.Text = comboBoxDestinationCity.GetItemText(comboBoxDestinationCity.SelectedItem);
-                //comboBoxSourceCompany.Text = comboBoxDestinationCompany.GetItemText(comboBoxDestinationCompany.SelectedItem);
+                labelFreightMarketDistanceNumbers.Text = (JobsTotalDistance * DistanceMultiplier).ToString() + " " + ProgSettingsV.DistanceMes; //km";
 
                 comboBoxSourceCity.SelectedValue = comboBoxDestinationCity.SelectedValue;
                 comboBoxSourceCompany.SelectedValue = comboBoxDestinationCompany.SelectedValue;

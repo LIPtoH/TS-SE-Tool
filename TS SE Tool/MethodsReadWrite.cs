@@ -224,6 +224,23 @@ namespace TS_SE_Tool
             }
         }
 
+        private void LoadTruckBrandsLng()
+        {
+            try
+            {
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\truck_brands.txt");
+
+                for (int i = 0; i < tempFile.Length; i++)
+                {
+                    TruckBrandsLngDict.Add(tempFile[i].Split(new char[] { ';' })[0], tempFile[i].Split(new char[] { ';' })[1]);
+                }
+            }
+            catch
+            {
+                LogWriter("truck_brands.txt file is missing");
+            }
+        }
+
         private void LoadExtImages()
         {
             MemoryStream ms = new MemoryStream();
@@ -277,7 +294,7 @@ namespace TS_SE_Tool
             imgpaths = new string[] { @"img\" + GameType + @"\engine.dds", @"img\" + GameType + @"\transmission.dds", @"img\" + GameType + @"\chassis.dds", @"img\" + GameType + @"\cabin.dds", @"img\" + GameType + @"\tyres.dds" };
             TruckPartsImg = ExtImgLoader(imgpaths, 64, 64, 0, 0);
 
-            imgpaths = new string[] { @"img\engine.dds", @"img\transmission.dds", @"img\chassis.dds",  @"img\tyres.dds" };
+            imgpaths = new string[] { @"img\" + GameType + @"\cargo.dds", @"img\" + GameType + @"\trailer_body.dds", @"img\" + GameType + @"\trailer_chassis.dds", @"img\" + GameType + @"\tyres.dds" };
             TrailerPartsImg = ExtImgLoader(imgpaths, 64, 64, 0, 0);
 
             imgpaths = new string[] { @"img\ETS\game_n.dds", @"img\ATS\game_n.dds" };
@@ -418,7 +435,7 @@ namespace TS_SE_Tool
 
             foreach (Cargo tempitem in CargoesList)
             {
-                if (!CitiesLngDict.TryGetValue(tempitem.CargoName, out string value))
+                if (!CargoLngDict.TryGetValue(tempitem.CargoName, out string value))
                 {
                     newEntries.Add(tempitem.CargoName);
                 }
@@ -428,6 +445,7 @@ namespace TS_SE_Tool
             {
                 using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\cargo_translate.txt", true))
                 {
+                    writer.WriteLine();
                     foreach (string str in newEntries)
                     {
                         writer.WriteLine(str + ";");

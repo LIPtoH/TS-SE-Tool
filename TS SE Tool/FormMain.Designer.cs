@@ -96,24 +96,21 @@
             this.tabPageTrailer = new System.Windows.Forms.TabPage();
             this.label10 = new System.Windows.Forms.Label();
             this.buttonUserTrailerSelectCurrent = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxTrailerDetails = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.labelTrailerLicensePlate = new System.Windows.Forms.Label();
             this.buttonUserTrailerSwitchCurrent = new System.Windows.Forms.Button();
             this.comboBoxCompanyTrailers = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tabPageFreightMarket = new System.Windows.Forms.TabPage();
+            this.labelFreightMarketDistanceNumbers = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
-            this.labelJobsListDistance = new System.Windows.Forms.Label();
+            this.labelFreightMarketDistance = new System.Windows.Forms.Label();
             this.listBoxAddedJobs = new System.Windows.Forms.ListBox();
             this.checkBoxRandomDest = new System.Windows.Forms.CheckBox();
             this.checkBoxFilterDestination = new System.Windows.Forms.CheckBox();
             this.checkBoxFilterSource = new System.Windows.Forms.CheckBox();
-            this.label15 = new System.Windows.Forms.Label();
+            this.labelFreightMarketFilterMain = new System.Windows.Forms.Label();
             this.labelFreightMarketCountry = new System.Windows.Forms.Label();
             this.labelFreightMarketCompany = new System.Windows.Forms.Label();
             this.comboBoxCompanies = new System.Windows.Forms.ComboBox();
@@ -179,7 +176,7 @@
             this.groupBoxgroupBoxShareTruckSettings.SuspendLayout();
             this.groupBoxTruckDetails.SuspendLayout();
             this.tabPageTrailer.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxTrailerDetails.SuspendLayout();
             this.tabPageFreightMarket.SuspendLayout();
             this.tabPageCargoMarket.SuspendLayout();
             this.tabPageConvoyControl.SuspendLayout();
@@ -782,7 +779,7 @@
             // 
             // buttonUserTruckSelectCurrent
             // 
-            this.buttonUserTruckSelectCurrent.Location = new System.Drawing.Point(83, 33);
+            this.buttonUserTruckSelectCurrent.Location = new System.Drawing.Point(65, 33);
             this.buttonUserTruckSelectCurrent.Name = "buttonUserTruckSelectCurrent";
             this.buttonUserTruckSelectCurrent.Size = new System.Drawing.Size(150, 42);
             this.buttonUserTruckSelectCurrent.TabIndex = 26;
@@ -822,9 +819,9 @@
             // 
             this.buttonUserTruckSwitchCurrent.Enabled = false;
             this.buttonUserTruckSwitchCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonUserTruckSwitchCurrent.Location = new System.Drawing.Point(239, 33);
+            this.buttonUserTruckSwitchCurrent.Location = new System.Drawing.Point(221, 33);
             this.buttonUserTruckSwitchCurrent.Name = "buttonUserTruckSwitchCurrent";
-            this.buttonUserTruckSwitchCurrent.Size = new System.Drawing.Size(235, 42);
+            this.buttonUserTruckSwitchCurrent.Size = new System.Drawing.Size(184, 42);
             this.buttonUserTruckSwitchCurrent.TabIndex = 23;
             this.buttonUserTruckSwitchCurrent.Text = "Set as Current Truck";
             this.buttonUserTruckSwitchCurrent.UseVisualStyleBackColor = true;
@@ -834,9 +831,9 @@
             // 
             this.comboBoxCompanyTrucks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCompanyTrucks.FormattingEnabled = true;
-            this.comboBoxCompanyTrucks.Location = new System.Drawing.Point(83, 6);
+            this.comboBoxCompanyTrucks.Location = new System.Drawing.Point(65, 6);
             this.comboBoxCompanyTrucks.Name = "comboBoxCompanyTrucks";
-            this.comboBoxCompanyTrucks.Size = new System.Drawing.Size(391, 21);
+            this.comboBoxCompanyTrucks.Size = new System.Drawing.Size(340, 21);
             this.comboBoxCompanyTrucks.TabIndex = 22;
             this.comboBoxCompanyTrucks.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanyTrucks_SelectedIndexChanged);
             // 
@@ -853,7 +850,7 @@
             // 
             this.tabPageTrailer.Controls.Add(this.label10);
             this.tabPageTrailer.Controls.Add(this.buttonUserTrailerSelectCurrent);
-            this.tabPageTrailer.Controls.Add(this.groupBox1);
+            this.tabPageTrailer.Controls.Add(this.groupBoxTrailerDetails);
             this.tabPageTrailer.Controls.Add(this.buttonUserTrailerSwitchCurrent);
             this.tabPageTrailer.Controls.Add(this.comboBoxCompanyTrailers);
             this.tabPageTrailer.Controls.Add(this.label12);
@@ -878,27 +875,24 @@
             // buttonUserTrailerSelectCurrent
             // 
             this.buttonUserTrailerSelectCurrent.Enabled = false;
-            this.buttonUserTrailerSelectCurrent.Location = new System.Drawing.Point(83, 33);
+            this.buttonUserTrailerSelectCurrent.Location = new System.Drawing.Point(65, 33);
             this.buttonUserTrailerSelectCurrent.Name = "buttonUserTrailerSelectCurrent";
             this.buttonUserTrailerSelectCurrent.Size = new System.Drawing.Size(150, 42);
             this.buttonUserTrailerSelectCurrent.TabIndex = 31;
             this.buttonUserTrailerSelectCurrent.Text = "Select Current Trailer";
             this.buttonUserTrailerSelectCurrent.UseVisualStyleBackColor = true;
+            this.buttonUserTrailerSelectCurrent.Click += new System.EventHandler(this.buttonUserTrailerSelectCurrent_Click);
             // 
-            // groupBox1
+            // groupBoxTrailerDetails
             // 
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Location = new System.Drawing.Point(6, 81);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(468, 238);
-            this.groupBox1.TabIndex = 30;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Details";
+            this.groupBoxTrailerDetails.Controls.Add(this.label2);
+            this.groupBoxTrailerDetails.Controls.Add(this.labelTrailerLicensePlate);
+            this.groupBoxTrailerDetails.Location = new System.Drawing.Point(6, 81);
+            this.groupBoxTrailerDetails.Name = "groupBoxTrailerDetails";
+            this.groupBoxTrailerDetails.Size = new System.Drawing.Size(468, 250);
+            this.groupBoxTrailerDetails.TabIndex = 30;
+            this.groupBoxTrailerDetails.TabStop = false;
+            this.groupBoxTrailerDetails.Text = "Details";
             // 
             // label2
             // 
@@ -908,71 +902,37 @@
             this.label2.TabIndex = 16;
             this.label2.Text = "0 000 00";
             // 
-            // label7
+            // labelTrailerLicensePlate
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(17, 222);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(70, 13);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "License plate";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Cargo";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 72);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(31, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Body";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 102);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(43, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Chassis";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(11, 133);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Wheels";
+            this.labelTrailerLicensePlate.AutoSize = true;
+            this.labelTrailerLicensePlate.Location = new System.Drawing.Point(17, 222);
+            this.labelTrailerLicensePlate.Name = "labelTrailerLicensePlate";
+            this.labelTrailerLicensePlate.Size = new System.Drawing.Size(70, 13);
+            this.labelTrailerLicensePlate.TabIndex = 15;
+            this.labelTrailerLicensePlate.Text = "License plate";
             // 
             // buttonUserTrailerSwitchCurrent
             // 
             this.buttonUserTrailerSwitchCurrent.Enabled = false;
             this.buttonUserTrailerSwitchCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonUserTrailerSwitchCurrent.Location = new System.Drawing.Point(239, 33);
+            this.buttonUserTrailerSwitchCurrent.Location = new System.Drawing.Point(221, 33);
             this.buttonUserTrailerSwitchCurrent.Name = "buttonUserTrailerSwitchCurrent";
-            this.buttonUserTrailerSwitchCurrent.Size = new System.Drawing.Size(235, 42);
+            this.buttonUserTrailerSwitchCurrent.Size = new System.Drawing.Size(184, 42);
             this.buttonUserTrailerSwitchCurrent.TabIndex = 29;
             this.buttonUserTrailerSwitchCurrent.Text = "Set as Current Trailer";
             this.buttonUserTrailerSwitchCurrent.UseVisualStyleBackColor = true;
+            this.buttonUserTrailerSwitchCurrent.Click += new System.EventHandler(this.buttonUserTrailerSwitchCurrent_Click);
             // 
             // comboBoxCompanyTrailers
             // 
             this.comboBoxCompanyTrailers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCompanyTrailers.Enabled = false;
             this.comboBoxCompanyTrailers.FormattingEnabled = true;
-            this.comboBoxCompanyTrailers.Location = new System.Drawing.Point(83, 6);
+            this.comboBoxCompanyTrailers.Location = new System.Drawing.Point(65, 6);
             this.comboBoxCompanyTrailers.Name = "comboBoxCompanyTrailers";
-            this.comboBoxCompanyTrailers.Size = new System.Drawing.Size(391, 21);
+            this.comboBoxCompanyTrailers.Size = new System.Drawing.Size(340, 21);
             this.comboBoxCompanyTrailers.TabIndex = 28;
+            this.comboBoxCompanyTrailers.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanyTrailers_SelectedIndexChanged);
             // 
             // label12
             // 
@@ -985,13 +945,14 @@
             // 
             // tabPageFreightMarket
             // 
+            this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketDistanceNumbers);
             this.tabPageFreightMarket.Controls.Add(this.button5);
-            this.tabPageFreightMarket.Controls.Add(this.labelJobsListDistance);
+            this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketDistance);
             this.tabPageFreightMarket.Controls.Add(this.listBoxAddedJobs);
             this.tabPageFreightMarket.Controls.Add(this.checkBoxRandomDest);
             this.tabPageFreightMarket.Controls.Add(this.checkBoxFilterDestination);
             this.tabPageFreightMarket.Controls.Add(this.checkBoxFilterSource);
-            this.tabPageFreightMarket.Controls.Add(this.label15);
+            this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketFilterMain);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketCountry);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketCompany);
             this.tabPageFreightMarket.Controls.Add(this.comboBoxCompanies);
@@ -1018,23 +979,32 @@
             this.tabPageFreightMarket.Text = "FreightMarket";
             this.tabPageFreightMarket.UseVisualStyleBackColor = true;
             // 
+            // labelFreightMarketDistanceNumbers
+            // 
+            this.labelFreightMarketDistanceNumbers.AutoSize = true;
+            this.labelFreightMarketDistanceNumbers.Location = new System.Drawing.Point(105, 221);
+            this.labelFreightMarketDistanceNumbers.Name = "labelFreightMarketDistanceNumbers";
+            this.labelFreightMarketDistanceNumbers.Size = new System.Drawing.Size(13, 13);
+            this.labelFreightMarketDistanceNumbers.TabIndex = 25;
+            this.labelFreightMarketDistanceNumbers.Text = "0";
+            // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(72, 185);
+            this.button5.Location = new System.Drawing.Point(406, 125);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(161, 23);
+            this.button5.Size = new System.Drawing.Size(67, 48);
             this.button5.TabIndex = 24;
-            this.button5.Text = "Randomize";
+            this.button5.Text = "Random";
             this.button5.UseVisualStyleBackColor = true;
             // 
-            // labelJobsListDistance
+            // labelFreightMarketDistance
             // 
-            this.labelJobsListDistance.AutoSize = true;
-            this.labelJobsListDistance.Location = new System.Drawing.Point(9, 221);
-            this.labelJobsListDistance.Name = "labelJobsListDistance";
-            this.labelJobsListDistance.Size = new System.Drawing.Size(74, 13);
-            this.labelJobsListDistance.TabIndex = 23;
-            this.labelJobsListDistance.Text = "Jobs Distance";
+            this.labelFreightMarketDistance.AutoSize = true;
+            this.labelFreightMarketDistance.Location = new System.Drawing.Point(9, 221);
+            this.labelFreightMarketDistance.Name = "labelFreightMarketDistance";
+            this.labelFreightMarketDistance.Size = new System.Drawing.Size(90, 13);
+            this.labelFreightMarketDistance.TabIndex = 23;
+            this.labelFreightMarketDistance.Text = "Total path length:";
             // 
             // listBoxAddedJobs
             // 
@@ -1050,7 +1020,7 @@
             // checkBoxRandomDest
             // 
             this.checkBoxRandomDest.AutoSize = true;
-            this.checkBoxRandomDest.Location = new System.Drawing.Point(239, 189);
+            this.checkBoxRandomDest.Location = new System.Drawing.Point(406, 24);
             this.checkBoxRandomDest.Name = "checkBoxRandomDest";
             this.checkBoxRandomDest.Size = new System.Drawing.Size(50, 17);
             this.checkBoxRandomDest.TabIndex = 21;
@@ -1078,14 +1048,14 @@
             this.checkBoxFilterSource.Text = "Filter";
             this.checkBoxFilterSource.UseVisualStyleBackColor = true;
             // 
-            // label15
+            // labelFreightMarketFilterMain
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(6, 25);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(29, 13);
-            this.label15.TabIndex = 18;
-            this.label15.Text = "Filter";
+            this.labelFreightMarketFilterMain.AutoSize = true;
+            this.labelFreightMarketFilterMain.Location = new System.Drawing.Point(6, 25);
+            this.labelFreightMarketFilterMain.Name = "labelFreightMarketFilterMain";
+            this.labelFreightMarketFilterMain.Size = new System.Drawing.Size(29, 13);
+            this.labelFreightMarketFilterMain.TabIndex = 18;
+            this.labelFreightMarketFilterMain.Text = "Filter";
             // 
             // labelFreightMarketCountry
             // 
@@ -1125,9 +1095,9 @@
             // 
             // buttonClearJobList
             // 
-            this.buttonClearJobList.Location = new System.Drawing.Point(404, 185);
+            this.buttonClearJobList.Location = new System.Drawing.Point(323, 208);
             this.buttonClearJobList.Name = "buttonClearJobList";
-            this.buttonClearJobList.Size = new System.Drawing.Size(69, 46);
+            this.buttonClearJobList.Size = new System.Drawing.Size(150, 23);
             this.buttonClearJobList.TabIndex = 13;
             this.buttonClearJobList.Text = "Clear list";
             this.buttonClearJobList.UseVisualStyleBackColor = true;
@@ -1135,7 +1105,7 @@
             // 
             // buttonAddJob
             // 
-            this.buttonAddJob.Location = new System.Drawing.Point(72, 156);
+            this.buttonAddJob.Location = new System.Drawing.Point(70, 179);
             this.buttonAddJob.Name = "buttonAddJob";
             this.buttonAddJob.Size = new System.Drawing.Size(328, 23);
             this.buttonAddJob.TabIndex = 12;
@@ -1146,7 +1116,7 @@
             // labelFreightMarketUrgency
             // 
             this.labelFreightMarketUrgency.AutoSize = true;
-            this.labelFreightMarketUrgency.Location = new System.Drawing.Point(239, 113);
+            this.labelFreightMarketUrgency.Location = new System.Drawing.Point(6, 155);
             this.labelFreightMarketUrgency.Name = "labelFreightMarketUrgency";
             this.labelFreightMarketUrgency.Size = new System.Drawing.Size(47, 13);
             this.labelFreightMarketUrgency.TabIndex = 11;
@@ -1155,15 +1125,15 @@
             // comboBoxUrgency
             // 
             this.comboBoxUrgency.FormattingEnabled = true;
-            this.comboBoxUrgency.Location = new System.Drawing.Point(239, 129);
+            this.comboBoxUrgency.Location = new System.Drawing.Point(70, 152);
             this.comboBoxUrgency.Name = "comboBoxUrgency";
-            this.comboBoxUrgency.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxUrgency.Size = new System.Drawing.Size(328, 21);
             this.comboBoxUrgency.TabIndex = 10;
             // 
             // labelFreightMarketCargo
             // 
             this.labelFreightMarketCargo.AutoSize = true;
-            this.labelFreightMarketCargo.Location = new System.Drawing.Point(72, 113);
+            this.labelFreightMarketCargo.Location = new System.Drawing.Point(6, 128);
             this.labelFreightMarketCargo.Name = "labelFreightMarketCargo";
             this.labelFreightMarketCargo.Size = new System.Drawing.Size(35, 13);
             this.labelFreightMarketCargo.TabIndex = 9;
@@ -1172,9 +1142,9 @@
             // comboBoxCargoList
             // 
             this.comboBoxCargoList.FormattingEnabled = true;
-            this.comboBoxCargoList.Location = new System.Drawing.Point(72, 129);
+            this.comboBoxCargoList.Location = new System.Drawing.Point(70, 125);
             this.comboBoxCargoList.Name = "comboBoxCargoList";
-            this.comboBoxCargoList.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxCargoList.Size = new System.Drawing.Size(328, 21);
             this.comboBoxCargoList.TabIndex = 8;
             this.comboBoxCargoList.SelectedIndexChanged += new System.EventHandler(this.comboBoxCargoList_SelectedIndexChanged);
             // 
@@ -1309,7 +1279,7 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(6, 320);
+            this.listBox1.Location = new System.Drawing.Point(72, 261);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(140, 147);
             this.listBox1.TabIndex = 12;
@@ -1648,8 +1618,8 @@
             this.groupBoxTruckDetails.PerformLayout();
             this.tabPageTrailer.ResumeLayout(false);
             this.tabPageTrailer.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxTrailerDetails.ResumeLayout(false);
+            this.groupBoxTrailerDetails.PerformLayout();
             this.tabPageFreightMarket.ResumeLayout(false);
             this.tabPageFreightMarket.PerformLayout();
             this.tabPageCargoMarket.ResumeLayout(false);
@@ -1707,7 +1677,7 @@
         private System.Windows.Forms.Button buttonGameATS;
         private System.Windows.Forms.ComboBox comboBoxCompanies;
         private System.Windows.Forms.ComboBox comboBoxCountries;
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label labelFreightMarketFilterMain;
         private System.Windows.Forms.Label labelFreightMarketCountry;
         private System.Windows.Forms.Label labelFreightMarketCompany;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
@@ -1754,11 +1724,7 @@
         private System.Windows.Forms.Label labelUserCompanyMoneyAccount;
         private System.Windows.Forms.TextBox textBoxMoneyAccount;
         private System.Windows.Forms.Button buttonUserTrailerSelectCurrent;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox groupBoxTrailerDetails;
         private System.Windows.Forms.Button buttonUserTrailerSwitchCurrent;
         private System.Windows.Forms.ComboBox comboBoxCompanyTrailers;
         private System.Windows.Forms.Label label12;
@@ -1773,7 +1739,7 @@
         private System.Windows.Forms.Button buttonTruckDetailsCopy;
         private System.Windows.Forms.Button buttonTruckPaintPaste;
         private System.Windows.Forms.Button buttonTruckPaintCopy;
-        private System.Windows.Forms.Label labelJobsListDistance;
+        private System.Windows.Forms.Label labelFreightMarketDistance;
         private System.Windows.Forms.GroupBox groupBoxPlayerLevel;
         private System.Windows.Forms.Button button29;
         private System.Windows.Forms.Button button28;
@@ -1804,7 +1770,8 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelTrailerLicensePlate;
+        private System.Windows.Forms.Label labelFreightMarketDistanceNumbers;
     }
 }
 

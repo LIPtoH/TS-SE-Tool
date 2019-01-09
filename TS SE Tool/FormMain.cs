@@ -120,7 +120,7 @@ namespace TS_SE_Tool
         private Routes RouteList;
 
         private Dictionary<string, string> dictionaryProfiles;
-        private Dictionary<string, string> CompaniesLngDict, CargoLngDict;
+        private Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict;
         public static Dictionary<string, string> CitiesLngDict;
         //private Dictionary<string, UserCompanyTruck> UserTruckList;
         private Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
@@ -139,6 +139,7 @@ namespace TS_SE_Tool
         private Image RepairImg, RefuelImg;
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, TruckPartsImg, TrailerPartsImg, GameIconeImg;
         private ImageList TabpagesImages;
+
         private CheckBox[,] SkillButtonArray;
         private CheckBox[] ADRbuttonArray;
 
@@ -162,6 +163,7 @@ namespace TS_SE_Tool
             LoadCompaniesLng();
             LoadCitiesLng();
             LoadCargoLng();
+            LoadTruckBrandsLng();
             ChangeLanguage();
             ToggleVisibility(false);
 
@@ -170,8 +172,9 @@ namespace TS_SE_Tool
             //GetCompaniesCargoInOut();
 
             CreateProfilePanelControls();
-            CreateTruckPanelControls();
             CreateProgressBarBitmap();
+            CreateTruckPanelControls();
+            CreateTrailerPanelControls();
 
             tabControlMain.ImageList = TabpagesImages;
 
