@@ -43,7 +43,7 @@ namespace TS_SE_Tool
 
             try
             {
-                StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + @"\lang\" + language + ".txt", Encoding.UTF8);
+                StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + @"\lang\" + language + @"\lngfile.txt", Encoding.UTF8);
 
                 while (!reader.EndOfStream)
                 {

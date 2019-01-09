@@ -120,7 +120,7 @@ namespace TS_SE_Tool
         private Routes RouteList;
 
         private Dictionary<string, string> dictionaryProfiles;
-        private Dictionary<string, string> CompaniesLngDict;
+        private Dictionary<string, string> CompaniesLngDict, CargoLngDict;
         public static Dictionary<string, string> CitiesLngDict;
         //private Dictionary<string, UserCompanyTruck> UserTruckList;
         private Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
@@ -161,6 +161,7 @@ namespace TS_SE_Tool
             LoadExtCountries();
             LoadCompaniesLng();
             LoadCitiesLng();
+            LoadCargoLng();
             ChangeLanguage();
             ToggleVisibility(false);
 

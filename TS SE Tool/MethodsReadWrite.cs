@@ -205,6 +205,25 @@ namespace TS_SE_Tool
             }
         }
 
+        private void LoadCargoLng()
+        {
+            try
+            {
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\cargo_translate.txt");
+
+                for (int i = 0; i < tempFile.Length; i++)
+                {
+                    string[] tmp = tempFile[i].Split(new char[] { ';' });
+                    if (tmp[0] != "")
+                        CargoLngDict.Add(tmp[0], tmp[1]);
+                }
+            }
+            catch
+            {
+                LogWriter("cargo_translate.txt file is missing");
+            }
+        }
+
         private void LoadExtImages()
         {
             MemoryStream ms = new MemoryStream();
@@ -330,6 +349,7 @@ namespace TS_SE_Tool
             else
                 return bitmap;
         }
+
         private void SaveCompaniesLng()
         {
             CompaniesList = CompaniesList.Distinct().OrderBy(x => x).ToList();
@@ -386,7 +406,37 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter("companies_translate.txt file is missing");
+                LogWriter("cities_translate.txt file is missing");
+            }
+        }
+
+        private void SaveCargoLng()
+        {
+            CargoesList = CargoesList.Distinct().OrderBy(x => x.CargoName).ToList();
+
+            List<string> newEntries = new List<string>();
+
+            foreach (Cargo tempitem in CargoesList)
+            {
+                if (!CitiesLngDict.TryGetValue(tempitem.CargoName, out string value))
+                {
+                    newEntries.Add(tempitem.CargoName);
+                }
+            }
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\cargo_translate.txt", true))
+                {
+                    foreach (string str in newEntries)
+                    {
+                        writer.WriteLine(str + ";");
+                    }
+                }
+            }
+            catch
+            {
+                LogWriter("cargo_translate.txt file is missing");
             }
         }
 
@@ -1243,44 +1293,49 @@ namespace TS_SE_Tool
         {
             if (Directory.Exists(Directory.GetCurrentDirectory() + @"\lang"))
             {
-                string[] langfiles = Directory.GetFiles(Directory.GetCurrentDirectory() + @"\lang", "??-??.txt");
+                //string[] langfiles = Directory.GetFiles(Directory.GetCurrentDirectory() + @"\lang", "??-??.txt");
+                string[] langfolders = Directory.GetDirectories(Directory.GetCurrentDirectory() + @"\lang","??-??", SearchOption.TopDirectoryOnly);
                 string langTag;
 
                 string langNameShort;
                 string countryShort;
 
                 string flagpath;
-
-                foreach (string lang in langfiles)
+                foreach (string folder in langfolders)//foreach (string lang in langfiles)
                 {
-                    langTag = File.ReadAllLines(lang, Encoding.UTF8)[0].Split(new char[] { '[', ']' })[1];
+                    string lngfile = folder + @"\lngfile.txt";
 
-                    langNameShort = langTag.Split('-')[0];
-                    countryShort = langTag.Split('-')[1];
-
-                    CultureInfo ci = new CultureInfo(langTag, false);
-
-                    char[] a = ci.NativeName.ToCharArray();
-                    a[0] = char.ToUpper(a[0]);
-                    string CorrectedNativeName = new string(a);
-
-                    ToolStripItem TSitem = new ToolStripMenuItem();
-                    TSitem.Name = langNameShort + "_" + countryShort + "_ToolStripMenuItem";
-                    TSitem.Text = CorrectedNativeName;
-
-                    TSitem.Click += new EventHandler(toolstripChangeLanguage);//+= ChangeLanguage(TSitem,);
-
-                    flagpath = Directory.GetCurrentDirectory() + @"\lang\flags\" + countryShort + ".png";
-
-                    if (File.Exists(flagpath))
+                    if (File.Exists(lngfile))
                     {
-                        TSitem.Image = new Bitmap(flagpath);
-                        TSitem.ImageScaling = ToolStripItemImageScaling.None;
+                        langTag = File.ReadAllLines(lngfile, Encoding.UTF8)[0].Split(new char[] { '[', ']' })[1];
+
+                        langNameShort = langTag.Split('-')[0];
+                        countryShort = langTag.Split('-')[1];
+
+                        CultureInfo ci = new CultureInfo(langTag, false);
+
+                        char[] a = ci.NativeName.ToCharArray();
+                        a[0] = char.ToUpper(a[0]);
+                        string CorrectedNativeName = new string(a);
+
+                        ToolStripItem TSitem = new ToolStripMenuItem();
+                        TSitem.Name = langNameShort + "_" + countryShort + "_ToolStripMenuItem";
+                        TSitem.Text = CorrectedNativeName;
+
+                        TSitem.Click += new EventHandler(toolstripChangeLanguage);//+= ChangeLanguage(TSitem,);
+
+                        flagpath = folder + @"\flag.png";//Directory.GetCurrentDirectory() + @"\lang\flags\" + countryShort + ".png";
+
+                        if (File.Exists(flagpath))
+                        {
+                            TSitem.Image = new Bitmap(flagpath);
+                            TSitem.ImageScaling = ToolStripItemImageScaling.None;
+                        }
+
+                        languageToolStripMenuItem.DropDownItems.Add(TSitem);
+
+                        byte[] bytes = Encoding.UTF8.GetBytes(flagpath);
                     }
-
-                    languageToolStripMenuItem.DropDownItems.Add(TSitem);
-
-                    byte[] bytes = Encoding.UTF8.GetBytes(flagpath);
                 }
             }
             else

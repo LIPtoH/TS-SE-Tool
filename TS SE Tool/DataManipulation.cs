@@ -1182,6 +1182,7 @@ namespace TS_SE_Tool
 
             SaveCompaniesLng();
             SaveCitiesLng();
+            SaveCargoLng();
 
             //save new data to database
 

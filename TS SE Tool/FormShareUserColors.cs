@@ -258,12 +258,12 @@ namespace TS_SE_Tool
                 {
                     if (temp.Checked)
                     {
-                        MainForm.UserColorsList[i] = tempBList[j].BackColor;
-                        //UserColorsB[i].BackColor = tempBList[j].BackColor;
+                        if (j < tempBList.Count)
+                        {
+                            MainForm.UserColorsList[i] = tempBList[j].BackColor;
+                            j++;
+                        }
                         temp.Checked = false;
-                        j++;
-                        if (j >= tempBList.Count)
-                            break;
                     }
                     i++;
                 }

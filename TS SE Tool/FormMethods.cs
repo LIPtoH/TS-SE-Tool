@@ -97,6 +97,7 @@ namespace TS_SE_Tool
 
                 CompaniesLngDict = new Dictionary<string, string>();
                 CitiesLngDict = new Dictionary<string, string>();
+                CargoLngDict = new Dictionary<string, string>();
 
                 Globals.CurrentGame = dictionaryProfiles["ETS2"];
                 GameType = "ETS";
@@ -280,6 +281,7 @@ namespace TS_SE_Tool
             FillcomboBoxSourceCityDestinationCity();
 
             FillFormCargoOffersControls();
+
         }
 
         //Main part controls
@@ -588,9 +590,7 @@ namespace TS_SE_Tool
         public void FillProfileSaves()
         {
             //comboBoxSaves.Items.Clear();
-
             string savePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\save";
-
             Globals.SavesHex = Directory.GetDirectories(savePath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
 
             if (Globals.SavesHex.Length > 0)
@@ -627,7 +627,7 @@ namespace TS_SE_Tool
                             ProfileName += " " + namearr[i];
                         }
 
-                        combDT.Rows.Add(profile, ProfileName);
+                        combDT.Rows.Add(profile, "- " + ProfileName + " -");
                     }
                     else
                         combDT.Rows.Add(profile, GetCustomSaveFilename(profile));
@@ -644,6 +644,8 @@ namespace TS_SE_Tool
                 buttonOpenSaveFolder.Enabled = true;
                 buttonDecryptSave.Enabled = true;
                 buttonLoadSave.Enabled = true;
+
+                ShowStatusMessages("i", "");
             }
             else
             {
@@ -1997,6 +1999,7 @@ namespace TS_SE_Tool
                 //CitiesLngDict.TryGetValue(Job.SourceCity, out string SourceCityName);
                 //CitiesLngDict.TryGetValue(Job.DestinationCity, out string DestinationCityName);
 
+                //Source City
                 // Find the area in which to put the text.
                 float x = e.Bounds.Left + JobsItemMargin;
                 float y = e.Bounds.Top - JobsItemMargin + JobsTextHeigh / 2;
@@ -2009,6 +2012,7 @@ namespace TS_SE_Tool
                 format.Alignment = StringAlignment.Near;
                 e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
 
+                //Destination City
                 // Find the area in which to put the text.
                 x = e.Bounds.Left + width + 3 * JobsItemMargin + UrgencyImg[Job.Urgency].Width;
                 layout_rect = new RectangleF(x, y, width, height);
@@ -2016,6 +2020,7 @@ namespace TS_SE_Tool
                 txt = DestinationCityName;
                 e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
 
+                //Cargo
                 // Find the area in which to put the text.
                 x = e.Bounds.Left + picture_width + 3 * JobsItemMargin + 32;
                 y = e.Bounds.Top + JobsItemMargin * 2 + UrgencyImg[Job.Urgency].Height;
@@ -2023,7 +2028,18 @@ namespace TS_SE_Tool
                 height = e.Bounds.Bottom - JobsItemMargin - y;
                 layout_rect = new RectangleF(x, y, width, height);
 
-                txt = Job.Cargo;
+                if (CargoLngDict.TryGetValue(Job.Cargo, out string CargoName))
+                {
+                    if (CargoName != null && CargoName != "")
+                    {
+                        txt = CargoName;
+                    }
+                    else
+                        txt = Job.Cargo;
+                }
+                else
+                    txt = Job.Cargo;
+
                 e.Graphics.DrawString(txt, this.Font, br, layout_rect);
 
                 // Find the area in which to put Distance text.
@@ -2186,7 +2202,6 @@ namespace TS_SE_Tool
 
         public void FillcomboBoxCargoList()
         {
-            
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("Cargo", typeof(string));
             combDT.Columns.Add(dc);
@@ -2196,15 +2211,42 @@ namespace TS_SE_Tool
 
             foreach (Cargo tempitem in CargoesList)
             {
-                string str = tempitem.CargoName;
-                string value = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
+                if (CargoLngDict.TryGetValue(tempitem.CargoName, out string value))
+                {
+                    if (value != null && value != "")
+                    {
+                        if (tempitem.CargoType == 1)
+                            value += " [H]";
+                        else if (tempitem.CargoType == 2)
+                            value += " [D]";
 
-                if (tempitem.CargoType == 1)
-                    value += " [H]";
-                else if (tempitem.CargoType == 2)
-                    value += " [D]";
+                        combDT.Rows.Add(tempitem.CargoName, value);
+                    }
+                    else
+                    {
+                        string str = tempitem.CargoName;
+                        string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
 
-                combDT.Rows.Add(str, value);
+                        if (tempitem.CargoType == 1)
+                            CapName += " [H]";
+                        else if (tempitem.CargoType == 2)
+                            CapName += " [D]";
+
+                        combDT.Rows.Add(str, CapName);
+                    }
+                }
+                else
+                {
+                    string str = tempitem.CargoName;
+                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
+
+                    if (tempitem.CargoType == 1)
+                        CapName += " [H]";
+                    else if (tempitem.CargoType == 2)
+                        CapName += " [D]";
+
+                    combDT.Rows.Add(str, CapName);
+                }
             }
 
             combDT.DefaultView.Sort = "CargoName ASC";
