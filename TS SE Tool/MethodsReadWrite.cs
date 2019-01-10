@@ -561,22 +561,6 @@ namespace TS_SE_Tool
             return _buffer;
         }
 
-        private void LoadSaveFile_Click(object sender, EventArgs e)
-        {
-            //SetDefaultValues(false);
-
-            buttonDecryptSave.Enabled = false;
-            buttonLoadSave.Enabled = false;
-            buttonGameETS.Enabled = false;
-            buttonGameATS.Enabled = false;
-
-            LoadSaveFile(); //Load save file
-
-            //GC
-            GC.Collect();
-            //GC.WaitForPendingFinalizers();
-        }
-
         private void LoadSaveFile()
         {
             //this.config_file[0] = this.textField_enter_directory.Text;
@@ -817,6 +801,7 @@ namespace TS_SE_Tool
             buttonWriteSave.Enabled = false;
             WriteSaveFile(); //Save save file with or without changes
 
+            buttonDecryptSave.Enabled = true;
             MessageBox.Show("File saved", "Saving", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -842,7 +827,7 @@ namespace TS_SE_Tool
                 using (StreamWriter writer = new StreamWriter(SiiSavePath, true))
                 {
 
-                    bool EconomySection = false, PlayerSection = false;
+                    bool EconomySection = false, PlayerSection = false, GPSinserted = false;
                     bool editedcompany = false, visitedcitycompany = false, insidecompany = false, editedtruck = false, insidetruck = false;
                     int JobIndex = 0, truckaccCount = 0;
                     string trucknameless = "";
@@ -932,6 +917,35 @@ namespace TS_SE_Tool
 
                                 writer.WriteLine(" user_colors[" + userColorID.ToString() + "]: " + userColor);
                                 //line++;
+                                continue;
+                            }
+
+                            if (SaveInMemLine.StartsWith(" stored_gps_behind_waypoints:"))
+                            {
+                                writer.WriteLine(" stored_gps_behind_waypoints: " + GPSbehind.Count);
+
+                                int count = 0;
+                                foreach(KeyValuePair<string, List<string>> temp in GPSbehind)
+                                {
+                                    writer.WriteLine(" stored_gps_behind_waypoints[" + count + "]: _nameless." + temp.Key);
+                                    count++;
+                                }
+
+                                writer.WriteLine(" stored_gps_ahead_waypoints: " + GPSahead.Count);
+
+                                count = 0;
+                                foreach (KeyValuePair<string, List<string>> temp in GPSahead)
+                                {
+                                    writer.WriteLine(" stored_gps_ahead_waypoints[" + count + "]: _nameless." + temp.Key);
+                                    count++;
+                                }
+
+                                while (!tempSavefileInMemory[line].StartsWith(" stored_start_tollgate_pos:"))
+                                {
+                                    line++;
+                                }
+
+                                line--;
                                 continue;
                             }
 
@@ -1089,7 +1103,7 @@ namespace TS_SE_Tool
                                     break;
                                 line++;
                             }
-                            SaveInMemLine = tempSavefileInMemory[line];
+                            writer.WriteLine(tempSavefileInMemory[line]);//SaveInMemLine = tempSavefileInMemory[line];
                             continue;
                         }
 
@@ -1133,6 +1147,104 @@ namespace TS_SE_Tool
 
                             continue;
                         }
+
+
+                        if (!GPSinserted && (SaveInMemLine.StartsWith("gps_waypoint_storage :") || SaveInMemLine.StartsWith("map_action :")))
+                        {
+                            //GPSbehindOnline
+                            if (GPSbehindOnline.Count > 0)
+                            {
+                                foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSbehindOnline)
+                                {
+                                    writer.WriteLine("gps_waypoint_storage : " + tempgpsdata.Key + " {");
+
+                                    foreach (string templine in tempgpsdata.Value)
+                                    {
+                                        writer.WriteLine(templine);
+                                    }
+
+                                    writer.WriteLine("}");
+                                    writer.WriteLine("");
+                                }
+                            }
+
+                            //GPSaheadOnline
+                            if (GPSaheadOnline.Count > 0)
+                            {
+                                foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSaheadOnline)
+                                {
+                                    writer.WriteLine("gps_waypoint_storage : " + tempgpsdata.Key + " {");
+
+                                    foreach (string templine in tempgpsdata.Value)
+                                    {
+                                        writer.WriteLine(templine);
+                                    }
+
+                                    writer.WriteLine("}");
+                                    writer.WriteLine("");
+                                }
+                            }
+
+                            //GPSbehind
+                            if (GPSbehind.Count > 0)
+                            {
+                                foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSbehind)
+                                {
+                                    writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+
+                                    foreach (string templine in tempgpsdata.Value)
+                                    {
+                                        writer.WriteLine(templine);
+                                    }
+
+                                    writer.WriteLine("}");
+                                    writer.WriteLine("");
+                                }
+                            }
+
+                            //GPSahead
+                            if (GPSahead.Count > 0)
+                            {
+                                foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSahead)
+                                {
+                                    writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+
+                                    foreach (string templine in tempgpsdata.Value)
+                                    {
+                                        writer.WriteLine(templine);
+                                    }
+
+                                    writer.WriteLine("}");
+                                    writer.WriteLine("");
+                                }
+                            }
+
+                            while(true)
+                            {
+                                if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage :"))
+                                {
+                                    //line++;
+                                    do
+                                    {
+                                        line++;
+                                    } while (!tempSavefileInMemory[line].StartsWith("}"));
+
+                                    do
+                                    {
+                                        line++;
+                                    } while (tempSavefileInMemory[line] == "");
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            line--;
+                            GPSinserted = true;
+                            continue;
+                        }
+
 
                         if (insidecompany && SaveInMemLine.StartsWith("}"))
                         {

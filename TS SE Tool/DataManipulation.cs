@@ -271,6 +271,33 @@ namespace TS_SE_Tool
                             continue;
                         }
                         */
+                        //Online
+                        if (tempSavefileInMemory[line].StartsWith(" stored_online_gps_behind_waypoints:"))
+                        {
+                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            int gpscount = int.Parse(LineArray[2]);
+
+                            for (int i = 0; i < gpscount; i++)
+                            {
+                                line++;
+                                GPSbehindOnline.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2], new List<string>());
+                            }
+                            continue;
+                        }
+                        if (tempSavefileInMemory[line].StartsWith(" stored_online_gps_ahead_waypoints:"))
+                        {
+                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            int gpscount = int.Parse(LineArray[2]);
+
+                            for (int i = 0; i < gpscount; i++)
+                            {
+                                line++;
+                                GPSaheadOnline.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2], new List<string>());
+                            }
+                            continue;
+                        }
+
+                        //Offline
                         if (tempSavefileInMemory[line].StartsWith(" stored_gps_behind_waypoints:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
@@ -410,6 +437,27 @@ namespace TS_SE_Tool
                                     GPSahead[nameless].Add(tempSavefileInMemory[line]);
                                     line++;
                                 }
+                        }
+                        else
+                        if (GPSbehindOnline.ContainsKey(nameless))
+                        {
+                            line++;
+                            while (!tempSavefileInMemory[line].StartsWith("}"))
+                            {
+                                GPSbehindOnline[nameless].Add(tempSavefileInMemory[line]);
+                                line++;
+                            }
+
+                        }
+                        else
+                        if (GPSaheadOnline.ContainsKey(nameless))
+                        {
+                            line++;
+                            while (!tempSavefileInMemory[line].StartsWith("}"))
+                            {
+                                GPSaheadOnline[nameless].Add(tempSavefileInMemory[line]);
+                                line++;
+                            }
                         }
                     }
 

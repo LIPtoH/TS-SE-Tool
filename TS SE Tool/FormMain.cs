@@ -129,7 +129,7 @@ namespace TS_SE_Tool
         private List<string> namelessList;
         private string namelessLast;
 
-        private Dictionary<string, List<string>> GPSbehind, GPSahead;
+        private Dictionary<string, List<string>> GPSbehind, GPSahead, GPSbehindOnline, GPSaheadOnline;
 
         internal Dictionary<string, double> DistanceMultipliers;
 

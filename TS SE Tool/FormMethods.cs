@@ -245,6 +245,10 @@ namespace TS_SE_Tool
 
             GPSbehind = new Dictionary<string, List<string>>();
             GPSahead = new Dictionary<string, List<string>>();
+
+            GPSbehindOnline = new Dictionary<string, List<string>>();
+            GPSaheadOnline = new Dictionary<string, List<string>>();
+
             namelessList = new List<string>();
             namelessLast = "";
             //game = "ETS";
@@ -328,6 +332,23 @@ namespace TS_SE_Tool
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             string SiiSavePath = SavefilePath + @"\game.sii";
             DecodeFile(SiiSavePath);
+
+            //GC
+            GC.Collect();
+            //GC.WaitForPendingFinalizers();
+        }
+
+        private void LoadSaveFile_Click(object sender, EventArgs e)
+        {
+            //SetDefaultValues(false);
+
+            buttonDecryptSave.Enabled = false;
+            buttonLoadSave.Enabled = false;
+
+            buttonGameETS.Enabled = false;
+            buttonGameATS.Enabled = false;
+
+            LoadSaveFile(); //Load save file
 
             //GC
             GC.Collect();
@@ -3153,7 +3174,24 @@ namespace TS_SE_Tool
                     }
 
                     //GPSbehind = tempGPSbehind;
+                    if (tempGPSbehind.Count > 0)
+                    {
+                        GPSbehind.Clear();
+                        foreach (KeyValuePair<int, List<string>> temp in tempGPSbehind)
+                        {
+                            GPSbehind.Add(GetSpareNameless(), temp.Value);
+                        }
+                    }
+
                     //GPSahead = tempGPSahead;
+                    if (tempGPSahead.Count > 0)
+                    {
+                        GPSahead.Clear();
+                        foreach (KeyValuePair<int, List<string>> temp in tempGPSahead)
+                        {
+                            GPSahead.Add(GetSpareNameless(), temp.Value);
+                        }
+                    }
 
                     MessageBox.Show("GPS Path data  has been inserted.");
                 }
@@ -3310,21 +3348,26 @@ namespace TS_SE_Tool
         private string GetSpareNameless()
         {
             if (namelessLast == "")
-                namelessLast = namelessList.Last(); //nameless = namelessList.Last();
+            {
+                namelessLast = namelessList.Last();
+            }   
 
             string[] namelessNumbers = namelessLast.Split(new char[] { '.' });
 
-            int firstNum = UInt16.Parse(namelessNumbers[0], NumberStyles.HexNumber);
-            int secondNum = UInt16.Parse(namelessNumbers[1], NumberStyles.HexNumber);
-            int thirdNum = UInt16.Parse(namelessNumbers[2], NumberStyles.HexNumber);
+            ushort firstNum = UInt16.Parse(namelessNumbers[0], NumberStyles.HexNumber);
+            ushort secondNum = UInt16.Parse(namelessNumbers[1], NumberStyles.HexNumber);
+            ushort thirdNum = UInt16.Parse(namelessNumbers[2], NumberStyles.HexNumber);
+
+            ushort incr = 256;
 
             try
             {
-                thirdNum = checked(thirdNum + 16);
+                thirdNum = checked((ushort)(thirdNum + incr));
             }
             catch (OverflowException)
             {
-                thirdNum = 16;
+                thirdNum = incr;
+
                 try
                 {
                     secondNum++;
