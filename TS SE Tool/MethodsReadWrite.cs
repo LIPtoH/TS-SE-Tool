@@ -91,7 +91,7 @@ namespace TS_SE_Tool
                     }
                 }
 
-                checkBoxRandomDest.Checked = ProgSettingsV.ProposeRandom;
+                checkBoxFreightMarketRandomDest.Checked = ProgSettingsV.ProposeRandom;
 
             }
             catch
@@ -469,8 +469,24 @@ namespace TS_SE_Tool
 
             try
             {
-                using (StreamWriter writer = new StreamWriter(filename, true))
+                using (StreamWriter writer = new StreamWriter(filename, false))
                 {
+                    foreach(ToolStripDropDownItem temp in menuStripMain.Items)
+                    {
+                        writer.WriteLine(temp.Name + "=" + temp.Text);
+
+                        foreach (var temp2 in temp.DropDownItems)
+                        {
+                            if (temp2.GetType() == typeof(ToolStripMenuItem))
+                            {
+                                ToolStripDropDownItem temp3 = (ToolStripDropDownItem) temp2;
+                                if(!temp3.Name.Contains("Translation"))
+                                    writer.WriteLine(temp3.Name + "=" + temp3.Text);
+                            }
+                                
+                        }
+                    }
+
                     foreach (Control x in Controls)
                     {
                         if (x.Text != "" && (x is Label || x is CheckBox || x is Button || x is GroupBox))
@@ -497,6 +513,8 @@ namespace TS_SE_Tool
                             
                             foreach (TabPage page in pages.TabPages)
                             {
+                                writer.WriteLine(page.Name + "=" + page.Text);
+                                
                                 foreach (Control y in page.Controls)
                                 {
                                     if (y.Text != "" && (y is Label || y is CheckBox || y is Button || y is GroupBox))
@@ -763,7 +781,7 @@ namespace TS_SE_Tool
 
                     InsertDataIntoDatabase("GameTypesTable");
 
-                    comboBoxCountries.Items.Add("All");
+                    comboBoxFreightMarketCountries.Items.Add("All");
 
                     worker = new BackgroundWorker();
                     worker.WorkerReportsProgress = true;
@@ -786,8 +804,8 @@ namespace TS_SE_Tool
             toolStripProgressBarMain.Value = 0;
             PopulateFormControlsk();
 
-            buttonDecryptSave.Enabled = false;
-            buttonLoadSave.Enabled = true;
+            buttonMainDecryptSave.Enabled = false;
+            buttonMainLoadSave.Enabled = true;
 
             ToggleGame(GameType);
             ToggleVisibility(true);
@@ -798,10 +816,10 @@ namespace TS_SE_Tool
         private void buttonWriteSave_Click(object sender, EventArgs e)
         {
             ToggleVisibility(false);
-            buttonWriteSave.Enabled = false;
+            buttonMainWriteSave.Enabled = false;
             WriteSaveFile(); //Save save file with or without changes
 
-            buttonDecryptSave.Enabled = true;
+            buttonMainDecryptSave.Enabled = true;
             MessageBox.Show("File saved", "Saving", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -830,7 +848,8 @@ namespace TS_SE_Tool
                     bool EconomySection = false, PlayerSection = false, GPSinserted = false;
                     bool editedcompany = false, visitedcitycompany = false, insidecompany = false, editedtruck = false, insidetruck = false;
                     int JobIndex = 0, truckaccCount = 0;
-                    string trucknameless = "";
+                    string trucknameless = "", cityname = "", companyname = "";
+                    
 
 
                     for (int line = 1; line < tempSavefileInMemory.Length; line++)
@@ -1254,12 +1273,10 @@ namespace TS_SE_Tool
                         if (SaveInMemLine.StartsWith("company :"))
                         {
                             insidecompany = true;
-                            string companycity = SaveInMemLine.Split(new char[] { '.' })[3].Split(new char[] { ' ' })[0];
+                            cityname = SaveInMemLine.Split(new char[] { '.' })[3].Split(new char[] { ' ' })[0];
+                            companyname = SaveInMemLine.Split(new char[] { '.' })[2];
 
-                            //if (VisitedCities.Find(x => x.Name == companycity && x.Visited == true) != null)
-                            //    visitedcitycompany = true;
-
-                            visitedcitycompany = VisitedCities.Find(x => x.Name == companycity).Visited;
+                            visitedcitycompany = VisitedCities.Find(x => x.Name == cityname).Visited;
 
                             /*
                             if(Array.Find(ListSavefileCompanysString, x => x.Equals(SaveInMemLine)) != null)
@@ -1283,14 +1300,22 @@ namespace TS_SE_Tool
                             }
                         }
 
-                        //fill new job data
-                        if (editedcompany && SaveInMemLine.StartsWith("job_offer_data : "))
+                        if (insidecompany && SaveInMemLine.StartsWith(" cargo_offer_seeds:"))
                         {
-                            writer.WriteLine(SaveInMemLine);
-                            writer.WriteLine(JobsListAdded[JobIndex]);
-                            line += 11;
-                            editedcompany = false;
+                            int[] tempSeeds = CitiesList.Find(x => x.CityName == cityname).Companies.Find(x => x.CompanyName == companyname).CragoSeeds;
 
+                            writer.WriteLine(" cargo_offer_seeds: " + tempSeeds.Count());
+                            if(tempSeeds.Count() > 0)
+                                for(int i = 0; i < tempSeeds.Count(); i++ )
+                                {
+                                    writer.WriteLine(" cargo_offer_seeds[" + i + "]: " + tempSeeds[i]);
+                                }
+
+                            while (!tempSavefileInMemory[line].StartsWith(" discovered:"))
+                            {
+                                line++;
+                            }
+                            line--;
                             continue;
                         }
 
@@ -1302,7 +1327,17 @@ namespace TS_SE_Tool
                             continue;
                         }
 
-                        
+                        //fill new job data
+                        if (editedcompany && SaveInMemLine.StartsWith("job_offer_data : "))
+                        {
+                            writer.WriteLine(SaveInMemLine);
+                            writer.WriteLine(JobsListAdded[JobIndex]);
+                            line += 11;
+                            editedcompany = false;
+
+                            continue;
+                        }
+
                         //find vehicle
                         if (SaveInMemLine.StartsWith("vehicle :"))
                         {
@@ -1449,7 +1484,7 @@ namespace TS_SE_Tool
                         string CorrectedNativeName = new string(a);
 
                         ToolStripItem TSitem = new ToolStripMenuItem();
-                        TSitem.Name = langNameShort + "_" + countryShort + "_ToolStripMenuItem";
+                        TSitem.Name = langNameShort + "_" + countryShort + "_ToolStripMenuItemTranslation";
                         TSitem.Text = CorrectedNativeName;
 
                         TSitem.Click += new EventHandler(toolstripChangeLanguage);//+= ChangeLanguage(TSitem,);
@@ -1462,7 +1497,7 @@ namespace TS_SE_Tool
                             TSitem.ImageScaling = ToolStripItemImageScaling.None;
                         }
 
-                        languageToolStripMenuItem.DropDownItems.Add(TSitem);
+                        toolStripMenuItemLanguage.DropDownItems.Add(TSitem);
 
                         byte[] bytes = Encoding.UTF8.GetBytes(flagpath);
                     }

@@ -138,6 +138,7 @@ namespace TS_SE_Tool
         private Bitmap ProgressBarGradient;
         private Image RepairImg, RefuelImg;
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, TruckPartsImg, TrailerPartsImg, GameIconeImg;
+
         private ImageList TabpagesImages;
 
         private CheckBox[,] SkillButtonArray;
@@ -183,7 +184,7 @@ namespace TS_SE_Tool
                 tabControlMain.TabPages[i].ImageIndex = i;
             }
 
-            listBoxAddedJobs.DrawMode = DrawMode.OwnerDrawVariable;
+            listBoxFreightMarketAddedJobs.DrawMode = DrawMode.OwnerDrawVariable;
         }
 
         private void FormMain_Shown(object sender, EventArgs e)

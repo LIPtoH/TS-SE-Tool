@@ -1438,7 +1438,7 @@ namespace TS_SE_Tool
 
         private void AddCargo()
         {
-            if ((((comboBoxSourceCity.SelectedIndex < 0) || (comboBoxSourceCompany.SelectedIndex < 0)) || ((comboBoxDestinationCity.SelectedIndex < 0) || (comboBoxDestinationCompany.SelectedIndex < 0))) || (comboBoxCargoList.SelectedIndex < 0) || comboBoxUrgency.SelectedIndex < 0)
+            if ((((comboBoxFreightMarketSourceCity.SelectedIndex < 0) || (comboBoxFreightMarketSourceCompany.SelectedIndex < 0)) || ((comboBoxFreightMarketDestinationCity.SelectedIndex < 0) || (comboBoxFreightMarketDestinationCompany.SelectedIndex < 0))) || (comboBoxFreightMarketCargoList.SelectedIndex < 0) || comboBoxFreightMarketUrgency.SelectedIndex < 0)
             {
                 LogWriter("Missing selection of Source, Destination or Cargo settings");
                 ShowStatusMessages("e", "error_job_parameters_not_filled");
@@ -1447,17 +1447,17 @@ namespace TS_SE_Tool
             {
                 ShowStatusMessages("i", "");
 
-                string SourceCity = comboBoxSourceCity.SelectedValue.ToString();
-                string SourceCompany = comboBoxSourceCompany.SelectedValue.ToString();
-                string DestinationCity = comboBoxDestinationCity.SelectedValue.ToString();
-                string DestinationCompany = comboBoxDestinationCompany.SelectedValue.ToString();
-                string Cargo = comboBoxCargoList.SelectedValue.ToString();
+                string SourceCity = comboBoxFreightMarketSourceCity.SelectedValue.ToString();
+                string SourceCompany = comboBoxFreightMarketSourceCompany.SelectedValue.ToString();
+                string DestinationCity = comboBoxFreightMarketDestinationCity.SelectedValue.ToString();
+                string DestinationCompany = comboBoxFreightMarketDestinationCompany.SelectedValue.ToString();
+                string Cargo = comboBoxFreightMarketCargoList.SelectedValue.ToString();
 
-                string SourceCityName = comboBoxSourceCity.Text;
-                string SourceCompanyName = comboBoxSourceCompany.Text;
-                string DestinationCityName = comboBoxDestinationCity.Text;
-                string DestinationCompanyName = comboBoxDestinationCompany.Text;
-                string CargoName = comboBoxCargoList.Text;
+                string SourceCityName = comboBoxFreightMarketSourceCity.Text;
+                string SourceCompanyName = comboBoxFreightMarketSourceCompany.Text;
+                string DestinationCityName = comboBoxFreightMarketDestinationCity.Text;
+                string DestinationCompanyName = comboBoxFreightMarketDestinationCompany.Text;
+                string CargoName = comboBoxFreightMarketCargoList.Text;
 
                 //comboBoxCargoList
 
@@ -1487,9 +1487,9 @@ namespace TS_SE_Tool
 
                 int CargoType = -1;
 
-                if (comboBoxCargoList.Text.Contains("[H]"))
+                if (comboBoxFreightMarketCargoList.Text.Contains("[H]"))
                     CargoType = 1;
-                else if (comboBoxCargoList.Text.Contains("[D]"))
+                else if (comboBoxFreightMarketCargoList.Text.Contains("[D]"))
                     CargoType = 2;
                 else
                     CargoType = 0;
@@ -1530,7 +1530,7 @@ namespace TS_SE_Tool
                 randvar = RandomValue.Next(tempDefVar.Value.Count());
                 TrailerVariant = tempDefVar.Value.ElementAt(randvar);//.Value[randvar];
 
-                string Urgency = comboBoxUrgency.SelectedValue.ToString();
+                string Urgency = comboBoxFreightMarketUrgency.SelectedValue.ToString();
 
                 ListSavefileCompanysString[JobsAmountAdded - 1] = "company : company.volatile." + SourceCompany + "." + SourceCity + " {";
                 EconomyEventUnitLinkStringList[JobsAmountAdded - 1] = " unit_link: company.volatile." + SourceCompany + "." + SourceCity;
@@ -1553,10 +1553,10 @@ namespace TS_SE_Tool
 
                 LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName+ " To " + DestinationCityName + " | " + DestinationCompanyName + "\n-----------\n" + JobsListAdded[JobsAmountAdded - 1] + "\n-----------");
 
-                buttonWriteSave.Enabled = true;
-                buttonClearJobList.Enabled = true;
+                buttonMainWriteSave.Enabled = true;
+                buttonFreightMarketClearJobList.Enabled = true;
 
-                listBoxAddedJobs.Items.Add(new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice)));
+                listBoxFreightMarketAddedJobs.Items.Add(new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice)));
 
                 if (distance != "11111")
                 {
@@ -1565,8 +1565,8 @@ namespace TS_SE_Tool
 
                 labelFreightMarketDistanceNumbers.Text = (JobsTotalDistance * DistanceMultiplier).ToString() + " " + ProgSettingsV.DistanceMes; //km";
 
-                comboBoxSourceCity.SelectedValue = comboBoxDestinationCity.SelectedValue;
-                comboBoxSourceCompany.SelectedValue = comboBoxDestinationCompany.SelectedValue;
+                comboBoxFreightMarketSourceCity.SelectedValue = comboBoxFreightMarketDestinationCity.SelectedValue;
+                comboBoxFreightMarketSourceCompany.SelectedValue = comboBoxFreightMarketDestinationCompany.SelectedValue;
 
 
                 int looptest;
@@ -1584,8 +1584,8 @@ namespace TS_SE_Tool
                 {
                     try
                     {
-                        comboBoxDestinationCity.SelectedValue = LoopStartCity; //.SelectedIndex = comboBoxDestinationCity.Items.IndexOf(LoopStartCity);
-                        comboBoxDestinationCompany.SelectedValue = LoopStartCompany;//.SelectedIndex = comboBoxDestinationCompany.Items.IndexOf(LoopStartCompany);
+                        comboBoxFreightMarketDestinationCity.SelectedValue = LoopStartCity; //.SelectedIndex = comboBoxDestinationCity.Items.IndexOf(LoopStartCity);
+                        comboBoxFreightMarketDestinationCompany.SelectedValue = LoopStartCompany;//.SelectedIndex = comboBoxDestinationCompany.Items.IndexOf(LoopStartCompany);
 
                         //DestinationCity = LoopStartCity;
                         //DestinationCompany = LoopStartCompany;

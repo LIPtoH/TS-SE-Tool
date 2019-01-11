@@ -30,237 +30,237 @@
         {
             this.components = new System.ComponentModel.Container();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemProgram = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.makeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemLanguage = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCreateTrFile = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBoxProfiles = new System.Windows.Forms.ComboBox();
-            this.buttonRefreshAll = new System.Windows.Forms.Button();
+            this.buttonProfilesAndSavesRefreshAll = new System.Windows.Forms.Button();
             this.comboBoxSaves = new System.Windows.Forms.ComboBox();
-            this.buttonDecryptSave = new System.Windows.Forms.Button();
+            this.buttonMainDecryptSave = new System.Windows.Forms.Button();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageProfile = new System.Windows.Forms.TabPage();
-            this.groupBoxPlayerLevel = new System.Windows.Forms.GroupBox();
-            this.buttonPlayerLvlMinus10 = new System.Windows.Forms.Button();
+            this.groupBoxProfilePlayerLevel = new System.Windows.Forms.GroupBox();
+            this.buttonPlayerLevelMinus10 = new System.Windows.Forms.Button();
             this.panelPlayerLevel = new System.Windows.Forms.Panel();
             this.labelPlayerLevelName = new System.Windows.Forms.Label();
             this.labelPlayerLevelNumber = new System.Windows.Forms.Label();
-            this.textBoxPlayerExperience = new System.Windows.Forms.TextBox();
             this.labelExperienceNxtLvlThreshhold = new System.Windows.Forms.Label();
-            this.buttonPlayerLvlPlus01 = new System.Windows.Forms.Button();
-            this.buttonPlayerLvlPlus10 = new System.Windows.Forms.Button();
-            this.buttonPlayerLvlMinus01 = new System.Windows.Forms.Button();
-            this.buttonPlayerLvlMax = new System.Windows.Forms.Button();
-            this.buttonPlayerLvlMin = new System.Windows.Forms.Button();
+            this.buttonPlayerLevelPlus01 = new System.Windows.Forms.Button();
+            this.buttonPlayerLevelPlus10 = new System.Windows.Forms.Button();
+            this.buttonPlayerLevelMinus01 = new System.Windows.Forms.Button();
+            this.buttonPlayerLevelMaximum = new System.Windows.Forms.Button();
+            this.buttonPlayerLevelMinimum = new System.Windows.Forms.Button();
             this.groupBoxProfileSkill = new System.Windows.Forms.GroupBox();
-            this.groupBoxUserColors = new System.Windows.Forms.GroupBox();
-            this.buttonProfileShareColors = new System.Windows.Forms.Button();
+            this.groupBoxProfileUserColors = new System.Windows.Forms.GroupBox();
+            this.buttonUserColorsShareColors = new System.Windows.Forms.Button();
             this.tabPageCompany = new System.Windows.Forms.TabPage();
             this.pictureBoxCompanyLogo = new System.Windows.Forms.PictureBox();
-            this.buttonGaragesSell = new System.Windows.Forms.Button();
-            this.buttonCitiesUnVisit = new System.Windows.Forms.Button();
-            this.buttonCitiesVisit = new System.Windows.Forms.Button();
-            this.buttonGaragesBuyUpgrade = new System.Windows.Forms.Button();
-            this.buttonGaragesUpgrade = new System.Windows.Forms.Button();
-            this.buttonGaragesBuy = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesSell = new System.Windows.Forms.Button();
+            this.buttonUserCompanyCitiesUnVisit = new System.Windows.Forms.Button();
+            this.buttonUserCompanyCitiesVisit = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesBuyUpgrade = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesUpgrade = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesBuy = new System.Windows.Forms.Button();
             this.labelUserCompanyMoneyAccount = new System.Windows.Forms.Label();
-            this.textBoxMoneyAccount = new System.Windows.Forms.TextBox();
+            this.textBoxUserCompanyMoneyAccount = new System.Windows.Forms.TextBox();
             this.labelUserCompanyVisitedCities = new System.Windows.Forms.Label();
             this.listBoxVisitedCities = new System.Windows.Forms.ListBox();
             this.labelUserCompanyGarages = new System.Windows.Forms.Label();
             this.listBoxGarages = new System.Windows.Forms.ListBox();
             this.labelUserCompanyCompanyName = new System.Windows.Forms.Label();
-            this.textBoxUserCompanyName = new System.Windows.Forms.TextBox();
-            this.comboBoxHQcity = new System.Windows.Forms.ComboBox();
+            this.textBoxUserCompanyCompanyName = new System.Windows.Forms.TextBox();
+            this.comboBoxUserCompanyHQcity = new System.Windows.Forms.ComboBox();
             this.labelUserCompanyHQcity = new System.Windows.Forms.Label();
             this.tabPageTruck = new System.Windows.Forms.TabPage();
-            this.groupBoxgroupBoxShareTruckSettings = new System.Windows.Forms.GroupBox();
-            this.buttonTruckTruckPaste = new System.Windows.Forms.Button();
-            this.buttonTruckDetailsPaste = new System.Windows.Forms.Button();
-            this.buttonTruckTruckCopy = new System.Windows.Forms.Button();
-            this.buttonTruckDetailsCopy = new System.Windows.Forms.Button();
-            this.buttonTruckPaintPaste = new System.Windows.Forms.Button();
-            this.buttonTruckPaintCopy = new System.Windows.Forms.Button();
+            this.groupBoxUserTruckShareTruckSettings = new System.Windows.Forms.GroupBox();
+            this.buttonShareTruckTruckTruckPaste = new System.Windows.Forms.Button();
+            this.buttonShareTruckTruckDetailsPaste = new System.Windows.Forms.Button();
+            this.buttonShareTruckTruckTruckCopy = new System.Windows.Forms.Button();
+            this.buttonShareTruckTruckDetailsCopy = new System.Windows.Forms.Button();
+            this.buttonShareTruckTruckPaintPaste = new System.Windows.Forms.Button();
+            this.buttonShareTruckTruckPaintCopy = new System.Windows.Forms.Button();
             this.buttonUserTruckSelectCurrent = new System.Windows.Forms.Button();
-            this.groupBoxTruckDetails = new System.Windows.Forms.GroupBox();
+            this.groupBoxUserTruckTruckDetails = new System.Windows.Forms.GroupBox();
             this.labelLicensePlate = new System.Windows.Forms.Label();
-            this.labelTruckDetailsLicensePlate = new System.Windows.Forms.Label();
+            this.labelUserTruckLicensePlate = new System.Windows.Forms.Label();
             this.buttonUserTruckSwitchCurrent = new System.Windows.Forms.Button();
-            this.comboBoxCompanyTrucks = new System.Windows.Forms.ComboBox();
-            this.labelTruck = new System.Windows.Forms.Label();
+            this.comboBoxUserTruckCompanyTrucks = new System.Windows.Forms.ComboBox();
+            this.labelUserTruckTruck = new System.Windows.Forms.Label();
             this.tabPageTrailer = new System.Windows.Forms.TabPage();
             this.label10 = new System.Windows.Forms.Label();
             this.buttonUserTrailerSelectCurrent = new System.Windows.Forms.Button();
-            this.groupBoxTrailerDetails = new System.Windows.Forms.GroupBox();
+            this.groupBoxUserTrailerTrailerDetails = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.labelTrailerLicensePlate = new System.Windows.Forms.Label();
+            this.labelUserTrailerLicensePlate = new System.Windows.Forms.Label();
             this.buttonUserTrailerSwitchCurrent = new System.Windows.Forms.Button();
-            this.comboBoxCompanyTrailers = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
+            this.comboBoxUserTrailerCompanyTrailers = new System.Windows.Forms.ComboBox();
+            this.labelUserTrailerTrailer = new System.Windows.Forms.Label();
             this.tabPageFreightMarket = new System.Windows.Forms.TabPage();
             this.labelFreightMarketDistanceNumbers = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
+            this.buttonFreightMarketRandomizeCargo = new System.Windows.Forms.Button();
             this.labelFreightMarketDistance = new System.Windows.Forms.Label();
-            this.listBoxAddedJobs = new System.Windows.Forms.ListBox();
-            this.checkBoxRandomDest = new System.Windows.Forms.CheckBox();
-            this.checkBoxFilterDestination = new System.Windows.Forms.CheckBox();
-            this.checkBoxFilterSource = new System.Windows.Forms.CheckBox();
+            this.listBoxFreightMarketAddedJobs = new System.Windows.Forms.ListBox();
+            this.checkBoxFreightMarketRandomDest = new System.Windows.Forms.CheckBox();
+            this.checkBoxFreightMarketFilterDestination = new System.Windows.Forms.CheckBox();
+            this.checkBoxFreightMarketFilterSource = new System.Windows.Forms.CheckBox();
             this.labelFreightMarketFilterMain = new System.Windows.Forms.Label();
-            this.labelFreightMarketCountry = new System.Windows.Forms.Label();
-            this.labelFreightMarketCompany = new System.Windows.Forms.Label();
-            this.comboBoxCompanies = new System.Windows.Forms.ComboBox();
-            this.comboBoxCountries = new System.Windows.Forms.ComboBox();
-            this.buttonClearJobList = new System.Windows.Forms.Button();
-            this.buttonAddJob = new System.Windows.Forms.Button();
+            this.labelFreightMarketCountryF = new System.Windows.Forms.Label();
+            this.labelFreightMarketCompanyF = new System.Windows.Forms.Label();
+            this.comboBoxFreightMarketCompanies = new System.Windows.Forms.ComboBox();
+            this.comboBoxFreightMarketCountries = new System.Windows.Forms.ComboBox();
+            this.buttonFreightMarketClearJobList = new System.Windows.Forms.Button();
+            this.buttonFreightMarketAddJob = new System.Windows.Forms.Button();
             this.labelFreightMarketUrgency = new System.Windows.Forms.Label();
-            this.comboBoxUrgency = new System.Windows.Forms.ComboBox();
+            this.comboBoxFreightMarketUrgency = new System.Windows.Forms.ComboBox();
             this.labelFreightMarketCargo = new System.Windows.Forms.Label();
-            this.comboBoxCargoList = new System.Windows.Forms.ComboBox();
-            this.comboBoxDestinationCompany = new System.Windows.Forms.ComboBox();
+            this.comboBoxFreightMarketCargoList = new System.Windows.Forms.ComboBox();
+            this.comboBoxFreightMarketDestinationCompany = new System.Windows.Forms.ComboBox();
             this.labelFreightMarketDestination = new System.Windows.Forms.Label();
-            this.comboBoxDestinationCity = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.comboBoxFreightMarketDestinationCity = new System.Windows.Forms.ComboBox();
+            this.labelFreightMarketCompany = new System.Windows.Forms.Label();
             this.labelFreightMarketCity = new System.Windows.Forms.Label();
-            this.comboBoxSourceCompany = new System.Windows.Forms.ComboBox();
+            this.comboBoxFreightMarketSourceCompany = new System.Windows.Forms.ComboBox();
             this.labelFreightMarketSource = new System.Windows.Forms.Label();
-            this.comboBoxSourceCity = new System.Windows.Forms.ComboBox();
+            this.comboBoxFreightMarketSourceCity = new System.Windows.Forms.ComboBox();
             this.tabPageCargoMarket = new System.Windows.Forms.TabPage();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.listBoxSourceCargoSeeds = new System.Windows.Forms.ListBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.comboBoxSourceCityCM = new System.Windows.Forms.ComboBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.comboBoxSourceCompanyCM = new System.Windows.Forms.ComboBox();
-            this.tabPageConvoyControl = new System.Windows.Forms.TabPage();
+            this.buttonCargoMarketRandomizeCargoCompany = new System.Windows.Forms.Button();
+            this.buttonCargoMarketRandomizeCargoCity = new System.Windows.Forms.Button();
+            this.buttonCargoMarketResetCargoCompany = new System.Windows.Forms.Button();
+            this.buttonCargoMarketResetCargoCity = new System.Windows.Forms.Button();
+            this.listBoxCargoMarketCargoListForCompany = new System.Windows.Forms.ListBox();
+            this.listBoxCargoMarketSourceCargoSeeds = new System.Windows.Forms.ListBox();
+            this.labelCargoMarketSource = new System.Windows.Forms.Label();
+            this.labelCargoMarketCompany = new System.Windows.Forms.Label();
+            this.comboBoxCargoMarketSourceCity = new System.Windows.Forms.ComboBox();
+            this.labelCargoMarketCity = new System.Windows.Forms.Label();
+            this.comboBoxSourceCargoMarketCompany = new System.Windows.Forms.ComboBox();
+            this.tabPageConvoyTools = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
-            this.button29 = new System.Windows.Forms.Button();
-            this.button28 = new System.Windows.Forms.Button();
-            this.buttonGPSCurrentPositionPaste = new System.Windows.Forms.Button();
-            this.buttonGPSCurrentPositionCopy = new System.Windows.Forms.Button();
-            this.buttonGPSStoredGPSPathPaste = new System.Windows.Forms.Button();
-            this.buttonGPSStoredGPSPathCopy = new System.Windows.Forms.Button();
-            this.buttonWriteSave = new System.Windows.Forms.Button();
-            this.buttonOpenSaveFolder = new System.Windows.Forms.Button();
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste = new System.Windows.Forms.Button();
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy = new System.Windows.Forms.Button();
+            this.buttonConvoyToolsGPSCurrentPositionPaste = new System.Windows.Forms.Button();
+            this.buttonConvoyToolsGPSCurrentPositionCopy = new System.Windows.Forms.Button();
+            this.buttonConvoyToolsGPSStoredGPSPathPaste = new System.Windows.Forms.Button();
+            this.buttonConvoyToolsGPSStoredGPSPathCopy = new System.Windows.Forms.Button();
+            this.buttonMainWriteSave = new System.Windows.Forms.Button();
+            this.buttonProfilesAndSavesOpenSaveFolder = new System.Windows.Forms.Button();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusMessages = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBarMain = new System.Windows.Forms.ToolStripProgressBar();
-            this.buttonLoadSave = new System.Windows.Forms.Button();
+            this.buttonMainLoadSave = new System.Windows.Forms.Button();
             this.pictureBoxProfileAvatar = new System.Windows.Forms.PictureBox();
-            this.buttonAddCustomFolder = new System.Windows.Forms.Button();
-            this.buttonGameETS = new System.Windows.Forms.Button();
-            this.buttonGameATS = new System.Windows.Forms.Button();
+            this.buttonMainGameSwitchCustomFolder = new System.Windows.Forms.Button();
+            this.buttonMainGameSwitchETS = new System.Windows.Forms.Button();
+            this.buttonMainGameSwitchATS = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.comboBoxPrevProfiles = new System.Windows.Forms.ComboBox();
-            this.checkBoxProfileBackups = new System.Windows.Forms.CheckBox();
+            this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBoxProfilesAndSaves = new System.Windows.Forms.GroupBox();
+            this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
+            this.labelPlayerExperience = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
-            this.groupBoxPlayerLevel.SuspendLayout();
+            this.groupBoxProfilePlayerLevel.SuspendLayout();
             this.panelPlayerLevel.SuspendLayout();
-            this.groupBoxUserColors.SuspendLayout();
+            this.groupBoxProfileUserColors.SuspendLayout();
             this.tabPageCompany.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCompanyLogo)).BeginInit();
             this.tabPageTruck.SuspendLayout();
-            this.groupBoxgroupBoxShareTruckSettings.SuspendLayout();
-            this.groupBoxTruckDetails.SuspendLayout();
+            this.groupBoxUserTruckShareTruckSettings.SuspendLayout();
+            this.groupBoxUserTruckTruckDetails.SuspendLayout();
             this.tabPageTrailer.SuspendLayout();
-            this.groupBoxTrailerDetails.SuspendLayout();
+            this.groupBoxUserTrailerTrailerDetails.SuspendLayout();
             this.tabPageFreightMarket.SuspendLayout();
             this.tabPageCargoMarket.SuspendLayout();
-            this.tabPageConvoyControl.SuspendLayout();
+            this.tabPageConvoyTools.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileAvatar)).BeginInit();
-            this.groupBoxProfilesAndSaves.SuspendLayout();
+            this.groupBoxMainProfilesAndSaves.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripMain
             // 
             this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemFile,
-            this.languageToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.toolStripMenuItemProgram,
+            this.toolStripMenuItemLanguage,
+            this.toolStripMenuItemHelp});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
             this.menuStripMain.Size = new System.Drawing.Size(504, 24);
             this.menuStripMain.TabIndex = 0;
             this.menuStripMain.Text = "menuStrip1";
             // 
-            // toolStripMenuItemFile
+            // toolStripMenuItemProgram
             // 
-            this.toolStripMenuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem,
+            this.toolStripMenuItemProgram.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemSettings,
             this.toolStripSeparator1,
-            this.exitToolStripMenuItem});
-            this.toolStripMenuItemFile.Name = "toolStripMenuItemFile";
-            this.toolStripMenuItemFile.Size = new System.Drawing.Size(65, 20);
-            this.toolStripMenuItemFile.Text = "Program";
+            this.toolStripMenuItemExit});
+            this.toolStripMenuItemProgram.Name = "toolStripMenuItemProgram";
+            this.toolStripMenuItemProgram.Size = new System.Drawing.Size(65, 20);
+            this.toolStripMenuItemProgram.Text = "Program";
             // 
-            // settingsToolStripMenuItem
+            // toolStripMenuItemSettings
             // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.toolStripMenuItemSettings.Name = "toolStripMenuItemSettings";
+            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemSettings.Text = "Settings";
+            this.toolStripMenuItemSettings.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
-            // exitToolStripMenuItem
+            // toolStripMenuItemExit
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemExit.Text = "Exit";
+            this.toolStripMenuItemExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // languageToolStripMenuItem
+            // toolStripMenuItemLanguage
             // 
-            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.makeToolStripMenuItem,
+            this.toolStripMenuItemLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemCreateTrFile,
             this.toolStripSeparator2});
-            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            this.languageToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.languageToolStripMenuItem.Text = "Language";
+            this.toolStripMenuItemLanguage.Name = "toolStripMenuItemLanguage";
+            this.toolStripMenuItemLanguage.Size = new System.Drawing.Size(71, 20);
+            this.toolStripMenuItemLanguage.Text = "Language";
             // 
-            // makeToolStripMenuItem
+            // toolStripMenuItemCreateTrFile
             // 
-            this.makeToolStripMenuItem.Name = "makeToolStripMenuItem";
-            this.makeToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.makeToolStripMenuItem.Text = "Make translation";
-            this.makeToolStripMenuItem.Click += new System.EventHandler(this.makeToolStripMenuItem_Click);
+            this.toolStripMenuItemCreateTrFile.Name = "toolStripMenuItemCreateTrFile";
+            this.toolStripMenuItemCreateTrFile.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemCreateTrFile.Text = "Make translation";
+            this.toolStripMenuItemCreateTrFile.Click += new System.EventHandler(this.makeToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
-            // helpToolStripMenuItem
+            // toolStripMenuItemHelp
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.toolStripMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemAbout});
+            this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
+            this.toolStripMenuItemHelp.Size = new System.Drawing.Size(44, 20);
+            this.toolStripMenuItemHelp.Text = "Help";
             // 
-            // aboutToolStripMenuItem
+            // toolStripMenuItemAbout
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAbout.Text = "About";
+            this.toolStripMenuItemAbout.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // comboBoxProfiles
             // 
@@ -272,15 +272,15 @@
             this.comboBoxProfiles.TabIndex = 1;
             this.comboBoxProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfiles_SelectedIndexChanged);
             // 
-            // buttonRefreshAll
+            // buttonProfilesAndSavesRefreshAll
             // 
-            this.buttonRefreshAll.Location = new System.Drawing.Point(327, 19);
-            this.buttonRefreshAll.Name = "buttonRefreshAll";
-            this.buttonRefreshAll.Size = new System.Drawing.Size(66, 52);
-            this.buttonRefreshAll.TabIndex = 2;
-            this.buttonRefreshAll.Text = "Refresh";
-            this.buttonRefreshAll.UseVisualStyleBackColor = true;
-            this.buttonRefreshAll.Click += new System.EventHandler(this.buttonRefreshAll_Click);
+            this.buttonProfilesAndSavesRefreshAll.Location = new System.Drawing.Point(327, 19);
+            this.buttonProfilesAndSavesRefreshAll.Name = "buttonProfilesAndSavesRefreshAll";
+            this.buttonProfilesAndSavesRefreshAll.Size = new System.Drawing.Size(66, 52);
+            this.buttonProfilesAndSavesRefreshAll.TabIndex = 2;
+            this.buttonProfilesAndSavesRefreshAll.Text = "Refresh";
+            this.buttonProfilesAndSavesRefreshAll.UseVisualStyleBackColor = true;
+            this.buttonProfilesAndSavesRefreshAll.Click += new System.EventHandler(this.buttonRefreshAll_Click);
             // 
             // comboBoxSaves
             // 
@@ -291,15 +291,15 @@
             this.comboBoxSaves.Size = new System.Drawing.Size(160, 21);
             this.comboBoxSaves.TabIndex = 3;
             // 
-            // buttonDecryptSave
+            // buttonMainDecryptSave
             // 
-            this.buttonDecryptSave.Location = new System.Drawing.Point(420, 61);
-            this.buttonDecryptSave.Name = "buttonDecryptSave";
-            this.buttonDecryptSave.Size = new System.Drawing.Size(76, 23);
-            this.buttonDecryptSave.TabIndex = 5;
-            this.buttonDecryptSave.Text = "Decrypt";
-            this.buttonDecryptSave.UseVisualStyleBackColor = true;
-            this.buttonDecryptSave.Click += new System.EventHandler(this.buttonDecryptSave_Click);
+            this.buttonMainDecryptSave.Location = new System.Drawing.Point(420, 61);
+            this.buttonMainDecryptSave.Name = "buttonMainDecryptSave";
+            this.buttonMainDecryptSave.Size = new System.Drawing.Size(76, 23);
+            this.buttonMainDecryptSave.TabIndex = 5;
+            this.buttonMainDecryptSave.Text = "Decrypt";
+            this.buttonMainDecryptSave.UseVisualStyleBackColor = true;
+            this.buttonMainDecryptSave.Click += new System.EventHandler(this.buttonDecryptSave_Click);
             // 
             // tabControlMain
             // 
@@ -309,7 +309,7 @@
             this.tabControlMain.Controls.Add(this.tabPageTrailer);
             this.tabControlMain.Controls.Add(this.tabPageFreightMarket);
             this.tabControlMain.Controls.Add(this.tabPageCargoMarket);
-            this.tabControlMain.Controls.Add(this.tabPageConvoyControl);
+            this.tabControlMain.Controls.Add(this.tabPageConvoyTools);
             this.tabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabControlMain.ItemSize = new System.Drawing.Size(82, 24);
             this.tabControlMain.Location = new System.Drawing.Point(12, 167);
@@ -320,9 +320,9 @@
             // 
             // tabPageProfile
             // 
-            this.tabPageProfile.Controls.Add(this.groupBoxPlayerLevel);
+            this.tabPageProfile.Controls.Add(this.groupBoxProfilePlayerLevel);
             this.tabPageProfile.Controls.Add(this.groupBoxProfileSkill);
-            this.tabPageProfile.Controls.Add(this.groupBoxUserColors);
+            this.tabPageProfile.Controls.Add(this.groupBoxProfileUserColors);
             this.tabPageProfile.Location = new System.Drawing.Point(4, 28);
             this.tabPageProfile.Name = "tabPageProfile";
             this.tabPageProfile.Padding = new System.Windows.Forms.Padding(3);
@@ -331,33 +331,33 @@
             this.tabPageProfile.Text = "Profile";
             this.tabPageProfile.UseVisualStyleBackColor = true;
             // 
-            // groupBoxPlayerLevel
+            // groupBoxProfilePlayerLevel
             // 
-            this.groupBoxPlayerLevel.Controls.Add(this.buttonPlayerLvlMinus10);
-            this.groupBoxPlayerLevel.Controls.Add(this.panelPlayerLevel);
-            this.groupBoxPlayerLevel.Controls.Add(this.textBoxPlayerExperience);
-            this.groupBoxPlayerLevel.Controls.Add(this.labelExperienceNxtLvlThreshhold);
-            this.groupBoxPlayerLevel.Controls.Add(this.buttonPlayerLvlPlus01);
-            this.groupBoxPlayerLevel.Controls.Add(this.buttonPlayerLvlPlus10);
-            this.groupBoxPlayerLevel.Controls.Add(this.buttonPlayerLvlMinus01);
-            this.groupBoxPlayerLevel.Controls.Add(this.buttonPlayerLvlMax);
-            this.groupBoxPlayerLevel.Controls.Add(this.buttonPlayerLvlMin);
-            this.groupBoxPlayerLevel.Location = new System.Drawing.Point(6, 6);
-            this.groupBoxPlayerLevel.Name = "groupBoxPlayerLevel";
-            this.groupBoxPlayerLevel.Size = new System.Drawing.Size(392, 83);
-            this.groupBoxPlayerLevel.TabIndex = 0;
-            this.groupBoxPlayerLevel.TabStop = false;
-            this.groupBoxPlayerLevel.Text = "Player level";
+            this.groupBoxProfilePlayerLevel.Controls.Add(this.labelPlayerExperience);
+            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelMinus10);
+            this.groupBoxProfilePlayerLevel.Controls.Add(this.panelPlayerLevel);
+            this.groupBoxProfilePlayerLevel.Controls.Add(this.labelExperienceNxtLvlThreshhold);
+            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelPlus01);
+            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelPlus10);
+            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelMinus01);
+            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelMaximum);
+            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelMinimum);
+            this.groupBoxProfilePlayerLevel.Location = new System.Drawing.Point(6, 6);
+            this.groupBoxProfilePlayerLevel.Name = "groupBoxProfilePlayerLevel";
+            this.groupBoxProfilePlayerLevel.Size = new System.Drawing.Size(392, 83);
+            this.groupBoxProfilePlayerLevel.TabIndex = 0;
+            this.groupBoxProfilePlayerLevel.TabStop = false;
+            this.groupBoxProfilePlayerLevel.Text = "Player level";
             // 
-            // buttonPlayerLvlMinus10
+            // buttonPlayerLevelMinus10
             // 
-            this.buttonPlayerLvlMinus10.Location = new System.Drawing.Point(6, 19);
-            this.buttonPlayerLvlMinus10.Name = "buttonPlayerLvlMinus10";
-            this.buttonPlayerLvlMinus10.Size = new System.Drawing.Size(36, 23);
-            this.buttonPlayerLvlMinus10.TabIndex = 37;
-            this.buttonPlayerLvlMinus10.Text = "- 10";
-            this.buttonPlayerLvlMinus10.UseVisualStyleBackColor = true;
-            this.buttonPlayerLvlMinus10.Click += new System.EventHandler(this.buttonPlayerLvlMinus10_Click);
+            this.buttonPlayerLevelMinus10.Location = new System.Drawing.Point(6, 19);
+            this.buttonPlayerLevelMinus10.Name = "buttonPlayerLevelMinus10";
+            this.buttonPlayerLevelMinus10.Size = new System.Drawing.Size(36, 23);
+            this.buttonPlayerLevelMinus10.TabIndex = 37;
+            this.buttonPlayerLevelMinus10.Text = "- 10";
+            this.buttonPlayerLevelMinus10.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelMinus10.Click += new System.EventHandler(this.buttonPlayerLvlMinus10_Click);
             // 
             // panelPlayerLevel
             // 
@@ -389,16 +389,6 @@
             this.labelPlayerLevelNumber.Text = "000";
             this.labelPlayerLevelNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBoxPlayerExperience
-            // 
-            this.textBoxPlayerExperience.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxPlayerExperience.Location = new System.Drawing.Point(110, 54);
-            this.textBoxPlayerExperience.Name = "textBoxPlayerExperience";
-            this.textBoxPlayerExperience.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.textBoxPlayerExperience.Size = new System.Drawing.Size(74, 13);
-            this.textBoxPlayerExperience.TabIndex = 5;
-            this.textBoxPlayerExperience.Text = "0";
-            // 
             // labelExperienceNxtLvlThreshhold
             // 
             this.labelExperienceNxtLvlThreshhold.AutoSize = true;
@@ -408,55 +398,55 @@
             this.labelExperienceNxtLvlThreshhold.TabIndex = 38;
             this.labelExperienceNxtLvlThreshhold.Text = "/   0";
             // 
-            // buttonPlayerLvlPlus01
+            // buttonPlayerLevelPlus01
             // 
-            this.buttonPlayerLvlPlus01.Location = new System.Drawing.Point(303, 19);
-            this.buttonPlayerLvlPlus01.Name = "buttonPlayerLvlPlus01";
-            this.buttonPlayerLvlPlus01.Size = new System.Drawing.Size(36, 23);
-            this.buttonPlayerLvlPlus01.TabIndex = 12;
-            this.buttonPlayerLvlPlus01.Text = "+ 1";
-            this.buttonPlayerLvlPlus01.UseVisualStyleBackColor = true;
-            this.buttonPlayerLvlPlus01.Click += new System.EventHandler(this.buttonPlayerLvlPlus01_Click);
+            this.buttonPlayerLevelPlus01.Location = new System.Drawing.Point(303, 19);
+            this.buttonPlayerLevelPlus01.Name = "buttonPlayerLevelPlus01";
+            this.buttonPlayerLevelPlus01.Size = new System.Drawing.Size(36, 23);
+            this.buttonPlayerLevelPlus01.TabIndex = 12;
+            this.buttonPlayerLevelPlus01.Text = "+ 1";
+            this.buttonPlayerLevelPlus01.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelPlus01.Click += new System.EventHandler(this.buttonPlayerLvlPlus01_Click);
             // 
-            // buttonPlayerLvlPlus10
+            // buttonPlayerLevelPlus10
             // 
-            this.buttonPlayerLvlPlus10.Location = new System.Drawing.Point(345, 19);
-            this.buttonPlayerLvlPlus10.Name = "buttonPlayerLvlPlus10";
-            this.buttonPlayerLvlPlus10.Size = new System.Drawing.Size(36, 23);
-            this.buttonPlayerLvlPlus10.TabIndex = 13;
-            this.buttonPlayerLvlPlus10.Text = "+ 10";
-            this.buttonPlayerLvlPlus10.UseVisualStyleBackColor = true;
-            this.buttonPlayerLvlPlus10.Click += new System.EventHandler(this.buttonPlayerLvlPlus10_Click);
+            this.buttonPlayerLevelPlus10.Location = new System.Drawing.Point(345, 19);
+            this.buttonPlayerLevelPlus10.Name = "buttonPlayerLevelPlus10";
+            this.buttonPlayerLevelPlus10.Size = new System.Drawing.Size(36, 23);
+            this.buttonPlayerLevelPlus10.TabIndex = 13;
+            this.buttonPlayerLevelPlus10.Text = "+ 10";
+            this.buttonPlayerLevelPlus10.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelPlus10.Click += new System.EventHandler(this.buttonPlayerLvlPlus10_Click);
             // 
-            // buttonPlayerLvlMinus01
+            // buttonPlayerLevelMinus01
             // 
-            this.buttonPlayerLvlMinus01.Location = new System.Drawing.Point(48, 19);
-            this.buttonPlayerLvlMinus01.Name = "buttonPlayerLvlMinus01";
-            this.buttonPlayerLvlMinus01.Size = new System.Drawing.Size(36, 23);
-            this.buttonPlayerLvlMinus01.TabIndex = 36;
-            this.buttonPlayerLvlMinus01.Text = "- 1";
-            this.buttonPlayerLvlMinus01.UseVisualStyleBackColor = true;
-            this.buttonPlayerLvlMinus01.Click += new System.EventHandler(this.buttonPlayerLvlMinus01_Click);
+            this.buttonPlayerLevelMinus01.Location = new System.Drawing.Point(48, 19);
+            this.buttonPlayerLevelMinus01.Name = "buttonPlayerLevelMinus01";
+            this.buttonPlayerLevelMinus01.Size = new System.Drawing.Size(36, 23);
+            this.buttonPlayerLevelMinus01.TabIndex = 36;
+            this.buttonPlayerLevelMinus01.Text = "- 1";
+            this.buttonPlayerLevelMinus01.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelMinus01.Click += new System.EventHandler(this.buttonPlayerLvlMinus01_Click);
             // 
-            // buttonPlayerLvlMax
+            // buttonPlayerLevelMaximum
             // 
-            this.buttonPlayerLvlMax.Location = new System.Drawing.Point(303, 48);
-            this.buttonPlayerLvlMax.Name = "buttonPlayerLvlMax";
-            this.buttonPlayerLvlMax.Size = new System.Drawing.Size(78, 23);
-            this.buttonPlayerLvlMax.TabIndex = 14;
-            this.buttonPlayerLvlMax.Text = "MAX >>";
-            this.buttonPlayerLvlMax.UseVisualStyleBackColor = true;
-            this.buttonPlayerLvlMax.Click += new System.EventHandler(this.buttonPlayerLvlMax_Click);
+            this.buttonPlayerLevelMaximum.Location = new System.Drawing.Point(303, 48);
+            this.buttonPlayerLevelMaximum.Name = "buttonPlayerLevelMaximum";
+            this.buttonPlayerLevelMaximum.Size = new System.Drawing.Size(78, 23);
+            this.buttonPlayerLevelMaximum.TabIndex = 14;
+            this.buttonPlayerLevelMaximum.Text = "MAX >>";
+            this.buttonPlayerLevelMaximum.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelMaximum.Click += new System.EventHandler(this.buttonPlayerLvlMax_Click);
             // 
-            // buttonPlayerLvlMin
+            // buttonPlayerLevelMinimum
             // 
-            this.buttonPlayerLvlMin.Location = new System.Drawing.Point(6, 48);
-            this.buttonPlayerLvlMin.Name = "buttonPlayerLvlMin";
-            this.buttonPlayerLvlMin.Size = new System.Drawing.Size(78, 23);
-            this.buttonPlayerLvlMin.TabIndex = 35;
-            this.buttonPlayerLvlMin.Text = "<< MIN";
-            this.buttonPlayerLvlMin.UseVisualStyleBackColor = true;
-            this.buttonPlayerLvlMin.Click += new System.EventHandler(this.buttonPlayerLvlMin_Click);
+            this.buttonPlayerLevelMinimum.Location = new System.Drawing.Point(6, 48);
+            this.buttonPlayerLevelMinimum.Name = "buttonPlayerLevelMinimum";
+            this.buttonPlayerLevelMinimum.Size = new System.Drawing.Size(78, 23);
+            this.buttonPlayerLevelMinimum.TabIndex = 35;
+            this.buttonPlayerLevelMinimum.Text = "<< MIN";
+            this.buttonPlayerLevelMinimum.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelMinimum.Click += new System.EventHandler(this.buttonPlayerLvlMin_Click);
             // 
             // groupBoxProfileSkill
             // 
@@ -467,44 +457,44 @@
             this.groupBoxProfileSkill.TabStop = false;
             this.groupBoxProfileSkill.Text = "Skills";
             // 
-            // groupBoxUserColors
+            // groupBoxProfileUserColors
             // 
-            this.groupBoxUserColors.Controls.Add(this.buttonProfileShareColors);
-            this.groupBoxUserColors.Location = new System.Drawing.Point(404, 6);
-            this.groupBoxUserColors.Name = "groupBoxUserColors";
-            this.groupBoxUserColors.Size = new System.Drawing.Size(70, 458);
-            this.groupBoxUserColors.TabIndex = 7;
-            this.groupBoxUserColors.TabStop = false;
-            this.groupBoxUserColors.Text = "User colors";
+            this.groupBoxProfileUserColors.Controls.Add(this.buttonUserColorsShareColors);
+            this.groupBoxProfileUserColors.Location = new System.Drawing.Point(404, 6);
+            this.groupBoxProfileUserColors.Name = "groupBoxProfileUserColors";
+            this.groupBoxProfileUserColors.Size = new System.Drawing.Size(70, 458);
+            this.groupBoxProfileUserColors.TabIndex = 7;
+            this.groupBoxProfileUserColors.TabStop = false;
+            this.groupBoxProfileUserColors.Text = "User colors";
             // 
-            // buttonProfileShareColors
+            // buttonUserColorsShareColors
             // 
-            this.buttonProfileShareColors.Location = new System.Drawing.Point(6, 401);
-            this.buttonProfileShareColors.Name = "buttonProfileShareColors";
-            this.buttonProfileShareColors.Size = new System.Drawing.Size(58, 51);
-            this.buttonProfileShareColors.TabIndex = 0;
-            this.buttonProfileShareColors.Text = "Share colors";
-            this.buttonProfileShareColors.UseVisualStyleBackColor = true;
-            this.buttonProfileShareColors.Click += new System.EventHandler(this.buttonProfileShareColors_Click);
+            this.buttonUserColorsShareColors.Location = new System.Drawing.Point(6, 401);
+            this.buttonUserColorsShareColors.Name = "buttonUserColorsShareColors";
+            this.buttonUserColorsShareColors.Size = new System.Drawing.Size(58, 51);
+            this.buttonUserColorsShareColors.TabIndex = 0;
+            this.buttonUserColorsShareColors.Text = "Share colors";
+            this.buttonUserColorsShareColors.UseVisualStyleBackColor = true;
+            this.buttonUserColorsShareColors.Click += new System.EventHandler(this.buttonProfileShareColors_Click);
             // 
             // tabPageCompany
             // 
             this.tabPageCompany.Controls.Add(this.pictureBoxCompanyLogo);
-            this.tabPageCompany.Controls.Add(this.buttonGaragesSell);
-            this.tabPageCompany.Controls.Add(this.buttonCitiesUnVisit);
-            this.tabPageCompany.Controls.Add(this.buttonCitiesVisit);
-            this.tabPageCompany.Controls.Add(this.buttonGaragesBuyUpgrade);
-            this.tabPageCompany.Controls.Add(this.buttonGaragesUpgrade);
-            this.tabPageCompany.Controls.Add(this.buttonGaragesBuy);
+            this.tabPageCompany.Controls.Add(this.buttonUserCompanyGaragesSell);
+            this.tabPageCompany.Controls.Add(this.buttonUserCompanyCitiesUnVisit);
+            this.tabPageCompany.Controls.Add(this.buttonUserCompanyCitiesVisit);
+            this.tabPageCompany.Controls.Add(this.buttonUserCompanyGaragesBuyUpgrade);
+            this.tabPageCompany.Controls.Add(this.buttonUserCompanyGaragesUpgrade);
+            this.tabPageCompany.Controls.Add(this.buttonUserCompanyGaragesBuy);
             this.tabPageCompany.Controls.Add(this.labelUserCompanyMoneyAccount);
-            this.tabPageCompany.Controls.Add(this.textBoxMoneyAccount);
+            this.tabPageCompany.Controls.Add(this.textBoxUserCompanyMoneyAccount);
             this.tabPageCompany.Controls.Add(this.labelUserCompanyVisitedCities);
             this.tabPageCompany.Controls.Add(this.listBoxVisitedCities);
             this.tabPageCompany.Controls.Add(this.labelUserCompanyGarages);
             this.tabPageCompany.Controls.Add(this.listBoxGarages);
             this.tabPageCompany.Controls.Add(this.labelUserCompanyCompanyName);
-            this.tabPageCompany.Controls.Add(this.textBoxUserCompanyName);
-            this.tabPageCompany.Controls.Add(this.comboBoxHQcity);
+            this.tabPageCompany.Controls.Add(this.textBoxUserCompanyCompanyName);
+            this.tabPageCompany.Controls.Add(this.comboBoxUserCompanyHQcity);
             this.tabPageCompany.Controls.Add(this.labelUserCompanyHQcity);
             this.tabPageCompany.Location = new System.Drawing.Point(4, 28);
             this.tabPageCompany.Name = "tabPageCompany";
@@ -524,69 +514,69 @@
             this.pictureBoxCompanyLogo.TabIndex = 21;
             this.pictureBoxCompanyLogo.TabStop = false;
             // 
-            // buttonGaragesSell
+            // buttonUserCompanyGaragesSell
             // 
-            this.buttonGaragesSell.Enabled = false;
-            this.buttonGaragesSell.Location = new System.Drawing.Point(394, 397);
-            this.buttonGaragesSell.Name = "buttonGaragesSell";
-            this.buttonGaragesSell.Size = new System.Drawing.Size(80, 56);
-            this.buttonGaragesSell.TabIndex = 28;
-            this.buttonGaragesSell.Text = "Sell";
-            this.buttonGaragesSell.UseVisualStyleBackColor = true;
-            this.buttonGaragesSell.Click += new System.EventHandler(this.buttonGaragesSell_Click);
+            this.buttonUserCompanyGaragesSell.Enabled = false;
+            this.buttonUserCompanyGaragesSell.Location = new System.Drawing.Point(394, 397);
+            this.buttonUserCompanyGaragesSell.Name = "buttonUserCompanyGaragesSell";
+            this.buttonUserCompanyGaragesSell.Size = new System.Drawing.Size(80, 56);
+            this.buttonUserCompanyGaragesSell.TabIndex = 28;
+            this.buttonUserCompanyGaragesSell.Text = "Sell";
+            this.buttonUserCompanyGaragesSell.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesSell.Click += new System.EventHandler(this.buttonGaragesSell_Click);
             // 
-            // buttonCitiesUnVisit
+            // buttonUserCompanyCitiesUnVisit
             // 
-            this.buttonCitiesUnVisit.Location = new System.Drawing.Point(111, 397);
-            this.buttonCitiesUnVisit.Name = "buttonCitiesUnVisit";
-            this.buttonCitiesUnVisit.Size = new System.Drawing.Size(101, 55);
-            this.buttonCitiesUnVisit.TabIndex = 27;
-            this.buttonCitiesUnVisit.Text = "Unvisit";
-            this.buttonCitiesUnVisit.UseVisualStyleBackColor = true;
-            this.buttonCitiesUnVisit.Click += new System.EventHandler(this.buttonCitiesUnVisit_Click);
+            this.buttonUserCompanyCitiesUnVisit.Location = new System.Drawing.Point(111, 397);
+            this.buttonUserCompanyCitiesUnVisit.Name = "buttonUserCompanyCitiesUnVisit";
+            this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(101, 55);
+            this.buttonUserCompanyCitiesUnVisit.TabIndex = 27;
+            this.buttonUserCompanyCitiesUnVisit.Text = "Unvisit";
+            this.buttonUserCompanyCitiesUnVisit.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyCitiesUnVisit.Click += new System.EventHandler(this.buttonCitiesUnVisit_Click);
             // 
-            // buttonCitiesVisit
+            // buttonUserCompanyCitiesVisit
             // 
-            this.buttonCitiesVisit.Location = new System.Drawing.Point(9, 397);
-            this.buttonCitiesVisit.Name = "buttonCitiesVisit";
-            this.buttonCitiesVisit.Size = new System.Drawing.Size(96, 55);
-            this.buttonCitiesVisit.TabIndex = 26;
-            this.buttonCitiesVisit.Text = "Visit";
-            this.buttonCitiesVisit.UseVisualStyleBackColor = true;
-            this.buttonCitiesVisit.Click += new System.EventHandler(this.buttonCitiesVisit_Click);
+            this.buttonUserCompanyCitiesVisit.Location = new System.Drawing.Point(9, 397);
+            this.buttonUserCompanyCitiesVisit.Name = "buttonUserCompanyCitiesVisit";
+            this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(96, 55);
+            this.buttonUserCompanyCitiesVisit.TabIndex = 26;
+            this.buttonUserCompanyCitiesVisit.Text = "Visit";
+            this.buttonUserCompanyCitiesVisit.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyCitiesVisit.Click += new System.EventHandler(this.buttonCitiesVisit_Click);
             // 
-            // buttonGaragesBuyUpgrade
+            // buttonUserCompanyGaragesBuyUpgrade
             // 
-            this.buttonGaragesBuyUpgrade.Enabled = false;
-            this.buttonGaragesBuyUpgrade.Location = new System.Drawing.Point(218, 426);
-            this.buttonGaragesBuyUpgrade.Name = "buttonGaragesBuyUpgrade";
-            this.buttonGaragesBuyUpgrade.Size = new System.Drawing.Size(170, 26);
-            this.buttonGaragesBuyUpgrade.TabIndex = 25;
-            this.buttonGaragesBuyUpgrade.Text = "Buy and Upgrade";
-            this.buttonGaragesBuyUpgrade.UseVisualStyleBackColor = true;
-            this.buttonGaragesBuyUpgrade.Click += new System.EventHandler(this.buttonGaragesBuyUpgrade_Click);
+            this.buttonUserCompanyGaragesBuyUpgrade.Enabled = false;
+            this.buttonUserCompanyGaragesBuyUpgrade.Location = new System.Drawing.Point(218, 426);
+            this.buttonUserCompanyGaragesBuyUpgrade.Name = "buttonUserCompanyGaragesBuyUpgrade";
+            this.buttonUserCompanyGaragesBuyUpgrade.Size = new System.Drawing.Size(170, 26);
+            this.buttonUserCompanyGaragesBuyUpgrade.TabIndex = 25;
+            this.buttonUserCompanyGaragesBuyUpgrade.Text = "Buy and Upgrade";
+            this.buttonUserCompanyGaragesBuyUpgrade.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesBuyUpgrade.Click += new System.EventHandler(this.buttonGaragesBuyUpgrade_Click);
             // 
-            // buttonGaragesUpgrade
+            // buttonUserCompanyGaragesUpgrade
             // 
-            this.buttonGaragesUpgrade.Enabled = false;
-            this.buttonGaragesUpgrade.Location = new System.Drawing.Point(306, 397);
-            this.buttonGaragesUpgrade.Name = "buttonGaragesUpgrade";
-            this.buttonGaragesUpgrade.Size = new System.Drawing.Size(82, 23);
-            this.buttonGaragesUpgrade.TabIndex = 24;
-            this.buttonGaragesUpgrade.Text = "Upgrade";
-            this.buttonGaragesUpgrade.UseVisualStyleBackColor = true;
-            this.buttonGaragesUpgrade.Click += new System.EventHandler(this.buttonGaragesUpgrade_Click);
+            this.buttonUserCompanyGaragesUpgrade.Enabled = false;
+            this.buttonUserCompanyGaragesUpgrade.Location = new System.Drawing.Point(306, 397);
+            this.buttonUserCompanyGaragesUpgrade.Name = "buttonUserCompanyGaragesUpgrade";
+            this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(82, 23);
+            this.buttonUserCompanyGaragesUpgrade.TabIndex = 24;
+            this.buttonUserCompanyGaragesUpgrade.Text = "Upgrade";
+            this.buttonUserCompanyGaragesUpgrade.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesUpgrade.Click += new System.EventHandler(this.buttonGaragesUpgrade_Click);
             // 
-            // buttonGaragesBuy
+            // buttonUserCompanyGaragesBuy
             // 
-            this.buttonGaragesBuy.Enabled = false;
-            this.buttonGaragesBuy.Location = new System.Drawing.Point(218, 397);
-            this.buttonGaragesBuy.Name = "buttonGaragesBuy";
-            this.buttonGaragesBuy.Size = new System.Drawing.Size(82, 23);
-            this.buttonGaragesBuy.TabIndex = 23;
-            this.buttonGaragesBuy.Text = "Buy";
-            this.buttonGaragesBuy.UseVisualStyleBackColor = true;
-            this.buttonGaragesBuy.Click += new System.EventHandler(this.buttonGaragesBuy_Click);
+            this.buttonUserCompanyGaragesBuy.Enabled = false;
+            this.buttonUserCompanyGaragesBuy.Location = new System.Drawing.Point(218, 397);
+            this.buttonUserCompanyGaragesBuy.Name = "buttonUserCompanyGaragesBuy";
+            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(82, 23);
+            this.buttonUserCompanyGaragesBuy.TabIndex = 23;
+            this.buttonUserCompanyGaragesBuy.Text = "Buy";
+            this.buttonUserCompanyGaragesBuy.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesBuy.Click += new System.EventHandler(this.buttonGaragesBuy_Click);
             // 
             // labelUserCompanyMoneyAccount
             // 
@@ -597,15 +587,15 @@
             this.labelUserCompanyMoneyAccount.TabIndex = 22;
             this.labelUserCompanyMoneyAccount.Text = "Account money";
             // 
-            // textBoxMoneyAccount
+            // textBoxUserCompanyMoneyAccount
             // 
-            this.textBoxMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxMoneyAccount.Location = new System.Drawing.Point(218, 41);
-            this.textBoxMoneyAccount.Name = "textBoxMoneyAccount";
-            this.textBoxMoneyAccount.Size = new System.Drawing.Size(138, 20);
-            this.textBoxMoneyAccount.TabIndex = 21;
-            this.textBoxMoneyAccount.TextChanged += new System.EventHandler(this.textBoxMoneyAccount_TextChanged);
-            this.textBoxMoneyAccount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxMoneyAccount_KeyPress);
+            this.textBoxUserCompanyMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(218, 41);
+            this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
+            this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(138, 20);
+            this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
+            this.textBoxUserCompanyMoneyAccount.TextChanged += new System.EventHandler(this.textBoxMoneyAccount_TextChanged);
+            this.textBoxUserCompanyMoneyAccount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxMoneyAccount_KeyPress);
             // 
             // labelUserCompanyVisitedCities
             // 
@@ -660,22 +650,22 @@
             this.labelUserCompanyCompanyName.TabIndex = 15;
             this.labelUserCompanyCompanyName.Text = "Company name";
             // 
-            // textBoxUserCompanyName
+            // textBoxUserCompanyCompanyName
             // 
-            this.textBoxUserCompanyName.Enabled = false;
-            this.textBoxUserCompanyName.Location = new System.Drawing.Point(218, 15);
-            this.textBoxUserCompanyName.Name = "textBoxUserCompanyName";
-            this.textBoxUserCompanyName.Size = new System.Drawing.Size(138, 20);
-            this.textBoxUserCompanyName.TabIndex = 14;
+            this.textBoxUserCompanyCompanyName.Enabled = false;
+            this.textBoxUserCompanyCompanyName.Location = new System.Drawing.Point(218, 15);
+            this.textBoxUserCompanyCompanyName.Name = "textBoxUserCompanyCompanyName";
+            this.textBoxUserCompanyCompanyName.Size = new System.Drawing.Size(138, 20);
+            this.textBoxUserCompanyCompanyName.TabIndex = 14;
             // 
-            // comboBoxHQcity
+            // comboBoxUserCompanyHQcity
             // 
-            this.comboBoxHQcity.FormattingEnabled = true;
-            this.comboBoxHQcity.Location = new System.Drawing.Point(218, 67);
-            this.comboBoxHQcity.Name = "comboBoxHQcity";
-            this.comboBoxHQcity.Size = new System.Drawing.Size(138, 21);
-            this.comboBoxHQcity.TabIndex = 12;
-            this.comboBoxHQcity.SelectionChangeCommitted += new System.EventHandler(this.comboBoxHQcity_SelectionChangeCommitted);
+            this.comboBoxUserCompanyHQcity.FormattingEnabled = true;
+            this.comboBoxUserCompanyHQcity.Location = new System.Drawing.Point(218, 67);
+            this.comboBoxUserCompanyHQcity.Name = "comboBoxUserCompanyHQcity";
+            this.comboBoxUserCompanyHQcity.Size = new System.Drawing.Size(138, 21);
+            this.comboBoxUserCompanyHQcity.TabIndex = 12;
+            this.comboBoxUserCompanyHQcity.SelectionChangeCommitted += new System.EventHandler(this.comboBoxHQcity_SelectionChangeCommitted);
             // 
             // labelUserCompanyHQcity
             // 
@@ -688,12 +678,12 @@
             // 
             // tabPageTruck
             // 
-            this.tabPageTruck.Controls.Add(this.groupBoxgroupBoxShareTruckSettings);
+            this.tabPageTruck.Controls.Add(this.groupBoxUserTruckShareTruckSettings);
             this.tabPageTruck.Controls.Add(this.buttonUserTruckSelectCurrent);
-            this.tabPageTruck.Controls.Add(this.groupBoxTruckDetails);
+            this.tabPageTruck.Controls.Add(this.groupBoxUserTruckTruckDetails);
             this.tabPageTruck.Controls.Add(this.buttonUserTruckSwitchCurrent);
-            this.tabPageTruck.Controls.Add(this.comboBoxCompanyTrucks);
-            this.tabPageTruck.Controls.Add(this.labelTruck);
+            this.tabPageTruck.Controls.Add(this.comboBoxUserTruckCompanyTrucks);
+            this.tabPageTruck.Controls.Add(this.labelUserTruckTruck);
             this.tabPageTruck.Location = new System.Drawing.Point(4, 28);
             this.tabPageTruck.Name = "tabPageTruck";
             this.tabPageTruck.Padding = new System.Windows.Forms.Padding(3);
@@ -702,80 +692,80 @@
             this.tabPageTruck.Text = "Truck";
             this.tabPageTruck.UseVisualStyleBackColor = true;
             // 
-            // groupBoxgroupBoxShareTruckSettings
+            // groupBoxUserTruckShareTruckSettings
             // 
-            this.groupBoxgroupBoxShareTruckSettings.Controls.Add(this.buttonTruckTruckPaste);
-            this.groupBoxgroupBoxShareTruckSettings.Controls.Add(this.buttonTruckDetailsPaste);
-            this.groupBoxgroupBoxShareTruckSettings.Controls.Add(this.buttonTruckTruckCopy);
-            this.groupBoxgroupBoxShareTruckSettings.Controls.Add(this.buttonTruckDetailsCopy);
-            this.groupBoxgroupBoxShareTruckSettings.Controls.Add(this.buttonTruckPaintPaste);
-            this.groupBoxgroupBoxShareTruckSettings.Controls.Add(this.buttonTruckPaintCopy);
-            this.groupBoxgroupBoxShareTruckSettings.Location = new System.Drawing.Point(6, 382);
-            this.groupBoxgroupBoxShareTruckSettings.Name = "groupBoxgroupBoxShareTruckSettings";
-            this.groupBoxgroupBoxShareTruckSettings.Size = new System.Drawing.Size(468, 82);
-            this.groupBoxgroupBoxShareTruckSettings.TabIndex = 27;
-            this.groupBoxgroupBoxShareTruckSettings.TabStop = false;
-            this.groupBoxgroupBoxShareTruckSettings.Text = "Share Truck Settings";
+            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckTruckPaste);
+            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckDetailsPaste);
+            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckTruckCopy);
+            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckDetailsCopy);
+            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckPaintPaste);
+            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckPaintCopy);
+            this.groupBoxUserTruckShareTruckSettings.Location = new System.Drawing.Point(6, 382);
+            this.groupBoxUserTruckShareTruckSettings.Name = "groupBoxUserTruckShareTruckSettings";
+            this.groupBoxUserTruckShareTruckSettings.Size = new System.Drawing.Size(468, 82);
+            this.groupBoxUserTruckShareTruckSettings.TabIndex = 27;
+            this.groupBoxUserTruckShareTruckSettings.TabStop = false;
+            this.groupBoxUserTruckShareTruckSettings.Text = "Share Truck Settings";
             // 
-            // buttonTruckTruckPaste
+            // buttonShareTruckTruckTruckPaste
             // 
-            this.buttonTruckTruckPaste.Enabled = false;
-            this.buttonTruckTruckPaste.Location = new System.Drawing.Point(315, 48);
-            this.buttonTruckTruckPaste.Name = "buttonTruckTruckPaste";
-            this.buttonTruckTruckPaste.Size = new System.Drawing.Size(147, 23);
-            this.buttonTruckTruckPaste.TabIndex = 5;
-            this.buttonTruckTruckPaste.Text = "Paste All Truck Settings";
-            this.buttonTruckTruckPaste.UseVisualStyleBackColor = true;
+            this.buttonShareTruckTruckTruckPaste.Enabled = false;
+            this.buttonShareTruckTruckTruckPaste.Location = new System.Drawing.Point(315, 48);
+            this.buttonShareTruckTruckTruckPaste.Name = "buttonShareTruckTruckTruckPaste";
+            this.buttonShareTruckTruckTruckPaste.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckTruckPaste.TabIndex = 5;
+            this.buttonShareTruckTruckTruckPaste.Text = "Paste All Truck Settings";
+            this.buttonShareTruckTruckTruckPaste.UseVisualStyleBackColor = true;
             // 
-            // buttonTruckDetailsPaste
+            // buttonShareTruckTruckDetailsPaste
             // 
-            this.buttonTruckDetailsPaste.Enabled = false;
-            this.buttonTruckDetailsPaste.Location = new System.Drawing.Point(162, 48);
-            this.buttonTruckDetailsPaste.Name = "buttonTruckDetailsPaste";
-            this.buttonTruckDetailsPaste.Size = new System.Drawing.Size(147, 23);
-            this.buttonTruckDetailsPaste.TabIndex = 4;
-            this.buttonTruckDetailsPaste.Text = "Paste Truck Datails";
-            this.buttonTruckDetailsPaste.UseVisualStyleBackColor = true;
+            this.buttonShareTruckTruckDetailsPaste.Enabled = false;
+            this.buttonShareTruckTruckDetailsPaste.Location = new System.Drawing.Point(162, 48);
+            this.buttonShareTruckTruckDetailsPaste.Name = "buttonShareTruckTruckDetailsPaste";
+            this.buttonShareTruckTruckDetailsPaste.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckDetailsPaste.TabIndex = 4;
+            this.buttonShareTruckTruckDetailsPaste.Text = "Paste Truck Datails";
+            this.buttonShareTruckTruckDetailsPaste.UseVisualStyleBackColor = true;
             // 
-            // buttonTruckTruckCopy
+            // buttonShareTruckTruckTruckCopy
             // 
-            this.buttonTruckTruckCopy.Enabled = false;
-            this.buttonTruckTruckCopy.Location = new System.Drawing.Point(315, 20);
-            this.buttonTruckTruckCopy.Name = "buttonTruckTruckCopy";
-            this.buttonTruckTruckCopy.Size = new System.Drawing.Size(147, 23);
-            this.buttonTruckTruckCopy.TabIndex = 3;
-            this.buttonTruckTruckCopy.Text = "Copy All Truck Settings";
-            this.buttonTruckTruckCopy.UseVisualStyleBackColor = true;
+            this.buttonShareTruckTruckTruckCopy.Enabled = false;
+            this.buttonShareTruckTruckTruckCopy.Location = new System.Drawing.Point(315, 20);
+            this.buttonShareTruckTruckTruckCopy.Name = "buttonShareTruckTruckTruckCopy";
+            this.buttonShareTruckTruckTruckCopy.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckTruckCopy.TabIndex = 3;
+            this.buttonShareTruckTruckTruckCopy.Text = "Copy All Truck Settings";
+            this.buttonShareTruckTruckTruckCopy.UseVisualStyleBackColor = true;
             // 
-            // buttonTruckDetailsCopy
+            // buttonShareTruckTruckDetailsCopy
             // 
-            this.buttonTruckDetailsCopy.Enabled = false;
-            this.buttonTruckDetailsCopy.Location = new System.Drawing.Point(162, 20);
-            this.buttonTruckDetailsCopy.Name = "buttonTruckDetailsCopy";
-            this.buttonTruckDetailsCopy.Size = new System.Drawing.Size(147, 23);
-            this.buttonTruckDetailsCopy.TabIndex = 2;
-            this.buttonTruckDetailsCopy.Text = "Copy Truck Datails";
-            this.buttonTruckDetailsCopy.UseVisualStyleBackColor = true;
+            this.buttonShareTruckTruckDetailsCopy.Enabled = false;
+            this.buttonShareTruckTruckDetailsCopy.Location = new System.Drawing.Point(162, 20);
+            this.buttonShareTruckTruckDetailsCopy.Name = "buttonShareTruckTruckDetailsCopy";
+            this.buttonShareTruckTruckDetailsCopy.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckDetailsCopy.TabIndex = 2;
+            this.buttonShareTruckTruckDetailsCopy.Text = "Copy Truck Datails";
+            this.buttonShareTruckTruckDetailsCopy.UseVisualStyleBackColor = true;
             // 
-            // buttonTruckPaintPaste
+            // buttonShareTruckTruckPaintPaste
             // 
-            this.buttonTruckPaintPaste.Location = new System.Drawing.Point(7, 49);
-            this.buttonTruckPaintPaste.Name = "buttonTruckPaintPaste";
-            this.buttonTruckPaintPaste.Size = new System.Drawing.Size(147, 23);
-            this.buttonTruckPaintPaste.TabIndex = 1;
-            this.buttonTruckPaintPaste.Text = "Paste Paint Settings";
-            this.buttonTruckPaintPaste.UseVisualStyleBackColor = true;
-            this.buttonTruckPaintPaste.Click += new System.EventHandler(this.buttonTruckPaintPaste_Click);
+            this.buttonShareTruckTruckPaintPaste.Location = new System.Drawing.Point(7, 49);
+            this.buttonShareTruckTruckPaintPaste.Name = "buttonShareTruckTruckPaintPaste";
+            this.buttonShareTruckTruckPaintPaste.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckPaintPaste.TabIndex = 1;
+            this.buttonShareTruckTruckPaintPaste.Text = "Paste Paint Settings";
+            this.buttonShareTruckTruckPaintPaste.UseVisualStyleBackColor = true;
+            this.buttonShareTruckTruckPaintPaste.Click += new System.EventHandler(this.buttonTruckPaintPaste_Click);
             // 
-            // buttonTruckPaintCopy
+            // buttonShareTruckTruckPaintCopy
             // 
-            this.buttonTruckPaintCopy.Location = new System.Drawing.Point(7, 20);
-            this.buttonTruckPaintCopy.Name = "buttonTruckPaintCopy";
-            this.buttonTruckPaintCopy.Size = new System.Drawing.Size(147, 23);
-            this.buttonTruckPaintCopy.TabIndex = 0;
-            this.buttonTruckPaintCopy.Text = "Copy Paint Settings";
-            this.buttonTruckPaintCopy.UseVisualStyleBackColor = true;
-            this.buttonTruckPaintCopy.Click += new System.EventHandler(this.buttonTruckPaintCopy_Click);
+            this.buttonShareTruckTruckPaintCopy.Location = new System.Drawing.Point(7, 20);
+            this.buttonShareTruckTruckPaintCopy.Name = "buttonShareTruckTruckPaintCopy";
+            this.buttonShareTruckTruckPaintCopy.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckPaintCopy.TabIndex = 0;
+            this.buttonShareTruckTruckPaintCopy.Text = "Copy Paint Settings";
+            this.buttonShareTruckTruckPaintCopy.UseVisualStyleBackColor = true;
+            this.buttonShareTruckTruckPaintCopy.Click += new System.EventHandler(this.buttonTruckPaintCopy_Click);
             // 
             // buttonUserTruckSelectCurrent
             // 
@@ -787,16 +777,16 @@
             this.buttonUserTruckSelectCurrent.UseVisualStyleBackColor = true;
             this.buttonUserTruckSelectCurrent.Click += new System.EventHandler(this.buttonUserTruckSelectCurrent_Click);
             // 
-            // groupBoxTruckDetails
+            // groupBoxUserTruckTruckDetails
             // 
-            this.groupBoxTruckDetails.Controls.Add(this.labelLicensePlate);
-            this.groupBoxTruckDetails.Controls.Add(this.labelTruckDetailsLicensePlate);
-            this.groupBoxTruckDetails.Location = new System.Drawing.Point(6, 81);
-            this.groupBoxTruckDetails.Name = "groupBoxTruckDetails";
-            this.groupBoxTruckDetails.Size = new System.Drawing.Size(468, 295);
-            this.groupBoxTruckDetails.TabIndex = 25;
-            this.groupBoxTruckDetails.TabStop = false;
-            this.groupBoxTruckDetails.Text = "Details";
+            this.groupBoxUserTruckTruckDetails.Controls.Add(this.labelLicensePlate);
+            this.groupBoxUserTruckTruckDetails.Controls.Add(this.labelUserTruckLicensePlate);
+            this.groupBoxUserTruckTruckDetails.Location = new System.Drawing.Point(6, 81);
+            this.groupBoxUserTruckTruckDetails.Name = "groupBoxUserTruckTruckDetails";
+            this.groupBoxUserTruckTruckDetails.Size = new System.Drawing.Size(468, 295);
+            this.groupBoxUserTruckTruckDetails.TabIndex = 25;
+            this.groupBoxUserTruckTruckDetails.TabStop = false;
+            this.groupBoxUserTruckTruckDetails.Text = "Details";
             // 
             // labelLicensePlate
             // 
@@ -806,14 +796,14 @@
             this.labelLicensePlate.TabIndex = 14;
             this.labelLicensePlate.Text = "0 000 00";
             // 
-            // labelTruckDetailsLicensePlate
+            // labelUserTruckLicensePlate
             // 
-            this.labelTruckDetailsLicensePlate.AutoSize = true;
-            this.labelTruckDetailsLicensePlate.Location = new System.Drawing.Point(17, 268);
-            this.labelTruckDetailsLicensePlate.Name = "labelTruckDetailsLicensePlate";
-            this.labelTruckDetailsLicensePlate.Size = new System.Drawing.Size(70, 13);
-            this.labelTruckDetailsLicensePlate.TabIndex = 13;
-            this.labelTruckDetailsLicensePlate.Text = "License plate";
+            this.labelUserTruckLicensePlate.AutoSize = true;
+            this.labelUserTruckLicensePlate.Location = new System.Drawing.Point(17, 268);
+            this.labelUserTruckLicensePlate.Name = "labelUserTruckLicensePlate";
+            this.labelUserTruckLicensePlate.Size = new System.Drawing.Size(70, 13);
+            this.labelUserTruckLicensePlate.TabIndex = 13;
+            this.labelUserTruckLicensePlate.Text = "License plate";
             // 
             // buttonUserTruckSwitchCurrent
             // 
@@ -827,33 +817,33 @@
             this.buttonUserTruckSwitchCurrent.UseVisualStyleBackColor = true;
             this.buttonUserTruckSwitchCurrent.Click += new System.EventHandler(this.buttonUserTruckSwitchCurrent_Click);
             // 
-            // comboBoxCompanyTrucks
+            // comboBoxUserTruckCompanyTrucks
             // 
-            this.comboBoxCompanyTrucks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCompanyTrucks.FormattingEnabled = true;
-            this.comboBoxCompanyTrucks.Location = new System.Drawing.Point(65, 6);
-            this.comboBoxCompanyTrucks.Name = "comboBoxCompanyTrucks";
-            this.comboBoxCompanyTrucks.Size = new System.Drawing.Size(340, 21);
-            this.comboBoxCompanyTrucks.TabIndex = 22;
-            this.comboBoxCompanyTrucks.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanyTrucks_SelectedIndexChanged);
+            this.comboBoxUserTruckCompanyTrucks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxUserTruckCompanyTrucks.FormattingEnabled = true;
+            this.comboBoxUserTruckCompanyTrucks.Location = new System.Drawing.Point(65, 6);
+            this.comboBoxUserTruckCompanyTrucks.Name = "comboBoxUserTruckCompanyTrucks";
+            this.comboBoxUserTruckCompanyTrucks.Size = new System.Drawing.Size(340, 21);
+            this.comboBoxUserTruckCompanyTrucks.TabIndex = 22;
+            this.comboBoxUserTruckCompanyTrucks.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanyTrucks_SelectedIndexChanged);
             // 
-            // labelTruck
+            // labelUserTruckTruck
             // 
-            this.labelTruck.AutoSize = true;
-            this.labelTruck.Location = new System.Drawing.Point(10, 14);
-            this.labelTruck.Name = "labelTruck";
-            this.labelTruck.Size = new System.Drawing.Size(35, 13);
-            this.labelTruck.TabIndex = 11;
-            this.labelTruck.Text = "Truck";
+            this.labelUserTruckTruck.AutoSize = true;
+            this.labelUserTruckTruck.Location = new System.Drawing.Point(10, 14);
+            this.labelUserTruckTruck.Name = "labelUserTruckTruck";
+            this.labelUserTruckTruck.Size = new System.Drawing.Size(35, 13);
+            this.labelUserTruckTruck.TabIndex = 11;
+            this.labelUserTruckTruck.Text = "Truck";
             // 
             // tabPageTrailer
             // 
             this.tabPageTrailer.Controls.Add(this.label10);
             this.tabPageTrailer.Controls.Add(this.buttonUserTrailerSelectCurrent);
-            this.tabPageTrailer.Controls.Add(this.groupBoxTrailerDetails);
+            this.tabPageTrailer.Controls.Add(this.groupBoxUserTrailerTrailerDetails);
             this.tabPageTrailer.Controls.Add(this.buttonUserTrailerSwitchCurrent);
-            this.tabPageTrailer.Controls.Add(this.comboBoxCompanyTrailers);
-            this.tabPageTrailer.Controls.Add(this.label12);
+            this.tabPageTrailer.Controls.Add(this.comboBoxUserTrailerCompanyTrailers);
+            this.tabPageTrailer.Controls.Add(this.labelUserTrailerTrailer);
             this.tabPageTrailer.Location = new System.Drawing.Point(4, 28);
             this.tabPageTrailer.Name = "tabPageTrailer";
             this.tabPageTrailer.Padding = new System.Windows.Forms.Padding(3);
@@ -883,16 +873,16 @@
             this.buttonUserTrailerSelectCurrent.UseVisualStyleBackColor = true;
             this.buttonUserTrailerSelectCurrent.Click += new System.EventHandler(this.buttonUserTrailerSelectCurrent_Click);
             // 
-            // groupBoxTrailerDetails
+            // groupBoxUserTrailerTrailerDetails
             // 
-            this.groupBoxTrailerDetails.Controls.Add(this.label2);
-            this.groupBoxTrailerDetails.Controls.Add(this.labelTrailerLicensePlate);
-            this.groupBoxTrailerDetails.Location = new System.Drawing.Point(6, 81);
-            this.groupBoxTrailerDetails.Name = "groupBoxTrailerDetails";
-            this.groupBoxTrailerDetails.Size = new System.Drawing.Size(468, 250);
-            this.groupBoxTrailerDetails.TabIndex = 30;
-            this.groupBoxTrailerDetails.TabStop = false;
-            this.groupBoxTrailerDetails.Text = "Details";
+            this.groupBoxUserTrailerTrailerDetails.Controls.Add(this.label2);
+            this.groupBoxUserTrailerTrailerDetails.Controls.Add(this.labelUserTrailerLicensePlate);
+            this.groupBoxUserTrailerTrailerDetails.Location = new System.Drawing.Point(6, 81);
+            this.groupBoxUserTrailerTrailerDetails.Name = "groupBoxUserTrailerTrailerDetails";
+            this.groupBoxUserTrailerTrailerDetails.Size = new System.Drawing.Size(468, 250);
+            this.groupBoxUserTrailerTrailerDetails.TabIndex = 30;
+            this.groupBoxUserTrailerTrailerDetails.TabStop = false;
+            this.groupBoxUserTrailerTrailerDetails.Text = "Details";
             // 
             // label2
             // 
@@ -902,14 +892,14 @@
             this.label2.TabIndex = 16;
             this.label2.Text = "0 000 00";
             // 
-            // labelTrailerLicensePlate
+            // labelUserTrailerLicensePlate
             // 
-            this.labelTrailerLicensePlate.AutoSize = true;
-            this.labelTrailerLicensePlate.Location = new System.Drawing.Point(17, 222);
-            this.labelTrailerLicensePlate.Name = "labelTrailerLicensePlate";
-            this.labelTrailerLicensePlate.Size = new System.Drawing.Size(70, 13);
-            this.labelTrailerLicensePlate.TabIndex = 15;
-            this.labelTrailerLicensePlate.Text = "License plate";
+            this.labelUserTrailerLicensePlate.AutoSize = true;
+            this.labelUserTrailerLicensePlate.Location = new System.Drawing.Point(17, 222);
+            this.labelUserTrailerLicensePlate.Name = "labelUserTrailerLicensePlate";
+            this.labelUserTrailerLicensePlate.Size = new System.Drawing.Size(70, 13);
+            this.labelUserTrailerLicensePlate.TabIndex = 15;
+            this.labelUserTrailerLicensePlate.Text = "License plate";
             // 
             // buttonUserTrailerSwitchCurrent
             // 
@@ -923,54 +913,54 @@
             this.buttonUserTrailerSwitchCurrent.UseVisualStyleBackColor = true;
             this.buttonUserTrailerSwitchCurrent.Click += new System.EventHandler(this.buttonUserTrailerSwitchCurrent_Click);
             // 
-            // comboBoxCompanyTrailers
+            // comboBoxUserTrailerCompanyTrailers
             // 
-            this.comboBoxCompanyTrailers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCompanyTrailers.Enabled = false;
-            this.comboBoxCompanyTrailers.FormattingEnabled = true;
-            this.comboBoxCompanyTrailers.Location = new System.Drawing.Point(65, 6);
-            this.comboBoxCompanyTrailers.Name = "comboBoxCompanyTrailers";
-            this.comboBoxCompanyTrailers.Size = new System.Drawing.Size(340, 21);
-            this.comboBoxCompanyTrailers.TabIndex = 28;
-            this.comboBoxCompanyTrailers.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanyTrailers_SelectedIndexChanged);
+            this.comboBoxUserTrailerCompanyTrailers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxUserTrailerCompanyTrailers.Enabled = false;
+            this.comboBoxUserTrailerCompanyTrailers.FormattingEnabled = true;
+            this.comboBoxUserTrailerCompanyTrailers.Location = new System.Drawing.Point(65, 6);
+            this.comboBoxUserTrailerCompanyTrailers.Name = "comboBoxUserTrailerCompanyTrailers";
+            this.comboBoxUserTrailerCompanyTrailers.Size = new System.Drawing.Size(340, 21);
+            this.comboBoxUserTrailerCompanyTrailers.TabIndex = 28;
+            this.comboBoxUserTrailerCompanyTrailers.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanyTrailers_SelectedIndexChanged);
             // 
-            // label12
+            // labelUserTrailerTrailer
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(10, 14);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(36, 13);
-            this.label12.TabIndex = 27;
-            this.label12.Text = "Trailer";
+            this.labelUserTrailerTrailer.AutoSize = true;
+            this.labelUserTrailerTrailer.Location = new System.Drawing.Point(10, 14);
+            this.labelUserTrailerTrailer.Name = "labelUserTrailerTrailer";
+            this.labelUserTrailerTrailer.Size = new System.Drawing.Size(36, 13);
+            this.labelUserTrailerTrailer.TabIndex = 27;
+            this.labelUserTrailerTrailer.Text = "Trailer";
             // 
             // tabPageFreightMarket
             // 
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketDistanceNumbers);
-            this.tabPageFreightMarket.Controls.Add(this.button5);
+            this.tabPageFreightMarket.Controls.Add(this.buttonFreightMarketRandomizeCargo);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketDistance);
-            this.tabPageFreightMarket.Controls.Add(this.listBoxAddedJobs);
-            this.tabPageFreightMarket.Controls.Add(this.checkBoxRandomDest);
-            this.tabPageFreightMarket.Controls.Add(this.checkBoxFilterDestination);
-            this.tabPageFreightMarket.Controls.Add(this.checkBoxFilterSource);
+            this.tabPageFreightMarket.Controls.Add(this.listBoxFreightMarketAddedJobs);
+            this.tabPageFreightMarket.Controls.Add(this.checkBoxFreightMarketRandomDest);
+            this.tabPageFreightMarket.Controls.Add(this.checkBoxFreightMarketFilterDestination);
+            this.tabPageFreightMarket.Controls.Add(this.checkBoxFreightMarketFilterSource);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketFilterMain);
-            this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketCountry);
-            this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketCompany);
-            this.tabPageFreightMarket.Controls.Add(this.comboBoxCompanies);
-            this.tabPageFreightMarket.Controls.Add(this.comboBoxCountries);
-            this.tabPageFreightMarket.Controls.Add(this.buttonClearJobList);
-            this.tabPageFreightMarket.Controls.Add(this.buttonAddJob);
+            this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketCountryF);
+            this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketCompanyF);
+            this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketCompanies);
+            this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketCountries);
+            this.tabPageFreightMarket.Controls.Add(this.buttonFreightMarketClearJobList);
+            this.tabPageFreightMarket.Controls.Add(this.buttonFreightMarketAddJob);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketUrgency);
-            this.tabPageFreightMarket.Controls.Add(this.comboBoxUrgency);
+            this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketUrgency);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketCargo);
-            this.tabPageFreightMarket.Controls.Add(this.comboBoxCargoList);
-            this.tabPageFreightMarket.Controls.Add(this.comboBoxDestinationCompany);
+            this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketCargoList);
+            this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketDestinationCompany);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketDestination);
-            this.tabPageFreightMarket.Controls.Add(this.comboBoxDestinationCity);
-            this.tabPageFreightMarket.Controls.Add(this.label8);
+            this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketDestinationCity);
+            this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketCompany);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketCity);
-            this.tabPageFreightMarket.Controls.Add(this.comboBoxSourceCompany);
+            this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketSourceCompany);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketSource);
-            this.tabPageFreightMarket.Controls.Add(this.comboBoxSourceCity);
+            this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketSourceCity);
             this.tabPageFreightMarket.Location = new System.Drawing.Point(4, 28);
             this.tabPageFreightMarket.Name = "tabPageFreightMarket";
             this.tabPageFreightMarket.Padding = new System.Windows.Forms.Padding(3);
@@ -988,14 +978,14 @@
             this.labelFreightMarketDistanceNumbers.TabIndex = 25;
             this.labelFreightMarketDistanceNumbers.Text = "0";
             // 
-            // button5
+            // buttonFreightMarketRandomizeCargo
             // 
-            this.button5.Location = new System.Drawing.Point(406, 125);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(67, 48);
-            this.button5.TabIndex = 24;
-            this.button5.Text = "Random";
-            this.button5.UseVisualStyleBackColor = true;
+            this.buttonFreightMarketRandomizeCargo.Location = new System.Drawing.Point(406, 125);
+            this.buttonFreightMarketRandomizeCargo.Name = "buttonFreightMarketRandomizeCargo";
+            this.buttonFreightMarketRandomizeCargo.Size = new System.Drawing.Size(67, 48);
+            this.buttonFreightMarketRandomizeCargo.TabIndex = 24;
+            this.buttonFreightMarketRandomizeCargo.Text = "Random";
+            this.buttonFreightMarketRandomizeCargo.UseVisualStyleBackColor = true;
             // 
             // labelFreightMarketDistance
             // 
@@ -1006,47 +996,47 @@
             this.labelFreightMarketDistance.TabIndex = 23;
             this.labelFreightMarketDistance.Text = "Total path length:";
             // 
-            // listBoxAddedJobs
+            // listBoxFreightMarketAddedJobs
             // 
-            this.listBoxAddedJobs.FormattingEnabled = true;
-            this.listBoxAddedJobs.Location = new System.Drawing.Point(6, 237);
-            this.listBoxAddedJobs.Name = "listBoxAddedJobs";
-            this.listBoxAddedJobs.ScrollAlwaysVisible = true;
-            this.listBoxAddedJobs.Size = new System.Drawing.Size(467, 225);
-            this.listBoxAddedJobs.TabIndex = 22;
-            this.listBoxAddedJobs.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxAddedJobs_DrawItem);
-            this.listBoxAddedJobs.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxAddedJobs_MeasureItem);
+            this.listBoxFreightMarketAddedJobs.FormattingEnabled = true;
+            this.listBoxFreightMarketAddedJobs.Location = new System.Drawing.Point(6, 237);
+            this.listBoxFreightMarketAddedJobs.Name = "listBoxFreightMarketAddedJobs";
+            this.listBoxFreightMarketAddedJobs.ScrollAlwaysVisible = true;
+            this.listBoxFreightMarketAddedJobs.Size = new System.Drawing.Size(467, 225);
+            this.listBoxFreightMarketAddedJobs.TabIndex = 22;
+            this.listBoxFreightMarketAddedJobs.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxAddedJobs_DrawItem);
+            this.listBoxFreightMarketAddedJobs.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxAddedJobs_MeasureItem);
             // 
-            // checkBoxRandomDest
+            // checkBoxFreightMarketRandomDest
             // 
-            this.checkBoxRandomDest.AutoSize = true;
-            this.checkBoxRandomDest.Location = new System.Drawing.Point(406, 24);
-            this.checkBoxRandomDest.Name = "checkBoxRandomDest";
-            this.checkBoxRandomDest.Size = new System.Drawing.Size(50, 17);
-            this.checkBoxRandomDest.TabIndex = 21;
-            this.checkBoxRandomDest.Text = "RND";
-            this.checkBoxRandomDest.UseVisualStyleBackColor = true;
-            this.checkBoxRandomDest.CheckedChanged += new System.EventHandler(this.checkBoxRandomDest_CheckedChanged);
+            this.checkBoxFreightMarketRandomDest.AutoSize = true;
+            this.checkBoxFreightMarketRandomDest.Location = new System.Drawing.Point(406, 24);
+            this.checkBoxFreightMarketRandomDest.Name = "checkBoxFreightMarketRandomDest";
+            this.checkBoxFreightMarketRandomDest.Size = new System.Drawing.Size(50, 17);
+            this.checkBoxFreightMarketRandomDest.TabIndex = 21;
+            this.checkBoxFreightMarketRandomDest.Text = "RND";
+            this.checkBoxFreightMarketRandomDest.UseVisualStyleBackColor = true;
+            this.checkBoxFreightMarketRandomDest.CheckedChanged += new System.EventHandler(this.checkBoxRandomDest_CheckedChanged);
             // 
-            // checkBoxFilterDestination
+            // checkBoxFreightMarketFilterDestination
             // 
-            this.checkBoxFilterDestination.AutoSize = true;
-            this.checkBoxFilterDestination.Location = new System.Drawing.Point(406, 91);
-            this.checkBoxFilterDestination.Name = "checkBoxFilterDestination";
-            this.checkBoxFilterDestination.Size = new System.Drawing.Size(48, 17);
-            this.checkBoxFilterDestination.TabIndex = 20;
-            this.checkBoxFilterDestination.Text = "Filter";
-            this.checkBoxFilterDestination.UseVisualStyleBackColor = true;
+            this.checkBoxFreightMarketFilterDestination.AutoSize = true;
+            this.checkBoxFreightMarketFilterDestination.Location = new System.Drawing.Point(406, 91);
+            this.checkBoxFreightMarketFilterDestination.Name = "checkBoxFreightMarketFilterDestination";
+            this.checkBoxFreightMarketFilterDestination.Size = new System.Drawing.Size(48, 17);
+            this.checkBoxFreightMarketFilterDestination.TabIndex = 20;
+            this.checkBoxFreightMarketFilterDestination.Text = "Filter";
+            this.checkBoxFreightMarketFilterDestination.UseVisualStyleBackColor = true;
             // 
-            // checkBoxFilterSource
+            // checkBoxFreightMarketFilterSource
             // 
-            this.checkBoxFilterSource.AutoSize = true;
-            this.checkBoxFilterSource.Location = new System.Drawing.Point(406, 64);
-            this.checkBoxFilterSource.Name = "checkBoxFilterSource";
-            this.checkBoxFilterSource.Size = new System.Drawing.Size(48, 17);
-            this.checkBoxFilterSource.TabIndex = 19;
-            this.checkBoxFilterSource.Text = "Filter";
-            this.checkBoxFilterSource.UseVisualStyleBackColor = true;
+            this.checkBoxFreightMarketFilterSource.AutoSize = true;
+            this.checkBoxFreightMarketFilterSource.Location = new System.Drawing.Point(406, 64);
+            this.checkBoxFreightMarketFilterSource.Name = "checkBoxFreightMarketFilterSource";
+            this.checkBoxFreightMarketFilterSource.Size = new System.Drawing.Size(48, 17);
+            this.checkBoxFreightMarketFilterSource.TabIndex = 19;
+            this.checkBoxFreightMarketFilterSource.Text = "Filter";
+            this.checkBoxFreightMarketFilterSource.UseVisualStyleBackColor = true;
             // 
             // labelFreightMarketFilterMain
             // 
@@ -1057,61 +1047,61 @@
             this.labelFreightMarketFilterMain.TabIndex = 18;
             this.labelFreightMarketFilterMain.Text = "Filter";
             // 
-            // labelFreightMarketCountry
+            // labelFreightMarketCountryF
             // 
-            this.labelFreightMarketCountry.AutoSize = true;
-            this.labelFreightMarketCountry.Location = new System.Drawing.Point(72, 6);
-            this.labelFreightMarketCountry.Name = "labelFreightMarketCountry";
-            this.labelFreightMarketCountry.Size = new System.Drawing.Size(43, 13);
-            this.labelFreightMarketCountry.TabIndex = 17;
-            this.labelFreightMarketCountry.Text = "Country";
+            this.labelFreightMarketCountryF.AutoSize = true;
+            this.labelFreightMarketCountryF.Location = new System.Drawing.Point(72, 6);
+            this.labelFreightMarketCountryF.Name = "labelFreightMarketCountryF";
+            this.labelFreightMarketCountryF.Size = new System.Drawing.Size(43, 13);
+            this.labelFreightMarketCountryF.TabIndex = 17;
+            this.labelFreightMarketCountryF.Text = "Country";
             // 
-            // labelFreightMarketCompany
+            // labelFreightMarketCompanyF
             // 
-            this.labelFreightMarketCompany.AutoSize = true;
-            this.labelFreightMarketCompany.Location = new System.Drawing.Point(239, 6);
-            this.labelFreightMarketCompany.Name = "labelFreightMarketCompany";
-            this.labelFreightMarketCompany.Size = new System.Drawing.Size(51, 13);
-            this.labelFreightMarketCompany.TabIndex = 16;
-            this.labelFreightMarketCompany.Text = "Company";
+            this.labelFreightMarketCompanyF.AutoSize = true;
+            this.labelFreightMarketCompanyF.Location = new System.Drawing.Point(239, 6);
+            this.labelFreightMarketCompanyF.Name = "labelFreightMarketCompanyF";
+            this.labelFreightMarketCompanyF.Size = new System.Drawing.Size(51, 13);
+            this.labelFreightMarketCompanyF.TabIndex = 16;
+            this.labelFreightMarketCompanyF.Text = "Company";
             // 
-            // comboBoxCompanies
+            // comboBoxFreightMarketCompanies
             // 
-            this.comboBoxCompanies.FormattingEnabled = true;
-            this.comboBoxCompanies.Location = new System.Drawing.Point(239, 22);
-            this.comboBoxCompanies.Name = "comboBoxCompanies";
-            this.comboBoxCompanies.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxCompanies.TabIndex = 15;
-            this.comboBoxCompanies.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanies_SelectedIndexChanged);
+            this.comboBoxFreightMarketCompanies.FormattingEnabled = true;
+            this.comboBoxFreightMarketCompanies.Location = new System.Drawing.Point(239, 22);
+            this.comboBoxFreightMarketCompanies.Name = "comboBoxFreightMarketCompanies";
+            this.comboBoxFreightMarketCompanies.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketCompanies.TabIndex = 15;
+            this.comboBoxFreightMarketCompanies.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanies_SelectedIndexChanged);
             // 
-            // comboBoxCountries
+            // comboBoxFreightMarketCountries
             // 
-            this.comboBoxCountries.FormattingEnabled = true;
-            this.comboBoxCountries.Location = new System.Drawing.Point(72, 22);
-            this.comboBoxCountries.Name = "comboBoxCountries";
-            this.comboBoxCountries.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxCountries.TabIndex = 14;
-            this.comboBoxCountries.SelectedIndexChanged += new System.EventHandler(this.comboBoxCountries_SelectedIndexChanged);
+            this.comboBoxFreightMarketCountries.FormattingEnabled = true;
+            this.comboBoxFreightMarketCountries.Location = new System.Drawing.Point(72, 22);
+            this.comboBoxFreightMarketCountries.Name = "comboBoxFreightMarketCountries";
+            this.comboBoxFreightMarketCountries.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketCountries.TabIndex = 14;
+            this.comboBoxFreightMarketCountries.SelectedIndexChanged += new System.EventHandler(this.comboBoxCountries_SelectedIndexChanged);
             // 
-            // buttonClearJobList
+            // buttonFreightMarketClearJobList
             // 
-            this.buttonClearJobList.Location = new System.Drawing.Point(323, 208);
-            this.buttonClearJobList.Name = "buttonClearJobList";
-            this.buttonClearJobList.Size = new System.Drawing.Size(150, 23);
-            this.buttonClearJobList.TabIndex = 13;
-            this.buttonClearJobList.Text = "Clear list";
-            this.buttonClearJobList.UseVisualStyleBackColor = true;
-            this.buttonClearJobList.Click += new System.EventHandler(this.buttonClearJobList_Click);
+            this.buttonFreightMarketClearJobList.Location = new System.Drawing.Point(323, 208);
+            this.buttonFreightMarketClearJobList.Name = "buttonFreightMarketClearJobList";
+            this.buttonFreightMarketClearJobList.Size = new System.Drawing.Size(150, 23);
+            this.buttonFreightMarketClearJobList.TabIndex = 13;
+            this.buttonFreightMarketClearJobList.Text = "Clear list";
+            this.buttonFreightMarketClearJobList.UseVisualStyleBackColor = true;
+            this.buttonFreightMarketClearJobList.Click += new System.EventHandler(this.buttonClearJobList_Click);
             // 
-            // buttonAddJob
+            // buttonFreightMarketAddJob
             // 
-            this.buttonAddJob.Location = new System.Drawing.Point(70, 179);
-            this.buttonAddJob.Name = "buttonAddJob";
-            this.buttonAddJob.Size = new System.Drawing.Size(328, 23);
-            this.buttonAddJob.TabIndex = 12;
-            this.buttonAddJob.Text = "Add Job to list";
-            this.buttonAddJob.UseVisualStyleBackColor = true;
-            this.buttonAddJob.Click += new System.EventHandler(this.buttonAddJob_Click);
+            this.buttonFreightMarketAddJob.Location = new System.Drawing.Point(70, 179);
+            this.buttonFreightMarketAddJob.Name = "buttonFreightMarketAddJob";
+            this.buttonFreightMarketAddJob.Size = new System.Drawing.Size(328, 23);
+            this.buttonFreightMarketAddJob.TabIndex = 12;
+            this.buttonFreightMarketAddJob.Text = "Add Job to list";
+            this.buttonFreightMarketAddJob.UseVisualStyleBackColor = true;
+            this.buttonFreightMarketAddJob.Click += new System.EventHandler(this.buttonAddJob_Click);
             // 
             // labelFreightMarketUrgency
             // 
@@ -1122,13 +1112,13 @@
             this.labelFreightMarketUrgency.TabIndex = 11;
             this.labelFreightMarketUrgency.Text = "Urgency";
             // 
-            // comboBoxUrgency
+            // comboBoxFreightMarketUrgency
             // 
-            this.comboBoxUrgency.FormattingEnabled = true;
-            this.comboBoxUrgency.Location = new System.Drawing.Point(70, 152);
-            this.comboBoxUrgency.Name = "comboBoxUrgency";
-            this.comboBoxUrgency.Size = new System.Drawing.Size(328, 21);
-            this.comboBoxUrgency.TabIndex = 10;
+            this.comboBoxFreightMarketUrgency.FormattingEnabled = true;
+            this.comboBoxFreightMarketUrgency.Location = new System.Drawing.Point(70, 152);
+            this.comboBoxFreightMarketUrgency.Name = "comboBoxFreightMarketUrgency";
+            this.comboBoxFreightMarketUrgency.Size = new System.Drawing.Size(328, 21);
+            this.comboBoxFreightMarketUrgency.TabIndex = 10;
             // 
             // labelFreightMarketCargo
             // 
@@ -1139,23 +1129,23 @@
             this.labelFreightMarketCargo.TabIndex = 9;
             this.labelFreightMarketCargo.Text = "Cargo";
             // 
-            // comboBoxCargoList
+            // comboBoxFreightMarketCargoList
             // 
-            this.comboBoxCargoList.FormattingEnabled = true;
-            this.comboBoxCargoList.Location = new System.Drawing.Point(70, 125);
-            this.comboBoxCargoList.Name = "comboBoxCargoList";
-            this.comboBoxCargoList.Size = new System.Drawing.Size(328, 21);
-            this.comboBoxCargoList.TabIndex = 8;
-            this.comboBoxCargoList.SelectedIndexChanged += new System.EventHandler(this.comboBoxCargoList_SelectedIndexChanged);
+            this.comboBoxFreightMarketCargoList.FormattingEnabled = true;
+            this.comboBoxFreightMarketCargoList.Location = new System.Drawing.Point(70, 125);
+            this.comboBoxFreightMarketCargoList.Name = "comboBoxFreightMarketCargoList";
+            this.comboBoxFreightMarketCargoList.Size = new System.Drawing.Size(328, 21);
+            this.comboBoxFreightMarketCargoList.TabIndex = 8;
+            this.comboBoxFreightMarketCargoList.SelectedIndexChanged += new System.EventHandler(this.comboBoxCargoList_SelectedIndexChanged);
             // 
-            // comboBoxDestinationCompany
+            // comboBoxFreightMarketDestinationCompany
             // 
-            this.comboBoxDestinationCompany.FormattingEnabled = true;
-            this.comboBoxDestinationCompany.Location = new System.Drawing.Point(239, 89);
-            this.comboBoxDestinationCompany.Name = "comboBoxDestinationCompany";
-            this.comboBoxDestinationCompany.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxDestinationCompany.TabIndex = 7;
-            this.comboBoxDestinationCompany.SelectedIndexChanged += new System.EventHandler(this.comboBoxDestinationCompany_SelectedIndexChanged);
+            this.comboBoxFreightMarketDestinationCompany.FormattingEnabled = true;
+            this.comboBoxFreightMarketDestinationCompany.Location = new System.Drawing.Point(239, 89);
+            this.comboBoxFreightMarketDestinationCompany.Name = "comboBoxFreightMarketDestinationCompany";
+            this.comboBoxFreightMarketDestinationCompany.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketDestinationCompany.TabIndex = 7;
+            this.comboBoxFreightMarketDestinationCompany.SelectedIndexChanged += new System.EventHandler(this.comboBoxDestinationCompany_SelectedIndexChanged);
             // 
             // labelFreightMarketDestination
             // 
@@ -1166,23 +1156,23 @@
             this.labelFreightMarketDestination.TabIndex = 6;
             this.labelFreightMarketDestination.Text = "Destination";
             // 
-            // comboBoxDestinationCity
+            // comboBoxFreightMarketDestinationCity
             // 
-            this.comboBoxDestinationCity.FormattingEnabled = true;
-            this.comboBoxDestinationCity.Location = new System.Drawing.Point(72, 89);
-            this.comboBoxDestinationCity.Name = "comboBoxDestinationCity";
-            this.comboBoxDestinationCity.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxDestinationCity.TabIndex = 5;
-            this.comboBoxDestinationCity.SelectedIndexChanged += new System.EventHandler(this.comboBoxDestinationCity_SelectedIndexChanged);
+            this.comboBoxFreightMarketDestinationCity.FormattingEnabled = true;
+            this.comboBoxFreightMarketDestinationCity.Location = new System.Drawing.Point(72, 89);
+            this.comboBoxFreightMarketDestinationCity.Name = "comboBoxFreightMarketDestinationCity";
+            this.comboBoxFreightMarketDestinationCity.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketDestinationCity.TabIndex = 5;
+            this.comboBoxFreightMarketDestinationCity.SelectedIndexChanged += new System.EventHandler(this.comboBoxDestinationCity_SelectedIndexChanged);
             // 
-            // label8
+            // labelFreightMarketCompany
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(239, 46);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(51, 13);
-            this.label8.TabIndex = 4;
-            this.label8.Text = "Company";
+            this.labelFreightMarketCompany.AutoSize = true;
+            this.labelFreightMarketCompany.Location = new System.Drawing.Point(239, 46);
+            this.labelFreightMarketCompany.Name = "labelFreightMarketCompany";
+            this.labelFreightMarketCompany.Size = new System.Drawing.Size(51, 13);
+            this.labelFreightMarketCompany.TabIndex = 4;
+            this.labelFreightMarketCompany.Text = "Company";
             // 
             // labelFreightMarketCity
             // 
@@ -1193,14 +1183,14 @@
             this.labelFreightMarketCity.TabIndex = 3;
             this.labelFreightMarketCity.Text = "City";
             // 
-            // comboBoxSourceCompany
+            // comboBoxFreightMarketSourceCompany
             // 
-            this.comboBoxSourceCompany.FormattingEnabled = true;
-            this.comboBoxSourceCompany.Location = new System.Drawing.Point(239, 62);
-            this.comboBoxSourceCompany.Name = "comboBoxSourceCompany";
-            this.comboBoxSourceCompany.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxSourceCompany.TabIndex = 2;
-            this.comboBoxSourceCompany.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCompany_SelectedIndexChanged);
+            this.comboBoxFreightMarketSourceCompany.FormattingEnabled = true;
+            this.comboBoxFreightMarketSourceCompany.Location = new System.Drawing.Point(239, 62);
+            this.comboBoxFreightMarketSourceCompany.Name = "comboBoxFreightMarketSourceCompany";
+            this.comboBoxFreightMarketSourceCompany.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketSourceCompany.TabIndex = 2;
+            this.comboBoxFreightMarketSourceCompany.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCompany_SelectedIndexChanged);
             // 
             // labelFreightMarketSource
             // 
@@ -1211,28 +1201,28 @@
             this.labelFreightMarketSource.TabIndex = 1;
             this.labelFreightMarketSource.Text = "Source";
             // 
-            // comboBoxSourceCity
+            // comboBoxFreightMarketSourceCity
             // 
-            this.comboBoxSourceCity.FormattingEnabled = true;
-            this.comboBoxSourceCity.Location = new System.Drawing.Point(72, 62);
-            this.comboBoxSourceCity.Name = "comboBoxSourceCity";
-            this.comboBoxSourceCity.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxSourceCity.TabIndex = 0;
-            this.comboBoxSourceCity.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCity_SelectedIndexChanged);
+            this.comboBoxFreightMarketSourceCity.FormattingEnabled = true;
+            this.comboBoxFreightMarketSourceCity.Location = new System.Drawing.Point(72, 62);
+            this.comboBoxFreightMarketSourceCity.Name = "comboBoxFreightMarketSourceCity";
+            this.comboBoxFreightMarketSourceCity.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketSourceCity.TabIndex = 0;
+            this.comboBoxFreightMarketSourceCity.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCity_SelectedIndexChanged);
             // 
             // tabPageCargoMarket
             // 
-            this.tabPageCargoMarket.Controls.Add(this.button9);
-            this.tabPageCargoMarket.Controls.Add(this.button8);
-            this.tabPageCargoMarket.Controls.Add(this.button7);
-            this.tabPageCargoMarket.Controls.Add(this.button6);
-            this.tabPageCargoMarket.Controls.Add(this.listBox1);
-            this.tabPageCargoMarket.Controls.Add(this.listBoxSourceCargoSeeds);
-            this.tabPageCargoMarket.Controls.Add(this.label19);
-            this.tabPageCargoMarket.Controls.Add(this.label18);
-            this.tabPageCargoMarket.Controls.Add(this.comboBoxSourceCityCM);
-            this.tabPageCargoMarket.Controls.Add(this.label17);
-            this.tabPageCargoMarket.Controls.Add(this.comboBoxSourceCompanyCM);
+            this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketRandomizeCargoCompany);
+            this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketRandomizeCargoCity);
+            this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketResetCargoCompany);
+            this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketResetCargoCity);
+            this.tabPageCargoMarket.Controls.Add(this.listBoxCargoMarketCargoListForCompany);
+            this.tabPageCargoMarket.Controls.Add(this.listBoxCargoMarketSourceCargoSeeds);
+            this.tabPageCargoMarket.Controls.Add(this.labelCargoMarketSource);
+            this.tabPageCargoMarket.Controls.Add(this.labelCargoMarketCompany);
+            this.tabPageCargoMarket.Controls.Add(this.comboBoxCargoMarketSourceCity);
+            this.tabPageCargoMarket.Controls.Add(this.labelCargoMarketCity);
+            this.tabPageCargoMarket.Controls.Add(this.comboBoxSourceCargoMarketCompany);
             this.tabPageCargoMarket.Location = new System.Drawing.Point(4, 28);
             this.tabPageCargoMarket.Name = "tabPageCargoMarket";
             this.tabPageCargoMarket.Size = new System.Drawing.Size(480, 470);
@@ -1240,209 +1230,213 @@
             this.tabPageCargoMarket.Text = "CargoMarket";
             this.tabPageCargoMarket.UseVisualStyleBackColor = true;
             // 
-            // button9
+            // buttonCargoMarketRandomizeCargoCompany
             // 
-            this.button9.Location = new System.Drawing.Point(239, 79);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(161, 23);
-            this.button9.TabIndex = 16;
-            this.button9.Text = "Randomize Cargo list";
-            this.button9.UseVisualStyleBackColor = true;
+            this.buttonCargoMarketRandomizeCargoCompany.Location = new System.Drawing.Point(239, 79);
+            this.buttonCargoMarketRandomizeCargoCompany.Name = "buttonCargoMarketRandomizeCargoCompany";
+            this.buttonCargoMarketRandomizeCargoCompany.Size = new System.Drawing.Size(161, 23);
+            this.buttonCargoMarketRandomizeCargoCompany.TabIndex = 16;
+            this.buttonCargoMarketRandomizeCargoCompany.Text = "Randomize Cargo list";
+            this.buttonCargoMarketRandomizeCargoCompany.UseVisualStyleBackColor = true;
+            this.buttonCargoMarketRandomizeCargoCompany.Click += new System.EventHandler(this.buttonCargoMarketRandomizeCargoCompany_Click);
             // 
-            // button8
+            // buttonCargoMarketRandomizeCargoCity
             // 
-            this.button8.Location = new System.Drawing.Point(72, 79);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(161, 23);
-            this.button8.TabIndex = 15;
-            this.button8.Text = "Randomize Cargo list";
-            this.button8.UseVisualStyleBackColor = true;
+            this.buttonCargoMarketRandomizeCargoCity.Location = new System.Drawing.Point(72, 79);
+            this.buttonCargoMarketRandomizeCargoCity.Name = "buttonCargoMarketRandomizeCargoCity";
+            this.buttonCargoMarketRandomizeCargoCity.Size = new System.Drawing.Size(161, 23);
+            this.buttonCargoMarketRandomizeCargoCity.TabIndex = 15;
+            this.buttonCargoMarketRandomizeCargoCity.Text = "Randomize Cargo list";
+            this.buttonCargoMarketRandomizeCargoCity.UseVisualStyleBackColor = true;
+            this.buttonCargoMarketRandomizeCargoCity.Click += new System.EventHandler(this.buttonCargoMarketRandomizeCargoCity_Click);
             // 
-            // button7
+            // buttonCargoMarketResetCargoCompany
             // 
-            this.button7.Location = new System.Drawing.Point(239, 50);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(161, 23);
-            this.button7.TabIndex = 14;
-            this.button7.Text = "Reset Cargo list";
-            this.button7.UseVisualStyleBackColor = true;
+            this.buttonCargoMarketResetCargoCompany.Location = new System.Drawing.Point(239, 50);
+            this.buttonCargoMarketResetCargoCompany.Name = "buttonCargoMarketResetCargoCompany";
+            this.buttonCargoMarketResetCargoCompany.Size = new System.Drawing.Size(161, 23);
+            this.buttonCargoMarketResetCargoCompany.TabIndex = 14;
+            this.buttonCargoMarketResetCargoCompany.Text = "Reset Cargo list";
+            this.buttonCargoMarketResetCargoCompany.UseVisualStyleBackColor = true;
+            this.buttonCargoMarketResetCargoCompany.Click += new System.EventHandler(this.buttonCargoMarketResetCargoCompany_Click);
             // 
-            // button6
+            // buttonCargoMarketResetCargoCity
             // 
-            this.button6.Location = new System.Drawing.Point(72, 50);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(161, 23);
-            this.button6.TabIndex = 13;
-            this.button6.Text = "Reset Cargo list";
-            this.button6.UseVisualStyleBackColor = true;
+            this.buttonCargoMarketResetCargoCity.Location = new System.Drawing.Point(72, 50);
+            this.buttonCargoMarketResetCargoCity.Name = "buttonCargoMarketResetCargoCity";
+            this.buttonCargoMarketResetCargoCity.Size = new System.Drawing.Size(161, 23);
+            this.buttonCargoMarketResetCargoCity.TabIndex = 13;
+            this.buttonCargoMarketResetCargoCity.Text = "Reset Cargo list";
+            this.buttonCargoMarketResetCargoCity.UseVisualStyleBackColor = true;
+            this.buttonCargoMarketResetCargoCity.Click += new System.EventHandler(this.buttonCargoMarketResetCargoCity_Click);
             // 
-            // listBox1
+            // listBoxCargoMarketCargoListForCompany
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(72, 261);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(140, 147);
-            this.listBox1.TabIndex = 12;
-            this.listBox1.Visible = false;
+            this.listBoxCargoMarketCargoListForCompany.FormattingEnabled = true;
+            this.listBoxCargoMarketCargoListForCompany.Location = new System.Drawing.Point(72, 261);
+            this.listBoxCargoMarketCargoListForCompany.Name = "listBoxCargoMarketCargoListForCompany";
+            this.listBoxCargoMarketCargoListForCompany.Size = new System.Drawing.Size(161, 199);
+            this.listBoxCargoMarketCargoListForCompany.TabIndex = 12;
+            this.listBoxCargoMarketCargoListForCompany.Visible = false;
             // 
-            // listBoxSourceCargoSeeds
+            // listBoxCargoMarketSourceCargoSeeds
             // 
-            this.listBoxSourceCargoSeeds.FormattingEnabled = true;
-            this.listBoxSourceCargoSeeds.Location = new System.Drawing.Point(72, 108);
-            this.listBoxSourceCargoSeeds.Name = "listBoxSourceCargoSeeds";
-            this.listBoxSourceCargoSeeds.Size = new System.Drawing.Size(328, 147);
-            this.listBoxSourceCargoSeeds.TabIndex = 7;
+            this.listBoxCargoMarketSourceCargoSeeds.FormattingEnabled = true;
+            this.listBoxCargoMarketSourceCargoSeeds.Location = new System.Drawing.Point(72, 108);
+            this.listBoxCargoMarketSourceCargoSeeds.Name = "listBoxCargoMarketSourceCargoSeeds";
+            this.listBoxCargoMarketSourceCargoSeeds.Size = new System.Drawing.Size(328, 147);
+            this.listBoxCargoMarketSourceCargoSeeds.TabIndex = 7;
             // 
-            // label19
+            // labelCargoMarketSource
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(3, 28);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(41, 13);
-            this.label19.TabIndex = 6;
-            this.label19.Text = "Source";
+            this.labelCargoMarketSource.AutoSize = true;
+            this.labelCargoMarketSource.Location = new System.Drawing.Point(3, 28);
+            this.labelCargoMarketSource.Name = "labelCargoMarketSource";
+            this.labelCargoMarketSource.Size = new System.Drawing.Size(41, 13);
+            this.labelCargoMarketSource.TabIndex = 6;
+            this.labelCargoMarketSource.Text = "Source";
             // 
-            // label18
+            // labelCargoMarketCompany
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(239, 6);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(51, 13);
-            this.label18.TabIndex = 5;
-            this.label18.Text = "Company";
+            this.labelCargoMarketCompany.AutoSize = true;
+            this.labelCargoMarketCompany.Location = new System.Drawing.Point(239, 6);
+            this.labelCargoMarketCompany.Name = "labelCargoMarketCompany";
+            this.labelCargoMarketCompany.Size = new System.Drawing.Size(51, 13);
+            this.labelCargoMarketCompany.TabIndex = 5;
+            this.labelCargoMarketCompany.Text = "Company";
             // 
-            // comboBoxSourceCityCM
+            // comboBoxCargoMarketSourceCity
             // 
-            this.comboBoxSourceCityCM.FormattingEnabled = true;
-            this.comboBoxSourceCityCM.Location = new System.Drawing.Point(72, 22);
-            this.comboBoxSourceCityCM.Name = "comboBoxSourceCityCM";
-            this.comboBoxSourceCityCM.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxSourceCityCM.TabIndex = 2;
-            this.comboBoxSourceCityCM.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCityCM_SelectedIndexChanged);
+            this.comboBoxCargoMarketSourceCity.FormattingEnabled = true;
+            this.comboBoxCargoMarketSourceCity.Location = new System.Drawing.Point(72, 22);
+            this.comboBoxCargoMarketSourceCity.Name = "comboBoxCargoMarketSourceCity";
+            this.comboBoxCargoMarketSourceCity.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxCargoMarketSourceCity.TabIndex = 2;
+            this.comboBoxCargoMarketSourceCity.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCityCM_SelectedIndexChanged);
             // 
-            // label17
+            // labelCargoMarketCity
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(72, 6);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(24, 13);
-            this.label17.TabIndex = 1;
-            this.label17.Text = "City";
+            this.labelCargoMarketCity.AutoSize = true;
+            this.labelCargoMarketCity.Location = new System.Drawing.Point(72, 6);
+            this.labelCargoMarketCity.Name = "labelCargoMarketCity";
+            this.labelCargoMarketCity.Size = new System.Drawing.Size(24, 13);
+            this.labelCargoMarketCity.TabIndex = 1;
+            this.labelCargoMarketCity.Text = "City";
             // 
-            // comboBoxSourceCompanyCM
+            // comboBoxSourceCargoMarketCompany
             // 
-            this.comboBoxSourceCompanyCM.FormattingEnabled = true;
-            this.comboBoxSourceCompanyCM.Location = new System.Drawing.Point(239, 22);
-            this.comboBoxSourceCompanyCM.Name = "comboBoxSourceCompanyCM";
-            this.comboBoxSourceCompanyCM.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxSourceCompanyCM.TabIndex = 0;
-            this.comboBoxSourceCompanyCM.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCompanyCM_SelectedIndexChanged);
+            this.comboBoxSourceCargoMarketCompany.FormattingEnabled = true;
+            this.comboBoxSourceCargoMarketCompany.Location = new System.Drawing.Point(239, 22);
+            this.comboBoxSourceCargoMarketCompany.Name = "comboBoxSourceCargoMarketCompany";
+            this.comboBoxSourceCargoMarketCompany.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxSourceCargoMarketCompany.TabIndex = 0;
+            this.comboBoxSourceCargoMarketCompany.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCompanyCM_SelectedIndexChanged);
             // 
-            // tabPageConvoyControl
+            // tabPageConvoyTools
             // 
-            this.tabPageConvoyControl.Controls.Add(this.label5);
-            this.tabPageConvoyControl.Controls.Add(this.button29);
-            this.tabPageConvoyControl.Controls.Add(this.button28);
-            this.tabPageConvoyControl.Controls.Add(this.buttonGPSCurrentPositionPaste);
-            this.tabPageConvoyControl.Controls.Add(this.buttonGPSCurrentPositionCopy);
-            this.tabPageConvoyControl.Controls.Add(this.buttonGPSStoredGPSPathPaste);
-            this.tabPageConvoyControl.Controls.Add(this.buttonGPSStoredGPSPathCopy);
-            this.tabPageConvoyControl.Location = new System.Drawing.Point(4, 28);
-            this.tabPageConvoyControl.Name = "tabPageConvoyControl";
-            this.tabPageConvoyControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConvoyControl.Size = new System.Drawing.Size(480, 470);
-            this.tabPageConvoyControl.TabIndex = 4;
-            this.tabPageConvoyControl.Text = "Convoy Control";
-            this.tabPageConvoyControl.UseVisualStyleBackColor = true;
+            this.tabPageConvoyTools.Controls.Add(this.label5);
+            this.tabPageConvoyTools.Controls.Add(this.buttonConvoyToolsGPSTruckPositionMultySavePaste);
+            this.tabPageConvoyTools.Controls.Add(this.buttonConvoyToolsGPSTruckPositionMultySaveCopy);
+            this.tabPageConvoyTools.Controls.Add(this.buttonConvoyToolsGPSCurrentPositionPaste);
+            this.tabPageConvoyTools.Controls.Add(this.buttonConvoyToolsGPSCurrentPositionCopy);
+            this.tabPageConvoyTools.Controls.Add(this.buttonConvoyToolsGPSStoredGPSPathPaste);
+            this.tabPageConvoyTools.Controls.Add(this.buttonConvoyToolsGPSStoredGPSPathCopy);
+            this.tabPageConvoyTools.Location = new System.Drawing.Point(4, 28);
+            this.tabPageConvoyTools.Name = "tabPageConvoyTools";
+            this.tabPageConvoyTools.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageConvoyTools.Size = new System.Drawing.Size(480, 470);
+            this.tabPageConvoyTools.TabIndex = 4;
+            this.tabPageConvoyTools.Text = "Convoy Control";
+            this.tabPageConvoyTools.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(6, 61);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(468, 151);
+            this.label5.Size = new System.Drawing.Size(468, 247);
             this.label5.TabIndex = 6;
             this.label5.Text = "Work In Progres";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button29
+            // buttonConvoyToolsGPSTruckPositionMultySavePaste
             // 
-            this.button29.Location = new System.Drawing.Point(243, 64);
-            this.button29.Name = "button29";
-            this.button29.Size = new System.Drawing.Size(231, 52);
-            this.button29.TabIndex = 5;
-            this.button29.Text = "Create multiple saves with different truck positions";
-            this.button29.UseVisualStyleBackColor = true;
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Location = new System.Drawing.Point(243, 64);
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Name = "buttonConvoyToolsGPSTruckPositionMultySavePaste";
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Size = new System.Drawing.Size(231, 52);
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.TabIndex = 5;
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Text = "Create multiple saves with different truck positions";
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.UseVisualStyleBackColor = true;
             // 
-            // button28
+            // buttonConvoyToolsGPSTruckPositionMultySaveCopy
             // 
-            this.button28.Location = new System.Drawing.Point(6, 64);
-            this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(231, 52);
-            this.button28.TabIndex = 4;
-            this.button28.Text = "Copy truck position from multiple saves";
-            this.button28.UseVisualStyleBackColor = true;
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Location = new System.Drawing.Point(6, 64);
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Name = "buttonConvoyToolsGPSTruckPositionMultySaveCopy";
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Size = new System.Drawing.Size(231, 52);
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.TabIndex = 4;
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Text = "Copy truck position from multiple saves";
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.UseVisualStyleBackColor = true;
             // 
-            // buttonGPSCurrentPositionPaste
+            // buttonConvoyToolsGPSCurrentPositionPaste
             // 
-            this.buttonGPSCurrentPositionPaste.Location = new System.Drawing.Point(243, 6);
-            this.buttonGPSCurrentPositionPaste.Name = "buttonGPSCurrentPositionPaste";
-            this.buttonGPSCurrentPositionPaste.Size = new System.Drawing.Size(231, 23);
-            this.buttonGPSCurrentPositionPaste.TabIndex = 3;
-            this.buttonGPSCurrentPositionPaste.Text = "Paste current position";
-            this.buttonGPSCurrentPositionPaste.UseVisualStyleBackColor = true;
-            this.buttonGPSCurrentPositionPaste.Click += new System.EventHandler(this.buttonGPSCurrentPositionPaste_Click);
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Location = new System.Drawing.Point(243, 6);
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Name = "buttonConvoyToolsGPSCurrentPositionPaste";
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Size = new System.Drawing.Size(231, 23);
+            this.buttonConvoyToolsGPSCurrentPositionPaste.TabIndex = 3;
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Text = "Paste current position";
+            this.buttonConvoyToolsGPSCurrentPositionPaste.UseVisualStyleBackColor = true;
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Click += new System.EventHandler(this.buttonGPSCurrentPositionPaste_Click);
             // 
-            // buttonGPSCurrentPositionCopy
+            // buttonConvoyToolsGPSCurrentPositionCopy
             // 
-            this.buttonGPSCurrentPositionCopy.Location = new System.Drawing.Point(6, 6);
-            this.buttonGPSCurrentPositionCopy.Name = "buttonGPSCurrentPositionCopy";
-            this.buttonGPSCurrentPositionCopy.Size = new System.Drawing.Size(231, 23);
-            this.buttonGPSCurrentPositionCopy.TabIndex = 2;
-            this.buttonGPSCurrentPositionCopy.Text = "Copy current position";
-            this.buttonGPSCurrentPositionCopy.UseVisualStyleBackColor = true;
-            this.buttonGPSCurrentPositionCopy.Click += new System.EventHandler(this.buttonGPSCurrentPositionCopy_Click);
+            this.buttonConvoyToolsGPSCurrentPositionCopy.Location = new System.Drawing.Point(6, 6);
+            this.buttonConvoyToolsGPSCurrentPositionCopy.Name = "buttonConvoyToolsGPSCurrentPositionCopy";
+            this.buttonConvoyToolsGPSCurrentPositionCopy.Size = new System.Drawing.Size(231, 23);
+            this.buttonConvoyToolsGPSCurrentPositionCopy.TabIndex = 2;
+            this.buttonConvoyToolsGPSCurrentPositionCopy.Text = "Copy current position";
+            this.buttonConvoyToolsGPSCurrentPositionCopy.UseVisualStyleBackColor = true;
+            this.buttonConvoyToolsGPSCurrentPositionCopy.Click += new System.EventHandler(this.buttonGPSCurrentPositionCopy_Click);
             // 
-            // buttonGPSStoredGPSPathPaste
+            // buttonConvoyToolsGPSStoredGPSPathPaste
             // 
-            this.buttonGPSStoredGPSPathPaste.Location = new System.Drawing.Point(243, 35);
-            this.buttonGPSStoredGPSPathPaste.Name = "buttonGPSStoredGPSPathPaste";
-            this.buttonGPSStoredGPSPathPaste.Size = new System.Drawing.Size(231, 23);
-            this.buttonGPSStoredGPSPathPaste.TabIndex = 1;
-            this.buttonGPSStoredGPSPathPaste.Text = "Paste GPS path";
-            this.buttonGPSStoredGPSPathPaste.UseVisualStyleBackColor = true;
-            this.buttonGPSStoredGPSPathPaste.Click += new System.EventHandler(this.buttonGPSStoredGPSPathPaste_Click);
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Location = new System.Drawing.Point(243, 35);
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Name = "buttonConvoyToolsGPSStoredGPSPathPaste";
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Size = new System.Drawing.Size(231, 23);
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.TabIndex = 1;
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Text = "Paste GPS path";
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.UseVisualStyleBackColor = true;
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Click += new System.EventHandler(this.buttonGPSStoredGPSPathPaste_Click);
             // 
-            // buttonGPSStoredGPSPathCopy
+            // buttonConvoyToolsGPSStoredGPSPathCopy
             // 
-            this.buttonGPSStoredGPSPathCopy.Location = new System.Drawing.Point(6, 35);
-            this.buttonGPSStoredGPSPathCopy.Name = "buttonGPSStoredGPSPathCopy";
-            this.buttonGPSStoredGPSPathCopy.Size = new System.Drawing.Size(231, 23);
-            this.buttonGPSStoredGPSPathCopy.TabIndex = 0;
-            this.buttonGPSStoredGPSPathCopy.Text = "Copy GPS path";
-            this.buttonGPSStoredGPSPathCopy.UseVisualStyleBackColor = true;
-            this.buttonGPSStoredGPSPathCopy.Click += new System.EventHandler(this.buttonGPSStoredGPSPathCopy_Click);
+            this.buttonConvoyToolsGPSStoredGPSPathCopy.Location = new System.Drawing.Point(6, 35);
+            this.buttonConvoyToolsGPSStoredGPSPathCopy.Name = "buttonConvoyToolsGPSStoredGPSPathCopy";
+            this.buttonConvoyToolsGPSStoredGPSPathCopy.Size = new System.Drawing.Size(231, 23);
+            this.buttonConvoyToolsGPSStoredGPSPathCopy.TabIndex = 0;
+            this.buttonConvoyToolsGPSStoredGPSPathCopy.Text = "Copy GPS path";
+            this.buttonConvoyToolsGPSStoredGPSPathCopy.UseVisualStyleBackColor = true;
+            this.buttonConvoyToolsGPSStoredGPSPathCopy.Click += new System.EventHandler(this.buttonGPSStoredGPSPathCopy_Click);
             // 
-            // buttonWriteSave
+            // buttonMainWriteSave
             // 
-            this.buttonWriteSave.Enabled = false;
-            this.buttonWriteSave.Location = new System.Drawing.Point(420, 119);
-            this.buttonWriteSave.Name = "buttonWriteSave";
-            this.buttonWriteSave.Size = new System.Drawing.Size(76, 45);
-            this.buttonWriteSave.TabIndex = 7;
-            this.buttonWriteSave.Text = "Save";
-            this.buttonWriteSave.UseVisualStyleBackColor = true;
-            this.buttonWriteSave.Click += new System.EventHandler(this.buttonWriteSave_Click);
+            this.buttonMainWriteSave.Enabled = false;
+            this.buttonMainWriteSave.Location = new System.Drawing.Point(420, 119);
+            this.buttonMainWriteSave.Name = "buttonMainWriteSave";
+            this.buttonMainWriteSave.Size = new System.Drawing.Size(76, 45);
+            this.buttonMainWriteSave.TabIndex = 7;
+            this.buttonMainWriteSave.Text = "Save";
+            this.buttonMainWriteSave.UseVisualStyleBackColor = true;
+            this.buttonMainWriteSave.Click += new System.EventHandler(this.buttonWriteSave_Click);
             // 
-            // buttonOpenSaveFolder
+            // buttonProfilesAndSavesOpenSaveFolder
             // 
-            this.buttonOpenSaveFolder.Location = new System.Drawing.Point(259, 77);
-            this.buttonOpenSaveFolder.Name = "buttonOpenSaveFolder";
-            this.buttonOpenSaveFolder.Size = new System.Drawing.Size(134, 23);
-            this.buttonOpenSaveFolder.TabIndex = 8;
-            this.buttonOpenSaveFolder.Text = "Open Folder";
-            this.buttonOpenSaveFolder.UseVisualStyleBackColor = true;
-            this.buttonOpenSaveFolder.Click += new System.EventHandler(this.buttonOpenSaveFolder_Click);
+            this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(259, 77);
+            this.buttonProfilesAndSavesOpenSaveFolder.Name = "buttonProfilesAndSavesOpenSaveFolder";
+            this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(134, 23);
+            this.buttonProfilesAndSavesOpenSaveFolder.TabIndex = 8;
+            this.buttonProfilesAndSavesOpenSaveFolder.Text = "Open Folder";
+            this.buttonProfilesAndSavesOpenSaveFolder.UseVisualStyleBackColor = true;
+            this.buttonProfilesAndSavesOpenSaveFolder.Click += new System.EventHandler(this.buttonOpenSaveFolder_Click);
             // 
             // statusStripMain
             // 
@@ -1473,15 +1467,15 @@
             this.toolStripProgressBarMain.Step = 1;
             this.toolStripProgressBarMain.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 
-            // buttonLoadSave
+            // buttonMainLoadSave
             // 
-            this.buttonLoadSave.Location = new System.Drawing.Point(420, 90);
-            this.buttonLoadSave.Name = "buttonLoadSave";
-            this.buttonLoadSave.Size = new System.Drawing.Size(76, 23);
-            this.buttonLoadSave.TabIndex = 11;
-            this.buttonLoadSave.Text = "Load";
-            this.buttonLoadSave.UseVisualStyleBackColor = true;
-            this.buttonLoadSave.Click += new System.EventHandler(this.LoadSaveFile_Click);
+            this.buttonMainLoadSave.Location = new System.Drawing.Point(420, 90);
+            this.buttonMainLoadSave.Name = "buttonMainLoadSave";
+            this.buttonMainLoadSave.Size = new System.Drawing.Size(76, 23);
+            this.buttonMainLoadSave.TabIndex = 11;
+            this.buttonMainLoadSave.Text = "Load";
+            this.buttonMainLoadSave.UseVisualStyleBackColor = true;
+            this.buttonMainLoadSave.Click += new System.EventHandler(this.LoadSaveFile_Click);
             // 
             // pictureBoxProfileAvatar
             // 
@@ -1493,45 +1487,45 @@
             this.pictureBoxProfileAvatar.TabIndex = 12;
             this.pictureBoxProfileAvatar.TabStop = false;
             // 
-            // buttonAddCustomFolder
+            // buttonMainGameSwitchCustomFolder
             // 
-            this.buttonAddCustomFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonMainGameSwitchCustomFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddCustomFolder.Enabled = false;
-            this.buttonAddCustomFolder.Location = new System.Drawing.Point(346, 27);
-            this.buttonAddCustomFolder.Name = "buttonAddCustomFolder";
-            this.buttonAddCustomFolder.Size = new System.Drawing.Size(150, 23);
-            this.buttonAddCustomFolder.TabIndex = 14;
-            this.buttonAddCustomFolder.Text = "Add Custom Folder";
-            this.buttonAddCustomFolder.UseVisualStyleBackColor = true;
-            this.buttonAddCustomFolder.Click += new System.EventHandler(this.AddCustomFolder_Click);
+            this.buttonMainGameSwitchCustomFolder.Enabled = false;
+            this.buttonMainGameSwitchCustomFolder.Location = new System.Drawing.Point(346, 27);
+            this.buttonMainGameSwitchCustomFolder.Name = "buttonMainGameSwitchCustomFolder";
+            this.buttonMainGameSwitchCustomFolder.Size = new System.Drawing.Size(150, 23);
+            this.buttonMainGameSwitchCustomFolder.TabIndex = 14;
+            this.buttonMainGameSwitchCustomFolder.Text = "Add Custom Folder";
+            this.buttonMainGameSwitchCustomFolder.UseVisualStyleBackColor = true;
+            this.buttonMainGameSwitchCustomFolder.Click += new System.EventHandler(this.AddCustomFolder_Click);
             // 
-            // buttonGameETS
+            // buttonMainGameSwitchETS
             // 
-            this.buttonGameETS.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonGameETS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonGameETS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonGameETS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonGameETS.Location = new System.Drawing.Point(12, 27);
-            this.buttonGameETS.Name = "buttonGameETS";
-            this.buttonGameETS.Size = new System.Drawing.Size(150, 23);
-            this.buttonGameETS.TabIndex = 15;
-            this.buttonGameETS.Text = "ETS2";
-            this.buttonGameETS.UseVisualStyleBackColor = false;
-            this.buttonGameETS.Click += new System.EventHandler(this.ToggleGame_Click);
+            this.buttonMainGameSwitchETS.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonMainGameSwitchETS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMainGameSwitchETS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonMainGameSwitchETS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonMainGameSwitchETS.Location = new System.Drawing.Point(12, 27);
+            this.buttonMainGameSwitchETS.Name = "buttonMainGameSwitchETS";
+            this.buttonMainGameSwitchETS.Size = new System.Drawing.Size(150, 23);
+            this.buttonMainGameSwitchETS.TabIndex = 15;
+            this.buttonMainGameSwitchETS.Text = "ETS2";
+            this.buttonMainGameSwitchETS.UseVisualStyleBackColor = false;
+            this.buttonMainGameSwitchETS.Click += new System.EventHandler(this.ToggleGame_Click);
             // 
-            // buttonGameATS
+            // buttonMainGameSwitchATS
             // 
-            this.buttonGameATS.Enabled = false;
-            this.buttonGameATS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonGameATS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonGameATS.Location = new System.Drawing.Point(168, 27);
-            this.buttonGameATS.Name = "buttonGameATS";
-            this.buttonGameATS.Size = new System.Drawing.Size(150, 23);
-            this.buttonGameATS.TabIndex = 16;
-            this.buttonGameATS.Text = "ATS";
-            this.buttonGameATS.UseVisualStyleBackColor = true;
-            this.buttonGameATS.Click += new System.EventHandler(this.ToggleGame_Click);
+            this.buttonMainGameSwitchATS.Enabled = false;
+            this.buttonMainGameSwitchATS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMainGameSwitchATS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonMainGameSwitchATS.Location = new System.Drawing.Point(168, 27);
+            this.buttonMainGameSwitchATS.Name = "buttonMainGameSwitchATS";
+            this.buttonMainGameSwitchATS.Size = new System.Drawing.Size(150, 23);
+            this.buttonMainGameSwitchATS.TabIndex = 16;
+            this.buttonMainGameSwitchATS.Text = "ATS";
+            this.buttonMainGameSwitchATS.UseVisualStyleBackColor = true;
+            this.buttonMainGameSwitchATS.Click += new System.EventHandler(this.ToggleGame_Click);
             // 
             // openFileDialog1
             // 
@@ -1548,47 +1542,56 @@
             this.comboBoxPrevProfiles.TabIndex = 19;
             this.comboBoxPrevProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxPrevProfiles_SelectedIndexChanged);
             // 
-            // checkBoxProfileBackups
+            // checkBoxProfilesAndSavesProfileBackups
             // 
-            this.checkBoxProfileBackups.AutoSize = true;
-            this.checkBoxProfileBackups.Location = new System.Drawing.Point(259, 23);
-            this.checkBoxProfileBackups.Name = "checkBoxProfileBackups";
-            this.checkBoxProfileBackups.Size = new System.Drawing.Size(68, 17);
-            this.checkBoxProfileBackups.TabIndex = 20;
-            this.checkBoxProfileBackups.Text = "Backups";
-            this.checkBoxProfileBackups.UseVisualStyleBackColor = true;
-            this.checkBoxProfileBackups.CheckedChanged += new System.EventHandler(this.checkBoxProfileBackups_CheckedChanged);
+            this.checkBoxProfilesAndSavesProfileBackups.AutoSize = true;
+            this.checkBoxProfilesAndSavesProfileBackups.Location = new System.Drawing.Point(259, 23);
+            this.checkBoxProfilesAndSavesProfileBackups.Name = "checkBoxProfilesAndSavesProfileBackups";
+            this.checkBoxProfilesAndSavesProfileBackups.Size = new System.Drawing.Size(68, 17);
+            this.checkBoxProfilesAndSavesProfileBackups.TabIndex = 20;
+            this.checkBoxProfilesAndSavesProfileBackups.Text = "Backups";
+            this.checkBoxProfilesAndSavesProfileBackups.UseVisualStyleBackColor = true;
+            this.checkBoxProfilesAndSavesProfileBackups.CheckedChanged += new System.EventHandler(this.checkBoxProfileBackups_CheckedChanged);
             // 
-            // groupBoxProfilesAndSaves
+            // groupBoxMainProfilesAndSaves
             // 
-            this.groupBoxProfilesAndSaves.Controls.Add(this.checkBoxProfileBackups);
-            this.groupBoxProfilesAndSaves.Controls.Add(this.pictureBoxProfileAvatar);
-            this.groupBoxProfilesAndSaves.Controls.Add(this.comboBoxPrevProfiles);
-            this.groupBoxProfilesAndSaves.Controls.Add(this.comboBoxProfiles);
-            this.groupBoxProfilesAndSaves.Controls.Add(this.buttonRefreshAll);
-            this.groupBoxProfilesAndSaves.Controls.Add(this.comboBoxSaves);
-            this.groupBoxProfilesAndSaves.Controls.Add(this.buttonOpenSaveFolder);
-            this.groupBoxProfilesAndSaves.Location = new System.Drawing.Point(12, 56);
-            this.groupBoxProfilesAndSaves.Name = "groupBoxProfilesAndSaves";
-            this.groupBoxProfilesAndSaves.Size = new System.Drawing.Size(402, 108);
-            this.groupBoxProfilesAndSaves.TabIndex = 21;
-            this.groupBoxProfilesAndSaves.TabStop = false;
-            this.groupBoxProfilesAndSaves.Text = "Profiles And Saves";
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.checkBoxProfilesAndSavesProfileBackups);
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.pictureBoxProfileAvatar);
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxPrevProfiles);
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxProfiles);
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRefreshAll);
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxSaves);
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesOpenSaveFolder);
+            this.groupBoxMainProfilesAndSaves.Location = new System.Drawing.Point(12, 56);
+            this.groupBoxMainProfilesAndSaves.Name = "groupBoxMainProfilesAndSaves";
+            this.groupBoxMainProfilesAndSaves.Size = new System.Drawing.Size(402, 108);
+            this.groupBoxMainProfilesAndSaves.TabIndex = 21;
+            this.groupBoxMainProfilesAndSaves.TabStop = false;
+            this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
+            // 
+            // labelPlayerExperience
+            // 
+            this.labelPlayerExperience.Location = new System.Drawing.Point(110, 54);
+            this.labelPlayerExperience.Name = "labelPlayerExperience";
+            this.labelPlayerExperience.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelPlayerExperience.Size = new System.Drawing.Size(74, 13);
+            this.labelPlayerExperience.TabIndex = 39;
+            this.labelPlayerExperience.Text = "0";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(504, 691);
-            this.Controls.Add(this.groupBoxProfilesAndSaves);
-            this.Controls.Add(this.buttonGameATS);
-            this.Controls.Add(this.buttonGameETS);
-            this.Controls.Add(this.buttonLoadSave);
+            this.Controls.Add(this.groupBoxMainProfilesAndSaves);
+            this.Controls.Add(this.buttonMainGameSwitchATS);
+            this.Controls.Add(this.buttonMainGameSwitchETS);
+            this.Controls.Add(this.buttonMainLoadSave);
             this.Controls.Add(this.statusStripMain);
-            this.Controls.Add(this.buttonWriteSave);
-            this.Controls.Add(this.buttonAddCustomFolder);
+            this.Controls.Add(this.buttonMainWriteSave);
+            this.Controls.Add(this.buttonMainGameSwitchCustomFolder);
             this.Controls.Add(this.tabControlMain);
-            this.Controls.Add(this.buttonDecryptSave);
+            this.Controls.Add(this.buttonMainDecryptSave);
             this.Controls.Add(this.menuStripMain);
             this.MainMenuStrip = this.menuStripMain;
             this.MaximumSize = new System.Drawing.Size(520, 730);
@@ -1603,33 +1606,33 @@
             this.menuStripMain.PerformLayout();
             this.tabControlMain.ResumeLayout(false);
             this.tabPageProfile.ResumeLayout(false);
-            this.groupBoxPlayerLevel.ResumeLayout(false);
-            this.groupBoxPlayerLevel.PerformLayout();
+            this.groupBoxProfilePlayerLevel.ResumeLayout(false);
+            this.groupBoxProfilePlayerLevel.PerformLayout();
             this.panelPlayerLevel.ResumeLayout(false);
             this.panelPlayerLevel.PerformLayout();
-            this.groupBoxUserColors.ResumeLayout(false);
+            this.groupBoxProfileUserColors.ResumeLayout(false);
             this.tabPageCompany.ResumeLayout(false);
             this.tabPageCompany.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCompanyLogo)).EndInit();
             this.tabPageTruck.ResumeLayout(false);
             this.tabPageTruck.PerformLayout();
-            this.groupBoxgroupBoxShareTruckSettings.ResumeLayout(false);
-            this.groupBoxTruckDetails.ResumeLayout(false);
-            this.groupBoxTruckDetails.PerformLayout();
+            this.groupBoxUserTruckShareTruckSettings.ResumeLayout(false);
+            this.groupBoxUserTruckTruckDetails.ResumeLayout(false);
+            this.groupBoxUserTruckTruckDetails.PerformLayout();
             this.tabPageTrailer.ResumeLayout(false);
             this.tabPageTrailer.PerformLayout();
-            this.groupBoxTrailerDetails.ResumeLayout(false);
-            this.groupBoxTrailerDetails.PerformLayout();
+            this.groupBoxUserTrailerTrailerDetails.ResumeLayout(false);
+            this.groupBoxUserTrailerTrailerDetails.PerformLayout();
             this.tabPageFreightMarket.ResumeLayout(false);
             this.tabPageFreightMarket.PerformLayout();
             this.tabPageCargoMarket.ResumeLayout(false);
             this.tabPageCargoMarket.PerformLayout();
-            this.tabPageConvoyControl.ResumeLayout(false);
+            this.tabPageConvoyTools.ResumeLayout(false);
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileAvatar)).EndInit();
-            this.groupBoxProfilesAndSaves.ResumeLayout(false);
-            this.groupBoxProfilesAndSaves.PerformLayout();
+            this.groupBoxMainProfilesAndSaves.ResumeLayout(false);
+            this.groupBoxMainProfilesAndSaves.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1638,65 +1641,64 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStripMain;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFile;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemProgram;
         private System.Windows.Forms.ComboBox comboBoxProfiles;
-        private System.Windows.Forms.Button buttonRefreshAll;
+        private System.Windows.Forms.Button buttonProfilesAndSavesRefreshAll;
         private System.Windows.Forms.ComboBox comboBoxSaves;
-        private System.Windows.Forms.Button buttonDecryptSave;
+        private System.Windows.Forms.Button buttonMainDecryptSave;
         private System.Windows.Forms.TabControl tabControlMain;
         private System.Windows.Forms.TabPage tabPageProfile;
         private System.Windows.Forms.TabPage tabPageTruck;
-        private System.Windows.Forms.Label labelTruck;
-        private System.Windows.Forms.Button buttonWriteSave;
-        private System.Windows.Forms.Button buttonOpenSaveFolder;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
+        private System.Windows.Forms.Label labelUserTruckTruck;
+        private System.Windows.Forms.Button buttonMainWriteSave;
+        private System.Windows.Forms.Button buttonProfilesAndSavesOpenSaveFolder;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemLanguage;
         private System.Windows.Forms.StatusStrip statusStripMain;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusMessages;
-        private System.Windows.Forms.Button buttonLoadSave;
+        private System.Windows.Forms.Button buttonMainLoadSave;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarMain;
         private System.Windows.Forms.TabPage tabPageTrailer;
         private System.Windows.Forms.TabPage tabPageFreightMarket;
-        private System.Windows.Forms.ComboBox comboBoxDestinationCompany;
+        private System.Windows.Forms.ComboBox comboBoxFreightMarketDestinationCompany;
         private System.Windows.Forms.Label labelFreightMarketDestination;
-        private System.Windows.Forms.ComboBox comboBoxDestinationCity;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label labelFreightMarketCity;
-        private System.Windows.Forms.ComboBox comboBoxSourceCompany;
-        private System.Windows.Forms.Label labelFreightMarketSource;
-        private System.Windows.Forms.ComboBox comboBoxSourceCity;
-        private System.Windows.Forms.PictureBox pictureBoxProfileAvatar;
-        private System.Windows.Forms.Button buttonClearJobList;
-        private System.Windows.Forms.Button buttonAddJob;
-        private System.Windows.Forms.Label labelFreightMarketUrgency;
-        private System.Windows.Forms.ComboBox comboBoxUrgency;
-        private System.Windows.Forms.Label labelFreightMarketCargo;
-        private System.Windows.Forms.ComboBox comboBoxCargoList;
-        private System.Windows.Forms.Button buttonAddCustomFolder;
-        private System.Windows.Forms.Button buttonGameETS;
-        private System.Windows.Forms.Button buttonGameATS;
-        private System.Windows.Forms.ComboBox comboBoxCompanies;
-        private System.Windows.Forms.ComboBox comboBoxCountries;
-        private System.Windows.Forms.Label labelFreightMarketFilterMain;
-        private System.Windows.Forms.Label labelFreightMarketCountry;
+        private System.Windows.Forms.ComboBox comboBoxFreightMarketDestinationCity;
         private System.Windows.Forms.Label labelFreightMarketCompany;
+        private System.Windows.Forms.Label labelFreightMarketCity;
+        private System.Windows.Forms.ComboBox comboBoxFreightMarketSourceCompany;
+        private System.Windows.Forms.Label labelFreightMarketSource;
+        private System.Windows.Forms.ComboBox comboBoxFreightMarketSourceCity;
+        private System.Windows.Forms.PictureBox pictureBoxProfileAvatar;
+        private System.Windows.Forms.Button buttonFreightMarketClearJobList;
+        private System.Windows.Forms.Button buttonFreightMarketAddJob;
+        private System.Windows.Forms.Label labelFreightMarketUrgency;
+        private System.Windows.Forms.ComboBox comboBoxFreightMarketUrgency;
+        private System.Windows.Forms.Label labelFreightMarketCargo;
+        private System.Windows.Forms.ComboBox comboBoxFreightMarketCargoList;
+        private System.Windows.Forms.Button buttonMainGameSwitchCustomFolder;
+        private System.Windows.Forms.Button buttonMainGameSwitchETS;
+        private System.Windows.Forms.Button buttonMainGameSwitchATS;
+        private System.Windows.Forms.ComboBox comboBoxFreightMarketCompanies;
+        private System.Windows.Forms.ComboBox comboBoxFreightMarketCountries;
+        private System.Windows.Forms.Label labelFreightMarketFilterMain;
+        private System.Windows.Forms.Label labelFreightMarketCountryF;
+        private System.Windows.Forms.Label labelFreightMarketCompanyF;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.CheckBox checkBoxFilterDestination;
-        private System.Windows.Forms.CheckBox checkBoxFilterSource;
-        private System.Windows.Forms.TextBox textBoxPlayerExperience;
-        private System.Windows.Forms.GroupBox groupBoxUserColors;
-        private System.Windows.Forms.CheckBox checkBoxRandomDest;
-        private System.Windows.Forms.TabPage tabPageConvoyControl;
+        private System.Windows.Forms.CheckBox checkBoxFreightMarketFilterDestination;
+        private System.Windows.Forms.CheckBox checkBoxFreightMarketFilterSource;
+        private System.Windows.Forms.GroupBox groupBoxProfileUserColors;
+        private System.Windows.Forms.CheckBox checkBoxFreightMarketRandomDest;
+        private System.Windows.Forms.TabPage tabPageConvoyTools;
         private System.Windows.Forms.ComboBox comboBoxPrevProfiles;
-        private System.Windows.Forms.CheckBox checkBoxProfileBackups;
+        private System.Windows.Forms.CheckBox checkBoxProfilesAndSavesProfileBackups;
         private System.Windows.Forms.TabPage tabPageCompany;
         private System.Windows.Forms.Label labelUserCompanyCompanyName;
-        private System.Windows.Forms.TextBox textBoxUserCompanyName;
-        private System.Windows.Forms.ComboBox comboBoxHQcity;
+        private System.Windows.Forms.TextBox textBoxUserCompanyCompanyName;
+        private System.Windows.Forms.ComboBox comboBoxUserCompanyHQcity;
         private System.Windows.Forms.Label labelUserCompanyHQcity;
-        private System.Windows.Forms.Button buttonPlayerLvlMax;
-        private System.Windows.Forms.Button buttonPlayerLvlPlus10;
-        private System.Windows.Forms.Button buttonPlayerLvlPlus01;
+        private System.Windows.Forms.Button buttonPlayerLevelMaximum;
+        private System.Windows.Forms.Button buttonPlayerLevelPlus10;
+        private System.Windows.Forms.Button buttonPlayerLevelPlus01;
         private System.Windows.Forms.Label labelPlayerLevelNumber;
         private System.Windows.Forms.Label labelPlayerLevelName;
         private System.Windows.Forms.Label labelUserCompanyVisitedCities;
@@ -1705,73 +1707,74 @@
         private System.Windows.Forms.ListBox listBoxGarages;
         private System.Windows.Forms.ToolTip toolTipMain;
         private System.Windows.Forms.GroupBox groupBoxProfileSkill;
-        private System.Windows.Forms.Button buttonPlayerLvlMinus10;
-        private System.Windows.Forms.Button buttonPlayerLvlMinus01;
-        private System.Windows.Forms.Button buttonPlayerLvlMin;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.Button buttonPlayerLevelMinus10;
+        private System.Windows.Forms.Button buttonPlayerLevelMinus01;
+        private System.Windows.Forms.Button buttonPlayerLevelMinimum;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSettings;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem makeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCreateTrFile;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHelp;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.Label labelExperienceNxtLvlThreshhold;
-        private System.Windows.Forms.ComboBox comboBoxCompanyTrucks;
+        private System.Windows.Forms.ComboBox comboBoxUserTruckCompanyTrucks;
         private System.Windows.Forms.Button buttonUserTruckSwitchCurrent;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.GroupBox groupBoxTruckDetails;
+        private System.Windows.Forms.GroupBox groupBoxUserTruckTruckDetails;
         private System.Windows.Forms.Button buttonUserTruckSelectCurrent;
         private System.Windows.Forms.Panel panelPlayerLevel;
-        private System.Windows.Forms.ListBox listBoxAddedJobs;
+        private System.Windows.Forms.ListBox listBoxFreightMarketAddedJobs;
         private System.Windows.Forms.Label labelUserCompanyMoneyAccount;
-        private System.Windows.Forms.TextBox textBoxMoneyAccount;
+        private System.Windows.Forms.TextBox textBoxUserCompanyMoneyAccount;
         private System.Windows.Forms.Button buttonUserTrailerSelectCurrent;
-        private System.Windows.Forms.GroupBox groupBoxTrailerDetails;
+        private System.Windows.Forms.GroupBox groupBoxUserTrailerTrailerDetails;
         private System.Windows.Forms.Button buttonUserTrailerSwitchCurrent;
-        private System.Windows.Forms.ComboBox comboBoxCompanyTrailers;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button buttonGaragesSell;
-        private System.Windows.Forms.Button buttonCitiesUnVisit;
-        private System.Windows.Forms.Button buttonCitiesVisit;
-        private System.Windows.Forms.Button buttonGaragesBuyUpgrade;
-        private System.Windows.Forms.Button buttonGaragesUpgrade;
-        private System.Windows.Forms.Button buttonGaragesBuy;
-        private System.Windows.Forms.GroupBox groupBoxgroupBoxShareTruckSettings;
-        private System.Windows.Forms.Button buttonTruckTruckCopy;
-        private System.Windows.Forms.Button buttonTruckDetailsCopy;
-        private System.Windows.Forms.Button buttonTruckPaintPaste;
-        private System.Windows.Forms.Button buttonTruckPaintCopy;
+        private System.Windows.Forms.ComboBox comboBoxUserTrailerCompanyTrailers;
+        private System.Windows.Forms.Label labelUserTrailerTrailer;
+        private System.Windows.Forms.Button buttonUserCompanyGaragesSell;
+        private System.Windows.Forms.Button buttonUserCompanyCitiesUnVisit;
+        private System.Windows.Forms.Button buttonUserCompanyCitiesVisit;
+        private System.Windows.Forms.Button buttonUserCompanyGaragesBuyUpgrade;
+        private System.Windows.Forms.Button buttonUserCompanyGaragesUpgrade;
+        private System.Windows.Forms.Button buttonUserCompanyGaragesBuy;
+        private System.Windows.Forms.GroupBox groupBoxUserTruckShareTruckSettings;
+        private System.Windows.Forms.Button buttonShareTruckTruckTruckCopy;
+        private System.Windows.Forms.Button buttonShareTruckTruckDetailsCopy;
+        private System.Windows.Forms.Button buttonShareTruckTruckPaintPaste;
+        private System.Windows.Forms.Button buttonShareTruckTruckPaintCopy;
         private System.Windows.Forms.Label labelFreightMarketDistance;
-        private System.Windows.Forms.GroupBox groupBoxPlayerLevel;
-        private System.Windows.Forms.Button button29;
-        private System.Windows.Forms.Button button28;
-        private System.Windows.Forms.Button buttonGPSCurrentPositionPaste;
-        private System.Windows.Forms.Button buttonGPSCurrentPositionCopy;
-        private System.Windows.Forms.Button buttonGPSStoredGPSPathPaste;
-        private System.Windows.Forms.Button buttonGPSStoredGPSPathCopy;
+        private System.Windows.Forms.GroupBox groupBoxProfilePlayerLevel;
+        private System.Windows.Forms.Button buttonConvoyToolsGPSTruckPositionMultySavePaste;
+        private System.Windows.Forms.Button buttonConvoyToolsGPSTruckPositionMultySaveCopy;
+        private System.Windows.Forms.Button buttonConvoyToolsGPSCurrentPositionPaste;
+        private System.Windows.Forms.Button buttonConvoyToolsGPSCurrentPositionCopy;
+        private System.Windows.Forms.Button buttonConvoyToolsGPSStoredGPSPathPaste;
+        private System.Windows.Forms.Button buttonConvoyToolsGPSStoredGPSPathCopy;
         private System.Windows.Forms.Label labelLicensePlate;
-        private System.Windows.Forms.Label labelTruckDetailsLicensePlate;
-        private System.Windows.Forms.Button buttonTruckTruckPaste;
-        private System.Windows.Forms.Button buttonTruckDetailsPaste;
-        private System.Windows.Forms.GroupBox groupBoxProfilesAndSaves;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label labelUserTruckLicensePlate;
+        private System.Windows.Forms.Button buttonShareTruckTruckTruckPaste;
+        private System.Windows.Forms.Button buttonShareTruckTruckDetailsPaste;
+        private System.Windows.Forms.GroupBox groupBoxMainProfilesAndSaves;
+        private System.Windows.Forms.Button buttonFreightMarketRandomizeCargo;
         private System.Windows.Forms.PictureBox pictureBoxCompanyLogo;
-        private System.Windows.Forms.Button buttonProfileShareColors;
+        private System.Windows.Forms.Button buttonUserColorsShareColors;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TabPage tabPageCargoMarket;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.ComboBox comboBoxSourceCityCM;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.ComboBox comboBoxSourceCompanyCM;
-        private System.Windows.Forms.ListBox listBoxSourceCargoSeeds;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label labelCargoMarketSource;
+        private System.Windows.Forms.Label labelCargoMarketCompany;
+        private System.Windows.Forms.ComboBox comboBoxCargoMarketSourceCity;
+        private System.Windows.Forms.Label labelCargoMarketCity;
+        private System.Windows.Forms.ComboBox comboBoxSourceCargoMarketCompany;
+        private System.Windows.Forms.ListBox listBoxCargoMarketSourceCargoSeeds;
+        private System.Windows.Forms.ListBox listBoxCargoMarketCargoListForCompany;
+        private System.Windows.Forms.Button buttonCargoMarketRandomizeCargoCompany;
+        private System.Windows.Forms.Button buttonCargoMarketRandomizeCargoCity;
+        private System.Windows.Forms.Button buttonCargoMarketResetCargoCompany;
+        private System.Windows.Forms.Button buttonCargoMarketResetCargoCity;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label labelTrailerLicensePlate;
+        private System.Windows.Forms.Label labelUserTrailerLicensePlate;
         private System.Windows.Forms.Label labelFreightMarketDistanceNumbers;
+        private System.Windows.Forms.Label labelPlayerExperience;
     }
 }
 
