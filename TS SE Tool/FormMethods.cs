@@ -3003,22 +3003,54 @@ namespace TS_SE_Tool
         
         private void buttonCargoMarketRandomizeCargoCompany_Click(object sender, EventArgs e)
         {
+            List<Company> CityCompanies = CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies();
+            List<Company> RealCompanies = CityCompanies.FindAll(x => !x.Excluded);
 
-        }
+            int[] tempseeds = new int[10];
 
-        private void buttonCargoMarketRandomizeCargoCity_Click(object sender, EventArgs e)
-        {
+            for(int i=0; i< tempseeds.Length; i++)
+            {
+                tempseeds[i] = InGameTime + RandomValue.Next(180, 1800);
+            }
 
-        }
-
-        private void buttonCargoMarketResetCargoCity_Click(object sender, EventArgs e)
-        {
-
+            RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds = tempseeds;
         }
 
         private void buttonCargoMarketResetCargoCompany_Click(object sender, EventArgs e)
         {
+            List<Company> CityCompanies = CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies();
+            List<Company> RealCompanies = CityCompanies.FindAll(x => !x.Excluded);
 
+            RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds = new int[0];
+        }
+
+        private void buttonCargoMarketRandomizeCargoCity_Click(object sender, EventArgs e)
+        {
+            List<Company> CityCompanies = CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies();
+            List<Company> RealCompanies = CityCompanies.FindAll(x => !x.Excluded);
+
+            foreach (Company company in RealCompanies)
+            {
+                int[] tempseeds = new int[10];
+
+                for (int i = 0; i < tempseeds.Length; i++)
+                {
+                    tempseeds[i] = InGameTime + RandomValue.Next(180, 1800);
+                }
+
+                company.CragoSeeds = tempseeds;
+            }
+        }
+
+        private void buttonCargoMarketResetCargoCity_Click(object sender, EventArgs e)
+        {
+            List<Company> CityCompanies = CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies();
+            List<Company> RealCompanies = CityCompanies.FindAll(x => !x.Excluded);
+
+            foreach (Company company in RealCompanies)
+            {
+                company.CragoSeeds = new int[0];
+            }
         }
 
         //end Cargo Market tab
@@ -3370,7 +3402,7 @@ namespace TS_SE_Tool
             ushort secondNum = UInt16.Parse(namelessNumbers[1], NumberStyles.HexNumber);
             ushort thirdNum = UInt16.Parse(namelessNumbers[2], NumberStyles.HexNumber);
 
-            ushort incr = 768;
+            ushort incr = 48;
 
             try
             {

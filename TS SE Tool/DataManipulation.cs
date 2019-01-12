@@ -1062,6 +1062,9 @@ namespace TS_SE_Tool
 
             namelessList.Sort();
             namelessList = namelessList.Distinct().ToList();
+
+            //ExportnamelessList();
+
             //Exclude company from city if no jobs assigned by game
             foreach (City city in CitiesList)
             {

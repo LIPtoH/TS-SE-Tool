@@ -1606,5 +1606,16 @@ namespace TS_SE_Tool
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\gameref");
             }
         }
+
+        private void ExportnamelessList()
+        {
+            using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\namelessList.txt", false))
+            {
+                foreach (string strArray in namelessList)
+                {
+                    writer.WriteLine(strArray);
+                }
+            }
+        }
     }
 }
