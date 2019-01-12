@@ -198,6 +198,8 @@ namespace TS_SE_Tool
             FillAllProfilesPaths();
             //FillProfiles();
             //FillProfileSaves();
+            buttonMainDecryptSave.Enabled = true;
+            buttonMainLoadSave.Enabled = true;
         }
 
         private void FormMain_Load(object sender, EventArgs e)

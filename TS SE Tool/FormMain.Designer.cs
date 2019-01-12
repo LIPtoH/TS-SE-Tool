@@ -130,6 +130,7 @@
             this.labelFreightMarketSource = new System.Windows.Forms.Label();
             this.comboBoxFreightMarketSourceCity = new System.Windows.Forms.ComboBox();
             this.tabPageCargoMarket = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.buttonCargoMarketRandomizeCargoCompany = new System.Windows.Forms.Button();
             this.buttonCargoMarketRandomizeCargoCity = new System.Windows.Forms.Button();
             this.buttonCargoMarketResetCargoCompany = new System.Windows.Forms.Button();
@@ -164,7 +165,6 @@
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -239,14 +239,14 @@
             // toolStripMenuItemCreateTrFile
             // 
             this.toolStripMenuItemCreateTrFile.Name = "toolStripMenuItemCreateTrFile";
-            this.toolStripMenuItemCreateTrFile.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemCreateTrFile.Size = new System.Drawing.Size(162, 22);
             this.toolStripMenuItemCreateTrFile.Text = "Make translation";
             this.toolStripMenuItemCreateTrFile.Click += new System.EventHandler(this.makeToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
             // 
             // toolStripMenuItemHelp
             // 
@@ -291,6 +291,7 @@
             this.comboBoxSaves.Name = "comboBoxSaves";
             this.comboBoxSaves.Size = new System.Drawing.Size(160, 21);
             this.comboBoxSaves.TabIndex = 3;
+            this.comboBoxSaves.SelectedIndexChanged += new System.EventHandler(this.comboBoxSaves_SelectedIndexChanged);
             // 
             // buttonMainDecryptSave
             // 
@@ -1241,6 +1242,16 @@
             this.tabPageCargoMarket.Text = "CargoMarket";
             this.tabPageCargoMarket.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(3, 258);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(468, 212);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Work In Progres";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // buttonCargoMarketRandomizeCargoCompany
             // 
             this.buttonCargoMarketRandomizeCargoCompany.Location = new System.Drawing.Point(239, 79);
@@ -1579,16 +1590,6 @@
             this.groupBoxMainProfilesAndSaves.TabIndex = 21;
             this.groupBoxMainProfilesAndSaves.TabStop = false;
             this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(3, 258);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(468, 212);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "Work In Progres";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormMain
             // 

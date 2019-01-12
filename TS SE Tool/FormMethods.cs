@@ -330,6 +330,11 @@ namespace TS_SE_Tool
             string SiiSavePath = SavefilePath + @"\game.sii";
             DecodeFile(SiiSavePath);
 
+            buttonMainDecryptSave.Enabled = false;
+            buttonMainLoadSave.Enabled = true;
+
+            ToggleGame(GameType);
+
             //GC
             GC.Collect();
             //GC.WaitForPendingFinalizers();
@@ -652,6 +657,12 @@ namespace TS_SE_Tool
                 buttonMainDecryptSave.Enabled = false;
                 buttonMainLoadSave.Enabled = false;
             }
+        }
+
+        private void comboBoxSaves_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            buttonMainDecryptSave.Enabled = true;
+            buttonMainLoadSave.Enabled = true;
         }
 
         //end Profile and Saves groupbox
