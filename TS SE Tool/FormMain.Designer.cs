@@ -46,6 +46,7 @@
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageProfile = new System.Windows.Forms.TabPage();
             this.groupBoxProfilePlayerLevel = new System.Windows.Forms.GroupBox();
+            this.labelPlayerExperience = new System.Windows.Forms.Label();
             this.buttonPlayerLevelMinus10 = new System.Windows.Forms.Button();
             this.panelPlayerLevel = new System.Windows.Forms.Panel();
             this.labelPlayerLevelName = new System.Windows.Forms.Label();
@@ -163,7 +164,7 @@
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
-            this.labelPlayerExperience = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -210,19 +211,19 @@
             // toolStripMenuItemSettings
             // 
             this.toolStripMenuItemSettings.Name = "toolStripMenuItemSettings";
-            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(116, 22);
             this.toolStripMenuItemSettings.Text = "Settings";
             this.toolStripMenuItemSettings.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(116, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -258,7 +259,7 @@
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(107, 22);
             this.toolStripMenuItemAbout.Text = "About";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -348,6 +349,15 @@
             this.groupBoxProfilePlayerLevel.TabIndex = 0;
             this.groupBoxProfilePlayerLevel.TabStop = false;
             this.groupBoxProfilePlayerLevel.Text = "Player level";
+            // 
+            // labelPlayerExperience
+            // 
+            this.labelPlayerExperience.Location = new System.Drawing.Point(110, 54);
+            this.labelPlayerExperience.Name = "labelPlayerExperience";
+            this.labelPlayerExperience.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelPlayerExperience.Size = new System.Drawing.Size(74, 13);
+            this.labelPlayerExperience.TabIndex = 39;
+            this.labelPlayerExperience.Text = "0";
             // 
             // buttonPlayerLevelMinus10
             // 
@@ -1212,6 +1222,7 @@
             // 
             // tabPageCargoMarket
             // 
+            this.tabPageCargoMarket.Controls.Add(this.label1);
             this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketRandomizeCargoCompany);
             this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketRandomizeCargoCity);
             this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketResetCargoCompany);
@@ -1569,14 +1580,15 @@
             this.groupBoxMainProfilesAndSaves.TabStop = false;
             this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
             // 
-            // labelPlayerExperience
+            // label1
             // 
-            this.labelPlayerExperience.Location = new System.Drawing.Point(110, 54);
-            this.labelPlayerExperience.Name = "labelPlayerExperience";
-            this.labelPlayerExperience.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.labelPlayerExperience.Size = new System.Drawing.Size(74, 13);
-            this.labelPlayerExperience.TabIndex = 39;
-            this.labelPlayerExperience.Text = "0";
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(3, 258);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(468, 212);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Work In Progres";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormMain
             // 
@@ -1775,6 +1787,7 @@
         private System.Windows.Forms.Label labelUserTrailerLicensePlate;
         private System.Windows.Forms.Label labelFreightMarketDistanceNumbers;
         private System.Windows.Forms.Label labelPlayerExperience;
+        private System.Windows.Forms.Label label1;
     }
 }
 

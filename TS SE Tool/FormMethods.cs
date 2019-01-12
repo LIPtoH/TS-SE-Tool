@@ -3342,6 +3342,12 @@ namespace TS_SE_Tool
                         Controls.Find(x, true)[0].Text = rm.GetString(x, ci);
                     }
                     catch { }
+
+                    try
+                    {
+                        menuStripMain.Items.Find(x, true)[0].Text = rm.GetString(x, ci);
+                    }
+                    catch { }
                 }
             }
             catch
