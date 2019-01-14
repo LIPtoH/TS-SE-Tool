@@ -56,9 +56,9 @@ namespace TS_SE_Tool
         private string LoopStartCity;
         private string LoopStartCompany;
 
-        private string UserCompanyAssignedTruck;
-        private string UserCompanyAssignedTrailer;
-        private string UserCompanyAssignedTruckPlacement;
+        //private string UserCompanyAssignedTruck;
+        //private string UserCompanyAssignedTrailer;
+        //private string UserCompanyAssignedTruckPlacement;
         private bool UserCompanyAssignedTruckPlacementEdited;
 
         private string ProfileETS2;

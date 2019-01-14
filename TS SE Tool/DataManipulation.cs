@@ -111,6 +111,8 @@ namespace TS_SE_Tool
                                 tempGarage.Vehicles.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
                             else if (tempSavefileInMemory[line].StartsWith(" drivers["))
                                 tempGarage.Drivers.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
+                            else if (tempSavefileInMemory[line].StartsWith(" trailers["))
+                                tempGarage.Trailers.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
                             else if (tempSavefileInMemory[line].StartsWith(" status:"))
                                 tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
                             else if (tempSavefileInMemory[line].StartsWith("}"))
@@ -372,7 +374,7 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" assigned_truck:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            UserCompanyAssignedTruck = chunkOfline[2];
+                            PlayerProfileData.UserCompanyAssignedTruck = chunkOfline[2];
                             continue;
                         }
 
@@ -393,14 +395,14 @@ namespace TS_SE_Tool
                         if(tempSavefileInMemory[line].StartsWith(" assigned_trailer:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            UserCompanyAssignedTrailer = chunkOfline[2];
+                            PlayerProfileData.UserCompanyAssignedTrailer = chunkOfline[2];
                             continue;
                         }
 
                         if (tempSavefileInMemory[line].StartsWith(" truck_placement:"))
                         {
-                            //chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            UserCompanyAssignedTruckPlacement = tempSavefileInMemory[line];//chunkOfline[1];
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
+                            PlayerProfileData.UserCompanyAssignedTruckPlacement = chunkOfline[1].TrimStart(' ');
                             continue;
                         }
 

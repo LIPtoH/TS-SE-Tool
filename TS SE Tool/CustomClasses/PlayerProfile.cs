@@ -13,6 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using System.Collections.Generic;
+
 namespace TS_SE_Tool
 {
     class PlayerProfile
@@ -24,6 +26,11 @@ namespace TS_SE_Tool
         public byte[] PlayerSkills { get; set; }
         public string CompanyName { get; set; }
         public int CreationTime { get; set; }
+        public string UserCompanyAssignedTruck { get; set; }
+        public string UserCompanyAssignedTruckPlacement { get; set; }
+        public string UserCompanyAssignedTrailer { get; set; }
+        //public string UserCompanyAssignedTrailerPlacement { get; set; }
+        public List<string> UserCompanyAssignedSlaveTrailerPlacements = new List<string>();
 
 
         public PlayerProfile(string _HQcity, uint _Expirience, byte[] _PlayerSkills, uint _AccountMoney)

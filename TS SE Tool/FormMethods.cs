@@ -198,9 +198,9 @@ namespace TS_SE_Tool
 
             PlayerProfileData = new PlayerProfile("", 0, new byte[] { 0, 0, 0, 0, 0, 0 }, 0);
 
-            UserCompanyAssignedTruck = "";
-            UserCompanyAssignedTrailer = "";
-            UserCompanyAssignedTruckPlacement = "";
+            //UserCompanyAssignedTruck = "";
+            //UserCompanyAssignedTrailer = "";
+            //UserCompanyAssignedTruckPlacement = "";
             UserCompanyAssignedTruckPlacementEdited = false;
 
             CompaniesList = new List<string>();
@@ -272,7 +272,9 @@ namespace TS_SE_Tool
             string t1 = "Trucking since:\n\r" + DateTimeOffset.FromUnixTimeSeconds(PlayerProfileData.CreationTime).DateTime.ToLocalTime().ToString();
             toolTipMain.SetToolTip(pictureBoxProfileAvatar, t1);
 
-            string temptest = GetSpareNameless();
+            //string temptest = GetSpareNameless();
+            //ExportnamelessList();
+            //ExportTestnamelessList();
 
             FillFormProfileControls();
             UpdateUserColorsButtons();
@@ -1485,7 +1487,7 @@ namespace TS_SE_Tool
 
             //UserTruckList.TryGetValue(comboBoxCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruck SelectedUserCompanyTruck);
 
-            comboBoxUserTruckCompanyTrucks.SelectedValue = UserCompanyAssignedTruck;
+            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerProfileData.UserCompanyAssignedTruck;
         }
 
         private void comboBoxCompanyTrucks_SelectedIndexChanged(object sender, EventArgs e)
@@ -1501,12 +1503,12 @@ namespace TS_SE_Tool
 
         private void buttonUserTruckSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTruckCompanyTrucks.SelectedValue = UserCompanyAssignedTruck;
+            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerProfileData.UserCompanyAssignedTruck;
         }
 
         private void buttonUserTruckSwitchCurrent_Click(object sender, EventArgs e)
         {
-            UserCompanyAssignedTruck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
+            PlayerProfileData.UserCompanyAssignedTruck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
         }
 
         //Share buttons
@@ -1831,12 +1833,12 @@ namespace TS_SE_Tool
 
         private void buttonUserTrailerSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTrailerCompanyTrailers.SelectedValue = UserCompanyAssignedTrailer;
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerProfileData.UserCompanyAssignedTrailer;
         }
 
         private void buttonUserTrailerSwitchCurrent_Click(object sender, EventArgs e)
         {
-            UserCompanyAssignedTrailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+            PlayerProfileData.UserCompanyAssignedTrailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
         }
 
         //end User Trailer tab
@@ -1844,10 +1846,13 @@ namespace TS_SE_Tool
         //User Company tab
         private void FillFormCompanyControls()
         {
+            listBoxVisitedCities.DrawMode = DrawMode.OwnerDrawVariable;
+            listBoxGarages.DrawMode = DrawMode.OwnerDrawVariable;
+
             FillHQcities();
 
-            FillGaragesList();
-            FillVisitedCities();
+            FillGaragesList(0);
+            FillVisitedCities(0);
 
             textBoxUserCompanyMoneyAccount.Text = PlayerProfileData.AccountMoney.ToString();
             comboBoxUserCompanyHQcity.SelectedValue = PlayerProfileData.HQcity;
@@ -1924,7 +1929,7 @@ namespace TS_SE_Tool
             }
         }
 
-        public void FillVisitedCities()
+        public void FillVisitedCities(int _vindex)
         {
             listBoxVisitedCities.Items.Clear();
 
@@ -1933,7 +1938,7 @@ namespace TS_SE_Tool
                 listBoxVisitedCities.Items.Add(vc);
             }
 
-            listBoxVisitedCities.DrawMode = DrawMode.OwnerDrawVariable;
+            listBoxVisitedCities.TopIndex = _vindex;
         }
 
         private int VisitedCitiesItemMargin = 3;
@@ -2020,7 +2025,8 @@ namespace TS_SE_Tool
                         city.Visited = true;
                 }
 
-            FillVisitedCities();
+            
+            FillVisitedCities(listBoxVisitedCities.TopIndex);
         }
 
         private void buttonCitiesUnVisit_Click(object sender, EventArgs e)
@@ -2040,10 +2046,10 @@ namespace TS_SE_Tool
                         city.Visited = false;
                 }
 
-            FillVisitedCities();
+            FillVisitedCities(listBoxVisitedCities.TopIndex);
         }
 
-        public void FillGaragesList()
+        public void FillGaragesList(int _vindex)
         {
             listBoxGarages.Items.Clear();
 
@@ -2051,8 +2057,7 @@ namespace TS_SE_Tool
             {
                 listBoxGarages.Items.Add(garage);
             }
-
-            listBoxGarages.DrawMode = DrawMode.OwnerDrawVariable;
+            listBoxGarages.TopIndex = _vindex;
         }
 
         private int GarageItemMargin = 3;
@@ -2068,7 +2073,7 @@ namespace TS_SE_Tool
         {
             // Get the ListBox and the item.
             ListBox lst = sender as ListBox;
-            string txt = lst.Items[e.Index].ToString();
+            string txt = "";
             Garages grg = (Garages)lst.Items[e.Index];
 
             // Draw the background.
@@ -2093,16 +2098,56 @@ namespace TS_SE_Tool
             else
                 br = new SolidBrush(e.ForeColor);
 
-            // Find the area in which to put the text.
-            float x = e.Bounds.Left + picture_width + 3 * GarageItemMargin;
-            float y = e.Bounds.Top + GarageItemMargin * 2;
-            float width = e.Bounds.Right - GarageItemMargin - x;
-            float height = e.Bounds.Bottom - GarageItemMargin - y;
+            int maxvehdr = 0;
+
+            if (grg.GarageStatus == 0)
+                goto skipVehAndDrDraw;//"Not owned";
+            else if (grg.GarageStatus == 2)
+                maxvehdr = 3;
+            else if (grg.GarageStatus == 3)
+                maxvehdr = 5;
+            else if (grg.GarageStatus == 6)
+                maxvehdr = 1;
+
+            //Vehicles & Drivers
+            float x = e.Bounds.Left + 120;
+            float y = e.Bounds.Top + 18;
+            float width = e.Bounds.Right - 100;
+            float height = e.Bounds.Bottom - 14;
             RectangleF layout_rect = new RectangleF(x, y, width, height);
+
+            int curVeh = 0, curDr = 0; 
+
+            foreach(string temp in grg.Vehicles)
+            {
+                if (temp != "null")
+                    curVeh++;
+            }
+            foreach (string temp in grg.Drivers)
+            {
+                if (temp != "null")
+                    curDr++;
+            }
+
+            txt = "V: " + curVeh + " / " + maxvehdr + " D: " + curDr + " / " + maxvehdr + " T: " + grg.Trailers.Count;
 
             // Draw the text.
             e.Graphics.DrawString(txt, this.Font, br, layout_rect);
 
+            skipVehAndDrDraw:;
+
+            //City and Size
+            // Find the area in which to put the text.
+            x = e.Bounds.Left + picture_width + 3 * GarageItemMargin;
+            y = e.Bounds.Top + GarageItemMargin * 2;
+            width = e.Bounds.Right - GarageItemMargin - x;
+            height = e.Bounds.Bottom - GarageItemMargin - y;
+            layout_rect = new RectangleF(x, y, width, height);
+
+            txt = lst.Items[e.Index].ToString();
+            // Draw the text.
+            e.Graphics.DrawString(txt, this.Font, br, layout_rect);
+            
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
         }
@@ -2113,18 +2158,18 @@ namespace TS_SE_Tool
             {
                 foreach(Garages garage in listBoxGarages.Items)
                 {
-                    if (garage.GarageStatus == 0)
+                    if (garage.GarageStatus == 0 || garage.GarageStatus == 6)
                         garage.GarageStatus = 2;
                 }
             }
             else
                 foreach (Garages garage in listBoxGarages.SelectedItems)
                 {
-                    if (garage.GarageStatus == 0)
+                    if (garage.GarageStatus == 0 || garage.GarageStatus == 6)
                         garage.GarageStatus = 2;
                 }
 
-            FillGaragesList();
+            FillGaragesList(listBoxGarages.TopIndex);
         }
 
         private void buttonGaragesUpgrade_Click(object sender, EventArgs e)
@@ -2133,18 +2178,18 @@ namespace TS_SE_Tool
             {
                 foreach (Garages garage in listBoxGarages.Items)
                 {
-                    if (garage.GarageStatus == 2)
+                    if (garage.GarageStatus == 2 || garage.GarageStatus == 6)
                         garage.GarageStatus = 3;
                 }
             }
             else
                 foreach (Garages garage in listBoxGarages.SelectedItems)
                 {
-                    if (garage.GarageStatus == 2)
+                    if (garage.GarageStatus == 2 || garage.GarageStatus == 6)
                         garage.GarageStatus = 3;
                 }
 
-            FillGaragesList();
+            FillGaragesList(listBoxGarages.TopIndex);
         }
 
         private void buttonGaragesBuyUpgrade_Click(object sender, EventArgs e)
@@ -2162,7 +2207,7 @@ namespace TS_SE_Tool
                         garage.GarageStatus = 3;
                 }
 
-            FillGaragesList();
+            FillGaragesList(listBoxGarages.TopIndex);
         }
 
         private void buttonGaragesSell_Click(object sender, EventArgs e)
@@ -2171,16 +2216,22 @@ namespace TS_SE_Tool
             {
                 foreach (Garages garage in listBoxGarages.Items)
                 {
-                    garage.GarageStatus = 0;
+                    if (garage.GarageName == comboBoxUserCompanyHQcity.SelectedValue.ToString())
+                        garage.GarageStatus = 6;
+                    else
+                        garage.GarageStatus = 0;
                 }
             }
             else
                 foreach (Garages garage in listBoxGarages.SelectedItems)
                 {
-                    garage.GarageStatus = 0;
+                    if (garage.GarageName == comboBoxUserCompanyHQcity.SelectedValue.ToString())
+                        garage.GarageStatus = 6;
+                    else
+                        garage.GarageStatus = 0;
                 }
 
-            FillGaragesList();
+            FillGaragesList(listBoxGarages.TopIndex);
         }
         //end User Company tab
 
@@ -3025,6 +3076,8 @@ namespace TS_SE_Tool
             }
 
             RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds = tempseeds;
+
+            PrintCargoSeeds();
         }
 
         private void buttonCargoMarketResetCargoCompany_Click(object sender, EventArgs e)
@@ -3033,6 +3086,8 @@ namespace TS_SE_Tool
             List<Company> RealCompanies = CityCompanies.FindAll(x => !x.Excluded);
 
             RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds = new int[0];
+
+            PrintCargoSeeds();
         }
 
         private void buttonCargoMarketRandomizeCargoCity_Click(object sender, EventArgs e)
@@ -3051,6 +3106,8 @@ namespace TS_SE_Tool
 
                 company.CragoSeeds = tempseeds;
             }
+
+            PrintCargoSeeds();
         }
 
         private void buttonCargoMarketResetCargoCity_Click(object sender, EventArgs e)
@@ -3062,6 +3119,8 @@ namespace TS_SE_Tool
             {
                 company.CragoSeeds = new int[0];
             }
+
+            PrintCargoSeeds();
         }
 
         //end Cargo Market tab
@@ -3071,7 +3130,7 @@ namespace TS_SE_Tool
         {
             string tempString = "GPS_TruckPosition\r\n";
 
-            tempString += UserCompanyAssignedTruckPlacement;
+            tempString += PlayerProfileData.UserCompanyAssignedTruckPlacement;
             string asd = BitConverter.ToString(zipText(tempString)).Replace("-", "");
             Clipboard.SetText(asd);
             MessageBox.Show("Truck GPS position has been copied.");
@@ -3093,7 +3152,8 @@ namespace TS_SE_Tool
                         tempstr.Add(Lines[i]);
                     }
 
-                    UserCompanyAssignedTruckPlacement = tempstr[0];
+                    PlayerProfileData.UserCompanyAssignedTruckPlacement = tempstr[0];
+                    //PlayerProfileData.UserCompanyAssignedTrailerPlacement = "(0, 0, 0) (1; 0, 0, 0)";
 
                     MessageBox.Show("Truck GPS position has been inserted.");
                     UserCompanyAssignedTruckPlacementEdited = true;
@@ -3411,47 +3471,70 @@ namespace TS_SE_Tool
             if (namelessLast == "")
             {
                 namelessLast = namelessList.Last();
-            }   
-
-            string[] namelessNumbers = namelessLast.Split(new char[] { '.' });
-
-            ushort firstNum = UInt16.Parse(namelessNumbers[0], NumberStyles.HexNumber);
-            ushort secondNum = UInt16.Parse(namelessNumbers[1], NumberStyles.HexNumber);
-            ushort thirdNum = UInt16.Parse(namelessNumbers[2], NumberStyles.HexNumber);
+            }
 
             ushort incr = 48;
 
-            try
+            string[] namelessNumbers = namelessLast.Split(new char[] { '.' });
+            ushort[] namelessNumArray = new ushort[namelessNumbers.Length];
+
+            Array.Reverse(namelessNumbers);
+            bool first = true, overflow = false;
+
+            for (int i = 0; i < namelessNumbers.Length; i++)
             {
-                thirdNum = checked((ushort)(thirdNum + incr));
-            }
-            catch (OverflowException)
-            {
-                thirdNum = incr;
+                namelessNumArray[i] = UInt16.Parse(namelessNumbers[i], NumberStyles.HexNumber);
 
                 try
                 {
-                    secondNum++;
+                    if (first)
+                    {
+                        namelessNumArray[i] = checked((ushort)(namelessNumArray[i] + incr));
+                    }
+                    else
+                    if (overflow)
+                    {
+                        namelessNumArray[i] = checked((ushort)(namelessNumArray[i]+ 1));
+                        overflow = false;
+                    }
                 }
                 catch (OverflowException)
                 {
-                    secondNum = 1;
-                    try
+                    if (first)
                     {
-                        firstNum++;
+                        namelessNumArray[i] = (ushort)(namelessNumArray[i] + incr);
                     }
-                    catch (OverflowException)
+                    else
                     {
-                        firstNum = 1;
+                        namelessNumArray[i] = (ushort)(namelessNumArray[i] + 1);
                     }
+                    overflow = true;
                 }
+
+                if (i == (namelessNumbers.Length - 1) && overflow )
+                {
+                    Array.Resize(ref namelessNumArray, namelessNumArray.Length + 1);
+
+                    namelessNumArray[namelessNumbers.Length - 1] = 1;
+                }
+
+                if (first)
+                    first = false;
             }
 
-            namelessNumbers[0] = firstNum.ToString("x");
-            namelessNumbers[1] = secondNum.ToString("x");
-            namelessNumbers[2] = thirdNum.ToString("x");
-            namelessLast = namelessNumbers[0] + "." + namelessNumbers[1] + "." + namelessNumbers[2];
+            namelessLast = "";
 
+            for (int i = 0; i < namelessNumArray.Length; i++)
+            {
+                if (i < namelessNumArray.Length - 1)
+                {
+                    namelessLast = "." + namelessNumArray[i].ToString("x4") + namelessLast;
+                }
+                else
+                {
+                    namelessLast = namelessNumArray[i].ToString("x") + namelessLast;
+                }
+            }
             //namelessLast
             return namelessLast;
         }

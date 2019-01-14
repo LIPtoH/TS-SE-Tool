@@ -1043,18 +1043,63 @@ namespace TS_SE_Tool
                             
                             if (SaveInMemLine.StartsWith(" assigned_truck:"))
                             {
-                                writer.WriteLine(" assigned_truck: " + UserCompanyAssignedTruck);
-                                line++;
-                                writer.WriteLine(" my_truck: " + UserCompanyAssignedTruck);
-                                //Garage driver switch needed
+                                chunkOfline = SaveInMemLine.Split(new char[] { ' ' });
+                                
+                                if (PlayerProfileData.UserCompanyAssignedTruck != chunkOfline[2])
+                                {
+                                    writer.WriteLine(" assigned_truck: " + PlayerProfileData.UserCompanyAssignedTruck);
+                                    line++;
+                                    writer.WriteLine(" my_truck: " + PlayerProfileData.UserCompanyAssignedTruck);
+                                    //Garage driver switch needed
+                                    int indexuser = 0, indextarget = 0, indexgarage = 0, indexgarageuser = 0, indexgaragetrg = 0;
+
+                                    foreach (Garages tempgarage in GaragesList)
+                                    {
+                                        int i = 0;
+                                        foreach (string tempvehicle in tempgarage.Vehicles)
+                                        {
+                                            if (tempvehicle == PlayerProfileData.UserCompanyAssignedTruck)
+                                            {
+                                                indextarget = i;
+                                                indexgaragetrg = indexgarage;
+                                                break;
+                                            }
+                                            i++;
+                                        }
+
+                                        i = 0;
+                                        foreach (string tempdriver in tempgarage.Drivers)
+                                        {
+                                            if (tempdriver == PlayerProfileData.UserDriver)
+                                            {
+                                                indexuser = i;
+                                                indexgarageuser = indexgarage;
+                                                break;
+                                            }
+                                            i++;
+                                        }
+
+                                        indexgarage++;
+                                    }
+                                    //Swap
+                                    string tempdr = GaragesList[indexgarageuser].Drivers[indexuser];
+                                    GaragesList[indexgarageuser].Drivers[indexuser] = GaragesList[indexgaragetrg].Drivers[indextarget];
+                                    GaragesList[indexgaragetrg].Drivers[indextarget] = tempdr;
+                                    //
+                                }
+                                else
+                                {
+                                    writer.WriteLine(SaveInMemLine);
+                                }
+
                                 continue;
                             }
 
                             if (SaveInMemLine.StartsWith(" truck_placement:") && UserCompanyAssignedTruckPlacementEdited)
                             {
-                                writer.WriteLine(" truck_placement: " + UserCompanyAssignedTruckPlacement);
+                                writer.WriteLine(" truck_placement: " + PlayerProfileData.UserCompanyAssignedTruckPlacement);
                                 line++;
-                                writer.WriteLine(" trailer_placement: (0, 0, 0) (1; 0, 0, 0)");
+                                writer.WriteLine(" trailer_placement: (0, 0, 0) (1; 0, 0, 0)");//" + PlayerProfileData.UserCompanyAssignedTrailerPlacement);
                                 line++;
                                 int slave_trailers = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
                                 writer.WriteLine(tempSavefileInMemory[line]);
@@ -1073,8 +1118,8 @@ namespace TS_SE_Tool
                         //Garages
                         if (SaveInMemLine.StartsWith("garage : garage."))
                         {
-                            chunkOfline = SaveInMemLine.Split(new char[] { '.', '{' });
-                            Garages tempGarage = GaragesList.Find(x => x.GarageName == chunkOfline[1].TrimEnd(new char[] { ' ' }));
+                            chunkOfline = SaveInMemLine.Split(new char[] { '.', ' ' });
+                            Garages tempGarage = GaragesList.Find(x => x.GarageName == chunkOfline[3]);//.TrimEnd(new char[] { ' ' }));
 
                             int capacity = 0;
 
@@ -1096,6 +1141,21 @@ namespace TS_SE_Tool
                             writer.WriteLine(SaveInMemLine);
                             writer.WriteLine(" vehicles: " + capacity);
                             //tempGarage.Vehicles
+
+                            int cur = tempGarage.Vehicles.Count;
+
+                            if (capacity < cur)
+                            {
+                                tempGarage.Vehicles.RemoveRange(capacity, cur - capacity);//RE DO Try to save Drivers and Vehicles
+                                tempGarage.Drivers.RemoveRange(capacity, cur - capacity);
+                            }
+                            else if (capacity > cur)
+                            {
+                                string rstr = "null";
+                                tempGarage.Vehicles.AddRange(Enumerable.Repeat(rstr, capacity - cur));
+                                tempGarage.Drivers.AddRange(Enumerable.Repeat(rstr, capacity - cur));
+                            }                                
+
                             for (int i = 0; i < capacity; i++)
                             {
                                 writer.WriteLine(" vehicles[" + i + "]: " + tempGarage.Vehicles[i]);
@@ -1614,6 +1674,17 @@ namespace TS_SE_Tool
                 foreach (string strArray in namelessList)
                 {
                     writer.WriteLine(strArray);
+                }
+            }
+        }
+
+        private void ExportTestnamelessList()
+        {
+            using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\TestnamelessList.txt", false))
+            {
+                for(int i = 0; i < 3000; i++)
+                {
+                    writer.WriteLine(GetSpareNameless());
                 }
             }
         }

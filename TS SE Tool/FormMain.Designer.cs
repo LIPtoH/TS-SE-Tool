@@ -558,7 +558,6 @@
             // 
             // buttonUserCompanyGaragesBuyUpgrade
             // 
-            this.buttonUserCompanyGaragesBuyUpgrade.Enabled = false;
             this.buttonUserCompanyGaragesBuyUpgrade.Location = new System.Drawing.Point(218, 426);
             this.buttonUserCompanyGaragesBuyUpgrade.Name = "buttonUserCompanyGaragesBuyUpgrade";
             this.buttonUserCompanyGaragesBuyUpgrade.Size = new System.Drawing.Size(170, 26);
@@ -569,7 +568,6 @@
             // 
             // buttonUserCompanyGaragesUpgrade
             // 
-            this.buttonUserCompanyGaragesUpgrade.Enabled = false;
             this.buttonUserCompanyGaragesUpgrade.Location = new System.Drawing.Point(306, 397);
             this.buttonUserCompanyGaragesUpgrade.Name = "buttonUserCompanyGaragesUpgrade";
             this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(82, 23);
@@ -580,7 +578,6 @@
             // 
             // buttonUserCompanyGaragesBuy
             // 
-            this.buttonUserCompanyGaragesBuy.Enabled = false;
             this.buttonUserCompanyGaragesBuy.Location = new System.Drawing.Point(218, 397);
             this.buttonUserCompanyGaragesBuy.Name = "buttonUserCompanyGaragesBuy";
             this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(82, 23);
@@ -818,7 +815,6 @@
             // 
             // buttonUserTruckSwitchCurrent
             // 
-            this.buttonUserTruckSwitchCurrent.Enabled = false;
             this.buttonUserTruckSwitchCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonUserTruckSwitchCurrent.Location = new System.Drawing.Point(221, 33);
             this.buttonUserTruckSwitchCurrent.Name = "buttonUserTruckSwitchCurrent";
