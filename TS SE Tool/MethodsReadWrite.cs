@@ -809,7 +809,6 @@ namespace TS_SE_Tool
 
             ToggleGame(GameType);
             ToggleVisibility(true);
-
         }
 
         //button_save_file
@@ -1450,6 +1449,8 @@ namespace TS_SE_Tool
                             }
                             
                             truckaccCount--;
+                            if (truckaccCount == 0)
+                                editedtruck = false;
                             writer.WriteLine(tempSavefileInMemory[line]);
                             continue;
                         }                       
@@ -1569,7 +1570,7 @@ namespace TS_SE_Tool
             }
         }
 
-        private void GetCompaniesCargoInOut()
+        private void CacheExternalCompaniesCargoInOut(object sender, DoWorkEventArgs e)
         {
             if (Directory.Exists(Directory.GetCurrentDirectory() + @"\gameref"))
             {
@@ -1577,10 +1578,14 @@ namespace TS_SE_Tool
 
                 foreach(string dlcFolder in dlcFolders)
                 {
+                    ExtDataCreateDatabase(new DirectoryInfo(dlcFolder).Name);
+
                     if (Directory.Exists(dlcFolder + @"\def\company"))
                     {
                         string[] companyFolders = Directory.GetDirectories(dlcFolder + @"\def\company");
 
+                        #region hide
+                        /*
                         foreach (string companyFolder in companyFolders)
                         {
                             if (Directory.Exists(companyFolder + @"\out"))
@@ -1604,22 +1609,116 @@ namespace TS_SE_Tool
 
                                 ExternalCompanies.Find(x => x.CompanyName == company).AddCargoOut(tempOutCargo);
                             }
+
+                            if (Directory.Exists(companyFolder + @"\in"))
+                            {
+                                string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+                                string[] cargoes = Directory.GetFiles(companyFolder + @"\in", "*.sii");
+                                List<string> tempInCargo = new List<string>();
+
+                                foreach (string cargo in cargoes)
+                                {
+                                    string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
+
+                                    tempInCargo.Add(tempcargo);
+                                }
+
+                                if (!ExternalCompanies.Exists(x => x.CompanyName == company))
+                                {
+                                    ExternalCompanies.Add(new ExtCompany(company));
+                                }
+
+                                ExternalCompanies.Find(x => x.CompanyName == company).AddCargoIn(tempInCargo);
+                            }
                         }
+                        */
+                        #endregion hide
+
+                        List<ExtCompany> tempExternalCompanies = new List<ExtCompany>();
+
+                        companyFolders.AsParallel().ForAll(companyFolder =>
+                                {
+
+                                    if (Directory.Exists(companyFolder + @"\out"))
+                                    {
+                                        string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+                                        string[] cargoes = Directory.GetFiles(companyFolder + @"\out", "*.sii");
+                                        List<string> tempOutCargo = new List<string>();
+
+                                        foreach (string cargo in cargoes)
+                                        {
+                                            string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
+
+                                            tempOutCargo.Add(tempcargo);
+                                        }
+
+                                        if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
+                                        {
+                                            tempExternalCompanies.Add(new ExtCompany(company));
+                                        }
+
+                                        tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoOut(tempOutCargo);
+                                    }
+
+                                    if (Directory.Exists(companyFolder + @"\in"))
+                                    {
+                                        string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+                                        string[] cargoes = Directory.GetFiles(companyFolder + @"\in", "*.sii");
+                                        List<string> tempInCargo = new List<string>();
+
+                                        foreach (string cargo in cargoes)
+                                        {
+                                            string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
+
+                                            tempInCargo.Add(tempcargo);
+                                        }
+
+                                        if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
+                                        {
+                                            tempExternalCompanies.Add(new ExtCompany(company));
+                                        }
+
+                                        tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoIn(tempInCargo);
+                                    }
+                                }
+                            );
                     }
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\gameref");
+            }
+        }
+
+        private void CacheExternalCargoData(object sender, DoWorkEventArgs e)
+        {
+            if (Directory.Exists(Directory.GetCurrentDirectory() + @"\gameref"))
+            {
+                string[] dlcFolders = Directory.GetDirectories(Directory.GetCurrentDirectory() + @"\gameref\ETS");// + GameType);
+
+                foreach (string dlcFolder in dlcFolders)
+                {
+                    string cargoFolder = dlcFolder + @"\def\cargo";
                     //Scan cargo files
-                    /*
-                    if (Directory.Exists(dlcFolder + @"\def\cargo"))
+                    if (Directory.Exists(cargoFolder))
                     {
-                        string cargoFolder = dlcFolder + @"\def\cargo";
+                        ExtDataCreateDatabase(Directory.GetCurrentDirectory() + @"\gameref\cache\ETS\" + new DirectoryInfo(dlcFolder).Name + ".sdf");
+
                         string[] cargoFiles = Directory.GetFiles(cargoFolder, "*.sii");
+
+                        List<ExtCargo> tExtCargoList = new List<ExtCargo>();
 
                         foreach (string cargo in cargoFiles)
                         {
+                            ExtCargo tempExtCargo = null;
                             string[] tempCargoFile = File.ReadAllLines(cargo);
 
-                            foreach(string line in tempCargoFile)
+                            foreach (string line in tempCargoFile)
                             {
-                                ExtCargo tempExtCargo = null;
                                 if (line.StartsWith("cargo_data:"))
                                 {
                                     tempExtCargo = new ExtCargo(line.Split(new char[] { '.' })[1]);
@@ -1627,7 +1726,7 @@ namespace TS_SE_Tool
                                 }
                                 if (line.StartsWith("	fragility:"))
                                 {
-                                    tempExtCargo.Fragility = int.Parse( line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    tempExtCargo.Fragility = decimal.Parse( line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
                                     continue;
                                 }
                                 if (line.StartsWith("	adr_class:"))
@@ -1635,14 +1734,14 @@ namespace TS_SE_Tool
                                     tempExtCargo.ADRclass = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
                                     continue;
                                 }
-                                if (line.StartsWith("	adr_class:"))
+                                if (line.StartsWith("	mass:"))
                                 {
-                                    tempExtCargo.ADRclass = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    tempExtCargo.Mass = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
                                     continue;
                                 }
                                 if (line.StartsWith("	unit_reward_per_km:"))
                                 {
-                                    tempExtCargo.UnitRewardpPerKM = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    tempExtCargo.UnitRewardpPerKM = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
                                     continue;
                                 }
                                 if (line.StartsWith("	group[]:"))
@@ -1655,10 +1754,33 @@ namespace TS_SE_Tool
                                     tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
                                     continue;
                                 }
+                                if (line.StartsWith("	maximum_distance:"))
+                                {
+                                    //tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
+                                if (line.StartsWith("	volume:"))
+                                {
+                                    //tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
+                                if (line.StartsWith("	valuable:"))
+                                {
+                                    tempExtCargo.Valuable = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
+                                if (line.StartsWith("	overweight:"))
+                                {
+                                    tempExtCargo.Overweight = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                    continue;
+                                }
                             }
+
+                            tExtCargoList.Add(tempExtCargo);
                         }
+
+                        ExtDataInsertDataIntoDatabase(Directory.GetCurrentDirectory() + @"\gameref\cache\ETS\" + new DirectoryInfo(dlcFolder).Name + ".sdf", "CargoesTable", tExtCargoList);
                     }
-                    */
                 }
             }
             else

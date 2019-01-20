@@ -170,7 +170,12 @@ namespace TS_SE_Tool
 
             ToggleGame(GameType);
             LoadExtImages();
-            //GetCompaniesCargoInOut();
+            //GetExternalCompaniesCargoInOut()
+
+            worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = false;
+            worker.DoWork += CacheExternalCargoData;
+            worker.RunWorkerAsync();
 
             CreateProfilePanelControls();
             CreateProgressBarBitmap();

@@ -14,12 +14,13 @@ namespace TS_SE_Tool
         }
 
         public string CargoName { get; set; }
-        public List<string> Groups { get; set; }
-        public List<string> BodyTypes { get; set; }
-        public int Fragility { get; set; } = 0;
-        public bool Valuable { get; set; } = false;
-        public bool overweight { get; set; } = false;
+        public List<string> Groups = new List<string>();
+        public List<string> BodyTypes = new List<string>();
         public int ADRclass { get; set; } = 0;
-        public int UnitRewardpPerKM { get; set; } = 0;
+        public decimal Fragility { get; set; } = 0;
+        public decimal UnitRewardpPerKM { get; set; } = 0;
+        public decimal Mass { get; set; } = 0;
+        public bool Valuable { get; set; } = false;
+        public bool Overweight { get; set; } = false;
     }
 }
