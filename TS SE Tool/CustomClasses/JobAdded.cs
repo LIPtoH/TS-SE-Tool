@@ -33,9 +33,10 @@ namespace TS_SE_Tool.CustomClasses
         public int Distance { get; set; }
         public int Ferrytime  { get; set; }
         public int Ferryprice { get; set; }
+        public int UnitsCount { get; set; }
 
 
-        public JobAdded(string _SourceCity, string _SourceCompany, string _DestinationCity, string _DestinationCompany, string _Cargo, int _Urgency, int _Type, int _Distance, int _Ferrytime, int _Ferryprice)
+        public JobAdded(string _SourceCity, string _SourceCompany, string _DestinationCity, string _DestinationCompany, string _Cargo, int _Urgency, int _Type, int _UnitsCount, int _Distance, int _Ferrytime, int _Ferryprice)
         {
             SourceCity = _SourceCity;
             SourceCompany = _SourceCompany;
@@ -47,6 +48,7 @@ namespace TS_SE_Tool.CustomClasses
             Distance = _Distance;
             Ferrytime = _Ferrytime;
             Ferryprice = _Ferryprice;
+            UnitsCount = _UnitsCount;
     }
 
     }

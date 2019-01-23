@@ -169,15 +169,34 @@ namespace TS_SE_Tool
             }
         }
 
-        private void LoadCompaniesLng()
+        private void LoadCompaniesLng(string _ci)
         {
+            CompaniesLngDict.Clear();
+
+            string language = "";
+
+            if (_ci != "Default")
+                language = _ci += "\\";
+
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "companies_translate.txt"))
+                language = "";
+
             try
             {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\companies_translate.txt");
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "companies_translate.txt");
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
-                    CompaniesLngDict.Add(tempFile[i].Split(new char[] { ';' })[0], tempFile[i].Split(new char[] { ';' })[1]);
+                    string[] tmp = new string[2];
+                    try
+                    {
+                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                    }
+                    catch
+                    { }
+
+                    if (tmp[0] != "")
+                        CompaniesLngDict.Add(tmp[0], tmp[1]);
                 }
             }
             catch
@@ -186,15 +205,32 @@ namespace TS_SE_Tool
             }
         }
 
-        private void LoadCitiesLng()
+        private void LoadCitiesLng(string _ci)
         {
+            CitiesLngDict.Clear();
+
+            string language = "";
+
+            if (_ci != "Default")
+                language = _ci += "\\";
+
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "cities_translate.txt"))
+                language = "";
+
             try
             {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\cities_translate.txt");
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "cities_translate.txt");
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
-                    string[] tmp = tempFile[i].Split(new char[] { ';' });
+                    string[] tmp = new string[2];
+                    try
+                    {
+                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                    }
+                    catch
+                    { }
+
                     if (tmp[0] != "")
                         CitiesLngDict.Add(tmp[0], tmp[1]);
                 }
@@ -205,16 +241,33 @@ namespace TS_SE_Tool
             }
         }
 
-        private void LoadCargoLng()
+        private void LoadCargoLng(string _ci)
         {
+            CargoLngDict.Clear();
+
+            string language = "";
+
+            if (_ci != "Default")
+                language = _ci += "\\";
+
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "cargo_translate.txt"))
+                language = "";
+
             try
             {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\cargo_translate.txt");
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "cargo_translate.txt");
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
-                    string[] tmp = tempFile[i].Split(new char[] { ';' });
-                    if (tmp[0] != "")
+                    string[] tmp = new string[2];
+                    try
+                    {
+                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                    }
+                    catch
+                    { }
+
+                    if (tmp[0] != null && tmp[0] != "")
                         CargoLngDict.Add(tmp[0], tmp[1]);
                 }
             }
@@ -243,6 +296,16 @@ namespace TS_SE_Tool
 
         private void LoadExtImages()
         {
+            string[] imgpaths;
+
+            imgpaths = new string[] { @"img\UI\globe-with-meridians.png"};
+            Array.Resize(ref ProgUIImgs, imgpaths.Length);
+            
+            for(int i = 0; i < imgpaths.Length; i++)
+            {
+                ProgUIImgs[i] = Bitmap.FromFile(imgpaths[i]);
+            }
+
             MemoryStream ms = new MemoryStream();
             ImageFromDDS(@"img\service_ico.dds").Save(ms, ImageFormat.Png);
             RepairImg = Image.FromStream(ms);
@@ -253,12 +316,11 @@ namespace TS_SE_Tool
             RefuelImg = Image.FromStream(ms);
             ms.Dispose();
 
-            string[] imgpaths;
             imgpaths = new string[] { @"img\" + GameType + @"\adr_1.dds", @"img\" + GameType + @"\adr_2.dds", @"img\" + GameType + @"\adr_3.dds", @"img\" + GameType + @"\adr_4.dds", @"img\" + GameType + @"\adr_6.dds", @"img\" + GameType + @"\adr_8.dds" };
-            ADRImgS = ExtImgLoader(imgpaths, 46, 46, 9, 9, 35, 35);
+            ADRImgS = ExtImgLoader(imgpaths, 46, 46, 9, 9, 32, 32);
 
             imgpaths = new string[] { @"img\" + GameType + @"\adr_1_grey.dds", @"img\" + GameType + @"\adr_2_grey.dds", @"img\" + GameType + @"\adr_3_grey.dds", @"img\" + GameType + @"\adr_4_grey.dds", @"img\" + GameType + @"\adr_6_grey.dds", @"img\" + GameType + @"\adr_8_grey.dds" };
-            ADRImgSGrey = ExtImgLoader(imgpaths, 46, 46, 9, 9, 35, 35);
+            ADRImgSGrey = ExtImgLoader(imgpaths, 46, 46, 9, 9, 32, 32);
 
             imgpaths = new string[] { @"img\skill_bar_s.dds", @"img\skill_bar_s2.dds", @"img\skill_bar1.dds", @"img\skill_bar2.dds", @"img\skill_bar3.dds" };
             int y = 9;
@@ -290,6 +352,9 @@ namespace TS_SE_Tool
 
             imgpaths = new string[] { @"img\none_32.dds", @"img\heavy.dds", @"img\articulated.dds" };
             CargoTypeImg =  ExtImgLoader(imgpaths, 32, 32, 0, 0);
+
+            imgpaths = new string[] { @"img\fragile.dds", @"img\valuable.dds" };
+            CargoType2Img = ExtImgLoader(imgpaths, 32, 32, 0, 0);
 
             imgpaths = new string[] { @"img\" + GameType + @"\engine.dds", @"img\" + GameType + @"\transmission.dds", @"img\" + GameType + @"\chassis.dds", @"img\" + GameType + @"\cabin.dds", @"img\" + GameType + @"\tyres.dds" };
             TruckPartsImg = ExtImgLoader(imgpaths, 64, 64, 0, 0);
@@ -371,23 +436,34 @@ namespace TS_SE_Tool
         {
             CompaniesList = CompaniesList.Distinct().OrderBy(x => x).ToList();
 
-            List<string> newCompanies = new List<string>();
+            List<string> newEntries = new List<string>();
 
             foreach (string tempitem in CompaniesList )
             {
                 if (!CompaniesLngDict.TryGetValue(tempitem, out string value))
                 {
-                    newCompanies.Add(tempitem);
+                    newEntries.Add(tempitem);
                 }
             }
+            string language = ProgSettingsV.Language;
+
+            if (language != "Default")
+                language = language += "\\";
+
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "companies_translate.txt"))
+                language = "";
 
             try
             {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\companies_translate.txt", true))
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\" + language + "companies_translate.txt", true))
                 {
-                    foreach (string str in newCompanies)
+                    if (newEntries.Count > 0)
                     {
-                        writer.WriteLine(str + ";");
+                        writer.WriteLine();
+                        foreach (string str in newEntries)
+                        {
+                            writer.WriteLine(str + ";");
+                        }
                     }
                 }
             }
@@ -401,23 +477,34 @@ namespace TS_SE_Tool
         {
             CitiesList = CitiesList.Distinct().OrderBy(x => x.CityName).ToList();
 
-            List<string> newCompanies = new List<string>();
+            List<string> newEntries = new List<string>();
 
             foreach (City tempitem in CitiesList)
             {
                 if (!CitiesLngDict.TryGetValue(tempitem.CityName, out string value))
                 {
-                    newCompanies.Add(tempitem.CityName);
+                    newEntries.Add(tempitem.CityName);
                 }
             }
+            string language = ProgSettingsV.Language;
+
+            if (language != "Default")
+                language = language += "\\";
+
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "cities_translate.txt"))
+                language = "";
 
             try
             {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\cities_translate.txt", true))
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\" + language + "cities_translate.txt", true))
                 {
-                    foreach (string str in newCompanies)
+                    if (newEntries.Count > 0)
                     {
-                        writer.WriteLine(str + ";");
+                        writer.WriteLine();
+                        foreach (string str in newEntries)
+                        {
+                            writer.WriteLine(str + ";");
+                        }
                     }
                 }
             }
@@ -441,14 +528,25 @@ namespace TS_SE_Tool
                 }
             }
 
+            string language = ProgSettingsV.Language;
+
+            if (language != "Default")
+                language = language += "\\";
+
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "cargo_translate.txt"))
+                language = "";
+
             try
             {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\cargo_translate.txt", true))
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\" + language + "cargo_translate.txt", true))
                 {
-                    writer.WriteLine();
-                    foreach (string str in newEntries)
+                    if (newEntries.Count > 0)
                     {
-                        writer.WriteLine(str + ";");
+                        writer.WriteLine();
+                        foreach (string str in newEntries)
+                        {
+                            writer.WriteLine(str + ";");
+                        }
                     }
                 }
             }
@@ -806,6 +904,7 @@ namespace TS_SE_Tool
 
             buttonMainDecryptSave.Enabled = false;
             buttonMainLoadSave.Enabled = true;
+            buttonMainWriteSave.Enabled = true;
 
             ToggleGame(GameType);
             ToggleVisibility(true);
@@ -1570,6 +1669,16 @@ namespace TS_SE_Tool
             }
         }
 
+        private void CacheGameData()
+        {
+            //GetExternalCompaniesCargoInOut()
+
+            worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = false;
+            worker.DoWork += CacheExternalCargoData;
+            worker.RunWorkerAsync();
+        }
+
         private void CacheExternalCompaniesCargoInOut(object sender, DoWorkEventArgs e)
         {
             if (Directory.Exists(Directory.GetCurrentDirectory() + @"\gameref"))
@@ -1702,84 +1811,90 @@ namespace TS_SE_Tool
 
                 foreach (string dlcFolder in dlcFolders)
                 {
-                    string cargoFolder = dlcFolder + @"\def\cargo";
-                    //Scan cargo files
-                    if (Directory.Exists(cargoFolder))
+                    string dbfilepath = Directory.GetCurrentDirectory() + @"\gameref\cache\ETS\" + new DirectoryInfo(dlcFolder).Name + ".sdf";
+
+                    if (!File.Exists(dbfilepath) || (new FileInfo(dbfilepath).LastWriteTime < new FileInfo(dlcFolder).LastWriteTime))
                     {
-                        ExtDataCreateDatabase(Directory.GetCurrentDirectory() + @"\gameref\cache\ETS\" + new DirectoryInfo(dlcFolder).Name + ".sdf");
-
-                        string[] cargoFiles = Directory.GetFiles(cargoFolder, "*.sii");
-
-                        List<ExtCargo> tExtCargoList = new List<ExtCargo>();
-
-                        foreach (string cargo in cargoFiles)
+                        string cargoFolder = dlcFolder + @"\def\cargo";
+                        //Scan cargo files
+                        if (Directory.Exists(cargoFolder))
                         {
-                            ExtCargo tempExtCargo = null;
-                            string[] tempCargoFile = File.ReadAllLines(cargo);
+                            if (!File.Exists(dbfilepath))
+                                ExtDataCreateDatabase(Directory.GetCurrentDirectory() + @"\gameref\cache\ETS\" + new DirectoryInfo(dlcFolder).Name + ".sdf");
 
-                            foreach (string line in tempCargoFile)
+                            string[] cargoFiles = Directory.GetFiles(cargoFolder, "*.sii");
+
+                            List<ExtCargo> tExtCargoList = new List<ExtCargo>();
+
+                            foreach (string cargo in cargoFiles)
                             {
-                                if (line.StartsWith("cargo_data:"))
+                                ExtCargo tempExtCargo = null;
+                                string[] tempCargoFile = File.ReadAllLines(cargo);
+
+                                foreach (string line in tempCargoFile)
                                 {
-                                    tempExtCargo = new ExtCargo(line.Split(new char[] { '.' })[1]);
-                                    continue;
+                                    if (line.StartsWith("cargo_data:"))
+                                    {
+                                        tempExtCargo = new ExtCargo(line.Split(new char[] { '.' })[1]);
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	fragility:"))
+                                    {
+                                        tempExtCargo.Fragility = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	adr_class:"))
+                                    {
+                                        tempExtCargo.ADRclass = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	mass:"))
+                                    {
+                                        tempExtCargo.Mass = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	unit_reward_per_km:"))
+                                    {
+                                        tempExtCargo.UnitRewardpPerKM = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	group[]:"))
+                                    {
+                                        tempExtCargo.Groups.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	body_types[]:"))
+                                    {
+                                        tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	maximum_distance:"))
+                                    {
+                                        tempExtCargo.MaxDistance = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	volume:"))
+                                    {
+                                        tempExtCargo.Volume = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	valuable:"))
+                                    {
+                                        tempExtCargo.Valuable = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                        continue;
+                                    }
+                                    if (line.StartsWith("	overweight:"))
+                                    {
+                                        tempExtCargo.Overweight = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                        continue;
+                                    }
                                 }
-                                if (line.StartsWith("	fragility:"))
-                                {
-                                    tempExtCargo.Fragility = decimal.Parse( line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
-                                    continue;
-                                }
-                                if (line.StartsWith("	adr_class:"))
-                                {
-                                    tempExtCargo.ADRclass = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                    continue;
-                                }
-                                if (line.StartsWith("	mass:"))
-                                {
-                                    tempExtCargo.Mass = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
-                                    continue;
-                                }
-                                if (line.StartsWith("	unit_reward_per_km:"))
-                                {
-                                    tempExtCargo.UnitRewardpPerKM = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
-                                    continue;
-                                }
-                                if (line.StartsWith("	group[]:"))
-                                {
-                                    tempExtCargo.Groups.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                    continue;
-                                }
-                                if (line.StartsWith("	body_types[]:"))
-                                {
-                                    tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                    continue;
-                                }
-                                if (line.StartsWith("	maximum_distance:"))
-                                {
-                                    //tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                    continue;
-                                }
-                                if (line.StartsWith("	volume:"))
-                                {
-                                    //tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                    continue;
-                                }
-                                if (line.StartsWith("	valuable:"))
-                                {
-                                    tempExtCargo.Valuable = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                    continue;
-                                }
-                                if (line.StartsWith("	overweight:"))
-                                {
-                                    tempExtCargo.Overweight = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                    continue;
-                                }
+
+                                tExtCargoList.Add(tempExtCargo);
                             }
 
-                            tExtCargoList.Add(tempExtCargo);
+                            ExtDataInsertDataIntoDatabase(dbfilepath, "CargoesTable", tExtCargoList);
                         }
-
-                        ExtDataInsertDataIntoDatabase(Directory.GetCurrentDirectory() + @"\gameref\cache\ETS\" + new DirectoryInfo(dlcFolder).Name + ".sdf", "CargoesTable", tExtCargoList);
                     }
                 }
             }

@@ -17,6 +17,8 @@ namespace TS_SE_Tool
         public List<string> Groups = new List<string>();
         public List<string> BodyTypes = new List<string>();
         public int ADRclass { get; set; } = 0;
+        public int MaxDistance { get; set; } = 0;
+        public decimal Volume { get; set; } = 0;
         public decimal Fragility { get; set; } = 0;
         public decimal UnitRewardpPerKM { get; set; } = 0;
         public decimal Mass { get; set; } = 0;

@@ -29,6 +29,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Resources;
@@ -168,9 +169,11 @@ namespace TS_SE_Tool
                 CitiesImg = new Image[2];
                 UrgencyImg = new Image[3];
                 CargoTypeImg = new Image[3];
+                CargoType2Img = new Image[3];
                 GameIconeImg = new Image[2];
                 TruckPartsImg = new Image[5];
                 TrailerPartsImg = new Image[4];
+                ProgUIImgs = new Image[0];
 
                 SkillButtonArray = new CheckBox[5, 6];
 
@@ -198,9 +201,6 @@ namespace TS_SE_Tool
 
             PlayerProfileData = new PlayerProfile("", 0, new byte[] { 0, 0, 0, 0, 0, 0 }, 0);
 
-            //UserCompanyAssignedTruck = "";
-            //UserCompanyAssignedTrailer = "";
-            //UserCompanyAssignedTruckPlacement = "";
             UserCompanyAssignedTruckPlacementEdited = false;
 
             CompaniesList = new List<string>();
@@ -228,6 +228,8 @@ namespace TS_SE_Tool
             CompaniesListDiff = new List<string>();
 
             ExternalCompanies = new List<ExtCompany>();
+
+            ExtCargoList = new List<ExtCargo>();
 
             EconomyEventQueueList = new string[0];
             EconomyEventsTable = new string[0, 0];
@@ -348,6 +350,7 @@ namespace TS_SE_Tool
 
             buttonMainDecryptSave.Enabled = false;
             buttonMainLoadSave.Enabled = false;
+            buttonMainWriteSave.Enabled = false;
 
             buttonMainGameSwitchETS.Enabled = false;
             buttonMainGameSwitchATS.Enabled = false;
@@ -2321,16 +2324,106 @@ namespace TS_SE_Tool
                 e.Graphics.DrawImage(DestinationCompIcon, dest_rect, source_rect, GraphicsUnit.Pixel);
                 ////
                 // Draw Type picture
+                Image[] TypeImgs = new Image[5];
+                int indexTypeImgs = 0, CargoMass = 0;
+                bool extheavy = false;
 
-                dest_rect = new RectangleF(e.Bounds.Left + JobsItemMargin * 2 + SourceCompIcon.Width, e.Bounds.Top + JobsItemMargin * 2 + JobsTextHeigh, 32, 32);
-                source_rect = new RectangleF(0, 0, 32, 32);
-                e.Graphics.DrawImage(CargoTypeImg[Job.Type], dest_rect, source_rect, GraphicsUnit.Pixel);
+                try
+                {
+                    ExtCargo tempExtCargo = ExtCargoList.Find(z => z.CargoName == Job.Cargo);
 
+                    decimal fragile = tempExtCargo.Fragility;
+                    bool valuable = tempExtCargo.Valuable;
+                    int ADRclass = tempExtCargo.ADRclass;
+                    int trueADR = ADRclass;
+                    switch (trueADR)
+                    {
+                        case 6:
+                            {
+                                trueADR = 5;
+                                break;
+                            }
+                        case 8:
+                            {
+                                trueADR = 6;
+                                break;
+                            }
+                    }
+                    CargoMass = (int) ( tempExtCargo.Mass * Job.UnitsCount);
+                    if (CargoMass > 26000)
+                        extheavy = true;
+
+                    if (ADRclass > 0)
+                    {
+                        Bitmap bmp = new Bitmap(32, 32);
+                        Graphics graph = Graphics.FromImage(bmp);
+                        graph.DrawImage(ADRImgS[trueADR - 1], 2, 2, 28, 28);
+
+                        TypeImgs[indexTypeImgs] = bmp;
+                        //TypeImgs[indexTypeImgs] = ADRImgS[trueADR - 1];
+                        indexTypeImgs++;
+                    }
+
+                    if (fragile == 0 || fragile >= (decimal)0.7)
+                    {
+                        TypeImgs[indexTypeImgs] = CargoType2Img[0];
+                        indexTypeImgs++;
+                    }
+
+                    if (valuable)
+                    {
+                        TypeImgs[indexTypeImgs] = CargoType2Img[1];
+                        indexTypeImgs++;
+                    }
+                }
+                catch
+                {
+
+                }
+
+                if (extheavy || Job.Type == 1)
+                {
+                    TypeImgs[indexTypeImgs] = CargoTypeImg[1];
+                    indexTypeImgs++;
+                }
+
+                if (Job.Type == 2)
+                {
+                    TypeImgs[indexTypeImgs] = CargoTypeImg[2];
+                    indexTypeImgs++;
+                }
+
+                TypeImgs[indexTypeImgs] = UrgencyImg[Job.Urgency];
+
+                int xmult = 0, ymult = 0, images = 0;
+
+                foreach(Image temp in TypeImgs)
+                {
+                    if (temp == null)
+                    {
+                        break;
+                    }
+                    images++;
+                }
+
+                for (int i = 0; i < 5; i++)
+                {
+                    if (TypeImgs[i] == null)
+                    {
+                        break;
+                    }
+
+                    source_rect = new RectangleF(0, 0, 32, 32);
+                    dest_rect = new RectangleF((e.Bounds.Right - e.Bounds.Left - 32 * images) / 2 + 32 * xmult, e.Bounds.Top + JobsItemMargin, 32, 32);
+                    e.Graphics.DrawImage(TypeImgs[i], dest_rect, source_rect, GraphicsUnit.Pixel);
+
+                    xmult++;                    
+                }
 
                 // Draw the Urgency picture
-                source_rect = new RectangleF(0, 0, 32, 32);
-                dest_rect = new RectangleF((e.Bounds.Right - e.Bounds.Left - UrgencyImg[Job.Urgency].Width) / 2, e.Bounds.Top + JobsItemMargin, UrgencyImg[Job.Urgency].Width, UrgencyImg[Job.Urgency].Height);
-                e.Graphics.DrawImage(UrgencyImg[Job.Urgency], dest_rect, source_rect, GraphicsUnit.Pixel);
+                //source_rect = new RectangleF(0, 0, 32, 32);
+                //dest_rect = new RectangleF((e.Bounds.Right - e.Bounds.Left - UrgencyImg[Job.Urgency].Width) / 2, e.Bounds.Top + JobsItemMargin, UrgencyImg[Job.Urgency].Width, UrgencyImg[Job.Urgency].Height);
+                //e.Graphics.DrawImage(UrgencyImg[Job.Urgency], dest_rect, source_rect, GraphicsUnit.Pixel);
                 ////
 
                 // Draw the text.
@@ -2378,7 +2471,7 @@ namespace TS_SE_Tool
 
                 //Cargo
                 // Find the area in which to put the text.
-                x = e.Bounds.Left + picture_width + 3 * JobsItemMargin + 32;
+                x = e.Bounds.Left + picture_width + 4 * JobsItemMargin;// + 32 * 2;
                 y = e.Bounds.Top + JobsItemMargin * 2 + UrgencyImg[Job.Urgency].Height;
                 width = e.Bounds.Right - JobsItemMargin - x;
                 height = e.Bounds.Bottom - JobsItemMargin - y;
@@ -2396,6 +2489,9 @@ namespace TS_SE_Tool
                 else
                     txt = Job.Cargo;
 
+                if (CargoMass > 0)
+                    txt += " (" + CargoMass + " kg)";
+
                 e.Graphics.DrawString(txt, this.Font, br, layout_rect);
 
                 // Find the area in which to put Distance text.
@@ -2410,7 +2506,7 @@ namespace TS_SE_Tool
 
                 if (Job.Ferrytime > 0)
                 {
-                    txt = (Job.Distance * DistanceMultiplier).ToString() + " " + ProgSettingsV.DistanceMes + " ( ferry " + Job.Ferrytime.ToString() + "h - " + Job.Ferryprice.ToString() + " €)";
+                    txt = (Job.Distance * DistanceMultiplier).ToString() + " " + ProgSettingsV.DistanceMes + " (Ferry " + (Job.Ferrytime / 60) .ToString() + "h - " + Job.Ferryprice.ToString() + " €)";
                 }
 
                 layout_rect = new RectangleF(x, y + 14, width, height);
@@ -2557,6 +2653,12 @@ namespace TS_SE_Tool
 
         public void FillcomboBoxCargoList()
         {
+            int savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
+            string savedvalue = "";
+            if (savedindex != -1)
+                savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
+
+
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("Cargo", typeof(string));
             combDT.Columns.Add(dc);
@@ -2570,24 +2672,32 @@ namespace TS_SE_Tool
                 {
                     if (value != null && value != "")
                     {
+                        string str = tempitem.CargoName;
+
+                        if(str.EndsWith("_c"))
+                            value += " (Cont)";
+
                         if (tempitem.CargoType == 1)
                             value += " [H]";
                         else if (tempitem.CargoType == 2)
                             value += " [D]";
 
-                        combDT.Rows.Add(tempitem.CargoName, value);
+                        combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), value);
                     }
                     else
                     {
                         string str = tempitem.CargoName;
                         string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
 
+                        if (str.EndsWith("_c"))
+                            CapName += " (Cont)";
+
                         if (tempitem.CargoType == 1)
                             CapName += " [H]";
                         else if (tempitem.CargoType == 2)
                             CapName += " [D]";
 
-                        combDT.Rows.Add(str, CapName);
+                        combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), CapName);
                     }
                 }
                 else
@@ -2595,12 +2705,15 @@ namespace TS_SE_Tool
                     string str = tempitem.CargoName;
                     string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
 
+                    if (str.EndsWith("_c"))
+                        CapName += " (Cont)";
+
                     if (tempitem.CargoType == 1)
                         CapName += " [H]";
                     else if (tempitem.CargoType == 2)
                         CapName += " [D]";
 
-                    combDT.Rows.Add(str, CapName);
+                    combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), CapName);
                 }
             }
 
@@ -2610,7 +2723,10 @@ namespace TS_SE_Tool
             comboBoxFreightMarketCargoList.DisplayMember = "CargoName";
             comboBoxFreightMarketCargoList.DataSource = combDT;
 
-            comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
+            if (savedindex == -1)
+                comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
+            else
+                comboBoxFreightMarketCargoList.SelectedValue = savedvalue;
         }
 
         private void comboBoxSourceCity_SelectedIndexChanged(object sender, EventArgs e)
@@ -3391,13 +3507,15 @@ namespace TS_SE_Tool
             {
                 LogWriter("Wrong language setting format");
             }
-
+            
             CultureInfo ci = Thread.CurrentThread.CurrentUICulture;
 
             try
             {
+
                 PlainTXTResourceManager rm = new PlainTXTResourceManager();
-                ResourceSet set = rm.GetResourceSet(ci, true, true);
+                ResourceSet set = null;//rm.GetResourceSet(ci, true, true);
+                set = rm.GetResourceSet(ci, true, true);                
 
                 List<string> keys = new List<string>();
 
@@ -3406,6 +3524,7 @@ namespace TS_SE_Tool
                     keys.Add((string)o.Key);
                 }
 
+                this.SuspendLayout();
                 foreach (string x in keys)
                 {
                     try
@@ -3420,14 +3539,23 @@ namespace TS_SE_Tool
                     }
                     catch { }
                 }
+                this.ResumeLayout();
+
+                LoadCompaniesLng(ProgSettingsV.Language);
+                LoadCitiesLng(ProgSettingsV.Language);
+                LoadCargoLng(ProgSettingsV.Language);
+                LoadTruckBrandsLng();
+
+                FillcomboBoxCargoList();
             }
             catch
             {
 
             }
+            
             //rm.ReleaseAllResources();
         }
-
+        
         private string GetranslatedString(string _key)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentUICulture;

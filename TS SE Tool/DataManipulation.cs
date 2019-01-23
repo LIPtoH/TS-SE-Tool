@@ -1265,6 +1265,7 @@ namespace TS_SE_Tool
         private void CheckSaveInfoData()
         {
             string[] chunkOfline;
+            List<string> SavefileDependencies = new List<string>();
 
             for (int line = 0; line < tempInfoFileInMemory.Length; line++)
             {
@@ -1277,11 +1278,27 @@ namespace TS_SE_Tool
 
                 if (tempInfoFileInMemory[line].StartsWith(" dependencies["))
                 {
-                    chunkOfline = tempInfoFileInMemory[line].Split(new char[] { '"' });
-                    //SavefileDependencies.Add(chunkOfline[1]);
+                    chunkOfline = tempInfoFileInMemory[line].Split(new char[] { '"' })[1].Split(new char[] { '|' });
+                    string type = chunkOfline[0];
+                    string depcode = chunkOfline[1].Split(new char[] { '_' }, 2)[1];
+
+                    if (type == "dlc" || type == "rdlc")
+                        depcode = "dlc_" + depcode;
+                    if (type == "mod")
+                        depcode = "mod_" + depcode;
+
+                    SavefileDependencies.Add(depcode);
                     continue;
                 }
             }
+
+            LoadCachedExternalCargoData("def");
+
+            if (SavefileDependencies.Count > 0)
+                foreach(string tDepend in SavefileDependencies)
+                {
+                    LoadCachedExternalCargoData(tDepend);
+                }
 
             if (SavefileVersion == 0)
                 ShowStatusMessages("e", "error_save_version_not_detected");
@@ -1456,7 +1473,7 @@ namespace TS_SE_Tool
                 string SourceCompany = comboBoxFreightMarketSourceCompany.SelectedValue.ToString();
                 string DestinationCity = comboBoxFreightMarketDestinationCity.SelectedValue.ToString();
                 string DestinationCompany = comboBoxFreightMarketDestinationCompany.SelectedValue.ToString();
-                string Cargo = comboBoxFreightMarketCargoList.SelectedValue.ToString();
+                string Cargo = comboBoxFreightMarketCargoList.SelectedValue.ToString().Split(new char[] { ',' })[0];
 
                 string SourceCityName = comboBoxFreightMarketSourceCity.Text;
                 string SourceCompanyName = comboBoxFreightMarketSourceCompany.Text;
@@ -1561,7 +1578,7 @@ namespace TS_SE_Tool
                 buttonMainWriteSave.Enabled = true;
                 buttonFreightMarketClearJobList.Enabled = true;
 
-                listBoxFreightMarketAddedJobs.Items.Add(new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice)));
+                listBoxFreightMarketAddedJobs.Items.Add(new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, TrailerVariant.Value, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice)));
 
                 if (distance != "11111")
                 {
@@ -2683,5 +2700,62 @@ namespace TS_SE_Tool
             }
         }
 
+        private void LoadCachedExternalCargoData(string _dbname)
+        {
+            SqlCeDataReader reader = null;
+
+            try
+            {
+                SqlCeConnection tDBconnection;
+                string _fileName = Directory.GetCurrentDirectory() + @"\gameref\cache\ETS\" + _dbname + ".sdf";
+                tDBconnection = new SqlCeConnection("Data Source = " + _fileName + ";");
+
+                if (tDBconnection.State == ConnectionState.Closed)
+                {
+                    tDBconnection.Open();
+                }
+
+                int totalrecord = 0;
+
+                //ExtCargoList.Clear(); //Clears existing list
+
+                string commandText = "SELECT CargoName, ADRclass, Fragility, Mass, UnitRewardpPerKM, Valuable, Overweight FROM [CargoesTable]";
+
+                reader = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ExtCargo tempExtCargo = new ExtCargo(reader["CargoName"].ToString());
+
+                    tempExtCargo.Fragility = decimal.Parse(reader["Fragility"].ToString());
+
+                    tempExtCargo.ADRclass = int.Parse(reader["ADRclass"].ToString());
+
+                    tempExtCargo.Mass = decimal.Parse(reader["Mass"].ToString());
+
+                    tempExtCargo.UnitRewardpPerKM = decimal.Parse(reader["UnitRewardpPerKM"].ToString());
+
+                    //tempExtCargo.Groups.Add(reader["CargoName"].ToString());
+
+                    //tempExtCargo.BodyTypes.Add(reader["CargoName"].ToString());
+
+                    //tempExtCargo.MaxDistance = int.Parse(reader["CargoName"].ToString());
+
+                    //tempExtCargo.Volume = decimal.Parse(reader["CargoName"].ToString());
+
+                    tempExtCargo.Valuable = bool.Parse(reader["Valuable"].ToString());
+
+                    //tempExtCargo.Overweight = bool.Parse(reader["CargoName"].ToString());
+                    
+                    ExtCargoList.Add(tempExtCargo);
+                }
+
+                totalrecord = ExtCargoList.Count();
+
+                tDBconnection.Close();
+            }
+            catch
+            { }
+        }
     }
 }

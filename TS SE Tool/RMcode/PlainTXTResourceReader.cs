@@ -44,7 +44,7 @@ namespace TS_SE_Tool
             try
             {
                 StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + @"\lang\" + language + @"\lngfile.txt", Encoding.UTF8);
-
+                                
                 while (!reader.EndOfStream)
                 {
                     string[] linechunk;
@@ -52,7 +52,7 @@ namespace TS_SE_Tool
 
                     if (line != "" && !line.StartsWith("["))
                     {
-                        linechunk = line.Split('=');
+                        linechunk = line.Split(new char[] { '=' }, 2);
                         dict.Add(linechunk[0], linechunk[1]);
                     }
                 }

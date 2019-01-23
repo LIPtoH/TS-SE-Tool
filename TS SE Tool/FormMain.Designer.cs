@@ -239,14 +239,14 @@
             // toolStripMenuItemCreateTrFile
             // 
             this.toolStripMenuItemCreateTrFile.Name = "toolStripMenuItemCreateTrFile";
-            this.toolStripMenuItemCreateTrFile.Size = new System.Drawing.Size(162, 22);
+            this.toolStripMenuItemCreateTrFile.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemCreateTrFile.Text = "Make translation";
             this.toolStripMenuItemCreateTrFile.Click += new System.EventHandler(this.makeToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripMenuItemHelp
             // 

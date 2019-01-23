@@ -56,9 +56,6 @@ namespace TS_SE_Tool
         private string LoopStartCity;
         private string LoopStartCompany;
 
-        //private string UserCompanyAssignedTruck;
-        //private string UserCompanyAssignedTrailer;
-        //private string UserCompanyAssignedTruckPlacement;
         private bool UserCompanyAssignedTruckPlacementEdited;
 
         private string ProfileETS2;
@@ -102,6 +99,7 @@ namespace TS_SE_Tool
         private List<CompanyTruck> CompanyTruckListDiff;
 
         private List<ExtCompany> ExternalCompanies;
+        private List<ExtCargo> ExtCargoList;
 
         internal List<Color> UserColorsList;
 
@@ -122,7 +120,6 @@ namespace TS_SE_Tool
         private Dictionary<string, string> dictionaryProfiles;
         private Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict;
         public static Dictionary<string, string> CitiesLngDict;
-        //private Dictionary<string, UserCompanyTruck> UserTruckList;
         private Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
         private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary;
 
@@ -137,7 +134,8 @@ namespace TS_SE_Tool
 
         private Bitmap ProgressBarGradient;
         private Image RepairImg, RefuelImg;
-        private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, TruckPartsImg, TrailerPartsImg, GameIconeImg;
+        private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
+            TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs;
 
         private ImageList TabpagesImages;
 
@@ -160,27 +158,24 @@ namespace TS_SE_Tool
 
             SetDefaultValues(true);
             LoadConfig();
+
+            
+
             LoadExtCountries();
-            LoadCompaniesLng();
-            LoadCitiesLng();
-            LoadCargoLng();
-            LoadTruckBrandsLng();
-            ChangeLanguage();
+            
             ToggleVisibility(false);
 
             ToggleGame(GameType);
             LoadExtImages();
-            //GetExternalCompaniesCargoInOut()
 
-            worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = false;
-            worker.DoWork += CacheExternalCargoData;
-            worker.RunWorkerAsync();
+            CacheGameData();
 
             CreateProfilePanelControls();
             CreateProgressBarBitmap();
             CreateTruckPanelControls();
             CreateTrailerPanelControls();
+
+            menuStripMain.Items.Find("toolStripMenuItemLanguage", false)[0].Image = ProgUIImgs[0];
 
             tabControlMain.ImageList = TabpagesImages;
 
@@ -190,6 +185,8 @@ namespace TS_SE_Tool
             }
 
             listBoxFreightMarketAddedJobs.DrawMode = DrawMode.OwnerDrawVariable;
+
+            ChangeLanguage();
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
