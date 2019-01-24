@@ -185,6 +185,7 @@ namespace TS_SE_Tool
             }
 
             listBoxFreightMarketAddedJobs.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBoxFreightMarketCargoList.DrawMode = DrawMode.OwnerDrawVariable;
 
             ChangeLanguage();
         }

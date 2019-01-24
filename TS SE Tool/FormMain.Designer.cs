@@ -239,14 +239,14 @@
             // toolStripMenuItemCreateTrFile
             // 
             this.toolStripMenuItemCreateTrFile.Name = "toolStripMenuItemCreateTrFile";
-            this.toolStripMenuItemCreateTrFile.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemCreateTrFile.Size = new System.Drawing.Size(162, 22);
             this.toolStripMenuItemCreateTrFile.Text = "Make translation";
             this.toolStripMenuItemCreateTrFile.Click += new System.EventHandler(this.makeToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
             // 
             // toolStripMenuItemHelp
             // 
@@ -1138,11 +1138,15 @@
             // 
             // comboBoxFreightMarketCargoList
             // 
+            this.comboBoxFreightMarketCargoList.DropDownHeight = 212;
             this.comboBoxFreightMarketCargoList.FormattingEnabled = true;
+            this.comboBoxFreightMarketCargoList.IntegralHeight = false;
             this.comboBoxFreightMarketCargoList.Location = new System.Drawing.Point(70, 125);
             this.comboBoxFreightMarketCargoList.Name = "comboBoxFreightMarketCargoList";
             this.comboBoxFreightMarketCargoList.Size = new System.Drawing.Size(328, 21);
             this.comboBoxFreightMarketCargoList.TabIndex = 8;
+            this.comboBoxFreightMarketCargoList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxFreightMarketCargoList_DrawItem);
+            this.comboBoxFreightMarketCargoList.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.comboBoxFreightMarketCargoList_MeasureItem);
             this.comboBoxFreightMarketCargoList.SelectedIndexChanged += new System.EventHandler(this.comboBoxCargoList_SelectedIndexChanged);
             // 
             // comboBoxFreightMarketDestinationCompany

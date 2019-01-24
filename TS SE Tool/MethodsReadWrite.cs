@@ -267,7 +267,7 @@ namespace TS_SE_Tool
                     catch
                     { }
 
-                    if (tmp[0] != null && tmp[0] != "")
+                    if ((tmp[0] != null && tmp[0] != "") && (tmp[1] != null && tmp[1] != ""))
                         CargoLngDict.Add(tmp[0], tmp[1]);
                 }
             }

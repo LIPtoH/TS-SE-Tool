@@ -2673,7 +2673,7 @@ namespace TS_SE_Tool
                     if (value != null && value != "")
                     {
                         string str = tempitem.CargoName;
-
+                        /*
                         if(str.EndsWith("_c"))
                             value += " (Cont)";
 
@@ -2681,14 +2681,14 @@ namespace TS_SE_Tool
                             value += " [H]";
                         else if (tempitem.CargoType == 2)
                             value += " [D]";
-
+                        */
                         combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), value);
                     }
                     else
                     {
                         string str = tempitem.CargoName;
                         string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
-
+                        /*
                         if (str.EndsWith("_c"))
                             CapName += " (Cont)";
 
@@ -2696,7 +2696,7 @@ namespace TS_SE_Tool
                             CapName += " [H]";
                         else if (tempitem.CargoType == 2)
                             CapName += " [D]";
-
+                            */
                         combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), CapName);
                     }
                 }
@@ -2704,7 +2704,7 @@ namespace TS_SE_Tool
                 {
                     string str = tempitem.CargoName;
                     string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
-
+                    /*
                     if (str.EndsWith("_c"))
                         CapName += " (Cont)";
 
@@ -2712,8 +2712,8 @@ namespace TS_SE_Tool
                         CapName += " [H]";
                     else if (tempitem.CargoType == 2)
                         CapName += " [D]";
-
-                    combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), CapName);
+                        */
+                        combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), CapName);
                 }
             }
 
@@ -2727,6 +2727,63 @@ namespace TS_SE_Tool
                 comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
             else
                 comboBoxFreightMarketCargoList.SelectedValue = savedvalue;
+        }
+
+        private void comboBoxFreightMarketCargoList_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            e.ItemHeight = 13;
+        }
+
+        private void comboBoxFreightMarketCargoList_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+
+            if ((e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit)
+                return;
+
+            ComboBox lst = sender as ComboBox;
+
+            // Draw the background of the item.
+            e.DrawBackground();
+
+            // See if the item is selected.
+            Brush br;
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                br = SystemBrushes.HighlightText;
+            else
+                br = new SolidBrush(e.ForeColor);
+
+            float x = e.Bounds.Left;
+            float y = e.Bounds.Top;
+            float width = e.Bounds.Width;
+            float height = e.Bounds.Height;
+            RectangleF layout_rect;
+
+            string[] selval = ((DataRowView)lst.Items[e.Index])[0].ToString().Split(new char[] { ',' });
+            string CargoName = selval[0], CargoType = selval[1],
+                CargoDN = lst.GetItemText(lst.Items[e.Index]);
+
+            if (CargoName.EndsWith("_c"))
+                CargoDN += " (Cont)";
+
+            if (CargoType == "1")
+                CargoDN += " [H]";
+            else if (CargoType == "2")
+                CargoDN += " [D]";
+
+            string txt = CargoDN;
+
+            // Find the area in which to put the text.
+
+            layout_rect = new RectangleF(x, y, width, height);
+            //format.Alignment = StringAlignment.Far;
+
+            e.Graphics.DrawString(txt, this.Font, br, layout_rect);
+
+            // Draw the focus rectangle if the mouse hovers over an item.
+            e.DrawFocusRectangle();
         }
 
         private void comboBoxSourceCity_SelectedIndexChanged(object sender, EventArgs e)
@@ -3546,7 +3603,7 @@ namespace TS_SE_Tool
                 LoadCargoLng(ProgSettingsV.Language);
                 LoadTruckBrandsLng();
 
-                FillcomboBoxCargoList();
+                RefreshComboboxes();
             }
             catch
             {
@@ -3554,6 +3611,37 @@ namespace TS_SE_Tool
             }
             
             //rm.ReleaseAllResources();
+        }
+
+        private void RefreshComboboxes()
+        {
+            //FillcomboBoxCargoList();
+
+            DataTable temptable = comboBoxFreightMarketCargoList.DataSource as DataTable;
+            int i = 0;
+
+            foreach (DataRow temp in temptable.Rows)
+            {
+                try
+                {
+                    ((DataTable)comboBoxFreightMarketCargoList.DataSource).Rows[i][1] = CargoLngDict[temp[0].ToString().Split(new char[] { ',' })[0]];
+                }
+                catch
+                { }
+                i++;
+            }
+
+            int savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
+            string savedvalue = "";
+            if (savedindex != -1)
+                savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
+
+            comboBoxFreightMarketCargoList.SelectedIndex = -1;
+
+            if (savedindex != -1)
+                comboBoxFreightMarketCargoList.SelectedValue = savedvalue;
+            else
+                comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
         }
         
         private string GetranslatedString(string _key)
