@@ -2739,9 +2739,8 @@ namespace TS_SE_Tool
             if (e.Index < 0)
                 return;
 
-
-            if ((e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit)
-                return;
+            //if ((e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit)
+            //    return;
 
             ComboBox lst = sender as ComboBox;
 
@@ -3586,6 +3585,9 @@ namespace TS_SE_Tool
                 {
                     try
                     {
+                        //Control ctn = x as ;
+                        //ctn.Text = rm.GetString(x, ci);
+
                         Controls.Find(x, true)[0].Text = rm.GetString(x, ci);
                     }
                     catch { }
@@ -3617,6 +3619,11 @@ namespace TS_SE_Tool
         {
             //FillcomboBoxCargoList();
 
+            int savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
+            string savedvalue = "";
+            if (savedindex != -1)
+                savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
+
             DataTable temptable = comboBoxFreightMarketCargoList.DataSource as DataTable;
             int i = 0;
 
@@ -3630,11 +3637,6 @@ namespace TS_SE_Tool
                 { }
                 i++;
             }
-
-            int savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
-            string savedvalue = "";
-            if (savedindex != -1)
-                savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
 
             comboBoxFreightMarketCargoList.SelectedIndex = -1;
 

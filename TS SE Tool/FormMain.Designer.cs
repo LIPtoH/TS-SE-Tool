@@ -1139,6 +1139,7 @@
             // comboBoxFreightMarketCargoList
             // 
             this.comboBoxFreightMarketCargoList.DropDownHeight = 212;
+            this.comboBoxFreightMarketCargoList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFreightMarketCargoList.FormattingEnabled = true;
             this.comboBoxFreightMarketCargoList.IntegralHeight = false;
             this.comboBoxFreightMarketCargoList.Location = new System.Drawing.Point(70, 125);
