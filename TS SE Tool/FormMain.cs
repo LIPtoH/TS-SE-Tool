@@ -193,16 +193,14 @@ namespace TS_SE_Tool
         private void FormMain_Shown(object sender, EventArgs e)
         {
             FillAllProfilesPaths();
-            //FillProfiles();
         }
 
         private void buttonRefreshAll_Click(object sender, EventArgs e)
         {
-            FillAllProfilesPaths();
-            //FillProfiles();
-            //FillProfileSaves();
             buttonMainDecryptSave.Enabled = true;
             buttonMainLoadSave.Enabled = true;
+
+            FillAllProfilesPaths();
         }
 
         private void FormMain_Load(object sender, EventArgs e)

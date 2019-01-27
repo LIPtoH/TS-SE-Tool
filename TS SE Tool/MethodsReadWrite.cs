@@ -267,7 +267,7 @@ namespace TS_SE_Tool
                     catch
                     { }
 
-                    if ((tmp[0] != null && tmp[0] != "") && (tmp[1] != null && tmp[1] != ""))
+                    if ((tmp[0] != null && tmp[0] != ""))
                         CargoLngDict.Add(tmp[0], tmp[1]);
                 }
             }
@@ -1675,225 +1675,177 @@ namespace TS_SE_Tool
 
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = false;
-            worker.DoWork += CacheExternalCargoData;
+            worker.DoWork += CacheExternalGameData;
             worker.RunWorkerAsync();
         }
 
-        private void CacheExternalCompaniesCargoInOut(object sender, DoWorkEventArgs e)
+        private void CacheExternalGameData(object sender, DoWorkEventArgs e)
         {
             if (Directory.Exists(Directory.GetCurrentDirectory() + @"\gameref"))
             {
-                string[] dlcFolders = Directory.GetDirectories(Directory.GetCurrentDirectory() + @"\gameref\" + GameType);
+                string[] gameFolders = { "ETS", "ATS" };
 
-                foreach(string dlcFolder in dlcFolders)
+                foreach (string gamename in gameFolders)
                 {
-                    ExtDataCreateDatabase(new DirectoryInfo(dlcFolder).Name);
+                    string gamefolder = Directory.GetCurrentDirectory() + @"\gameref\" + gamename;
 
-                    if (Directory.Exists(dlcFolder + @"\def\company"))
+                    if (Directory.Exists(gamefolder))
                     {
-                        string[] companyFolders = Directory.GetDirectories(dlcFolder + @"\def\company");
+                        string[] dlcFolders = Directory.GetDirectories(gamefolder);
 
-                        #region hide
-                        /*
-                        foreach (string companyFolder in companyFolders)
+                        foreach (string dlcFolder in dlcFolders)
                         {
-                            if (Directory.Exists(companyFolder + @"\out"))
+                            string dbfilepath = Directory.GetCurrentDirectory() + @"\gameref\cache\" + gamename + "\\" + new DirectoryInfo(dlcFolder).Name + ".sdf";
+
+                            if (!File.Exists(dbfilepath) || (new FileInfo(dbfilepath).LastWriteTime < new FileInfo(dlcFolder).LastWriteTime))
                             {
-                                string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
-
-                                string[] cargoes = Directory.GetFiles(companyFolder + @"\out", "*.sii");
-                                List<string> tempOutCargo = new List<string>();
-
-                                foreach (string cargo in cargoes)
+                                string cargoFolder = dlcFolder + @"\def\cargo";
+                                //Scan cargo files
+                                if (Directory.Exists(cargoFolder))
                                 {
-                                    string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
+                                    if (!File.Exists(dbfilepath))
+                                        ExtDataCreateDatabase(dbfilepath);
 
-                                    tempOutCargo.Add(tempcargo);
+                                    string[] cargoFiles = Directory.GetFiles(cargoFolder, "*.sii");
+
+                                    List<ExtCargo> tExtCargoList = new List<ExtCargo>();
+
+                                    foreach (string cargo in cargoFiles)
+                                    {
+                                        ExtCargo tempExtCargo = null;
+                                        string[] tempCargoFile = File.ReadAllLines(cargo);
+
+                                        foreach (string line in tempCargoFile)
+                                        {
+                                            if (line.StartsWith("cargo_data:"))
+                                            {
+                                                tempExtCargo = new ExtCargo(line.Split(new char[] { '.' })[1]);
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	fragility:"))
+                                            {
+                                                tempExtCargo.Fragility = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	adr_class:"))
+                                            {
+                                                tempExtCargo.ADRclass = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	mass:"))
+                                            {
+                                                tempExtCargo.Mass = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	unit_reward_per_km:"))
+                                            {
+                                                tempExtCargo.UnitRewardpPerKM = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	group[]:"))
+                                            {
+                                                tempExtCargo.Groups.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	body_types[]:"))
+                                            {
+                                                tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	maximum_distance:"))
+                                            {
+                                                tempExtCargo.MaxDistance = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	volume:"))
+                                            {
+                                                tempExtCargo.Volume = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	valuable:"))
+                                            {
+                                                tempExtCargo.Valuable = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                                continue;
+                                            }
+                                            if (line.StartsWith("	overweight:"))
+                                            {
+                                                tempExtCargo.Overweight = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
+                                                continue;
+                                            }
+                                        }
+
+                                        tExtCargoList.Add(tempExtCargo);
+                                    }
+
+                                    ExtDataInsertDataIntoDatabase(dbfilepath, "CargoesTable", tExtCargoList);
                                 }
 
-                                if(!ExternalCompanies.Exists(x => x.CompanyName == company))
+                                ///Companies
+
+                                string gcompanyFolder = dlcFolder + @"\def\company";
+                                //Scan cargo files
+                                if (Directory.Exists(gcompanyFolder))
                                 {
-                                    ExternalCompanies.Add(new ExtCompany(company));
+                                    if (!File.Exists(dbfilepath))
+                                        ExtDataCreateDatabase(dbfilepath);
+
+                                    string[] companyFolders = Directory.GetDirectories(gcompanyFolder);
+                                    
+                                    List<ExtCompany> tempExternalCompanies = new List<ExtCompany>();
+
+                                    companyFolders.AsParallel().ForAll(companyFolder =>
+                                    {
+
+                                        if (Directory.Exists(companyFolder + @"\out"))
+                                        {
+                                            string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+                                            string[] cargoes = Directory.GetFiles(companyFolder + @"\out", "*.sii");
+                                            List<string> tempOutCargo = new List<string>();
+
+                                            foreach (string cargo in cargoes)
+                                            {
+                                                string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
+
+                                                tempOutCargo.Add(tempcargo);
+                                            }
+
+                                            if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
+                                            {
+                                                tempExternalCompanies.Add(new ExtCompany(company));
+                                            }
+
+                                            tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoOut(tempOutCargo);
+                                        }
+
+                                        if (Directory.Exists(companyFolder + @"\in"))
+                                        {
+                                            string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+                                            string[] cargoes = Directory.GetFiles(companyFolder + @"\in", "*.sii");
+                                            List<string> tempInCargo = new List<string>();
+
+                                            foreach (string cargo in cargoes)
+                                            {
+                                                string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
+
+                                                tempInCargo.Add(tempcargo);
+                                            }
+
+                                            if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
+                                            {
+                                                tempExternalCompanies.Add(new ExtCompany(company));
+                                            }
+
+                                            tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoIn(tempInCargo);
+                                        }
+                                    }
+                                        );
+
+                                    ExtDataInsertDataIntoDatabase(dbfilepath, "CompaniesTable", tempExternalCompanies);
                                 }
 
-                                ExternalCompanies.Find(x => x.CompanyName == company).AddCargoOut(tempOutCargo);
                             }
-
-                            if (Directory.Exists(companyFolder + @"\in"))
-                            {
-                                string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
-
-                                string[] cargoes = Directory.GetFiles(companyFolder + @"\in", "*.sii");
-                                List<string> tempInCargo = new List<string>();
-
-                                foreach (string cargo in cargoes)
-                                {
-                                    string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
-
-                                    tempInCargo.Add(tempcargo);
-                                }
-
-                                if (!ExternalCompanies.Exists(x => x.CompanyName == company))
-                                {
-                                    ExternalCompanies.Add(new ExtCompany(company));
-                                }
-
-                                ExternalCompanies.Find(x => x.CompanyName == company).AddCargoIn(tempInCargo);
-                            }
-                        }
-                        */
-                        #endregion hide
-
-                        List<ExtCompany> tempExternalCompanies = new List<ExtCompany>();
-
-                        companyFolders.AsParallel().ForAll(companyFolder =>
-                                {
-
-                                    if (Directory.Exists(companyFolder + @"\out"))
-                                    {
-                                        string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
-
-                                        string[] cargoes = Directory.GetFiles(companyFolder + @"\out", "*.sii");
-                                        List<string> tempOutCargo = new List<string>();
-
-                                        foreach (string cargo in cargoes)
-                                        {
-                                            string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
-
-                                            tempOutCargo.Add(tempcargo);
-                                        }
-
-                                        if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
-                                        {
-                                            tempExternalCompanies.Add(new ExtCompany(company));
-                                        }
-
-                                        tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoOut(tempOutCargo);
-                                    }
-
-                                    if (Directory.Exists(companyFolder + @"\in"))
-                                    {
-                                        string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
-
-                                        string[] cargoes = Directory.GetFiles(companyFolder + @"\in", "*.sii");
-                                        List<string> tempInCargo = new List<string>();
-
-                                        foreach (string cargo in cargoes)
-                                        {
-                                            string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
-
-                                            tempInCargo.Add(tempcargo);
-                                        }
-
-                                        if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
-                                        {
-                                            tempExternalCompanies.Add(new ExtCompany(company));
-                                        }
-
-                                        tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoIn(tempInCargo);
-                                    }
-                                }
-                            );
-                    }
-                }
-            }
-            else
-            {
-                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\gameref");
-            }
-        }
-
-        private void CacheExternalCargoData(object sender, DoWorkEventArgs e)
-        {
-            if (Directory.Exists(Directory.GetCurrentDirectory() + @"\gameref"))
-            {
-                string[] dlcFolders = Directory.GetDirectories(Directory.GetCurrentDirectory() + @"\gameref\ETS");// + GameType);
-
-                foreach (string dlcFolder in dlcFolders)
-                {
-                    string dbfilepath = Directory.GetCurrentDirectory() + @"\gameref\cache\ETS\" + new DirectoryInfo(dlcFolder).Name + ".sdf";
-
-                    if (!File.Exists(dbfilepath) || (new FileInfo(dbfilepath).LastWriteTime < new FileInfo(dlcFolder).LastWriteTime))
-                    {
-                        string cargoFolder = dlcFolder + @"\def\cargo";
-                        //Scan cargo files
-                        if (Directory.Exists(cargoFolder))
-                        {
-                            if (!File.Exists(dbfilepath))
-                                ExtDataCreateDatabase(Directory.GetCurrentDirectory() + @"\gameref\cache\ETS\" + new DirectoryInfo(dlcFolder).Name + ".sdf");
-
-                            string[] cargoFiles = Directory.GetFiles(cargoFolder, "*.sii");
-
-                            List<ExtCargo> tExtCargoList = new List<ExtCargo>();
-
-                            foreach (string cargo in cargoFiles)
-                            {
-                                ExtCargo tempExtCargo = null;
-                                string[] tempCargoFile = File.ReadAllLines(cargo);
-
-                                foreach (string line in tempCargoFile)
-                                {
-                                    if (line.StartsWith("cargo_data:"))
-                                    {
-                                        tempExtCargo = new ExtCargo(line.Split(new char[] { '.' })[1]);
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	fragility:"))
-                                    {
-                                        tempExtCargo.Fragility = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	adr_class:"))
-                                    {
-                                        tempExtCargo.ADRclass = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	mass:"))
-                                    {
-                                        tempExtCargo.Mass = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	unit_reward_per_km:"))
-                                    {
-                                        tempExtCargo.UnitRewardpPerKM = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	group[]:"))
-                                    {
-                                        tempExtCargo.Groups.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	body_types[]:"))
-                                    {
-                                        tempExtCargo.BodyTypes.Add(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	maximum_distance:"))
-                                    {
-                                        tempExtCargo.MaxDistance = int.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	volume:"))
-                                    {
-                                        tempExtCargo.Volume = decimal.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty), CultureInfo.InvariantCulture);
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	valuable:"))
-                                    {
-                                        tempExtCargo.Valuable = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                        continue;
-                                    }
-                                    if (line.StartsWith("	overweight:"))
-                                    {
-                                        tempExtCargo.Overweight = bool.Parse(line.Split(new char[] { ':' })[1].Replace(" ", String.Empty));
-                                        continue;
-                                    }
-                                }
-
-                                tExtCargoList.Add(tempExtCargo);
-                            }
-
-                            ExtDataInsertDataIntoDatabase(dbfilepath, "CargoesTable", tExtCargoList);
                         }
                     }
                 }

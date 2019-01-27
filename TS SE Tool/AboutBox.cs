@@ -112,7 +112,7 @@ namespace TS_SE_Tool
                 {
                     return "";
                 }
-                return ((AssemblyCopyrightAttribute)attributes[0]).Copyright + " - 2018";
+                return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
             }
         }
 

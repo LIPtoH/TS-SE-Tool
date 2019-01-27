@@ -371,9 +371,9 @@ namespace TS_SE_Tool
         public void FillAllProfilesPaths()
         {
             string MyDocumentsPath = "";
-            MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame;
-
             string RemoteUserdataDirectory = "";
+
+            MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame;
 
             try
             {
@@ -441,29 +441,31 @@ namespace TS_SE_Tool
                 List<string> tempList = new List<string>();
 
                 int index = 0;
-                foreach (string folder in Directory.GetDirectories(MyDocumentsPath))
-                {
-                    if (Path.GetFileName(folder).StartsWith("profiles")) //Documents
+                if (Directory.Exists(MyDocumentsPath))
+                    foreach (string folder in Directory.GetDirectories(MyDocumentsPath))
                     {
-                        //comboBoxPrevProfiles.Items.Add(Path.GetFileName(folder));
-                        combDT.Rows.Add(index, "[L] " + Path.GetFileName(folder));
+                        if (Path.GetFileName(folder).StartsWith("profiles")) //Documents
+                        {
+                            //comboBoxPrevProfiles.Items.Add(Path.GetFileName(folder));
+                            combDT.Rows.Add(index, "[L] " + Path.GetFileName(folder));
 
-                        tempList.Add(folder);
-                        index++;
+                            tempList.Add(folder);
+                            index++;
+                        }
                     }
-                }
 
                 //string RemoteUserdataDirectory Steam Profiles
-                foreach (string folder in Directory.GetDirectories(RemoteUserdataDirectory))
-                {
-                    if (Path.GetFileName(folder).StartsWith("profiles")) //Steam
+                if (Directory.Exists(RemoteUserdataDirectory))
+                    foreach (string folder in Directory.GetDirectories(RemoteUserdataDirectory))
                     {
-                        combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
+                        if (Path.GetFileName(folder).StartsWith("profiles")) //Steam
+                        {
+                            combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
 
-                        tempList.Add(folder);
-                        index++;
+                            tempList.Add(folder);
+                            index++;
+                        }
                     }
-                }
 
                 Globals.ProfilesPaths = tempList.ToArray();
 
@@ -516,14 +518,20 @@ namespace TS_SE_Tool
                 buttonProfilesAndSavesOpenSaveFolder.Enabled = true;
                 buttonMainDecryptSave.Enabled = true;
                 buttonMainLoadSave.Enabled = true;
+                comboBoxPrevProfiles.Enabled = true;
+                comboBoxProfiles.Enabled = true;
+                comboBoxSaves.Enabled = true;
             }
             else
             {
-                MessageBox.Show("No profiles found");
-
                 buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
                 buttonMainDecryptSave.Enabled = false;
                 buttonMainLoadSave.Enabled = false;
+                comboBoxPrevProfiles.Enabled = false;
+                comboBoxProfiles.Enabled = false;
+                comboBoxSaves.Enabled = false;
+
+                MessageBox.Show("No profiles found");
             }
         }
 
@@ -556,6 +564,8 @@ namespace TS_SE_Tool
                     Profile = FromHexToString(Path.GetFileName(profile));
                     comboBoxProfiles.Items.Add(Profile);
                 }
+                comboBoxProfiles.Enabled = true;
+                comboBoxSaves.Enabled = true;
                 comboBoxProfiles.SelectedIndex = 0;
                 buttonProfilesAndSavesOpenSaveFolder.Enabled = true;
                 buttonMainDecryptSave.Enabled = true;
@@ -563,11 +573,13 @@ namespace TS_SE_Tool
             }
             else
             {
-                MessageBox.Show("No profiles found");
-
+                comboBoxProfiles.Enabled = false;
+                comboBoxSaves.Enabled = false;
                 buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
                 buttonMainDecryptSave.Enabled = false;
                 buttonMainLoadSave.Enabled = false;
+
+                MessageBox.Show("No profiles found");
             }
         }
 
@@ -647,6 +659,7 @@ namespace TS_SE_Tool
 
                 comboBoxSaves.DataSource = combDT;
 
+                comboBoxSaves.Enabled = true;
                 comboBoxSaves.SelectedIndex = 0;
                 buttonProfilesAndSavesOpenSaveFolder.Enabled = true;
                 buttonMainDecryptSave.Enabled = true;
@@ -656,11 +669,12 @@ namespace TS_SE_Tool
             }
             else
             {
-                MessageBox.Show("No save file folders found");
-
+                comboBoxSaves.Enabled = false;
                 buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
                 buttonMainDecryptSave.Enabled = false;
                 buttonMainLoadSave.Enabled = false;
+
+                MessageBox.Show("No save file folders found");
             }
         }
 
@@ -2731,7 +2745,7 @@ namespace TS_SE_Tool
 
         private void comboBoxFreightMarketCargoList_MeasureItem(object sender, MeasureItemEventArgs e)
         {
-            e.ItemHeight = 13;
+            e.ItemHeight = 26;
         }
 
         private void comboBoxFreightMarketCargoList_DrawItem(object sender, DrawItemEventArgs e)
@@ -2766,20 +2780,117 @@ namespace TS_SE_Tool
 
             if (CargoName.EndsWith("_c"))
                 CargoDN += " (Cont)";
-
+            /*
             if (CargoType == "1")
                 CargoDN += " [H]";
             else if (CargoType == "2")
                 CargoDN += " [D]";
-
+                */
             string txt = CargoDN;
 
-            // Find the area in which to put the text.
+            //////
+            // Draw Type picture
+            Image[] TypeImgs = new Image[5];
+            int indexTypeImgs = 0;
+            bool extheavy = false;
 
+            try
+            {
+                ExtCargo tempExtCargo = ExtCargoList.Find(z => z.CargoName == CargoName);
+
+                decimal fragile = tempExtCargo.Fragility;
+                bool valuable = tempExtCargo.Valuable;
+                int ADRclass = tempExtCargo.ADRclass;
+                int trueADR = ADRclass;
+
+                switch (trueADR)
+                {
+                    case 6:
+                        {
+                            trueADR = 5;
+                            break;
+                        }
+                    case 8:
+                        {
+                            trueADR = 6;
+                            break;
+                        }
+                }
+
+                if (ADRclass > 0)
+                {
+                    Bitmap bmp = new Bitmap(32, 32);
+                    Graphics graph = Graphics.FromImage(bmp);
+                    graph.DrawImage(ADRImgS[trueADR - 1], 2, 2, 28, 28);
+
+                    TypeImgs[indexTypeImgs] = bmp;
+                    indexTypeImgs++;
+                }
+
+                if (fragile == 0 || fragile >= (decimal)0.7)
+                {
+                    TypeImgs[indexTypeImgs] = CargoType2Img[0];
+                    indexTypeImgs++;
+                }
+
+                if (valuable)
+                {
+                    TypeImgs[indexTypeImgs] = CargoType2Img[1];
+                    indexTypeImgs++;
+                }
+            }
+            catch
+            {
+
+            }
+
+            if (extheavy || CargoType == "1")
+            {
+                TypeImgs[indexTypeImgs] = CargoTypeImg[1];
+                indexTypeImgs++;
+            }
+
+            if (CargoType == "2")
+            {
+                TypeImgs[indexTypeImgs] = CargoTypeImg[2];
+                indexTypeImgs++;
+            }
+
+            int xmult = 0, images = 0;
+
+            foreach (Image temp in TypeImgs)
+            {
+                if (temp == null)
+                {
+                    break;
+                }
+                images++;
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (TypeImgs[i] == null)
+                {
+                    break;
+                }
+
+                RectangleF source_rect = new RectangleF(0, 0, 32, 32);
+                RectangleF dest_rect = new RectangleF((e.Bounds.Right - 26 * images) + 24 * xmult, e.Bounds.Top + 1, 24, 24);
+                e.Graphics.DrawImage(TypeImgs[i], dest_rect, source_rect, GraphicsUnit.Pixel);
+
+                xmult++;
+            }
+            /////
+
+            // Find the area in which to put the text.
+            float fntsize = 8.25f;
+            y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
             layout_rect = new RectangleF(x, y, width, height);
             //format.Alignment = StringAlignment.Far;
 
-            e.Graphics.DrawString(txt, this.Font, br, layout_rect);
+            Font textfnt = new Font("Microsoft Sans Serif", fntsize);
+
+            e.Graphics.DrawString(txt, textfnt, br, layout_rect);
 
             // Draw the focus rectangle if the mouse hovers over an item.
             e.DrawFocusRectangle();
@@ -3080,6 +3191,11 @@ namespace TS_SE_Tool
         private void checkBoxRandomDest_CheckedChanged(object sender, EventArgs e)
         {
             ProgSettingsV.ProposeRandom = checkBoxFreightMarketRandomDest.Checked;
+        }
+
+        private void buttonFreightMarketRandomizeCargo_Click(object sender, EventArgs e)
+        {
+            comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
         }
 
         //end Freight market tab

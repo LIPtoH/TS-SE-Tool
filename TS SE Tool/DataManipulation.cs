@@ -2518,23 +2518,22 @@ namespace TS_SE_Tool
             sql += "ALTER TABLE BodyTypesToCargoTable ADD FOREIGN KEY(CargoID) REFERENCES CargoesTable(ID_cargo);";
             sql += "ALTER TABLE BodyTypesToCargoTable ADD FOREIGN KEY(BodyTypeID) REFERENCES BodyTypesTable(ID_bodytype) ON DELETE CASCADE;";
 
-            /*
-            sql += "CREATE TABLE CitysTable (ID_city INT IDENTITY(1,1) PRIMARY KEY, CityName NVARCHAR(32) NOT NULL);";
-
             sql += "CREATE TABLE CompaniesTable (ID_company INT IDENTITY(1,1) PRIMARY KEY, CompanyName NVARCHAR(32) NOT NULL);";
+
+            sql += "CREATE TABLE CompaniesCargoesInTable (ID_CargoIn INT IDENTITY(1,1) PRIMARY KEY, CompanyID INT NOT NULL, CargoID INT NOT NULL);";
+            sql += "ALTER TABLE CompaniesCargoesInTable ADD FOREIGN KEY(CompanyID) REFERENCES CompaniesTable(ID_company) ON DELETE CASCADE;";
+            sql += "ALTER TABLE CompaniesCargoesInTable ADD FOREIGN KEY(CargoID) REFERENCES CargoesTable(ID_cargo) ON DELETE CASCADE;";
+
+            sql += "CREATE TABLE CompaniesCargoesOutTable (ID_CargoOut INT IDENTITY(1,1) PRIMARY KEY, CompanyID INT NOT NULL, CargoID INT NOT NULL);";
+            sql += "ALTER TABLE CompaniesCargoesOutTable ADD FOREIGN KEY(CompanyID) REFERENCES CompaniesTable(ID_company) ON DELETE CASCADE;";
+            sql += "ALTER TABLE CompaniesCargoesOutTable ADD FOREIGN KEY(CargoID) REFERENCES CargoesTable(ID_cargo) ON DELETE CASCADE;";
+            /*
+            sql += "CREATE TABLE CitysTable (ID_city INT IDENTITY(1,1) PRIMARY KEY, CityName NVARCHAR(32) NOT NULL);";            
 
             sql += "CREATE TABLE CompaniesToCitysTable (ID_CmpnToCt INT IDENTITY(1,1) PRIMARY KEY, CityID INT NOT NULL, CompanyID INT NOT NULL);";
             sql += "ALTER TABLE CompaniesToCitysTable ADD FOREIGN KEY(CityID) REFERENCES CitysTable(ID_city) ON DELETE CASCADE;";
             sql += "ALTER TABLE CompaniesToCitysTable ADD FOREIGN KEY(CompanyID) REFERENCES CompaniesTable(ID_company) ON DELETE CASCADE;";
-
-            sql += "CREATE TABLE CompaniesCargoesInTable (ID_trailerCtD INT IDENTITY(1,1) PRIMARY KEY, CargoID INT NOT NULL, TrailerDefinitionID INT NOT NULL);";
-            sql += "ALTER TABLE CompaniesCargoesInTable ADD FOREIGN KEY(CargoID) REFERENCES CargoesTable(ID_cargo);";
-            sql += "ALTER TABLE CompaniesCargoesInTable ADD FOREIGN KEY(TrailerDefinitionID) REFERENCES TrailerDefinitionTable(ID_trailerD);";
-
-            sql += "CREATE TABLE CompaniesCargoesOutTable (ID_CmpnCrg INT IDENTITY(1,1) PRIMARY KEY, CompanyID INT NOT NULL, CargoID INT NOT NULL);";
-            sql += "ALTER TABLE CompaniesCargoesOutTable ADD FOREIGN KEY(CompanyID) REFERENCES CompaniesTable(ID_company) ON DELETE CASCADE;";
-            sql += "ALTER TABLE CompaniesCargoesOutTable ADD FOREIGN KEY(CargoID) REFERENCES CargoesTable(ID_cargo) ON DELETE CASCADE;";
-            
+                        
             sql += "CREATE TABLE DistancesTable (ID_Distance INT IDENTITY(1,1) PRIMARY KEY, SourceCityID INT NOT NULL, SourceCompanyID INT NOT NULL, " +
                 "DestinationCityID INT NOT NULL, DestinationCompanyID INT NOT NULL, Distance INT NOT NULL, FerryTime INT NOT NULL, FerryPrice INT NOT NULL);";
             sql += "ALTER TABLE DistancesTable ADD FOREIGN KEY(SourceCityID) REFERENCES CitysTable(ID_city);";
@@ -2697,12 +2696,149 @@ namespace TS_SE_Tool
 
                         break;
                     }
+
+                case "CompaniesTable":
+                    {
+                        List<ExtCompany> extCompanylist = _data as List<ExtCompany>;
+
+                        SqlCeConnection tDBconnection;
+                        string _fileName = _dbname;//Directory.GetCurrentDirectory() + @"\gameref\ETS\cache\" + _dbname + ".sdf";
+                        tDBconnection = new SqlCeConnection("Data Source = " + _fileName + ";");
+
+                        if (tDBconnection.State == ConnectionState.Closed)
+                        {
+                            tDBconnection.Open();
+                        }
+
+                        SqlCeCommand command = tDBconnection.CreateCommand();
+                        string updatecommandText = "";
+
+                        foreach (ExtCompany tempCompany in extCompanylist)
+                        {
+                            updatecommandText = "INSERT INTO [CompaniesTable] (CompanyName) " +
+                                                "VALUES('" +
+                                                tempCompany.CompanyName + "');";
+
+                            //SqlCeCommand command = DBconnection.CreateCommand();
+                            try
+                            {
+                                command.CommandText = updatecommandText;
+                                command.ExecuteNonQuery();
+                            }
+                            catch (SqlCeException sqlexception)
+                            {
+                                MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+
+                            updatecommandText = "SELECT ID_company FROM [CompaniesTable] WHERE CompanyName = '" + tempCompany.CompanyName + "' ";
+                            command.CommandText = updatecommandText;
+
+                            //command.Connection.Open();
+                            SqlCeDataReader readerDef = command.ExecuteReader();
+
+                            int CompanyID = -1;
+
+                            while (readerDef.Read())
+                            {
+                                CompanyID = int.Parse(readerDef["ID_company"].ToString());
+                            }
+
+                            foreach (string tempcargo in tempCompany.inCargo)
+                            {
+                                updatecommandText = "SELECT ID_cargo FROM [CargoesTable] WHERE CargoName = '" + tempcargo + "' ";
+                                command.CommandText = updatecommandText;
+
+                                //command.Connection.Open();
+                                int CargoID = -1;
+                                try
+                                {
+                                    SqlCeDataReader readerCargo = command.ExecuteReader();
+
+                                    while (readerCargo.Read())
+                                    {
+                                        CargoID = int.Parse(readerCargo["ID_cargo"].ToString());
+                                    }
+                                    if(CargoID != -1)
+                                    {
+                                        updatecommandText = "INSERT INTO [CompaniesCargoesInTable] (CompanyID, CargoID) " +
+                                                            "VALUES(" +
+                                                            CompanyID + ", " +
+                                                            CargoID + ");";
+                                        try
+                                        {
+                                            command.CommandText = updatecommandText;
+                                            //command.Connection.Open();
+                                            command.ExecuteNonQuery();
+                                        }
+                                        catch (SqlCeException sqlexception)
+                                        {
+                                            MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        }
+                                    }
+
+                                }
+                                catch (SqlCeException sqlexception)
+                                {
+                                    MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+
+
+                            }
+
+                            foreach (string tempcargo in tempCompany.outCargo)
+                            {
+                                updatecommandText = "SELECT ID_cargo FROM [CargoesTable] WHERE CargoName = '" + tempcargo + "' ";
+                                command.CommandText = updatecommandText;
+
+                                //command.Connection.Open();
+                                int CargoID = -1;
+                                try
+                                {
+                                    SqlCeDataReader readerCargo = command.ExecuteReader();
+
+                                    while (readerCargo.Read())
+                                    {
+                                        CargoID = int.Parse(readerCargo["ID_cargo"].ToString());
+                                    }
+                                    if (CargoID != -1)
+                                    {
+                                        updatecommandText = "INSERT INTO [CompaniesCargoesOutTable] (CompanyID, CargoID) " +
+                                                            "VALUES(" +
+                                                            CompanyID + ", " +
+                                                            CargoID + ");";
+                                        try
+                                        {
+                                            command.CommandText = updatecommandText;
+                                            //command.Connection.Open();
+                                            command.ExecuteNonQuery();
+                                        }
+                                        catch (SqlCeException sqlexception)
+                                        {
+                                            MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        }
+                                    }
+
+                                }
+                                catch (SqlCeException sqlexception)
+                                {
+                                    MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+
+
+                            }
+
+                        }
+
+                        tDBconnection.Close();
+
+                        break;
+                    }
             }
         }
 
         private void LoadCachedExternalCargoData(string _dbname)
         {
-            SqlCeDataReader reader = null;
+            SqlCeDataReader reader = null, reader2 = null;
 
             try
             {
@@ -2719,7 +2855,7 @@ namespace TS_SE_Tool
 
                 //ExtCargoList.Clear(); //Clears existing list
 
-                string commandText = "SELECT CargoName, ADRclass, Fragility, Mass, UnitRewardpPerKM, Valuable, Overweight FROM [CargoesTable]";
+                string commandText = "SELECT ID_cargo, CargoName, ADRclass, Fragility, Mass, UnitRewardpPerKM, Valuable, Overweight FROM [CargoesTable]";
 
                 reader = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
 
@@ -2737,8 +2873,6 @@ namespace TS_SE_Tool
 
                     //tempExtCargo.Groups.Add(reader["CargoName"].ToString());
 
-                    //tempExtCargo.BodyTypes.Add(reader["CargoName"].ToString());
-
                     //tempExtCargo.MaxDistance = int.Parse(reader["CargoName"].ToString());
 
                     //tempExtCargo.Volume = decimal.Parse(reader["CargoName"].ToString());
@@ -2746,7 +2880,18 @@ namespace TS_SE_Tool
                     tempExtCargo.Valuable = bool.Parse(reader["Valuable"].ToString());
 
                     //tempExtCargo.Overweight = bool.Parse(reader["CargoName"].ToString());
+
+                    //tempExtCargo.BodyTypes.Add(reader["CargoName"].ToString());
                     
+                    commandText = "SELECT BodyTypesTable.BodyTypeName FROM [BodyTypesToCargoTable] INNER JOIN [BodyTypesTable] ON BodyTypesTable.ID_bodytype = BodyTypesToCargoTable.BodyTypeID WHERE BodyTypesToCargoTable.CargoID = '" + reader["ID_cargo"].ToString() + "';";
+
+                    reader2 = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
+
+                    while (reader2.Read())
+                    {
+                        tempExtCargo.BodyTypes.Add(reader2["BodyTypeName"].ToString());
+                    }
+
                     ExtCargoList.Add(tempExtCargo);
                 }
 
