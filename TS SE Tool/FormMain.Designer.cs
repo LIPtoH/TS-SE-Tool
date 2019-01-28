@@ -130,6 +130,8 @@
             this.labelFreightMarketSource = new System.Windows.Forms.Label();
             this.comboBoxFreightMarketSourceCity = new System.Windows.Forms.ComboBox();
             this.tabPageCargoMarket = new System.Windows.Forms.TabPage();
+            this.labelCMTrailerType = new System.Windows.Forms.Label();
+            this.comboBoxCMTrailerTypes = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonCargoMarketRandomizeCargoCompany = new System.Windows.Forms.Button();
             this.buttonCargoMarketRandomizeCargoCity = new System.Windows.Forms.Button();
@@ -1227,6 +1229,8 @@
             // 
             // tabPageCargoMarket
             // 
+            this.tabPageCargoMarket.Controls.Add(this.labelCMTrailerType);
+            this.tabPageCargoMarket.Controls.Add(this.comboBoxCMTrailerTypes);
             this.tabPageCargoMarket.Controls.Add(this.label1);
             this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketRandomizeCargoCompany);
             this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketRandomizeCargoCity);
@@ -1246,12 +1250,30 @@
             this.tabPageCargoMarket.Text = "CargoMarket";
             this.tabPageCargoMarket.UseVisualStyleBackColor = true;
             // 
+            // labelCMTrailerType
+            // 
+            this.labelCMTrailerType.AutoSize = true;
+            this.labelCMTrailerType.Location = new System.Drawing.Point(3, 265);
+            this.labelCMTrailerType.Name = "labelCMTrailerType";
+            this.labelCMTrailerType.Size = new System.Drawing.Size(63, 13);
+            this.labelCMTrailerType.TabIndex = 19;
+            this.labelCMTrailerType.Text = "Trailer Type";
+            // 
+            // comboBoxCMTrailerTypes
+            // 
+            this.comboBoxCMTrailerTypes.FormattingEnabled = true;
+            this.comboBoxCMTrailerTypes.Location = new System.Drawing.Point(72, 262);
+            this.comboBoxCMTrailerTypes.Name = "comboBoxCMTrailerTypes";
+            this.comboBoxCMTrailerTypes.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxCMTrailerTypes.TabIndex = 18;
+            this.comboBoxCMTrailerTypes.SelectedIndexChanged += new System.EventHandler(this.comboBoxCMTrailerTypes_SelectedIndexChanged);
+            // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(3, 258);
+            this.label1.Location = new System.Drawing.Point(3, 286);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(468, 212);
+            this.label1.Size = new System.Drawing.Size(230, 174);
             this.label1.TabIndex = 17;
             this.label1.Text = "Work In Progres";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1299,11 +1321,11 @@
             // listBoxCargoMarketCargoListForCompany
             // 
             this.listBoxCargoMarketCargoListForCompany.FormattingEnabled = true;
-            this.listBoxCargoMarketCargoListForCompany.Location = new System.Drawing.Point(72, 261);
+            this.listBoxCargoMarketCargoListForCompany.Location = new System.Drawing.Point(239, 261);
             this.listBoxCargoMarketCargoListForCompany.Name = "listBoxCargoMarketCargoListForCompany";
             this.listBoxCargoMarketCargoListForCompany.Size = new System.Drawing.Size(161, 199);
+            this.listBoxCargoMarketCargoListForCompany.Sorted = true;
             this.listBoxCargoMarketCargoListForCompany.TabIndex = 12;
-            this.listBoxCargoMarketCargoListForCompany.Visible = false;
             // 
             // listBoxCargoMarketSourceCargoSeeds
             // 
@@ -1793,6 +1815,8 @@
         private System.Windows.Forms.Label labelFreightMarketDistanceNumbers;
         private System.Windows.Forms.Label labelPlayerExperience;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelCMTrailerType;
+        private System.Windows.Forms.ComboBox comboBoxCMTrailerTypes;
     }
 }
 

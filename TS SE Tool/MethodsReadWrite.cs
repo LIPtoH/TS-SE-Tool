@@ -1671,8 +1671,6 @@ namespace TS_SE_Tool
 
         private void CacheGameData()
         {
-            //GetExternalCompaniesCargoInOut()
-
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = false;
             worker.DoWork += CacheExternalGameData;
@@ -1794,52 +1792,51 @@ namespace TS_SE_Tool
                                     List<ExtCompany> tempExternalCompanies = new List<ExtCompany>();
 
                                     companyFolders.AsParallel().ForAll(companyFolder =>
-                                    {
-
-                                        if (Directory.Exists(companyFolder + @"\out"))
                                         {
-                                            string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
-
-                                            string[] cargoes = Directory.GetFiles(companyFolder + @"\out", "*.sii");
-                                            List<string> tempOutCargo = new List<string>();
-
-                                            foreach (string cargo in cargoes)
+                                            if (Directory.Exists(companyFolder + @"\out"))
                                             {
-                                                string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
+                                                string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
-                                                tempOutCargo.Add(tempcargo);
+                                                string[] cargoes = Directory.GetFiles(companyFolder + @"\out", "*.sii");
+                                                List<string> tempOutCargo = new List<string>();
+
+                                                foreach (string cargo in cargoes)
+                                                {
+                                                    string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new char[] { '.' })[0];
+
+                                                    tempOutCargo.Add(tempcargo);
+                                                }
+
+                                                if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
+                                                {
+                                                    tempExternalCompanies.Add(new ExtCompany(company));
+                                                }
+
+                                                tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoOut(tempOutCargo);
                                             }
 
-                                            if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
+                                            if (Directory.Exists(companyFolder + @"\in"))
                                             {
-                                                tempExternalCompanies.Add(new ExtCompany(company));
-                                            }
+                                                string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
-                                            tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoOut(tempOutCargo);
+                                                string[] cargoes = Directory.GetFiles(companyFolder + @"\in", "*.sii");
+                                                List<string> tempInCargo = new List<string>();
+
+                                                foreach (string cargo in cargoes)
+                                                {
+                                                    string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new char[] { '.' })[0];
+
+                                                    tempInCargo.Add(tempcargo);
+                                                }
+
+                                                if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
+                                                {
+                                                    tempExternalCompanies.Add(new ExtCompany(company));
+                                                }
+
+                                                tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoIn(tempInCargo);
+                                            }
                                         }
-
-                                        if (Directory.Exists(companyFolder + @"\in"))
-                                        {
-                                            string company = companyFolder.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
-
-                                            string[] cargoes = Directory.GetFiles(companyFolder + @"\in", "*.sii");
-                                            List<string> tempInCargo = new List<string>();
-
-                                            foreach (string cargo in cargoes)
-                                            {
-                                                string tempcargo = cargo.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split(new string[] { ".sii" }, StringSplitOptions.None)[0];
-
-                                                tempInCargo.Add(tempcargo);
-                                            }
-
-                                            if (!tempExternalCompanies.Exists(x => x.CompanyName == company))
-                                            {
-                                                tempExternalCompanies.Add(new ExtCompany(company));
-                                            }
-
-                                            tempExternalCompanies.Find(x => x.CompanyName == company).AddCargoIn(tempInCargo);
-                                        }
-                                    }
                                         );
 
                                     ExtDataInsertDataIntoDatabase(dbfilepath, "CompaniesTable", tempExternalCompanies);
