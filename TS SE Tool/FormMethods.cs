@@ -3184,7 +3184,7 @@ namespace TS_SE_Tool
             Array.Resize(ref EconomyEventUnitLinkStringList, 0);
 
             listBoxFreightMarketAddedJobs.Items.Clear();
-            labelFreightMarketDistance.Text = "Jobs Distance";
+            labelFreightMarketDistanceNumbers.Text = "0 " + ProgSettingsV.DistanceMes;
             buttonFreightMarketClearJobList.Enabled = false;
         }
 
@@ -3387,7 +3387,6 @@ namespace TS_SE_Tool
                     listBoxCargoMarketSourceCargoSeeds.Items.Add("" + cargoseed.ToString() + " | Time left " + ((cargoseed - InGameTime) / 60).ToString() + "h " + 
                         ((cargoseed - InGameTime) % 60).ToString() + "m " + cargoforseed);
 
-                    //listBoxSourceCargoSeeds.Items.Add("" + cargoseed.ToString() + " | TL " + ((cargoseed - InGameTime) / 60).ToString() + "h "  + ((cargoseed - InGameTime) % 60).ToString() + "m " + " | Cargo " + "1 " + tempOutCargo[Cargoreminder] + " | 2 " + tempOutCargo[Cargoreminder2]);
                     //seedindex++;
                 }
             }
@@ -3487,7 +3486,6 @@ namespace TS_SE_Tool
 
             comboBoxCMTrailerTypes.DataSource = combDT;
         }
-
         //end Cargo Market tab
 
         //Convoy tools tab
@@ -3799,6 +3797,7 @@ namespace TS_SE_Tool
                 LoadTruckBrandsLng();
 
                 RefreshComboboxes();
+                CorrectControlsPositions();
             }
             catch
             {
@@ -3808,16 +3807,27 @@ namespace TS_SE_Tool
             //rm.ReleaseAllResources();
         }
 
+        private void CorrectControlsPositions()
+        {
+            //Freight Market
+            labelFreightMarketDistanceNumbers.Location = new Point( labelFreightMarketDistance.Location.X + labelFreightMarketDistance.Width + 6, labelFreightMarketDistanceNumbers.Location.Y);
+        }
+
         private void RefreshComboboxes()
         {
-            //FillcomboBoxCargoList();
-
-            int savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
+            //Freight Market
+            //CargoList
+            int savedindex = 0;
             string savedvalue = "";
+            DataTable temptable = new DataTable();
+
+            savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
+
             if (savedindex != -1)
                 savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
 
-            DataTable temptable = comboBoxFreightMarketCargoList.DataSource as DataTable;
+            temptable = comboBoxFreightMarketCargoList.DataSource as DataTable;
+
             int i = 0;
 
             foreach (DataRow temp in temptable.Rows)
@@ -3831,12 +3841,45 @@ namespace TS_SE_Tool
                 i++;
             }
 
-            comboBoxFreightMarketCargoList.SelectedIndex = -1;
+            //comboBoxFreightMarketCargoList.SelectedIndex = -1;
 
             if (savedindex != -1)
                 comboBoxFreightMarketCargoList.SelectedValue = savedvalue;
             else
                 comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
+
+            //Cities Source
+
+            ComboBox[] CitiesCB = { comboBoxFreightMarketSourceCity, comboBoxFreightMarketDestinationCity, comboBoxUserCompanyHQcity, comboBoxCargoMarketSourceCity };
+
+            foreach(ComboBox tempCB in CitiesCB)
+            {
+                savedindex = tempCB.SelectedIndex;
+
+                if (savedindex != -1)
+                    savedvalue = tempCB.SelectedValue.ToString();
+
+                temptable = tempCB.DataSource as DataTable;
+
+                i = 0;
+
+                foreach (DataRow temp in temptable.Rows)
+                {
+                    try
+                    {
+                        ((DataTable)tempCB.DataSource).Rows[i][1] = CitiesLngDict[temp[0].ToString()];
+                    }
+                    catch
+                    { }
+                    i++;
+                }
+
+                //comboBoxFreightMarketSourceCity.SelectedIndex = -1;
+                if (savedindex != -1)
+                    tempCB.SelectedValue = savedvalue;
+                else
+                    tempCB.SelectedIndex = RandomValue.Next(tempCB.Items.Count);
+            }
         }
         
         private string GetranslatedString(string _key)
