@@ -355,6 +355,99 @@ namespace TS_SE_Tool
                 }
             }
         }
+        
+        private void LoadCountriesLng(string _ci)
+        {
+            CountriesLngDict.Clear();
+
+            try
+            {
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\countries_translate.txt");
+
+                for (int i = 0; i < tempFile.Length; i++)
+                {
+                    string[] tmp = new string[2];
+                    try
+                    {
+                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                    }
+                    catch
+                    { }
+
+                    if (tmp[0] != "")
+                        CountriesLngDict.Add(tmp[0], tmp[1]);
+                }
+            }
+            catch
+            {
+                LogWriter("countries_translate.txt file is missing");
+            }
+
+            string language = "";
+
+            if (_ci != "Default")
+                language = _ci += "\\";
+
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "countries_translate.txt"))
+                //language = "";
+                return;
+
+            if (CountriesLngDict.Count() > 0)
+            {
+                try
+                {
+                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "countries_translate.txt");
+
+                    for (int i = 0; i < tempFile.Length; i++)
+                    {
+                        string[] tmp = new string[2];
+                        try
+                        {
+                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                        }
+                        catch
+                        { }
+
+                        if (tmp[0] != null && tmp[0] != "")
+                        {
+                            if (CountriesLngDict.ContainsKey(tmp[0]))
+                                CountriesLngDict[tmp[0]] = tmp[1];
+                            else
+                                CountriesLngDict.Add(tmp[0], tmp[1]);
+                        }
+                    }
+                }
+                catch
+                {
+                    LogWriter("countries_translate.txt file is missing");
+                }
+            }
+            else
+            {
+                try
+                {
+                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "countries_translate.txt");
+
+                    for (int i = 0; i < tempFile.Length; i++)
+                    {
+                        string[] tmp = new string[2];
+                        try
+                        {
+                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                        }
+                        catch
+                        { }
+
+                        if (tmp[0] != null && tmp[0] != "")
+                            CountriesLngDict.Add(tmp[0], tmp[1]);
+                    }
+                }
+                catch
+                {
+                    LogWriter("countries_translate.txt file is missing");
+                }
+            }
+        }
 
         private void LoadCargoLng(string _ci)
         {
@@ -451,8 +544,105 @@ namespace TS_SE_Tool
             }
         }
 
+        private void LoadUrgencyLng(string _ci)
+        {
+            UrgencyLngDict.Clear();
+
+            try
+            {
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\urgency_translate.txt");
+
+                for (int i = 0; i < tempFile.Length; i++)
+                {
+                    string[] tmp = new string[2];
+                    try
+                    {
+                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                    }
+                    catch
+                    { }
+
+                    if ((tmp[0] != null && tmp[0] != ""))
+                        UrgencyLngDict.Add(tmp[0], tmp[1]);
+                }
+            }
+            catch
+            {
+                LogWriter("urgency_translate.txt file is missing");
+            }
+
+            string language = "";
+
+            if (_ci != "Default")
+                language = _ci += "\\";
+
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "urgency_translate.txt"))
+            {
+                //language = "";
+                return;
+            }
+
+            if (UrgencyLngDict.Count() > 0)
+            {
+                try
+                {
+                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "urgency_translate.txt");
+
+                    for (int i = 0; i < tempFile.Length; i++)
+                    {
+                        string[] tmp = new string[2];
+                        try
+                        {
+                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                        }
+                        catch
+                        { }
+
+                        if (tmp[0] != null && tmp[0] != "")
+                        {
+                            if (UrgencyLngDict.ContainsKey(tmp[0]))
+                                UrgencyLngDict[tmp[0]] = tmp[1];
+                            else
+                                UrgencyLngDict.Add(tmp[0], tmp[1]);
+                        }
+                    }
+                }
+                catch
+                {
+                    LogWriter("urgency_translate.txt file is missing");
+                }
+            }
+            else
+            {
+                try
+                {
+                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "urgency_translate.txt");
+
+                    for (int i = 0; i < tempFile.Length; i++)
+                    {
+                        string[] tmp = new string[2];
+                        try
+                        {
+                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                        }
+                        catch
+                        { }
+
+                        if ((tmp[0] != null && tmp[0] != ""))
+                            UrgencyLngDict.Add(tmp[0], tmp[1]);
+                    }
+                }
+                catch
+                {
+                    LogWriter("urgency_translate.txt file is missing");
+                }
+            }
+        }
+
         private void LoadTruckBrandsLng()
         {
+            TruckBrandsLngDict.Clear();
+
             try
             {
                 string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\truck_brands.txt");
@@ -1061,9 +1251,7 @@ namespace TS_SE_Tool
                     LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
 
                     InsertDataIntoDatabase("GameTypesTable");
-
-                    comboBoxFreightMarketCountries.Items.Add("All");
-
+                    
                     worker = new BackgroundWorker();
                     worker.WorkerReportsProgress = true;
                     worker.DoWork += PrepareData;//Start;

@@ -46,6 +46,8 @@ namespace TS_SE_Tool
         private int JobsTotalDistance;
         private int JobsAmountAdded;
 
+        private int[] UrgencyArray;
+
         private double ProgPrevVersion;
 
         private bool FileDecoded;
@@ -118,7 +120,7 @@ namespace TS_SE_Tool
         private Routes RouteList;
 
         private Dictionary<string, string> dictionaryProfiles;
-        private Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict;
+        private Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict, CountriesLngDict, UrgencyLngDict;
         public static Dictionary<string, string> CitiesLngDict;
         private Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
         private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary;
