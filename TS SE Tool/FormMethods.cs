@@ -1576,7 +1576,6 @@ namespace TS_SE_Tool
         //end User Trucks tab
 
         //User Trailer tab
-
         private void CreateTrailerPanelControls()
         {
             CreateTrailerPanelProgressBars();
@@ -3373,10 +3372,11 @@ namespace TS_SE_Tool
                     //int Cargoreminder2 = (cargoseed - InGameTime + (int)numericUpDown2.Value) % (tempOutCargo.Count() - (int)numericUpDown1.Value);
                     //tempOutCargo.Sort();
 
-                    string cargoforseed = "| Cargo ";
+                    string cargoforseed = "";
                     /*
                     if(listBoxCargoMarketCargoListForCompany.Items.Count > 0)
                     {
+                        cargoforseed = "| Cargo ";
                         string[] tempOutCargo = new string[listBoxCargoMarketCargoListForCompany.Items.Count];
                         listBoxCargoMarketCargoListForCompany.Items.CopyTo(tempOutCargo, 0);
 
@@ -3759,7 +3759,6 @@ namespace TS_SE_Tool
 
             try
             {
-
                 PlainTXTResourceManager rm = new PlainTXTResourceManager();
                 ResourceSet set = null;//rm.GetResourceSet(ci, true, true);
                 set = rm.GetResourceSet(ci, true, true);                
@@ -3772,23 +3771,10 @@ namespace TS_SE_Tool
                 }
 
                 this.SuspendLayout();
-                foreach (string x in keys)
-                {
-                    try
-                    {
-                        //Control ctn = x as ;
-                        //ctn.Text = rm.GetString(x, ci);
 
-                        Controls.Find(x, true)[0].Text = rm.GetString(x, ci);
-                    }
-                    catch { }
+                HelpTranslateFormMethod(this, rm, ci);
+                HelpTranslateMenuStripMethod(menuStripMain, rm, ci);
 
-                    try
-                    {
-                        menuStripMain.Items.Find(x, true)[0].Text = rm.GetString(x, ci);
-                    }
-                    catch { }
-                }
                 this.ResumeLayout();
 
                 LoadCompaniesLng(ProgSettingsV.Language);
@@ -3801,14 +3787,71 @@ namespace TS_SE_Tool
             }
             catch
             {
-
-            }
-            
+            }            
             //rm.ReleaseAllResources();
+        }
+
+        private void HelpTranslateFormMethod (Control parent, PlainTXTResourceManager _rm, CultureInfo _ci)
+        {
+            foreach (Control c in parent.Controls)
+            {
+                try
+                {
+                    string translatedString = _rm.GetString(c.Name, _ci);
+                    if (translatedString != null)
+                        c.Text = translatedString;
+                }
+                catch
+                {   
+                }
+                HelpTranslateFormMethod(c, _rm, _ci);
+            }
+        }
+
+        private void HelpTranslateMenuStripMethod(MenuStrip parent, PlainTXTResourceManager _rm, CultureInfo _ci)
+        {
+            foreach (ToolStripMenuItem c in parent.Items)
+            {
+                try
+                {
+                    string translatedString = _rm.GetString(c.Name, _ci);
+                    if (translatedString != null)
+                        c.Text = translatedString;
+                }
+                catch
+                {
+                }
+                HelpTranslateMenuStripDDMethod(c, _rm, _ci);
+            }
+        }
+
+        private void HelpTranslateMenuStripDDMethod(ToolStripDropDownItem parent, PlainTXTResourceManager _rm, CultureInfo _ci)
+        {
+            try
+            {
+                foreach (ToolStripDropDownItem c in parent.DropDownItems)
+                {
+                    string translatedString = _rm.GetString(c.Name, _ci);
+                    if (translatedString != null)
+                        c.Text = translatedString;
+
+                    HelpTranslateMenuStripDDMethod(c, _rm, _ci);
+                }
+            }
+            catch
+            {
+            }
+
         }
 
         private void CorrectControlsPositions()
         {
+            //Truck
+            Panel pbTruckFuel = (Panel)tabControlMain.TabPages[2].Controls.Find("progressbarTruckFuel",true)[0];
+            Label Flabel = (Label)tabControlMain.TabPages[2].Controls.Find("labelTruckDetailsFuel", true)[0];
+
+            Flabel.Location = new Point(pbTruckFuel.Location.X + (pbTruckFuel.Width - Flabel.Width) / 2, pbTruckFuel.Location.Y + pbTruckFuel.Height + 10);
+
             //Freight Market
             labelFreightMarketDistanceNumbers.Location = new Point( labelFreightMarketDistance.Location.X + labelFreightMarketDistance.Width + 6, labelFreightMarketDistanceNumbers.Location.Y);
         }
@@ -3817,49 +3860,18 @@ namespace TS_SE_Tool
         {
             //Freight Market
             //CargoList
-            int savedindex = 0;
+            int savedindex = 0, i = 0;
             string savedvalue = "";
             DataTable temptable = new DataTable();
 
-            savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
-
-            if (savedindex != -1)
-                savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
-
             temptable = comboBoxFreightMarketCargoList.DataSource as DataTable;
 
-            int i = 0;
-
-            foreach (DataRow temp in temptable.Rows)
+            if (temptable != null)
             {
-                try
-                {
-                    ((DataTable)comboBoxFreightMarketCargoList.DataSource).Rows[i][1] = CargoLngDict[temp[0].ToString().Split(new char[] { ',' })[0]];
-                }
-                catch
-                { }
-                i++;
-            }
-
-            //comboBoxFreightMarketCargoList.SelectedIndex = -1;
-
-            if (savedindex != -1)
-                comboBoxFreightMarketCargoList.SelectedValue = savedvalue;
-            else
-                comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
-
-            //Cities Source
-
-            ComboBox[] CitiesCB = { comboBoxFreightMarketSourceCity, comboBoxFreightMarketDestinationCity, comboBoxUserCompanyHQcity, comboBoxCargoMarketSourceCity };
-
-            foreach(ComboBox tempCB in CitiesCB)
-            {
-                savedindex = tempCB.SelectedIndex;
+                savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
 
                 if (savedindex != -1)
-                    savedvalue = tempCB.SelectedValue.ToString();
-
-                temptable = tempCB.DataSource as DataTable;
+                    savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
 
                 i = 0;
 
@@ -3867,19 +3879,59 @@ namespace TS_SE_Tool
                 {
                     try
                     {
-                        ((DataTable)tempCB.DataSource).Rows[i][1] = CitiesLngDict[temp[0].ToString()];
+                        ((DataTable)comboBoxFreightMarketCargoList.DataSource).Rows[i][1] = CargoLngDict[temp[0].ToString().Split(new char[] { ',' })[0]];
                     }
                     catch
                     { }
                     i++;
                 }
 
-                //comboBoxFreightMarketSourceCity.SelectedIndex = -1;
+                //comboBoxFreightMarketCargoList.SelectedIndex = -1;
+
                 if (savedindex != -1)
-                    tempCB.SelectedValue = savedvalue;
+                    comboBoxFreightMarketCargoList.SelectedValue = savedvalue;
                 else
-                    tempCB.SelectedIndex = RandomValue.Next(tempCB.Items.Count);
+                    comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
             }
+
+            //Cities ComboBoxes
+            ComboBox[] CitiesCB = { comboBoxFreightMarketSourceCity, comboBoxFreightMarketDestinationCity, comboBoxUserCompanyHQcity, comboBoxCargoMarketSourceCity };
+
+            foreach(ComboBox tempCB in CitiesCB)
+            {
+                if (temptable != null)
+                {
+                    temptable = tempCB.DataSource as DataTable;
+
+                    savedindex = tempCB.SelectedIndex;
+
+                    if (savedindex != -1)
+                        savedvalue = tempCB.SelectedValue.ToString();
+
+                    i = 0;
+
+                    foreach (DataRow temp in temptable.Rows)
+                    {
+                        try
+                        {
+                            ((DataTable)tempCB.DataSource).Rows[i][1] = CitiesLngDict[temp[0].ToString()];
+                        }
+                        catch
+                        { }
+                        i++;
+                    }
+
+                    //comboBoxFreightMarketSourceCity.SelectedIndex = -1;
+                    if (savedindex != -1)
+                        tempCB.SelectedValue = savedvalue;
+                    else
+                        tempCB.SelectedIndex = RandomValue.Next(tempCB.Items.Count);
+                }
+            }
+
+            //ListBoxes
+            FillVisitedCities(listBoxVisitedCities.TopIndex);
+            FillGaragesList(listBoxGarages.TopIndex);
         }
         
         private string GetranslatedString(string _key)

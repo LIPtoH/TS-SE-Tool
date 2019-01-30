@@ -132,7 +132,6 @@
             this.tabPageCargoMarket = new System.Windows.Forms.TabPage();
             this.labelCMTrailerType = new System.Windows.Forms.Label();
             this.comboBoxCMTrailerTypes = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.buttonCargoMarketRandomizeCargoCompany = new System.Windows.Forms.Button();
             this.buttonCargoMarketRandomizeCargoCity = new System.Windows.Forms.Button();
             this.buttonCargoMarketResetCargoCompany = new System.Windows.Forms.Button();
@@ -167,6 +166,7 @@
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -198,7 +198,7 @@
             this.menuStripMain.Name = "menuStripMain";
             this.menuStripMain.Size = new System.Drawing.Size(504, 24);
             this.menuStripMain.TabIndex = 0;
-            this.menuStripMain.Text = "menuStrip1";
+            this.menuStripMain.Text = "menuStripMain";
             // 
             // toolStripMenuItemProgram
             // 
@@ -213,19 +213,19 @@
             // toolStripMenuItemSettings
             // 
             this.toolStripMenuItemSettings.Name = "toolStripMenuItemSettings";
-            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(116, 22);
+            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemSettings.Text = "Settings";
             this.toolStripMenuItemSettings.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(116, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -802,7 +802,7 @@
             // 
             this.labelLicensePlate.Location = new System.Drawing.Point(103, 268);
             this.labelLicensePlate.Name = "labelLicensePlate";
-            this.labelLicensePlate.Size = new System.Drawing.Size(300, 13);
+            this.labelLicensePlate.Size = new System.Drawing.Size(200, 13);
             this.labelLicensePlate.TabIndex = 14;
             this.labelLicensePlate.Text = "0 000 00";
             // 
@@ -1229,9 +1229,9 @@
             // 
             // tabPageCargoMarket
             // 
+            this.tabPageCargoMarket.Controls.Add(this.label1);
             this.tabPageCargoMarket.Controls.Add(this.labelCMTrailerType);
             this.tabPageCargoMarket.Controls.Add(this.comboBoxCMTrailerTypes);
-            this.tabPageCargoMarket.Controls.Add(this.label1);
             this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketRandomizeCargoCompany);
             this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketRandomizeCargoCity);
             this.tabPageCargoMarket.Controls.Add(this.buttonCargoMarketResetCargoCompany);
@@ -1267,16 +1267,6 @@
             this.comboBoxCMTrailerTypes.Size = new System.Drawing.Size(161, 21);
             this.comboBoxCMTrailerTypes.TabIndex = 18;
             this.comboBoxCMTrailerTypes.SelectedIndexChanged += new System.EventHandler(this.comboBoxCMTrailerTypes_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(3, 286);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(230, 174);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "Work In Progres";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonCargoMarketRandomizeCargoCompany
             // 
@@ -1617,6 +1607,16 @@
             this.groupBoxMainProfilesAndSaves.TabStop = false;
             this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
             // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(4, 258);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(473, 202);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Work In Progres";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1814,9 +1814,9 @@
         private System.Windows.Forms.Label labelUserTrailerLicensePlate;
         private System.Windows.Forms.Label labelFreightMarketDistanceNumbers;
         private System.Windows.Forms.Label labelPlayerExperience;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelCMTrailerType;
         private System.Windows.Forms.ComboBox comboBoxCMTrailerTypes;
+        private System.Windows.Forms.Label label1;
     }
 }
 
