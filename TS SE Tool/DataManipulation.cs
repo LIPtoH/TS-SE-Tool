@@ -1273,19 +1273,24 @@ namespace TS_SE_Tool
                 {
                     chunkOfline = tempInfoFileInMemory[line].Split(new char[] { ' ' });
                     SavefileVersion = int.Parse(chunkOfline[2]);
-                    continue; //searching only version
+                    continue;
                 }
 
                 if (tempInfoFileInMemory[line].StartsWith(" dependencies["))
                 {
                     chunkOfline = tempInfoFileInMemory[line].Split(new char[] { '"' })[1].Split(new char[] { '|' });
                     string type = chunkOfline[0];
-                    string depcode = chunkOfline[1].Split(new char[] { '_' }, 2)[1];
-
+                    string depcode = "";
                     if (type == "dlc" || type == "rdlc")
+                    {
+                        depcode = chunkOfline[1].Split(new char[] { '_' }, 2)[1];
                         depcode = "dlc_" + depcode;
+                    }
                     if (type == "mod")
+                    {
+                        depcode = chunkOfline[1];
                         depcode = "mod_" + depcode;
+                    }
 
                     SavefileDependencies.Add(depcode);
                     continue;
