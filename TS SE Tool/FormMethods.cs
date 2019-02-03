@@ -2887,6 +2887,7 @@ namespace TS_SE_Tool
 
                 decimal fragile = tempExtCargo.Fragility;
                 bool valuable = tempExtCargo.Valuable;
+                bool overveight = tempExtCargo.Overweight;
                 int ADRclass = tempExtCargo.ADRclass;
                 int trueADR = ADRclass;
 
@@ -2924,6 +2925,11 @@ namespace TS_SE_Tool
                 {
                     TypeImgs[indexTypeImgs] = CargoType2Img[1];
                     indexTypeImgs++;
+                }
+
+                if (overveight)
+                {
+                    extheavy = true;
                 }
             }
             catch
@@ -3784,7 +3790,7 @@ namespace TS_SE_Tool
         {
             Button gamebutton = sender as Button;
 
-            if (gamebutton.Name == "buttonGameETS")
+            if (gamebutton.Name == "buttonMainGameSwitchETS")
                 ToggleGame("ETS");
             else
                 ToggleGame("ATS");
@@ -3851,7 +3857,7 @@ namespace TS_SE_Tool
             {
                 PlainTXTResourceManager rm = new PlainTXTResourceManager();
                 ResourceSet set = null;//rm.GetResourceSet(ci, true, true);
-                set = rm.GetResourceSet(ci, true, true);                
+                set = rm.GetResourceSet(ci, true, true);
 
                 List<string> keys = new List<string>();
 
@@ -3867,11 +3873,25 @@ namespace TS_SE_Tool
 
                 this.ResumeLayout();
 
-                LoadCountriesLng(ProgSettingsV.Language);
-                LoadCompaniesLng(ProgSettingsV.Language);
-                LoadCitiesLng(ProgSettingsV.Language);
-                LoadCargoLng(ProgSettingsV.Language);
-                LoadUrgencyLng(ProgSettingsV.Language);
+                for (int i = 0; i < 6; i++)
+                {
+                    string translatedString = rm.GetString("labelProfileSkillName" + i.ToString(), ci);
+
+                    foreach (Control c in groupBoxProfileSkill.Controls)
+                    {
+                        if(c.Name == "profileSkillsPanel" + i.ToString())
+                        {
+                            toolTipMain.SetToolTip(c, translatedString);
+                        }                        
+                    }
+                }
+
+                LngFileLoader("countries_translate.txt", CountriesLngDict, ProgSettingsV.Language);
+                LngFileLoader("cities_translate.txt", CitiesLngDict, ProgSettingsV.Language);
+                LngFileLoader("companies_translate.txt", CompaniesLngDict, ProgSettingsV.Language);
+                LngFileLoader("cargo_translate.txt", CargoLngDict, ProgSettingsV.Language);
+                LngFileLoader("urgency_translate.txt", UrgencyLngDict, ProgSettingsV.Language);
+
                 LoadTruckBrandsLng();
 
                 RefreshComboboxes();

@@ -168,201 +168,14 @@ namespace TS_SE_Tool
                 }
             }
         }
-
-        private void LoadCompaniesLng(string _ci)
-        {
-            CompaniesLngDict.Clear();
-
-            try
-            {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\companies_translate.txt");
-
-                for (int i = 0; i < tempFile.Length; i++)
-                {
-                    string[] tmp = new string[2];
-                    try
-                    {
-                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                    }
-                    catch
-                    { }
-
-                    if (tmp[0] != "")
-                        CompaniesLngDict.Add(tmp[0], tmp[1]);
-                }
-            }
-            catch
-            {
-                LogWriter("companies_translate.txt file is missing");
-            }
-
-            string language = "";
-
-            if (_ci != "Default")
-                language = _ci += "\\";
-
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "companies_translate.txt"))
-                //language = "";
-                return;
-
-            if (CompaniesLngDict.Count() > 0)
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "companies_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if (tmp[0] != null && tmp[0] != "")
-                        {
-                            if (CompaniesLngDict.ContainsKey(tmp[0]))
-                                CompaniesLngDict[tmp[0]] = tmp[1];
-                            else
-                                CompaniesLngDict.Add(tmp[0], tmp[1]);
-                        }
-                    }
-                }
-                catch
-                {
-                    LogWriter("companies_translate.txt file is missing");
-                }
-            }
-            else
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "companies_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if (tmp[0] != null && tmp[0] != "")
-                            CompaniesLngDict.Add(tmp[0], tmp[1]);
-                    }
-                }
-                catch
-                {
-                    LogWriter("companies_translate.txt file is missing");
-                }
-            }
-
-        }
-
-        private void LoadCitiesLng(string _ci)
-        {
-            CitiesLngDict.Clear();
-
-            try
-            {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\cities_translate.txt");
-
-                for (int i = 0; i < tempFile.Length; i++)
-                {
-                    string[] tmp = new string[2];
-                    try
-                    {
-                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                    }
-                    catch
-                    { }
-
-                    if (tmp[0] != "")
-                        CitiesLngDict.Add(tmp[0], tmp[1]);
-                }
-            }
-            catch
-            {
-                LogWriter("cities_translate.txt file is missing");
-            }
-
-            string language = "";
-
-            if (_ci != "Default")
-                language = _ci += "\\";
-
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "cities_translate.txt"))
-                //language = "";
-                return;
-
-            if (CitiesLngDict.Count() > 0)
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "cities_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if (tmp[0] != null && tmp[0] != "")
-                        {
-                            if (CitiesLngDict.ContainsKey(tmp[0]))
-                                CitiesLngDict[tmp[0]] = tmp[1];
-                            else
-                                CitiesLngDict.Add(tmp[0], tmp[1]);
-                        }
-                    }
-                }
-                catch
-                {
-                    LogWriter("cities_translate.txt file is missing");
-                }
-            }
-            else
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "cities_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if (tmp[0] != null && tmp[0] != "")
-                            CitiesLngDict.Add(tmp[0], tmp[1]);
-                    }
-                }
-                catch
-                {
-                    LogWriter("cities_translate.txt file is missing");
-                }
-            }
-        }
         
-        private void LoadCountriesLng(string _ci)
+        private void LngFileLoader(string _sourcefile, Dictionary<string,string> _destDict, string _ci)
         {
-            CountriesLngDict.Clear();
+            _destDict.Clear();
 
             try
             {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\countries_translate.txt");
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + _sourcefile);
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
@@ -375,12 +188,12 @@ namespace TS_SE_Tool
                     { }
 
                     if (tmp[0] != "")
-                        CountriesLngDict.Add(tmp[0], tmp[1]);
+                        _destDict.Add(tmp[0], tmp[1]);
                 }
             }
             catch
             {
-                LogWriter("countries_translate.txt file is missing");
+                LogWriter(_sourcefile + " file is missing");
             }
 
             string language = "";
@@ -388,74 +201,12 @@ namespace TS_SE_Tool
             if (_ci != "Default")
                 language = _ci += "\\";
 
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "countries_translate.txt"))
-                //language = "";
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + _sourcefile))
                 return;
-
-            if (CountriesLngDict.Count() > 0)
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "countries_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if (tmp[0] != null && tmp[0] != "")
-                        {
-                            if (CountriesLngDict.ContainsKey(tmp[0]))
-                                CountriesLngDict[tmp[0]] = tmp[1];
-                            else
-                                CountriesLngDict.Add(tmp[0], tmp[1]);
-                        }
-                    }
-                }
-                catch
-                {
-                    LogWriter("countries_translate.txt file is missing");
-                }
-            }
-            else
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "countries_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if (tmp[0] != null && tmp[0] != "")
-                            CountriesLngDict.Add(tmp[0], tmp[1]);
-                    }
-                }
-                catch
-                {
-                    LogWriter("countries_translate.txt file is missing");
-                }
-            }
-        }
-
-        private void LoadCargoLng(string _ci)
-        {
-            CargoLngDict.Clear();
 
             try
             {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\cargo_translate.txt");
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + _sourcefile);
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
@@ -467,175 +218,18 @@ namespace TS_SE_Tool
                     catch
                     { }
 
-                    if ((tmp[0] != null && tmp[0] != ""))
-                        CargoLngDict.Add(tmp[0], tmp[1]);
+                    if (tmp[0] != null && tmp[0] != "")
+                    {
+                        if (_destDict.ContainsKey(tmp[0]))
+                            _destDict[tmp[0]] = tmp[1];
+                        else
+                            _destDict.Add(tmp[0], tmp[1]);
+                    }
                 }
             }
             catch
             {
-                LogWriter("cargo_translate.txt file is missing");
-            }
-
-            string language = "";
-
-            if (_ci != "Default")
-                language = _ci += "\\";
-
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "cargo_translate.txt"))
-            {
-                //language = "";
-                return;
-            }
-
-            if (CargoLngDict.Count() > 0)
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "cargo_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if (tmp[0] != null && tmp[0] != "")
-                        {
-                            if (CargoLngDict.ContainsKey(tmp[0]))
-                                CargoLngDict[tmp[0]] = tmp[1];
-                            else
-                                CargoLngDict.Add(tmp[0], tmp[1]);
-                        }
-                    }
-                }
-                catch
-                {
-                    LogWriter("cargo_translate.txt file is missing");
-                }
-            }
-            else
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "cargo_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if ((tmp[0] != null && tmp[0] != ""))
-                            CargoLngDict.Add(tmp[0], tmp[1]);
-                    }
-                }
-                catch
-                {
-                    LogWriter("cargo_translate.txt file is missing");
-                }
-            }
-        }
-
-        private void LoadUrgencyLng(string _ci)
-        {
-            UrgencyLngDict.Clear();
-
-            try
-            {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\urgency_translate.txt");
-
-                for (int i = 0; i < tempFile.Length; i++)
-                {
-                    string[] tmp = new string[2];
-                    try
-                    {
-                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                    }
-                    catch
-                    { }
-
-                    if ((tmp[0] != null && tmp[0] != ""))
-                        UrgencyLngDict.Add(tmp[0], tmp[1]);
-                }
-            }
-            catch
-            {
-                LogWriter("urgency_translate.txt file is missing");
-            }
-
-            string language = "";
-
-            if (_ci != "Default")
-                language = _ci += "\\";
-
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "urgency_translate.txt"))
-            {
-                //language = "";
-                return;
-            }
-
-            if (UrgencyLngDict.Count() > 0)
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "urgency_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if (tmp[0] != null && tmp[0] != "")
-                        {
-                            if (UrgencyLngDict.ContainsKey(tmp[0]))
-                                UrgencyLngDict[tmp[0]] = tmp[1];
-                            else
-                                UrgencyLngDict.Add(tmp[0], tmp[1]);
-                        }
-                    }
-                }
-                catch
-                {
-                    LogWriter("urgency_translate.txt file is missing");
-                }
-            }
-            else
-            {
-                try
-                {
-                    string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + "urgency_translate.txt");
-
-                    for (int i = 0; i < tempFile.Length; i++)
-                    {
-                        string[] tmp = new string[2];
-                        try
-                        {
-                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                        }
-                        catch
-                        { }
-
-                        if ((tmp[0] != null && tmp[0] != ""))
-                            UrgencyLngDict.Add(tmp[0], tmp[1]);
-                    }
-                }
-                catch
-                {
-                    LogWriter("urgency_translate.txt file is missing");
-                }
+                LogWriter(_sourcefile + " file is missing");
             }
         }
 

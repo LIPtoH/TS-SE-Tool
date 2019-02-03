@@ -2990,10 +2990,10 @@ namespace TS_SE_Tool
 
                     tempExtCargo.Valuable = bool.Parse(reader["Valuable"].ToString());
 
-                    //tempExtCargo.Overweight = bool.Parse(reader["CargoName"].ToString());
+                    tempExtCargo.Overweight = bool.Parse(reader["Overweight"].ToString());
 
                     //tempExtCargo.BodyTypes.Add(reader["CargoName"].ToString());
-                    
+
                     commandText = "SELECT BodyTypesTable.BodyTypeName FROM [BodyTypesToCargoTable] INNER JOIN [BodyTypesTable] ON BodyTypesTable.ID_bodytype = BodyTypesToCargoTable.BodyTypeID WHERE BodyTypesToCargoTable.CargoID = '" + reader["ID_cargo"].ToString() + "';";
 
                     reader2 = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
