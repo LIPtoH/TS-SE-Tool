@@ -101,6 +101,7 @@ namespace TS_SE_Tool
                 CountriesLngDict = new Dictionary<string, string>();
                 CargoLngDict = new Dictionary<string, string>();
                 UrgencyLngDict = new Dictionary<string, string>();
+                CustomStringsDict = new Dictionary<string, string>();
                 TruckBrandsLngDict = new Dictionary<string, string>();
 
                 Globals.CurrentGame = dictionaryProfiles["ETS2"];
@@ -3891,6 +3892,7 @@ namespace TS_SE_Tool
                 LngFileLoader("companies_translate.txt", CompaniesLngDict, ProgSettingsV.Language);
                 LngFileLoader("cargo_translate.txt", CargoLngDict, ProgSettingsV.Language);
                 LngFileLoader("urgency_translate.txt", UrgencyLngDict, ProgSettingsV.Language);
+                LngFileLoader("custom_strings.txt", CustomStringsDict, ProgSettingsV.Language);
 
                 LoadTruckBrandsLng();
 

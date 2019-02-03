@@ -42,19 +42,38 @@ namespace TS_SE_Tool
         public bool IgnoreStatus { get; set; } = true;
 
         public override string ToString() {
-            string output = "";
-            string status = "";
+            string output = "", status = "", statusStr = "";
 
-            //FormMain
+            //FormMain.CustomStringsDict.TryGetValue(GarageName, out status);
 
             if (GarageStatus == 0)
-                status = "Not owned";
-            else if(GarageStatus == 2)
-                status = "Small";
+            {
+                statusStr = "Not owned";
+                FormMain.CustomStringsDict.TryGetValue(statusStr, out status);
+            }
+            else if (GarageStatus == 2)
+            {
+                statusStr = "Small";
+                FormMain.CustomStringsDict.TryGetValue(statusStr, out status);
+            }
             else if (GarageStatus == 3)
-                status = "Large";
+            {
+                statusStr = "Large";
+                FormMain.CustomStringsDict.TryGetValue(statusStr, out status);
+            }
             else if (GarageStatus == 6)
-                status = "Tiny";
+            {
+                statusStr = "Tiny";
+                FormMain.CustomStringsDict.TryGetValue(statusStr, out status);
+            }
+
+            string trueStatus = "";
+            if (status != null && status != "")
+                trueStatus = status;
+            else
+            {
+                trueStatus = statusStr;
+            }
 
             string trueGarageName = "";
 

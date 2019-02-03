@@ -121,7 +121,8 @@ namespace TS_SE_Tool
 
         private Dictionary<string, string> dictionaryProfiles;
         private Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict, CountriesLngDict, UrgencyLngDict;
-        public static Dictionary<string, string> CitiesLngDict;
+        
+        public static Dictionary<string, string> CitiesLngDict, CustomStringsDict;
         private Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
         private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary;
 
