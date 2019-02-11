@@ -258,21 +258,6 @@ namespace TS_SE_Tool
                         }
 
                         //GPS
-                        /*
-                        if (tempSavefileInMemory[line].StartsWith(" stored_nav_start_pos:"))
-                        {
-                            //string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            //PlayerProfileData.PlayerSkills[5] = byte.Parse(LineArray[2]);
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" stored_nav_start_pos:"))
-                        {
-                            //string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            //PlayerProfileData.PlayerSkills[5] = byte.Parse(LineArray[2]);
-                            continue;
-                        }
-                        */
                         //Online
                         if (tempSavefileInMemory[line].StartsWith(" stored_online_gps_behind_waypoints:"))
                         {
@@ -409,7 +394,6 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" trailers["))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            //UserTruckList.Add(chunkOfline[2], new UserCompanyTruck());
 
                             UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
                             continue;
@@ -495,21 +479,13 @@ namespace TS_SE_Tool
                                 {
                                     accessoriescount = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
 
-                                    //accessoriespool = new string[accessoriescount];
                                     line++;
-                                    /*
-                                    for (int i = 0; i < accessoriescount; i++)
-                                    {
-                                        accessoriespool[i] = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-                                        line++;
-                                    }
-                                    */
                                 }
 
                                 line++;
                             }
 
-                            while (accessoriescount > 0)//(accessoriespool.Length > 0)
+                            while (accessoriescount > 0)
                             {
                                 if (tempSavefileInMemory[line].StartsWith("vehicle_"))
                                 {
@@ -568,8 +544,6 @@ namespace TS_SE_Tool
                                     UserTruckDictionary[vehiclenameless].Parts.Last().PartData = tempPartData;
                                     accessoriescount--;
                                 }
-
-                                //accessoriespool = accessoriespool.Where(val => val != accessorynameless).ToArray();
                                 line++;
                             }
                         }
@@ -639,10 +613,10 @@ namespace TS_SE_Tool
                                     accessoriescount[slavetrailerscount]  = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
                                     //accessoriespool = new string[accessoriescount];
                                     line++;
-                                    /*
-                                    for (int i = 0; i < accessoriescount; i++)
+                                    
+                                    for (int i = 0; i < accessoriescount.Length; i++)
                                     {
-                                        accessoriespool[i] = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                                        accessoriescount[i] = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
                                         line++;
                                     }
                                     /////
@@ -1514,13 +1488,15 @@ namespace TS_SE_Tool
 
                 int CargoType = -1;
 
+                CargoType = int.Parse(comboBoxFreightMarketCargoList.SelectedValue.ToString().Split(new char[] { ',' })[1]);
+                /*
                 if (comboBoxFreightMarketCargoList.Text.Contains("[H]"))
                     CargoType = 1;
                 else if (comboBoxFreightMarketCargoList.Text.Contains("[D]"))
                     CargoType = 2;
                 else
                     CargoType = 0;
-
+                */
                 List<CompanyTruck> CompanyTruckType = CompanyTruckListDB.Where(x => x.Type == CargoType).ToList();
                 TruckName = CompanyTruckType[RandomValue.Next(CompanyTruckType.Count())].TruckName;
 
@@ -2420,18 +2396,7 @@ namespace TS_SE_Tool
                     case "CargoesTable":
                         {
                             CargoesListDB.Clear(); //Clears existing list
-                            /*
-                            sql += "CREATE TABLE CargoesTable (ID_cargo INT IDENTITY(1,1) PRIMARY KEY, CargoName NVARCHAR(32) NOT NULL, CargoType INT NOT NULL, GameTypeID INT NOT NULL);";
-                            sql += "ALTER TABLE CargoesTable ADD FOREIGN KEY(GameTypeID) REFERENCES GameTypesTable(ID_gameType);";
                             
-                            sql += "CREATE TABLE TrailerDefinitionTable (ID_trailerD INT IDENTITY(1,1) PRIMARY KEY, TrailerDefinitionName NVARCHAR(32) NOT NULL, CargoID INT NOT NULL);";
-                            sql += "ALTER TABLE CargoesTable ADD FOREIGN KEY(CargoID) REFERENCES CargoesTable(ID_cargo);";
-
-                            sql += "CREATE TABLE TrailerVariantTable (ID_trailerV INT IDENTITY(1,1) PRIMARY KEY, TrailerVariantName NVARCHAR(32) NOT NULL, CargoUnitsCount INT NOT NULL, TrailerDefinitionID INT NOT NULL);";
-                            sql += "ALTER TABLE CargoesTable ADD FOREIGN KEY(TrailerDefinitionID) REFERENCES TrailerDefinitionTable(ID_trailerD);";
-
-                            */
-                            //string commandText = "SELECT CargoName, CargoType, CargoVariants FROM [CargoesTable] INNER JOIN GameTypesTable ON CargoesTable.GameTypeID = GameTypesTable.ID_gameType WHERE GameTypeName = '" + _gametype + "';";
                             string commandText = "SELECT ID_cargo, CargoName, CargoType FROM [CargoesTable] INNER JOIN GameTypesTable ON CargoesTable.GameTypeID = GameTypesTable.ID_gameType WHERE GameTypeName = '" + _gametype + "';";
                             //DBconnection.Open();
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
@@ -2440,7 +2405,6 @@ namespace TS_SE_Tool
 
                             while (reader.Read())
                             {
-                                //CargoesListDB.Add(new Cargo(reader["CargoName"].ToString(), reader["CargoType"].ToString(), reader["CargoVariants"].ToString()));
                                 commandText = "SELECT ID_trailerD, TrailerDefinitionName FROM [TrailerDefinitionTable] INNER JOIN CargoesTable ON CargoesTable.ID_cargo = TrailerDefinitionTable.CargoID WHERE CargoID = '" + reader["ID_cargo"].ToString() + "';";
                                 SqlCeDataReader reader2 = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
@@ -2462,7 +2426,6 @@ namespace TS_SE_Tool
 
                                 CargoesListDB.Add(new Cargo(reader["CargoName"].ToString(), int.Parse(reader["CargoType"].ToString()), tempVarDef));//reader["CargoType"].ToString(), reader["CargoType"].ToString()));
                             }
-                            //DBconnection.Close();
 
                             totalrecord = CargoesListDB.Count();
 
@@ -2548,7 +2511,6 @@ namespace TS_SE_Tool
             int index = _dbname.LastIndexOf("\\");
             string first = _dbname.Substring(0, index);
             string second = _dbname.Substring(index + 1);
-            //string fileName = Directory.GetCurrentDirectory() + @"\gameref\ETS\cache\" + _dbname + ".sdf";
 
             if (!Directory.Exists(first))
             {
@@ -2560,14 +2522,11 @@ namespace TS_SE_Tool
                 File.Delete(fileName);
             }
 
-            //ShowStatusMessages("e", "message_database_missing_creating_db");
-
             connectionString = string.Format("DataSource ='{0}';", fileName);
 
             SqlCeEngine Engine = new SqlCeEngine(connectionString);
             Engine.CreateDatabase();
 
-            //ShowStatusMessages("i", "message_database_created");
             ExtDataCreateDatabaseStructure(fileName);
         }
 
@@ -2580,9 +2539,7 @@ namespace TS_SE_Tool
             {
                 tDBconnection.Open();
             }
-
-            //ShowStatusMessages("e", "message_database_missing_creating_db_structure");
-
+            
             SqlCeCommand cmd;
 
             string sql = "";
@@ -2606,26 +2563,7 @@ namespace TS_SE_Tool
             sql += "CREATE TABLE CompaniesCargoesOutTable (ID_CargoOut INT IDENTITY(1,1) PRIMARY KEY, CompanyID INT NOT NULL, CargoID INT NOT NULL);";
             sql += "ALTER TABLE CompaniesCargoesOutTable ADD FOREIGN KEY(CompanyID) REFERENCES CompaniesTable(ID_company) ON DELETE CASCADE;";
             sql += "ALTER TABLE CompaniesCargoesOutTable ADD FOREIGN KEY(CargoID) REFERENCES AllCargoesTable(ID_cargo) ON DELETE CASCADE;";
-            /*
-            sql += "CREATE TABLE CitysTable (ID_city INT IDENTITY(1,1) PRIMARY KEY, CityName NVARCHAR(32) NOT NULL);";            
 
-            sql += "CREATE TABLE CompaniesToCitysTable (ID_CmpnToCt INT IDENTITY(1,1) PRIMARY KEY, CityID INT NOT NULL, CompanyID INT NOT NULL);";
-            sql += "ALTER TABLE CompaniesToCitysTable ADD FOREIGN KEY(CityID) REFERENCES CitysTable(ID_city) ON DELETE CASCADE;";
-            sql += "ALTER TABLE CompaniesToCitysTable ADD FOREIGN KEY(CompanyID) REFERENCES CompaniesTable(ID_company) ON DELETE CASCADE;";
-                        
-            sql += "CREATE TABLE DistancesTable (ID_Distance INT IDENTITY(1,1) PRIMARY KEY, SourceCityID INT NOT NULL, SourceCompanyID INT NOT NULL, " +
-                "DestinationCityID INT NOT NULL, DestinationCompanyID INT NOT NULL, Distance INT NOT NULL, FerryTime INT NOT NULL, FerryPrice INT NOT NULL);";
-            sql += "ALTER TABLE DistancesTable ADD FOREIGN KEY(SourceCityID) REFERENCES CitysTable(ID_city);";
-            sql += "ALTER TABLE DistancesTable ADD FOREIGN KEY(SourceCompanyID) REFERENCES CompaniesTable(ID_company);";
-            sql += "ALTER TABLE DistancesTable ADD FOREIGN KEY(DestinationCityID) REFERENCES CitysTable(ID_city);";
-            sql += "ALTER TABLE DistancesTable ADD FOREIGN KEY(DestinationCompanyID) REFERENCES CompaniesTable(ID_company);";
-
-            sql += "CREATE TABLE tempBulkDistancesTable (ID_Distance INT IDENTITY(1,1) PRIMARY KEY, SourceCity NVARCHAR(32) NOT NULL, SourceCompany NVARCHAR(32) NOT NULL, " +
-                "DestinationCity NVARCHAR(32) NOT NULL, DestinationCompany NVARCHAR(32) NOT NULL, Distance INT NOT NULL, FerryTime INT NOT NULL, FerryPrice INT NOT NULL);";
-
-            sql += "CREATE TABLE tempDistancesTable (ID_Distance INT IDENTITY(1,1) PRIMARY KEY, SourceCityID INT NOT NULL, SourceCompanyID INT NOT NULL, " +
-                "DestinationCityID INT NOT NULL, DestinationCompanyID INT NOT NULL, Distance INT NOT NULL, FerryTime INT NOT NULL, FerryPrice INT NOT NULL);";
-            */
             string[] linesArray = sql.Split(';');
 
             foreach (string sqlline in linesArray)
@@ -2822,7 +2760,7 @@ namespace TS_SE_Tool
                             {
                                 MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
-                        }                       
+                        }
 
                         foreach (ExtCompany tempCompany in extCompanylist)
                         {
@@ -2869,7 +2807,7 @@ namespace TS_SE_Tool
                                     {
                                         CargoID = int.Parse(readerCargo["ID_cargo"].ToString());
                                     }
-                                    if(CargoID != -1)
+                                    if (CargoID != -1)
                                     {
                                         updatecommandText = "INSERT INTO [CompaniesCargoesInTable] (CompanyID, CargoID) " +
                                                             "VALUES(" +
@@ -2962,10 +2900,6 @@ namespace TS_SE_Tool
                     tDBconnection.Open();
                 }
 
-                //int totalrecord = 0;
-
-                //ExtCargoList.Clear(); //Clears existing list
-
                 string commandText = "SELECT ID_cargo, CargoName, ADRclass, Fragility, Mass, UnitRewardpPerKM, Valuable, Overweight FROM [CargoesTable]";
 
                 reader = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
@@ -2992,8 +2926,6 @@ namespace TS_SE_Tool
 
                     tempExtCargo.Overweight = bool.Parse(reader["Overweight"].ToString());
 
-                    //tempExtCargo.BodyTypes.Add(reader["CargoName"].ToString());
-
                     commandText = "SELECT BodyTypesTable.BodyTypeName FROM [BodyTypesToCargoTable] INNER JOIN [BodyTypesTable] ON BodyTypesTable.ID_bodytype = BodyTypesToCargoTable.BodyTypeID WHERE BodyTypesToCargoTable.CargoID = '" + reader["ID_cargo"].ToString() + "';";
 
                     reader2 = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
@@ -3005,8 +2937,6 @@ namespace TS_SE_Tool
 
                     ExtCargoList.Add(tempExtCargo);
                 }
-
-                //totalrecord = ExtCargoList.Count();
 
                 commandText = "SELECT ID_company, CompanyName FROM [CompaniesTable]";
 
@@ -3033,8 +2963,6 @@ namespace TS_SE_Tool
                     }
                     else
                     {
-                        //ExtCompany tempExtCompany = ExternalCompanies.Find(x => x.CompanyName == reader["CompanyName"].ToString());
-
                         commandText = "SELECT AllCargoesTable.CargoName FROM [CompaniesCargoesOutTable] INNER JOIN [AllCargoesTable] ON AllCargoesTable.ID_cargo = CompaniesCargoesOutTable.CargoID WHERE CompaniesCargoesOutTable.CompanyID = '" + reader["ID_company"].ToString() + "';";
 
                         reader2 = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();

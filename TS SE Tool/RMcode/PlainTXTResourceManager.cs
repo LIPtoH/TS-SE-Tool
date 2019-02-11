@@ -24,7 +24,7 @@ using System.Globalization;
 
 namespace TS_SE_Tool
 {
-    class PlainTXTResourceManager : ResourceManager
+    public class PlainTXTResourceManager : ResourceManager
     {
         //private string dsn;
         Hashtable MyResourceSets;

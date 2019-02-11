@@ -74,6 +74,7 @@ namespace TS_SE_Tool
         {
             if (_initial)
             {
+                ResourceManagerMain = new PlainTXTResourceManager();
                 ProgSettingsV = new ProgSettings(0.1, "Default", false, 72, 0, 1.0, "km");
 
                 ProgSettingsV.ProgramVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductMajorPart +
@@ -3856,27 +3857,28 @@ namespace TS_SE_Tool
 
             try
             {
-                PlainTXTResourceManager rm = new PlainTXTResourceManager();
+                
+                /*
                 ResourceSet set = null;//rm.GetResourceSet(ci, true, true);
                 set = rm.GetResourceSet(ci, true, true);
-
+                
                 List<string> keys = new List<string>();
 
                 foreach (DictionaryEntry o in set)
                 {
                     keys.Add((string)o.Key);
                 }
-
+                */
                 this.SuspendLayout();
 
-                HelpTranslateFormMethod(this, rm, ci);
-                HelpTranslateMenuStripMethod(menuStripMain, rm, ci);
+                HelpTranslateFormMethod(this, ResourceManagerMain, ci);
+                HelpTranslateMenuStripMethod(menuStripMain, ResourceManagerMain, ci);
 
                 this.ResumeLayout();
 
                 for (int i = 0; i < 6; i++)
                 {
-                    string translatedString = rm.GetString("labelProfileSkillName" + i.ToString(), ci);
+                    string translatedString = ResourceManagerMain.GetString("labelProfileSkillName" + i.ToString(), ci);
 
                     foreach (Control c in groupBoxProfileSkill.Controls)
                     {

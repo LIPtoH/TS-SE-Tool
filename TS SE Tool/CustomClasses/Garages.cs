@@ -18,11 +18,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace TS_SE_Tool
 {
     class Garages
     {
+        FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+
         public Garages(string _GarageName, int _GarageStatus)
         {
             GarageName = _GarageName;
@@ -44,27 +48,25 @@ namespace TS_SE_Tool
         public override string ToString() {
             string output = "", status = "", statusStr = "";
 
-            //FormMain.CustomStringsDict.TryGetValue(GarageName, out status);
-
             if (GarageStatus == 0)
             {
                 statusStr = "Not owned";
-                FormMain.CustomStringsDict.TryGetValue(statusStr, out status);
+                status = MainForm.ResourceManagerMain.GetString(statusStr, Thread.CurrentThread.CurrentUICulture);
             }
             else if (GarageStatus == 2)
             {
                 statusStr = "Small";
-                FormMain.CustomStringsDict.TryGetValue(statusStr, out status);
+                status = MainForm.ResourceManagerMain.GetString(statusStr, Thread.CurrentThread.CurrentUICulture);
             }
             else if (GarageStatus == 3)
             {
                 statusStr = "Large";
-                FormMain.CustomStringsDict.TryGetValue(statusStr, out status);
+                status = MainForm.ResourceManagerMain.GetString(statusStr, Thread.CurrentThread.CurrentUICulture);
             }
             else if (GarageStatus == 6)
             {
                 statusStr = "Tiny";
-                FormMain.CustomStringsDict.TryGetValue(statusStr, out status);
+                status = MainForm.ResourceManagerMain.GetString(statusStr, Thread.CurrentThread.CurrentUICulture);
             }
 
             string trueStatus = "";
@@ -86,7 +88,7 @@ namespace TS_SE_Tool
                 trueGarageName = GarageName;
             }
 
-            output = trueGarageName + "\n" + status;
+            output = trueGarageName + "\n" + trueStatus;
 
             return output;
         }

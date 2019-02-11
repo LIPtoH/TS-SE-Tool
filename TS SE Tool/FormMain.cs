@@ -119,6 +119,8 @@ namespace TS_SE_Tool
 
         private Routes RouteList;
 
+        public PlainTXTResourceManager ResourceManagerMain;
+
         private Dictionary<string, string> dictionaryProfiles;
         private Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict, CountriesLngDict, UrgencyLngDict;
         

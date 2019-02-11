@@ -24,6 +24,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using TS_SE_Tool.CustomClasses;
+using System.Globalization;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
@@ -36,17 +38,47 @@ namespace TS_SE_Tool
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
 
+            this.SuspendLayout();
+
+            try
+            {
+                string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
+                if (translatedString != null)
+                    this.Text = translatedString;
+            }
+            catch
+            {
+            }
+
+            HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
+
+            CorrectControlsPositions();
+            this.ResumeLayout();
+
             DataTable combDT = new DataTable();
             combDT.Columns.Add("ID");
             combDT.Columns.Add("DistDisplayName");
 
-            combDT.Rows.Add(new object[] { "km", "Kilometers" });
-            combDT.Rows.Add(new object[] { "mi", "Miles" });
+            Dictionary<string,string> DistanceMesNames =new Dictionary<string, string> { { "km", "Kilometers" }, { "mi", "Miles" } };
+
+            foreach (KeyValuePair<string,string> tempitem in DistanceMesNames)
+            {
+                string value = MainForm.ResourceManagerMain.GetString(tempitem.Value, Thread.CurrentThread.CurrentUICulture);
+
+                if (value != null && value != "")
+                {
+                    combDT.Rows.Add(tempitem.Key, value);
+                }
+                else
+                {
+                    combDT.Rows.Add(tempitem.Key, tempitem.Value);
+                }
+            }
 
             comboBoxSettingDistanceMesSelect.ValueMember = "ID";
             comboBoxSettingDistanceMesSelect.DisplayMember = "DistDisplayName";
             comboBoxSettingDistanceMesSelect.DataSource = combDT;
-            comboBoxSettingDistanceMesSelect.SelectedValue = MainForm.ProgSettingsV.DistanceMes; // - 1;
+            comboBoxSettingDistanceMesSelect.SelectedValue = MainForm.ProgSettingsV.DistanceMes;
 
             numericUpDownSettingPickTimeD.Value = Math.Floor((decimal)(MainForm.ProgSettingsV.JobPickupTime / 24));
             numericUpDownSettingPickTimeH.Value = MainForm.ProgSettingsV.JobPickupTime - numericUpDownSettingPickTimeD.Value * 24;
@@ -115,6 +147,55 @@ namespace TS_SE_Tool
         private void numericUpDownSettingLoopCitys_ValueChanged(object sender, EventArgs e)
         {
             MainForm.ProgSettingsV.LoopEvery = Convert.ToByte(numericUpDownSettingLoopCitys.Value);
+        }
+
+        private void HelpTranslateFormMethod(Control parent, PlainTXTResourceManager _rm, CultureInfo _ci)
+        {
+            foreach (Control c in parent.Controls)
+            {
+                try
+                {
+                    string translatedString = _rm.GetString(c.Name, _ci);
+                    if (translatedString != null)
+                        c.Text = translatedString;
+                }
+                catch
+                {
+                }
+                HelpTranslateFormMethod(c, _rm, _ci);
+            }
+        }
+
+        private void CorrectControlsPositions()
+        {
+            //Longest setting string
+            Control[] labellist = { labelJobPickupTime, labelLoopEvery, labelDistance, labelCurrency };
+            int longeststr = 0, margin = 6;
+
+            foreach (Control c in labellist)
+            {
+                Label temp = c as Label;
+                if (c.Width > longeststr)
+                    longeststr = c.Width;
+            }
+
+            Control[][] Controllist = new Control[4][];
+            Controllist[0] = new Control[] { numericUpDownSettingPickTimeD, labelDayShort, numericUpDownSettingPickTimeH, labelHourShort };
+            Controllist[1] = new Control[] { numericUpDownSettingLoopCitys, labelCity };
+            Controllist[2] = new Control[] { comboBoxSettingDistanceMesSelect };
+            Controllist[3] = new Control[] { comboBoxSettingCurrencySelect };
+
+            foreach (Control[] cc in Controllist)
+            {
+                int margincount = 2, startX = longeststr;
+                
+                foreach (Control c in cc)
+                {
+                    c.Location = new Point(startX + margin * margincount, c.Location.Y);
+                    startX += c.Width;
+                    margincount++;
+                }
+            }
         }
     }
 }
