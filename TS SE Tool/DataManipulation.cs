@@ -267,7 +267,7 @@ namespace TS_SE_Tool
                             for (int i = 0; i < gpscount; i++)
                             {
                                 line++;
-                                GPSbehindOnline.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2], new List<string>());
+                                GPSbehindOnline.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
                             }
                             continue;
                         }
@@ -279,7 +279,7 @@ namespace TS_SE_Tool
                             for (int i = 0; i < gpscount; i++)
                             {
                                 line++;
-                                GPSaheadOnline.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2], new List<string>());
+                                GPSaheadOnline.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
                             }
                             continue;
                         }
@@ -293,7 +293,7 @@ namespace TS_SE_Tool
                             for (int i = 0; i < gpscount; i++)
                             {
                                 line++;
-                                GPSbehind.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2], new List<string>());
+                                GPSbehind.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
                             }
                             continue;
                         }
@@ -305,7 +305,7 @@ namespace TS_SE_Tool
                             for (int i = 0; i < gpscount; i++)
                             {
                                 line++;
-                                GPSahead.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2], new List<string>());
+                                GPSahead.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
                             }
                             continue;
                         }
@@ -398,11 +398,19 @@ namespace TS_SE_Tool
                             UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
                             continue;
                         }
+
+                        if (tempSavefileInMemory[line].StartsWith(" trailer_defs["))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+
+                            UserTrailerDefDictionary.Add(chunkOfline[2], new List<string>());
+                            continue;
+                        }
                     }
                     //Populate GPS
                     if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage"))
                     {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' },2)[1];
 
                         if (GPSbehind.ContainsKey(nameless))
                         {
@@ -551,25 +559,29 @@ namespace TS_SE_Tool
                     }
 
                     //find vehicles Trailer
-                    /*
+                    int[] traileraccessoriescount = new int[1];
+                    string[] trailernamelessArray = new string[1];
+                    int slavetrailerscount = 0;
+
                     TrailerSearchStart:
                     if (tempSavefileInMemory[line].StartsWith("trailer :"))
                     {
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
                         string vehiclenameless = chunkOfline[2];
 
-                        if (UserTrailerDictionary.ContainsKey(vehiclenameless))//UserTruckList.ContainsKey(vehiclenameless))
+                        if (UserTrailerDictionary.ContainsKey(vehiclenameless))
                         {
                             UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("trailerdata"));
                             line++;
 
-                            int[] accessoriescount = new int[1];
-                            string[] trailernamelessArray = new string[1];
-                            int slavetrailerscount = 0;
-                            //string[] accessoriespool = null;
-
                             while (!tempSavefileInMemory[line].StartsWith("}"))
                             {
+                                if (tempSavefileInMemory[line].StartsWith(" trailer_definition:"))
+                                {
+                                    string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                                    UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("trailerdef", nameless));
+                                }
+                                else
                                 if (tempSavefileInMemory[line].StartsWith(" cargo_mass:"))
                                 {
                                     UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(tempSavefileInMemory[line]);
@@ -587,22 +599,26 @@ namespace TS_SE_Tool
                                 else
                                 if (tempSavefileInMemory[line].StartsWith(" slave_trailer:"))
                                 {
-                                    //UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(tempSavefileInMemory[line]);
                                     if (tempSavefileInMemory[line].Contains("_nameless"))
                                     {
                                         slavetrailerscount++;
-                                        Array.Resize(ref accessoriescount, slavetrailerscount);
+                                        Array.Resize(ref traileraccessoriescount, slavetrailerscount);
                                         Array.Resize(ref trailernamelessArray, slavetrailerscount);
 
-                                        UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("slavetrailer"));
-                                        UserTrailerDictionary[vehiclenameless].Parts.Last().PartNameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                                        string trailernameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                                        trailernamelessArray[slavetrailerscount - 1] = vehiclenameless;
+
+                                        UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("slavetrailer", trailernameless));
+
+                                        UserTrailerDictionary.Add(trailernameless, new UserCompanyTruckData());
+                                        UserTrailerDictionary.Last().Value.Main = false;
                                     }
                                     else
                                     {
                                         slavetrailerscount++;
-                                        Array.Resize(ref accessoriescount, slavetrailerscount);
+                                        Array.Resize(ref traileraccessoriescount, slavetrailerscount);
                                         Array.Resize(ref trailernamelessArray, slavetrailerscount);
-
 
                                         trailernamelessArray[slavetrailerscount - 1] = vehiclenameless;
                                     }
@@ -610,17 +626,10 @@ namespace TS_SE_Tool
                                 else
                                 if (tempSavefileInMemory[line].StartsWith(" accessories:"))
                                 {
-                                    accessoriescount[slavetrailerscount]  = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
-                                    //accessoriespool = new string[accessoriescount];
+                                    traileraccessoriescount[slavetrailerscount - 1] = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
                                     line++;
-                                    
-                                    for (int i = 0; i < accessoriescount.Length; i++)
-                                    {
-                                        accessoriescount[i] = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
-                                        line++;
-                                    }
-                                    /////
                                 }
+
                                 line++;
                             }
 
@@ -634,9 +643,10 @@ namespace TS_SE_Tool
                             }
                             else
                             {
-                                int trailerindex = accessoriescount.Length - 1;
+                                int trailerindex = traileraccessoriescount.Length - 1;
 
-                                while (accessoriescount[trailerindex] > 0)//(accessoriespool.Length > 0)
+                                TrailerAccSearchStart:
+                                while (traileraccessoriescount[trailerindex] > 0)
                                 {
                                     if (tempSavefileInMemory[line].StartsWith("vehicle_"))
                                     {
@@ -686,19 +696,37 @@ namespace TS_SE_Tool
 
                                         UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Last().PartNameless = accessorynameless;
                                         UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Last().PartData = tempPartData;
-                                        accessoriescount[0]--;
+                                        traileraccessoriescount[trailerindex]--;
                                     }
 
-                                    //accessoriespool = accessoriespool.Where(val => val != accessorynameless).ToArray();
                                     line++;
-                                    if (trailerindex != 0)
-                                        trailerindex--;
+                                }
+
+                                if (trailerindex != 0)
+                                {
+                                    trailerindex--;
+                                    goto TrailerAccSearchStart;
                                 }
                             }
                         }
                         continue;
                     }
-                    */
+
+                    if (tempSavefileInMemory[line].StartsWith("trailer_def :"))
+                    {
+                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                        string nameless = chunkOfline[2];
+
+                        line++;
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                        {
+                            UserTrailerDefDictionary[nameless].Add(tempSavefileInMemory[line]);
+                            line++;
+                        }
+
+                        continue;
+                    }
 
                     //find existing jobs
                     if (tempSavefileInMemory[line].StartsWith("company : company.volatile."))
@@ -1489,49 +1517,27 @@ namespace TS_SE_Tool
                 int CargoType = -1;
 
                 CargoType = int.Parse(comboBoxFreightMarketCargoList.SelectedValue.ToString().Split(new char[] { ',' })[1]);
-                /*
-                if (comboBoxFreightMarketCargoList.Text.Contains("[H]"))
-                    CargoType = 1;
-                else if (comboBoxFreightMarketCargoList.Text.Contains("[D]"))
-                    CargoType = 2;
-                else
-                    CargoType = 0;
-                */
+
                 List<CompanyTruck> CompanyTruckType = CompanyTruckListDB.Where(x => x.Type == CargoType).ToList();
                 TruckName = CompanyTruckType[RandomValue.Next(CompanyTruckType.Count())].TruckName;
-
-                //int variant = 0;
 
                 int TrueDistance = (int)(int.Parse(distance) * ProgSettingsV.TimeMultiplier);
 
                 Cargo cargo = CargoesList.Find(x => x.CargoName == Cargo && x.CargoType == CargoType);
 
-                /*
-                int randvar = 0;
-                do
-                {
-                    randvar = RandomValue.Next(5);
-                    if (cargo.CargoVariant[randvar])
-                    {
-                        variant = randvar;
-                        break;
-                    }
-                }
-                while (true);
-                */
                 KeyValuePair<string, int> TrailerVariant = new KeyValuePair<string, int>();
                 string TrailerDefinition = "";
                 //string UnitsCount = "";
 
                 int randvar = 0;
-                randvar = RandomValue.Next(cargo.CargoVarDef.Count());
 
+                randvar = RandomValue.Next(cargo.CargoVarDef.Count());
                 KeyValuePair<string, Dictionary<string, int>> tempDefVar = cargo.CargoVarDef.ElementAt(randvar);
-                //List<string> tempDefVar = RandomValues(cargo.CargoVarDef).Take(1) as List<string>;
 
                 TrailerDefinition = tempDefVar.Key;
+
                 randvar = RandomValue.Next(tempDefVar.Value.Count());
-                TrailerVariant = tempDefVar.Value.ElementAt(randvar);//.Value[randvar];
+                TrailerVariant = tempDefVar.Value.ElementAt(randvar);
 
                 string Urgency = comboBoxFreightMarketUrgency.SelectedValue.ToString();
 

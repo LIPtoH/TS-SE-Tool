@@ -210,6 +210,7 @@ namespace TS_SE_Tool
             GaragesList = new List<Garages>();
             UserTruckDictionary = new Dictionary<string, UserCompanyTruckData>();
             UserTrailerDictionary = new Dictionary<string, UserCompanyTruckData>();
+            UserTrailerDefDictionary = new Dictionary<string, List<string>>();
 
             VisitedCities = new List<VisitedCity>();
 
@@ -325,7 +326,13 @@ namespace TS_SE_Tool
 
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             string SiiSavePath = SavefilePath + @"\game.sii";
-            DecodeFile(SiiSavePath);
+
+            string[] file = DecodeFile(SiiSavePath);
+
+            if(file != null)
+                ShowStatusMessages("i", "");
+            else
+                ShowStatusMessages("e", "error_could_not_decode_file");
 
             buttonMainDecryptSave.Enabled = false;
             buttonMainLoadSave.Enabled = true;
@@ -441,6 +448,14 @@ namespace TS_SE_Tool
                         {
                             //comboBoxPrevProfiles.Items.Add(Path.GetFileName(folder));
                             combDT.Rows.Add(index, "[L] " + Path.GetFileName(folder));
+
+                            tempList.Add(folder);
+                            index++;
+                        }
+                        if (Path.GetFileName(folder).StartsWith("steam_profiles")) //Documents
+                        {
+                            //comboBoxPrevProfiles.Items.Add(Path.GetFileName(folder));
+                            combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
 
                             tempList.Add(folder);
                             index++;
@@ -1654,11 +1669,11 @@ namespace TS_SE_Tool
 
         public void buttonTrailerRepair_Click(object sender, EventArgs e)
         {
-            string[] PartList = { "cargo", "body", "chassis", "tire" };
+            string[] PartList = { "trailerdata", "body", "chassis", "tire" };
 
             foreach (string tempPart in PartList)
             {
-                foreach (UserCompanyTruckDataPart temp in UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.FindAll(x => x.PartType == tempPart))
+                foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.FindAll(x => x.PartType == tempPart))
                 {
                     string partNameless = temp.PartNameless;
 
@@ -1668,7 +1683,13 @@ namespace TS_SE_Tool
                     {
                         if (temp2.StartsWith(" wear:"))
                         {
-                            UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
+                            UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
+                            break;
+                        }
+                        else
+                        if (temp2.StartsWith(" cargo_damage:"))
+                        {
+                            UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
                             break;
                         }
                         i++;
@@ -1682,9 +1703,9 @@ namespace TS_SE_Tool
         public void buttonTrailerElRepair_Click(object sender, EventArgs e)
         {
             Button curbtn = sender as Button;
-            int bi = Convert.ToByte(curbtn.Name.Substring(19));
+            int bi = Convert.ToByte(curbtn.Name.Substring(21));
 
-            string[] PartList = { "cargo", "body", "chassis", "tire" };
+            string[] PartList = { "trailerdata", "body", "chassis", "tire" };
 
             foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.FindAll(x => x.PartType == PartList[bi]))
             {
@@ -1699,6 +1720,12 @@ namespace TS_SE_Tool
                         UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
                         break;
                     }
+                    else
+                    if (temp2.StartsWith(" cargo_damage:"))
+                    {
+                        UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
+                        break;
+                    }
                     i++;
                 }
             }
@@ -1710,7 +1737,7 @@ namespace TS_SE_Tool
         {
             UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTrailer);
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Panel pnl = null;
                 string pnlname = "progressbarTrailerPart" + i.ToString();
@@ -1726,7 +1753,7 @@ namespace TS_SE_Tool
                     switch (i)
                     {
                         case 0:
-                            TruckDataPart = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "cargo").PartData;
+                            TruckDataPart = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "trailerdata").PartData;
                             break;
                         case 1:
                             TruckDataPart = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "body").PartData;
@@ -1739,7 +1766,7 @@ namespace TS_SE_Tool
                             break;
                     }
 
-                    string wear = TruckDataPart.Find(xl => xl.StartsWith(" wear:")).Split(new char[] { ' ' })[2];//TruckPart.PartWear;
+                    string wear = TruckDataPart.Find(xl => xl.StartsWith(" wear:") || xl.StartsWith(" cargo_damage:")).Split(new char[] { ' ' })[2];//TruckPart.PartWear;
                     decimal _wear = 0;
 
                     if (wear != "0" && wear != "1")
@@ -1779,10 +1806,10 @@ namespace TS_SE_Tool
             }
 
             string lctxt = "";
-            labelUserTrailerLicensePlate.Text = "";
+            labelLicensePlateTr.Text = "";
             int stindex = 0, endindex = 0;
 
-            string LicensePlate = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "truckdata").PartData.Find(xl => xl.StartsWith(" license_plate:")).Split(new char[] { '"' })[1];
+            string LicensePlate = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "trailerdata").PartData.Find(xl => xl.StartsWith(" license_plate:")).Split(new char[] { '"' })[1];
 
             for (int i = 0; i < LicensePlate.Length; i++)//SelectedUserCompanyTruck.LicensePlate.Length; i++)
             {
@@ -1802,14 +1829,14 @@ namespace TS_SE_Tool
                 }
             }
             if (lctxt.Split(new char[] { '|' }).Length > 1)
-                labelUserTrailerLicensePlate.Text = lctxt.Split(new char[] { '|' })[0] + " Country " + lctxt.Split(new char[] { '|' })[1];
+                labelLicensePlateTr.Text = lctxt.Split(new char[] { '|' })[0] + " Country " + lctxt.Split(new char[] { '|' })[1];
             else
-                labelUserTrailerLicensePlate.Text = lctxt.Split(new char[] { '|' })[0];
+                labelLicensePlateTr.Text = lctxt.Split(new char[] { '|' })[0];
         }
 
         private void FillUserCompanyTrailerList()
         {
-            /*
+            
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("UserTrailerkNameless", typeof(string));
             combDT.Columns.Add(dc);
@@ -1819,25 +1846,36 @@ namespace TS_SE_Tool
 
             foreach (KeyValuePair<string, UserCompanyTruckData> UserTrailer in UserTrailerDictionary)
             {
-                string templine = UserTrailer.Value.Parts.Find(x => x.PartType == "truckbrandname").PartData.Find(xline => xline.StartsWith(" data_path:"));
-                string truckname = templine.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
+                if (UserTrailer.Value.Main)
+                {
+                    string trailerdef = UserTrailerDictionary[UserTrailer.Key].Parts.Find(x => x.PartType == "trailerdef").PartNameless;
 
-                combDT.Rows.Add(UserTrailer.Key, truckname);
+                    string trailername = "";
+                    trailername = UserTrailerDefDictionary[trailerdef].Find(x => x.StartsWith(" source_name:")).Split(new char[] { '"' })[1];
+
+                    combDT.Rows.Add(UserTrailer.Key, trailername);
+                }
             }
 
             //combDT.DefaultView.Sort = "UserTrailerName ASC";
-            comboBoxCompanyTrailers.ValueMember = "UserTrailerkNameless";
-            comboBoxCompanyTrailers.DisplayMember = "UserTrailerName";
+            comboBoxUserTrailerCompanyTrailers.ValueMember = "UserTrailerkNameless";
+            comboBoxUserTrailerCompanyTrailers.DisplayMember = "UserTrailerName";
 
-            comboBoxCompanyTrailers.DataSource = combDT;
+            comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
 
-            comboBoxCompanyTrailers.SelectedValue = UserCompanyAssignedTrailer;
-            */
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerProfileData.UserCompanyAssignedTrailer;
+            
         }
 
         private void comboBoxCompanyTrailers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ComboBox cmbbx = sender as ComboBox;
 
+            if (cmbbx.SelectedIndex != -1)
+            {
+                UpdateTrailerPanelProgressBars();
+                //UpdateTruckPanelProgressTitles();
+            }
         }
 
         private void buttonUserTrailerSelectCurrent_Click(object sender, EventArgs e)
@@ -2547,15 +2585,6 @@ namespace TS_SE_Tool
 
         public void FillcomboBoxCountries()
         {
-            /*
-            comboBoxFreightMarketCountries.Items.Add("All");
-
-            foreach (string str in CountriesList)
-            {
-                comboBoxFreightMarketCountries.Items.Add(str);
-            }
-            */
-
             int savedindex = comboBoxFreightMarketCountries.SelectedIndex;
             string savedvalue = "";
             if (savedindex != -1)
@@ -3857,18 +3886,6 @@ namespace TS_SE_Tool
 
             try
             {
-                
-                /*
-                ResourceSet set = null;//rm.GetResourceSet(ci, true, true);
-                set = rm.GetResourceSet(ci, true, true);
-                
-                List<string> keys = new List<string>();
-
-                foreach (DictionaryEntry o in set)
-                {
-                    keys.Add((string)o.Key);
-                }
-                */
                 this.SuspendLayout();
 
                 HelpTranslateFormMethod(this, ResourceManagerMain, ci);

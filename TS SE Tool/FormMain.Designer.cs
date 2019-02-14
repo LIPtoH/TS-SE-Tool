@@ -97,7 +97,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.buttonUserTrailerSelectCurrent = new System.Windows.Forms.Button();
             this.groupBoxUserTrailerTrailerDetails = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelLicensePlateTr = new System.Windows.Forms.Label();
             this.labelUserTrailerLicensePlate = new System.Windows.Forms.Label();
             this.buttonUserTrailerSwitchCurrent = new System.Windows.Forms.Button();
             this.comboBoxUserTrailerCompanyTrailers = new System.Windows.Forms.ComboBox();
@@ -884,7 +884,7 @@
             // 
             // groupBoxUserTrailerTrailerDetails
             // 
-            this.groupBoxUserTrailerTrailerDetails.Controls.Add(this.label2);
+            this.groupBoxUserTrailerTrailerDetails.Controls.Add(this.labelLicensePlateTr);
             this.groupBoxUserTrailerTrailerDetails.Controls.Add(this.labelUserTrailerLicensePlate);
             this.groupBoxUserTrailerTrailerDetails.Location = new System.Drawing.Point(6, 81);
             this.groupBoxUserTrailerTrailerDetails.Name = "groupBoxUserTrailerTrailerDetails";
@@ -893,13 +893,13 @@
             this.groupBoxUserTrailerTrailerDetails.TabStop = false;
             this.groupBoxUserTrailerTrailerDetails.Text = "Details";
             // 
-            // label2
+            // labelLicensePlateTr
             // 
-            this.label2.Location = new System.Drawing.Point(103, 222);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(300, 13);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "0 000 00";
+            this.labelLicensePlateTr.Location = new System.Drawing.Point(103, 222);
+            this.labelLicensePlateTr.Name = "labelLicensePlateTr";
+            this.labelLicensePlateTr.Size = new System.Drawing.Size(300, 13);
+            this.labelLicensePlateTr.TabIndex = 16;
+            this.labelLicensePlateTr.Text = "0 000 00";
             // 
             // labelUserTrailerLicensePlate
             // 
@@ -925,7 +925,6 @@
             // comboBoxUserTrailerCompanyTrailers
             // 
             this.comboBoxUserTrailerCompanyTrailers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxUserTrailerCompanyTrailers.Enabled = false;
             this.comboBoxUserTrailerCompanyTrailers.FormattingEnabled = true;
             this.comboBoxUserTrailerCompanyTrailers.Location = new System.Drawing.Point(65, 6);
             this.comboBoxUserTrailerCompanyTrailers.Name = "comboBoxUserTrailerCompanyTrailers";
@@ -1810,7 +1809,7 @@
         private System.Windows.Forms.Button buttonCargoMarketRandomizeCargoCity;
         private System.Windows.Forms.Button buttonCargoMarketResetCargoCompany;
         private System.Windows.Forms.Button buttonCargoMarketResetCargoCity;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelLicensePlateTr;
         private System.Windows.Forms.Label labelUserTrailerLicensePlate;
         private System.Windows.Forms.Label labelFreightMarketDistanceNumbers;
         private System.Windows.Forms.Label labelPlayerExperience;

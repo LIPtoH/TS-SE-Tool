@@ -33,6 +33,12 @@ namespace TS_SE_Tool.CustomClasses
             PartType = _PartType;
         }
 
+        public UserCompanyTruckDataPart(string _PartType, string _PartNameless)
+        {
+            PartType = _PartType;
+            PartNameless = _PartNameless;
+        }
+
         public string PartNameless { get; set; } = "";
         public List<string> PartData { get; set; } = new List<string>();
         public string PartType { get; set; } = "";

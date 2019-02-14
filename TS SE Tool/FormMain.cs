@@ -127,6 +127,7 @@ namespace TS_SE_Tool
         public static Dictionary<string, string> CitiesLngDict, CustomStringsDict;
         private Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
         private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary;
+        private Dictionary<string, List<string>> UserTrailerDefDictionary;
 
         private List<string> namelessList;
         private string namelessLast;

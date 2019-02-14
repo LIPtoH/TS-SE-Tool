@@ -909,11 +909,13 @@ namespace TS_SE_Tool
                 {
 
                     bool EconomySection = false, PlayerSection = false, GPSinserted = false;
-                    bool editedcompany = false, visitedcitycompany = false, insidecompany = false, editedtruck = false, insidetruck = false;
+                    bool editedcompany = false, visitedcitycompany = false, insidecompany = false, editedtruck = false, insidetruck = false,
+                        editedtrailer = false, insidetrailer = false, hasslavetrailer = false;
                     int JobIndex = 0, truckaccCount = 0;
                     string trucknameless = "", cityname = "", companyname = "";
-                    
-
+                    string[] trailernameless = new string[1];
+                    int[] traileraccessoriescount = new int[1];
+                    int slavetrailerscount = 0;
 
                     for (int line = 1; line < tempSavefileInMemory.Length; line++)
                     {
@@ -945,7 +947,7 @@ namespace TS_SE_Tool
                             {
                                 char[] ADR = Convert.ToString(PlayerProfileData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
                                 Array.Reverse(ADR);
-                                
+
                                 writer.WriteLine(" adr: " + Convert.ToByte(new string(ADR), 2));
                                 continue;
                             }
@@ -991,7 +993,7 @@ namespace TS_SE_Tool
                                 }
                                 else
                                 {
-                                    Byte[] bytes = new Byte[] { UserColorsList[userColorID].R, UserColorsList[userColorID].G, UserColorsList[userColorID].B, 255};
+                                    Byte[] bytes = new Byte[] { UserColorsList[userColorID].R, UserColorsList[userColorID].G, UserColorsList[userColorID].B, 255 };
                                     uint temp = BitConverter.ToUInt32(bytes, 0);
 
                                     userColor = temp.ToString();
@@ -1007,7 +1009,7 @@ namespace TS_SE_Tool
                                 writer.WriteLine(" stored_gps_behind_waypoints: " + GPSbehind.Count);
 
                                 int count = 0;
-                                foreach(KeyValuePair<string, List<string>> temp in GPSbehind)
+                                foreach (KeyValuePair<string, List<string>> temp in GPSbehind)
                                 {
                                     writer.WriteLine(" stored_gps_behind_waypoints[" + count + "]: _nameless." + temp.Key);
                                     count++;
@@ -1035,7 +1037,7 @@ namespace TS_SE_Tool
                             //Visited cities
                             if (SaveInMemLine.StartsWith(" visited_cities:"))
                             {
-                                int visitedcitiesbefore = int.Parse( SaveInMemLine.Split(new char[] { ':' })[1]);
+                                int visitedcitiesbefore = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
                                 line += visitedcitiesbefore;
 
                                 List<VisitedCity> newvc = VisitedCities.FindAll(x => x.Visited && x.VisitCount > 0);
@@ -1103,11 +1105,11 @@ namespace TS_SE_Tool
                                 writer.WriteLine(" hq_city: " + PlayerProfileData.HQcity);
                                 continue;
                             }
-                            
+
                             if (SaveInMemLine.StartsWith(" assigned_truck:"))
                             {
                                 chunkOfline = SaveInMemLine.Split(new char[] { ' ' });
-                                
+
                                 if (PlayerProfileData.UserCompanyAssignedTruck != chunkOfline[2])
                                 {
                                     writer.WriteLine(" assigned_truck: " + PlayerProfileData.UserCompanyAssignedTruck);
@@ -1167,13 +1169,13 @@ namespace TS_SE_Tool
                                 int slave_trailers = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
                                 writer.WriteLine(tempSavefileInMemory[line]);
                                 if (slave_trailers > 0)
+                                {
+                                    for (int i = 0; i < slave_trailers; i++)
                                     {
-                                        for (int i = 0; i < slave_trailers; i++)
-                                        {
-                                            writer.WriteLine(" slave_trailer_placements[" + i + "]: (0, 0, 0) (1; 0, 0, 0)");
-                                            line++;
-                                        }
+                                        writer.WriteLine(" slave_trailer_placements[" + i + "]: (0, 0, 0) (1; 0, 0, 0)");
+                                        line++;
                                     }
+                                }
                                 continue;
                             }
                         }
@@ -1188,7 +1190,7 @@ namespace TS_SE_Tool
 
                             if (tempGarage.GarageStatus == 0)
                             {
-                            }   
+                            }
                             else if (tempGarage.GarageStatus == 2)
                             {
                                 capacity = 3;
@@ -1217,7 +1219,7 @@ namespace TS_SE_Tool
                                 string rstr = "null";
                                 tempGarage.Vehicles.AddRange(Enumerable.Repeat(rstr, capacity - cur));
                                 tempGarage.Drivers.AddRange(Enumerable.Repeat(rstr, capacity - cur));
-                            }                                
+                            }
 
                             for (int i = 0; i < capacity; i++)
                             {
@@ -1298,7 +1300,7 @@ namespace TS_SE_Tool
                             {
                                 foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSbehindOnline)
                                 {
-                                    writer.WriteLine("gps_waypoint_storage : " + tempgpsdata.Key + " {");
+                                    writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
 
                                     foreach (string templine in tempgpsdata.Value)
                                     {
@@ -1315,7 +1317,7 @@ namespace TS_SE_Tool
                             {
                                 foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSaheadOnline)
                                 {
-                                    writer.WriteLine("gps_waypoint_storage : " + tempgpsdata.Key + " {");
+                                    writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
 
                                     foreach (string templine in tempgpsdata.Value)
                                     {
@@ -1361,7 +1363,7 @@ namespace TS_SE_Tool
                                 }
                             }
 
-                            while(true)
+                            while (true)
                             {
                                 if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage :"))
                                 {
@@ -1401,15 +1403,6 @@ namespace TS_SE_Tool
 
                             visitedcitycompany = VisitedCities.Find(x => x.Name == cityname).Visited;
 
-                            /*
-                            if(Array.Find(ListSavefileCompanysString, x => x.Equals(SaveInMemLine)) != null)
-                            {
-                                editedcompany = true;
-                                JobIndex = j;
-
-                                continue;
-                            }
-                            */
                             for (int j = 0; j < ListSavefileCompanysString.Length; j++)
                             {
                                 //find edited company
@@ -1428,8 +1421,8 @@ namespace TS_SE_Tool
                             int[] tempSeeds = CitiesList.Find(x => x.CityName == cityname).Companies.Find(x => x.CompanyName == companyname).CragoSeeds;
 
                             writer.WriteLine(" cargo_offer_seeds: " + tempSeeds.Count());
-                            if(tempSeeds.Count() > 0)
-                                for(int i = 0; i < tempSeeds.Count(); i++ )
+                            if (tempSeeds.Count() > 0)
+                                for (int i = 0; i < tempSeeds.Count(); i++)
                                 {
                                     writer.WriteLine(" cargo_offer_seeds[" + i + "]: " + tempSeeds[i]);
                                 }
@@ -1461,7 +1454,7 @@ namespace TS_SE_Tool
                             continue;
                         }
 
-                        //find vehicle
+                        //find Truck vehicle
                         if (SaveInMemLine.StartsWith("vehicle :"))
                         {
                             trucknameless = SaveInMemLine.Split(new char[] { ' ' })[2];
@@ -1469,9 +1462,8 @@ namespace TS_SE_Tool
                             if (UserTruckDictionary.ContainsKey(trucknameless))
                             {
                                 editedtruck = true;
-                                insidetruck = true;                                
+                                insidetruck = true;
                             }
-
                             //continue;
                         }
 
@@ -1506,18 +1498,100 @@ namespace TS_SE_Tool
                             {
                                 writer.WriteLine(tempdataline);
                             }
-                            
+
                             while (tempSavefileInMemory[line] != "}")
                             {
                                 line++;
                             }
-                            
+
                             truckaccCount--;
                             if (truckaccCount == 0)
                                 editedtruck = false;
                             writer.WriteLine(tempSavefileInMemory[line]);
                             continue;
-                        }                       
+                        }
+
+                        //find Trailer vehicle
+                        if (SaveInMemLine.StartsWith("trailer :"))
+                        {
+                            //slavetrailerscount++;
+                            trailernameless[trailernameless.Count() - 1] = SaveInMemLine.Split(new char[] { ' ' })[2];
+
+                            if (UserTrailerDictionary.ContainsKey(trailernameless[trailernameless.Count() - 1]))
+                            {
+                                editedtrailer = true;
+                                insidetrailer = true;
+                            }
+                            //continue;
+                        }
+
+                        if (insidetrailer && SaveInMemLine.StartsWith("}"))
+                        {
+                            insidetrailer = false;
+                        }
+
+                        if (insidetrailer && SaveInMemLine.StartsWith(" cargo_damage:"))
+                        {
+                            List<string> temp = UserTrailerDictionary[trailernameless[trailernameless.Count() - 1]].Parts.Find(x => x.PartType == "trailerdata").PartData;
+
+                            writer.WriteLine(temp.Find(x => x.StartsWith(" cargo_damage:")));
+                            continue;
+                        }
+
+                        if (insidetrailer && SaveInMemLine.StartsWith(" slave_trailer:"))
+                        {
+                            if (tempSavefileInMemory[line].Contains("_nameless"))
+                            {
+                                slavetrailerscount++;
+                                Array.Resize(ref traileraccessoriescount, slavetrailerscount + 1);
+                                Array.Resize(ref trailernameless, slavetrailerscount + 1);
+                                trailernameless[slavetrailerscount] = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                            }
+                            else
+                            {
+                                //slavetrailerscount++;
+                                //Array.Resize(ref traileraccessoriescount, slavetrailerscount);
+                                //Array.Resize(ref trailernameless, slavetrailerscount);
+                            }
+                        }
+
+                        if (insidetrailer && SaveInMemLine.StartsWith(" accessories:"))
+                        {
+                            traileraccessoriescount[slavetrailerscount] = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
+                        }
+
+                        //edit vehicle accessory
+                        if (editedtrailer && SaveInMemLine.StartsWith("vehicle_"))
+                        {
+                            string partnameless = SaveInMemLine.Split(new char[] { ' ' })[2];
+                            writer.WriteLine(SaveInMemLine);
+                            line++;
+
+                            List<string> temp = UserTrailerDictionary[trailernameless[slavetrailerscount]].Parts.Find(x => x.PartNameless == partnameless).PartData;
+
+                            foreach (string tempdataline in temp)
+                            {
+                                writer.WriteLine(tempdataline);
+                            }
+
+                            while (tempSavefileInMemory[line] != "}")
+                            {
+                                line++;
+                            }
+
+                            traileraccessoriescount[slavetrailerscount]--;
+
+                            if (slavetrailerscount > 0 && traileraccessoriescount[slavetrailerscount] == 0)
+                                slavetrailerscount--;
+
+                            if (traileraccessoriescount[0] == 0)
+                                editedtrailer = false;
+
+                            writer.WriteLine(tempSavefileInMemory[line]);
+
+                            continue;
+                        }
+                        //End trailer write
 
                         EndWrite:
                         writer.WriteLine(SaveInMemLine);
