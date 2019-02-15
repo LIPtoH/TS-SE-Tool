@@ -3815,6 +3815,27 @@ namespace TS_SE_Tool
             {
                 tabControlMain.TabPages["tabPageTrailer"].Enabled = false;
             }
+
+            if (GameType == "ETS")
+            {
+                //Globals.CurrentGame = dictionaryProfiles["ETS2"];
+                buttonMainGameSwitchETS.Enabled = false;
+                buttonMainGameSwitchATS.Enabled = true;
+                buttonMainGameSwitchETS.BackColor = Color.White;
+                buttonMainGameSwitchETS.ForeColor = Color.Black;
+                buttonMainGameSwitchATS.BackColor = Color.FromKnownColor(KnownColor.Control);
+                buttonMainGameSwitchATS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+            }
+            else
+            {
+                //Globals.CurrentGame = dictionaryProfiles["ATS"];
+                buttonMainGameSwitchETS.Enabled = true;
+                buttonMainGameSwitchATS.Enabled = false;
+                buttonMainGameSwitchATS.BackColor = Color.White;
+                buttonMainGameSwitchATS.ForeColor = Color.Black;
+                buttonMainGameSwitchETS.BackColor = Color.FromKnownColor(KnownColor.Control);
+                buttonMainGameSwitchETS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+            }
         }
 
         public void ToggleGame_Click(object sender, EventArgs e)
@@ -3831,6 +3852,21 @@ namespace TS_SE_Tool
 
         public void ToggleGame(string _game)
         {
+            if (tempSavefileInMemory != null)
+            {
+                DialogResult result = MessageBox.Show("Savefile not saved.\nDo you want to discard changes and switch game type?", "Switching game", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.No)
+                    return;
+                else
+                {
+                    ToggleVisibility(false);
+                    buttonMainWriteSave.Enabled = false;
+                    buttonMainDecryptSave.Enabled = true;
+                    SetDefaultValues(false);
+                }
+            }
+
             if (_game == "ETS")
             {
                 Globals.CurrentGame = dictionaryProfiles["ETS2"];

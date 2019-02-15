@@ -871,7 +871,7 @@ namespace TS_SE_Tool
             buttonMainLoadSave.Enabled = true;
             buttonMainWriteSave.Enabled = true;
 
-            ToggleGame(GameType);
+            //ToggleGame(GameType);
             ToggleVisibility(true);
         }
 
