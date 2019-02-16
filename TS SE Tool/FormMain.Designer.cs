@@ -873,7 +873,6 @@
             // 
             // buttonUserTrailerSelectCurrent
             // 
-            this.buttonUserTrailerSelectCurrent.Enabled = false;
             this.buttonUserTrailerSelectCurrent.Location = new System.Drawing.Point(65, 33);
             this.buttonUserTrailerSelectCurrent.Name = "buttonUserTrailerSelectCurrent";
             this.buttonUserTrailerSelectCurrent.Size = new System.Drawing.Size(150, 42);

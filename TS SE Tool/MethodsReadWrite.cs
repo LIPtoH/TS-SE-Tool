@@ -1549,7 +1549,7 @@ namespace TS_SE_Tool
                             }
                             else
                             {
-                                //slavetrailerscount++;
+                                slavetrailerscount++;
                                 //Array.Resize(ref traileraccessoriescount, slavetrailerscount);
                                 //Array.Resize(ref trailernameless, slavetrailerscount);
                             }
@@ -1557,7 +1557,7 @@ namespace TS_SE_Tool
 
                         if (insidetrailer && SaveInMemLine.StartsWith(" accessories:"))
                         {
-                            traileraccessoriescount[slavetrailerscount] = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
+                            traileraccessoriescount[slavetrailerscount - 1] = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
                         }
 
                         //edit vehicle accessory
@@ -1567,7 +1567,7 @@ namespace TS_SE_Tool
                             writer.WriteLine(SaveInMemLine);
                             line++;
 
-                            List<string> temp = UserTrailerDictionary[trailernameless[slavetrailerscount]].Parts.Find(x => x.PartNameless == partnameless).PartData;
+                            List<string> temp = UserTrailerDictionary[trailernameless[slavetrailerscount - 1]].Parts.Find(x => x.PartNameless == partnameless).PartData;
 
                             foreach (string tempdataline in temp)
                             {
@@ -1579,9 +1579,9 @@ namespace TS_SE_Tool
                                 line++;
                             }
 
-                            traileraccessoriescount[slavetrailerscount]--;
+                            traileraccessoriescount[slavetrailerscount - 1]--;
 
-                            if (slavetrailerscount > 0 && traileraccessoriescount[slavetrailerscount] == 0)
+                            if (slavetrailerscount > 0 && traileraccessoriescount[slavetrailerscount - 1] == 0)
                                 slavetrailerscount--;
 
                             if (traileraccessoriescount[0] == 0)

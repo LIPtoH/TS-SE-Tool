@@ -966,14 +966,11 @@ namespace TS_SE_Tool
                                                 //Dictionary<string, int> tempVar = new Dictionary<string, int>();
                                                 //tempVar.Add(trailervariant, units_count);
 
-
-
                                                 //if (!tempDefVar.ContainsKey(trailerdefinition))
                                                 //{
                                                 //    CargoesList.Add(new Cargo(cargo, cargotype, DefVar));
                                                 //}
                                                 //else
-
 
                                                 //tempDefVar.Add(trailerdefinition, tempVar);
 
@@ -1521,7 +1518,18 @@ namespace TS_SE_Tool
                 List<CompanyTruck> CompanyTruckType = CompanyTruckListDB.Where(x => x.Type == CargoType).ToList();
                 TruckName = CompanyTruckType[RandomValue.Next(CompanyTruckType.Count())].TruckName;
 
-                int TrueDistance = (int)(int.Parse(distance) * ProgSettingsV.TimeMultiplier);
+                int TrueDistance = 1;
+
+                if (distance != "11111")
+                {
+                    TrueDistance = (int)(int.Parse(distance) * ProgSettingsV.TimeMultiplier);
+                }
+                else
+                {
+                    unCertainRouteLength = "*";
+                    //TrueDistance = (int)(3000 * ProgSettingsV.TimeMultiplier);
+                }
+
 
                 Cargo cargo = CargoesList.Find(x => x.CargoName == Cargo && x.CargoType == CargoType);
 
@@ -1567,12 +1575,14 @@ namespace TS_SE_Tool
 
                 listBoxFreightMarketAddedJobs.Items.Add(new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, TrailerVariant.Value, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice)));
 
-                if (distance != "11111")
+                if (distance == "11111")                
                 {
-                    JobsTotalDistance += int.Parse(distance);
+                    unCertainRouteLength = "*";
                 }
 
-                labelFreightMarketDistanceNumbers.Text = (JobsTotalDistance * DistanceMultiplier).ToString() + " " + ProgSettingsV.DistanceMes; //km";
+                JobsTotalDistance += TrueDistance;//int.Parse(distance);
+
+                labelFreightMarketDistanceNumbers.Text = (JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes; //km";
 
                 comboBoxFreightMarketSourceCity.SelectedValue = comboBoxFreightMarketDestinationCity.SelectedValue;
                 comboBoxFreightMarketSourceCompany.SelectedValue = comboBoxFreightMarketDestinationCompany.SelectedValue;

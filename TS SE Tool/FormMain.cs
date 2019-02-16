@@ -57,6 +57,7 @@ namespace TS_SE_Tool
         private string LastVisitedCity;
         private string LoopStartCity;
         private string LoopStartCompany;
+        private string unCertainRouteLength;
 
         private bool UserCompanyAssignedTruckPlacementEdited;
 
@@ -163,9 +164,7 @@ namespace TS_SE_Tool
             GetTranslationFiles();
 
             SetDefaultValues(true);
-            LoadConfig();
-
-            
+            LoadConfig();            
 
             LoadExtCountries();
             

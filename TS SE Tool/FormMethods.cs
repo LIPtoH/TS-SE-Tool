@@ -175,7 +175,7 @@ namespace TS_SE_Tool
                 buttonMainGameSwitchETS.Image = GameIconeImg[0];
                 buttonMainGameSwitchATS.Image = GameIconeImg[1];
             }
-
+            unCertainRouteLength = "";
             FileDecoded = false;
             SavefilePath = "";
 
@@ -258,8 +258,7 @@ namespace TS_SE_Tool
 
             components = null;
         }
-
-
+        
         private void PopulateFormControlsk()
         {
             buttonMainDecryptSave.Enabled = false;
@@ -1670,10 +1669,15 @@ namespace TS_SE_Tool
         public void buttonTrailerRepair_Click(object sender, EventArgs e)
         {
             string[] PartList = { "trailerdata", "body", "chassis", "tire" };
+            string trailerNameless = "";
+
+            trailerNameless = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+
+            StartTrailerParts:
 
             foreach (string tempPart in PartList)
             {
-                foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.FindAll(x => x.PartType == tempPart))
+                foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[trailerNameless].Parts.FindAll(x => x.PartType == tempPart))
                 {
                     string partNameless = temp.PartNameless;
 
@@ -1683,18 +1687,26 @@ namespace TS_SE_Tool
                     {
                         if (temp2.StartsWith(" wear:"))
                         {
-                            UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
+                            UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
                             break;
                         }
                         else
                         if (temp2.StartsWith(" cargo_damage:"))
                         {
-                            UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
+                            UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
                             break;
                         }
                         i++;
                     }
                 }
+            }
+
+            UserCompanyTruckDataPart slavetrailer = UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "slavetrailer");
+
+            if (slavetrailer != null)
+            {
+                trailerNameless = slavetrailer.PartNameless;
+                goto StartTrailerParts;
             }
 
             UpdateTrailerPanelProgressBars();
@@ -1706,8 +1718,13 @@ namespace TS_SE_Tool
             int bi = Convert.ToByte(curbtn.Name.Substring(21));
 
             string[] PartList = { "trailerdata", "body", "chassis", "tire" };
+            string trailerNameless = "";
 
-            foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.FindAll(x => x.PartType == PartList[bi]))
+            trailerNameless = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+
+            StartTrailerParts:
+
+            foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[trailerNameless].Parts.FindAll(x => x.PartType == PartList[bi]))
             {
                 string partNameless = temp.PartNameless;
 
@@ -1717,17 +1734,25 @@ namespace TS_SE_Tool
                 {
                     if (temp2.StartsWith(" wear:"))
                     {
-                        UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
+                        UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
                         break;
                     }
                     else
                     if (temp2.StartsWith(" cargo_damage:"))
                     {
-                        UserTrailerDictionary[comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
+                        UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
                         break;
                     }
                     i++;
                 }
+            }
+
+            UserCompanyTruckDataPart slavetrailer = UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "slavetrailer");
+            
+            if (slavetrailer != null)
+            {
+                trailerNameless = slavetrailer.PartNameless;
+                goto StartTrailerParts;
             }
 
             UpdateTrailerPanelProgressBars();
@@ -3304,6 +3329,7 @@ namespace TS_SE_Tool
 
         private void ClearJobData()
         {
+            unCertainRouteLength = "";
             JobsTotalDistance = 0;
             JobsAmountAdded = 0;
 
