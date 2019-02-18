@@ -29,7 +29,7 @@ namespace TS_SE_Tool
         public string UserCompanyAssignedTruck { get; set; }
         public string UserCompanyAssignedTruckPlacement { get; set; }
         public string UserCompanyAssignedTrailer { get; set; }
-        //public string UserCompanyAssignedTrailerPlacement { get; set; }
+        public string CurrentJob { get; set; }
         public List<string> UserCompanyAssignedSlaveTrailerPlacements = new List<string>();
 
 

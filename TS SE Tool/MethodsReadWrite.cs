@@ -274,6 +274,11 @@ namespace TS_SE_Tool
             RefuelImg = Image.FromStream(ms);
             ms.Dispose();
 
+            ms = new MemoryStream();
+            ImageFromDDS(@"img\customize_p.dds").Save(ms, ImageFormat.Png);
+            CutomizeImg = Image.FromStream(ms);
+            ms.Dispose();
+
             imgpaths = new string[] { @"img\" + GameType + @"\adr_1.dds", @"img\" + GameType + @"\adr_2.dds", @"img\" + GameType + @"\adr_3.dds", @"img\" + GameType + @"\adr_4.dds", @"img\" + GameType + @"\adr_6.dds", @"img\" + GameType + @"\adr_8.dds" };
             ADRImgS = ExtImgLoader(imgpaths, 46, 46, 9, 9, 32, 32);
 
@@ -915,7 +920,7 @@ namespace TS_SE_Tool
                     string trucknameless = "", cityname = "", companyname = "";
                     string[] trailernameless = new string[1];
                     int[] traileraccessoriescount = new int[1];
-                    int slavetrailerscount = 0;
+                    int slavetrailerscount = 1;
 
                     for (int line = 1; line < tempSavefileInMemory.Length; line++)
                     {
@@ -1389,6 +1394,24 @@ namespace TS_SE_Tool
                             continue;
                         }
 
+                        if (SaveInMemLine.StartsWith("registry :"))
+                        {
+                            if (GPSahead.Count > 0 || GPSbehind.Count > 0)
+                            {
+                                while (true)
+                                {
+                                    if (tempSavefileInMemory[line].StartsWith(" data[0]:"))
+                                    {
+                                        writer.WriteLine(" data[0]: 5"); //Write GPS present flag
+                                        break;
+                                    }
+                                    else
+                                        writer.WriteLine(tempSavefileInMemory[line]);
+                                    line++;
+                                }
+                                continue;
+                            }
+                        }
 
                         if (insidecompany && SaveInMemLine.StartsWith("}"))
                         {
@@ -1514,10 +1537,14 @@ namespace TS_SE_Tool
                         //find Trailer vehicle
                         if (SaveInMemLine.StartsWith("trailer :"))
                         {
+                            hasslavetrailer = false;
                             //slavetrailerscount++;
-                            trailernameless[trailernameless.Count() - 1] = SaveInMemLine.Split(new char[] { ' ' })[2];
+                            Array.Resize(ref traileraccessoriescount, slavetrailerscount);
+                            Array.Resize(ref trailernameless, slavetrailerscount);
 
-                            if (UserTrailerDictionary.ContainsKey(trailernameless[trailernameless.Count() - 1]))
+                            trailernameless[slavetrailerscount - 1] = SaveInMemLine.Split(new char[] { ' ' })[2];
+
+                            if (UserTrailerDictionary.ContainsKey(trailernameless[slavetrailerscount - 1]))
                             {
                                 editedtrailer = true;
                                 insidetrailer = true;
@@ -1532,7 +1559,7 @@ namespace TS_SE_Tool
 
                         if (insidetrailer && SaveInMemLine.StartsWith(" cargo_damage:"))
                         {
-                            List<string> temp = UserTrailerDictionary[trailernameless[trailernameless.Count() - 1]].Parts.Find(x => x.PartType == "trailerdata").PartData;
+                            List<string> temp = UserTrailerDictionary[trailernameless[slavetrailerscount - 1]].Parts.Find(x => x.PartType == "trailerdata").PartData;
 
                             writer.WriteLine(temp.Find(x => x.StartsWith(" cargo_damage:")));
                             continue;
@@ -1543,13 +1570,14 @@ namespace TS_SE_Tool
                             if (tempSavefileInMemory[line].Contains("_nameless"))
                             {
                                 slavetrailerscount++;
-                                Array.Resize(ref traileraccessoriescount, slavetrailerscount + 1);
-                                Array.Resize(ref trailernameless, slavetrailerscount + 1);
-                                trailernameless[slavetrailerscount] = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                                Array.Resize(ref traileraccessoriescount, slavetrailerscount);
+                                Array.Resize(ref trailernameless, slavetrailerscount);
+                                trailernameless[slavetrailerscount - 1] = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                                hasslavetrailer = true;
                             }
                             else
                             {
-                                slavetrailerscount++;
+                                //slavetrailerscount++;
                                 //Array.Resize(ref traileraccessoriescount, slavetrailerscount);
                                 //Array.Resize(ref trailernameless, slavetrailerscount);
                             }
@@ -1557,7 +1585,10 @@ namespace TS_SE_Tool
 
                         if (insidetrailer && SaveInMemLine.StartsWith(" accessories:"))
                         {
-                            traileraccessoriescount[slavetrailerscount - 1] = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
+                            if (hasslavetrailer)
+                                traileraccessoriescount[slavetrailerscount - 2] = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
+                            else
+                                traileraccessoriescount[slavetrailerscount - 1] = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
                         }
 
                         //edit vehicle accessory
@@ -1581,7 +1612,7 @@ namespace TS_SE_Tool
 
                             traileraccessoriescount[slavetrailerscount - 1]--;
 
-                            if (slavetrailerscount > 0 && traileraccessoriescount[slavetrailerscount - 1] == 0)
+                            if (slavetrailerscount > 1 && traileraccessoriescount[slavetrailerscount - 1] == 0)
                                 slavetrailerscount--;
 
                             if (traileraccessoriescount[0] == 0)

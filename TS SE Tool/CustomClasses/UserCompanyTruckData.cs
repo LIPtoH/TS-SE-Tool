@@ -32,5 +32,6 @@ namespace TS_SE_Tool
         public List<UserCompanyTruckDataPart> Parts = new List<UserCompanyTruckDataPart>();
         public string TruckType { get; set; } = "fromsave";
         public bool Main { get; set; } = true;
+        public bool Users { get; set; } = true;
     }
 }

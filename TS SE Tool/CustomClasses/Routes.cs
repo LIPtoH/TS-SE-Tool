@@ -42,13 +42,13 @@ namespace TS_SE_Tool
                 if (strArray2.Count == 0)
                 {
                     if(_starting_city == _destination_city)
-                        return new string[] { _starting_city, _starting_company, _destination_city, _destination_company, "5", "0", "0" };
+                        return new string[] { _starting_city, _starting_company, _destination_city, _destination_company, "1", "0", "0" };
                     else
                         return new string[] { _starting_city, _starting_company, _destination_city, _destination_company, "11111", "0", "0" };
                 }
                 else
                 {
-                    strArray2 = strArray2.OrderByDescending(x => x[4]).ToList();
+                    strArray2 = strArray2.OrderBy(x => x[4]).ToList();
                     strArray = strArray2.First();
 
                     if (strArray != null)

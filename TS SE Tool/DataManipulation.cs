@@ -406,7 +406,15 @@ namespace TS_SE_Tool
                             UserTrailerDefDictionary.Add(chunkOfline[2], new List<string>());
                             continue;
                         }
+
+                        if (tempSavefileInMemory[line].StartsWith(" current_job:"))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
+                            PlayerProfileData.CurrentJob = chunkOfline[1].TrimStart(' ');
+                            continue;
+                        }
                     }
+
                     //Populate GPS
                     if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage"))
                     {
@@ -453,6 +461,31 @@ namespace TS_SE_Tool
                                 line++;
                             }
                         }
+                    }
+
+                    if (tempSavefileInMemory[line].StartsWith("player_job :"))
+                    {
+                        do
+                        {
+                            line++;
+                            if (tempSavefileInMemory[line].StartsWith(" company_truck:"))
+                            {
+                                chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                                UserTruckDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
+                                UserTruckDictionary[chunkOfline[2]].Users = false;
+                                continue;
+                            }
+
+                            if (tempSavefileInMemory[line].StartsWith(" company_trailer:"))
+                            {
+                                chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                                UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
+                                UserTrailerDictionary[chunkOfline[2]].Users = false;
+                                continue;
+                            }
+                        } while (!tempSavefileInMemory[line].StartsWith("}"));
+
+                        continue;
                     }
 
                     //find vehicles Truck
@@ -677,11 +710,11 @@ namespace TS_SE_Tool
                                                     {
                                                         UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("body"));
                                                     }
-                                                    else if (truckpart.Contains("/chassis/"))
+                                                    else if (truckpart.Contains("chassis"))
                                                     {
                                                         UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("chassis"));
                                                     }
-                                                    else if (truckpart.Contains("/r_tire/"))
+                                                    else if (truckpart.Contains("/r_tire/") || truckpart.Contains("/t_wheel/"))
                                                     {
                                                         UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("tire"));
                                                     }
@@ -1518,19 +1551,6 @@ namespace TS_SE_Tool
                 List<CompanyTruck> CompanyTruckType = CompanyTruckListDB.Where(x => x.Type == CargoType).ToList();
                 TruckName = CompanyTruckType[RandomValue.Next(CompanyTruckType.Count())].TruckName;
 
-                int TrueDistance = 1;
-
-                if (distance != "11111")
-                {
-                    TrueDistance = (int)(int.Parse(distance) * ProgSettingsV.TimeMultiplier);
-                }
-                else
-                {
-                    unCertainRouteLength = "*";
-                    //TrueDistance = (int)(3000 * ProgSettingsV.TimeMultiplier);
-                }
-
-
                 Cargo cargo = CargoesList.Find(x => x.CargoName == Cargo && x.CargoType == CargoType);
 
                 KeyValuePair<string, int> TrailerVariant = new KeyValuePair<string, int>();
@@ -1548,6 +1568,17 @@ namespace TS_SE_Tool
                 TrailerVariant = tempDefVar.Value.ElementAt(randvar);
 
                 string Urgency = comboBoxFreightMarketUrgency.SelectedValue.ToString();
+
+                //True Distance
+                int TrueDistance = (int)(int.Parse(distance) * ProgSettingsV.TimeMultiplier);
+
+                listBoxFreightMarketAddedJobs.Items.Add(new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, TrailerVariant.Value, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice)));
+
+                if (distance == "11111")
+                {
+                    TrueDistance = (int)(5 * ProgSettingsV.TimeMultiplier);
+                    unCertainRouteLength = "*";
+                }
 
                 ListSavefileCompanysString[JobsAmountAdded - 1] = "company : company.volatile." + SourceCompany + "." + SourceCity + " {";
                 EconomyEventUnitLinkStringList[JobsAmountAdded - 1] = " unit_link: company.volatile." + SourceCompany + "." + SourceCity;
@@ -1572,13 +1603,6 @@ namespace TS_SE_Tool
 
                 buttonMainWriteSave.Enabled = true;
                 buttonFreightMarketClearJobList.Enabled = true;
-
-                listBoxFreightMarketAddedJobs.Items.Add(new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, TrailerVariant.Value, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice)));
-
-                if (distance == "11111")                
-                {
-                    unCertainRouteLength = "*";
-                }
 
                 JobsTotalDistance += TrueDistance;//int.Parse(distance);
 

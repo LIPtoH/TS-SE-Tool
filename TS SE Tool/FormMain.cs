@@ -140,7 +140,7 @@ namespace TS_SE_Tool
         private DataTable DistancesTable;
 
         private Bitmap ProgressBarGradient;
-        private Image RepairImg, RefuelImg;
+        private Image RepairImg, RefuelImg,CutomizeImg;
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs;
 
