@@ -1606,7 +1606,7 @@ namespace TS_SE_Tool
 
                 JobsTotalDistance += TrueDistance;//int.Parse(distance);
 
-                labelFreightMarketDistanceNumbers.Text = (JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes; //km";
+                labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes; //km";
 
                 comboBoxFreightMarketSourceCity.SelectedValue = comboBoxFreightMarketDestinationCity.SelectedValue;
                 comboBoxFreightMarketSourceCompany.SelectedValue = comboBoxFreightMarketDestinationCompany.SelectedValue;

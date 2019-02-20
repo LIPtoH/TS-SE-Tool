@@ -1516,8 +1516,14 @@ namespace TS_SE_Tool
 
             foreach (KeyValuePair<string, UserCompanyTruckData> UserTruck in UserTruckDictionary)
             {
-                string templine = UserTruck.Value.Parts.Find(x => x.PartType == "truckbrandname").PartData.Find(xline => xline.StartsWith(" data_path:"));
-                string truckname = templine.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
+                string truckname = "";
+                try
+                {
+                    string templine = UserTruck.Value.Parts.Find(x => x.PartType == "truckbrandname").PartData.Find(xline => xline.StartsWith(" data_path:"));
+                    truckname = templine.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
+                }
+                catch { }
+                TruckBrandsLngDict.TryGetValue(truckname, out string trucknamevalue);
 
                 string TruckName = "";
 
@@ -1525,8 +1531,6 @@ namespace TS_SE_Tool
                     TruckName = "[U] ";
                 else
                     TruckName = "[Q] ";
-
-                TruckBrandsLngDict.TryGetValue(truckname, out string trucknamevalue);
 
                 if (trucknamevalue != null && trucknamevalue != "")
                 {
@@ -2635,7 +2639,7 @@ namespace TS_SE_Tool
                 // Find the area in which to put Distance text.
                 if (Job.Distance == 11111)
                 {
-                    txt = "5* ";
+                    txt = Math.Floor(5 * DistanceMultiplier).ToString() + "* ";
                 }
                 else
                 {
@@ -3912,6 +3916,11 @@ namespace TS_SE_Tool
             foreach (TabPage tp in tabControlMain.TabPages)
             {
                 tp.Enabled = visible;
+            }
+
+            if (comboBoxUserTruckCompanyTrucks.Items.Count == 0)
+            {
+                tabControlMain.TabPages["tabPageTruck"].Enabled = false;
             }
 
             if (comboBoxUserTrailerCompanyTrailers.Items.Count == 0)

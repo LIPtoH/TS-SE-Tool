@@ -88,6 +88,12 @@ namespace TS_SE_Tool
                                 }
                                 break;
                             }
+                        case "DistanceMes":
+                            {
+                                ProgSettingsV.DistanceMes = line.Split(new char[] { '=' })[1];
+                                DistanceMultiplier = DistanceMultipliers[ProgSettingsV.DistanceMes];                                
+                                break;
+                            }
                     }
                 }
 
