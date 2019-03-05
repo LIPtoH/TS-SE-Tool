@@ -86,6 +86,8 @@ namespace TS_SE_Tool
         private List<Cargo> CargoesListDB;
         private List<Cargo> CargoesListDiff;
 
+        private Dictionary<string, List<string>> TrailerDefinitionVariants;
+
         private List<string> HeavyCargoList;
 
         private List<string> CompaniesList;
@@ -191,6 +193,7 @@ namespace TS_SE_Tool
 
             listBoxFreightMarketAddedJobs.DrawMode = DrawMode.OwnerDrawVariable;
             comboBoxFreightMarketCargoList.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBoxFreightMarketUrgency.DrawMode = DrawMode.OwnerDrawVariable;
 
             ChangeLanguage();
         }

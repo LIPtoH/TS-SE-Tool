@@ -107,10 +107,7 @@ namespace TS_SE_Tool
 
                 Globals.CurrentGame = dictionaryProfiles["ETS2"];
                 GameType = "ETS";
-
-                DBconnection = new System.Data.SqlServerCe.SqlCeConnection("Data Source = Database.sdf");
-                CreateDatabase();
-
+                
                 DistancesTable = new DataTable();
                 DistancesTable.Columns.Add("SourceCity", typeof(string));
                 DistancesTable.Columns.Add("SourceCompany", typeof(string));
@@ -201,6 +198,7 @@ namespace TS_SE_Tool
 
             CountriesList = new List<string>();
             CargoesList = new List<Cargo>();
+            TrailerDefinitionVariants = new Dictionary<string, List<string>>();
             HeavyCargoList = new List<string>();
             CompanyTruckList = new List<CompanyTruck>();
             CompanyTruckListDB = new List<CompanyTruck>();
@@ -247,7 +245,6 @@ namespace TS_SE_Tool
 
             namelessList = new List<string>();
             namelessLast = "";
-            //game = "ETS";
             JobsTotalDistance = 0;
             LoopStartCity = "";
             LoopStartCompany = "";
@@ -1270,8 +1267,7 @@ namespace TS_SE_Tool
             buttonInfo.Enabled = false;
             //buttonInfo.Click += new EventHandler();
         }
-
-
+        
         public void buttonTruckReFuel_Click(object sender, EventArgs e)
         {
             int i = 0;
@@ -2015,10 +2011,19 @@ namespace TS_SE_Tool
             //start filling
 
             //fill source and destination cities
-            foreach (City tempcity in from x in CitiesList
-                                      where !x.Disabled
-                                      select x)
+            //foreach (City tempcity in from x in CitiesList where !x.Disabled select x)
+            foreach (Garages garage in from x in GaragesList where !x.IgnoreStatus && x.GarageStatus != 0 select x)
             {
+                string CityName = garage.GarageName;
+                CitiesLngDict.TryGetValue(CityName, out string value);
+
+                if (value != null && value != "")
+                    combDT.Rows.Add(CityName, value);
+                else
+                {
+                    combDT.Rows.Add(CityName, CityName + " -n");
+                }
+                /*
                 CitiesLngDict.TryGetValue(tempcity.CityName, out string value);
                 if (value != null && value != "")
                     combDT.Rows.Add(tempcity.CityName, value);
@@ -2026,9 +2031,7 @@ namespace TS_SE_Tool
                 {
                     combDT.Rows.Add(tempcity.CityName, tempcity.CityName + " -n");
                 }
-
-                //comboBoxSourceCity.Items.Add(tempcity.CityName); //Source
-                //comboBoxDestinationCity.Items.Add(tempcity.CityName); //Destination
+                */
             }
 
             comboBoxUserCompanyHQcity.ValueMember = "City";
@@ -2537,7 +2540,7 @@ namespace TS_SE_Tool
 
                 TypeImgs[indexTypeImgs] = UrgencyImg[Job.Urgency];
 
-                int xmult = 0, ymult = 0, images = 0;
+                int xmult = 0, images = 0; //, ymult = 0
 
                 foreach (Image temp in TypeImgs)
                 {
@@ -2774,6 +2777,99 @@ namespace TS_SE_Tool
             triggerDestinationCitiesUpdate();
         }
 
+        public void FillcomboBoxUrgencyList()
+        {
+            int savedindex = comboBoxFreightMarketUrgency.SelectedIndex;
+            string savedvalue = "";
+            if (savedindex != -1)
+                savedvalue = comboBoxFreightMarketUrgency.SelectedValue.ToString();
+
+            DataTable combDT = new DataTable();
+            combDT.Columns.Add("ID");
+            combDT.Columns.Add("UrgencyDisplayName");
+            
+            foreach (int tempitem in UrgencyArray)
+            {
+                string str = tempitem.ToString();
+                if (UrgencyLngDict.TryGetValue(str, out string value))
+                {
+                    if (value != null && value != "")
+                    {
+                        combDT.Rows.Add(str, value);
+                    }
+                    else
+                    {
+                        combDT.Rows.Add(str, str);
+                    }
+                }
+                else
+                {
+                    combDT.Rows.Add(str, str);
+                }
+            }
+
+            //combDT.DefaultView.Sort = "CargoName ASC";
+            comboBoxFreightMarketUrgency.ValueMember = "ID";
+            comboBoxFreightMarketUrgency.DisplayMember = "UrgencyDisplayName";
+            comboBoxFreightMarketUrgency.DataSource = combDT;
+
+            if (savedindex == -1)
+                comboBoxFreightMarketUrgency.SelectedIndex = RandomValue.Next(comboBoxFreightMarketUrgency.Items.Count);
+            else
+                comboBoxFreightMarketUrgency.SelectedValue = savedvalue;
+
+        }
+
+        private void comboBoxFreightMarketUrgency_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            e.ItemHeight = 26;
+        }
+
+        private void comboBoxFreightMarketUrgency_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            ComboBox lst = sender as ComboBox;
+
+            e.DrawBackground();
+
+            Brush br;
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                br = SystemBrushes.HighlightText;
+            else
+                br = new SolidBrush(e.ForeColor);
+
+            float x = e.Bounds.Left;
+            float y = e.Bounds.Top;
+            float width = e.Bounds.Width;
+            float height = e.Bounds.Height;
+            RectangleF layout_rect;
+
+            int urgIndex = int.Parse((string)((DataRowView)lst.Items[e.Index])[0]);
+
+            string txt = lst.GetItemText(lst.Items[e.Index]);
+
+            //Draw Urgency img
+            RectangleF source_rect = new RectangleF(0, 0, 32, 32);
+            RectangleF dest_rect = new RectangleF((e.Bounds.Right - 26), e.Bounds.Top + 1, 24, 24);
+            e.Graphics.DrawImage(UrgencyImg[urgIndex], dest_rect, source_rect, GraphicsUnit.Pixel);
+
+            //Draw text
+            // Find the area in which to put the text.
+            float fntsize = 8.25f;
+            y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
+            layout_rect = new RectangleF(x, y, width, height);
+            //format.Alignment = StringAlignment.Far;
+
+            Font textfnt = new Font("Microsoft Sans Serif", fntsize);
+
+            e.Graphics.DrawString(txt, textfnt, br, layout_rect);
+
+            // Draw the focus rectangle if the mouse hovers over an item.
+            e.DrawFocusRectangle();
+        }
+
         public void FillcomboBoxCompanies()
         {
             //start filtering
@@ -2823,49 +2919,6 @@ namespace TS_SE_Tool
             //end filling
 
             //comboBoxFreightMarketCountries.SelectedIndex = comboBoxFreightMarketCountries.FindString("All");
-        }
-
-        public void FillcomboBoxUrgencyList()
-        {
-            int savedindex = comboBoxFreightMarketUrgency.SelectedIndex;
-            string savedvalue = "";
-            if (savedindex != -1)
-                savedvalue = comboBoxFreightMarketUrgency.SelectedValue.ToString();
-
-            DataTable combDT = new DataTable();
-            combDT.Columns.Add("ID");
-            combDT.Columns.Add("UrgencyDisplayName");
-            
-            foreach (int tempitem in UrgencyArray)
-            {
-                string str = tempitem.ToString();
-                if (UrgencyLngDict.TryGetValue(str, out string value))
-                {
-                    if (value != null && value != "")
-                    {
-                        combDT.Rows.Add(str, value);
-                    }
-                    else
-                    {
-                        combDT.Rows.Add(str, str);
-                    }
-                }
-                else
-                {
-                    combDT.Rows.Add(str, str);
-                }
-            }
-
-            //combDT.DefaultView.Sort = "CargoName ASC";
-            comboBoxFreightMarketUrgency.ValueMember = "ID";
-            comboBoxFreightMarketUrgency.DisplayMember = "UrgencyDisplayName";
-            comboBoxFreightMarketUrgency.DataSource = combDT;
-
-            if (savedindex == -1)
-                comboBoxFreightMarketUrgency.SelectedIndex = RandomValue.Next(comboBoxFreightMarketUrgency.Items.Count);
-            else
-                comboBoxFreightMarketUrgency.SelectedValue = savedvalue;
-
         }
 
         private void comboBoxCompanies_SelectedIndexChanged(object sender, EventArgs e)
@@ -2936,14 +2989,14 @@ namespace TS_SE_Tool
                     {
                         string str = tempitem.CargoName;
 
-                        combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), value);
+                        combDT.Rows.Add(str, value);
                     }
                     else
                     {
                         string str = tempitem.CargoName;
                         string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
 
-                        combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), CapName);
+                        combDT.Rows.Add(str, CapName);
                     }
                 }
                 else
@@ -2951,7 +3004,7 @@ namespace TS_SE_Tool
                     string str = tempitem.CargoName;
                     string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
 
-                    combDT.Rows.Add(str + "," + tempitem.CargoType.ToString(), CapName);
+                    combDT.Rows.Add(str, CapName);
                 }
             }
 
@@ -2998,18 +3051,13 @@ namespace TS_SE_Tool
             float height = e.Bounds.Height;
             RectangleF layout_rect;
 
-            string[] selval = ((DataRowView)lst.Items[e.Index])[0].ToString().Split(new char[] { ',' });
-            string CargoName = selval[0], CargoType = selval[1],
+            //string[] selval = ((DataRowView)lst.Items[e.Index])[0].ToString().Split(new char[] { ',' });
+            string CargoName = ((DataRowView)lst.Items[e.Index])[0].ToString(),//selval[0],// CargoType = selval[1],
                 CargoDN = lst.GetItemText(lst.Items[e.Index]);
 
             if (CargoName.EndsWith("_c"))
                 CargoDN += " (Cont)";
-            /*
-            if (CargoType == "1")
-                CargoDN += " [H]";
-            else if (CargoType == "2")
-                CargoDN += " [D]";
-                */
+
             string txt = CargoDN;
 
             //////
@@ -3071,9 +3119,8 @@ namespace TS_SE_Tool
             }
             catch
             {
-
             }
-
+            /*
             if (extheavy || CargoType == "1")
             {
                 TypeImgs[indexTypeImgs] = CargoTypeImg[1];
@@ -3085,7 +3132,7 @@ namespace TS_SE_Tool
                 TypeImgs[indexTypeImgs] = CargoTypeImg[2];
                 indexTypeImgs++;
             }
-
+            */
             int xmult = 0, images = 0;
 
             foreach (Image temp in TypeImgs)
@@ -3117,13 +3164,72 @@ namespace TS_SE_Tool
             y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
             layout_rect = new RectangleF(x, y, width, height);
             //format.Alignment = StringAlignment.Far;
-
             Font textfnt = new Font("Microsoft Sans Serif", fntsize);
-
             e.Graphics.DrawString(txt, textfnt, br, layout_rect);
 
             // Draw the focus rectangle if the mouse hovers over an item.
             e.DrawFocusRectangle();
+        }
+
+        private void comboBoxCargoList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ProgSettingsV.ProposeRandom && comboBoxFreightMarketUrgency.Items.Count > 0)
+            {
+                comboBoxFreightMarketUrgency.SelectedIndex = RandomValue.Next(comboBoxFreightMarketUrgency.Items.Count);
+            }
+
+            FillcomboBoxTrailerDefList();
+        }
+
+        public void FillcomboBoxTrailerDefList()
+        {
+            //int savedindex = comboBoxFreightMarketTrailerDef.SelectedIndex;
+            //string savedvalue = "";
+            //if (savedindex != -1)
+            //    savedvalue = comboBoxFreightMarketTrailerDef.SelectedValue.ToString();
+
+            DataTable combDT = new DataTable();
+            DataColumn dc = new DataColumn("Definition", typeof(string));
+            combDT.Columns.Add(dc);
+
+            dc = new DataColumn("DefinitionName", typeof(string));
+            combDT.Columns.Add(dc);
+
+            Cargo TempCargo = CargoesList.Find(x => x.CargoName == comboBoxFreightMarketCargoList.SelectedValue.ToString().Split(new char[] { ',' })[0]);
+
+            List<string> DefList = new List<string>(TempCargo.TrailerDefList.Select(x => x.DefName));
+
+            foreach (string tempitem in DefList)
+            {
+                if (CargoLngDict.TryGetValue(tempitem, out string value))
+                {
+                    if (value != null && value != "")
+                    {
+                        combDT.Rows.Add(tempitem, value);
+                    }
+                    else
+                    {
+                        string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tempitem);
+                        combDT.Rows.Add(tempitem, CapName);
+                    }
+                }
+                else
+                {
+                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tempitem);
+                    combDT.Rows.Add(tempitem, CapName);
+                }
+            }
+
+            combDT.DefaultView.Sort = "DefinitionName ASC";
+
+            comboBoxFreightMarketTrailerDef.ValueMember = "Definition";
+            comboBoxFreightMarketTrailerDef.DisplayMember = "DefinitionName";
+            comboBoxFreightMarketTrailerDef.DataSource = combDT;
+
+            //if (savedindex == -1)
+                comboBoxFreightMarketTrailerDef.SelectedIndex = RandomValue.Next(comboBoxFreightMarketTrailerDef.Items.Count);
+            //else
+            //    comboBoxFreightMarketTrailerDef.SelectedValue = savedvalue;
         }
 
         private void comboBoxSourceCity_SelectedIndexChanged(object sender, EventArgs e)
@@ -3388,14 +3494,6 @@ namespace TS_SE_Tool
                 comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
             }
            
-        }
-
-        private void comboBoxCargoList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ProgSettingsV.ProposeRandom && comboBoxFreightMarketUrgency.Items.Count > 0)
-            {
-                comboBoxFreightMarketUrgency.SelectedIndex = RandomValue.Next(comboBoxFreightMarketUrgency.Items.Count);
-            }
         }
 
         private void buttonAddJob_Click(object sender, EventArgs e)
@@ -4059,7 +4157,7 @@ namespace TS_SE_Tool
                 LngFileLoader("companies_translate.txt", CompaniesLngDict, ProgSettingsV.Language);
                 LngFileLoader("cargo_translate.txt", CargoLngDict, ProgSettingsV.Language);
                 LngFileLoader("urgency_translate.txt", UrgencyLngDict, ProgSettingsV.Language);
-                LngFileLoader("custom_strings.txt", CustomStringsDict, ProgSettingsV.Language);
+                //LngFileLoader("custom_strings.txt", CustomStringsDict, ProgSettingsV.Language);
 
                 LoadTruckBrandsLng();
 
@@ -4145,7 +4243,7 @@ namespace TS_SE_Tool
         private void RefreshComboboxes()
         {
             //Freight Market
-            //CargoList
+            //Cargo
             int savedindex = 0, i = 0;
             string savedvalue = "";
             DataTable temptable = new DataTable();
@@ -4179,6 +4277,40 @@ namespace TS_SE_Tool
                 else
                     comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
             }
+
+            //Urgency
+            temptable = comboBoxFreightMarketUrgency.DataSource as DataTable;
+
+            if (temptable != null)
+            {
+                /*
+                savedindex = comboBoxFreightMarketUrgency.SelectedIndex;
+
+                if (savedindex != -1)
+                    savedvalue = comboBoxFreightMarketUrgency.SelectedValue.ToString();
+                */
+                i = 0;
+
+                foreach (DataRow temp in temptable.Rows)
+                {
+                    try
+                    {
+                        ((DataTable)comboBoxFreightMarketUrgency.DataSource).Rows[i][1] = UrgencyLngDict[temp[0].ToString()];
+                    }
+                    catch
+                    { }
+                    i++;
+                }
+
+                //comboBoxFreightMarketCargoList.SelectedIndex = -1;
+                /*
+                if (savedindex != -1)
+                    comboBoxFreightMarketUrgency.SelectedValue = savedvalue;
+                else
+                    comboBoxFreightMarketUrgency.SelectedIndex = RandomValue.Next(comboBoxFreightMarketUrgency.Items.Count);
+                */
+            }
+
 
             //Cities ComboBoxes
             ComboBox[] CitiesCB = { comboBoxFreightMarketSourceCity, comboBoxFreightMarketDestinationCity, comboBoxUserCompanyHQcity, comboBoxCargoMarketSourceCity };

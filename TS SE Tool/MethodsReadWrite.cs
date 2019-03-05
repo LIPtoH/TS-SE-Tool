@@ -657,9 +657,8 @@ namespace TS_SE_Tool
 
         private void LoadSaveFile()
         {
-            //this.config_file[0] = this.textField_enter_directory.Text;
-            
-            WriteConfig();
+            //this.config_file[0] = this.textField_enter_directory.Text;            
+            //WriteConfig();
             ToggleVisibility(false);
             SetDefaultValues(false);
 
@@ -720,7 +719,6 @@ namespace TS_SE_Tool
                 {
                     //LastModifiedTimestamp = File.GetLastWriteTime(SiiInfoPath);
                     //textBoxDynamic.Text += LastModifiedTimestamp.ToString();
-
                     CheckProfileInfoData();
                 }
             }
@@ -748,7 +746,6 @@ namespace TS_SE_Tool
                         {
                             break;
                         }
-
                         decodeAttempt++;
                     }
 
@@ -778,14 +775,12 @@ namespace TS_SE_Tool
             }
 
             tempInfoFileInMemory = null; //clearmemory
-
             //endinfo
 
             if (SavefileVersion > 0 && SavefileVersion != SupportedSavefileVersionETS2)
             {
                 MessageBox.Show("Savefile version don't supported.\nYou cann't edit file with this version, but you can try to decode it.", "Wrong version");
                 return;
-                //goto LoadSavefileEnd
             }
             else if (SavefileVersion == 0)
             {
@@ -801,23 +796,6 @@ namespace TS_SE_Tool
             }
             else
             {
-                //Game type for custom path
-                if (SavefilePath.Contains("Euro Truck"))
-                {
-                    GameType = "ETS";
-                }
-                else
-                {
-                    GameType = "ATS";
-                }
-
-                /*Profile name for custom path
-                 * 
-                string[] strArray = Globals.SavesHex[comboBoxSaves.SelectedIndex].Split(new char[] { '\\' });
-                string hexValue = strArray[strArray.Length - 3];
-                hexValue = FromHexToString(hexValue);
-                Label_Profile.Text = hexValue;
-                */
                 FileDecoded = false;
                 try
                 {
@@ -830,7 +808,6 @@ namespace TS_SE_Tool
                         {
                             break;
                         }
-
                         decodeAttempt++;
                     }
 
@@ -839,7 +816,6 @@ namespace TS_SE_Tool
                         ShowStatusMessages("e", "error_could_not_decode_file");
                         LogWriter("Could not decrypt after 5 attempts");
                     }
-
                 }
                 catch
                 {
@@ -855,8 +831,11 @@ namespace TS_SE_Tool
                 {
                     LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
 
-                    InsertDataIntoDatabase("GameTypesTable");
-                    
+                    string dbPath = "dbs/" + GameType + "." + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + ".sdf";
+
+                    DBconnection = new SqlCeConnection("Data Source = " + dbPath);
+                    CreateDatabase(dbPath);
+
                     worker = new BackgroundWorker();
                     worker.WorkerReportsProgress = true;
                     worker.DoWork += PrepareData;//Start;
@@ -1175,7 +1154,7 @@ namespace TS_SE_Tool
                             {
                                 writer.WriteLine(" truck_placement: " + PlayerProfileData.UserCompanyAssignedTruckPlacement);
                                 line++;
-                                writer.WriteLine(" trailer_placement: (0, 0, 0) (1; 0, 0, 0)");//" + PlayerProfileData.UserCompanyAssignedTrailerPlacement);
+                                writer.WriteLine(" trailer_placement: (0, 0, 0) (1; 0, 0, 0)");
                                 line++;
                                 int slave_trailers = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
                                 writer.WriteLine(tempSavefileInMemory[line]);
@@ -1195,7 +1174,7 @@ namespace TS_SE_Tool
                         if (SaveInMemLine.StartsWith("garage : garage."))
                         {
                             chunkOfline = SaveInMemLine.Split(new char[] { '.', ' ' });
-                            Garages tempGarage = GaragesList.Find(x => x.GarageName == chunkOfline[3]);//.TrimEnd(new char[] { ' ' }));
+                            Garages tempGarage = GaragesList.Find(x => x.GarageName == chunkOfline[3]);
 
                             int capacity = 0;
 
@@ -1216,7 +1195,6 @@ namespace TS_SE_Tool
                             }
                             writer.WriteLine(SaveInMemLine);
                             writer.WriteLine(" vehicles: " + capacity);
-                            //tempGarage.Vehicles
 
                             int cur = tempGarage.Vehicles.Count;
 
@@ -1258,7 +1236,7 @@ namespace TS_SE_Tool
                                     break;
                                 line++;
                             }
-                            writer.WriteLine(tempSavefileInMemory[line]);//SaveInMemLine = tempSavefileInMemory[line];
+                            writer.WriteLine(tempSavefileInMemory[line]);
                             continue;
                         }
 
