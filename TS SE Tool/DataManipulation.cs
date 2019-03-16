@@ -874,6 +874,7 @@ namespace TS_SE_Tool
                                             if (tempSavefileInMemory[index].StartsWith(" company_truck:"))
                                             {
                                                 string[] LineArray = tempSavefileInMemory[index].Split(new char[] { ' ' });
+                                                cargotype = 0;
 
                                                 if (tempSavefileInMemory[index].Contains("\"heavy"))
                                                 {
@@ -1454,9 +1455,6 @@ namespace TS_SE_Tool
 
                 string TrailerDefinition = "", TrailerVariant = "";
 
-                //int randvar = 0;
-                //randvar = RandomValue.Next(cargo.CargoVarDef.Count());
-
                 TrailerDefinition = comboBoxFreightMarketTrailerDef.SelectedValue.ToString();
                 TrailerVariant = comboBoxFreightMarketTrailerVariant.SelectedValue.ToString();
                 int UnitsCount = cargo.TrailerDefList.Find(x => x.DefName == TrailerDefinition).UnitsCount;
@@ -1523,9 +1521,6 @@ namespace TS_SE_Tool
                     {
                         comboBoxFreightMarketDestinationCity.SelectedValue = LoopStartCity;
                         comboBoxFreightMarketDestinationCompany.SelectedValue = LoopStartCompany;
-
-                        //DestinationCity = LoopStartCity;
-                        //DestinationCompany = LoopStartCompany;
                     }
                     catch
                     {

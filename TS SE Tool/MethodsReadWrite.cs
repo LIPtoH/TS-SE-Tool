@@ -48,7 +48,6 @@ namespace TS_SE_Tool
                         case "ProgramVersion":
                             {
                                 ProgPrevVersion = double.Parse(line.Split(new char[] { '=' })[1]);
-                                //ProgSettingsV.ProgramVersion = double.Parse( line.Split(new char[] { '=' })[1]);
                                 break;
                             }
 
@@ -657,8 +656,6 @@ namespace TS_SE_Tool
 
         private void LoadSaveFile()
         {
-            //this.config_file[0] = this.textField_enter_directory.Text;            
-            //WriteConfig();
             ToggleVisibility(false);
             SetDefaultValues(false);
 

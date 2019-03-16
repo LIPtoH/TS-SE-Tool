@@ -1575,7 +1575,7 @@
             this.buttonMainGameSwitchCustomFolder.TabIndex = 14;
             this.buttonMainGameSwitchCustomFolder.Text = "Add Custom Folder";
             this.buttonMainGameSwitchCustomFolder.UseVisualStyleBackColor = true;
-            this.buttonMainGameSwitchCustomFolder.Click += new System.EventHandler(this.AddCustomFolder_Click);
+            this.buttonMainGameSwitchCustomFolder.Visible = false;
             // 
             // buttonMainGameSwitchETS
             // 
