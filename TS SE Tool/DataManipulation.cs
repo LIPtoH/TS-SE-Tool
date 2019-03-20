@@ -1446,9 +1446,10 @@ namespace TS_SE_Tool
 
                 int CargoType = -1;
 
-                CargoType = int.Parse(comboBoxFreightMarketCargoList.SelectedValue.ToString().Split(new char[] { ',' })[1]);
+                DataTable TrailerDefDTs = ((DataTable)comboBoxFreightMarketTrailerDef.DataSource).DefaultView.ToTable();
+                CargoType = int.Parse(TrailerDefDTs.Rows[comboBoxFreightMarketTrailerDef.SelectedIndex]["CargoType"].ToString());
 
-                List<CompanyTruck> CompanyTruckType = CompanyTruckListDB.Where(x => x.Type == CargoType).ToList();
+                List <CompanyTruck> CompanyTruckType = CompanyTruckListDB.Where(x => x.Type == CargoType).ToList();
                 TruckName = CompanyTruckType[RandomValue.Next(CompanyTruckType.Count())].TruckName;
 
                 Cargo cargo = CargoesList.Find(x => x.CargoName == Cargo);
@@ -1457,7 +1458,7 @@ namespace TS_SE_Tool
 
                 TrailerDefinition = comboBoxFreightMarketTrailerDef.SelectedValue.ToString();
                 TrailerVariant = comboBoxFreightMarketTrailerVariant.SelectedValue.ToString();
-                int UnitsCount = cargo.TrailerDefList.Find(x => x.DefName == TrailerDefinition).UnitsCount;
+                int UnitsCount = int.Parse(TrailerDefDTs.Rows[comboBoxFreightMarketTrailerDef.SelectedIndex]["UnitsCount"].ToString());//cargo.TrailerDefList.Find(x => x.DefName == TrailerDefinition).UnitsCount;
 
                 string Urgency = comboBoxFreightMarketUrgency.SelectedValue.ToString();
 

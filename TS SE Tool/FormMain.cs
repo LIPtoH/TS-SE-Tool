@@ -146,6 +146,7 @@ namespace TS_SE_Tool
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs;
 
+
         private ImageList TabpagesImages;
 
         private CheckBox[,] SkillButtonArray;

@@ -1999,13 +1999,14 @@ namespace TS_SE_Tool
                     combDT.Rows.Add(CityName, CityName + " -n");
                 }
             }
-
+            comboBoxUserCompanyHQcity.SelectedIndexChanged -= comboBoxUserCompanyHQcity_SelectedIndexChanged;
             comboBoxUserCompanyHQcity.ValueMember = "City";
             comboBoxUserCompanyHQcity.DisplayMember = "CityName";
             comboBoxUserCompanyHQcity.DataSource = combDT;
+            comboBoxUserCompanyHQcity.SelectedIndexChanged += comboBoxUserCompanyHQcity_SelectedIndexChanged;
         }
-
-        private void comboBoxHQcity_SelectionChangeCommitted(object sender, EventArgs e)
+        
+        private void comboBoxUserCompanyHQcity_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxUserCompanyHQcity.SelectedValue != null)
                 PlayerProfileData.HQcity = comboBoxUserCompanyHQcity.SelectedValue.ToString();
@@ -2804,9 +2805,6 @@ namespace TS_SE_Tool
 
         private void comboBoxCompanies_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //comboBoxFreightMarketDestinationCity.SelectedIndex = -1;
-            //comboBoxFreightMarketDestinationCompany.SelectedIndex = -1;
-
             triggerDestinationCitiesUpdate();
         }
 
@@ -3090,29 +3088,37 @@ namespace TS_SE_Tool
             dc = new DataColumn("DefinitionName", typeof(string));
             combDT.Columns.Add(dc);
 
+            dc = new DataColumn("CargoType", typeof(int));
+            combDT.Columns.Add(dc);
+
+            dc = new DataColumn("UnitsCount", typeof(int));
+            combDT.Columns.Add(dc);
+
             Cargo TempCargo = CargoesList.Find(x => x.CargoName == comboBoxFreightMarketCargoList.SelectedValue.ToString().Split(new char[] { ',' })[0]);
-
-            //List<string> DefList = new List<string>(TempCargo.TrailerDefList.Select(x => x.DefName));
-
+            
             foreach ( TrailerDefinition tempitem in TempCargo.TrailerDefList)
-            //foreach (string tempitem in DefList)
             {
-                if (CargoLngDict.TryGetValue(tempitem.DefName, out string value))
+                string value = null;
+
+                CargoLngDict.TryGetValue(tempitem.DefName, out value);
+
+                if (value != null && value != "")
                 {
-                    if (value != null && value != "")
-                    {
-                        combDT.Rows.Add(tempitem.DefName, value + " " + tempitem.CargoType + " " + tempitem.UnitsCount);
-                    }
-                    else
-                    {
-                        string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tempitem.DefName);
-                        combDT.Rows.Add(tempitem.DefName, CapName + " " + tempitem.CargoType + " " + tempitem.UnitsCount);
-                    }
+                    combDT.Rows.Add(tempitem.DefName, value + " (" + tempitem.UnitsCount +"u)", tempitem.CargoType, tempitem.UnitsCount);
                 }
                 else
                 {
                     string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tempitem.DefName);
-                    combDT.Rows.Add(tempitem.DefName, CapName + " " + tempitem.CargoType + " " + tempitem.UnitsCount);
+                    string[] CapNameArray =  CapName.Split(new char[] { '.' });
+
+                    CapName = "";
+                    for (int i = 1; i < CapNameArray.Length; i++)
+                    {
+                        CapName += CapNameArray[i] + " ";
+                    }
+
+
+                    combDT.Rows.Add(tempitem.DefName, CapName + "(" + tempitem.UnitsCount + "u)", tempitem.CargoType, tempitem.UnitsCount);
                 }
             }
 
@@ -3123,6 +3129,53 @@ namespace TS_SE_Tool
             comboBoxFreightMarketTrailerDef.DataSource = combDT;
 
             comboBoxFreightMarketTrailerDef.SelectedIndex = RandomValue.Next(comboBoxFreightMarketTrailerDef.Items.Count);
+        }
+
+        private void comboBoxFreightMarketTrailerDef_SelectedValueChanged(object sender, EventArgs e)
+        {
+            //FillcomboBoxTrailerVariantList();
+        }
+
+        private void comboBoxFreightMarketTrailerDef_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillcomboBoxTrailerVariantList();
+        }
+
+        public void FillcomboBoxTrailerVariantList()
+        {
+            DataTable combDT = new DataTable();
+            DataColumn dc = new DataColumn("Variant", typeof(string));
+            combDT.Columns.Add(dc);
+
+            dc = new DataColumn("VariantName", typeof(string));
+            combDT.Columns.Add(dc);
+
+            List<string> TrailerVariants = TrailerDefinitionVariants[comboBoxFreightMarketTrailerDef.SelectedValue.ToString()];
+
+            foreach (string tempitem in TrailerVariants)
+            {
+                string value = null;
+
+                //CargoLngDict.TryGetValue(tempitem, out value);
+
+                if (value != null && value != "")
+                {
+                    combDT.Rows.Add(tempitem, value);
+                }
+                else
+                {
+                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tempitem);
+                    combDT.Rows.Add(tempitem, CapName);
+                }
+            }
+
+            combDT.DefaultView.Sort = "VariantName ASC";
+
+            comboBoxFreightMarketTrailerVariant.ValueMember = "Variant";
+            comboBoxFreightMarketTrailerVariant.DisplayMember = "VariantName";
+            comboBoxFreightMarketTrailerVariant.DataSource = combDT;
+
+            comboBoxFreightMarketTrailerVariant.SelectedIndex = RandomValue.Next(comboBoxFreightMarketTrailerVariant.Items.Count);
         }
 
         private void comboBoxSourceCity_SelectedIndexChanged(object sender, EventArgs e)
@@ -4067,55 +4120,10 @@ namespace TS_SE_Tool
 
         private void RefreshComboboxes()
         {
-            //Freight Market
-            //Cargo
-            int savedindex = 0, i = 0;
+            int savedindex = 0, i = 0, j = 0;
             string savedvalue = "";
             DataTable temptable = new DataTable();
-
-            temptable = comboBoxFreightMarketCargoList.DataSource as DataTable;
-            if (temptable != null)
-            {
-                savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
-
-                if (savedindex != -1)
-                    savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
-
-                i = 0;
-                foreach (DataRow temp in temptable.Rows)
-                {
-                    try
-                    {
-                        temp[1] = CargoLngDict[temp[0].ToString()];
-                    }
-                    catch
-                    { }
-                    i++;
-                }
-
-                if (savedindex != -1)
-                    comboBoxFreightMarketCargoList.SelectedValue = savedvalue;
-                else
-                    comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
-            }
-
-            //Urgency
-            temptable = comboBoxFreightMarketUrgency.DataSource as DataTable;
-            if (temptable != null)
-            {
-                i = 0;
-                foreach (DataRow temp in temptable.Rows)
-                {
-                    try
-                    {
-                        temp[1] = UrgencyLngDict[temp[0].ToString()];
-                    }
-                    catch
-                    { }
-                    i++;
-                }
-            }
-
+            
             //Countries ComboBoxes
             temptable = comboBoxFreightMarketCountries.DataSource as DataTable;
             if (temptable != null)
@@ -4125,6 +4133,7 @@ namespace TS_SE_Tool
                 if (savedindex != -1)
                     savedvalue = comboBoxFreightMarketCountries.SelectedValue.ToString();
 
+                comboBoxFreightMarketCountries.SelectedIndexChanged -= comboBoxCountries_SelectedIndexChanged;
                 i = 0;
                 foreach (DataRow temp in temptable.Rows)
                 {
@@ -4153,31 +4162,83 @@ namespace TS_SE_Tool
                 sortedDT.Rows.RemoveAt(rowi);
                 sortedDT.Rows.InsertAt(row, 0);
 
-                comboBoxFreightMarketCountries.SelectedIndexChanged -= comboBoxCountries_SelectedIndexChanged;
 
                 comboBoxFreightMarketCountries.DataSource = sortedDT;
                 
                 if (savedindex != -1)
                     comboBoxFreightMarketCountries.SelectedValue = savedvalue;
                 else
-                    comboBoxFreightMarketCountries.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCountries.Items.Count);
+                    comboBoxFreightMarketCountries.SelectedValue = "All";
 
                 comboBoxFreightMarketCountries.SelectedIndexChanged += comboBoxCountries_SelectedIndexChanged;
             }
+            
+            //Companies
+            temptable = comboBoxFreightMarketCompanies.DataSource as DataTable;
+
+            if (temptable != null)
+            {
+                savedindex = comboBoxFreightMarketCompanies.SelectedIndex;
+
+                if (savedindex != -1)
+                    savedvalue = comboBoxFreightMarketCompanies.SelectedValue.ToString();
+
+                comboBoxFreightMarketCompanies.SelectedIndexChanged -= comboBoxCompanies_SelectedIndexChanged;
+                i = 0;
+                foreach (DataRow temp in temptable.Rows)
+                {
+                    try
+                    {
+                        temp[1] = CompaniesLngDict[temp[0].ToString()];
+                    }
+                    catch
+                    { }
+                    i++;
+                }
+
+                DataTable sortedDT = temptable.DefaultView.Table.Copy();
+
+                DataView dv = sortedDT.DefaultView;
+                dv.Sort = "CompanyName ASC";
+                sortedDT = dv.ToTable();
+                sortedDT.DefaultView.Sort = "";
+
+                DataRow sourceRow = sortedDT.Select("Company = 'All'")[0];
+                int rowi = sortedDT.Rows.IndexOf(sourceRow);
+
+                DataRow row = sortedDT.NewRow();
+                row.ItemArray = sourceRow.ItemArray;
+
+                sortedDT.Rows.RemoveAt(rowi);
+                sortedDT.Rows.InsertAt(row, 0);
+
+
+                comboBoxFreightMarketCompanies.DataSource = sortedDT;
+
+                if (savedindex != -1)
+                    comboBoxFreightMarketCompanies.SelectedValue = savedvalue;
+                else
+                    comboBoxFreightMarketCompanies.SelectedValue = "All";
+
+                comboBoxFreightMarketCompanies.SelectedIndexChanged += comboBoxCompanies_SelectedIndexChanged;
+            }
+            
             //////
             //Cities ComboBoxes
             ComboBox[] CitiesCB = { comboBoxFreightMarketSourceCity, comboBoxFreightMarketDestinationCity, comboBoxUserCompanyHQcity, comboBoxCargoMarketSourceCity };
-
-            foreach(ComboBox tempCB in CitiesCB)
+            EventHandler[] CitiesCBeh = { comboBoxSourceCity_SelectedIndexChanged, comboBoxDestinationCity_SelectedIndexChanged, comboBoxUserCompanyHQcity_SelectedIndexChanged };
+            j = 0;
+            foreach (ComboBox tempCB in CitiesCB)
             {
+                temptable = tempCB.DataSource as DataTable;
                 if (temptable != null)
                 {
-                    temptable = tempCB.DataSource as DataTable;
                     savedindex = tempCB.SelectedIndex;
 
                     if (savedindex != -1)
                         savedvalue = tempCB.SelectedValue.ToString();
 
+                    tempCB.SelectedIndexChanged -= CitiesCBeh[j];
                     i = 0;
                     foreach (DataRow temp in temptable.Rows)
                     {
@@ -4192,41 +4253,90 @@ namespace TS_SE_Tool
 
                     if (savedindex != -1)
                         tempCB.SelectedValue = savedvalue;
-                    else
-                        tempCB.SelectedIndex = RandomValue.Next(tempCB.Items.Count);
+
+                    tempCB.SelectedIndexChanged += CitiesCBeh[j];
+                    j++;
                 }
             }
 
             //////
             //Cities ComboBoxes
-            ComboBox[] CompaniesCB = { comboBoxFreightMarketCompanies, comboBoxFreightMarketSourceCompany, comboBoxFreightMarketDestinationCompany };
-
+            ComboBox[] CompaniesCB = { comboBoxFreightMarketSourceCompany, comboBoxFreightMarketDestinationCompany };
+            EventHandler[] CompaniesCBeh = { comboBoxSourceCompany_SelectedIndexChanged, comboBoxDestinationCompany_SelectedIndexChanged };
+            j = 0;
             foreach (ComboBox tempCB in CompaniesCB)
             {
                 temptable = tempCB.DataSource as DataTable;
-                savedindex = tempCB.SelectedIndex;
+                if (temptable != null)
+                {
+                    savedindex = tempCB.SelectedIndex;
+
+                    if (savedindex != -1)
+                        savedvalue = tempCB.SelectedValue.ToString();
+
+                    tempCB.SelectedIndexChanged -= CompaniesCBeh[j];
+
+                    i = 0;
+                    foreach (DataRow temp in temptable.Rows)
+                    {
+                        try
+                        {
+                            temp[1] = CompaniesLngDict[temp[0].ToString()];
+                        }
+                        catch
+                        { }
+                        i++;
+                    }
+
+                    if (savedindex != -1)
+                        tempCB.SelectedValue = savedvalue;
+
+                    tempCB.SelectedIndexChanged += CompaniesCBeh[j];
+                    j++;
+                    }
+                }
+
+            //Freight Market
+            //Cargo
+            temptable = comboBoxFreightMarketCargoList.DataSource as DataTable;
+            if (temptable != null)
+            {
+                savedindex = comboBoxFreightMarketCargoList.SelectedIndex;
 
                 if (savedindex != -1)
-                    savedvalue = tempCB.SelectedValue.ToString();
+                    savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
 
                 i = 0;
                 foreach (DataRow temp in temptable.Rows)
                 {
                     try
                     {
-                        temp[1] = CompaniesLngDict[temp[0].ToString()];
+                        temp[1] = CargoLngDict[temp[0].ToString()];
                     }
                     catch
                     { }
                     i++;
                 }
 
-                temptable.DefaultView.Sort = "CompanyName ASC";
-
                 if (savedindex != -1)
-                    tempCB.SelectedValue = savedvalue;
-                else
-                    tempCB.SelectedIndex = RandomValue.Next(tempCB.Items.Count);
+                    comboBoxFreightMarketCargoList.SelectedValue = savedvalue;
+            }
+
+            //Urgency
+            temptable = comboBoxFreightMarketUrgency.DataSource as DataTable;
+            if (temptable != null)
+            {
+                i = 0;
+                foreach (DataRow temp in temptable.Rows)
+                {
+                    try
+                    {
+                        temp[1] = UrgencyLngDict[temp[0].ToString()];
+                    }
+                    catch
+                    { }
+                    i++;
+                }
             }
 
             //////

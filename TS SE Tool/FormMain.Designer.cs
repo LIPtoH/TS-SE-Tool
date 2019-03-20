@@ -148,12 +148,14 @@
             this.labelCargoMarketCity = new System.Windows.Forms.Label();
             this.comboBoxSourceCargoMarketCompany = new System.Windows.Forms.ComboBox();
             this.tabPageConvoyTools = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonConvoyToolsGPSCurrentPositionCopy = new System.Windows.Forms.Button();
+            this.buttonConvoyToolsGPSCurrentPositionPaste = new System.Windows.Forms.Button();
+            this.buttonConvoyToolsGPSStoredGPSPathCopy = new System.Windows.Forms.Button();
+            this.buttonConvoyToolsGPSStoredGPSPathPaste = new System.Windows.Forms.Button();
             this.buttonConvoyToolsGPSTruckPositionMultySavePaste = new System.Windows.Forms.Button();
             this.buttonConvoyToolsGPSTruckPositionMultySaveCopy = new System.Windows.Forms.Button();
-            this.buttonConvoyToolsGPSCurrentPositionPaste = new System.Windows.Forms.Button();
-            this.buttonConvoyToolsGPSCurrentPositionCopy = new System.Windows.Forms.Button();
-            this.buttonConvoyToolsGPSStoredGPSPathPaste = new System.Windows.Forms.Button();
-            this.buttonConvoyToolsGPSStoredGPSPathCopy = new System.Windows.Forms.Button();
             this.buttonMainWriteSave = new System.Windows.Forms.Button();
             this.buttonProfilesAndSavesOpenSaveFolder = new System.Windows.Forms.Button();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
@@ -169,8 +171,6 @@
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -187,10 +187,10 @@
             this.tabPageFreightMarket.SuspendLayout();
             this.tabPageCargoMarket.SuspendLayout();
             this.tabPageConvoyTools.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileAvatar)).BeginInit();
             this.groupBoxMainProfilesAndSaves.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripMain
@@ -680,7 +680,7 @@
             this.comboBoxUserCompanyHQcity.Name = "comboBoxUserCompanyHQcity";
             this.comboBoxUserCompanyHQcity.Size = new System.Drawing.Size(138, 21);
             this.comboBoxUserCompanyHQcity.TabIndex = 12;
-            this.comboBoxUserCompanyHQcity.SelectionChangeCommitted += new System.EventHandler(this.comboBoxHQcity_SelectionChangeCommitted);
+            this.comboBoxUserCompanyHQcity.SelectedIndexChanged += new System.EventHandler(this.comboBoxUserCompanyHQcity_SelectedIndexChanged);
             // 
             // labelUserCompanyHQcity
             // 
@@ -1001,6 +1001,8 @@
             this.comboBoxFreightMarketTrailerDef.Name = "comboBoxFreightMarketTrailerDef";
             this.comboBoxFreightMarketTrailerDef.Size = new System.Drawing.Size(241, 21);
             this.comboBoxFreightMarketTrailerDef.TabIndex = 27;
+            this.comboBoxFreightMarketTrailerDef.SelectedIndexChanged += new System.EventHandler(this.comboBoxFreightMarketTrailerDef_SelectedIndexChanged);
+            this.comboBoxFreightMarketTrailerDef.SelectedValueChanged += new System.EventHandler(this.comboBoxFreightMarketTrailerDef_SelectedValueChanged);
             // 
             // labelFreightMarketTrailer
             // 
@@ -1431,38 +1433,35 @@
             this.tabPageConvoyTools.Text = "Convoy Control";
             this.tabPageConvoyTools.UseVisualStyleBackColor = true;
             // 
-            // buttonConvoyToolsGPSTruckPositionMultySavePaste
+            // label5
             // 
-            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Location = new System.Drawing.Point(278, 61);
-            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Name = "buttonConvoyToolsGPSTruckPositionMultySavePaste";
-            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Size = new System.Drawing.Size(269, 52);
-            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.TabIndex = 5;
-            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Text = "Create multiple saves with different truck positions";
-            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.UseVisualStyleBackColor = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(6, 67);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(552, 247);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Work In Progres";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // buttonConvoyToolsGPSTruckPositionMultySaveCopy
+            // tableLayoutPanel1
             // 
-            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Location = new System.Drawing.Point(3, 60);
-            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Name = "buttonConvoyToolsGPSTruckPositionMultySaveCopy";
-            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Size = new System.Drawing.Size(269, 52);
-            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.TabIndex = 4;
-            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Text = "Copy truck position from multiple saves";
-            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.UseVisualStyleBackColor = true;
-            // 
-            // buttonConvoyToolsGPSCurrentPositionPaste
-            // 
-            this.buttonConvoyToolsGPSCurrentPositionPaste.Location = new System.Drawing.Point(278, 3);
-            this.buttonConvoyToolsGPSCurrentPositionPaste.Name = "buttonConvoyToolsGPSCurrentPositionPaste";
-            this.buttonConvoyToolsGPSCurrentPositionPaste.Size = new System.Drawing.Size(269, 23);
-            this.buttonConvoyToolsGPSCurrentPositionPaste.TabIndex = 3;
-            this.buttonConvoyToolsGPSCurrentPositionPaste.Text = "Paste current position";
-            this.buttonConvoyToolsGPSCurrentPositionPaste.UseVisualStyleBackColor = true;
-            this.buttonConvoyToolsGPSCurrentPositionPaste.Click += new System.EventHandler(this.buttonGPSCurrentPositionPaste_Click);
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSCurrentPositionCopy, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSCurrentPositionPaste, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSStoredGPSPathCopy, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSStoredGPSPathPaste, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSTruckPositionMultySavePaste, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSTruckPositionMultySaveCopy, 0, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 6);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(552, 119);
+            this.tableLayoutPanel1.TabIndex = 7;
             // 
             // buttonConvoyToolsGPSCurrentPositionCopy
             // 
@@ -1474,15 +1473,15 @@
             this.buttonConvoyToolsGPSCurrentPositionCopy.UseVisualStyleBackColor = true;
             this.buttonConvoyToolsGPSCurrentPositionCopy.Click += new System.EventHandler(this.buttonGPSCurrentPositionCopy_Click);
             // 
-            // buttonConvoyToolsGPSStoredGPSPathPaste
+            // buttonConvoyToolsGPSCurrentPositionPaste
             // 
-            this.buttonConvoyToolsGPSStoredGPSPathPaste.Location = new System.Drawing.Point(278, 32);
-            this.buttonConvoyToolsGPSStoredGPSPathPaste.Name = "buttonConvoyToolsGPSStoredGPSPathPaste";
-            this.buttonConvoyToolsGPSStoredGPSPathPaste.Size = new System.Drawing.Size(269, 23);
-            this.buttonConvoyToolsGPSStoredGPSPathPaste.TabIndex = 1;
-            this.buttonConvoyToolsGPSStoredGPSPathPaste.Text = "Paste GPS path";
-            this.buttonConvoyToolsGPSStoredGPSPathPaste.UseVisualStyleBackColor = true;
-            this.buttonConvoyToolsGPSStoredGPSPathPaste.Click += new System.EventHandler(this.buttonGPSStoredGPSPathPaste_Click);
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Location = new System.Drawing.Point(279, 3);
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Name = "buttonConvoyToolsGPSCurrentPositionPaste";
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Size = new System.Drawing.Size(269, 23);
+            this.buttonConvoyToolsGPSCurrentPositionPaste.TabIndex = 3;
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Text = "Paste current position";
+            this.buttonConvoyToolsGPSCurrentPositionPaste.UseVisualStyleBackColor = true;
+            this.buttonConvoyToolsGPSCurrentPositionPaste.Click += new System.EventHandler(this.buttonGPSCurrentPositionPaste_Click);
             // 
             // buttonConvoyToolsGPSStoredGPSPathCopy
             // 
@@ -1493,6 +1492,39 @@
             this.buttonConvoyToolsGPSStoredGPSPathCopy.Text = "Copy GPS path";
             this.buttonConvoyToolsGPSStoredGPSPathCopy.UseVisualStyleBackColor = true;
             this.buttonConvoyToolsGPSStoredGPSPathCopy.Click += new System.EventHandler(this.buttonGPSStoredGPSPathCopy_Click);
+            // 
+            // buttonConvoyToolsGPSStoredGPSPathPaste
+            // 
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Location = new System.Drawing.Point(279, 32);
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Name = "buttonConvoyToolsGPSStoredGPSPathPaste";
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Size = new System.Drawing.Size(269, 23);
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.TabIndex = 1;
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Text = "Paste GPS path";
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.UseVisualStyleBackColor = true;
+            this.buttonConvoyToolsGPSStoredGPSPathPaste.Click += new System.EventHandler(this.buttonGPSStoredGPSPathPaste_Click);
+            // 
+            // buttonConvoyToolsGPSTruckPositionMultySavePaste
+            // 
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Location = new System.Drawing.Point(279, 61);
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Name = "buttonConvoyToolsGPSTruckPositionMultySavePaste";
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Size = new System.Drawing.Size(270, 52);
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.TabIndex = 5;
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.Text = "Create multiple saves with different truck positions";
+            this.buttonConvoyToolsGPSTruckPositionMultySavePaste.UseVisualStyleBackColor = true;
+            // 
+            // buttonConvoyToolsGPSTruckPositionMultySaveCopy
+            // 
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Location = new System.Drawing.Point(3, 61);
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Name = "buttonConvoyToolsGPSTruckPositionMultySaveCopy";
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Size = new System.Drawing.Size(270, 55);
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.TabIndex = 4;
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Text = "Copy truck position from multiple saves";
+            this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.UseVisualStyleBackColor = true;
             // 
             // buttonMainWriteSave
             // 
@@ -1646,36 +1678,6 @@
             this.groupBoxMainProfilesAndSaves.TabStop = false;
             this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSCurrentPositionCopy, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSCurrentPositionPaste, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSStoredGPSPathCopy, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSStoredGPSPathPaste, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSTruckPositionMultySavePaste, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSTruckPositionMultySaveCopy, 0, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 6);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(552, 119);
-            this.tableLayoutPanel1.TabIndex = 7;
-            // 
-            // label5
-            // 
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(6, 67);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(552, 247);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Work In Progres";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1726,12 +1728,12 @@
             this.tabPageCargoMarket.ResumeLayout(false);
             this.tabPageCargoMarket.PerformLayout();
             this.tabPageConvoyTools.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileAvatar)).EndInit();
             this.groupBoxMainProfilesAndSaves.ResumeLayout(false);
             this.groupBoxMainProfilesAndSaves.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
