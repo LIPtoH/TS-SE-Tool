@@ -61,6 +61,8 @@ namespace TS_SE_Tool
 
         private bool UserCompanyAssignedTruckPlacementEdited;
 
+        private bool InfoDepContinue;
+
         private string ProfileETS2;
         private string ProfileATS;
 
@@ -95,6 +97,9 @@ namespace TS_SE_Tool
         private List<string> CompaniesListDiff;
 
         private List<string> CountriesList;
+
+        private List<string> DBDependencies;
+        private List<string> SFDependencies;
 
         private List<Garages> GaragesList;
         private List<VisitedCity> VisitedCities;

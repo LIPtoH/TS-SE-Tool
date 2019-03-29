@@ -988,14 +988,16 @@
             // 
             // comboBoxFreightMarketTrailerVariant
             // 
+            this.comboBoxFreightMarketTrailerVariant.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFreightMarketTrailerVariant.FormattingEnabled = true;
             this.comboBoxFreightMarketTrailerVariant.Location = new System.Drawing.Point(322, 154);
             this.comboBoxFreightMarketTrailerVariant.Name = "comboBoxFreightMarketTrailerVariant";
-            this.comboBoxFreightMarketTrailerVariant.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketTrailerVariant.Size = new System.Drawing.Size(234, 21);
             this.comboBoxFreightMarketTrailerVariant.TabIndex = 28;
             // 
             // comboBoxFreightMarketTrailerDef
             // 
+            this.comboBoxFreightMarketTrailerDef.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFreightMarketTrailerDef.FormattingEnabled = true;
             this.comboBoxFreightMarketTrailerDef.Location = new System.Drawing.Point(72, 154);
             this.comboBoxFreightMarketTrailerDef.Name = "comboBoxFreightMarketTrailerDef";
@@ -1024,9 +1026,9 @@
             // 
             // buttonFreightMarketRandomizeCargo
             // 
-            this.buttonFreightMarketRandomizeCargo.Location = new System.Drawing.Point(489, 114);
+            this.buttonFreightMarketRandomizeCargo.Location = new System.Drawing.Point(406, 181);
             this.buttonFreightMarketRandomizeCargo.Name = "buttonFreightMarketRandomizeCargo";
-            this.buttonFreightMarketRandomizeCargo.Size = new System.Drawing.Size(67, 59);
+            this.buttonFreightMarketRandomizeCargo.Size = new System.Drawing.Size(150, 21);
             this.buttonFreightMarketRandomizeCargo.TabIndex = 24;
             this.buttonFreightMarketRandomizeCargo.Text = "Random";
             this.buttonFreightMarketRandomizeCargo.UseVisualStyleBackColor = true;
@@ -1055,7 +1057,7 @@
             // checkBoxFreightMarketRandomDest
             // 
             this.checkBoxFreightMarketRandomDest.AutoSize = true;
-            this.checkBoxFreightMarketRandomDest.Location = new System.Drawing.Point(406, 24);
+            this.checkBoxFreightMarketRandomDest.Location = new System.Drawing.Point(444, 24);
             this.checkBoxFreightMarketRandomDest.Name = "checkBoxFreightMarketRandomDest";
             this.checkBoxFreightMarketRandomDest.Size = new System.Drawing.Size(50, 17);
             this.checkBoxFreightMarketRandomDest.TabIndex = 21;
@@ -1066,7 +1068,7 @@
             // checkBoxFreightMarketFilterDestination
             // 
             this.checkBoxFreightMarketFilterDestination.AutoSize = true;
-            this.checkBoxFreightMarketFilterDestination.Location = new System.Drawing.Point(406, 91);
+            this.checkBoxFreightMarketFilterDestination.Location = new System.Drawing.Point(444, 91);
             this.checkBoxFreightMarketFilterDestination.Name = "checkBoxFreightMarketFilterDestination";
             this.checkBoxFreightMarketFilterDestination.Size = new System.Drawing.Size(48, 17);
             this.checkBoxFreightMarketFilterDestination.TabIndex = 20;
@@ -1076,7 +1078,7 @@
             // checkBoxFreightMarketFilterSource
             // 
             this.checkBoxFreightMarketFilterSource.AutoSize = true;
-            this.checkBoxFreightMarketFilterSource.Location = new System.Drawing.Point(406, 64);
+            this.checkBoxFreightMarketFilterSource.Location = new System.Drawing.Point(444, 64);
             this.checkBoxFreightMarketFilterSource.Name = "checkBoxFreightMarketFilterSource";
             this.checkBoxFreightMarketFilterSource.Size = new System.Drawing.Size(48, 17);
             this.checkBoxFreightMarketFilterSource.TabIndex = 19;
@@ -1104,7 +1106,7 @@
             // labelFreightMarketCompanyF
             // 
             this.labelFreightMarketCompanyF.AutoSize = true;
-            this.labelFreightMarketCompanyF.Location = new System.Drawing.Point(239, 6);
+            this.labelFreightMarketCompanyF.Location = new System.Drawing.Point(255, 6);
             this.labelFreightMarketCompanyF.Name = "labelFreightMarketCompanyF";
             this.labelFreightMarketCompanyF.Size = new System.Drawing.Size(51, 13);
             this.labelFreightMarketCompanyF.TabIndex = 16;
@@ -1113,9 +1115,9 @@
             // comboBoxFreightMarketCompanies
             // 
             this.comboBoxFreightMarketCompanies.FormattingEnabled = true;
-            this.comboBoxFreightMarketCompanies.Location = new System.Drawing.Point(239, 22);
+            this.comboBoxFreightMarketCompanies.Location = new System.Drawing.Point(258, 22);
             this.comboBoxFreightMarketCompanies.Name = "comboBoxFreightMarketCompanies";
-            this.comboBoxFreightMarketCompanies.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketCompanies.Size = new System.Drawing.Size(180, 21);
             this.comboBoxFreightMarketCompanies.TabIndex = 15;
             this.comboBoxFreightMarketCompanies.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanies_SelectedIndexChanged);
             // 
@@ -1124,7 +1126,7 @@
             this.comboBoxFreightMarketCountries.FormattingEnabled = true;
             this.comboBoxFreightMarketCountries.Location = new System.Drawing.Point(72, 22);
             this.comboBoxFreightMarketCountries.Name = "comboBoxFreightMarketCountries";
-            this.comboBoxFreightMarketCountries.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketCountries.Size = new System.Drawing.Size(180, 21);
             this.comboBoxFreightMarketCountries.TabIndex = 14;
             this.comboBoxFreightMarketCountries.SelectedIndexChanged += new System.EventHandler(this.comboBoxCountries_SelectedIndexChanged);
             // 
@@ -1142,7 +1144,7 @@
             // 
             this.buttonFreightMarketAddJob.Location = new System.Drawing.Point(72, 179);
             this.buttonFreightMarketAddJob.Name = "buttonFreightMarketAddJob";
-            this.buttonFreightMarketAddJob.Size = new System.Drawing.Size(411, 23);
+            this.buttonFreightMarketAddJob.Size = new System.Drawing.Size(328, 23);
             this.buttonFreightMarketAddJob.TabIndex = 12;
             this.buttonFreightMarketAddJob.Text = "Add Job to list";
             this.buttonFreightMarketAddJob.UseVisualStyleBackColor = true;
@@ -1164,9 +1166,9 @@
             this.comboBoxFreightMarketUrgency.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxFreightMarketUrgency.FormattingEnabled = true;
             this.comboBoxFreightMarketUrgency.IntegralHeight = false;
-            this.comboBoxFreightMarketUrgency.Location = new System.Drawing.Point(372, 116);
+            this.comboBoxFreightMarketUrgency.Location = new System.Drawing.Point(444, 116);
             this.comboBoxFreightMarketUrgency.Name = "comboBoxFreightMarketUrgency";
-            this.comboBoxFreightMarketUrgency.Size = new System.Drawing.Size(111, 32);
+            this.comboBoxFreightMarketUrgency.Size = new System.Drawing.Size(112, 32);
             this.comboBoxFreightMarketUrgency.TabIndex = 10;
             this.comboBoxFreightMarketUrgency.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxFreightMarketUrgency_DrawItem);
             this.comboBoxFreightMarketUrgency.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.comboBoxFreightMarketUrgency_MeasureItem);
@@ -1199,9 +1201,9 @@
             // comboBoxFreightMarketDestinationCompany
             // 
             this.comboBoxFreightMarketDestinationCompany.FormattingEnabled = true;
-            this.comboBoxFreightMarketDestinationCompany.Location = new System.Drawing.Point(239, 89);
+            this.comboBoxFreightMarketDestinationCompany.Location = new System.Drawing.Point(258, 89);
             this.comboBoxFreightMarketDestinationCompany.Name = "comboBoxFreightMarketDestinationCompany";
-            this.comboBoxFreightMarketDestinationCompany.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketDestinationCompany.Size = new System.Drawing.Size(180, 21);
             this.comboBoxFreightMarketDestinationCompany.TabIndex = 7;
             this.comboBoxFreightMarketDestinationCompany.SelectedIndexChanged += new System.EventHandler(this.comboBoxDestinationCompany_SelectedIndexChanged);
             // 
@@ -1219,14 +1221,14 @@
             this.comboBoxFreightMarketDestinationCity.FormattingEnabled = true;
             this.comboBoxFreightMarketDestinationCity.Location = new System.Drawing.Point(72, 89);
             this.comboBoxFreightMarketDestinationCity.Name = "comboBoxFreightMarketDestinationCity";
-            this.comboBoxFreightMarketDestinationCity.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketDestinationCity.Size = new System.Drawing.Size(180, 21);
             this.comboBoxFreightMarketDestinationCity.TabIndex = 5;
             this.comboBoxFreightMarketDestinationCity.SelectedIndexChanged += new System.EventHandler(this.comboBoxDestinationCity_SelectedIndexChanged);
             // 
             // labelFreightMarketCompany
             // 
             this.labelFreightMarketCompany.AutoSize = true;
-            this.labelFreightMarketCompany.Location = new System.Drawing.Point(239, 46);
+            this.labelFreightMarketCompany.Location = new System.Drawing.Point(255, 46);
             this.labelFreightMarketCompany.Name = "labelFreightMarketCompany";
             this.labelFreightMarketCompany.Size = new System.Drawing.Size(51, 13);
             this.labelFreightMarketCompany.TabIndex = 4;
@@ -1244,9 +1246,9 @@
             // comboBoxFreightMarketSourceCompany
             // 
             this.comboBoxFreightMarketSourceCompany.FormattingEnabled = true;
-            this.comboBoxFreightMarketSourceCompany.Location = new System.Drawing.Point(239, 62);
+            this.comboBoxFreightMarketSourceCompany.Location = new System.Drawing.Point(258, 62);
             this.comboBoxFreightMarketSourceCompany.Name = "comboBoxFreightMarketSourceCompany";
-            this.comboBoxFreightMarketSourceCompany.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketSourceCompany.Size = new System.Drawing.Size(180, 21);
             this.comboBoxFreightMarketSourceCompany.TabIndex = 2;
             this.comboBoxFreightMarketSourceCompany.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCompany_SelectedIndexChanged);
             // 
@@ -1264,7 +1266,7 @@
             this.comboBoxFreightMarketSourceCity.FormattingEnabled = true;
             this.comboBoxFreightMarketSourceCity.Location = new System.Drawing.Point(72, 62);
             this.comboBoxFreightMarketSourceCity.Name = "comboBoxFreightMarketSourceCity";
-            this.comboBoxFreightMarketSourceCity.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxFreightMarketSourceCity.Size = new System.Drawing.Size(180, 21);
             this.comboBoxFreightMarketSourceCity.TabIndex = 0;
             this.comboBoxFreightMarketSourceCity.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCity_SelectedIndexChanged);
             // 

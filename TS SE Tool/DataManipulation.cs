@@ -1061,9 +1061,9 @@ namespace TS_SE_Tool
             //GetDataFrom Database
 
             //GetDataFromDatabase("CargoesTable", GameType);
-            GetDataFromDatabase("CitysTable", GameType);
-            GetDataFromDatabase("CompaniesTable", GameType);
-            GetDataFromDatabase("TrucksTable", GameType);
+            GetDataFromDatabase("CitysTable");
+            GetDataFromDatabase("CompaniesTable");
+            GetDataFromDatabase("TrucksTable");
 
             //Compare Data to Database
             if (CargoesListDB.Count() > 0)
@@ -1207,20 +1207,24 @@ namespace TS_SE_Tool
                     SavefileVersion = int.Parse(chunkOfline[2]);
                     continue;
                 }
-
+                
                 if (tempInfoFileInMemory[line].StartsWith(" dependencies["))
                 {
-                    chunkOfline = tempInfoFileInMemory[line].Split(new char[] { '"' })[1].Split(new char[] { '|' });
-                    string type = chunkOfline[0];
+                    chunkOfline = tempInfoFileInMemory[line].Split(new char[] { '"' });
+                    SFDependencies.Add(chunkOfline[1]);
+
+                    string[] depstring = chunkOfline[1].Split(new char[] { '|' });
+
+                    string type = depstring[0];
                     string depcode = "";
                     if (type == "dlc" || type == "rdlc")
                     {
-                        depcode = chunkOfline[1].Split(new char[] { '_' }, 2)[1];
+                        depcode = depstring[1].Split(new char[] { '_' }, 2)[1];
                         depcode = "dlc_" + depcode;
                     }
                     if (type == "mod")
                     {
-                        depcode = chunkOfline[1];
+                        depcode = depstring[1];
                         depcode = "mod_" + depcode;
                     }
 
@@ -1228,6 +1232,67 @@ namespace TS_SE_Tool
                     continue;
                 }
             }
+
+            GetDataFromDatabase("Dependencies");
+
+            //Check dependencies
+            if (DBDependencies.Capacity == 0)
+            {
+                InsertDataIntoDatabase("Dependencies");
+                InfoDepContinue = true;
+            }
+            else
+            {
+
+                List<string> dbdep = DBDependencies.Except(SFDependencies).ToList();
+                List<string> sfdep = SFDependencies.Except(DBDependencies).ToList();
+
+                if (dbdep.Capacity > 0 || sfdep.Capacity > 0)
+                {
+                    string dbdepstr = "", sfdepstr = "";
+
+                    if(dbdep.Capacity > 0)
+                    {
+                        dbdepstr += "\r\nDependencies only in Database:\r\n";
+                        foreach (string temp in dbdep)
+                        {
+                            dbdepstr += temp + "\r\n";
+                        }
+                    }
+
+                    if(sfdep.Capacity > 0)
+                    {
+                        sfdepstr += "\r\nDependencies only in Save file:\r\n";
+                        foreach (string temp in sfdep)
+                        {
+                            sfdepstr += temp + "\r\n"; ;
+                        }
+                    }
+
+                    DialogResult r = MessageBox.Show("Save file and Database has different Dependencies due to installed\\deleted mods\\dlc's.\r\n" +
+                        "This may result in wrong path and cargo data.\r\n" +
+                        "Do you want to proceed and Update Dependencies?\r\n" + dbdepstr + "\r\n" + sfdepstr, "Dependencies conflict", MessageBoxButtons.YesNo);
+
+                    if (r == DialogResult.Yes)
+                    {
+                        //Update Dependencies
+                        InsertDataIntoDatabase("Dependencies");
+                        InfoDepContinue = true;
+                    }
+                    else
+                    {
+                        //Stop opening save
+                        InfoDepContinue = false;
+                    }
+                }
+                else
+                {
+                    InfoDepContinue = true;
+                }
+            }
+
+            if (!InfoDepContinue)
+                return;
 
             LoadCachedExternalCargoData("def");
 
@@ -1676,6 +1741,8 @@ namespace TS_SE_Tool
 
             string sql = "";
 
+            sql += "CREATE TABLE Dependencies (ID_dep INT IDENTITY(1,1) PRIMARY KEY, Dependency NVARCHAR(64) NOT NULL);";
+
             sql += "CREATE TABLE CitysTable (ID_city INT IDENTITY(1,1) PRIMARY KEY, CityName NVARCHAR(32) NOT NULL);";
 
             sql += "CREATE TABLE CompaniesTable (ID_company INT IDENTITY(1,1) PRIMARY KEY, CompanyName NVARCHAR(32) NOT NULL);";
@@ -1916,6 +1983,59 @@ namespace TS_SE_Tool
         {
             switch (_targetTable)
             {
+                case "Dependencies":
+                    {
+                        if (SFDependencies != null && SFDependencies.Count() > 0)
+                        {
+                            List<string> temp = DBDependencies.Except(SFDependencies).ToList();
+
+                            string SQLCommandCMD = "";
+
+                            SQLCommandCMD += "DELETE FROM [Dependencies] WHERE Dependency IN (";
+                            bool first = true;
+
+                            foreach (string tempitem in temp)
+                            {
+                                if (!first)
+                                {
+                                    SQLCommandCMD += " , ";
+                                }
+                                else
+                                {
+                                    first = false;
+                                }
+
+                                SQLCommandCMD += "'" + tempitem + "'";
+                            }
+                            SQLCommandCMD += ")";
+
+                            UpdateDatabase(SQLCommandCMD);
+
+                            SQLCommandCMD = "INSERT INTO [Dependencies] (Dependency) ";
+
+                            first = true;
+
+                            temp = SFDependencies.Except(DBDependencies).ToList();
+
+                            foreach (string tempitem in temp)
+                            {
+                                if (!first)
+                                {
+                                    SQLCommandCMD += " UNION ALL ";
+                                }
+                                else
+                                {
+                                    first = false;
+                                }
+
+                                SQLCommandCMD += "SELECT '" + tempitem + "'";
+                            }
+                            UpdateDatabase(SQLCommandCMD);
+                        }
+
+                        break;
+                    }
+
                 case "CargoesTable":
                     {
                         if (CargoesListDiff != null && CargoesListDiff.Count() > 0)
@@ -2233,7 +2353,7 @@ namespace TS_SE_Tool
             }
         }
 
-        private void GetDataFromDatabase(string _targetTable, string _gametype)
+        private void GetDataFromDatabase(string _targetTable)
         {
             SqlCeDataReader reader = null;
 
@@ -2246,6 +2366,23 @@ namespace TS_SE_Tool
 
                 switch (_targetTable)
                 {
+                    case "Dependencies":
+                        {
+                            DBDependencies.Clear();
+
+                            //Dependencies(ID_dep INT IDENTITY(1, 1) PRIMARY KEY, Dependency
+                            string commandText = "SELECT Dependency FROM [Dependencies];";
+                            //DBconnection.Open();
+                            reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
+
+                            while (reader.Read())
+                            {
+                                DBDependencies.Add(reader["Dependency"].ToString());
+                            }
+                            //DBDependencies
+                            break;
+                        }
+
                     case "CargoesTable":
                         {
                             CargoesListDB.Clear(); //Clears existing list
@@ -2338,7 +2475,9 @@ namespace TS_SE_Tool
             }
             finally
             {
-                reader.Close();
+                if (reader != null)
+                    reader.Close();
+
                 DBconnection.Close();
             }
 

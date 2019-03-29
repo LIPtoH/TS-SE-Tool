@@ -193,6 +193,8 @@ namespace TS_SE_Tool
 
             UserCompanyAssignedTruckPlacementEdited = false;
 
+            InfoDepContinue = false;
+
             CompaniesList = new List<string>();
             CitiesList = new List<City>();
 
@@ -218,6 +220,9 @@ namespace TS_SE_Tool
             CargoesListDiff = new List<Cargo>();
             CitiesListDiff = new List<string>();
             CompaniesListDiff = new List<string>();
+
+            DBDependencies = new List<string>();
+            SFDependencies = new List<string>();
 
             ExternalCompanies = new List<ExtCompany>();
 
@@ -2783,9 +2788,6 @@ namespace TS_SE_Tool
             dc = new DataColumn("CompanyName", typeof(string));
             combDT.Columns.Add(dc);
 
-            //start filling
-            combDT.Rows.Add("All", "All");
-
             foreach (string tempitem in tempCompList)
                 if (CompaniesLngDict.TryGetValue(tempitem, out string value))
                     if (value != null && value != "")
@@ -2797,9 +2799,23 @@ namespace TS_SE_Tool
                         combDT.Rows.Add(tempitem, tempitem);
                     }
 
+            DataTable sortedDT = combDT.DefaultView.Table.Copy();
+
+            DataView dv = sortedDT.DefaultView;
+            dv.Sort = "CompanyName ASC";
+            sortedDT = dv.ToTable();
+            sortedDT.DefaultView.Sort = "";
+            
+            DataRow row = sortedDT.NewRow();
+            string tvalue;
+            CompaniesLngDict.TryGetValue("All", out tvalue);
+            row.ItemArray = new object [] { "All", tvalue };
+
+            sortedDT.Rows.InsertAt(row, 0);
+            //
             comboBoxFreightMarketCompanies.ValueMember = "Company";
             comboBoxFreightMarketCompanies.DisplayMember = "CompanyName";
-            comboBoxFreightMarketCompanies.DataSource = combDT;
+            comboBoxFreightMarketCompanies.DataSource = sortedDT;
             //end filling
         }
 
@@ -4226,7 +4242,7 @@ namespace TS_SE_Tool
             //////
             //Cities ComboBoxes
             ComboBox[] CitiesCB = { comboBoxFreightMarketSourceCity, comboBoxFreightMarketDestinationCity, comboBoxUserCompanyHQcity, comboBoxCargoMarketSourceCity };
-            EventHandler[] CitiesCBeh = { comboBoxSourceCity_SelectedIndexChanged, comboBoxDestinationCity_SelectedIndexChanged, comboBoxUserCompanyHQcity_SelectedIndexChanged };
+            EventHandler[] CitiesCBeh = { comboBoxSourceCity_SelectedIndexChanged, comboBoxDestinationCity_SelectedIndexChanged, comboBoxUserCompanyHQcity_SelectedIndexChanged, comboBoxSourceCityCM_SelectedIndexChanged };
             j = 0;
             foreach (ComboBox tempCB in CitiesCB)
             {
@@ -4260,9 +4276,9 @@ namespace TS_SE_Tool
             }
 
             //////
-            //Cities ComboBoxes
-            ComboBox[] CompaniesCB = { comboBoxFreightMarketSourceCompany, comboBoxFreightMarketDestinationCompany };
-            EventHandler[] CompaniesCBeh = { comboBoxSourceCompany_SelectedIndexChanged, comboBoxDestinationCompany_SelectedIndexChanged };
+            //Companies ComboBoxes
+            ComboBox[] CompaniesCB = { comboBoxFreightMarketSourceCompany, comboBoxFreightMarketDestinationCompany, comboBoxSourceCargoMarketCompany };
+            EventHandler[] CompaniesCBeh = { comboBoxSourceCompany_SelectedIndexChanged, comboBoxDestinationCompany_SelectedIndexChanged, comboBoxSourceCompanyCM_SelectedIndexChanged };
             j = 0;
             foreach (ComboBox tempCB in CompaniesCB)
             {
@@ -4294,7 +4310,7 @@ namespace TS_SE_Tool
                     tempCB.SelectedIndexChanged += CompaniesCBeh[j];
                     j++;
                     }
-                }
+            }
 
             //Freight Market
             //Cargo
@@ -4305,6 +4321,8 @@ namespace TS_SE_Tool
 
                 if (savedindex != -1)
                     savedvalue = comboBoxFreightMarketCargoList.SelectedValue.ToString();
+
+                comboBoxFreightMarketCargoList.SelectedIndexChanged -= comboBoxCargoList_SelectedIndexChanged;
 
                 i = 0;
                 foreach (DataRow temp in temptable.Rows)
@@ -4320,6 +4338,8 @@ namespace TS_SE_Tool
 
                 if (savedindex != -1)
                     comboBoxFreightMarketCargoList.SelectedValue = savedvalue;
+
+                comboBoxFreightMarketCargoList.SelectedIndexChanged += comboBoxCargoList_SelectedIndexChanged;
             }
 
             //Urgency

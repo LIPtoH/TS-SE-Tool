@@ -672,6 +672,13 @@ namespace TS_SE_Tool
 
             string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
 
+            string dbPath = "dbs/" + GameType + "." + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + ".sdf";
+            DBconnection = new SqlCeConnection("Data Source = " + dbPath);
+            if (File.Exists(SiiSavePath))
+                CreateDatabase(dbPath);
+            else
+                return;
+
             //Profile Info
             if (!File.Exists(SiiProfilePath))
             {
@@ -774,6 +781,11 @@ namespace TS_SE_Tool
             tempInfoFileInMemory = null; //clearmemory
             //endinfo
 
+            if (!InfoDepContinue)
+            {
+                return;
+            }
+
             if (SavefileVersion > 0 && SavefileVersion != SupportedSavefileVersionETS2)
             {
                 MessageBox.Show("Savefile version don't supported.\nYou cann't edit file with this version, but you can try to decode it.", "Wrong version");
@@ -827,12 +839,7 @@ namespace TS_SE_Tool
                 else if (tempSavefileInMemory != null)
                 {
                     LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
-
-                    string dbPath = "dbs/" + GameType + "." + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + ".sdf";
-
-                    DBconnection = new SqlCeConnection("Data Source = " + dbPath);
-                    CreateDatabase(dbPath);
-
+                    
                     worker = new BackgroundWorker();
                     worker.WorkerReportsProgress = true;
                     worker.DoWork += PrepareData;//Start;
