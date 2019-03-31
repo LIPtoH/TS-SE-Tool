@@ -689,7 +689,7 @@ namespace TS_SE_Tool
         //Profile tab
         private void CreateProfilePanelControls()
         {
-            int pSkillsNameHeight = 56, pSkillsNameWidth = 56, pSkillsNameOffset = 5, pSkillsNamelOffset = 12;
+            int pSkillsNameHeight = 64, pSkillsNameWidth = 64, pSkillsNameOffset = 5, pSkillsNamelOffset = 12;
 
             string[] toolskillimgtooltip = new string[] { "ADR", "Long Distance", "High Value Cargo", "Fragile Cargo", "Just-In-Time Delivery", "Ecodriving" };
 
@@ -699,7 +699,7 @@ namespace TS_SE_Tool
                 groupBoxProfileSkill.Controls.Add(Ppanel);
 
                 Ppanel.Parent = groupBoxProfileSkill;
-                Ppanel.Location = new Point(pSkillsNamelOffset, 11 + (pSkillsNameHeight + pSkillsNameOffset) * i);
+                Ppanel.Location = new Point(pSkillsNamelOffset, 17 + (pSkillsNameHeight + pSkillsNameOffset) * i);
                 Ppanel.BorderStyle = BorderStyle.None;
                 Ppanel.Size = new Size(pSkillsNameWidth, pSkillsNameHeight);
                 Ppanel.Name = "profileSkillsPanel" + i.ToString();
@@ -711,12 +711,12 @@ namespace TS_SE_Tool
                 Label slabel = new Label();
                 groupBoxProfileSkill.Controls.Add(slabel);
                 slabel.Name = "labelProfileSkillName" + i.ToString();
-                slabel.Location = new Point(pSkillsNamelOffset * 2 + pSkillsNameWidth, 11 + (pSkillsNameHeight + pSkillsNameOffset) * i);
+                slabel.Location = new Point(pSkillsNamelOffset * 2 + pSkillsNameWidth, 17 + (pSkillsNameHeight + pSkillsNameOffset) * i);
                 slabel.Text = toolskillimgtooltip[i];
                 slabel.AutoSize = true;
             }
 
-            int bADRHeight = 40, bADRWidth = 40, pOffset = 6, lOffset = pSkillsNameWidth + pSkillsNamelOffset * 2;
+            int bADRHeight = 48, bADRWidth = 48, pOffset = 6, lOffset = pSkillsNameWidth + pSkillsNamelOffset * 2;
 
             for (int i = 0; i < 6; i++)
             {
@@ -725,7 +725,7 @@ namespace TS_SE_Tool
 
                 Ppanel.Parent = groupBoxProfileSkill;
 
-                Ppanel.Location = new Point(lOffset + (bADRWidth + pOffset) * i, 11 + 14);
+                Ppanel.Location = new Point(lOffset + (bADRWidth + pOffset) * i, 17 + 14);
                 Ppanel.Appearance = Appearance.Button;
                 Ppanel.FlatStyle = FlatStyle.Flat;
                 Ppanel.Size = new Size(bADRWidth, bADRHeight);
@@ -757,7 +757,7 @@ namespace TS_SE_Tool
 
                     Ppanel.Parent = groupBoxProfileSkill;
 
-                    Ppanel.Location = new Point(lOffset + (bADRWidth + pOffset) * j, 11 + 14 + (pSkillsNameHeight + pSkillsNameOffset) * (i + 1));
+                    Ppanel.Location = new Point(lOffset + (bADRWidth + pOffset) * j, 17 + 14 + (pSkillsNameHeight + pSkillsNameOffset) * (i + 1));
                     Ppanel.Appearance = Appearance.Button;
                     Ppanel.FlatStyle = FlatStyle.Flat;
                     Ppanel.Size = new Size(bADRWidth, bADRHeight);
@@ -821,15 +821,15 @@ namespace TS_SE_Tool
 
         private void CreateUserColorsButtons()
         {
-            int padding = 6, width = 40, colorcount = 8;
+            int padding = 6, width = 112, height = 50, colorcount = 8;
 
             for (int i = 0; i < colorcount; i++)
             {
                 Button rb = new Button();
                 rb.Name = "buttonUC" + i.ToString();
                 rb.Text = null;
-                rb.Location = new Point(15, 32 + (padding + width) * (i));
-                rb.Size = new Size(width, width);
+                rb.Location = new Point(6, 20 + (padding + height) * i);
+                rb.Size = new Size(width, height);
                 rb.FlatStyle = FlatStyle.Flat;
                 rb.Enabled = false;
 
@@ -2246,7 +2246,13 @@ namespace TS_SE_Tool
                     curDr++;
             }
 
-            txt = "V: " + curVeh + " / " + maxvehdr + " D: " + curDr + " / " + maxvehdr + " T: " + grg.Trailers.Count;
+            string Vs = "", Ds = "", Ts = "";
+
+            Vs =  ResourceManagerMain.GetString("VehicleShort", Thread.CurrentThread.CurrentUICulture);
+            Ds = ResourceManagerMain.GetString("DriverShort", Thread.CurrentThread.CurrentUICulture);
+            Ts = ResourceManagerMain.GetString("TrailerShort", Thread.CurrentThread.CurrentUICulture);
+
+            txt = Vs + ": " + curVeh + " / " + maxvehdr + " " + Ds +": " + curDr + " / " + maxvehdr + " " + Ts + ": " + grg.Trailers.Count;
 
             // Draw the text.
             e.Graphics.DrawString(txt, this.Font, br, layout_rect);
@@ -3003,13 +3009,13 @@ namespace TS_SE_Tool
             catch
             {
             }
-            /*
-            if (extheavy || CargoType == "1")
+            
+            if (extheavy)
             {
                 TypeImgs[indexTypeImgs] = CargoTypeImg[1];
                 indexTypeImgs++;
             }
-
+            /*
             if (CargoType == "2")
             {
                 TypeImgs[indexTypeImgs] = CargoTypeImg[2];
@@ -3147,14 +3153,109 @@ namespace TS_SE_Tool
             comboBoxFreightMarketTrailerDef.SelectedIndex = RandomValue.Next(comboBoxFreightMarketTrailerDef.Items.Count);
         }
 
-        private void comboBoxFreightMarketTrailerDef_SelectedValueChanged(object sender, EventArgs e)
-        {
-            //FillcomboBoxTrailerVariantList();
-        }
-
         private void comboBoxFreightMarketTrailerDef_SelectedIndexChanged(object sender, EventArgs e)
         {
             FillcomboBoxTrailerVariantList();
+        }
+
+        private void comboBoxFreightMarketTrailerDef_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            e.ItemHeight = 26;
+        }
+
+        private void comboBoxFreightMarketTrailerDef_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            ComboBox lst = sender as ComboBox;
+
+            // Draw the background of the item.
+            e.DrawBackground();
+
+            // See if the item is selected.
+            Brush br;
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                br = SystemBrushes.HighlightText;
+            else
+                br = new SolidBrush(e.ForeColor);
+
+            float x = e.Bounds.Left;
+            float y = e.Bounds.Top;
+            float height = e.Bounds.Height;
+            RectangleF layout_rect;
+
+            string CargoName = ((DataRowView)comboBoxFreightMarketCargoList.SelectedItem)[0].ToString(),
+                DefDN = lst.GetItemText(lst.Items[e.Index]), CargoType = ((DataRowView)lst.Items[e.Index])[2].ToString();
+
+            string txt = DefDN;
+
+            int DefUnitsCount = int.Parse(((DataRowView)lst.Items[e.Index])[3].ToString());
+
+            //////
+            // Draw Type picture
+            Image[] TypeImgs = new Image[5];
+            int indexTypeImgs = 0;
+            bool extheavy = false;
+
+            decimal TCW = ExtCargoList.Find(xx => xx.CargoName == CargoName).Mass * DefUnitsCount;
+
+            if (TCW > 26000)
+                extheavy = true;
+
+            if (extheavy || CargoType == "1")
+            {
+                TypeImgs[indexTypeImgs] = CargoTypeImg[1];
+                indexTypeImgs++;
+            }
+
+            if (CargoType == "2")
+            {
+                TypeImgs[indexTypeImgs] = CargoTypeImg[2];
+                indexTypeImgs++;
+            }
+            
+            int xmult = 0, images = 0;
+
+            foreach (Image temp in TypeImgs)
+            {
+                if (temp == null)
+                {
+                    break;
+                }
+                images++;
+            }
+
+            float width = e.Bounds.Width - 25 * images;
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (TypeImgs[i] == null)
+                {
+                    break;
+                }
+
+                RectangleF source_rect = new RectangleF(0, 0, 32, 32);
+                RectangleF dest_rect = new RectangleF((e.Bounds.Right - 26 * images) + 24 * xmult, e.Bounds.Top + 1, 24, 24);
+                e.Graphics.DrawImage(TypeImgs[i], dest_rect, source_rect, GraphicsUnit.Pixel);
+
+                xmult++;
+            }
+            /////
+
+            // Find the area in which to put the text.
+            float fntsize = 7f;
+            y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
+            layout_rect = new RectangleF(x, y-5, width, height);
+            StringFormat format = new StringFormat();
+            
+            //format.Alignment = StringAlignment.Far;
+
+            Font textfnt = new Font("Microsoft Sans Serif", fntsize);
+            e.Graphics.DrawString(txt, textfnt, br, layout_rect);
+
+            // Draw the focus rectangle if the mouse hovers over an item.
+            e.DrawFocusRectangle();
         }
 
         public void FillcomboBoxTrailerVariantList()
@@ -3192,6 +3293,48 @@ namespace TS_SE_Tool
             comboBoxFreightMarketTrailerVariant.DataSource = combDT;
 
             comboBoxFreightMarketTrailerVariant.SelectedIndex = RandomValue.Next(comboBoxFreightMarketTrailerVariant.Items.Count);
+        }
+
+        private void comboBoxFreightMarketTrailerVariant_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            e.ItemHeight = 26;
+        }
+
+        private void comboBoxFreightMarketTrailerVariant_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            ComboBox lst = sender as ComboBox;
+
+            // Draw the background of the item.
+            e.DrawBackground();
+
+            // See if the item is selected.
+            Brush br;
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                br = SystemBrushes.HighlightText;
+            else
+                br = new SolidBrush(e.ForeColor);
+
+            float x = e.Bounds.Left;
+            float y = e.Bounds.Top;
+            float width = e.Bounds.Width;
+            float height = e.Bounds.Height;
+            RectangleF layout_rect;
+            string DefDN = lst.GetItemText(lst.Items[e.Index]);
+            string txt = DefDN;
+
+            // Find the area in which to put the text.
+            float fntsize = 7.5f;
+            y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
+            layout_rect = new RectangleF(x, y-5, width, height);
+            //format.Alignment = StringAlignment.Far;
+            Font textfnt = new Font("Microsoft Sans Serif", fntsize);
+            e.Graphics.DrawString(txt, textfnt, br, layout_rect);
+
+            // Draw the focus rectangle if the mouse hovers over an item.
+            e.DrawFocusRectangle();
         }
 
         private void comboBoxSourceCity_SelectedIndexChanged(object sender, EventArgs e)

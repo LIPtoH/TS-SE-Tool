@@ -151,7 +151,6 @@ namespace TS_SE_Tool
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs;
 
-
         private ImageList TabpagesImages;
 
         private CheckBox[,] SkillButtonArray;
@@ -200,6 +199,8 @@ namespace TS_SE_Tool
             listBoxFreightMarketAddedJobs.DrawMode = DrawMode.OwnerDrawVariable;
             comboBoxFreightMarketCargoList.DrawMode = DrawMode.OwnerDrawVariable;
             comboBoxFreightMarketUrgency.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBoxFreightMarketTrailerDef.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBoxFreightMarketTrailerVariant.DrawMode = DrawMode.OwnerDrawVariable;
 
             ChangeLanguage();
         }

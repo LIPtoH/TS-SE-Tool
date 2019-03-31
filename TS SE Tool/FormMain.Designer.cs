@@ -61,31 +61,37 @@
             this.groupBoxProfileUserColors = new System.Windows.Forms.GroupBox();
             this.buttonUserColorsShareColors = new System.Windows.Forms.Button();
             this.tabPageCompany = new System.Windows.Forms.TabPage();
-            this.pictureBoxCompanyLogo = new System.Windows.Forms.PictureBox();
-            this.buttonUserCompanyGaragesSell = new System.Windows.Forms.Button();
-            this.buttonUserCompanyCitiesUnVisit = new System.Windows.Forms.Button();
-            this.buttonUserCompanyCitiesVisit = new System.Windows.Forms.Button();
-            this.buttonUserCompanyGaragesBuyUpgrade = new System.Windows.Forms.Button();
-            this.buttonUserCompanyGaragesUpgrade = new System.Windows.Forms.Button();
-            this.buttonUserCompanyGaragesBuy = new System.Windows.Forms.Button();
-            this.labelUserCompanyMoneyAccount = new System.Windows.Forms.Label();
-            this.textBoxUserCompanyMoneyAccount = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.labelUserCompanyVisitedCities = new System.Windows.Forms.Label();
-            this.listBoxVisitedCities = new System.Windows.Forms.ListBox();
             this.labelUserCompanyGarages = new System.Windows.Forms.Label();
             this.listBoxGarages = new System.Windows.Forms.ListBox();
+            this.listBoxVisitedCities = new System.Windows.Forms.ListBox();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonUserCompanyCitiesVisit = new System.Windows.Forms.Button();
+            this.buttonUserCompanyCitiesUnVisit = new System.Windows.Forms.Button();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonUserCompanyGaragesBuy = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesBuyUpgrade = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesSell = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesUpgrade = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBoxCompanyLogo = new System.Windows.Forms.PictureBox();
             this.labelUserCompanyCompanyName = new System.Windows.Forms.Label();
-            this.textBoxUserCompanyCompanyName = new System.Windows.Forms.TextBox();
-            this.comboBoxUserCompanyHQcity = new System.Windows.Forms.ComboBox();
+            this.labelUserCompanyMoneyAccount = new System.Windows.Forms.Label();
             this.labelUserCompanyHQcity = new System.Windows.Forms.Label();
+            this.textBoxUserCompanyCompanyName = new System.Windows.Forms.TextBox();
+            this.textBoxUserCompanyMoneyAccount = new System.Windows.Forms.TextBox();
+            this.comboBoxUserCompanyHQcity = new System.Windows.Forms.ComboBox();
             this.tabPageTruck = new System.Windows.Forms.TabPage();
             this.groupBoxUserTruckShareTruckSettings = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonShareTruckTruckTruckPaste = new System.Windows.Forms.Button();
+            this.buttonShareTruckTruckPaintCopy = new System.Windows.Forms.Button();
             this.buttonShareTruckTruckDetailsPaste = new System.Windows.Forms.Button();
+            this.buttonShareTruckTruckPaintPaste = new System.Windows.Forms.Button();
             this.buttonShareTruckTruckTruckCopy = new System.Windows.Forms.Button();
             this.buttonShareTruckTruckDetailsCopy = new System.Windows.Forms.Button();
-            this.buttonShareTruckTruckPaintPaste = new System.Windows.Forms.Button();
-            this.buttonShareTruckTruckPaintCopy = new System.Windows.Forms.Button();
             this.buttonUserTruckSelectCurrent = new System.Windows.Forms.Button();
             this.groupBoxUserTruckTruckDetails = new System.Windows.Forms.GroupBox();
             this.labelLicensePlate = new System.Windows.Forms.Label();
@@ -178,9 +184,15 @@
             this.panelPlayerLevel.SuspendLayout();
             this.groupBoxProfileUserColors.SuspendLayout();
             this.tabPageCompany.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCompanyLogo)).BeginInit();
             this.tabPageTruck.SuspendLayout();
             this.groupBoxUserTruckShareTruckSettings.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
             this.groupBoxUserTruckTruckDetails.SuspendLayout();
             this.tabPageTrailer.SuspendLayout();
             this.groupBoxUserTrailerTrailerDetails.SuspendLayout();
@@ -324,7 +336,7 @@
             this.tabControlMain.Location = new System.Drawing.Point(12, 167);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(572, 502);
+            this.tabControlMain.Size = new System.Drawing.Size(572, 569);
             this.tabControlMain.TabIndex = 6;
             // 
             // tabPageProfile
@@ -335,7 +347,7 @@
             this.tabPageProfile.Location = new System.Drawing.Point(4, 28);
             this.tabPageProfile.Name = "tabPageProfile";
             this.tabPageProfile.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProfile.Size = new System.Drawing.Size(564, 470);
+            this.tabPageProfile.Size = new System.Drawing.Size(564, 537);
             this.tabPageProfile.TabIndex = 0;
             this.tabPageProfile.Text = "Profile";
             this.tabPageProfile.UseVisualStyleBackColor = true;
@@ -353,17 +365,17 @@
             this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelMinimum);
             this.groupBoxProfilePlayerLevel.Location = new System.Drawing.Point(6, 6);
             this.groupBoxProfilePlayerLevel.Name = "groupBoxProfilePlayerLevel";
-            this.groupBoxProfilePlayerLevel.Size = new System.Drawing.Size(392, 83);
+            this.groupBoxProfilePlayerLevel.Size = new System.Drawing.Size(420, 83);
             this.groupBoxProfilePlayerLevel.TabIndex = 0;
             this.groupBoxProfilePlayerLevel.TabStop = false;
             this.groupBoxProfilePlayerLevel.Text = "Player level";
             // 
             // labelPlayerExperience
             // 
-            this.labelPlayerExperience.Location = new System.Drawing.Point(110, 54);
+            this.labelPlayerExperience.Location = new System.Drawing.Point(110, 53);
             this.labelPlayerExperience.Name = "labelPlayerExperience";
             this.labelPlayerExperience.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.labelPlayerExperience.Size = new System.Drawing.Size(74, 13);
+            this.labelPlayerExperience.Size = new System.Drawing.Size(115, 13);
             this.labelPlayerExperience.TabIndex = 39;
             this.labelPlayerExperience.Text = "0";
             // 
@@ -383,7 +395,7 @@
             this.panelPlayerLevel.Controls.Add(this.labelPlayerLevelNumber);
             this.panelPlayerLevel.Location = new System.Drawing.Point(110, 19);
             this.panelPlayerLevel.Name = "panelPlayerLevel";
-            this.panelPlayerLevel.Size = new System.Drawing.Size(167, 26);
+            this.panelPlayerLevel.Size = new System.Drawing.Size(220, 26);
             this.panelPlayerLevel.TabIndex = 5;
             // 
             // labelPlayerLevelName
@@ -410,7 +422,7 @@
             // labelExperienceNxtLvlThreshhold
             // 
             this.labelExperienceNxtLvlThreshhold.AutoSize = true;
-            this.labelExperienceNxtLvlThreshhold.Location = new System.Drawing.Point(190, 54);
+            this.labelExperienceNxtLvlThreshhold.Location = new System.Drawing.Point(231, 53);
             this.labelExperienceNxtLvlThreshhold.Name = "labelExperienceNxtLvlThreshhold";
             this.labelExperienceNxtLvlThreshhold.Size = new System.Drawing.Size(27, 13);
             this.labelExperienceNxtLvlThreshhold.TabIndex = 38;
@@ -418,7 +430,7 @@
             // 
             // buttonPlayerLevelPlus01
             // 
-            this.buttonPlayerLevelPlus01.Location = new System.Drawing.Point(303, 19);
+            this.buttonPlayerLevelPlus01.Location = new System.Drawing.Point(336, 19);
             this.buttonPlayerLevelPlus01.Name = "buttonPlayerLevelPlus01";
             this.buttonPlayerLevelPlus01.Size = new System.Drawing.Size(36, 23);
             this.buttonPlayerLevelPlus01.TabIndex = 12;
@@ -428,7 +440,7 @@
             // 
             // buttonPlayerLevelPlus10
             // 
-            this.buttonPlayerLevelPlus10.Location = new System.Drawing.Point(345, 19);
+            this.buttonPlayerLevelPlus10.Location = new System.Drawing.Point(378, 19);
             this.buttonPlayerLevelPlus10.Name = "buttonPlayerLevelPlus10";
             this.buttonPlayerLevelPlus10.Size = new System.Drawing.Size(36, 23);
             this.buttonPlayerLevelPlus10.TabIndex = 13;
@@ -448,7 +460,7 @@
             // 
             // buttonPlayerLevelMaximum
             // 
-            this.buttonPlayerLevelMaximum.Location = new System.Drawing.Point(303, 48);
+            this.buttonPlayerLevelMaximum.Location = new System.Drawing.Point(336, 48);
             this.buttonPlayerLevelMaximum.Name = "buttonPlayerLevelMaximum";
             this.buttonPlayerLevelMaximum.Size = new System.Drawing.Size(78, 23);
             this.buttonPlayerLevelMaximum.TabIndex = 14;
@@ -470,7 +482,7 @@
             // 
             this.groupBoxProfileSkill.Location = new System.Drawing.Point(6, 91);
             this.groupBoxProfileSkill.Name = "groupBoxProfileSkill";
-            this.groupBoxProfileSkill.Size = new System.Drawing.Size(392, 373);
+            this.groupBoxProfileSkill.Size = new System.Drawing.Size(420, 440);
             this.groupBoxProfileSkill.TabIndex = 34;
             this.groupBoxProfileSkill.TabStop = false;
             this.groupBoxProfileSkill.Text = "Skills";
@@ -478,18 +490,18 @@
             // groupBoxProfileUserColors
             // 
             this.groupBoxProfileUserColors.Controls.Add(this.buttonUserColorsShareColors);
-            this.groupBoxProfileUserColors.Location = new System.Drawing.Point(404, 6);
+            this.groupBoxProfileUserColors.Location = new System.Drawing.Point(432, 6);
             this.groupBoxProfileUserColors.Name = "groupBoxProfileUserColors";
-            this.groupBoxProfileUserColors.Size = new System.Drawing.Size(70, 458);
+            this.groupBoxProfileUserColors.Size = new System.Drawing.Size(124, 525);
             this.groupBoxProfileUserColors.TabIndex = 7;
             this.groupBoxProfileUserColors.TabStop = false;
             this.groupBoxProfileUserColors.Text = "User colors";
             // 
             // buttonUserColorsShareColors
             // 
-            this.buttonUserColorsShareColors.Location = new System.Drawing.Point(6, 401);
+            this.buttonUserColorsShareColors.Location = new System.Drawing.Point(6, 468);
             this.buttonUserColorsShareColors.Name = "buttonUserColorsShareColors";
-            this.buttonUserColorsShareColors.Size = new System.Drawing.Size(58, 51);
+            this.buttonUserColorsShareColors.Size = new System.Drawing.Size(112, 51);
             this.buttonUserColorsShareColors.TabIndex = 0;
             this.buttonUserColorsShareColors.Text = "Share colors";
             this.buttonUserColorsShareColors.UseVisualStyleBackColor = true;
@@ -497,147 +509,66 @@
             // 
             // tabPageCompany
             // 
-            this.tabPageCompany.Controls.Add(this.pictureBoxCompanyLogo);
-            this.tabPageCompany.Controls.Add(this.buttonUserCompanyGaragesSell);
-            this.tabPageCompany.Controls.Add(this.buttonUserCompanyCitiesUnVisit);
-            this.tabPageCompany.Controls.Add(this.buttonUserCompanyCitiesVisit);
-            this.tabPageCompany.Controls.Add(this.buttonUserCompanyGaragesBuyUpgrade);
-            this.tabPageCompany.Controls.Add(this.buttonUserCompanyGaragesUpgrade);
-            this.tabPageCompany.Controls.Add(this.buttonUserCompanyGaragesBuy);
-            this.tabPageCompany.Controls.Add(this.labelUserCompanyMoneyAccount);
-            this.tabPageCompany.Controls.Add(this.textBoxUserCompanyMoneyAccount);
-            this.tabPageCompany.Controls.Add(this.labelUserCompanyVisitedCities);
-            this.tabPageCompany.Controls.Add(this.listBoxVisitedCities);
-            this.tabPageCompany.Controls.Add(this.labelUserCompanyGarages);
-            this.tabPageCompany.Controls.Add(this.listBoxGarages);
-            this.tabPageCompany.Controls.Add(this.labelUserCompanyCompanyName);
-            this.tabPageCompany.Controls.Add(this.textBoxUserCompanyCompanyName);
-            this.tabPageCompany.Controls.Add(this.comboBoxUserCompanyHQcity);
-            this.tabPageCompany.Controls.Add(this.labelUserCompanyHQcity);
+            this.tabPageCompany.Controls.Add(this.tableLayoutPanel2);
             this.tabPageCompany.Location = new System.Drawing.Point(4, 28);
             this.tabPageCompany.Name = "tabPageCompany";
             this.tabPageCompany.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCompany.Size = new System.Drawing.Size(564, 470);
+            this.tabPageCompany.Size = new System.Drawing.Size(564, 537);
             this.tabPageCompany.TabIndex = 5;
             this.tabPageCompany.Text = "Company";
             this.tabPageCompany.UseVisualStyleBackColor = true;
             // 
-            // pictureBoxCompanyLogo
+            // tableLayoutPanel2
             // 
-            this.pictureBoxCompanyLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxCompanyLogo.Location = new System.Drawing.Point(9, 6);
-            this.pictureBoxCompanyLogo.Name = "pictureBoxCompanyLogo";
-            this.pictureBoxCompanyLogo.Size = new System.Drawing.Size(92, 92);
-            this.pictureBoxCompanyLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxCompanyLogo.TabIndex = 21;
-            this.pictureBoxCompanyLogo.TabStop = false;
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 107F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 137F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(558, 531);
+            this.tableLayoutPanel2.TabIndex = 29;
             // 
-            // buttonUserCompanyGaragesSell
+            // tableLayoutPanel4
             // 
-            this.buttonUserCompanyGaragesSell.Enabled = false;
-            this.buttonUserCompanyGaragesSell.Location = new System.Drawing.Point(394, 397);
-            this.buttonUserCompanyGaragesSell.Name = "buttonUserCompanyGaragesSell";
-            this.buttonUserCompanyGaragesSell.Size = new System.Drawing.Size(80, 56);
-            this.buttonUserCompanyGaragesSell.TabIndex = 28;
-            this.buttonUserCompanyGaragesSell.Text = "Sell";
-            this.buttonUserCompanyGaragesSell.UseVisualStyleBackColor = true;
-            this.buttonUserCompanyGaragesSell.Click += new System.EventHandler(this.buttonGaragesSell_Click);
-            // 
-            // buttonUserCompanyCitiesUnVisit
-            // 
-            this.buttonUserCompanyCitiesUnVisit.Location = new System.Drawing.Point(111, 397);
-            this.buttonUserCompanyCitiesUnVisit.Name = "buttonUserCompanyCitiesUnVisit";
-            this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(101, 55);
-            this.buttonUserCompanyCitiesUnVisit.TabIndex = 27;
-            this.buttonUserCompanyCitiesUnVisit.Text = "Unvisit";
-            this.buttonUserCompanyCitiesUnVisit.UseVisualStyleBackColor = true;
-            this.buttonUserCompanyCitiesUnVisit.Click += new System.EventHandler(this.buttonCitiesUnVisit_Click);
-            // 
-            // buttonUserCompanyCitiesVisit
-            // 
-            this.buttonUserCompanyCitiesVisit.Location = new System.Drawing.Point(9, 397);
-            this.buttonUserCompanyCitiesVisit.Name = "buttonUserCompanyCitiesVisit";
-            this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(96, 55);
-            this.buttonUserCompanyCitiesVisit.TabIndex = 26;
-            this.buttonUserCompanyCitiesVisit.Text = "Visit";
-            this.buttonUserCompanyCitiesVisit.UseVisualStyleBackColor = true;
-            this.buttonUserCompanyCitiesVisit.Click += new System.EventHandler(this.buttonCitiesVisit_Click);
-            // 
-            // buttonUserCompanyGaragesBuyUpgrade
-            // 
-            this.buttonUserCompanyGaragesBuyUpgrade.Location = new System.Drawing.Point(218, 426);
-            this.buttonUserCompanyGaragesBuyUpgrade.Name = "buttonUserCompanyGaragesBuyUpgrade";
-            this.buttonUserCompanyGaragesBuyUpgrade.Size = new System.Drawing.Size(170, 26);
-            this.buttonUserCompanyGaragesBuyUpgrade.TabIndex = 25;
-            this.buttonUserCompanyGaragesBuyUpgrade.Text = "Buy and Upgrade";
-            this.buttonUserCompanyGaragesBuyUpgrade.UseVisualStyleBackColor = true;
-            this.buttonUserCompanyGaragesBuyUpgrade.Click += new System.EventHandler(this.buttonGaragesBuyUpgrade_Click);
-            // 
-            // buttonUserCompanyGaragesUpgrade
-            // 
-            this.buttonUserCompanyGaragesUpgrade.Location = new System.Drawing.Point(306, 397);
-            this.buttonUserCompanyGaragesUpgrade.Name = "buttonUserCompanyGaragesUpgrade";
-            this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(82, 23);
-            this.buttonUserCompanyGaragesUpgrade.TabIndex = 24;
-            this.buttonUserCompanyGaragesUpgrade.Text = "Upgrade";
-            this.buttonUserCompanyGaragesUpgrade.UseVisualStyleBackColor = true;
-            this.buttonUserCompanyGaragesUpgrade.Click += new System.EventHandler(this.buttonGaragesUpgrade_Click);
-            // 
-            // buttonUserCompanyGaragesBuy
-            // 
-            this.buttonUserCompanyGaragesBuy.Location = new System.Drawing.Point(218, 397);
-            this.buttonUserCompanyGaragesBuy.Name = "buttonUserCompanyGaragesBuy";
-            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(82, 23);
-            this.buttonUserCompanyGaragesBuy.TabIndex = 23;
-            this.buttonUserCompanyGaragesBuy.Text = "Buy";
-            this.buttonUserCompanyGaragesBuy.UseVisualStyleBackColor = true;
-            this.buttonUserCompanyGaragesBuy.Click += new System.EventHandler(this.buttonGaragesBuy_Click);
-            // 
-            // labelUserCompanyMoneyAccount
-            // 
-            this.labelUserCompanyMoneyAccount.AutoSize = true;
-            this.labelUserCompanyMoneyAccount.Location = new System.Drawing.Point(107, 43);
-            this.labelUserCompanyMoneyAccount.Name = "labelUserCompanyMoneyAccount";
-            this.labelUserCompanyMoneyAccount.Size = new System.Drawing.Size(81, 13);
-            this.labelUserCompanyMoneyAccount.TabIndex = 22;
-            this.labelUserCompanyMoneyAccount.Text = "Account money";
-            // 
-            // textBoxUserCompanyMoneyAccount
-            // 
-            this.textBoxUserCompanyMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(218, 41);
-            this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
-            this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(138, 20);
-            this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
-            this.textBoxUserCompanyMoneyAccount.TextChanged += new System.EventHandler(this.textBoxMoneyAccount_TextChanged);
-            this.textBoxUserCompanyMoneyAccount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxMoneyAccount_KeyPress);
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.labelUserCompanyVisitedCities, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.labelUserCompanyGarages, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.listBoxGarages, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.listBoxVisitedCities, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 2);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel6, 1, 2);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 110);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 3;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 334F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(552, 418);
+            this.tableLayoutPanel4.TabIndex = 30;
             // 
             // labelUserCompanyVisitedCities
             // 
+            this.labelUserCompanyVisitedCities.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyVisitedCities.AutoSize = true;
-            this.labelUserCompanyVisitedCities.Location = new System.Drawing.Point(6, 103);
+            this.labelUserCompanyVisitedCities.Location = new System.Drawing.Point(3, 3);
             this.labelUserCompanyVisitedCities.Name = "labelUserCompanyVisitedCities";
             this.labelUserCompanyVisitedCities.Size = new System.Drawing.Size(65, 13);
             this.labelUserCompanyVisitedCities.TabIndex = 20;
             this.labelUserCompanyVisitedCities.Text = "Visited cities";
             // 
-            // listBoxVisitedCities
-            // 
-            this.listBoxVisitedCities.Font = new System.Drawing.Font("Microsoft Sans Serif", 2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listBoxVisitedCities.FormattingEnabled = true;
-            this.listBoxVisitedCities.ItemHeight = 4;
-            this.listBoxVisitedCities.Location = new System.Drawing.Point(9, 119);
-            this.listBoxVisitedCities.Name = "listBoxVisitedCities";
-            this.listBoxVisitedCities.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxVisitedCities.Size = new System.Drawing.Size(203, 272);
-            this.listBoxVisitedCities.TabIndex = 19;
-            this.listBoxVisitedCities.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxVisitedCities_DrawItem);
-            this.listBoxVisitedCities.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxVisitedCities_MeasureItem);
-            // 
             // labelUserCompanyGarages
             // 
+            this.labelUserCompanyGarages.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyGarages.AutoSize = true;
-            this.labelUserCompanyGarages.Location = new System.Drawing.Point(215, 103);
+            this.labelUserCompanyGarages.Location = new System.Drawing.Point(279, 3);
             this.labelUserCompanyGarages.Name = "labelUserCompanyGarages";
             this.labelUserCompanyGarages.Size = new System.Drawing.Size(47, 13);
             this.labelUserCompanyGarages.TabIndex = 18;
@@ -645,51 +576,228 @@
             // 
             // listBoxGarages
             // 
+            this.listBoxGarages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxGarages.Font = new System.Drawing.Font("Microsoft Sans Serif", 2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxGarages.FormattingEnabled = true;
             this.listBoxGarages.ItemHeight = 4;
-            this.listBoxGarages.Location = new System.Drawing.Point(218, 119);
+            this.listBoxGarages.Location = new System.Drawing.Point(279, 23);
             this.listBoxGarages.Name = "listBoxGarages";
             this.listBoxGarages.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxGarages.Size = new System.Drawing.Size(256, 272);
+            this.listBoxGarages.Size = new System.Drawing.Size(270, 328);
             this.listBoxGarages.TabIndex = 17;
             this.listBoxGarages.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxGarages_DrawItem);
             this.listBoxGarages.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxGarages_MeasureItem);
             // 
+            // listBoxVisitedCities
+            // 
+            this.listBoxVisitedCities.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxVisitedCities.Font = new System.Drawing.Font("Microsoft Sans Serif", 2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxVisitedCities.FormattingEnabled = true;
+            this.listBoxVisitedCities.ItemHeight = 4;
+            this.listBoxVisitedCities.Location = new System.Drawing.Point(3, 23);
+            this.listBoxVisitedCities.Name = "listBoxVisitedCities";
+            this.listBoxVisitedCities.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.listBoxVisitedCities.Size = new System.Drawing.Size(270, 328);
+            this.listBoxVisitedCities.TabIndex = 19;
+            this.listBoxVisitedCities.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxVisitedCities_DrawItem);
+            this.listBoxVisitedCities.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxVisitedCities_MeasureItem);
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesVisit, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesUnVisit, 1, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 357);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(270, 58);
+            this.tableLayoutPanel5.TabIndex = 21;
+            // 
+            // buttonUserCompanyCitiesVisit
+            // 
+            this.buttonUserCompanyCitiesVisit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyCitiesVisit.Location = new System.Drawing.Point(3, 3);
+            this.buttonUserCompanyCitiesVisit.Name = "buttonUserCompanyCitiesVisit";
+            this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(129, 52);
+            this.buttonUserCompanyCitiesVisit.TabIndex = 26;
+            this.buttonUserCompanyCitiesVisit.Text = "Visit";
+            this.buttonUserCompanyCitiesVisit.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyCitiesVisit.Click += new System.EventHandler(this.buttonCitiesVisit_Click);
+            // 
+            // buttonUserCompanyCitiesUnVisit
+            // 
+            this.buttonUserCompanyCitiesUnVisit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyCitiesUnVisit.Location = new System.Drawing.Point(138, 3);
+            this.buttonUserCompanyCitiesUnVisit.Name = "buttonUserCompanyCitiesUnVisit";
+            this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(129, 52);
+            this.buttonUserCompanyCitiesUnVisit.TabIndex = 27;
+            this.buttonUserCompanyCitiesUnVisit.Text = "Unvisit";
+            this.buttonUserCompanyCitiesUnVisit.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyCitiesUnVisit.Click += new System.EventHandler(this.buttonCitiesUnVisit_Click);
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 3;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesBuy, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesBuyUpgrade, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesSell, 2, 0);
+            this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesUpgrade, 1, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(279, 357);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 2;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(270, 58);
+            this.tableLayoutPanel6.TabIndex = 22;
+            // 
+            // buttonUserCompanyGaragesBuy
+            // 
+            this.buttonUserCompanyGaragesBuy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyGaragesBuy.Location = new System.Drawing.Point(3, 3);
+            this.buttonUserCompanyGaragesBuy.Name = "buttonUserCompanyGaragesBuy";
+            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(86, 23);
+            this.buttonUserCompanyGaragesBuy.TabIndex = 23;
+            this.buttonUserCompanyGaragesBuy.Text = "Buy";
+            this.buttonUserCompanyGaragesBuy.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesBuy.Click += new System.EventHandler(this.buttonGaragesBuy_Click);
+            // 
+            // buttonUserCompanyGaragesBuyUpgrade
+            // 
+            this.tableLayoutPanel6.SetColumnSpan(this.buttonUserCompanyGaragesBuyUpgrade, 2);
+            this.buttonUserCompanyGaragesBuyUpgrade.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyGaragesBuyUpgrade.Location = new System.Drawing.Point(3, 32);
+            this.buttonUserCompanyGaragesBuyUpgrade.Name = "buttonUserCompanyGaragesBuyUpgrade";
+            this.buttonUserCompanyGaragesBuyUpgrade.Size = new System.Drawing.Size(178, 23);
+            this.buttonUserCompanyGaragesBuyUpgrade.TabIndex = 25;
+            this.buttonUserCompanyGaragesBuyUpgrade.Text = "Buy and Upgrade";
+            this.buttonUserCompanyGaragesBuyUpgrade.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesBuyUpgrade.Click += new System.EventHandler(this.buttonGaragesBuyUpgrade_Click);
+            // 
+            // buttonUserCompanyGaragesSell
+            // 
+            this.buttonUserCompanyGaragesSell.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyGaragesSell.Enabled = false;
+            this.buttonUserCompanyGaragesSell.Location = new System.Drawing.Point(187, 3);
+            this.buttonUserCompanyGaragesSell.Name = "buttonUserCompanyGaragesSell";
+            this.tableLayoutPanel6.SetRowSpan(this.buttonUserCompanyGaragesSell, 2);
+            this.buttonUserCompanyGaragesSell.Size = new System.Drawing.Size(80, 52);
+            this.buttonUserCompanyGaragesSell.TabIndex = 28;
+            this.buttonUserCompanyGaragesSell.Text = "Sell";
+            this.buttonUserCompanyGaragesSell.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesSell.Click += new System.EventHandler(this.buttonGaragesSell_Click);
+            // 
+            // buttonUserCompanyGaragesUpgrade
+            // 
+            this.buttonUserCompanyGaragesUpgrade.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyGaragesUpgrade.Location = new System.Drawing.Point(95, 3);
+            this.buttonUserCompanyGaragesUpgrade.Name = "buttonUserCompanyGaragesUpgrade";
+            this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(86, 23);
+            this.buttonUserCompanyGaragesUpgrade.TabIndex = 24;
+            this.buttonUserCompanyGaragesUpgrade.Text = "Upgrade";
+            this.buttonUserCompanyGaragesUpgrade.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesUpgrade.Click += new System.EventHandler(this.buttonGaragesUpgrade_Click);
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.Controls.Add(this.pictureBoxCompanyLogo, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyCompanyName, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyMoneyAccount, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyHQcity, 1, 2);
+            this.tableLayoutPanel3.Controls.Add(this.textBoxUserCompanyCompanyName, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.textBoxUserCompanyMoneyAccount, 2, 1);
+            this.tableLayoutPanel3.Controls.Add(this.comboBoxUserCompanyHQcity, 2, 2);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 3;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(552, 101);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // pictureBoxCompanyLogo
+            // 
+            this.pictureBoxCompanyLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxCompanyLogo.Location = new System.Drawing.Point(3, 3);
+            this.pictureBoxCompanyLogo.Name = "pictureBoxCompanyLogo";
+            this.tableLayoutPanel3.SetRowSpan(this.pictureBoxCompanyLogo, 3);
+            this.pictureBoxCompanyLogo.Size = new System.Drawing.Size(92, 92);
+            this.pictureBoxCompanyLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxCompanyLogo.TabIndex = 21;
+            this.pictureBoxCompanyLogo.TabStop = false;
+            // 
             // labelUserCompanyCompanyName
             // 
+            this.labelUserCompanyCompanyName.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyCompanyName.AutoSize = true;
-            this.labelUserCompanyCompanyName.Location = new System.Drawing.Point(107, 18);
+            this.labelUserCompanyCompanyName.Location = new System.Drawing.Point(101, 10);
             this.labelUserCompanyCompanyName.Name = "labelUserCompanyCompanyName";
             this.labelUserCompanyCompanyName.Size = new System.Drawing.Size(80, 13);
             this.labelUserCompanyCompanyName.TabIndex = 15;
             this.labelUserCompanyCompanyName.Text = "Company name";
             // 
-            // textBoxUserCompanyCompanyName
+            // labelUserCompanyMoneyAccount
             // 
-            this.textBoxUserCompanyCompanyName.Enabled = false;
-            this.textBoxUserCompanyCompanyName.Location = new System.Drawing.Point(218, 15);
-            this.textBoxUserCompanyCompanyName.Name = "textBoxUserCompanyCompanyName";
-            this.textBoxUserCompanyCompanyName.Size = new System.Drawing.Size(138, 20);
-            this.textBoxUserCompanyCompanyName.TabIndex = 14;
-            // 
-            // comboBoxUserCompanyHQcity
-            // 
-            this.comboBoxUserCompanyHQcity.FormattingEnabled = true;
-            this.comboBoxUserCompanyHQcity.Location = new System.Drawing.Point(218, 67);
-            this.comboBoxUserCompanyHQcity.Name = "comboBoxUserCompanyHQcity";
-            this.comboBoxUserCompanyHQcity.Size = new System.Drawing.Size(138, 21);
-            this.comboBoxUserCompanyHQcity.TabIndex = 12;
-            this.comboBoxUserCompanyHQcity.SelectedIndexChanged += new System.EventHandler(this.comboBoxUserCompanyHQcity_SelectedIndexChanged);
+            this.labelUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelUserCompanyMoneyAccount.AutoSize = true;
+            this.labelUserCompanyMoneyAccount.Location = new System.Drawing.Point(101, 43);
+            this.labelUserCompanyMoneyAccount.Name = "labelUserCompanyMoneyAccount";
+            this.labelUserCompanyMoneyAccount.Size = new System.Drawing.Size(81, 13);
+            this.labelUserCompanyMoneyAccount.TabIndex = 22;
+            this.labelUserCompanyMoneyAccount.Text = "Account money";
             // 
             // labelUserCompanyHQcity
             // 
+            this.labelUserCompanyHQcity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyHQcity.AutoSize = true;
-            this.labelUserCompanyHQcity.Location = new System.Drawing.Point(107, 70);
+            this.labelUserCompanyHQcity.Location = new System.Drawing.Point(101, 77);
             this.labelUserCompanyHQcity.Name = "labelUserCompanyHQcity";
             this.labelUserCompanyHQcity.Size = new System.Drawing.Size(42, 13);
             this.labelUserCompanyHQcity.TabIndex = 4;
             this.labelUserCompanyHQcity.Text = "HQ city";
+            // 
+            // textBoxUserCompanyCompanyName
+            // 
+            this.textBoxUserCompanyCompanyName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBoxUserCompanyCompanyName.Enabled = false;
+            this.textBoxUserCompanyCompanyName.Location = new System.Drawing.Point(229, 6);
+            this.textBoxUserCompanyCompanyName.Name = "textBoxUserCompanyCompanyName";
+            this.textBoxUserCompanyCompanyName.Size = new System.Drawing.Size(138, 20);
+            this.textBoxUserCompanyCompanyName.TabIndex = 14;
+            // 
+            // textBoxUserCompanyMoneyAccount
+            // 
+            this.textBoxUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBoxUserCompanyMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(229, 39);
+            this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
+            this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(138, 20);
+            this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
+            this.textBoxUserCompanyMoneyAccount.TextChanged += new System.EventHandler(this.textBoxMoneyAccount_TextChanged);
+            this.textBoxUserCompanyMoneyAccount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxMoneyAccount_KeyPress);
+            // 
+            // comboBoxUserCompanyHQcity
+            // 
+            this.comboBoxUserCompanyHQcity.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.comboBoxUserCompanyHQcity.FormattingEnabled = true;
+            this.comboBoxUserCompanyHQcity.Location = new System.Drawing.Point(229, 73);
+            this.comboBoxUserCompanyHQcity.Name = "comboBoxUserCompanyHQcity";
+            this.comboBoxUserCompanyHQcity.Size = new System.Drawing.Size(138, 21);
+            this.comboBoxUserCompanyHQcity.TabIndex = 12;
+            this.comboBoxUserCompanyHQcity.SelectedIndexChanged += new System.EventHandler(this.comboBoxUserCompanyHQcity_SelectedIndexChanged);
             // 
             // tabPageTruck
             // 
@@ -702,85 +810,108 @@
             this.tabPageTruck.Location = new System.Drawing.Point(4, 28);
             this.tabPageTruck.Name = "tabPageTruck";
             this.tabPageTruck.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTruck.Size = new System.Drawing.Size(564, 470);
+            this.tabPageTruck.Size = new System.Drawing.Size(564, 537);
             this.tabPageTruck.TabIndex = 1;
             this.tabPageTruck.Text = "Truck";
             this.tabPageTruck.UseVisualStyleBackColor = true;
             // 
             // groupBoxUserTruckShareTruckSettings
             // 
-            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckTruckPaste);
-            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckDetailsPaste);
-            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckTruckCopy);
-            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckDetailsCopy);
-            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckPaintPaste);
-            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.buttonShareTruckTruckPaintCopy);
-            this.groupBoxUserTruckShareTruckSettings.Location = new System.Drawing.Point(6, 382);
+            this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.tableLayoutPanel7);
+            this.groupBoxUserTruckShareTruckSettings.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBoxUserTruckShareTruckSettings.Location = new System.Drawing.Point(3, 456);
             this.groupBoxUserTruckShareTruckSettings.Name = "groupBoxUserTruckShareTruckSettings";
-            this.groupBoxUserTruckShareTruckSettings.Size = new System.Drawing.Size(550, 82);
+            this.groupBoxUserTruckShareTruckSettings.Size = new System.Drawing.Size(558, 78);
             this.groupBoxUserTruckShareTruckSettings.TabIndex = 27;
             this.groupBoxUserTruckShareTruckSettings.TabStop = false;
             this.groupBoxUserTruckShareTruckSettings.Text = "Share Truck Settings";
             // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 3;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel7.Controls.Add(this.buttonShareTruckTruckTruckPaste, 2, 1);
+            this.tableLayoutPanel7.Controls.Add(this.buttonShareTruckTruckPaintCopy, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.buttonShareTruckTruckDetailsPaste, 1, 1);
+            this.tableLayoutPanel7.Controls.Add(this.buttonShareTruckTruckPaintPaste, 0, 1);
+            this.tableLayoutPanel7.Controls.Add(this.buttonShareTruckTruckTruckCopy, 2, 0);
+            this.tableLayoutPanel7.Controls.Add(this.buttonShareTruckTruckDetailsCopy, 1, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 2;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(552, 59);
+            this.tableLayoutPanel7.TabIndex = 28;
+            // 
             // buttonShareTruckTruckTruckPaste
             // 
+            this.buttonShareTruckTruckTruckPaste.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonShareTruckTruckTruckPaste.Enabled = false;
-            this.buttonShareTruckTruckTruckPaste.Location = new System.Drawing.Point(315, 48);
+            this.buttonShareTruckTruckTruckPaste.Location = new System.Drawing.Point(370, 32);
             this.buttonShareTruckTruckTruckPaste.Name = "buttonShareTruckTruckTruckPaste";
-            this.buttonShareTruckTruckTruckPaste.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckTruckPaste.Size = new System.Drawing.Size(179, 24);
             this.buttonShareTruckTruckTruckPaste.TabIndex = 5;
             this.buttonShareTruckTruckTruckPaste.Text = "Paste All Truck Settings";
             this.buttonShareTruckTruckTruckPaste.UseVisualStyleBackColor = true;
             // 
+            // buttonShareTruckTruckPaintCopy
+            // 
+            this.buttonShareTruckTruckPaintCopy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonShareTruckTruckPaintCopy.Location = new System.Drawing.Point(3, 3);
+            this.buttonShareTruckTruckPaintCopy.Name = "buttonShareTruckTruckPaintCopy";
+            this.buttonShareTruckTruckPaintCopy.Size = new System.Drawing.Size(177, 23);
+            this.buttonShareTruckTruckPaintCopy.TabIndex = 0;
+            this.buttonShareTruckTruckPaintCopy.Text = "Copy Paint Settings";
+            this.buttonShareTruckTruckPaintCopy.UseVisualStyleBackColor = true;
+            this.buttonShareTruckTruckPaintCopy.Click += new System.EventHandler(this.buttonTruckPaintCopy_Click);
+            // 
             // buttonShareTruckTruckDetailsPaste
             // 
+            this.buttonShareTruckTruckDetailsPaste.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonShareTruckTruckDetailsPaste.Enabled = false;
-            this.buttonShareTruckTruckDetailsPaste.Location = new System.Drawing.Point(162, 48);
+            this.buttonShareTruckTruckDetailsPaste.Location = new System.Drawing.Point(186, 32);
             this.buttonShareTruckTruckDetailsPaste.Name = "buttonShareTruckTruckDetailsPaste";
-            this.buttonShareTruckTruckDetailsPaste.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckDetailsPaste.Size = new System.Drawing.Size(178, 24);
             this.buttonShareTruckTruckDetailsPaste.TabIndex = 4;
             this.buttonShareTruckTruckDetailsPaste.Text = "Paste Truck Datails";
             this.buttonShareTruckTruckDetailsPaste.UseVisualStyleBackColor = true;
             // 
+            // buttonShareTruckTruckPaintPaste
+            // 
+            this.buttonShareTruckTruckPaintPaste.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonShareTruckTruckPaintPaste.Location = new System.Drawing.Point(3, 32);
+            this.buttonShareTruckTruckPaintPaste.Name = "buttonShareTruckTruckPaintPaste";
+            this.buttonShareTruckTruckPaintPaste.Size = new System.Drawing.Size(177, 24);
+            this.buttonShareTruckTruckPaintPaste.TabIndex = 1;
+            this.buttonShareTruckTruckPaintPaste.Text = "Paste Paint Settings";
+            this.buttonShareTruckTruckPaintPaste.UseVisualStyleBackColor = true;
+            this.buttonShareTruckTruckPaintPaste.Click += new System.EventHandler(this.buttonTruckPaintPaste_Click);
+            // 
             // buttonShareTruckTruckTruckCopy
             // 
+            this.buttonShareTruckTruckTruckCopy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonShareTruckTruckTruckCopy.Enabled = false;
-            this.buttonShareTruckTruckTruckCopy.Location = new System.Drawing.Point(315, 20);
+            this.buttonShareTruckTruckTruckCopy.Location = new System.Drawing.Point(370, 3);
             this.buttonShareTruckTruckTruckCopy.Name = "buttonShareTruckTruckTruckCopy";
-            this.buttonShareTruckTruckTruckCopy.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckTruckCopy.Size = new System.Drawing.Size(179, 23);
             this.buttonShareTruckTruckTruckCopy.TabIndex = 3;
             this.buttonShareTruckTruckTruckCopy.Text = "Copy All Truck Settings";
             this.buttonShareTruckTruckTruckCopy.UseVisualStyleBackColor = true;
             // 
             // buttonShareTruckTruckDetailsCopy
             // 
+            this.buttonShareTruckTruckDetailsCopy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonShareTruckTruckDetailsCopy.Enabled = false;
-            this.buttonShareTruckTruckDetailsCopy.Location = new System.Drawing.Point(162, 20);
+            this.buttonShareTruckTruckDetailsCopy.Location = new System.Drawing.Point(186, 3);
             this.buttonShareTruckTruckDetailsCopy.Name = "buttonShareTruckTruckDetailsCopy";
-            this.buttonShareTruckTruckDetailsCopy.Size = new System.Drawing.Size(147, 23);
+            this.buttonShareTruckTruckDetailsCopy.Size = new System.Drawing.Size(178, 23);
             this.buttonShareTruckTruckDetailsCopy.TabIndex = 2;
             this.buttonShareTruckTruckDetailsCopy.Text = "Copy Truck Datails";
             this.buttonShareTruckTruckDetailsCopy.UseVisualStyleBackColor = true;
-            // 
-            // buttonShareTruckTruckPaintPaste
-            // 
-            this.buttonShareTruckTruckPaintPaste.Location = new System.Drawing.Point(7, 49);
-            this.buttonShareTruckTruckPaintPaste.Name = "buttonShareTruckTruckPaintPaste";
-            this.buttonShareTruckTruckPaintPaste.Size = new System.Drawing.Size(147, 23);
-            this.buttonShareTruckTruckPaintPaste.TabIndex = 1;
-            this.buttonShareTruckTruckPaintPaste.Text = "Paste Paint Settings";
-            this.buttonShareTruckTruckPaintPaste.UseVisualStyleBackColor = true;
-            this.buttonShareTruckTruckPaintPaste.Click += new System.EventHandler(this.buttonTruckPaintPaste_Click);
-            // 
-            // buttonShareTruckTruckPaintCopy
-            // 
-            this.buttonShareTruckTruckPaintCopy.Location = new System.Drawing.Point(7, 20);
-            this.buttonShareTruckTruckPaintCopy.Name = "buttonShareTruckTruckPaintCopy";
-            this.buttonShareTruckTruckPaintCopy.Size = new System.Drawing.Size(147, 23);
-            this.buttonShareTruckTruckPaintCopy.TabIndex = 0;
-            this.buttonShareTruckTruckPaintCopy.Text = "Copy Paint Settings";
-            this.buttonShareTruckTruckPaintCopy.UseVisualStyleBackColor = true;
-            this.buttonShareTruckTruckPaintCopy.Click += new System.EventHandler(this.buttonTruckPaintCopy_Click);
             // 
             // buttonUserTruckSelectCurrent
             // 
@@ -863,7 +994,7 @@
             this.tabPageTrailer.Location = new System.Drawing.Point(4, 28);
             this.tabPageTrailer.Name = "tabPageTrailer";
             this.tabPageTrailer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTrailer.Size = new System.Drawing.Size(564, 470);
+            this.tabPageTrailer.Size = new System.Drawing.Size(564, 537);
             this.tabPageTrailer.TabIndex = 2;
             this.tabPageTrailer.Text = "Trailer";
             this.tabPageTrailer.UseVisualStyleBackColor = true;
@@ -981,35 +1112,45 @@
             this.tabPageFreightMarket.Location = new System.Drawing.Point(4, 28);
             this.tabPageFreightMarket.Name = "tabPageFreightMarket";
             this.tabPageFreightMarket.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFreightMarket.Size = new System.Drawing.Size(564, 470);
+            this.tabPageFreightMarket.Size = new System.Drawing.Size(564, 537);
             this.tabPageFreightMarket.TabIndex = 3;
             this.tabPageFreightMarket.Text = "FreightMarket";
             this.tabPageFreightMarket.UseVisualStyleBackColor = true;
             // 
             // comboBoxFreightMarketTrailerVariant
             // 
+            this.comboBoxFreightMarketTrailerVariant.DropDownHeight = 208;
             this.comboBoxFreightMarketTrailerVariant.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFreightMarketTrailerVariant.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.comboBoxFreightMarketTrailerVariant.FormattingEnabled = true;
+            this.comboBoxFreightMarketTrailerVariant.IntegralHeight = false;
             this.comboBoxFreightMarketTrailerVariant.Location = new System.Drawing.Point(322, 154);
             this.comboBoxFreightMarketTrailerVariant.Name = "comboBoxFreightMarketTrailerVariant";
-            this.comboBoxFreightMarketTrailerVariant.Size = new System.Drawing.Size(234, 21);
+            this.comboBoxFreightMarketTrailerVariant.Size = new System.Drawing.Size(234, 32);
             this.comboBoxFreightMarketTrailerVariant.TabIndex = 28;
+            this.comboBoxFreightMarketTrailerVariant.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxFreightMarketTrailerVariant_DrawItem);
+            this.comboBoxFreightMarketTrailerVariant.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.comboBoxFreightMarketTrailerVariant_MeasureItem);
             // 
             // comboBoxFreightMarketTrailerDef
             // 
+            this.comboBoxFreightMarketTrailerDef.DropDownHeight = 210;
             this.comboBoxFreightMarketTrailerDef.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFreightMarketTrailerDef.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.comboBoxFreightMarketTrailerDef.FormattingEnabled = true;
+            this.comboBoxFreightMarketTrailerDef.IntegralHeight = false;
+            this.comboBoxFreightMarketTrailerDef.ItemHeight = 24;
             this.comboBoxFreightMarketTrailerDef.Location = new System.Drawing.Point(72, 154);
             this.comboBoxFreightMarketTrailerDef.Name = "comboBoxFreightMarketTrailerDef";
-            this.comboBoxFreightMarketTrailerDef.Size = new System.Drawing.Size(241, 21);
+            this.comboBoxFreightMarketTrailerDef.Size = new System.Drawing.Size(241, 32);
             this.comboBoxFreightMarketTrailerDef.TabIndex = 27;
+            this.comboBoxFreightMarketTrailerDef.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxFreightMarketTrailerDef_DrawItem);
+            this.comboBoxFreightMarketTrailerDef.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.comboBoxFreightMarketTrailerDef_MeasureItem);
             this.comboBoxFreightMarketTrailerDef.SelectedIndexChanged += new System.EventHandler(this.comboBoxFreightMarketTrailerDef_SelectedIndexChanged);
-            this.comboBoxFreightMarketTrailerDef.SelectedValueChanged += new System.EventHandler(this.comboBoxFreightMarketTrailerDef_SelectedValueChanged);
             // 
             // labelFreightMarketTrailer
             // 
             this.labelFreightMarketTrailer.AutoSize = true;
-            this.labelFreightMarketTrailer.Location = new System.Drawing.Point(6, 157);
+            this.labelFreightMarketTrailer.Location = new System.Drawing.Point(6, 165);
             this.labelFreightMarketTrailer.Name = "labelFreightMarketTrailer";
             this.labelFreightMarketTrailer.Size = new System.Drawing.Size(36, 13);
             this.labelFreightMarketTrailer.TabIndex = 26;
@@ -1018,7 +1159,7 @@
             // labelFreightMarketDistanceNumbers
             // 
             this.labelFreightMarketDistanceNumbers.AutoSize = true;
-            this.labelFreightMarketDistanceNumbers.Location = new System.Drawing.Point(105, 213);
+            this.labelFreightMarketDistanceNumbers.Location = new System.Drawing.Point(102, 240);
             this.labelFreightMarketDistanceNumbers.Name = "labelFreightMarketDistanceNumbers";
             this.labelFreightMarketDistanceNumbers.Size = new System.Drawing.Size(13, 13);
             this.labelFreightMarketDistanceNumbers.TabIndex = 25;
@@ -1026,9 +1167,9 @@
             // 
             // buttonFreightMarketRandomizeCargo
             // 
-            this.buttonFreightMarketRandomizeCargo.Location = new System.Drawing.Point(406, 181);
+            this.buttonFreightMarketRandomizeCargo.Location = new System.Drawing.Point(406, 206);
             this.buttonFreightMarketRandomizeCargo.Name = "buttonFreightMarketRandomizeCargo";
-            this.buttonFreightMarketRandomizeCargo.Size = new System.Drawing.Size(150, 21);
+            this.buttonFreightMarketRandomizeCargo.Size = new System.Drawing.Size(150, 23);
             this.buttonFreightMarketRandomizeCargo.TabIndex = 24;
             this.buttonFreightMarketRandomizeCargo.Text = "Random";
             this.buttonFreightMarketRandomizeCargo.UseVisualStyleBackColor = true;
@@ -1037,7 +1178,7 @@
             // labelFreightMarketDistance
             // 
             this.labelFreightMarketDistance.AutoSize = true;
-            this.labelFreightMarketDistance.Location = new System.Drawing.Point(9, 213);
+            this.labelFreightMarketDistance.Location = new System.Drawing.Point(6, 240);
             this.labelFreightMarketDistance.Name = "labelFreightMarketDistance";
             this.labelFreightMarketDistance.Size = new System.Drawing.Size(90, 13);
             this.labelFreightMarketDistance.TabIndex = 23;
@@ -1045,11 +1186,12 @@
             // 
             // listBoxFreightMarketAddedJobs
             // 
+            this.listBoxFreightMarketAddedJobs.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listBoxFreightMarketAddedJobs.FormattingEnabled = true;
-            this.listBoxFreightMarketAddedJobs.Location = new System.Drawing.Point(6, 237);
+            this.listBoxFreightMarketAddedJobs.Location = new System.Drawing.Point(3, 270);
             this.listBoxFreightMarketAddedJobs.Name = "listBoxFreightMarketAddedJobs";
             this.listBoxFreightMarketAddedJobs.ScrollAlwaysVisible = true;
-            this.listBoxFreightMarketAddedJobs.Size = new System.Drawing.Size(550, 225);
+            this.listBoxFreightMarketAddedJobs.Size = new System.Drawing.Size(558, 264);
             this.listBoxFreightMarketAddedJobs.TabIndex = 22;
             this.listBoxFreightMarketAddedJobs.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxAddedJobs_DrawItem);
             this.listBoxFreightMarketAddedJobs.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxAddedJobs_MeasureItem);
@@ -1132,7 +1274,7 @@
             // 
             // buttonFreightMarketClearJobList
             // 
-            this.buttonFreightMarketClearJobList.Location = new System.Drawing.Point(406, 208);
+            this.buttonFreightMarketClearJobList.Location = new System.Drawing.Point(406, 235);
             this.buttonFreightMarketClearJobList.Name = "buttonFreightMarketClearJobList";
             this.buttonFreightMarketClearJobList.Size = new System.Drawing.Size(150, 23);
             this.buttonFreightMarketClearJobList.TabIndex = 13;
@@ -1142,9 +1284,9 @@
             // 
             // buttonFreightMarketAddJob
             // 
-            this.buttonFreightMarketAddJob.Location = new System.Drawing.Point(72, 179);
+            this.buttonFreightMarketAddJob.Location = new System.Drawing.Point(6, 206);
             this.buttonFreightMarketAddJob.Name = "buttonFreightMarketAddJob";
-            this.buttonFreightMarketAddJob.Size = new System.Drawing.Size(328, 23);
+            this.buttonFreightMarketAddJob.Size = new System.Drawing.Size(394, 23);
             this.buttonFreightMarketAddJob.TabIndex = 12;
             this.buttonFreightMarketAddJob.Text = "Add Job to list";
             this.buttonFreightMarketAddJob.UseVisualStyleBackColor = true;
@@ -1166,9 +1308,9 @@
             this.comboBoxFreightMarketUrgency.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxFreightMarketUrgency.FormattingEnabled = true;
             this.comboBoxFreightMarketUrgency.IntegralHeight = false;
-            this.comboBoxFreightMarketUrgency.Location = new System.Drawing.Point(444, 116);
+            this.comboBoxFreightMarketUrgency.Location = new System.Drawing.Point(406, 116);
             this.comboBoxFreightMarketUrgency.Name = "comboBoxFreightMarketUrgency";
-            this.comboBoxFreightMarketUrgency.Size = new System.Drawing.Size(112, 32);
+            this.comboBoxFreightMarketUrgency.Size = new System.Drawing.Size(150, 32);
             this.comboBoxFreightMarketUrgency.TabIndex = 10;
             this.comboBoxFreightMarketUrgency.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxFreightMarketUrgency_DrawItem);
             this.comboBoxFreightMarketUrgency.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.comboBoxFreightMarketUrgency_MeasureItem);
@@ -1184,7 +1326,7 @@
             // 
             // comboBoxFreightMarketCargoList
             // 
-            this.comboBoxFreightMarketCargoList.DropDownHeight = 318;
+            this.comboBoxFreightMarketCargoList.DropDownHeight = 366;
             this.comboBoxFreightMarketCargoList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFreightMarketCargoList.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxFreightMarketCargoList.FormattingEnabled = true;
@@ -1288,7 +1430,7 @@
             this.tabPageCargoMarket.Controls.Add(this.comboBoxSourceCargoMarketCompany);
             this.tabPageCargoMarket.Location = new System.Drawing.Point(4, 28);
             this.tabPageCargoMarket.Name = "tabPageCargoMarket";
-            this.tabPageCargoMarket.Size = new System.Drawing.Size(564, 470);
+            this.tabPageCargoMarket.Size = new System.Drawing.Size(564, 537);
             this.tabPageCargoMarket.TabIndex = 6;
             this.tabPageCargoMarket.Text = "CargoMarket";
             this.tabPageCargoMarket.UseVisualStyleBackColor = true;
@@ -1430,7 +1572,7 @@
             this.tabPageConvoyTools.Location = new System.Drawing.Point(4, 28);
             this.tabPageConvoyTools.Name = "tabPageConvoyTools";
             this.tabPageConvoyTools.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConvoyTools.Size = new System.Drawing.Size(564, 470);
+            this.tabPageConvoyTools.Size = new System.Drawing.Size(564, 537);
             this.tabPageConvoyTools.TabIndex = 4;
             this.tabPageConvoyTools.Text = "Convoy Control";
             this.tabPageConvoyTools.UseVisualStyleBackColor = true;
@@ -1555,7 +1697,7 @@
             this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusMessages,
             this.toolStripProgressBarMain});
-            this.statusStripMain.Location = new System.Drawing.Point(0, 669);
+            this.statusStripMain.Location = new System.Drawing.Point(0, 739);
             this.statusStripMain.Name = "statusStripMain";
             this.statusStripMain.Size = new System.Drawing.Size(584, 22);
             this.statusStripMain.TabIndex = 9;
@@ -1684,7 +1826,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 691);
+            this.ClientSize = new System.Drawing.Size(584, 761);
             this.Controls.Add(this.groupBoxMainProfilesAndSaves);
             this.Controls.Add(this.buttonMainGameSwitchATS);
             this.Controls.Add(this.buttonMainGameSwitchETS);
@@ -1696,8 +1838,8 @@
             this.Controls.Add(this.buttonMainDecryptSave);
             this.Controls.Add(this.menuStripMain);
             this.MainMenuStrip = this.menuStripMain;
-            this.MaximumSize = new System.Drawing.Size(600, 730);
-            this.MinimumSize = new System.Drawing.Size(600, 730);
+            this.MaximumSize = new System.Drawing.Size(600, 800);
+            this.MinimumSize = new System.Drawing.Size(600, 800);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TS SE Tool";
@@ -1714,11 +1856,18 @@
             this.panelPlayerLevel.PerformLayout();
             this.groupBoxProfileUserColors.ResumeLayout(false);
             this.tabPageCompany.ResumeLayout(false);
-            this.tabPageCompany.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCompanyLogo)).EndInit();
             this.tabPageTruck.ResumeLayout(false);
             this.tabPageTruck.PerformLayout();
             this.groupBoxUserTruckShareTruckSettings.ResumeLayout(false);
+            this.tableLayoutPanel7.ResumeLayout(false);
             this.groupBoxUserTruckTruckDetails.ResumeLayout(false);
             this.groupBoxUserTruckTruckDetails.PerformLayout();
             this.tabPageTrailer.ResumeLayout(false);
@@ -1885,6 +2034,12 @@
         private System.Windows.Forms.Label labelFreightMarketTrailer;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
     }
 }
 
