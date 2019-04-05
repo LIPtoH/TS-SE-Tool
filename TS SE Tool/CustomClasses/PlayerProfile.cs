@@ -25,6 +25,7 @@ namespace TS_SE_Tool
         public uint AccountMoney { get; set; }
         public byte[] PlayerSkills { get; set; }
         public string CompanyName { get; set; }
+        public string CompanyLogo { get; set; }
         public int CreationTime { get; set; }
         public string UserCompanyAssignedTruck { get; set; }
         public string UserCompanyAssignedTruckPlacement { get; set; }

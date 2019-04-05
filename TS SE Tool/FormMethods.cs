@@ -105,8 +105,8 @@ namespace TS_SE_Tool
                 CustomStringsDict = new Dictionary<string, string>();
                 TruckBrandsLngDict = new Dictionary<string, string>();
 
-                Globals.CurrentGame = dictionaryProfiles["ETS2"];
-                GameType = "ETS";
+                GameType = "ETS2";
+                Globals.CurrentGame = dictionaryProfiles[GameType];
                 
                 DistancesTable = new DataTable();
                 DistancesTable.Columns.Add("SourceCity", typeof(string));
@@ -182,7 +182,7 @@ namespace TS_SE_Tool
 
             //string ATSexp = "";
 
-            if (GameType == "ETS")
+            if (GameType == "ETS2")
                 Globals.PlayerLevelUps = new int[] {200, 500, 700, 900, 1000, 1100, 1300, 1600, 1700, 1900, 2100, 2300, 2600, 2700,
                     2900, 3000, 3100, 3400, 3700, 4000, 4300, 4600, 4700, 4900, 5200, 5700, 5900, 6000, 6200, 6600, 6900};
             else
@@ -404,7 +404,7 @@ namespace TS_SE_Tool
                             string CurrentUserDir = Directory.GetDirectories(SteamCloudPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray()[0];//null;
 
                             string GameID = "";
-                            if (GameType == "ETS")
+                            if (GameType == "ETS2")
                                 GameID = @"\227300"; //ETS2
                             else
                                 GameID = @"\270880"; //ATS
@@ -878,6 +878,8 @@ namespace TS_SE_Tool
                     btn.Enabled = true;
                     if (UserColorsList[i].A == 0)
                         btn.Text = "X";
+                    else
+                        btn.Text = "";
                 }
             }
         }
@@ -1208,10 +1210,21 @@ namespace TS_SE_Tool
             int pHeight = RepairImg.Height, pOffset = 5, tOffset = comboBoxUserTruckCompanyTrucks.Location.Y;
             int topbutoffset = comboBoxUserTruckCompanyTrucks.Location.X + comboBoxUserTruckCompanyTrucks.Width + pOffset;
 
-            Button buttonR = new Button();
-            tabPageTruck.Controls.Add(buttonR);
+            Button buttonInfo = new Button();
+            tableLayoutPanel8.Controls.Add(buttonInfo);
+            buttonInfo.Location = new Point(comboBoxUserTruckCompanyTrucks.Location.X + ((int)tableLayoutPanel8.ColumnStyles[0].Width - CutomizeImg.Width - 6) / 2, buttonUserTruckSelectCurrent.Location.Y);
+            buttonInfo.FlatStyle = FlatStyle.Flat;
+            buttonInfo.Size = new Size(CutomizeImg.Width, CutomizeImg.Height);
+            buttonInfo.Name = "buttonTruckInfo";
+            buttonInfo.BackgroundImage = ConvertBitmapToGrayscale(CutomizeImg);
+            buttonInfo.BackgroundImageLayout = ImageLayout.Zoom;
+            buttonInfo.Text = "";
+            buttonInfo.FlatAppearance.BorderSize = 0;
+            buttonInfo.Enabled = false;
 
-            buttonR.Location = new Point(topbutoffset, tOffset);
+            Button buttonR = new Button();
+            tableLayoutPanel8.Controls.Add(buttonR);
+            buttonR.Location = new Point(buttonUserTruckSwitchCurrent.Location.X + buttonUserTruckSwitchCurrent.Width + 3, buttonUserTruckSelectCurrent.Location.Y);
             buttonR.FlatStyle = FlatStyle.Flat;
             buttonR.Size = new Size(RepairImg.Height, RepairImg.Height);
             buttonR.Name = "buttonTruckRepair";
@@ -1222,9 +1235,9 @@ namespace TS_SE_Tool
             buttonR.Click += new EventHandler(buttonTruckRepair_Click);
 
             Button buttonF = new Button();
-            tabPageTruck.Controls.Add(buttonF);
+            tableLayoutPanel8.Controls.Add(buttonF);
 
-            buttonF.Location = new Point(topbutoffset, tOffset + RepairImg.Height + pOffset);
+            buttonF.Location = new Point(buttonUserTruckSwitchCurrent.Location.X + buttonUserTruckSwitchCurrent.Width + (int)tableLayoutPanel8.ColumnStyles[3].Width + 6, buttonUserTruckSelectCurrent.Location.Y);
             buttonF.FlatStyle = FlatStyle.Flat;
             buttonF.Size = new Size(RepairImg.Height, RepairImg.Height);
             buttonF.Name = "buttonTruckReFuel";
@@ -1234,18 +1247,6 @@ namespace TS_SE_Tool
             buttonF.FlatAppearance.BorderSize = 0;
             buttonF.Click += new EventHandler(buttonTruckReFuel_Click);
 
-            Button buttonInfo = new Button();
-            tabPageTruck.Controls.Add(buttonInfo);
-
-            buttonInfo.Location = new Point(labelUserTruckTruck.Location.X + (comboBoxUserTruckCompanyTrucks.Location.X - labelUserTruckTruck.Location.X - CutomizeImg.Width - pOffset) /2, buttonUserTruckSelectCurrent.Location.Y + pOffset);
-            buttonInfo.FlatStyle = FlatStyle.Flat;
-            buttonInfo.Size = new Size(CutomizeImg.Width, CutomizeImg.Height);
-            buttonInfo.Name = "buttonTruckInfo";
-            buttonInfo.BackgroundImage = ConvertBitmapToGrayscale(CutomizeImg);
-            buttonInfo.BackgroundImageLayout = ImageLayout.Zoom;
-            buttonInfo.Text = "";
-            buttonInfo.FlatAppearance.BorderSize = 0;
-            buttonInfo.Enabled = false;
         }
         
         public void buttonTruckReFuel_Click(object sender, EventArgs e)
@@ -1977,6 +1978,16 @@ namespace TS_SE_Tool
             textBoxUserCompanyMoneyAccount.Text = PlayerProfileData.AccountMoney.ToString();
             comboBoxUserCompanyHQcity.SelectedValue = PlayerProfileData.HQcity;
             textBoxUserCompanyCompanyName.Text = PlayerProfileData.CompanyName;
+
+            MemoryStream ms = new MemoryStream();
+
+            Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + PlayerProfileData.CompanyLogo + ".dds");
+            temp.Clone(new Rectangle(0, 0, 94, 94), temp.PixelFormat).Save(ms, ImageFormat.Png);
+            PlayerCompanyLogo =  Image.FromStream(ms);
+
+            ms.Dispose();
+
+            pictureBoxCompanyLogo.Image = PlayerCompanyLogo;
         }
 
         private void FillHQcities()
@@ -1991,7 +2002,6 @@ namespace TS_SE_Tool
             //start filling
 
             //fill source and destination cities
-            //foreach (City tempcity in from x in CitiesList where !x.Disabled select x)
             foreach (Garages garage in from x in GaragesList where !x.IgnoreStatus && x.GarageStatus != 0 select x)
             {
                 string CityName = garage.GarageName;
@@ -2004,6 +2014,7 @@ namespace TS_SE_Tool
                     combDT.Rows.Add(CityName, CityName + " -n");
                 }
             }
+            combDT.DefaultView.Sort = "CityName ASC";
             comboBoxUserCompanyHQcity.SelectedIndexChanged -= comboBoxUserCompanyHQcity_SelectedIndexChanged;
             comboBoxUserCompanyHQcity.ValueMember = "City";
             comboBoxUserCompanyHQcity.DisplayMember = "CityName";
@@ -3244,14 +3255,27 @@ namespace TS_SE_Tool
             /////
 
             // Find the area in which to put the text.
-            float fntsize = 7f;
-            y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
-            layout_rect = new RectangleF(x, y-5, width, height);
+
+            float fntsize = 8.25f;
+            Font textfnt = new Font("Microsoft Sans Serif", fntsize);
+
+            Size size = TextRenderer.MeasureText(txt, textfnt);
+            if (size.Width > width)
+            {
+                fntsize = 7f;
+                textfnt = new Font("Microsoft Sans Serif", fntsize);
+                y = e.Bounds.Top - 5 + (e.Bounds.Height - 4 - fntsize) / 2;
+            }
+            else
+            {
+                y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
+            }
+
+            layout_rect = new RectangleF(x, y, width, height);
             StringFormat format = new StringFormat();
             
             //format.Alignment = StringAlignment.Far;
 
-            Font textfnt = new Font("Microsoft Sans Serif", fntsize);
             e.Graphics.DrawString(txt, textfnt, br, layout_rect);
 
             // Draw the focus rectangle if the mouse hovers over an item.
@@ -3326,11 +3350,23 @@ namespace TS_SE_Tool
             string txt = DefDN;
 
             // Find the area in which to put the text.
-            float fntsize = 7.5f;
-            y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
-            layout_rect = new RectangleF(x, y-5, width, height);
-            //format.Alignment = StringAlignment.Far;
+            float fntsize = 8.25f;
             Font textfnt = new Font("Microsoft Sans Serif", fntsize);
+
+            Size size = TextRenderer.MeasureText(txt, textfnt);
+            if (size.Width > width)
+            {
+                fntsize = 7f;
+                textfnt = new Font("Microsoft Sans Serif", fntsize);
+                y = e.Bounds.Top - 5 + (e.Bounds.Height - 4 - fntsize) / 2;
+            }
+            else
+            {
+                y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
+            }
+
+            layout_rect = new RectangleF(x, y, width, height);
+            //format.Alignment = StringAlignment.Far;
             e.Graphics.DrawString(txt, textfnt, br, layout_rect);
 
             // Draw the focus rectangle if the mouse hovers over an item.
@@ -4063,7 +4099,7 @@ namespace TS_SE_Tool
                 tabControlMain.TabPages["tabPageTrailer"].Enabled = false;
             }
 
-            if (GameType == "ETS")
+            if (GameType == "ETS2")
             {
                 //Globals.CurrentGame = dictionaryProfiles["ETS2"];
                 buttonMainGameSwitchETS.Enabled = false;
@@ -4073,7 +4109,7 @@ namespace TS_SE_Tool
                 buttonMainGameSwitchATS.BackColor = Color.FromKnownColor(KnownColor.Control);
                 buttonMainGameSwitchATS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
             }
-            else
+            else if (GameType == "ATS")
             {
                 //Globals.CurrentGame = dictionaryProfiles["ATS"];
                 buttonMainGameSwitchETS.Enabled = true;
@@ -4090,7 +4126,7 @@ namespace TS_SE_Tool
             Button gamebutton = sender as Button;
 
             if (gamebutton.Name == "buttonMainGameSwitchETS")
-                ToggleGame("ETS");
+                ToggleGame("ETS2");
             else
                 ToggleGame("ATS");
 
@@ -4114,7 +4150,7 @@ namespace TS_SE_Tool
                 }
             }
 
-            if (_game == "ETS")
+            if (_game == "ETS2")
             {
                 Globals.CurrentGame = dictionaryProfiles["ETS2"];
                 buttonMainGameSwitchETS.Enabled = false;

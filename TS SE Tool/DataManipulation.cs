@@ -1233,6 +1233,9 @@ namespace TS_SE_Tool
                 }
             }
 
+            string sql = "UPDATE [DatabaseDetails] SET SaveVersion = " + SavefileVersion + " WHERE ID_DBline = 1;";
+            UpdateDatabase(sql);
+
             GetDataFromDatabase("Dependencies");
 
             //Check dependencies
@@ -1243,7 +1246,6 @@ namespace TS_SE_Tool
             }
             else
             {
-
                 List<string> dbdep = DBDependencies.Except(SFDependencies).ToList();
                 List<string> sfdep = SFDependencies.Except(DBDependencies).ToList();
 
@@ -1375,6 +1377,13 @@ namespace TS_SE_Tool
 
             for (int line = 0; line < tempProfileFileInMemory.Length; line++)
             {
+                if (tempProfileFileInMemory[line].StartsWith(" logo:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    PlayerProfileData.CompanyLogo = chunkOfline[2];
+                    continue; //searching
+                }
+
                 if (tempProfileFileInMemory[line].StartsWith(" company_name:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
@@ -1644,8 +1653,6 @@ namespace TS_SE_Tool
         {
             string connectionString;
 
-            //string fileName = "Database.sdf";
-
             if (!File.Exists(fileName))
             {
                 ShowStatusMessages("e", "message_database_missing_creating_db");
@@ -1662,70 +1669,14 @@ namespace TS_SE_Tool
             }
             else
             {
-                //Edit db from 0.3
-                if (DBconnection.State == ConnectionState.Closed)
-                {
-                    DBconnection.Open();
-                }
-
-                //ShowStatusMessages("e", "message_database_missing_creating_db_structure");
-
-                SqlCeCommand cmd;
+                /*
+                //Edit DB                
                 string sql = "";
-                sql = "SELECT COUNT(INDEX_NAME) FROM INFORMATION_SCHEMA.INDEXES WHERE table_name = 'DistancesTable' AND index_name = 'Idx_Uniq_path'";
-                cmd = new SqlCeCommand(sql, DBconnection);
-
-                try
-                {
-                    int rows = (int) cmd.ExecuteScalar();
-
-                    if (rows == 0)                    
-                    {
-                        sql = "CREATE UNIQUE INDEX [Idx_Uniq_path] ON [DistancesTable] ([SourceCityID],[SourceCompanyID],[DestinationCityID],[DestinationCompanyID]);";
-
-                        string[] linesArray = sql.Split(';');
-
-                        foreach (string sqlline in linesArray)
-                        {
-                            if (sqlline != "")
-                            {
-                                cmd = new SqlCeCommand(sqlline, DBconnection);
-
-                                try
-                                {
-                                    cmd.ExecuteNonQuery();
-                                    ShowStatusMessages("i", "message_database_created");
-                                }
-                                catch (SqlCeException sqlexception)
-                                {
-                                    ShowStatusMessages("i", "error_sql_exception");
-                                    MessageBox.Show(sqlexception.Message, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                                catch (Exception ex)
-                                {
-                                    ShowStatusMessages("i", "error_exception");
-                                    MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-                        }
-                    }
-
-                    //cmd.ExecuteNonQuery();
-                    //ShowStatusMessages("i", "message_database_created");
-                }
-                catch (SqlCeException sqlexception)
-                {
-                    ShowStatusMessages("i", "error_sql_exception");
-                    MessageBox.Show(sqlexception.Message, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                catch (Exception ex)
-                {
-                    ShowStatusMessages("i", "error_exception");
-                    MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                DBconnection.Close();
+                sql = "";
+                UpdateDatabase(sql);
+                */
             }
+
         }
 
         private void CreateDatabaseStructure()
@@ -1741,6 +1692,8 @@ namespace TS_SE_Tool
 
             string sql = "";
 
+            sql += "CREATE TABLE DatabaseDetails (ID_DBline INT IDENTITY(1,1) PRIMARY KEY, DBVersion NVARCHAR(8) NOT NULL, GameName NVARCHAR(8) NOT NULL, SaveVersion INT NOT NULL, ProfileName NVARCHAR(64) NOT NULL);";
+            sql += "INSERT INTO [DatabaseDetails] (DBVersion, GameName, SaveVersion, ProfileName) VALUES ('0.1.6','" + GameType +  "', 0, '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "');";
             sql += "CREATE TABLE Dependencies (ID_dep INT IDENTITY(1,1) PRIMARY KEY, Dependency NVARCHAR(64) NOT NULL);";
 
             sql += "CREATE TABLE CitysTable (ID_city INT IDENTITY(1,1) PRIMARY KEY, CityName NVARCHAR(32) NOT NULL);";
@@ -1800,7 +1753,7 @@ namespace TS_SE_Tool
                     catch (SqlCeException sqlexception)
                     {
                         ShowStatusMessages("i", "error_sql_exception");
-                        MessageBox.Show(sqlexception.Message, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(sqlexception.Message, "SQL Exception. Create DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     catch (Exception ex)
                     {
@@ -1827,7 +1780,7 @@ namespace TS_SE_Tool
             catch (SqlCeException sqlexception)
             {
                 ShowStatusMessages("i", "error_sql_exception");
-                MessageBox.Show(sqlexception.Message, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(sqlexception.Message + "\r\n" + _sql_string, "SQL Exception. Update DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -1884,7 +1837,7 @@ namespace TS_SE_Tool
             catch (SqlCeException sqlexception)
             {
                 ShowStatusMessages("i", "error_sql_exception");
-                MessageBox.Show(sqlexception.Message, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(sqlexception.Message, "SQL Exception. Load all Distances", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 LogWriter("Getting Data went wrong");
             }
@@ -1990,26 +1943,29 @@ namespace TS_SE_Tool
                             List<string> temp = DBDependencies.Except(SFDependencies).ToList();
 
                             string SQLCommandCMD = "";
-
-                            SQLCommandCMD += "DELETE FROM [Dependencies] WHERE Dependency IN (";
                             bool first = true;
 
-                            foreach (string tempitem in temp)
+                            if (temp != null && temp.Count() > 0)
                             {
-                                if (!first)
-                                {
-                                    SQLCommandCMD += " , ";
-                                }
-                                else
-                                {
-                                    first = false;
-                                }
+                                SQLCommandCMD += "DELETE FROM [Dependencies] WHERE Dependency IN (";
 
-                                SQLCommandCMD += "'" + tempitem + "'";
+                                foreach (string tempitem in temp)
+                                {
+                                    if (!first)
+                                    {
+                                        SQLCommandCMD += " , ";
+                                    }
+                                    else
+                                    {
+                                        first = false;
+                                    }
+
+                                    SQLCommandCMD += "'" + tempitem + "'";
+                                }
+                                SQLCommandCMD += ")";
+
+                                UpdateDatabase(SQLCommandCMD);
                             }
-                            SQLCommandCMD += ")";
-
-                            UpdateDatabase(SQLCommandCMD);
 
                             SQLCommandCMD = "INSERT INTO [Dependencies] (Dependency) ";
 
@@ -2563,7 +2519,7 @@ namespace TS_SE_Tool
                     catch (SqlCeException sqlexception)
                     {
                         //ShowStatusMessages("i", "error_sql_exception");
-                        MessageBox.Show(sqlexception.Message, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(sqlexception.Message, "SQL Exception. Ext Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     catch (Exception ex)
                     {

@@ -330,7 +330,7 @@ namespace TS_SE_Tool
             imgpaths = new string[] { @"img\" + GameType + @"\cargo.dds", @"img\" + GameType + @"\trailer_body.dds", @"img\" + GameType + @"\trailer_chassis.dds", @"img\" + GameType + @"\tyres.dds" };
             TrailerPartsImg = ExtImgLoader(imgpaths, 64, 64, 0, 0);
 
-            imgpaths = new string[] { @"img\ETS\game_n.dds", @"img\ATS\game_n.dds" };
+            imgpaths = new string[] { @"img\ETS2\game_n.dds", @"img\ATS\game_n.dds" };
             GameIconeImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
         }
 
@@ -674,6 +674,7 @@ namespace TS_SE_Tool
 
             string dbPath = "dbs/" + GameType + "." + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + ".sdf";
             DBconnection = new SqlCeConnection("Data Source = " + dbPath);
+
             if (File.Exists(SiiSavePath))
                 CreateDatabase(dbPath);
             else
@@ -1739,7 +1740,7 @@ namespace TS_SE_Tool
         {
             if (Directory.Exists(Directory.GetCurrentDirectory() + @"\gameref"))
             {
-                string[] gameFolders = { "ETS", "ATS" };
+                string[] gameFolders = { "ETS2", "ATS" };
 
                 foreach (string gamename in gameFolders)
                 {
