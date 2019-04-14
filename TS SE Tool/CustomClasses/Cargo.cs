@@ -39,7 +39,6 @@ namespace TS_SE_Tool
     }
         
     #region Equality
-
     class CargoComparer : IEqualityComparer<Cargo>
     {
         public bool Equals(Cargo obj1, Cargo obj2)

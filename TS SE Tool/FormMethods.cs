@@ -172,6 +172,7 @@ namespace TS_SE_Tool
                 buttonMainGameSwitchETS.Image = GameIconeImg[0];
                 buttonMainGameSwitchATS.Image = GameIconeImg[1];
             }
+
             unCertainRouteLength = "";
             FileDecoded = false;
             SavefilePath = "";
@@ -259,6 +260,10 @@ namespace TS_SE_Tool
             DistancesTable.Clear();
 
             components = null;
+
+            //Clear elements
+            comboBoxFreightMarketTrailerDef.DataSource = null;
+            comboBoxFreightMarketCargoList.DataSource = null;
         }
         
         private void PopulateFormControlsk()
@@ -358,6 +363,16 @@ namespace TS_SE_Tool
             //GC
             GC.Collect();
             //GC.WaitForPendingFinalizers();
+        }
+
+        private void buttonWriteSave_Click(object sender, EventArgs e)
+        {
+            ToggleVisibility(false);
+            buttonMainWriteSave.Enabled = false;
+            WriteSaveFile(); //Save save file with or without changes
+
+            buttonMainDecryptSave.Enabled = true;
+            MessageBox.Show("File saved", "Saving", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         //Profile and Saves groupbox
@@ -821,14 +836,14 @@ namespace TS_SE_Tool
 
         private void CreateUserColorsButtons()
         {
-            int padding = 6, width = 112, height = 50, colorcount = 8;
+            int padding = 6, width = 108, height = 46, colorcount = 8;
 
             for (int i = 0; i < colorcount; i++)
             {
                 Button rb = new Button();
                 rb.Name = "buttonUC" + i.ToString();
                 rb.Text = null;
-                rb.Location = new Point(6, 20 + (padding + height) * i);
+                rb.Location = new Point(8, 32 + (padding + height) * i);
                 rb.Size = new Size(width, height);
                 rb.FlatStyle = FlatStyle.Flat;
                 rb.Enabled = false;
@@ -1211,8 +1226,7 @@ namespace TS_SE_Tool
             int topbutoffset = comboBoxUserTruckCompanyTrucks.Location.X + comboBoxUserTruckCompanyTrucks.Width + pOffset;
 
             Button buttonInfo = new Button();
-            tableLayoutPanel8.Controls.Add(buttonInfo);
-            buttonInfo.Location = new Point(comboBoxUserTruckCompanyTrucks.Location.X + ((int)tableLayoutPanel8.ColumnStyles[0].Width - CutomizeImg.Width - 6) / 2, buttonUserTruckSelectCurrent.Location.Y);
+            tableLayoutPanel8.Controls.Add(buttonInfo, 0, 1);
             buttonInfo.FlatStyle = FlatStyle.Flat;
             buttonInfo.Size = new Size(CutomizeImg.Width, CutomizeImg.Height);
             buttonInfo.Name = "buttonTruckInfo";
@@ -1223,8 +1237,7 @@ namespace TS_SE_Tool
             buttonInfo.Enabled = false;
 
             Button buttonR = new Button();
-            tableLayoutPanel8.Controls.Add(buttonR);
-            buttonR.Location = new Point(buttonUserTruckSwitchCurrent.Location.X + buttonUserTruckSwitchCurrent.Width + 3, buttonUserTruckSelectCurrent.Location.Y);
+            tableLayoutPanel8.Controls.Add(buttonR, 3, 1);            
             buttonR.FlatStyle = FlatStyle.Flat;
             buttonR.Size = new Size(RepairImg.Height, RepairImg.Height);
             buttonR.Name = "buttonTruckRepair";
@@ -1235,9 +1248,7 @@ namespace TS_SE_Tool
             buttonR.Click += new EventHandler(buttonTruckRepair_Click);
 
             Button buttonF = new Button();
-            tableLayoutPanel8.Controls.Add(buttonF);
-
-            buttonF.Location = new Point(buttonUserTruckSwitchCurrent.Location.X + buttonUserTruckSwitchCurrent.Width + (int)tableLayoutPanel8.ColumnStyles[3].Width + 6, buttonUserTruckSelectCurrent.Location.Y);
+            tableLayoutPanel8.Controls.Add(buttonF, 4, 1);
             buttonF.FlatStyle = FlatStyle.Flat;
             buttonF.Size = new Size(RepairImg.Height, RepairImg.Height);
             buttonF.Name = "buttonTruckReFuel";
@@ -2378,7 +2389,7 @@ namespace TS_SE_Tool
             FillcomboBoxUrgencyList();
             FillcomboBoxSourceCity();
         }
-
+        //Job list
         private int JobsItemMargin = 3;
         private const float JobsPictureHeight = 32, JobsTextHeigh = 23, JobsItemHeight = 64;
 
@@ -2668,7 +2679,7 @@ namespace TS_SE_Tool
 
             return bmp;
         }
-
+        //Main countries
         public void FillcomboBoxCountries()
         {
             DataTable combDT = new DataTable();
@@ -2725,57 +2736,7 @@ namespace TS_SE_Tool
         {
             triggerDestinationCitiesUpdate();
         }
-
-        private void comboBoxFreightMarketUrgency_MeasureItem(object sender, MeasureItemEventArgs e)
-        {
-            e.ItemHeight = 26;
-        }
-
-        private void comboBoxFreightMarketUrgency_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            if (e.Index < 0)
-                return;
-
-            ComboBox lst = sender as ComboBox;
-
-            e.DrawBackground();
-
-            Brush br;
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-                br = SystemBrushes.HighlightText;
-            else
-                br = new SolidBrush(e.ForeColor);
-
-            float x = e.Bounds.Left;
-            float y = e.Bounds.Top;
-            float width = e.Bounds.Width;
-            float height = e.Bounds.Height;
-            RectangleF layout_rect;
-
-            int urgIndex = int.Parse((string)((DataRowView)lst.Items[e.Index])[0]);
-
-            string txt = lst.GetItemText(lst.Items[e.Index]);
-
-            //Draw Urgency img
-            RectangleF source_rect = new RectangleF(0, 0, 32, 32);
-            RectangleF dest_rect = new RectangleF((e.Bounds.Right - 26), e.Bounds.Top + 1, 24, 24);
-            e.Graphics.DrawImage(UrgencyImg[urgIndex], dest_rect, source_rect, GraphicsUnit.Pixel);
-
-            //Draw text
-            // Find the area in which to put the text.
-            float fntsize = 8.25f;
-            y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
-            layout_rect = new RectangleF(x, y, width, height);
-            //format.Alignment = StringAlignment.Far;
-
-            Font textfnt = new Font("Microsoft Sans Serif", fntsize);
-
-            e.Graphics.DrawString(txt, textfnt, br, layout_rect);
-
-            // Draw the focus rectangle if the mouse hovers over an item.
-            e.DrawFocusRectangle();
-        }
-
+        //Main companies
         public void FillcomboBoxCompanies()
         {
             //start filtering
@@ -2877,7 +2838,7 @@ namespace TS_SE_Tool
             comboBoxFreightMarketSourceCity.SelectedValue = LastVisitedCity;
             //end
         }
-
+        //Cargo list
         public void FillcomboBoxCargoList()
         {
             DataTable combDT = new DataTable();
@@ -3080,7 +3041,7 @@ namespace TS_SE_Tool
 
             FillcomboBoxTrailerDefList();
         }
-
+        //Urgency
         public void FillcomboBoxUrgencyList()
         {
             DataTable combDT = new DataTable();
@@ -3112,6 +3073,56 @@ namespace TS_SE_Tool
             comboBoxFreightMarketUrgency.DataSource = combDT;
         }
 
+        private void comboBoxFreightMarketUrgency_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            e.ItemHeight = 26;
+        }
+
+        private void comboBoxFreightMarketUrgency_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            ComboBox lst = sender as ComboBox;
+
+            e.DrawBackground();
+
+            Brush br;
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                br = SystemBrushes.HighlightText;
+            else
+                br = new SolidBrush(e.ForeColor);
+
+            float x = e.Bounds.Left;
+            float y = e.Bounds.Top;
+            float width = e.Bounds.Width;
+            float height = e.Bounds.Height;
+            RectangleF layout_rect;
+
+            int urgIndex = int.Parse((string)((DataRowView)lst.Items[e.Index])[0]);
+
+            string txt = lst.GetItemText(lst.Items[e.Index]);
+
+            //Draw Urgency img
+            RectangleF source_rect = new RectangleF(0, 0, 32, 32);
+            RectangleF dest_rect = new RectangleF((e.Bounds.Right - 26), e.Bounds.Top + 1, 24, 24);
+            e.Graphics.DrawImage(UrgencyImg[urgIndex], dest_rect, source_rect, GraphicsUnit.Pixel);
+
+            //Draw text
+            // Find the area in which to put the text.
+            float fntsize = 8.25f;
+            y = e.Bounds.Top + (e.Bounds.Height - 4 - fntsize) / 2;
+            layout_rect = new RectangleF(x, y, width, height);
+            //format.Alignment = StringAlignment.Far;
+
+            Font textfnt = new Font("Microsoft Sans Serif", fntsize);
+
+            e.Graphics.DrawString(txt, textfnt, br, layout_rect);
+
+            // Draw the focus rectangle if the mouse hovers over an item.
+            e.DrawFocusRectangle();
+        }
+        //Trailer definition
         public void FillcomboBoxTrailerDefList()
         {
             DataTable combDT = new DataTable();
@@ -3237,7 +3248,7 @@ namespace TS_SE_Tool
                 images++;
             }
 
-            float width = e.Bounds.Width - 25 * images;
+            float width = e.Bounds.Width - 25 * images - 6;
 
             for (int i = 0; i < 5; i++)
             {
@@ -3281,7 +3292,7 @@ namespace TS_SE_Tool
             // Draw the focus rectangle if the mouse hovers over an item.
             e.DrawFocusRectangle();
         }
-
+        //Trailer variant
         public void FillcomboBoxTrailerVariantList()
         {
             DataTable combDT = new DataTable();
@@ -3343,7 +3354,7 @@ namespace TS_SE_Tool
 
             float x = e.Bounds.Left;
             float y = e.Bounds.Top;
-            float width = e.Bounds.Width;
+            float width = e.Bounds.Width - 6;
             float height = e.Bounds.Height;
             RectangleF layout_rect;
             string DefDN = lst.GetItemText(lst.Items[e.Index]);
@@ -3372,7 +3383,7 @@ namespace TS_SE_Tool
             // Draw the focus rectangle if the mouse hovers over an item.
             e.DrawFocusRectangle();
         }
-
+        //Source city
         private void comboBoxSourceCity_SelectedIndexChanged(object sender, EventArgs e)
         {
             string city = comboBoxFreightMarketSourceCity.SelectedValue.ToString();
@@ -3415,7 +3426,7 @@ namespace TS_SE_Tool
                 comboBoxFreightMarketSourceCompany.SelectedIndex = RandomValue.Next(comboBoxFreightMarketSourceCompany.Items.Count);
             }
         }
-
+        //Source company
         private void comboBoxSourceCompany_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ProgSettingsV.ProposeRandom)
@@ -3423,7 +3434,7 @@ namespace TS_SE_Tool
                 comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
             }
         }
-
+        //Destination city
         private void comboBoxDestinationCity_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxFreightMarketDestinationCity.SelectedIndex >= 0)
@@ -3543,7 +3554,7 @@ namespace TS_SE_Tool
                 comboBoxFreightMarketDestinationCity.SelectedIndex = RandomValue.Next(comboBoxFreightMarketDestinationCity.Items.Count);
             }
         }
-
+        //Destination companies
         private void triggerDestinationCompaniesUpdate()
         {
             SetupDestinationCompanies(!(comboBoxFreightMarketCompanies.SelectedValue.ToString() == "All"));
@@ -3593,7 +3604,7 @@ namespace TS_SE_Tool
                 comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
             }
         }
-
+        //Buttons
         private void buttonAddJob_Click(object sender, EventArgs e)
         {
             AddCargo();
@@ -4579,7 +4590,7 @@ namespace TS_SE_Tool
 
         private Color GetProgressbarColor(decimal value)
         {
-            return ProgressBarGradient.GetPixel(Convert.ToInt32((1 - value) * 100) - 1, 0);
+            return ProgressBarGradient.GetPixel(Convert.ToInt32((1 - value) * 99), 0);
         }
 
         private string GetSpareNameless()

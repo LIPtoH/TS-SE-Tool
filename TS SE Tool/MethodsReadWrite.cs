@@ -33,7 +33,6 @@ namespace TS_SE_Tool
 {
     public partial class FormMain : Form
     {
-
         private BackgroundWorker worker;
 
         private void LoadConfig()
@@ -871,16 +870,6 @@ namespace TS_SE_Tool
         }
 
         //button_save_file
-        private void buttonWriteSave_Click(object sender, EventArgs e)
-        {
-            ToggleVisibility(false);
-            buttonMainWriteSave.Enabled = false;
-            WriteSaveFile(); //Save save file with or without changes
-
-            buttonMainDecryptSave.Enabled = true;
-            MessageBox.Show("File saved", "Saving", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void WriteSaveFile()
         {
             string[] chunkOfline;

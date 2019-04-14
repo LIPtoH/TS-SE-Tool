@@ -1060,7 +1060,7 @@ namespace TS_SE_Tool
 
             //GetDataFrom Database
 
-            //GetDataFromDatabase("CargoesTable", GameType);
+            //GetDataFromDatabase("CargoesTable");
             GetDataFromDatabase("CitysTable");
             GetDataFromDatabase("CompaniesTable");
             GetDataFromDatabase("TrucksTable");
@@ -2326,9 +2326,7 @@ namespace TS_SE_Tool
                         {
                             DBDependencies.Clear();
 
-                            //Dependencies(ID_dep INT IDENTITY(1, 1) PRIMARY KEY, Dependency
                             string commandText = "SELECT Dependency FROM [Dependencies];";
-                            //DBconnection.Open();
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
                             while (reader.Read())
