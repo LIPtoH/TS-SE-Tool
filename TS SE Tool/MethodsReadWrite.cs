@@ -1826,7 +1826,7 @@ namespace TS_SE_Tool
                                     ExtDataInsertDataIntoDatabase(dbfilepath, "CargoesTable", tExtCargoList);
                                 }
 
-                                ///Companies
+                                //Companies
 
                                 string gcompanyFolder = dlcFolder + @"\def\company";
                                 //Scan cargo files

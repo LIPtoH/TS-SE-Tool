@@ -202,6 +202,8 @@ namespace TS_SE_Tool
             CountriesList = new List<string>();
             CargoesList = new List<Cargo>();
             TrailerDefinitionVariants = new Dictionary<string, List<string>>();
+            TrailerVariants = new List<string>();
+
             HeavyCargoList = new List<string>();
             CompanyTruckList = new List<CompanyTruck>();
             CompanyTruckListDB = new List<CompanyTruck>();
@@ -262,10 +264,19 @@ namespace TS_SE_Tool
             components = null;
 
             //Clear elements
+            ClearFormControls();
+        }
+
+        private void ClearFormControls()
+        {
+            comboBoxFreightMarketTrailerVariant.SelectedIndex = -1;
+            comboBoxFreightMarketTrailerVariant.DataSource = null;
+            comboBoxFreightMarketTrailerDef.SelectedIndex = -1;
             comboBoxFreightMarketTrailerDef.DataSource = null;
+            comboBoxFreightMarketCargoList.SelectedIndex = -1;
             comboBoxFreightMarketCargoList.DataSource = null;
         }
-        
+
         private void PopulateFormControlsk()
         {
             buttonMainDecryptSave.Enabled = false;
@@ -3038,8 +3049,9 @@ namespace TS_SE_Tool
             {
                 comboBoxFreightMarketUrgency.SelectedIndex = RandomValue.Next(comboBoxFreightMarketUrgency.Items.Count);
             }
-
-            FillcomboBoxTrailerDefList();
+            ComboBox temp = sender as ComboBox;
+            if (temp.SelectedIndex > -1)
+                FillcomboBoxTrailerDefList();
         }
         //Urgency
         public void FillcomboBoxUrgencyList()
@@ -3177,7 +3189,9 @@ namespace TS_SE_Tool
 
         private void comboBoxFreightMarketTrailerDef_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillcomboBoxTrailerVariantList();
+            ComboBox temp = sender as ComboBox;
+            if (temp.SelectedIndex > -1)
+                FillcomboBoxTrailerVariantList();
         }
 
         private void comboBoxFreightMarketTrailerDef_MeasureItem(object sender, MeasureItemEventArgs e)

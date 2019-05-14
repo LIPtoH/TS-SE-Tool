@@ -89,6 +89,7 @@ namespace TS_SE_Tool
         private List<Cargo> CargoesListDiff;
 
         private Dictionary<string, List<string>> TrailerDefinitionVariants;
+        private List<string> TrailerVariants;
 
         private List<string> HeavyCargoList;
 

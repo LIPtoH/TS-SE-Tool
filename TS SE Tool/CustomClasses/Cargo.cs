@@ -70,7 +70,7 @@ namespace TS_SE_Tool
 
                 for (int i = 0; i < obj.TrailerDefList.Count; i++)
                 {
-                    hashCode = hashCode * 3 + obj.TrailerDefList.GetHashCode();
+                    hashCode = hashCode * 3 + obj.TrailerDefList[i].GetHashCode();
                 }
                 return hashCode;
             }

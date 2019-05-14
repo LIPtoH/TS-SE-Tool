@@ -38,13 +38,14 @@ namespace TS_SE_Tool
             CargoType = _CargoType;
             UnitsCount = int.Parse(_UnitsCount);
         }
-
+        /*
         public TrailerDefinition(string _DefName, int _Volume, int _CargoWeight)
         {
             DefName = _DefName;
             Volume = _Volume;
             CargoWeight = _CargoWeight;
         }
+        */
     }
 
     #region Equality
@@ -78,7 +79,9 @@ namespace TS_SE_Tool
                 var myStrHashCode = !string.IsNullOrEmpty(obj.DefName) ? obj.DefName.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ myStrHashCode;
 
-                hashCode = hashCode * Tuple.Create(obj.CargoType, obj.UnitsCount).GetHashCode();
+                hashCode = hashCode * Tuple.Create(obj.CargoType, obj.UnitsCount
+                    //, obj.Volume, obj.CargoWeight
+                    ).GetHashCode();
                 return hashCode;
             }
         }
