@@ -1655,6 +1655,11 @@ namespace TS_SE_Tool
         {
             string connectionString;
 
+            if(!Directory.Exists("dbs"))
+            {
+                Directory.CreateDirectory("dbs");
+            }
+
             if (!File.Exists(fileName))
             {
                 ShowStatusMessages("e", "message_database_missing_creating_db");
@@ -1989,8 +1994,16 @@ namespace TS_SE_Tool
                                 {
                                     first = false;
                                 }
+                                
+                                int apoIndex = tempitem.IndexOf("'");
+                                string sqlstr = "";
 
-                                SQLCommandCMD += "SELECT '" + tempitem + "'";
+                                if (apoIndex > -1)
+                                    sqlstr = tempitem.Insert(apoIndex, "'");
+                                else
+                                    sqlstr = tempitem;
+
+                                SQLCommandCMD += "SELECT '" + sqlstr + "'";
                             }
                             UpdateDatabase(SQLCommandCMD);
                         }

@@ -2004,9 +2004,15 @@ namespace TS_SE_Tool
             MemoryStream ms = new MemoryStream();
 
             Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + PlayerProfileData.CompanyLogo + ".dds");
-            temp.Clone(new Rectangle(0, 0, 94, 94), temp.PixelFormat).Save(ms, ImageFormat.Png);
-            PlayerCompanyLogo =  Image.FromStream(ms);
-
+            if(temp != null)
+            {
+                temp.Clone(new Rectangle(0, 0, 94, 94), temp.PixelFormat).Save(ms, ImageFormat.Png);
+                PlayerCompanyLogo = Image.FromStream(ms);
+            }
+            else
+            {
+                PlayerCompanyLogo = new Bitmap(94, 94);
+            }
             ms.Dispose();
 
             pictureBoxCompanyLogo.Image = PlayerCompanyLogo;
@@ -2221,6 +2227,7 @@ namespace TS_SE_Tool
 
         private void listBoxGarages_DrawItem(object sender, DrawItemEventArgs e)
         {
+
             // Get the ListBox and the item.
             ListBox lst = sender as ListBox;
             string txt = "";

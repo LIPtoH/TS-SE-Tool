@@ -40,7 +40,29 @@ namespace TS_SE_Tool
         public IDictionaryEnumerator GetEnumerator()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
+            //Base
+            try
+            {
+                StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + @"\lang\base_lngfile.txt", Encoding.UTF8);
 
+                while (!reader.EndOfStream)
+                {
+                    string[] linechunk;
+                    string line = reader.ReadLine();
+
+                    if (line != "" && !line.StartsWith("["))
+                    {
+                        linechunk = line.Split(new char[] { '=' }, 2);
+                        dict.Add(linechunk[0], linechunk[1]);
+                    }
+                }
+
+                reader.Close();
+            }
+            catch  // ignore
+            {
+            }
+            //LNG
             try
             {
                 StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + @"\lang\" + language + @"\lngfile.txt", Encoding.UTF8);
@@ -53,7 +75,11 @@ namespace TS_SE_Tool
                     if (line != "" && !line.StartsWith("["))
                     {
                         linechunk = line.Split(new char[] { '=' }, 2);
-                        dict.Add(linechunk[0], linechunk[1]);
+                        //dict.Add(linechunk[0], linechunk[1]);
+                        if (dict.ContainsKey(linechunk[0]))
+                            dict[linechunk[0]] = linechunk[1];
+                        else
+                            dict.Add(linechunk[0], linechunk[1]);
                     }
                 }
 
