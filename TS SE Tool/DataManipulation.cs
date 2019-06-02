@@ -27,6 +27,7 @@ using System.Collections;
 using TS_SE_Tool.CustomClasses;
 using ErikEJ.SqlCe;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace TS_SE_Tool
 {
@@ -1257,19 +1258,22 @@ namespace TS_SE_Tool
 
                     if(dbdep.Capacity > 0)
                     {
-                        dbdepstr += "\r\nDependencies only in Database:\r\n";
+                        dbdepstr += "\r\nDependencies only in Database (" + dbdep.Count.ToString() +  "):\r\n";
+                        int i = 0;
                         foreach (string temp in dbdep)
                         {
-                            dbdepstr += temp + "\r\n";
+                            i++;
+                            dbdepstr += i.ToString() + ") " + temp + "\r\n";
                         }
                     }
 
                     if(sfdep.Capacity > 0)
                     {
-                        sfdepstr += "\r\nDependencies only in Save file:\r\n";
+                        sfdepstr += "\r\nDependencies only in Save file (" + sfdep.Count.ToString() + "):\r\n";
+                        int i = 0;
                         foreach (string temp in sfdep)
                         {
-                            sfdepstr += temp + "\r\n"; ;
+                            sfdepstr += i.ToString() + ") " + temp + "\r\n"; ;
                         }
                     }
 
@@ -1676,14 +1680,45 @@ namespace TS_SE_Tool
             }
             else
             {
-                /*
-                //Edit DB                
-                string sql = "";
-                sql = "";
-                UpdateDatabase(sql);
-                */
-            }
+                //Edit DB
+                SqlCeDataReader reader = null;
 
+                if (DBconnection.State == ConnectionState.Closed)
+                    DBconnection.Open();
+
+                string commandText = "SELECT DBVersion FROM [DatabaseDetails];";
+                reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
+                string DBVersion = "";
+                while (reader.Read())
+                {
+                    DBVersion = reader["DBVersion"].ToString();
+                }
+
+                string sql = "";
+
+                if (DBVersion == "0.1.6")
+                {
+                    goto label016;
+                }
+                else
+                if (DBVersion == "0.2.0")
+                    return;
+
+
+                label016://0.1.6
+                sql = "ALTER TABLE [Dependencies] ALTER COLUMN Dependency NVARCHAR(256) NOT NULL;";
+                UpdateDatabase(sql);
+
+                //string DBVersion1 = Assembly.GetExecutingAssembly().GetName().Version.Major.ToString();
+                //string DBVersion2 = Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString();
+                //string DBVersion3 = Assembly.GetExecutingAssembly().GetName().Version.Build.ToString();
+                //string DBVersion4 = Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString();
+
+                string DBVersionNew = "0.2.0";//DBVersion1 + DBVersion2 + DBVersion3; //Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                sql = "UPDATE [DatabaseDetails] SET DBVersion = '" + DBVersionNew + "' " +
+                        "WHERE ID_DBline = 1;";
+                UpdateDatabase(sql);
+            }
         }
 
         private void CreateDatabaseStructure()
@@ -1701,7 +1736,8 @@ namespace TS_SE_Tool
 
             sql += "CREATE TABLE DatabaseDetails (ID_DBline INT IDENTITY(1,1) PRIMARY KEY, DBVersion NVARCHAR(8) NOT NULL, GameName NVARCHAR(8) NOT NULL, SaveVersion INT NOT NULL, ProfileName NVARCHAR(64) NOT NULL);";
             sql += "INSERT INTO [DatabaseDetails] (DBVersion, GameName, SaveVersion, ProfileName) VALUES ('0.1.6','" + GameType +  "', 0, '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "');";
-            sql += "CREATE TABLE Dependencies (ID_dep INT IDENTITY(1,1) PRIMARY KEY, Dependency NVARCHAR(64) NOT NULL);";
+
+            sql += "CREATE TABLE Dependencies (ID_dep INT IDENTITY(1,1) PRIMARY KEY, Dependency NVARCHAR(256) NOT NULL);";
 
             sql += "CREATE TABLE CitysTable (ID_city INT IDENTITY(1,1) PRIMARY KEY, CityName NVARCHAR(32) NOT NULL);";
 
@@ -1971,7 +2007,15 @@ namespace TS_SE_Tool
                                         first = false;
                                     }
 
-                                    SQLCommandCMD += "'" + tempitem + "'";
+                                    int apoIndex = tempitem.IndexOf("'");
+                                    string sqlstr = "";
+
+                                    if (apoIndex > -1)
+                                        sqlstr = tempitem.Insert(apoIndex, "'");
+                                    else
+                                        sqlstr = tempitem;
+
+                                    SQLCommandCMD += "'" + sqlstr + "'";
                                 }
                                 SQLCommandCMD += ")";
 

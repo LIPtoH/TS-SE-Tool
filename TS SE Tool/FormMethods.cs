@@ -44,16 +44,22 @@ namespace TS_SE_Tool
     {
         private void ShowStatusMessages(string _status, string _message)
         {
-
-            toolStripStatusMessages.Text = GetranslatedString(_message);
             if (_status == "e")
             {
                 toolStripStatusMessages.ForeColor = Color.Red;
             }
+            else
             if (_status == "i")
             {
                 toolStripStatusMessages.ForeColor = Color.Black;
             }
+            else
+            if (_status == "clear")
+            {
+                toolStripStatusMessages.Text = "";
+                return;
+            }
+            toolStripStatusMessages.Text = GetranslatedString(_message);
         }
 
         private void ShowStatusMessages(string _status, string _message, string _option)
@@ -81,10 +87,10 @@ namespace TS_SE_Tool
                     (FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductMinorPart / 10.0);
 
                 SavefileVersion = 0;
-                SupportedSavefileVersionETS2 = 39; //Supported save version
-                SupportedGameVersionETS2 = "1.33.x - 1.34.x"; //Last game version Tested on
+                SupportedSavefileVersionETS2 = new int[] { 39, 40, 41 }; //Supported save version
+                SupportedGameVersionETS2 = "1.33.x - 1.35.x"; //Last game version Tested on
                 //SupportedSavefileVersionATS;
-                SupportedGameVersionATS = "1.33.x - 1.34.x"; //Last game version Tested on
+                SupportedGameVersionATS = "1.33.x - 1.35.x"; //Last game version Tested on
 
                 ProfileETS2 = @"\Euro Truck Simulator 2";
                 ProfileATS = @"\American Truck Simulator";
@@ -370,7 +376,6 @@ namespace TS_SE_Tool
             buttonMainGameSwitchATS.Enabled = false;
 
             LoadSaveFile(); //Load save file
-
             //GC
             GC.Collect();
             //GC.WaitForPendingFinalizers();
@@ -1694,9 +1699,11 @@ namespace TS_SE_Tool
             int pHeight = RepairImg.Height, pOffset = 5, tOffset = comboBoxUserTrailerCompanyTrailers.Location.Y;
             int topbutoffset = comboBoxUserTrailerCompanyTrailers.Location.X + comboBoxUserTrailerCompanyTrailers.Width + pOffset;
 
-            Button buttonR = new Button();
-            tabPageTrailer.Controls.Add(buttonR);
+            //tableLayoutPanel13
 
+            Button buttonR = new Button();
+            //tabPageTrailer.Controls.Add(buttonR);
+            tableLayoutPanel13.Controls.Add(buttonR, 3, 1);
             buttonR.Location = new Point(topbutoffset, tOffset);
             buttonR.FlatStyle = FlatStyle.Flat;
             buttonR.Size = new Size(RepairImg.Height, RepairImg.Height);
@@ -1709,9 +1716,9 @@ namespace TS_SE_Tool
 
 
             Button buttonInfo = new Button();
-            tabPageTrailer.Controls.Add(buttonInfo);
-
-            buttonInfo.Location = new Point(labelUserTrailerTrailer.Location.X + (comboBoxUserTrailerCompanyTrailers.Location.X - labelUserTrailerTrailer.Location.X - CutomizeImg.Width - pOffset) / 2, buttonUserTruckSelectCurrent.Location.Y + pOffset);
+            //tabPageTrailer.Controls.Add(buttonInfo);
+            tableLayoutPanel13.Controls.Add(buttonInfo, 0, 1);
+            //buttonInfo.Location = new Point(labelUserTrailerTrailer.Location.X + (comboBoxUserTrailerCompanyTrailers.Location.X - labelUserTrailerTrailer.Location.X - CutomizeImg.Width - pOffset) / 2, buttonUserTruckSelectCurrent.Location.Y + pOffset);
             buttonInfo.FlatStyle = FlatStyle.Flat;
             buttonInfo.Size = new Size(CutomizeImg.Width, CutomizeImg.Height);
             buttonInfo.Name = "buttonTruckInfo";
@@ -2227,6 +2234,8 @@ namespace TS_SE_Tool
 
         private void listBoxGarages_DrawItem(object sender, DrawItemEventArgs e)
         {
+            if (e.Index == -1)
+                return;
 
             // Get the ListBox and the item.
             ListBox lst = sender as ListBox;
@@ -2267,11 +2276,6 @@ namespace TS_SE_Tool
                 maxvehdr = 1;
 
             //Vehicles & Drivers
-            float x = e.Bounds.Left + 120;
-            float y = e.Bounds.Top + 18;
-            float width = e.Bounds.Right - 100;
-            float height = e.Bounds.Bottom - 14;
-            RectangleF layout_rect = new RectangleF(x, y, width, height);
 
             int curVeh = 0, curDr = 0;
 
@@ -2293,6 +2297,15 @@ namespace TS_SE_Tool
             Ts = ResourceManagerMain.GetString("TrailerShort", Thread.CurrentThread.CurrentUICulture);
 
             txt = Vs + ": " + curVeh + " / " + maxvehdr + " " + Ds +": " + curDr + " / " + maxvehdr + " " + Ts + ": " + grg.Trailers.Count;
+
+            Size size = TextRenderer.MeasureText(txt, this.Font);
+
+            float x = e.Bounds.Right - size.Width - 3;
+            float y = e.Bounds.Top + 18;
+            float width = e.Bounds.Right - 100;
+            float height = e.Bounds.Bottom - 14;
+
+            RectangleF layout_rect = new RectangleF(x, y, size.Width, height);
 
             // Draw the text.
             e.Graphics.DrawString(txt, this.Font, br, layout_rect);
@@ -3241,10 +3254,15 @@ namespace TS_SE_Tool
             int indexTypeImgs = 0;
             bool extheavy = false;
 
-            decimal TCW = ExtCargoList.Find(xx => xx.CargoName == CargoName).Mass * DefUnitsCount;
+            try
+            {
+                decimal TCW = ExtCargoList.Find(xx => xx.CargoName == CargoName).Mass * DefUnitsCount;
 
-            if (TCW > 26000)
-                extheavy = true;
+                if (TCW > 26000)
+                    extheavy = true;
+            }
+            catch
+            { }
 
             if (extheavy || CargoType == "1")
             {
@@ -3269,7 +3287,7 @@ namespace TS_SE_Tool
                 images++;
             }
 
-            float width = e.Bounds.Width - 25 * images - 6;
+            float width = e.Bounds.Width - 25 * images - 4;
 
             for (int i = 0; i < 5; i++)
             {
@@ -3375,7 +3393,7 @@ namespace TS_SE_Tool
 
             float x = e.Bounds.Left;
             float y = e.Bounds.Top;
-            float width = e.Bounds.Width - 6;
+            float width = e.Bounds.Width - 8;
             float height = e.Bounds.Height;
             RectangleF layout_rect;
             string DefDN = lst.GetItemText(lst.Items[e.Index]);

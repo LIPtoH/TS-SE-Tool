@@ -38,7 +38,7 @@ namespace TS_SE_Tool
             labelProductName.Text = AssemblyProduct;
             labelVersion.Text = String.Format("Version {0} (alpha)", AssemblyVersion);
             labelCopyright.Text = AssemblyCopyright;
-            textBoxDescription.Text = "This program created by\r\nLIPtoH <liptoh.codebase@gmail.com>\r\nhttps://github.com/LIPtoH/TS-SE\r\n\r\n" +
+            textBoxDescription.Text = "This program created by\r\nLIPtoH <liptoh.codebase@gmail.com>\r\nhttps://github.com/LIPtoH/TS-SE-Tool\r\n\r\n" +
                 "Tools and projects used in this project:\r\n\r\n" +
                 "SII Decrypt\r\nhttps://github.com/ncs-sniper/SII_Decrypt\r\n\r\n" +
                 "PsColorPicker\r\nhttps://github.com/exectails/PsColorPicker\r\n\r\n" +
@@ -46,8 +46,10 @@ namespace TS_SE_Tool
                 "SqlCeBulkCopy\r\nhttps://github.com/ErikEJ/SqlCeBulkCopy\r\n\r\n" +
                 "DDSImageParser.cs\r\nhttps://gist.github.com/soeminnminn/e9c4c99867743a717f5b";
 
-            labelETS2version.Text = MainForm.SupportedSavefileVersionETS2 + " (" + MainForm.SupportedGameVersionETS2 + ")";
-            labelATSversion.Text = MainForm.SupportedSavefileVersionETS2 + " (" + MainForm.SupportedGameVersionATS + ")";
+            //String.Join(",", array.Select(p=>p.ToString()).ToArray());
+
+            labelETS2version.Text = String.Join(", ", MainForm.SupportedSavefileVersionETS2.Select(p => p.ToString()).ToArray()) + " (" + MainForm.SupportedGameVersionETS2 + ")";
+            labelATSversion.Text = String.Join(", ", MainForm.SupportedSavefileVersionETS2.Select(p => p.ToString()).ToArray()) + " (" + MainForm.SupportedGameVersionATS + ")";
         }
 
         #region Assembly Attribute Accessors

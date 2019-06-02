@@ -786,16 +786,20 @@ namespace TS_SE_Tool
                 return;
             }
 
-            if (SavefileVersion > 0 && SavefileVersion != SupportedSavefileVersionETS2)
+            if (SavefileVersion > 0 && !SupportedSavefileVersionETS2.Contains(SavefileVersion))
             {
                 MessageBox.Show("Savefile version don't supported.\nYou cann't edit file with this version, but you can try to decode it.", "Wrong version");
+                ShowStatusMessages("clear", "");
                 return;
             }
             else if (SavefileVersion == 0)
             {
                 DialogResult result = MessageBox.Show("Savefile version was not recognised.\nDo you want to continue?", "Version not recognised", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
+                {
+                    ShowStatusMessages("clear", "");
                     return;
+                }
             }
 
             if (!File.Exists(SiiSavePath))
