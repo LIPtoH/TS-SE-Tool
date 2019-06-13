@@ -115,13 +115,20 @@ namespace TS_SE_Tool
 
         public static string FromHexToString(string hex)
         {
-            byte[] raw = new byte[hex.Length / 2];
-            for (int i = 0; i < raw.Length; i++)
+            try
             {
-                raw[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
-            }
+                byte[] raw = new byte[hex.Length / 2];
+                for (int i = 0; i < raw.Length; i++)
+                {
+                    raw[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
+                }
 
-            return Encoding.ASCII.GetString(raw);
+                return Encoding.UTF8.GetString(raw); //ASCII
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static decimal HexFloatToDecimalFloat(string _hexFloat)

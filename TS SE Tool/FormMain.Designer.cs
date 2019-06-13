@@ -103,7 +103,7 @@
             this.labelUserTruckLicensePlate = new System.Windows.Forms.Label();
             this.tabPageTrailer = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxUserTruckShareTrailerSettings = new System.Windows.Forms.GroupBox();
+            this.groupBoxUserTrailerShareTrailerSettings = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonShareTrailerWholeTrailerPaste = new System.Windows.Forms.Button();
             this.buttonShareTrailerTrailerPaintCopy = new System.Windows.Forms.Button();
@@ -212,7 +212,7 @@
             this.groupBoxUserTruckTruckDetails.SuspendLayout();
             this.tabPageTrailer.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
-            this.groupBoxUserTruckShareTrailerSettings.SuspendLayout();
+            this.groupBoxUserTrailerShareTrailerSettings.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             this.groupBoxUserTruckTrailer.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
@@ -283,12 +283,14 @@
             this.toolStripMenuItemCreateTrFile.Name = "toolStripMenuItemCreateTrFile";
             this.toolStripMenuItemCreateTrFile.Size = new System.Drawing.Size(162, 22);
             this.toolStripMenuItemCreateTrFile.Text = "Make translation";
+            this.toolStripMenuItemCreateTrFile.Visible = false;
             this.toolStripMenuItemCreateTrFile.Click += new System.EventHandler(this.makeToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator2.Visible = false;
             // 
             // toolStripMenuItemHelp
             // 
@@ -1061,7 +1063,7 @@
             // 
             this.tableLayoutPanel12.ColumnCount = 1;
             this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Controls.Add(this.groupBoxUserTruckShareTrailerSettings, 0, 2);
+            this.tableLayoutPanel12.Controls.Add(this.groupBoxUserTrailerShareTrailerSettings, 0, 2);
             this.tableLayoutPanel12.Controls.Add(this.groupBoxUserTruckTrailer, 0, 0);
             this.tableLayoutPanel12.Controls.Add(this.groupBoxUserTrailerTrailerDetails, 0, 1);
             this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1074,16 +1076,16 @@
             this.tableLayoutPanel12.Size = new System.Drawing.Size(564, 526);
             this.tableLayoutPanel12.TabIndex = 32;
             // 
-            // groupBoxUserTruckShareTrailerSettings
+            // groupBoxUserTrailerShareTrailerSettings
             // 
-            this.groupBoxUserTruckShareTrailerSettings.Controls.Add(this.tableLayoutPanel14);
-            this.groupBoxUserTruckShareTrailerSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxUserTruckShareTrailerSettings.Location = new System.Drawing.Point(3, 419);
-            this.groupBoxUserTruckShareTrailerSettings.Name = "groupBoxUserTruckShareTrailerSettings";
-            this.groupBoxUserTruckShareTrailerSettings.Size = new System.Drawing.Size(558, 104);
-            this.groupBoxUserTruckShareTrailerSettings.TabIndex = 31;
-            this.groupBoxUserTruckShareTrailerSettings.TabStop = false;
-            this.groupBoxUserTruckShareTrailerSettings.Text = "Share Trailer Settings";
+            this.groupBoxUserTrailerShareTrailerSettings.Controls.Add(this.tableLayoutPanel14);
+            this.groupBoxUserTrailerShareTrailerSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxUserTrailerShareTrailerSettings.Location = new System.Drawing.Point(3, 419);
+            this.groupBoxUserTrailerShareTrailerSettings.Name = "groupBoxUserTrailerShareTrailerSettings";
+            this.groupBoxUserTrailerShareTrailerSettings.Size = new System.Drawing.Size(558, 104);
+            this.groupBoxUserTrailerShareTrailerSettings.TabIndex = 31;
+            this.groupBoxUserTrailerShareTrailerSettings.TabStop = false;
+            this.groupBoxUserTrailerShareTrailerSettings.Text = "Share Trailer Settings";
             // 
             // tableLayoutPanel14
             // 
@@ -2100,7 +2102,7 @@
             this.groupBoxUserTruckTruckDetails.PerformLayout();
             this.tabPageTrailer.ResumeLayout(false);
             this.tableLayoutPanel12.ResumeLayout(false);
-            this.groupBoxUserTruckShareTrailerSettings.ResumeLayout(false);
+            this.groupBoxUserTrailerShareTrailerSettings.ResumeLayout(false);
             this.tableLayoutPanel14.ResumeLayout(false);
             this.groupBoxUserTruckTrailer.ResumeLayout(false);
             this.tableLayoutPanel13.ResumeLayout(false);
@@ -2277,7 +2279,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
-        private System.Windows.Forms.GroupBox groupBoxUserTruckShareTrailerSettings;
+        private System.Windows.Forms.GroupBox groupBoxUserTrailerShareTrailerSettings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
         private System.Windows.Forms.Button buttonShareTrailerWholeTrailerPaste;
         private System.Windows.Forms.Button buttonShareTrailerTrailerPaintCopy;

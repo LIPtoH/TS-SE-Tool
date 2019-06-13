@@ -179,7 +179,7 @@ namespace TS_SE_Tool
 
             try
             {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + _sourcefile);
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\Default\" + _sourcefile);
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
@@ -243,7 +243,7 @@ namespace TS_SE_Tool
 
             try
             {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\truck_brands.txt");
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\Default\truck_brands.txt");
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
@@ -426,7 +426,7 @@ namespace TS_SE_Tool
             */
             try
             {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\companies_translate.txt", true))
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\companies_translate.txt", true))
                 {
                     if (newEntries.Count > 0)
                     {
@@ -470,7 +470,7 @@ namespace TS_SE_Tool
                 */
             try
             {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\cities_translate.txt", true))
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\cities_translate.txt", true))
                 {
                     if (newEntries.Count > 0)
                     {
@@ -514,7 +514,7 @@ namespace TS_SE_Tool
                 */
             try
             {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\cargo_translate.txt", true))
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\cargo_translate.txt", true))
                 {
                     if (newEntries.Count > 0)
                     {

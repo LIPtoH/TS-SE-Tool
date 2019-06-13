@@ -270,7 +270,7 @@ namespace TS_SE_Tool
     public class Globals
     {
         public static string[] ProfilesPaths;
-        public static string[] ProfilesHex;
+        public static List<string> ProfilesHex;
         public static string[] SavesHex;
         public static string CurrentGame = "";
         public static string ProfileSii = "";

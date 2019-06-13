@@ -588,15 +588,24 @@ namespace TS_SE_Tool
                 return;
             }
             */
-            Globals.ProfilesHex = Directory.GetDirectories(MyDocumentsPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
+            Globals.ProfilesHex = Directory.GetDirectories(MyDocumentsPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToList();//.ToArray();
 
-            if (Globals.ProfilesHex.Length > 0)
+            if (Globals.ProfilesHex.Count > 0)//.Length > 0)
             {
+                List<string> NewProfileHex = new List<string>();
+
                 foreach (string profile in Globals.ProfilesHex)
                 {
                     Profile = FromHexToString(Path.GetFileName(profile));
-                    comboBoxProfiles.Items.Add(Profile);
+                    if (Profile != null)
+                    {
+                        comboBoxProfiles.Items.Add(Profile);
+                        NewProfileHex.Add(profile);
+                    }
                 }
+
+                Globals.ProfilesHex = NewProfileHex;
+
                 comboBoxProfiles.Enabled = true;
                 comboBoxSaves.Enabled = true;
                 comboBoxProfiles.SelectedIndex = 0;
