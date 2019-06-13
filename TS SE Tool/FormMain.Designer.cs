@@ -188,6 +188,8 @@
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStripMain.SuspendLayout();
@@ -224,6 +226,8 @@
             this.statusStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileAvatar)).BeginInit();
             this.groupBoxMainProfilesAndSaves.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
+            this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
             this.SuspendLayout();
@@ -236,7 +240,7 @@
             this.toolStripMenuItemHelp});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(584, 24);
+            this.menuStripMain.Size = new System.Drawing.Size(834, 24);
             this.menuStripMain.TabIndex = 0;
             this.menuStripMain.Text = "menuStripMain";
             // 
@@ -311,9 +315,9 @@
             // 
             this.comboBoxProfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxProfiles.FormattingEnabled = true;
-            this.comboBoxProfiles.Location = new System.Drawing.Point(93, 50);
+            this.comboBoxProfiles.Location = new System.Drawing.Point(6, 133);
             this.comboBoxProfiles.Name = "comboBoxProfiles";
-            this.comboBoxProfiles.Size = new System.Drawing.Size(160, 21);
+            this.comboBoxProfiles.Size = new System.Drawing.Size(226, 21);
             this.comboBoxProfiles.TabIndex = 1;
             this.comboBoxProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfiles_SelectedIndexChanged);
             // 
@@ -331,18 +335,18 @@
             // 
             this.comboBoxSaves.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSaves.FormattingEnabled = true;
-            this.comboBoxSaves.Location = new System.Drawing.Point(93, 79);
+            this.comboBoxSaves.Location = new System.Drawing.Point(6, 160);
             this.comboBoxSaves.Name = "comboBoxSaves";
-            this.comboBoxSaves.Size = new System.Drawing.Size(160, 21);
+            this.comboBoxSaves.Size = new System.Drawing.Size(226, 21);
             this.comboBoxSaves.TabIndex = 3;
             this.comboBoxSaves.SelectedIndexChanged += new System.EventHandler(this.comboBoxSaves_SelectedIndexChanged);
             // 
             // buttonMainDecryptSave
             // 
             this.buttonMainDecryptSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonMainDecryptSave.Location = new System.Drawing.Point(460, 3);
+            this.buttonMainDecryptSave.Location = new System.Drawing.Point(3, 3);
             this.buttonMainDecryptSave.Name = "buttonMainDecryptSave";
-            this.buttonMainDecryptSave.Size = new System.Drawing.Size(115, 21);
+            this.buttonMainDecryptSave.Size = new System.Drawing.Size(116, 39);
             this.buttonMainDecryptSave.TabIndex = 5;
             this.buttonMainDecryptSave.Text = "Decrypt";
             this.buttonMainDecryptSave.UseVisualStyleBackColor = true;
@@ -350,7 +354,6 @@
             // 
             // tabControlMain
             // 
-            this.tableLayoutPanel10.SetColumnSpan(this.tabControlMain, 3);
             this.tabControlMain.Controls.Add(this.tabPageProfile);
             this.tabControlMain.Controls.Add(this.tabPageCompany);
             this.tabControlMain.Controls.Add(this.tabPageTruck);
@@ -361,10 +364,10 @@
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabControlMain.ItemSize = new System.Drawing.Size(82, 24);
-            this.tabControlMain.Location = new System.Drawing.Point(3, 148);
+            this.tabControlMain.Location = new System.Drawing.Point(3, 3);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(578, 564);
+            this.tabControlMain.Size = new System.Drawing.Size(578, 569);
             this.tabControlMain.TabIndex = 6;
             // 
             // tabPageProfile
@@ -375,7 +378,7 @@
             this.tabPageProfile.Location = new System.Drawing.Point(4, 28);
             this.tabPageProfile.Name = "tabPageProfile";
             this.tabPageProfile.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProfile.Size = new System.Drawing.Size(570, 532);
+            this.tabPageProfile.Size = new System.Drawing.Size(570, 537);
             this.tabPageProfile.TabIndex = 0;
             this.tabPageProfile.Text = "Profile";
             this.tabPageProfile.UseVisualStyleBackColor = true;
@@ -541,7 +544,7 @@
             this.tabPageCompany.Location = new System.Drawing.Point(4, 28);
             this.tabPageCompany.Name = "tabPageCompany";
             this.tabPageCompany.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCompany.Size = new System.Drawing.Size(570, 532);
+            this.tabPageCompany.Size = new System.Drawing.Size(570, 577);
             this.tabPageCompany.TabIndex = 5;
             this.tabPageCompany.Text = "Company";
             this.tabPageCompany.UseVisualStyleBackColor = true;
@@ -558,7 +561,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 107F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 137F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(564, 526);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(564, 571);
             this.tableLayoutPanel2.TabIndex = 29;
             // 
             // tableLayoutPanel4
@@ -573,13 +576,14 @@
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel6, 1, 2);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 110);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 107);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 3;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 330F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(558, 413);
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(564, 464);
             this.tableLayoutPanel4.TabIndex = 30;
             // 
             // labelUserCompanyVisitedCities
@@ -596,7 +600,7 @@
             // 
             this.labelUserCompanyGarages.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyGarages.AutoSize = true;
-            this.labelUserCompanyGarages.Location = new System.Drawing.Point(282, 3);
+            this.labelUserCompanyGarages.Location = new System.Drawing.Point(285, 3);
             this.labelUserCompanyGarages.Name = "labelUserCompanyGarages";
             this.labelUserCompanyGarages.Size = new System.Drawing.Size(47, 13);
             this.labelUserCompanyGarages.TabIndex = 18;
@@ -608,10 +612,10 @@
             this.listBoxGarages.Font = new System.Drawing.Font("Microsoft Sans Serif", 2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxGarages.FormattingEnabled = true;
             this.listBoxGarages.ItemHeight = 4;
-            this.listBoxGarages.Location = new System.Drawing.Point(282, 23);
+            this.listBoxGarages.Location = new System.Drawing.Point(285, 23);
             this.listBoxGarages.Name = "listBoxGarages";
             this.listBoxGarages.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxGarages.Size = new System.Drawing.Size(273, 324);
+            this.listBoxGarages.Size = new System.Drawing.Size(276, 356);
             this.listBoxGarages.TabIndex = 17;
             this.listBoxGarages.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxGarages_DrawItem);
             this.listBoxGarages.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxGarages_MeasureItem);
@@ -625,7 +629,7 @@
             this.listBoxVisitedCities.Location = new System.Drawing.Point(3, 23);
             this.listBoxVisitedCities.Name = "listBoxVisitedCities";
             this.listBoxVisitedCities.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxVisitedCities.Size = new System.Drawing.Size(273, 324);
+            this.listBoxVisitedCities.Size = new System.Drawing.Size(276, 356);
             this.listBoxVisitedCities.TabIndex = 19;
             this.listBoxVisitedCities.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxVisitedCities_DrawItem);
             this.listBoxVisitedCities.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxVisitedCities_MeasureItem);
@@ -638,11 +642,12 @@
             this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesVisit, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesUnVisit, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 353);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 382);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(273, 57);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(282, 82);
             this.tableLayoutPanel5.TabIndex = 21;
             // 
             // buttonUserCompanyCitiesVisit
@@ -650,7 +655,7 @@
             this.buttonUserCompanyCitiesVisit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonUserCompanyCitiesVisit.Location = new System.Drawing.Point(3, 3);
             this.buttonUserCompanyCitiesVisit.Name = "buttonUserCompanyCitiesVisit";
-            this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(130, 51);
+            this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(135, 76);
             this.buttonUserCompanyCitiesVisit.TabIndex = 26;
             this.buttonUserCompanyCitiesVisit.Text = "Visit";
             this.buttonUserCompanyCitiesVisit.UseVisualStyleBackColor = true;
@@ -659,9 +664,9 @@
             // buttonUserCompanyCitiesUnVisit
             // 
             this.buttonUserCompanyCitiesUnVisit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyCitiesUnVisit.Location = new System.Drawing.Point(139, 3);
+            this.buttonUserCompanyCitiesUnVisit.Location = new System.Drawing.Point(144, 3);
             this.buttonUserCompanyCitiesUnVisit.Name = "buttonUserCompanyCitiesUnVisit";
-            this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(131, 51);
+            this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(135, 76);
             this.buttonUserCompanyCitiesUnVisit.TabIndex = 27;
             this.buttonUserCompanyCitiesUnVisit.Text = "Unvisit";
             this.buttonUserCompanyCitiesUnVisit.UseVisualStyleBackColor = true;
@@ -678,12 +683,13 @@
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesSell, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesUpgrade, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(282, 353);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(282, 382);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(273, 57);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(282, 82);
             this.tableLayoutPanel6.TabIndex = 22;
             // 
             // buttonUserCompanyGaragesBuy
@@ -691,7 +697,7 @@
             this.buttonUserCompanyGaragesBuy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonUserCompanyGaragesBuy.Location = new System.Drawing.Point(3, 3);
             this.buttonUserCompanyGaragesBuy.Name = "buttonUserCompanyGaragesBuy";
-            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(87, 22);
+            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(91, 35);
             this.buttonUserCompanyGaragesBuy.TabIndex = 23;
             this.buttonUserCompanyGaragesBuy.Text = "Buy";
             this.buttonUserCompanyGaragesBuy.UseVisualStyleBackColor = true;
@@ -701,9 +707,9 @@
             // 
             this.tableLayoutPanel6.SetColumnSpan(this.buttonUserCompanyGaragesBuyUpgrade, 2);
             this.buttonUserCompanyGaragesBuyUpgrade.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesBuyUpgrade.Location = new System.Drawing.Point(3, 31);
+            this.buttonUserCompanyGaragesBuyUpgrade.Location = new System.Drawing.Point(3, 44);
             this.buttonUserCompanyGaragesBuyUpgrade.Name = "buttonUserCompanyGaragesBuyUpgrade";
-            this.buttonUserCompanyGaragesBuyUpgrade.Size = new System.Drawing.Size(180, 23);
+            this.buttonUserCompanyGaragesBuyUpgrade.Size = new System.Drawing.Size(188, 35);
             this.buttonUserCompanyGaragesBuyUpgrade.TabIndex = 25;
             this.buttonUserCompanyGaragesBuyUpgrade.Text = "Buy and Upgrade";
             this.buttonUserCompanyGaragesBuyUpgrade.UseVisualStyleBackColor = true;
@@ -713,10 +719,10 @@
             // 
             this.buttonUserCompanyGaragesSell.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonUserCompanyGaragesSell.Enabled = false;
-            this.buttonUserCompanyGaragesSell.Location = new System.Drawing.Point(189, 3);
+            this.buttonUserCompanyGaragesSell.Location = new System.Drawing.Point(197, 3);
             this.buttonUserCompanyGaragesSell.Name = "buttonUserCompanyGaragesSell";
             this.tableLayoutPanel6.SetRowSpan(this.buttonUserCompanyGaragesSell, 2);
-            this.buttonUserCompanyGaragesSell.Size = new System.Drawing.Size(81, 51);
+            this.buttonUserCompanyGaragesSell.Size = new System.Drawing.Size(82, 76);
             this.buttonUserCompanyGaragesSell.TabIndex = 28;
             this.buttonUserCompanyGaragesSell.Text = "Sell";
             this.buttonUserCompanyGaragesSell.UseVisualStyleBackColor = true;
@@ -725,9 +731,9 @@
             // buttonUserCompanyGaragesUpgrade
             // 
             this.buttonUserCompanyGaragesUpgrade.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesUpgrade.Location = new System.Drawing.Point(96, 3);
+            this.buttonUserCompanyGaragesUpgrade.Location = new System.Drawing.Point(100, 3);
             this.buttonUserCompanyGaragesUpgrade.Name = "buttonUserCompanyGaragesUpgrade";
-            this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(87, 22);
+            this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(91, 35);
             this.buttonUserCompanyGaragesUpgrade.TabIndex = 24;
             this.buttonUserCompanyGaragesUpgrade.Text = "Upgrade";
             this.buttonUserCompanyGaragesUpgrade.UseVisualStyleBackColor = true;
@@ -747,13 +753,14 @@
             this.tableLayoutPanel3.Controls.Add(this.textBoxUserCompanyMoneyAccount, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.comboBoxUserCompanyHQcity, 2, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(558, 101);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(564, 107);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // pictureBoxCompanyLogo
@@ -771,7 +778,7 @@
             // 
             this.labelUserCompanyCompanyName.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyCompanyName.AutoSize = true;
-            this.labelUserCompanyCompanyName.Location = new System.Drawing.Point(131, 10);
+            this.labelUserCompanyCompanyName.Location = new System.Drawing.Point(131, 11);
             this.labelUserCompanyCompanyName.Name = "labelUserCompanyCompanyName";
             this.labelUserCompanyCompanyName.Size = new System.Drawing.Size(80, 13);
             this.labelUserCompanyCompanyName.TabIndex = 15;
@@ -781,7 +788,7 @@
             // 
             this.labelUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyMoneyAccount.AutoSize = true;
-            this.labelUserCompanyMoneyAccount.Location = new System.Drawing.Point(131, 43);
+            this.labelUserCompanyMoneyAccount.Location = new System.Drawing.Point(131, 46);
             this.labelUserCompanyMoneyAccount.Name = "labelUserCompanyMoneyAccount";
             this.labelUserCompanyMoneyAccount.Size = new System.Drawing.Size(81, 13);
             this.labelUserCompanyMoneyAccount.TabIndex = 22;
@@ -791,7 +798,7 @@
             // 
             this.labelUserCompanyHQcity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyHQcity.AutoSize = true;
-            this.labelUserCompanyHQcity.Location = new System.Drawing.Point(131, 77);
+            this.labelUserCompanyHQcity.Location = new System.Drawing.Point(131, 82);
             this.labelUserCompanyHQcity.Name = "labelUserCompanyHQcity";
             this.labelUserCompanyHQcity.Size = new System.Drawing.Size(42, 13);
             this.labelUserCompanyHQcity.TabIndex = 4;
@@ -801,7 +808,7 @@
             // 
             this.textBoxUserCompanyCompanyName.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.textBoxUserCompanyCompanyName.Enabled = false;
-            this.textBoxUserCompanyCompanyName.Location = new System.Drawing.Point(278, 6);
+            this.textBoxUserCompanyCompanyName.Location = new System.Drawing.Point(278, 7);
             this.textBoxUserCompanyCompanyName.Name = "textBoxUserCompanyCompanyName";
             this.textBoxUserCompanyCompanyName.Size = new System.Drawing.Size(224, 20);
             this.textBoxUserCompanyCompanyName.TabIndex = 14;
@@ -810,7 +817,7 @@
             // 
             this.textBoxUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.textBoxUserCompanyMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(278, 39);
+            this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(278, 42);
             this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
             this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(224, 20);
             this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
@@ -821,7 +828,7 @@
             // 
             this.comboBoxUserCompanyHQcity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.comboBoxUserCompanyHQcity.FormattingEnabled = true;
-            this.comboBoxUserCompanyHQcity.Location = new System.Drawing.Point(278, 73);
+            this.comboBoxUserCompanyHQcity.Location = new System.Drawing.Point(278, 78);
             this.comboBoxUserCompanyHQcity.Name = "comboBoxUserCompanyHQcity";
             this.comboBoxUserCompanyHQcity.Size = new System.Drawing.Size(224, 21);
             this.comboBoxUserCompanyHQcity.TabIndex = 12;
@@ -833,7 +840,7 @@
             this.tabPageTruck.Location = new System.Drawing.Point(4, 28);
             this.tabPageTruck.Name = "tabPageTruck";
             this.tabPageTruck.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTruck.Size = new System.Drawing.Size(570, 532);
+            this.tabPageTruck.Size = new System.Drawing.Size(570, 577);
             this.tabPageTruck.TabIndex = 1;
             this.tabPageTruck.Text = "Truck";
             this.tabPageTruck.UseVisualStyleBackColor = true;
@@ -852,7 +859,7 @@
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(564, 526);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(564, 571);
             this.tableLayoutPanel9.TabIndex = 28;
             // 
             // groupBoxUserTruckTruck
@@ -925,7 +932,7 @@
             // 
             this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.tableLayoutPanel7);
             this.groupBoxUserTruckShareTruckSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxUserTruckShareTruckSettings.Location = new System.Drawing.Point(3, 419);
+            this.groupBoxUserTruckShareTruckSettings.Location = new System.Drawing.Point(3, 464);
             this.groupBoxUserTruckShareTruckSettings.Name = "groupBoxUserTruckShareTruckSettings";
             this.groupBoxUserTruckShareTruckSettings.Size = new System.Drawing.Size(558, 104);
             this.groupBoxUserTruckShareTruckSettings.TabIndex = 27;
@@ -1026,7 +1033,7 @@
             this.groupBoxUserTruckTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxUserTruckTruckDetails.Location = new System.Drawing.Point(3, 107);
             this.groupBoxUserTruckTruckDetails.Name = "groupBoxUserTruckTruckDetails";
-            this.groupBoxUserTruckTruckDetails.Size = new System.Drawing.Size(558, 306);
+            this.groupBoxUserTruckTruckDetails.Size = new System.Drawing.Size(558, 351);
             this.groupBoxUserTruckTruckDetails.TabIndex = 25;
             this.groupBoxUserTruckTruckDetails.TabStop = false;
             this.groupBoxUserTruckTruckDetails.Text = "Details";
@@ -1054,7 +1061,7 @@
             this.tabPageTrailer.Location = new System.Drawing.Point(4, 28);
             this.tabPageTrailer.Name = "tabPageTrailer";
             this.tabPageTrailer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTrailer.Size = new System.Drawing.Size(570, 532);
+            this.tabPageTrailer.Size = new System.Drawing.Size(570, 577);
             this.tabPageTrailer.TabIndex = 2;
             this.tabPageTrailer.Text = "Trailer";
             this.tabPageTrailer.UseVisualStyleBackColor = true;
@@ -1073,14 +1080,14 @@
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(564, 526);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(564, 571);
             this.tableLayoutPanel12.TabIndex = 32;
             // 
             // groupBoxUserTrailerShareTrailerSettings
             // 
             this.groupBoxUserTrailerShareTrailerSettings.Controls.Add(this.tableLayoutPanel14);
             this.groupBoxUserTrailerShareTrailerSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxUserTrailerShareTrailerSettings.Location = new System.Drawing.Point(3, 419);
+            this.groupBoxUserTrailerShareTrailerSettings.Location = new System.Drawing.Point(3, 464);
             this.groupBoxUserTrailerShareTrailerSettings.Name = "groupBoxUserTrailerShareTrailerSettings";
             this.groupBoxUserTrailerShareTrailerSettings.Size = new System.Drawing.Size(558, 104);
             this.groupBoxUserTrailerShareTrailerSettings.TabIndex = 31;
@@ -1302,7 +1309,7 @@
             this.tabPageFreightMarket.Location = new System.Drawing.Point(4, 28);
             this.tabPageFreightMarket.Name = "tabPageFreightMarket";
             this.tabPageFreightMarket.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFreightMarket.Size = new System.Drawing.Size(570, 532);
+            this.tabPageFreightMarket.Size = new System.Drawing.Size(570, 577);
             this.tabPageFreightMarket.TabIndex = 3;
             this.tabPageFreightMarket.Text = "FreightMarket";
             this.tabPageFreightMarket.UseVisualStyleBackColor = true;
@@ -1378,7 +1385,7 @@
             // 
             this.listBoxFreightMarketAddedJobs.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listBoxFreightMarketAddedJobs.FormattingEnabled = true;
-            this.listBoxFreightMarketAddedJobs.Location = new System.Drawing.Point(3, 265);
+            this.listBoxFreightMarketAddedJobs.Location = new System.Drawing.Point(3, 310);
             this.listBoxFreightMarketAddedJobs.Name = "listBoxFreightMarketAddedJobs";
             this.listBoxFreightMarketAddedJobs.ScrollAlwaysVisible = true;
             this.listBoxFreightMarketAddedJobs.Size = new System.Drawing.Size(564, 264);
@@ -1620,7 +1627,7 @@
             this.tabPageCargoMarket.Controls.Add(this.comboBoxSourceCargoMarketCompany);
             this.tabPageCargoMarket.Location = new System.Drawing.Point(4, 28);
             this.tabPageCargoMarket.Name = "tabPageCargoMarket";
-            this.tabPageCargoMarket.Size = new System.Drawing.Size(570, 532);
+            this.tabPageCargoMarket.Size = new System.Drawing.Size(570, 577);
             this.tabPageCargoMarket.TabIndex = 6;
             this.tabPageCargoMarket.Text = "CargoMarket";
             this.tabPageCargoMarket.UseVisualStyleBackColor = true;
@@ -1762,7 +1769,7 @@
             this.tabPageConvoyTools.Location = new System.Drawing.Point(4, 28);
             this.tabPageConvoyTools.Name = "tabPageConvoyTools";
             this.tabPageConvoyTools.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConvoyTools.Size = new System.Drawing.Size(570, 532);
+            this.tabPageConvoyTools.Size = new System.Drawing.Size(570, 577);
             this.tabPageConvoyTools.TabIndex = 4;
             this.tabPageConvoyTools.Text = "Convoy Control";
             this.tabPageConvoyTools.UseVisualStyleBackColor = true;
@@ -1864,9 +1871,10 @@
             // 
             this.buttonMainWriteSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMainWriteSave.Enabled = false;
-            this.buttonMainWriteSave.Location = new System.Drawing.Point(460, 57);
+            this.buttonMainWriteSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonMainWriteSave.Location = new System.Drawing.Point(3, 486);
             this.buttonMainWriteSave.Name = "buttonMainWriteSave";
-            this.buttonMainWriteSave.Size = new System.Drawing.Size(115, 50);
+            this.buttonMainWriteSave.Size = new System.Drawing.Size(238, 84);
             this.buttonMainWriteSave.TabIndex = 7;
             this.buttonMainWriteSave.Text = "Save";
             this.buttonMainWriteSave.UseVisualStyleBackColor = true;
@@ -1874,9 +1882,10 @@
             // 
             // buttonProfilesAndSavesOpenSaveFolder
             // 
-            this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(259, 77);
+            this.buttonProfilesAndSavesOpenSaveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(6, 187);
             this.buttonProfilesAndSavesOpenSaveFolder.Name = "buttonProfilesAndSavesOpenSaveFolder";
-            this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(177, 23);
+            this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(226, 41);
             this.buttonProfilesAndSavesOpenSaveFolder.TabIndex = 8;
             this.buttonProfilesAndSavesOpenSaveFolder.Text = "Open Folder";
             this.buttonProfilesAndSavesOpenSaveFolder.UseVisualStyleBackColor = true;
@@ -1888,9 +1897,9 @@
             this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusMessages,
             this.toolStripProgressBarMain});
-            this.statusStripMain.Location = new System.Drawing.Point(0, 739);
+            this.statusStripMain.Location = new System.Drawing.Point(0, 599);
             this.statusStripMain.Name = "statusStripMain";
-            this.statusStripMain.Size = new System.Drawing.Size(584, 22);
+            this.statusStripMain.Size = new System.Drawing.Size(834, 22);
             this.statusStripMain.TabIndex = 9;
             this.statusStripMain.Text = "statusStrip1";
             // 
@@ -1899,7 +1908,7 @@
             this.toolStripStatusMessages.AutoSize = false;
             this.toolStripStatusMessages.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripStatusMessages.Name = "toolStripStatusMessages";
-            this.toolStripStatusMessages.Size = new System.Drawing.Size(460, 17);
+            this.toolStripStatusMessages.Size = new System.Drawing.Size(680, 17);
             this.toolStripStatusMessages.Text = "Not Ready";
             this.toolStripStatusMessages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1914,9 +1923,9 @@
             // buttonMainLoadSave
             // 
             this.buttonMainLoadSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonMainLoadSave.Location = new System.Drawing.Point(460, 30);
+            this.buttonMainLoadSave.Location = new System.Drawing.Point(125, 3);
             this.buttonMainLoadSave.Name = "buttonMainLoadSave";
-            this.buttonMainLoadSave.Size = new System.Drawing.Size(115, 21);
+            this.buttonMainLoadSave.Size = new System.Drawing.Size(116, 39);
             this.buttonMainLoadSave.TabIndex = 11;
             this.buttonMainLoadSave.Text = "Load";
             this.buttonMainLoadSave.UseVisualStyleBackColor = true;
@@ -1934,10 +1943,12 @@
             // 
             // buttonMainGameSwitchCustomFolder
             // 
+            this.tableLayoutPanel10.SetColumnSpan(this.buttonMainGameSwitchCustomFolder, 2);
+            this.buttonMainGameSwitchCustomFolder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMainGameSwitchCustomFolder.Enabled = false;
-            this.buttonMainGameSwitchCustomFolder.Location = new System.Drawing.Point(463, 3);
+            this.buttonMainGameSwitchCustomFolder.Location = new System.Drawing.Point(3, 55);
             this.buttonMainGameSwitchCustomFolder.Name = "buttonMainGameSwitchCustomFolder";
-            this.buttonMainGameSwitchCustomFolder.Size = new System.Drawing.Size(112, 23);
+            this.buttonMainGameSwitchCustomFolder.Size = new System.Drawing.Size(238, 22);
             this.buttonMainGameSwitchCustomFolder.TabIndex = 14;
             this.buttonMainGameSwitchCustomFolder.Text = "Add Custom Folder";
             this.buttonMainGameSwitchCustomFolder.UseVisualStyleBackColor = true;
@@ -1952,7 +1963,7 @@
             this.buttonMainGameSwitchETS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonMainGameSwitchETS.Location = new System.Drawing.Point(3, 3);
             this.buttonMainGameSwitchETS.Name = "buttonMainGameSwitchETS";
-            this.buttonMainGameSwitchETS.Size = new System.Drawing.Size(227, 23);
+            this.buttonMainGameSwitchETS.Size = new System.Drawing.Size(116, 46);
             this.buttonMainGameSwitchETS.TabIndex = 15;
             this.buttonMainGameSwitchETS.Text = "ETS2";
             this.buttonMainGameSwitchETS.UseVisualStyleBackColor = false;
@@ -1964,9 +1975,9 @@
             this.buttonMainGameSwitchATS.Enabled = false;
             this.buttonMainGameSwitchATS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMainGameSwitchATS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonMainGameSwitchATS.Location = new System.Drawing.Point(236, 3);
+            this.buttonMainGameSwitchATS.Location = new System.Drawing.Point(125, 3);
             this.buttonMainGameSwitchATS.Name = "buttonMainGameSwitchATS";
-            this.buttonMainGameSwitchATS.Size = new System.Drawing.Size(221, 23);
+            this.buttonMainGameSwitchATS.Size = new System.Drawing.Size(116, 46);
             this.buttonMainGameSwitchATS.TabIndex = 16;
             this.buttonMainGameSwitchATS.Text = "ATS";
             this.buttonMainGameSwitchATS.UseVisualStyleBackColor = true;
@@ -1981,16 +1992,16 @@
             this.comboBoxPrevProfiles.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxPrevProfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPrevProfiles.FormattingEnabled = true;
-            this.comboBoxPrevProfiles.Location = new System.Drawing.Point(93, 19);
+            this.comboBoxPrevProfiles.Location = new System.Drawing.Point(6, 106);
             this.comboBoxPrevProfiles.Name = "comboBoxPrevProfiles";
-            this.comboBoxPrevProfiles.Size = new System.Drawing.Size(160, 21);
+            this.comboBoxPrevProfiles.Size = new System.Drawing.Size(226, 21);
             this.comboBoxPrevProfiles.TabIndex = 19;
             this.comboBoxPrevProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxPrevProfiles_SelectedIndexChanged);
             // 
             // checkBoxProfilesAndSavesProfileBackups
             // 
             this.checkBoxProfilesAndSavesProfileBackups.AutoSize = true;
-            this.checkBoxProfilesAndSavesProfileBackups.Location = new System.Drawing.Point(259, 23);
+            this.checkBoxProfilesAndSavesProfileBackups.Location = new System.Drawing.Point(93, 83);
             this.checkBoxProfilesAndSavesProfileBackups.Name = "checkBoxProfilesAndSavesProfileBackups";
             this.checkBoxProfilesAndSavesProfileBackups.Size = new System.Drawing.Size(68, 17);
             this.checkBoxProfilesAndSavesProfileBackups.TabIndex = 20;
@@ -2008,71 +2019,98 @@
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxSaves);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesOpenSaveFolder);
             this.groupBoxMainProfilesAndSaves.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxMainProfilesAndSaves.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxMainProfilesAndSaves.Location = new System.Drawing.Point(3, 83);
             this.groupBoxMainProfilesAndSaves.Name = "groupBoxMainProfilesAndSaves";
-            this.tableLayoutPanel11.SetRowSpan(this.groupBoxMainProfilesAndSaves, 3);
-            this.groupBoxMainProfilesAndSaves.Size = new System.Drawing.Size(451, 104);
+            this.groupBoxMainProfilesAndSaves.Size = new System.Drawing.Size(238, 234);
             this.groupBoxMainProfilesAndSaves.TabIndex = 21;
             this.groupBoxMainProfilesAndSaves.TabStop = false;
             this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
             // 
+            // tableLayoutPanel15
+            // 
+            this.tableLayoutPanel15.ColumnCount = 2;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+            this.tableLayoutPanel15.Controls.Add(this.tableLayoutPanel16, 1, 0);
+            this.tableLayoutPanel15.Controls.Add(this.tabControlMain, 0, 0);
+            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 1;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(834, 575);
+            this.tableLayoutPanel15.TabIndex = 10;
+            // 
+            // tableLayoutPanel16
+            // 
+            this.tableLayoutPanel16.ColumnCount = 1;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel16.Controls.Add(this.groupBoxMainProfilesAndSaves, 0, 1);
+            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel10, 0, 0);
+            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel11, 0, 2);
+            this.tableLayoutPanel16.Controls.Add(this.buttonMainWriteSave, 0, 4);
+            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel16.Location = new System.Drawing.Point(585, 1);
+            this.tableLayoutPanel16.Margin = new System.Windows.Forms.Padding(1, 1, 5, 1);
+            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
+            this.tableLayoutPanel16.RowCount = 5;
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 240F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(244, 573);
+            this.tableLayoutPanel16.TabIndex = 0;
+            // 
             // tableLayoutPanel10
             // 
-            this.tableLayoutPanel10.ColumnCount = 3;
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.0411F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.06164F));
+            this.tableLayoutPanel10.ColumnCount = 2;
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel10.Controls.Add(this.buttonMainGameSwitchATS, 1, 0);
-            this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel11, 0, 1);
-            this.tableLayoutPanel10.Controls.Add(this.tabControlMain, 0, 2);
             this.tableLayoutPanel10.Controls.Add(this.buttonMainGameSwitchETS, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.buttonMainGameSwitchCustomFolder, 2, 0);
+            this.tableLayoutPanel10.Controls.Add(this.buttonMainGameSwitchCustomFolder, 0, 1);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel10.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
-            this.tableLayoutPanel10.RowCount = 3;
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 570F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(584, 715);
-            this.tableLayoutPanel10.TabIndex = 0;
+            this.tableLayoutPanel10.RowCount = 2;
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34F));
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(244, 80);
+            this.tableLayoutPanel10.TabIndex = 12;
             // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.ColumnCount = 2;
-            this.tableLayoutPanel10.SetColumnSpan(this.tableLayoutPanel11, 3);
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.23875F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.76125F));
-            this.tableLayoutPanel11.Controls.Add(this.buttonMainLoadSave, 1, 1);
-            this.tableLayoutPanel11.Controls.Add(this.buttonMainWriteSave, 1, 2);
-            this.tableLayoutPanel11.Controls.Add(this.groupBoxMainProfilesAndSaves, 0, 0);
-            this.tableLayoutPanel11.Controls.Add(this.buttonMainDecryptSave, 1, 0);
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.Controls.Add(this.buttonMainDecryptSave, 0, 0);
+            this.tableLayoutPanel11.Controls.Add(this.buttonMainLoadSave, 1, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(3, 32);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(0, 320);
+            this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
-            this.tableLayoutPanel11.RowCount = 3;
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel11.RowCount = 1;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(578, 110);
-            this.tableLayoutPanel11.TabIndex = 0;
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 45);
+            this.tableLayoutPanel11.TabIndex = 22;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 761);
-            this.Controls.Add(this.tableLayoutPanel10);
+            this.ClientSize = new System.Drawing.Size(834, 621);
+            this.Controls.Add(this.tableLayoutPanel15);
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.menuStripMain);
             this.MainMenuStrip = this.menuStripMain;
-            this.MaximumSize = new System.Drawing.Size(600, 800);
-            this.MinimumSize = new System.Drawing.Size(600, 800);
+            this.MaximumSize = new System.Drawing.Size(1000, 660);
+            this.MinimumSize = new System.Drawing.Size(850, 660);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TS SE Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
-            this.Load += new System.EventHandler(this.FormMain_Load);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
@@ -2119,6 +2157,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileAvatar)).EndInit();
             this.groupBoxMainProfilesAndSaves.ResumeLayout(false);
             this.groupBoxMainProfilesAndSaves.PerformLayout();
+            this.tableLayoutPanel15.ResumeLayout(false);
+            this.tableLayoutPanel16.ResumeLayout(false);
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel11.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -2276,8 +2316,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.GroupBox groupBoxUserTruckTruck;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
         private System.Windows.Forms.GroupBox groupBoxUserTrailerShareTrailerSettings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
@@ -2289,6 +2327,10 @@
         private System.Windows.Forms.Button buttonShareTrailerTrailerDetailsCopy;
         private System.Windows.Forms.GroupBox groupBoxUserTruckTrailer;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
     }
 }
 

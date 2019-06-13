@@ -218,12 +218,7 @@ namespace TS_SE_Tool
 
             FillAllProfilesPaths();
         }
-
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormSettings FormWindow = new FormSettings();
