@@ -28,6 +28,7 @@ using TS_SE_Tool.CustomClasses;
 using ErikEJ.SqlCe;
 using System.ComponentModel;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace TS_SE_Tool
 {
@@ -1273,6 +1274,7 @@ namespace TS_SE_Tool
                         int i = 0;
                         foreach (string temp in sfdep)
                         {
+                            i++;
                             sfdepstr += i.ToString() + ") " + temp + "\r\n"; ;
                         }
                     }
@@ -1393,7 +1395,25 @@ namespace TS_SE_Tool
                 if (tempProfileFileInMemory[line].StartsWith(" company_name:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    PlayerProfileData.CompanyName = chunkOfline[2];
+                    string compName = "";
+                    if (chunkOfline[2].StartsWith("\"") && chunkOfline[2].EndsWith("\""))
+                    {
+                        string compNameH = chunkOfline[2].Trim('"');
+                        string compNameH2 = string.Join("", compNameH.Split(new string[] { "\\x" }, StringSplitOptions.RemoveEmptyEntries));
+                        compName = FromHexToString(compNameH2);
+
+                        if (compName == null)
+                        {
+                            compName = Regex.Unescape(chunkOfline[2]);
+                            compName = compName.Remove(compName.Length - 1, 1).Remove(0, 1);
+                        }
+                    }
+
+                    if (compName == "")
+                        PlayerProfileData.CompanyName = chunkOfline[2];
+                    else
+                        PlayerProfileData.CompanyName = compName;
+
                     continue; //searching
                 }
 

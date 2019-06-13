@@ -319,13 +319,14 @@
             this.comboBoxProfiles.Name = "comboBoxProfiles";
             this.comboBoxProfiles.Size = new System.Drawing.Size(226, 21);
             this.comboBoxProfiles.TabIndex = 1;
+            this.comboBoxProfiles.DropDown += new System.EventHandler(this.comboBoxProfiles_DropDown);
             this.comboBoxProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfiles_SelectedIndexChanged);
             // 
             // buttonProfilesAndSavesRefreshAll
             // 
-            this.buttonProfilesAndSavesRefreshAll.Location = new System.Drawing.Point(355, 19);
+            this.buttonProfilesAndSavesRefreshAll.Location = new System.Drawing.Point(122, 42);
             this.buttonProfilesAndSavesRefreshAll.Name = "buttonProfilesAndSavesRefreshAll";
-            this.buttonProfilesAndSavesRefreshAll.Size = new System.Drawing.Size(81, 52);
+            this.buttonProfilesAndSavesRefreshAll.Size = new System.Drawing.Size(110, 23);
             this.buttonProfilesAndSavesRefreshAll.TabIndex = 2;
             this.buttonProfilesAndSavesRefreshAll.Text = "Refresh";
             this.buttonProfilesAndSavesRefreshAll.UseVisualStyleBackColor = true;
@@ -339,6 +340,7 @@
             this.comboBoxSaves.Name = "comboBoxSaves";
             this.comboBoxSaves.Size = new System.Drawing.Size(226, 21);
             this.comboBoxSaves.TabIndex = 3;
+            this.comboBoxSaves.DropDown += new System.EventHandler(this.comboBoxSaves_DropDown);
             this.comboBoxSaves.SelectedIndexChanged += new System.EventHandler(this.comboBoxSaves_SelectedIndexChanged);
             // 
             // buttonMainDecryptSave
@@ -544,7 +546,7 @@
             this.tabPageCompany.Location = new System.Drawing.Point(4, 28);
             this.tabPageCompany.Name = "tabPageCompany";
             this.tabPageCompany.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCompany.Size = new System.Drawing.Size(570, 577);
+            this.tabPageCompany.Size = new System.Drawing.Size(570, 537);
             this.tabPageCompany.TabIndex = 5;
             this.tabPageCompany.Text = "Company";
             this.tabPageCompany.UseVisualStyleBackColor = true;
@@ -561,7 +563,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 107F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 137F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(564, 571);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(564, 531);
             this.tableLayoutPanel2.TabIndex = 29;
             // 
             // tableLayoutPanel4
@@ -583,7 +585,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 82F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(564, 464);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(564, 424);
             this.tableLayoutPanel4.TabIndex = 30;
             // 
             // labelUserCompanyVisitedCities
@@ -615,7 +617,7 @@
             this.listBoxGarages.Location = new System.Drawing.Point(285, 23);
             this.listBoxGarages.Name = "listBoxGarages";
             this.listBoxGarages.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxGarages.Size = new System.Drawing.Size(276, 356);
+            this.listBoxGarages.Size = new System.Drawing.Size(276, 316);
             this.listBoxGarages.TabIndex = 17;
             this.listBoxGarages.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxGarages_DrawItem);
             this.listBoxGarages.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxGarages_MeasureItem);
@@ -629,7 +631,7 @@
             this.listBoxVisitedCities.Location = new System.Drawing.Point(3, 23);
             this.listBoxVisitedCities.Name = "listBoxVisitedCities";
             this.listBoxVisitedCities.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxVisitedCities.Size = new System.Drawing.Size(276, 356);
+            this.listBoxVisitedCities.Size = new System.Drawing.Size(276, 316);
             this.listBoxVisitedCities.TabIndex = 19;
             this.listBoxVisitedCities.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxVisitedCities_DrawItem);
             this.listBoxVisitedCities.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxVisitedCities_MeasureItem);
@@ -642,7 +644,7 @@
             this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesVisit, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesUnVisit, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 382);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 342);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
@@ -653,6 +655,7 @@
             // buttonUserCompanyCitiesVisit
             // 
             this.buttonUserCompanyCitiesVisit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyCitiesVisit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonUserCompanyCitiesVisit.Location = new System.Drawing.Point(3, 3);
             this.buttonUserCompanyCitiesVisit.Name = "buttonUserCompanyCitiesVisit";
             this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(135, 76);
@@ -664,6 +667,7 @@
             // buttonUserCompanyCitiesUnVisit
             // 
             this.buttonUserCompanyCitiesUnVisit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyCitiesUnVisit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonUserCompanyCitiesUnVisit.Location = new System.Drawing.Point(144, 3);
             this.buttonUserCompanyCitiesUnVisit.Name = "buttonUserCompanyCitiesUnVisit";
             this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(135, 76);
@@ -683,7 +687,7 @@
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesSell, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesUpgrade, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(282, 382);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(282, 342);
             this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
@@ -744,7 +748,7 @@
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 283F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 289F));
             this.tableLayoutPanel3.Controls.Add(this.pictureBoxCompanyLogo, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyCompanyName, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyMoneyAccount, 1, 1);
@@ -840,7 +844,7 @@
             this.tabPageTruck.Location = new System.Drawing.Point(4, 28);
             this.tabPageTruck.Name = "tabPageTruck";
             this.tabPageTruck.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTruck.Size = new System.Drawing.Size(570, 577);
+            this.tabPageTruck.Size = new System.Drawing.Size(570, 537);
             this.tabPageTruck.TabIndex = 1;
             this.tabPageTruck.Text = "Truck";
             this.tabPageTruck.UseVisualStyleBackColor = true;
@@ -859,7 +863,7 @@
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(564, 571);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(564, 531);
             this.tableLayoutPanel9.TabIndex = 28;
             // 
             // groupBoxUserTruckTruck
@@ -932,7 +936,7 @@
             // 
             this.groupBoxUserTruckShareTruckSettings.Controls.Add(this.tableLayoutPanel7);
             this.groupBoxUserTruckShareTruckSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxUserTruckShareTruckSettings.Location = new System.Drawing.Point(3, 464);
+            this.groupBoxUserTruckShareTruckSettings.Location = new System.Drawing.Point(3, 424);
             this.groupBoxUserTruckShareTruckSettings.Name = "groupBoxUserTruckShareTruckSettings";
             this.groupBoxUserTruckShareTruckSettings.Size = new System.Drawing.Size(558, 104);
             this.groupBoxUserTruckShareTruckSettings.TabIndex = 27;
@@ -1033,7 +1037,7 @@
             this.groupBoxUserTruckTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxUserTruckTruckDetails.Location = new System.Drawing.Point(3, 107);
             this.groupBoxUserTruckTruckDetails.Name = "groupBoxUserTruckTruckDetails";
-            this.groupBoxUserTruckTruckDetails.Size = new System.Drawing.Size(558, 351);
+            this.groupBoxUserTruckTruckDetails.Size = new System.Drawing.Size(558, 311);
             this.groupBoxUserTruckTruckDetails.TabIndex = 25;
             this.groupBoxUserTruckTruckDetails.TabStop = false;
             this.groupBoxUserTruckTruckDetails.Text = "Details";
@@ -1061,7 +1065,7 @@
             this.tabPageTrailer.Location = new System.Drawing.Point(4, 28);
             this.tabPageTrailer.Name = "tabPageTrailer";
             this.tabPageTrailer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTrailer.Size = new System.Drawing.Size(570, 577);
+            this.tabPageTrailer.Size = new System.Drawing.Size(570, 537);
             this.tabPageTrailer.TabIndex = 2;
             this.tabPageTrailer.Text = "Trailer";
             this.tabPageTrailer.UseVisualStyleBackColor = true;
@@ -1080,14 +1084,14 @@
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(564, 571);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(564, 531);
             this.tableLayoutPanel12.TabIndex = 32;
             // 
             // groupBoxUserTrailerShareTrailerSettings
             // 
             this.groupBoxUserTrailerShareTrailerSettings.Controls.Add(this.tableLayoutPanel14);
             this.groupBoxUserTrailerShareTrailerSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxUserTrailerShareTrailerSettings.Location = new System.Drawing.Point(3, 464);
+            this.groupBoxUserTrailerShareTrailerSettings.Location = new System.Drawing.Point(3, 424);
             this.groupBoxUserTrailerShareTrailerSettings.Name = "groupBoxUserTrailerShareTrailerSettings";
             this.groupBoxUserTrailerShareTrailerSettings.Size = new System.Drawing.Size(558, 104);
             this.groupBoxUserTrailerShareTrailerSettings.TabIndex = 31;
@@ -1309,7 +1313,7 @@
             this.tabPageFreightMarket.Location = new System.Drawing.Point(4, 28);
             this.tabPageFreightMarket.Name = "tabPageFreightMarket";
             this.tabPageFreightMarket.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFreightMarket.Size = new System.Drawing.Size(570, 577);
+            this.tabPageFreightMarket.Size = new System.Drawing.Size(570, 537);
             this.tabPageFreightMarket.TabIndex = 3;
             this.tabPageFreightMarket.Text = "FreightMarket";
             this.tabPageFreightMarket.UseVisualStyleBackColor = true;
@@ -1385,7 +1389,7 @@
             // 
             this.listBoxFreightMarketAddedJobs.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listBoxFreightMarketAddedJobs.FormattingEnabled = true;
-            this.listBoxFreightMarketAddedJobs.Location = new System.Drawing.Point(3, 310);
+            this.listBoxFreightMarketAddedJobs.Location = new System.Drawing.Point(3, 270);
             this.listBoxFreightMarketAddedJobs.Name = "listBoxFreightMarketAddedJobs";
             this.listBoxFreightMarketAddedJobs.ScrollAlwaysVisible = true;
             this.listBoxFreightMarketAddedJobs.Size = new System.Drawing.Size(564, 264);
@@ -1627,7 +1631,7 @@
             this.tabPageCargoMarket.Controls.Add(this.comboBoxSourceCargoMarketCompany);
             this.tabPageCargoMarket.Location = new System.Drawing.Point(4, 28);
             this.tabPageCargoMarket.Name = "tabPageCargoMarket";
-            this.tabPageCargoMarket.Size = new System.Drawing.Size(570, 577);
+            this.tabPageCargoMarket.Size = new System.Drawing.Size(570, 537);
             this.tabPageCargoMarket.TabIndex = 6;
             this.tabPageCargoMarket.Text = "CargoMarket";
             this.tabPageCargoMarket.UseVisualStyleBackColor = true;
@@ -1769,7 +1773,7 @@
             this.tabPageConvoyTools.Location = new System.Drawing.Point(4, 28);
             this.tabPageConvoyTools.Name = "tabPageConvoyTools";
             this.tabPageConvoyTools.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConvoyTools.Size = new System.Drawing.Size(570, 577);
+            this.tabPageConvoyTools.Size = new System.Drawing.Size(570, 537);
             this.tabPageConvoyTools.TabIndex = 4;
             this.tabPageConvoyTools.Text = "Convoy Control";
             this.tabPageConvoyTools.UseVisualStyleBackColor = true;
@@ -1996,12 +2000,13 @@
             this.comboBoxPrevProfiles.Name = "comboBoxPrevProfiles";
             this.comboBoxPrevProfiles.Size = new System.Drawing.Size(226, 21);
             this.comboBoxPrevProfiles.TabIndex = 19;
+            this.comboBoxPrevProfiles.DropDown += new System.EventHandler(this.comboBoxPrevProfiles_DropDown);
             this.comboBoxPrevProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxPrevProfiles_SelectedIndexChanged);
             // 
             // checkBoxProfilesAndSavesProfileBackups
             // 
             this.checkBoxProfilesAndSavesProfileBackups.AutoSize = true;
-            this.checkBoxProfilesAndSavesProfileBackups.Location = new System.Drawing.Point(93, 83);
+            this.checkBoxProfilesAndSavesProfileBackups.Location = new System.Drawing.Point(122, 19);
             this.checkBoxProfilesAndSavesProfileBackups.Name = "checkBoxProfilesAndSavesProfileBackups";
             this.checkBoxProfilesAndSavesProfileBackups.Size = new System.Drawing.Size(68, 17);
             this.checkBoxProfilesAndSavesProfileBackups.TabIndex = 20;
@@ -2011,11 +2016,11 @@
             // 
             // groupBoxMainProfilesAndSaves
             // 
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRefreshAll);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.checkBoxProfilesAndSavesProfileBackups);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.pictureBoxProfileAvatar);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxPrevProfiles);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxProfiles);
-            this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRefreshAll);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxSaves);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesOpenSaveFolder);
             this.groupBoxMainProfilesAndSaves.Dock = System.Windows.Forms.DockStyle.Fill;

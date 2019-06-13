@@ -570,13 +570,36 @@ namespace TS_SE_Tool
 
         private void comboBoxPrevProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string sv = comboBoxPrevProfiles.SelectedValue.ToString();
+
             FillProfiles();
+
+            int index = FindByValue(comboBoxPrevProfiles, sv);
+
+            if (index > -1)
+                comboBoxPrevProfiles.SelectedValue = sv;
+            else
+                comboBoxPrevProfiles.SelectedIndex = 0;
+        }
+
+        private void comboBoxPrevProfiles_DropDown(object sender, EventArgs e)
+        {
+            string sv = comboBoxPrevProfiles.SelectedValue.ToString();            
+
+            FillAllProfilesPaths();
+
+            int index = FindByValue(comboBoxPrevProfiles, sv);
+
+            if (index > -1)
+                comboBoxPrevProfiles.SelectedValue = sv;
+            else
+                comboBoxPrevProfiles.SelectedIndex = 0;
         }
 
         public void FillProfiles()
         {
             string Profile = "";
-            comboBoxProfiles.Items.Clear();
+            //comboBoxProfiles.Items.Clear();
 
             string MyDocumentsPath = "";
             
@@ -592,6 +615,13 @@ namespace TS_SE_Tool
 
             if (Globals.ProfilesHex.Count > 0)//.Length > 0)
             {
+                DataTable combDT = new DataTable();
+                DataColumn dc = new DataColumn("ProfilePath", typeof(string));
+                combDT.Columns.Add(dc);
+
+                dc = new DataColumn("ProfileName", typeof(string));
+                combDT.Columns.Add(dc);
+
                 List<string> NewProfileHex = new List<string>();
 
                 foreach (string profile in Globals.ProfilesHex)
@@ -599,10 +629,15 @@ namespace TS_SE_Tool
                     Profile = FromHexToString(Path.GetFileName(profile));
                     if (Profile != null)
                     {
-                        comboBoxProfiles.Items.Add(Profile);
+                        //comboBoxProfiles.Items.Add(Profile);
+                        combDT.Rows.Add(profile, Profile);
                         NewProfileHex.Add(profile);
                     }
                 }
+
+                comboBoxProfiles.ValueMember = "ProfilePath";
+                comboBoxProfiles.DisplayMember = "ProfileName";
+                comboBoxProfiles.DataSource = combDT;
 
                 Globals.ProfilesHex = NewProfileHex;
 
@@ -646,6 +681,20 @@ namespace TS_SE_Tool
             //DateTime CreationDate = (new DateTime(1970, 1, 1, 0, 0, 0, 0)).AddSeconds(CreationTime); //trucking since
         }
 
+        private void comboBoxProfiles_DropDown(object sender, EventArgs e)
+        {
+            string sv = comboBoxProfiles.SelectedValue.ToString();
+
+            FillProfiles();
+
+            int index = FindByValue(comboBoxProfiles, sv);
+
+            if (index > -1)
+                comboBoxProfiles.SelectedValue = sv;
+            else
+                comboBoxProfiles.SelectedIndex = 0;
+        }
+
         public void FillProfileSaves()
         {
             string savePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\save";
@@ -664,6 +713,9 @@ namespace TS_SE_Tool
 
                 foreach (string profile in Globals.SavesHex)
                 {
+                    if (!File.Exists(profile + @"\game.sii") || !File.Exists(profile + @"\info.sii"))
+                        continue;
+
                     string[] fold = profile.Split(new string[] { "\\" }, StringSplitOptions.None);
 
                     foreach (char c in fold[fold.Length - 1])
@@ -721,6 +773,20 @@ namespace TS_SE_Tool
         {
             buttonMainDecryptSave.Enabled = true;
             buttonMainLoadSave.Enabled = true;
+        }
+
+        private void comboBoxSaves_DropDown(object sender, EventArgs e)
+        {
+            string sv = comboBoxSaves.SelectedValue.ToString();
+
+            FillProfileSaves();
+
+            int index = FindByValue(comboBoxSaves, sv);
+
+            if (index > -1)
+                comboBoxSaves.SelectedValue = sv;
+            else
+                comboBoxSaves.SelectedIndex = 0;
         }
 
         //end Profile and Saves groupbox
@@ -4786,6 +4852,22 @@ namespace TS_SE_Tool
                 }
             }
             return bm;
+        }
+
+        private int FindByValue (ComboBox inputComboBox, string value)
+        {
+            DataTable combDT = new DataTable();
+            combDT = inputComboBox.DataSource as DataTable;
+
+            string fcol = combDT.Columns[0].ToString();
+
+            string searchExpression = fcol + " = '" + value + @"'";
+            DataRow[] foundRows = combDT.Select(searchExpression);
+
+            if (foundRows.Length > 0)
+                return 0;
+            else
+                return -1;
         }
 
         //end Form methods
