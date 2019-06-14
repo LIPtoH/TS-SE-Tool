@@ -1912,7 +1912,7 @@
             this.toolStripStatusMessages.AutoSize = false;
             this.toolStripStatusMessages.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripStatusMessages.Name = "toolStripStatusMessages";
-            this.toolStripStatusMessages.Size = new System.Drawing.Size(680, 17);
+            this.toolStripStatusMessages.Size = new System.Drawing.Size(600, 17);
             this.toolStripStatusMessages.Text = "Not Ready";
             this.toolStripStatusMessages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1920,7 +1920,7 @@
             // 
             this.toolStripProgressBarMain.Name = "toolStripProgressBarMain";
             this.toolStripProgressBarMain.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.toolStripProgressBarMain.Size = new System.Drawing.Size(100, 16);
+            this.toolStripProgressBarMain.Size = new System.Drawing.Size(200, 16);
             this.toolStripProgressBarMain.Step = 1;
             this.toolStripProgressBarMain.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 

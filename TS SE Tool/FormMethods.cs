@@ -190,8 +190,8 @@ namespace TS_SE_Tool
             //string ATSexp = "";
 
             if (GameType == "ETS2")
-                Globals.PlayerLevelUps = new int[] {200, 500, 700, 900, 1000, 1100, 1300, 1600, 1700, 1900, 2100, 2300, 2600, 2700,
-                    2900, 3000, 3100, 3400, 3700, 4000, 4300, 4600, 4700, 4900, 5200, 5700, 5900, 6000, 6200, 6600, 6900};
+                Globals.PlayerLevelUps = new int[] {200, 500, 700, 900, 1000, 1100, 1300, 1600, 1700, 2100, 2300, 2600, 2700,
+                    2900, 3000, 3100, 3400, 3700, 4000, 4300, 4600, 4700, 4900, 5200, 5700, 5900, 6000, 6200, 6600, 6800};
             else
                 Globals.PlayerLevelUps = new int[] {200, 500, 700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300, 2500, 2700,
                     2900, 3100, 3300, 3500, 3700, 4000, 4300, 4600, 4900, 5200, 5500, 5800, 6100, 6400, 6700, 7000, 7300};
@@ -311,8 +311,12 @@ namespace TS_SE_Tool
 
         private void buttonOpenSaveFolder_Click(object sender, EventArgs e)
         {
-            Process.Start(Globals.SavesHex[comboBoxSaves.SelectedIndex]);
+            if(Directory.Exists(Globals.SavesHex[comboBoxSaves.SelectedIndex]))
+                Process.Start(Globals.SavesHex[comboBoxSaves.SelectedIndex]);
+            //else
+
         }
+
         /*
         private void buttonGameCustomPath_Click(object sender, EventArgs e)
         {
@@ -337,6 +341,7 @@ namespace TS_SE_Tool
             Globals.SavesHex[0] = DirectoryName;
         }
         */
+
         private void buttonDecryptSave_Click(object sender, EventArgs e)
         {
             SetDefaultValues(false);
@@ -394,7 +399,19 @@ namespace TS_SE_Tool
         //Profile and Saves groupbox
         private void checkBoxProfileBackups_CheckedChanged(object sender, EventArgs e)
         {
+            string sv = comboBoxPrevProfiles.SelectedValue.ToString();
+
             FillAllProfilesPaths();
+
+            //if (checkBoxProfilesAndSavesProfileBackups.Checked)
+            //{
+                int index = FindByValue(comboBoxPrevProfiles, sv);
+
+                if (index > -1)
+                    comboBoxPrevProfiles.SelectedValue = sv;
+                else
+                    comboBoxPrevProfiles.SelectedIndex = 0;
+            //}
         }
 
         public void FillAllProfilesPaths()
@@ -473,14 +490,14 @@ namespace TS_SE_Tool
                     {
                         if (Path.GetFileName(folder).StartsWith("profiles")) //Documents
                         {
-                            combDT.Rows.Add(index, "[L] " + Path.GetFileName(folder));
+                            combDT.Rows.Add(folder, "[L] " + Path.GetFileName(folder)); //combDT.Rows.Add(index, "[L] " + Path.GetFileName(folder));
 
                             tempList.Add(folder);
                             index++;
                         }
                         if (Path.GetFileName(folder).StartsWith("steam_profiles")) //Documents
                         {
-                            combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
+                            combDT.Rows.Add(folder, "[S] " + Path.GetFileName(folder)); //combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
 
                             tempList.Add(folder);
                             index++;
@@ -493,7 +510,7 @@ namespace TS_SE_Tool
                     {
                         if (Path.GetFileName(folder).StartsWith("profiles")) //Steam
                         {
-                            combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
+                            combDT.Rows.Add(folder, "[S] " + Path.GetFileName(folder)); //combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
 
                             tempList.Add(folder);
                             index++;
@@ -522,7 +539,7 @@ namespace TS_SE_Tool
 
                 if (Directory.Exists(folder))
                 {
-                    combDT.Rows.Add(index, "[L] profiles");
+                    combDT.Rows.Add(folder, "[L] profiles");
 
                     tempList.Add(folder);
                     index++;
@@ -532,7 +549,7 @@ namespace TS_SE_Tool
 
                 if (Directory.Exists(folder))
                 {
-                    combDT.Rows.Add(index, "[S] profiles");
+                    combDT.Rows.Add(folder, "[S] profiles");
 
                     tempList.Add(folder);
                     index++;
@@ -570,6 +587,11 @@ namespace TS_SE_Tool
 
         private void comboBoxPrevProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!Directory.Exists(Globals.ProfilesPaths[comboBoxPrevProfiles.SelectedIndex]))
+            {
+                return;
+            }
+
             string sv = comboBoxPrevProfiles.SelectedValue.ToString();
 
             FillProfiles();
@@ -584,9 +606,11 @@ namespace TS_SE_Tool
 
         private void comboBoxPrevProfiles_DropDown(object sender, EventArgs e)
         {
-            string sv = comboBoxPrevProfiles.SelectedValue.ToString();            
+            string sv = comboBoxPrevProfiles.SelectedValue.ToString();
 
+            comboBoxPrevProfiles.SelectedIndexChanged -= comboBoxPrevProfiles_SelectedIndexChanged;
             FillAllProfilesPaths();
+            comboBoxPrevProfiles.SelectedIndexChanged += comboBoxPrevProfiles_SelectedIndexChanged;
 
             int index = FindByValue(comboBoxPrevProfiles, sv);
 
@@ -598,12 +622,15 @@ namespace TS_SE_Tool
 
         public void FillProfiles()
         {
-            string Profile = "";
-            //comboBoxProfiles.Items.Clear();
+            if (!Directory.Exists(Globals.ProfilesPaths[comboBoxPrevProfiles.SelectedIndex]))
+            {
+                FillAllProfilesPaths();
+                return;
+            }
 
+            string Profile = "";
             string MyDocumentsPath = "";
-            
-            MyDocumentsPath = Globals.ProfilesPaths[int.Parse(comboBoxPrevProfiles.SelectedValue.ToString())];
+            MyDocumentsPath = comboBoxPrevProfiles.SelectedValue.ToString();//Globals.ProfilesPaths[int.Parse(comboBoxPrevProfiles.SelectedValue.ToString())];
             /*
             if (!Directory.Exists(MyDocumentsPath))
             {
@@ -627,26 +654,42 @@ namespace TS_SE_Tool
                 foreach (string profile in Globals.ProfilesHex)
                 {
                     Profile = FromHexToString(Path.GetFileName(profile));
-                    if (Profile != null)
+                    if (Profile != null && Directory.Exists(profile + @"\save"))
                     {
                         //comboBoxProfiles.Items.Add(Profile);
                         combDT.Rows.Add(profile, Profile);
                         NewProfileHex.Add(profile);
                     }
                 }
+                if (NewProfileHex.Count > 0)
+                {
+                    Globals.ProfilesHex = NewProfileHex;
 
-                comboBoxProfiles.ValueMember = "ProfilePath";
-                comboBoxProfiles.DisplayMember = "ProfileName";
-                comboBoxProfiles.DataSource = combDT;
+                    comboBoxProfiles.ValueMember = "ProfilePath";
+                    comboBoxProfiles.DisplayMember = "ProfileName";
+                    comboBoxProfiles.DataSource = combDT;
 
-                Globals.ProfilesHex = NewProfileHex;
+                    comboBoxProfiles.Enabled = true;
+                    comboBoxSaves.Enabled = true;
+                    comboBoxProfiles.SelectedIndex = 0;
+                    buttonProfilesAndSavesOpenSaveFolder.Enabled = true;
+                    buttonMainDecryptSave.Enabled = true;
+                    buttonMainLoadSave.Enabled = true;
+                }
+                else
+                {
+                    comboBoxProfiles.Enabled = false;
+                    comboBoxSaves.Enabled = false;
+                    comboBoxProfiles.DataSource = null;
+                    comboBoxSaves.DataSource = null;
+                    comboBoxProfiles.SelectedIndex = -1;
 
-                comboBoxProfiles.Enabled = true;
-                comboBoxSaves.Enabled = true;
-                comboBoxProfiles.SelectedIndex = 0;
-                buttonProfilesAndSavesOpenSaveFolder.Enabled = true;
-                buttonMainDecryptSave.Enabled = true;
-                buttonMainLoadSave.Enabled = true;
+                    buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
+                    buttonMainDecryptSave.Enabled = false;
+                    buttonMainLoadSave.Enabled = false;
+
+                    ShowStatusMessages("e", "No valid Profiles was found");
+                }
             }
             else
             {
@@ -662,7 +705,8 @@ namespace TS_SE_Tool
 
         private void comboBoxProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillProfileSaves();
+            if (comboBoxProfiles.SelectedIndex > -1)
+                FillProfileSaves();
 
             try
             {
@@ -685,7 +729,9 @@ namespace TS_SE_Tool
         {
             string sv = comboBoxProfiles.SelectedValue.ToString();
 
+            comboBoxProfiles.SelectedIndexChanged -= comboBoxProfiles_SelectedIndexChanged;
             FillProfiles();
+            comboBoxProfiles.SelectedIndexChanged += comboBoxProfiles_SelectedIndexChanged;
 
             int index = FindByValue(comboBoxProfiles, sv);
 
@@ -697,6 +743,12 @@ namespace TS_SE_Tool
 
         public void FillProfileSaves()
         {
+            if (!Directory.Exists(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]))
+            {
+                FillProfiles();
+                return;
+            }                
+
             string savePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\save";
             Globals.SavesHex = Directory.GetDirectories(savePath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
 
