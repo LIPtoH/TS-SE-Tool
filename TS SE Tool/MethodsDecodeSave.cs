@@ -22,6 +22,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+using System.Runtime.InteropServices;
 
 namespace TS_SE_Tool
 {
@@ -29,10 +30,6 @@ namespace TS_SE_Tool
     {
         private string[] DecodeFile(string _savefile_path)
         {
-            LogWriter("Backing up file to: " + _savefile_path + "_backup");
-
-            File.Copy(_savefile_path, _savefile_path + "_backup", true);
-
             ShowStatusMessages("i", "message_loading_save_file");
 
             LogWriter("Loading file into memory");
@@ -87,6 +84,10 @@ namespace TS_SE_Tool
 
                 if (input.StartsWith("BSII"))
                 {
+                    LogWriter("Backing up file to: " + _savefile_path + "_backup");
+
+                    File.Copy(_savefile_path, _savefile_path + "_backup", true);
+
                     string arguments = "\"" + _savefile_path + "\" \"" + _savefile_path + "\"";
 
                     LogWriter("Starting SiiDecrypt");
@@ -110,6 +111,122 @@ namespace TS_SE_Tool
                 ShowStatusMessages("e", "error_could_not_decode_file");
 
                 return null;
+            }
+        }
+
+        private unsafe string[] NewDecodeFile (string _savefile_path)
+        {
+            ShowStatusMessages("i", "message_loading_save_file");
+            LogWriter("Loading file into memory");
+
+            //string FileData = "";
+            byte[] FileDataB = new byte[10];
+
+            try
+            {
+                //FileDate = 
+                FileDataB = File.ReadAllBytes(_savefile_path);
+            }
+            catch
+            {
+                LogWriter("Could not find file in: " + _savefile_path);
+                ShowStatusMessages("e", "error_could_not_find_file");
+
+                FileDecoded = false;
+                return null;
+            }
+
+            int MemFileFrm = -1;
+            UInt32 buff = (UInt32)FileDataB.Length;
+
+            fixed (byte* ptr = FileDataB)
+            {
+               MemFileFrm = SIIGetMemoryFormat(ptr, buff);
+            }
+
+            switch (MemFileFrm)
+            {
+                case 1:
+                    // "SIIDEC_RESULT_FORMAT_PLAINTEXT";
+                    {
+                        FileDecoded = true;
+                        string BigS = Encoding.UTF8.GetString(FileDataB);
+                        return BigS.Split(new string[] { "\r\n"}, StringSplitOptions.None);
+                    }
+                case 2:
+                    // "SIIDEC_RESULT_FORMAT_ENCRYPTED";
+                    {
+                        ShowStatusMessages("i", "message_decoding_save_file");
+                        LogWriter("Decoding file");
+
+                        int result = -1;
+                        uint newbuff = 0;
+                        uint* newbuffP = &newbuff;
+
+                        fixed (byte* ptr = FileDataB)
+                        {
+                            result = SIIDecryptAndDecodeMemory(ptr, buff, null, newbuffP);
+                        }                        
+
+                        if (result == 0)
+                        {
+                            byte[] newFileData = new byte[(int)newbuff];
+
+                            fixed (byte* ptr = FileDataB)
+                            {
+                                fixed (byte* ptr2 = newFileData)
+                                result = SIIDecryptAndDecodeMemory(ptr, buff, ptr2, newbuffP);
+                            }
+
+                            FileDecoded = true;
+                            string BigS = Encoding.UTF8.GetString(newFileData);
+                            return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                        }
+
+                        return null;
+                    }
+                case 3:
+                    // "SIIDEC_RESULT_FORMAT_BINARY";
+                case 4:
+                    // "SIIDEC_RESULT_FORMAT_3NK";
+                    {
+                        ShowStatusMessages("i", "message_decoding_save_file");
+                        LogWriter("Decoding file");
+
+                        int result = -1;
+                        uint newbuff = 0;
+                        uint* newbuffP = &newbuff;
+
+                        fixed (byte* ptr = FileDataB)
+                        {
+                            result = SIIDecodeMemory(ptr, buff, null, newbuffP);
+                        }
+
+                        if (result == 0)
+                        {
+                            byte[] newFileData = new byte[(int)newbuff];
+
+                            fixed (byte* ptr = FileDataB)
+                            {
+                                fixed (byte* ptr2 = newFileData)
+                                    result = SIIDecodeMemory(ptr, buff, ptr2, newbuffP);
+                            }
+
+                            FileDecoded = true;
+                            string BigS = Encoding.UTF8.GetString(newFileData);
+                            return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                        }
+                        return null;
+                    }
+                case -1:
+                // "SIIDEC_RESULT_GENERIC_ERROR";
+                case 10:
+                    // "SIIDEC_RESULT_FORMAT_UNKNOWN";
+                case 11:
+                    // "SIIDEC_RESULT_TOO_FEW_DATA";
+                default:
+                    // "UNEXPECTED_ERROR";
+                    return null;
             }
         }
 
@@ -170,5 +287,45 @@ namespace TS_SE_Tool
             return managed.CreateDecryptor().TransformFinalBlock(_encryptedData, 0, _encryptedData.Length);
         }
 
+        //SII decrypt
+        [DllImport(@"libs/SII_Decrypt.dll", EntryPoint = "GetFileFormat")]
+        public static extern Int32 SIIGetFileFormat(string FilePath);
+
+        //unsafe
+        [DllImport(@"libs/SII_Decrypt.dll", EntryPoint = "GetMemoryFormat")]
+        public static extern unsafe Int32 SIIGetMemoryFormat(byte* InputMS, uint InputMSSize);
+
+        [DllImport(@"libs/SII_Decrypt.dll", EntryPoint = "DecryptAndDecodeMemory")]
+        public static extern unsafe Int32 SIIDecryptAndDecodeMemory(byte* InputMS, uint InputMSSize, byte* OutputMS, uint* OutputMSSize);
+
+        [DllImport(@"libs/SII_Decrypt.dll", EntryPoint = "DecodeMemory")]
+        public static extern unsafe Int32 SIIDecodeMemory(byte* InputMS, uint InputMSSize, byte* OutputMS, uint* OutputMSSize);
+
+        private string SIIresultDecode (int inputR)
+        {
+            switch (inputR)
+            {
+                case -1:
+                    return "SIIDEC_RESULT_GENERIC_ERROR";
+                case 0:
+                    return "SIIDEC_RESULT_SUCCESS";
+                case 1:
+                    return "SIIDEC_RESULT_FORMAT_PLAINTEXT";
+                case 2:
+                    return "SIIDEC_RESULT_FORMAT_ENCRYPTED";
+                case 3:
+                    return "SIIDEC_RESULT_FORMAT_BINARY";
+                case 4:
+                    return "SIIDEC_RESULT_FORMAT_3NK";
+                case 10:
+                    return "SIIDEC_RESULT_FORMAT_UNKNOWN";
+                case 11:
+                    return "SIIDEC_RESULT_TOO_FEW_DATA";
+                case 12:
+                    return "SIIDEC_RESULT_BUFFER_TOO_SMALL";
+                default:
+                    return "UNEXPECTED_ERROR";
+            }
+        }
     }
 }

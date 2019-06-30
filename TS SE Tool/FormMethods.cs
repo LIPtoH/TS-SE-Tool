@@ -177,6 +177,9 @@ namespace TS_SE_Tool
 
                 buttonMainGameSwitchETS.Image = GameIconeImg[0];
                 buttonMainGameSwitchATS.Image = GameIconeImg[1];
+
+                folderBrowserDialogAddCustomFolder.Description = "Select the directory that you want to use as custom folder."; // Set the help text description for the FolderBrowserDialog.                
+                folderBrowserDialogAddCustomFolder.ShowNewFolderButton = false; // Do not allow the user to create new files via the FolderBrowserDialog.
             }
 
             unCertainRouteLength = "";
@@ -317,30 +320,11 @@ namespace TS_SE_Tool
 
         }
 
-        /*
-        private void buttonGameCustomPath_Click(object sender, EventArgs e)
+        private void buttonMainAddCustomFolder_Click(object sender, EventArgs e)
         {
-
+            FormAddCustomFolder FormWindow = new FormAddCustomFolder();
+            FormWindow.ShowDialog();
         }
-
-        private void AddCustomFolder_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.Filter = "Save files (game.sii)|game.sii";
-            openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            DialogResult result = openFileDialog1.ShowDialog();
-
-            comboBoxProfiles.Items.Add("Custom");
-
-            string DirectoryPath = Path.GetDirectoryName(openFileDialog1.FileName);
-
-            string DirectoryName = openFileDialog1.FileName.Substring((DirectoryPath.LastIndexOf('\\') + 1), (DirectoryPath.Length - (DirectoryPath.LastIndexOf('\\')) - 1));
-
-            comboBoxSaves.Items.Add(DirectoryName);
-
-            Globals.SavesHex[0] = DirectoryName;
-        }
-        */
 
         private void buttonDecryptSave_Click(object sender, EventArgs e)
         {
@@ -354,10 +338,19 @@ namespace TS_SE_Tool
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             string SiiSavePath = SavefilePath + @"\game.sii";
 
-            string[] file = DecodeFile(SiiSavePath);
+            //string[] file = DecodeFile(SiiSavePath);
+            string[] file = NewDecodeFile(SiiSavePath);
 
-            if(file != null)
+            if (file != null)
+            {
+                LogWriter("Backing up file to: " + SiiSavePath + "_backup");
+                File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
+
+                File.WriteAllLines(SiiSavePath, file);
+
                 ShowStatusMessages("i", "");
+            }
+                
             else
                 ShowStatusMessages("e", "error_could_not_decode_file");
 
@@ -533,16 +526,13 @@ namespace TS_SE_Tool
                 dc = new DataColumn("ProfileName", typeof(string));
                 combDT.Columns.Add(dc);
 
-                int index = 0;
                 List<string> tempList = new List<string>();
                 string folder = MyDocumentsPath + @"\profiles";
 
                 if (Directory.Exists(folder))
                 {
                     combDT.Rows.Add(folder, "[L] profiles");
-
                     tempList.Add(folder);
-                    index++;
                 }
 
                 folder = RemoteUserdataDirectory + @"\profiles";
@@ -550,9 +540,24 @@ namespace TS_SE_Tool
                 if (Directory.Exists(folder))
                 {
                     combDT.Rows.Add(folder, "[S] profiles");
-
                     tempList.Add(folder);
+                }
+
+                int index = 0;
+                foreach (string CustPath in ProgSettingsV.CustomPaths)
+                {
                     index++;
+                    folder = CustPath + @"\profiles";
+                    if (Directory.Exists(folder))
+                    {
+                        combDT.Rows.Add(folder, "[C] Custom profiles");
+                        tempList.Add(folder);
+                    }
+                    else
+                    {
+                        combDT.Rows.Add(CustPath, "[C] Custom path " + index.ToString());
+                        tempList.Add(CustPath);
+                    }
                 }
 
                 Globals.ProfilesPaths = tempList.ToArray();
@@ -629,18 +634,22 @@ namespace TS_SE_Tool
             }
 
             string Profile = "";
-            string MyDocumentsPath = "";
-            MyDocumentsPath = comboBoxPrevProfiles.SelectedValue.ToString();//Globals.ProfilesPaths[int.Parse(comboBoxPrevProfiles.SelectedValue.ToString())];
-            /*
-            if (!Directory.Exists(MyDocumentsPath))
-            {
-                MessageBox.Show("Standart Save files don't exist");
-                return;
-            }
-            */
-            Globals.ProfilesHex = Directory.GetDirectories(MyDocumentsPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToList();//.ToArray();
+            string SelectedFolder = "";
+            SelectedFolder = comboBoxPrevProfiles.SelectedValue.ToString();
 
-            if (Globals.ProfilesHex.Count > 0)//.Length > 0)
+            List<string> includedFiles = new List<string>();
+            includedFiles = Directory.GetFiles(SelectedFolder).Select(Path.GetFileName).ToList();
+
+            if (includedFiles.Contains("profile.sii") || includedFiles.Contains("game.sii"))
+            {
+                Globals.ProfilesHex.Clear();
+                Globals.ProfilesHex.Add(SelectedFolder);
+            }
+            else
+                Globals.ProfilesHex = Directory.GetDirectories(SelectedFolder).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToList();
+            
+
+            if (Globals.ProfilesHex.Count > 0)
             {
                 DataTable combDT = new DataTable();
                 DataColumn dc = new DataColumn("ProfilePath", typeof(string));
@@ -651,23 +660,31 @@ namespace TS_SE_Tool
 
                 List<string> NewProfileHex = new List<string>();
 
-                foreach (string profile in Globals.ProfilesHex)
+                if (!includedFiles.Contains("game.sii"))
                 {
-                    Profile = FromHexToString(Path.GetFileName(profile));
-                    if (Profile != null && Directory.Exists(profile + @"\save"))
+                    foreach (string profile in Globals.ProfilesHex)
                     {
-                        //comboBoxProfiles.Items.Add(Profile);
-                        combDT.Rows.Add(profile, Profile);
-                        NewProfileHex.Add(profile);
+                        Profile = FromHexToString(Path.GetFileName(profile));
+                        if (Profile != null && Directory.Exists(profile + @"\save"))
+                        {
+                            combDT.Rows.Add(profile, Profile);
+                            NewProfileHex.Add(profile);
+                        }
                     }
                 }
-                if (NewProfileHex.Count > 0)
+                else
+                {
+                    NewProfileHex.Add(SelectedFolder);
+                    combDT.Rows.Add(SelectedFolder, "[C] Custom profile");
+                }
+
+                comboBoxProfiles.ValueMember = "ProfilePath";
+                comboBoxProfiles.DisplayMember = "ProfileName";
+                comboBoxProfiles.DataSource = combDT;
+
+                if (comboBoxProfiles.Items.Count > 0)
                 {
                     Globals.ProfilesHex = NewProfileHex;
-
-                    comboBoxProfiles.ValueMember = "ProfilePath";
-                    comboBoxProfiles.DisplayMember = "ProfileName";
-                    comboBoxProfiles.DataSource = combDT;
 
                     comboBoxProfiles.Enabled = true;
                     comboBoxSaves.Enabled = true;
@@ -749,8 +766,21 @@ namespace TS_SE_Tool
                 return;
             }                
 
-            string savePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\save";
-            Globals.SavesHex = Directory.GetDirectories(savePath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
+            string SelectedFolder = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
+
+            List<string> includedFiles = new List<string>();
+            includedFiles = Directory.GetFiles(SelectedFolder).Select(Path.GetFileName).ToList();
+
+            if (includedFiles.Contains("game.sii"))
+            {
+                Globals.SavesHex = new string[1];
+                Globals.SavesHex[0] = SelectedFolder;
+            }
+            else
+            {
+                SelectedFolder = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\save";
+                Globals.SavesHex = Directory.GetDirectories(SelectedFolder).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
+            }
 
             if (Globals.SavesHex.Length > 0)
             {
@@ -2090,12 +2120,19 @@ namespace TS_SE_Tool
                 }
             }
 
-            //combDT.DefaultView.Sort = "UserTrailerName ASC";
-            comboBoxUserTrailerCompanyTrailers.ValueMember = "UserTrailerkNameless";
-            comboBoxUserTrailerCompanyTrailers.DisplayMember = "UserTrailerName";
-            comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
-            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerProfileData.UserCompanyAssignedTrailer;
-            
+            if(combDT.Rows.Count > 0)
+            {
+                //combDT.DefaultView.Sort = "UserTrailerName ASC";
+                comboBoxUserTrailerCompanyTrailers.Enabled = true;
+                comboBoxUserTrailerCompanyTrailers.ValueMember = "UserTrailerkNameless";
+                comboBoxUserTrailerCompanyTrailers.DisplayMember = "UserTrailerName";
+                comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
+                comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerProfileData.UserCompanyAssignedTrailer;
+            }
+            else
+            {
+                comboBoxUserTrailerCompanyTrailers.Enabled = false;
+            }
         }
 
         private void comboBoxCompanyTrailers_SelectedIndexChanged(object sender, EventArgs e)

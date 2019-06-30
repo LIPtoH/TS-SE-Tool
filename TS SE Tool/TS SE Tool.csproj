@@ -151,6 +151,12 @@
     <Compile Include="DataManipulation.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormAddCustomFolder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAddCustomFolder.Designer.cs">
+      <DependentUpon>FormAddCustomFolder.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +191,9 @@
     <Compile Include="RMcode\PlainTXTResourceSet.cs" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAddCustomFolder.resx">
+      <DependentUpon>FormAddCustomFolder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

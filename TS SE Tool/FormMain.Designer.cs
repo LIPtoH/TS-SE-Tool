@@ -180,7 +180,7 @@
             this.toolStripProgressBarMain = new System.Windows.Forms.ToolStripProgressBar();
             this.buttonMainLoadSave = new System.Windows.Forms.Button();
             this.pictureBoxProfileAvatar = new System.Windows.Forms.PictureBox();
-            this.buttonMainGameSwitchCustomFolder = new System.Windows.Forms.Button();
+            this.buttonMainAddCustomFolder = new System.Windows.Forms.Button();
             this.buttonMainGameSwitchETS = new System.Windows.Forms.Button();
             this.buttonMainGameSwitchATS = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -192,6 +192,7 @@
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.folderBrowserDialogAddCustomFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -1945,18 +1946,17 @@
             this.pictureBoxProfileAvatar.TabIndex = 12;
             this.pictureBoxProfileAvatar.TabStop = false;
             // 
-            // buttonMainGameSwitchCustomFolder
+            // buttonMainAddCustomFolder
             // 
-            this.tableLayoutPanel10.SetColumnSpan(this.buttonMainGameSwitchCustomFolder, 2);
-            this.buttonMainGameSwitchCustomFolder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonMainGameSwitchCustomFolder.Enabled = false;
-            this.buttonMainGameSwitchCustomFolder.Location = new System.Drawing.Point(3, 55);
-            this.buttonMainGameSwitchCustomFolder.Name = "buttonMainGameSwitchCustomFolder";
-            this.buttonMainGameSwitchCustomFolder.Size = new System.Drawing.Size(238, 22);
-            this.buttonMainGameSwitchCustomFolder.TabIndex = 14;
-            this.buttonMainGameSwitchCustomFolder.Text = "Add Custom Folder";
-            this.buttonMainGameSwitchCustomFolder.UseVisualStyleBackColor = true;
-            this.buttonMainGameSwitchCustomFolder.Visible = false;
+            this.tableLayoutPanel10.SetColumnSpan(this.buttonMainAddCustomFolder, 2);
+            this.buttonMainAddCustomFolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMainAddCustomFolder.Location = new System.Drawing.Point(3, 55);
+            this.buttonMainAddCustomFolder.Name = "buttonMainAddCustomFolder";
+            this.buttonMainAddCustomFolder.Size = new System.Drawing.Size(238, 22);
+            this.buttonMainAddCustomFolder.TabIndex = 14;
+            this.buttonMainAddCustomFolder.Text = "Add Custom Folder";
+            this.buttonMainAddCustomFolder.UseVisualStyleBackColor = true;
+            this.buttonMainAddCustomFolder.Click += new System.EventHandler(this.buttonMainAddCustomFolder_Click);
             // 
             // buttonMainGameSwitchETS
             // 
@@ -2074,7 +2074,7 @@
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel10.Controls.Add(this.buttonMainGameSwitchATS, 1, 0);
             this.tableLayoutPanel10.Controls.Add(this.buttonMainGameSwitchETS, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.buttonMainGameSwitchCustomFolder, 0, 1);
+            this.tableLayoutPanel10.Controls.Add(this.buttonMainAddCustomFolder, 0, 1);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel10.Margin = new System.Windows.Forms.Padding(0);
@@ -2207,7 +2207,7 @@
         private System.Windows.Forms.ComboBox comboBoxFreightMarketUrgency;
         private System.Windows.Forms.Label labelFreightMarketCargo;
         private System.Windows.Forms.ComboBox comboBoxFreightMarketCargoList;
-        private System.Windows.Forms.Button buttonMainGameSwitchCustomFolder;
+        private System.Windows.Forms.Button buttonMainAddCustomFolder;
         private System.Windows.Forms.Button buttonMainGameSwitchETS;
         private System.Windows.Forms.Button buttonMainGameSwitchATS;
         private System.Windows.Forms.ComboBox comboBoxFreightMarketCompanies;
@@ -2336,6 +2336,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogAddCustomFolder;
     }
 }
 

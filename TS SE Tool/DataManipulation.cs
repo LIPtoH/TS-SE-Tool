@@ -1329,14 +1329,15 @@ namespace TS_SE_Tool
                 ShowStatusMessages("e", "error_could_not_find_file");
             }
             else
-            {
+            {   
                 FileDecoded = false;
                 try
                 {
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempFile = DecodeFile(tempSiiInfoPath);
+                        //tempFile = DecodeFile(tempSiiInfoPath);
+                        tempFile = NewDecodeFile(tempSiiInfoPath);
 
                         if (FileDecoded)
                         {

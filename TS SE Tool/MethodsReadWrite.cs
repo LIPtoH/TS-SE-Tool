@@ -92,6 +92,11 @@ namespace TS_SE_Tool
                                 DistanceMultiplier = DistanceMultipliers[ProgSettingsV.DistanceMes];                                
                                 break;
                             }
+                        case "CustomPath":
+                            {
+                                ProgSettingsV.CustomPaths.Add(line.Split(new char[] { '=' })[1]);
+                                break;
+                            }
                     }
                 }
 
@@ -114,7 +119,16 @@ namespace TS_SE_Tool
                     PropertyInfo[] properties = ProgSettingsV.GetType().GetProperties();
                     foreach (PropertyInfo pi in properties)
                     {
-                        writer.WriteLine(pi.Name + "=" + pi.GetValue(ProgSettingsV).ToString());
+                        if(pi.Name != "CustomPaths")
+                            writer.WriteLine(pi.Name + "=" + pi.GetValue(ProgSettingsV).ToString());
+                        else
+                        {
+                        }
+                    }
+
+                    foreach (string CP in ProgSettingsV.CustomPaths)
+                    {
+                        writer.WriteLine("CustomPath=" + CP);
                     }
                 }
             }
@@ -303,7 +317,7 @@ namespace TS_SE_Tool
             }
 
             imgpaths = new string[] { @"img\skill_adr.dds", @"img\skill_distance.dds", @"img\skill_heavy.dds", @"img\skill_fragile.dds", @"img\skill_jit.dds", @"img\skill_mechanical.dds" };
-            SkillImgS = ExtImgLoader(imgpaths, 64, 64, 64, 0);
+            SkillImgS = ExtImgLoader(imgpaths, 64, 64, 0, 0);
 
             imgpaths = new string[] { @"img\profiles.dds", @"img\comp_man.dds", @"img\truck_service.dds", @"img\trailers.dds", @"img\company_job.dds", @"img\cargo_market.dds", @"img\maps.dds" };
             TabpagesImages.Images.AddRange (ExtImgLoader(imgpaths, 64, 64, 64, 0));
@@ -335,14 +349,14 @@ namespace TS_SE_Tool
 
         private Image[] ExtImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y )
         {
-            MemoryStream ms;
+            
             Image[] tempImgarray = new Image[_filenamesarray.Length];
 
             for (int i = 0; i < _filenamesarray.Length; i++)
             {
                 try
                 {
-                    ms = new MemoryStream();
+                    MemoryStream ms = new MemoryStream();
                     Bitmap temp = ImageFromDDS(_filenamesarray[i]);
                     temp.Clone(new Rectangle(_x, _y, _width, _height), temp.PixelFormat).Save(ms, ImageFormat.Png);
                     tempImgarray[i] = Image.FromStream(ms);
@@ -387,9 +401,9 @@ namespace TS_SE_Tool
 
             if (File.Exists(_path))
             {
-                FileStream fsimage = new FileStream(_path, FileMode.Open);
-
-                S16.Drawing.DDSImage asd = new S16.Drawing.DDSImage(fsimage);
+                S16.Drawing.DDSImage asd;
+                using (FileStream fsimage = new FileStream(_path, FileMode.Open))
+                    asd = new S16.Drawing.DDSImage(fsimage);
 
                 bitmap = asd.BitmapImage;
 
@@ -693,7 +707,8 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempProfileFileInMemory = DecodeFile(SiiProfilePath);
+                        //tempProfileFileInMemory = DecodeFile(SiiProfilePath);
+                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath);
 
                         if (FileDecoded)
                         {
@@ -744,7 +759,8 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempInfoFileInMemory = DecodeFile(SiiInfoPath);
+                        //tempInfoFileInMemory = DecodeFile(SiiInfoPath);
+                        tempInfoFileInMemory = NewDecodeFile(SiiInfoPath);
 
                         if (FileDecoded)
                         {
@@ -815,7 +831,8 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempSavefileInMemory = DecodeFile(SiiSavePath);
+                        //tempSavefileInMemory = DecodeFile(SiiSavePath);
+                        tempSavefileInMemory = NewDecodeFile(SiiSavePath);
 
                         if (FileDecoded)
                         {
