@@ -17,7 +17,9 @@ namespace TS_SE_Tool
 
         private string SelectedfolderPath;
         private bool ListOpen = true;
-        private List<string> CustomPathsArr;
+        private Dictionary<string, List<string>> CustomPathsArr;
+        private string GameType = "";
+        private bool CustomPathChanged = false;
 
         public FormAddCustomFolder()
         {
@@ -25,7 +27,18 @@ namespace TS_SE_Tool
             //tableLayoutPanel1.ColumnStyles[3].Width = 0;
             //this.Width = 390;
             ChangeCustomPathListVisibility();
-            CustomPathsArr = new List<string>(MainForm.ProgSettingsV.CustomPaths);
+            CustomPathsArr = new Dictionary<string, List<string>>();//(MainForm.ProgSettingsV.CustomPaths);
+            foreach (KeyValuePair<string, List<string>> k1 in MainForm.ProgSettingsV.CustomPaths)
+            {
+                List<string> tmp = new List<string>();
+                foreach (string k2 in k1.Value)
+                {
+                    tmp.Add(k2);
+                }
+                CustomPathsArr.Add(k1.Key, tmp);
+            }
+
+            radioButtonGameTypeETS2.Checked = true;
         }
 
         private void buttonChooseFolder_Click(object sender, EventArgs e)
@@ -74,21 +87,37 @@ namespace TS_SE_Tool
 
         private void buttonAddCustomPath_Click(object sender, EventArgs e)
         {
-            buttonAddCustomPath.Enabled = false;
-            labelCustomPathDir.Text = "Choose folder";
-            radioButtonGameTypeETS2.Checked = false;
-            radioButtonGameTypeATS.Checked = false;
-            radioButton4.Checked = true;
-
-            if (!CustomPathsArr.Contains(SelectedfolderPath))
+            if (CustomPathsArr.Keys.Contains(GameType))
             {
-                CustomPathsArr.Add(SelectedfolderPath);
-                if (ListOpen)
-                    UpdatedataGridView();
-                MessageBox.Show("Path " + SelectedfolderPath + " added to the list", "Custom path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (CustomPathsArr[GameType].Contains(SelectedfolderPath))
+                {
+                    MessageBox.Show("Path " + SelectedfolderPath + " already added to the " + GameType + " list", "Path exist in the list", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else
+                {
+                    CustomPathsArr[GameType].Add(SelectedfolderPath);
+                    CustomPathChanged = true;
+                    if (ListOpen)
+                        UpdatedataGridView();
+                    MessageBox.Show("Path " + SelectedfolderPath + " added to the " + GameType + " list", "Custom path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             else
-                MessageBox.Show("Path " + SelectedfolderPath + " already added to the list", "Path exist in the list", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            {
+                List<string> tmp = new List<string>();
+                tmp.Add(SelectedfolderPath);
+                CustomPathsArr.Add(GameType, tmp);
+                CustomPathChanged = true;
+                if (ListOpen)
+                        UpdatedataGridView();
+                MessageBox.Show("Path " + SelectedfolderPath + " added to the " + GameType + " list", "Custom path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            buttonAddCustomPath.Enabled = false;
+            labelCustomPathDir.Text = "Choose folder...";
+            //radioButtonGameTypeETS2.Checked = false;
+            //radioButtonGameTypeATS.Checked = false;
+            radioButton4.Checked = true;
         }
 
         static string GetDirectoryName2(string f)
@@ -110,6 +139,17 @@ namespace TS_SE_Tool
                 buttonAddCustomPath.Enabled = true;
             else
                 buttonAddCustomPath.Enabled = false;
+        }
+
+        private void radioButtonGameType_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonGameTypeETS2.Checked)
+                GameType = "ETS2";
+            else
+                GameType = "ATS";
+
+            if (ListOpen)
+                UpdatedataGridView();
         }
 
         private void buttonEditCPlist_Click(object sender, EventArgs e)
@@ -146,10 +186,14 @@ namespace TS_SE_Tool
 
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                CustomPathsArr.RemoveAt(e.RowIndex);
-            }
+                CustomPathChanged = true;
+                string tmp = senderGrid[1, e.RowIndex].Value.ToString();
+                CustomPathsArr[GameType].Remove(tmp);
+                if (CustomPathsArr[GameType].Count == 0)
+                    CustomPathsArr.Remove(GameType);
 
-            UpdatedataGridView();
+                UpdatedataGridView();
+            }
         }
 
         private void UpdatedataGridView()
@@ -158,9 +202,12 @@ namespace TS_SE_Tool
             DataColumn dc = new DataColumn("Path", typeof(string));
             combDT.Columns.Add(dc);
 
-            foreach (string path in CustomPathsArr)
+            if (CustomPathsArr.Keys.Contains(GameType))
             {
-                combDT.Rows.Add(path);
+                foreach (string path in CustomPathsArr[GameType])
+                {
+                    combDT.Rows.Add(path);
+                }
             }
 
             dataGridView1.DataSource = combDT;
@@ -168,7 +215,27 @@ namespace TS_SE_Tool
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            MainForm.ProgSettingsV.CustomPaths = new List<string>(CustomPathsArr);
+            MainForm.ProgSettingsV.CustomPaths = new Dictionary<string, List<string>>(CustomPathsArr);
+            CustomPathChanged = false;
+        }
+
+        private void FormAddCustomFolder_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult exitDR = DialogResult.No;
+
+            if (CustomPathChanged)
+            {
+                exitDR = MessageBox.Show("You have unsaved changes.\r\nDo you really want to close dialogue without saving?", "Dialogue close", MessageBoxButtons.YesNo);
+
+                if (exitDR == DialogResult.Yes)
+                {
+                }
+                else
+                {
+                    e.Cancel = true;
+                    Activate();
+                }
+            }
         }
     }
 }

@@ -466,18 +466,17 @@ namespace TS_SE_Tool
 
             }
 
+            DataTable combDT = new DataTable();
+            DataColumn dc = new DataColumn("ProfileID", typeof(string));
+            combDT.Columns.Add(dc);
+
+            dc = new DataColumn("ProfileName", typeof(string));
+            combDT.Columns.Add(dc);
+
+            List<string> tempList = new List<string>();
+
             if (checkBoxProfilesAndSavesProfileBackups.Checked)
             {
-                DataTable combDT = new DataTable();
-                DataColumn dc = new DataColumn("ProfileID", typeof(string));
-                combDT.Columns.Add(dc);
-
-                dc = new DataColumn("ProfileName", typeof(string));
-                combDT.Columns.Add(dc);
-
-                List<string> tempList = new List<string>();
-
-                int index = 0;
                 if (Directory.Exists(MyDocumentsPath))
                     foreach (string folder in Directory.GetDirectories(MyDocumentsPath))
                     {
@@ -486,14 +485,12 @@ namespace TS_SE_Tool
                             combDT.Rows.Add(folder, "[L] " + Path.GetFileName(folder)); //combDT.Rows.Add(index, "[L] " + Path.GetFileName(folder));
 
                             tempList.Add(folder);
-                            index++;
                         }
                         if (Path.GetFileName(folder).StartsWith("steam_profiles")) //Documents
                         {
                             combDT.Rows.Add(folder, "[S] " + Path.GetFileName(folder)); //combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
 
                             tempList.Add(folder);
-                            index++;
                         }
                     }
 
@@ -506,27 +503,11 @@ namespace TS_SE_Tool
                             combDT.Rows.Add(folder, "[S] " + Path.GetFileName(folder)); //combDT.Rows.Add(index, "[S] " + Path.GetFileName(folder));
 
                             tempList.Add(folder);
-                            index++;
                         }
                     }
-
-                Globals.ProfilesPaths = tempList.ToArray();
-
-                comboBoxPrevProfiles.ValueMember = "ProfileID";
-                comboBoxPrevProfiles.DisplayMember = "ProfileName";
-                comboBoxPrevProfiles.DataSource = combDT;
-
             }
             else
             {
-                DataTable combDT = new DataTable();
-                DataColumn dc = new DataColumn("ProfileID", typeof(string));
-                combDT.Columns.Add(dc);
-
-                dc = new DataColumn("ProfileName", typeof(string));
-                combDT.Columns.Add(dc);
-
-                List<string> tempList = new List<string>();
                 string folder = MyDocumentsPath + @"\profiles";
 
                 if (Directory.Exists(folder))
@@ -542,29 +523,24 @@ namespace TS_SE_Tool
                     combDT.Rows.Add(folder, "[S] profiles");
                     tempList.Add(folder);
                 }
+            }
 
-                int index = 0;
-                foreach (string CustPath in ProgSettingsV.CustomPaths)
+            int index = 0;
+            if (ProgSettingsV.CustomPaths.Keys.Contains(GameType))
+                foreach (string CustPath in ProgSettingsV.CustomPaths[GameType])
                 {
                     index++;
-                    folder = CustPath + @"\profiles";
-                    if (Directory.Exists(folder))
-                    {
-                        combDT.Rows.Add(folder, "[C] Custom profiles");
-                        tempList.Add(folder);
-                    }
-                    else
+                    if (Directory.Exists( CustPath))
                     {
                         combDT.Rows.Add(CustPath, "[C] Custom path " + index.ToString());
                         tempList.Add(CustPath);
-                    }
+                    }   
                 }
 
-                Globals.ProfilesPaths = tempList.ToArray();
-                comboBoxPrevProfiles.ValueMember = "ProfileID";
-                comboBoxPrevProfiles.DisplayMember = "ProfileName";
-                comboBoxPrevProfiles.DataSource = combDT;
-            }
+            Globals.ProfilesPaths = tempList.ToArray();
+            comboBoxPrevProfiles.ValueMember = "ProfileID";
+            comboBoxPrevProfiles.DisplayMember = "ProfileName";
+            comboBoxPrevProfiles.DataSource = combDT;
 
 
             if (comboBoxPrevProfiles.Items.Count > 0)

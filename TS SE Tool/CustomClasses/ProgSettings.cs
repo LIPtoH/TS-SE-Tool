@@ -32,7 +32,7 @@ namespace TS_SE_Tool
             LoopEvery = _LoopEvery;
             TimeMultiplier = _TimeMultiplier;
             DistanceMes = _DistanceMes;
-            CustomPaths = new List<string>();
+            CustomPaths = new Dictionary<string, List<string>>();//List<string>();
         }
 
         public double ProgramVersion { get; set; }
@@ -49,6 +49,7 @@ namespace TS_SE_Tool
 
         public string DistanceMes { get; set; }
 
-        public List<string> CustomPaths { get; set; }
+        //public List<string> CustomPaths { get; set; }
+        public Dictionary<string, List<string>> CustomPaths { get; set; }
     }
 }

@@ -39,6 +39,7 @@ namespace TS_SE_Tool
         {
             try
             {
+                string GameType = "";
                 PropertyInfo[] properties = ProgSettingsV.GetType().GetProperties();
                 foreach (string line in File.ReadAllLines(Directory.GetCurrentDirectory() + @"\config.cfg"))
                 {
@@ -92,14 +93,29 @@ namespace TS_SE_Tool
                                 DistanceMultiplier = DistanceMultipliers[ProgSettingsV.DistanceMes];                                
                                 break;
                             }
+                        case "CustomPathGame":
+                            {
+                                GameType = line.Split(new char[] { '=' })[1];
+                                break;
+                            }
                         case "CustomPath":
                             {
-                                ProgSettingsV.CustomPaths.Add(line.Split(new char[] { '=' })[1]);
+                                if (GameType == "" || GameType == null )
+                                    break;
+                                if (ProgSettingsV.CustomPaths.ContainsKey(GameType))
+                                    ProgSettingsV.CustomPaths[GameType].Add(line.Split(new char[] { '=' })[1]);
+                                else
+                                {
+                                    List<string> tmp = new List<string>();
+                                    tmp.Add(line.Split(new char[] { '=' })[1]);
+                                    ProgSettingsV.CustomPaths.Add(GameType, tmp);
+                                }
                                 break;
                             }
                     }
                 }
 
+                ProgSettingsV.CustomPaths = ProgSettingsV.CustomPaths.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
                 checkBoxFreightMarketRandomDest.Checked = ProgSettingsV.ProposeRandom;
 
             }
@@ -126,9 +142,19 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    foreach (string CP in ProgSettingsV.CustomPaths)
+                    //foreach (string CP in ProgSettingsV.CustomPaths)
+                    string GameType = "";
+                    foreach (KeyValuePair<string, List<string>> CPg in ProgSettingsV.CustomPaths)
                     {
-                        writer.WriteLine("CustomPath=" + CP);
+                        if (GameType != CPg.Key)
+                        {
+                            GameType = CPg.Key;
+                            writer.WriteLine("CustomPathGame=" + CPg.Key);
+                        }
+                        foreach(string CP in CPg.Value)
+                        {
+                            writer.WriteLine("CustomPath=" + CP);
+                        }
                     }
                 }
             }
