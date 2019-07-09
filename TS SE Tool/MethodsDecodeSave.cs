@@ -28,6 +28,7 @@ namespace TS_SE_Tool
 {
     public partial class FormMain
     {
+        /*
         private string[] DecodeFile(string _savefile_path)
         {
             ShowStatusMessages("i", "message_loading_save_file");
@@ -113,7 +114,7 @@ namespace TS_SE_Tool
                 return null;
             }
         }
-
+        */
         private unsafe string[] NewDecodeFile (string _savefile_path)
         {
             ShowStatusMessages("i", "message_loading_save_file");

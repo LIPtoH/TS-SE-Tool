@@ -174,12 +174,6 @@ namespace TS_SE_Tool
                 SkillButtonArray = new CheckBox[5, 6];
 
                 TabpagesImages = new ImageList();
-
-                buttonMainGameSwitchETS.Image = GameIconeImg[0];
-                buttonMainGameSwitchATS.Image = GameIconeImg[1];
-
-                folderBrowserDialogAddCustomFolder.Description = "Select the directory that you want to use as custom folder."; // Set the help text description for the FolderBrowserDialog.                
-                folderBrowserDialogAddCustomFolder.ShowNewFolderButton = false; // Do not allow the user to create new files via the FolderBrowserDialog.
             }
 
             unCertainRouteLength = "";
@@ -330,10 +324,17 @@ namespace TS_SE_Tool
         {
             SetDefaultValues(false);
 
+            radioButtonMainGameSwitchETS.Enabled = false;
+            radioButtonMainGameSwitchATS.Enabled = false;
+
+            checkBoxProfilesAndSavesProfileBackups.Enabled = false;
+            buttonProfilesAndSavesRefreshAll.Enabled = false;
+            comboBoxPrevProfiles.Enabled = false;
+            comboBoxProfiles.Enabled = false;
+            comboBoxSaves.Enabled = false;
+
             buttonMainDecryptSave.Enabled = false;
             buttonMainLoadSave.Enabled = false;
-            buttonMainGameSwitchETS.Enabled = false;
-            buttonMainGameSwitchATS.Enabled = false;
 
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             string SiiSavePath = SavefilePath + @"\game.sii";
@@ -354,8 +355,19 @@ namespace TS_SE_Tool
             else
                 ShowStatusMessages("e", "error_could_not_decode_file");
 
+            radioButtonMainGameSwitchETS.Enabled = true;
+            radioButtonMainGameSwitchATS.Enabled = true;
+
+
+            checkBoxProfilesAndSavesProfileBackups.Enabled = true;
+            buttonProfilesAndSavesRefreshAll.Enabled = true;
+            comboBoxPrevProfiles.Enabled = true;
+            comboBoxProfiles.Enabled = true;
+            comboBoxSaves.Enabled = true;
+
             buttonMainDecryptSave.Enabled = false;
             buttonMainLoadSave.Enabled = true;
+
 
             ToggleGame(GameType);
 
@@ -366,12 +378,18 @@ namespace TS_SE_Tool
 
         private void LoadSaveFile_Click(object sender, EventArgs e)
         {
+            radioButtonMainGameSwitchETS.Enabled = false;
+            radioButtonMainGameSwitchATS.Enabled = false;
+
+            checkBoxProfilesAndSavesProfileBackups.Enabled = false;
+            buttonProfilesAndSavesRefreshAll.Enabled = false;
+            comboBoxPrevProfiles.Enabled = false;
+            comboBoxProfiles.Enabled = false;
+            comboBoxSaves.Enabled = false;
+
             buttonMainDecryptSave.Enabled = false;
             buttonMainLoadSave.Enabled = false;
             buttonMainWriteSave.Enabled = false;
-
-            buttonMainGameSwitchETS.Enabled = false;
-            buttonMainGameSwitchATS.Enabled = false;
 
             LoadSaveFile(); //Load save file
             //GC
@@ -1038,12 +1056,17 @@ namespace TS_SE_Tool
 
                 if (btn != null)
                 {
-                    btn.BackColor = UserColorsList[i];
                     btn.Enabled = true;
                     if (UserColorsList[i].A == 0)
+                    {
                         btn.Text = "X";
+                        btn.BackColor = Color.FromName("Control");
+                    }                        
                     else
+                    {
                         btn.Text = "";
+                        btn.BackColor = UserColorsList[i];
+                    }   
                 }
             }
         }
@@ -1056,16 +1079,20 @@ namespace TS_SE_Tool
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
-                obj.BackColor = frm.PrimaryColor;
-
                 int index = int.Parse(obj.Name.Substring(8, 1));
 
                 UserColorsList[index] = frm.PrimaryColor;
 
                 if (frm.PrimaryColor.A != 0)
+                {
                     obj.Text = "";
+                    obj.BackColor = frm.PrimaryColor;
+                }
                 else
+                {
                     obj.Text = "X";
+                    obj.BackColor = Color.FromName("Control");
+                }                    
             }
         }
 
@@ -4289,9 +4316,10 @@ namespace TS_SE_Tool
                 tabControlMain.TabPages["tabPageTrailer"].Enabled = false;
             }
 
+            /*
             if (GameType == "ETS2")
             {
-                //Globals.CurrentGame = dictionaryProfiles["ETS2"];
+                Globals.CurrentGame = dictionaryProfiles["ETS2"];
                 buttonMainGameSwitchETS.Enabled = false;
                 buttonMainGameSwitchATS.Enabled = true;
                 buttonMainGameSwitchETS.BackColor = Color.White;
@@ -4301,7 +4329,7 @@ namespace TS_SE_Tool
             }
             else if (GameType == "ATS")
             {
-                //Globals.CurrentGame = dictionaryProfiles["ATS"];
+                Globals.CurrentGame = dictionaryProfiles["ATS"];
                 buttonMainGameSwitchETS.Enabled = true;
                 buttonMainGameSwitchATS.Enabled = false;
                 buttonMainGameSwitchATS.BackColor = Color.White;
@@ -4309,13 +4337,14 @@ namespace TS_SE_Tool
                 buttonMainGameSwitchETS.BackColor = Color.FromKnownColor(KnownColor.Control);
                 buttonMainGameSwitchETS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
             }
+            */
         }
 
         public void ToggleGame_Click(object sender, EventArgs e)
         {
-            Button gamebutton = sender as Button;
+            //Button gamebutton = sender as Button;
 
-            if (gamebutton.Name == "buttonMainGameSwitchETS")
+            if (radioButtonMainGameSwitchETS.Checked)//gamebutton.Name == "buttonMainGameSwitchETS")
                 ToggleGame("ETS2");
             else
                 ToggleGame("ATS");
@@ -4343,26 +4372,25 @@ namespace TS_SE_Tool
             if (_game == "ETS2")
             {
                 Globals.CurrentGame = dictionaryProfiles["ETS2"];
-                buttonMainGameSwitchETS.Enabled = false;
-                buttonMainGameSwitchATS.Enabled = true;
+                //radioButtonMainGameSwitchETS.Enabled = false;
+                //radioButtonMainGameSwitchATS.Enabled = true;
                 GameType = _game;
-                buttonMainGameSwitchETS.BackColor = Color.White;
-                buttonMainGameSwitchETS.ForeColor = Color.Black;
-                buttonMainGameSwitchATS.BackColor = Color.FromKnownColor(KnownColor.Control);
-                buttonMainGameSwitchATS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+                //buttonMainGameSwitchETS.BackColor = Color.White;
+                //buttonMainGameSwitchETS.ForeColor = Color.Black;
+                //buttonMainGameSwitchATS.BackColor = Color.FromKnownColor(KnownColor.Control);
+                //buttonMainGameSwitchATS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
             }
             else
             {
                 Globals.CurrentGame = dictionaryProfiles["ATS"];
-                buttonMainGameSwitchETS.Enabled = true;
-                buttonMainGameSwitchATS.Enabled = false;
+                //radioButtonMainGameSwitchETS.Enabled = true;
+                //radioButtonMainGameSwitchATS.Enabled = false;
                 GameType = _game;
-                buttonMainGameSwitchATS.BackColor = Color.White;
-                buttonMainGameSwitchATS.ForeColor = Color.Black;
-                buttonMainGameSwitchETS.BackColor = Color.FromKnownColor(KnownColor.Control);
-                buttonMainGameSwitchETS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+                //buttonMainGameSwitchATS.BackColor = Color.White;
+                //buttonMainGameSwitchATS.ForeColor = Color.Black;
+                //buttonMainGameSwitchETS.BackColor = Color.FromKnownColor(KnownColor.Control);
+                //buttonMainGameSwitchETS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
             }
-
         }
 
         private void toolstripChangeLanguage(object sender, EventArgs e)

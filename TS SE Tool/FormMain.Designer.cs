@@ -181,9 +181,6 @@
             this.buttonMainLoadSave = new System.Windows.Forms.Button();
             this.pictureBoxProfileAvatar = new System.Windows.Forms.PictureBox();
             this.buttonMainAddCustomFolder = new System.Windows.Forms.Button();
-            this.buttonMainGameSwitchETS = new System.Windows.Forms.Button();
-            this.buttonMainGameSwitchATS = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.comboBoxPrevProfiles = new System.Windows.Forms.ComboBox();
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
@@ -191,8 +188,9 @@
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
+            this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
+            this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.folderBrowserDialogAddCustomFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -1958,39 +1956,6 @@
             this.buttonMainAddCustomFolder.UseVisualStyleBackColor = true;
             this.buttonMainAddCustomFolder.Click += new System.EventHandler(this.buttonMainAddCustomFolder_Click);
             // 
-            // buttonMainGameSwitchETS
-            // 
-            this.buttonMainGameSwitchETS.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonMainGameSwitchETS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonMainGameSwitchETS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMainGameSwitchETS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonMainGameSwitchETS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonMainGameSwitchETS.Location = new System.Drawing.Point(3, 3);
-            this.buttonMainGameSwitchETS.Name = "buttonMainGameSwitchETS";
-            this.buttonMainGameSwitchETS.Size = new System.Drawing.Size(116, 46);
-            this.buttonMainGameSwitchETS.TabIndex = 15;
-            this.buttonMainGameSwitchETS.Text = "ETS2";
-            this.buttonMainGameSwitchETS.UseVisualStyleBackColor = false;
-            this.buttonMainGameSwitchETS.Click += new System.EventHandler(this.ToggleGame_Click);
-            // 
-            // buttonMainGameSwitchATS
-            // 
-            this.buttonMainGameSwitchATS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonMainGameSwitchATS.Enabled = false;
-            this.buttonMainGameSwitchATS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMainGameSwitchATS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonMainGameSwitchATS.Location = new System.Drawing.Point(125, 3);
-            this.buttonMainGameSwitchATS.Name = "buttonMainGameSwitchATS";
-            this.buttonMainGameSwitchATS.Size = new System.Drawing.Size(116, 46);
-            this.buttonMainGameSwitchATS.TabIndex = 16;
-            this.buttonMainGameSwitchATS.Text = "ATS";
-            this.buttonMainGameSwitchATS.UseVisualStyleBackColor = true;
-            this.buttonMainGameSwitchATS.Click += new System.EventHandler(this.ToggleGame_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // comboBoxPrevProfiles
             // 
             this.comboBoxPrevProfiles.BackColor = System.Drawing.SystemColors.Window;
@@ -2072,9 +2037,9 @@
             this.tableLayoutPanel10.ColumnCount = 2;
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel10.Controls.Add(this.buttonMainGameSwitchATS, 1, 0);
-            this.tableLayoutPanel10.Controls.Add(this.buttonMainGameSwitchETS, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.buttonMainAddCustomFolder, 0, 1);
+            this.tableLayoutPanel10.Controls.Add(this.radioButtonMainGameSwitchETS, 0, 0);
+            this.tableLayoutPanel10.Controls.Add(this.radioButtonMainGameSwitchATS, 1, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel10.Margin = new System.Windows.Forms.Padding(0);
@@ -2084,6 +2049,41 @@
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34F));
             this.tableLayoutPanel10.Size = new System.Drawing.Size(244, 80);
             this.tableLayoutPanel10.TabIndex = 12;
+            // 
+            // radioButtonMainGameSwitchETS
+            // 
+            this.radioButtonMainGameSwitchETS.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonMainGameSwitchETS.AutoSize = true;
+            this.radioButtonMainGameSwitchETS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioButtonMainGameSwitchETS.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioButtonMainGameSwitchETS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.radioButtonMainGameSwitchETS.Location = new System.Drawing.Point(3, 3);
+            this.radioButtonMainGameSwitchETS.Name = "radioButtonMainGameSwitchETS";
+            this.radioButtonMainGameSwitchETS.Padding = new System.Windows.Forms.Padding(5);
+            this.radioButtonMainGameSwitchETS.Size = new System.Drawing.Size(116, 46);
+            this.radioButtonMainGameSwitchETS.TabIndex = 15;
+            this.radioButtonMainGameSwitchETS.TabStop = true;
+            this.radioButtonMainGameSwitchETS.Text = "ETS 2";
+            this.radioButtonMainGameSwitchETS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radioButtonMainGameSwitchETS.UseVisualStyleBackColor = true;
+            this.radioButtonMainGameSwitchETS.CheckedChanged += new System.EventHandler(this.ToggleGame_Click);
+            // 
+            // radioButtonMainGameSwitchATS
+            // 
+            this.radioButtonMainGameSwitchATS.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonMainGameSwitchATS.AutoSize = true;
+            this.radioButtonMainGameSwitchATS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioButtonMainGameSwitchATS.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioButtonMainGameSwitchATS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.radioButtonMainGameSwitchATS.Location = new System.Drawing.Point(125, 3);
+            this.radioButtonMainGameSwitchATS.Name = "radioButtonMainGameSwitchATS";
+            this.radioButtonMainGameSwitchATS.Padding = new System.Windows.Forms.Padding(5);
+            this.radioButtonMainGameSwitchATS.Size = new System.Drawing.Size(116, 46);
+            this.radioButtonMainGameSwitchATS.TabIndex = 16;
+            this.radioButtonMainGameSwitchATS.TabStop = true;
+            this.radioButtonMainGameSwitchATS.Text = "ATS";
+            this.radioButtonMainGameSwitchATS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radioButtonMainGameSwitchATS.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel11
             // 
@@ -2165,6 +2165,7 @@
             this.tableLayoutPanel15.ResumeLayout(false);
             this.tableLayoutPanel16.ResumeLayout(false);
             this.tableLayoutPanel10.ResumeLayout(false);
+            this.tableLayoutPanel10.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2208,14 +2209,11 @@
         private System.Windows.Forms.Label labelFreightMarketCargo;
         private System.Windows.Forms.ComboBox comboBoxFreightMarketCargoList;
         private System.Windows.Forms.Button buttonMainAddCustomFolder;
-        private System.Windows.Forms.Button buttonMainGameSwitchETS;
-        private System.Windows.Forms.Button buttonMainGameSwitchATS;
         private System.Windows.Forms.ComboBox comboBoxFreightMarketCompanies;
         private System.Windows.Forms.ComboBox comboBoxFreightMarketCountries;
         private System.Windows.Forms.Label labelFreightMarketFilterMain;
         private System.Windows.Forms.Label labelFreightMarketCountryF;
         private System.Windows.Forms.Label labelFreightMarketCompanyF;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.CheckBox checkBoxFreightMarketFilterDestination;
         private System.Windows.Forms.CheckBox checkBoxFreightMarketFilterSource;
         private System.Windows.Forms.GroupBox groupBoxProfileUserColors;
@@ -2336,7 +2334,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogAddCustomFolder;
+        private System.Windows.Forms.RadioButton radioButtonMainGameSwitchETS;
+        private System.Windows.Forms.RadioButton radioButtonMainGameSwitchATS;
     }
 }
 

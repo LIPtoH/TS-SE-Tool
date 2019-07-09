@@ -908,6 +908,15 @@ namespace TS_SE_Tool
             toolStripProgressBarMain.Value = 0;
             PopulateFormControlsk();
 
+            radioButtonMainGameSwitchETS.Enabled = true;
+            radioButtonMainGameSwitchATS.Enabled = true;
+
+            checkBoxProfilesAndSavesProfileBackups.Enabled = true;
+            buttonProfilesAndSavesRefreshAll.Enabled = true;
+            comboBoxPrevProfiles.Enabled = true;
+            comboBoxProfiles.Enabled = true;
+            comboBoxSaves.Enabled = true;
+
             buttonMainDecryptSave.Enabled = false;
             buttonMainLoadSave.Enabled = true;
             buttonMainWriteSave.Enabled = true;
@@ -934,7 +943,7 @@ namespace TS_SE_Tool
                 PrepareEvents();
                 PrepareVisitedCities();
 
-                File.WriteAllText(SiiSavePath, tempSavefileInMemory[0] + "\n");
+                File.WriteAllText(SiiSavePath, tempSavefileInMemory[0] + "\r\n");
 
                 using (StreamWriter writer = new StreamWriter(SiiSavePath, true))
                 {

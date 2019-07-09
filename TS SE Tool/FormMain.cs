@@ -151,7 +151,7 @@ namespace TS_SE_Tool
         private Image RepairImg, RefuelImg, CutomizeImg, PlayerCompanyLogo;
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs;
-
+        
         private ImageList TabpagesImages;
 
         private CheckBox[,] SkillButtonArray;
@@ -178,8 +178,12 @@ namespace TS_SE_Tool
             
             ToggleVisibility(false);
 
-            ToggleGame(GameType);
+            //ToggleGame(GameType);
+            radioButtonMainGameSwitchETS.Checked = true;
             LoadExtImages();
+            
+            radioButtonMainGameSwitchETS.Image = GameIconeImg[0];
+            radioButtonMainGameSwitchATS.Image = GameIconeImg[1];
 
             CacheGameData();
 

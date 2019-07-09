@@ -470,7 +470,7 @@ namespace TS_SE_Tool
                         do
                         {
                             line++;
-                            if (tempSavefileInMemory[line].StartsWith(" company_truck:"))
+                            if (tempSavefileInMemory[line].Contains("_nameless") && tempSavefileInMemory[line].StartsWith(" company_truck:"))
                             {
                                 chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
                                 UserTruckDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
@@ -478,7 +478,7 @@ namespace TS_SE_Tool
                                 continue;
                             }
 
-                            if (tempSavefileInMemory[line].StartsWith(" company_trailer:"))
+                            if (tempSavefileInMemory[line].Contains("_nameless") && tempSavefileInMemory[line].StartsWith(" company_trailer:"))
                             {
                                 chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
                                 UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
