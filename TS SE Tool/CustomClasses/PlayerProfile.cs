@@ -105,6 +105,11 @@ namespace TS_SE_Tool
                     experience += (uint)Globals.PlayerLevelUps[Globals.PlayerLevelUps.Length - 1];
             }
 
+            if (_plLvl < Globals.PlayerLevelUps.Length)
+                experience += (uint)Globals.PlayerLevelUps[_plLvl] - 1;
+            else
+                experience += (uint)Globals.PlayerLevelUps[Globals.PlayerLevelUps.Length - 1] - 1;
+
             ExperiencePoints = experience;
 
             return experience;

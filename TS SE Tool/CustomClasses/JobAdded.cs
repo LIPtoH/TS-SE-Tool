@@ -19,7 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TS_SE_Tool.CustomClasses
+namespace TS_SE_Tool
 {
     class JobAdded
     {
@@ -31,12 +31,17 @@ namespace TS_SE_Tool.CustomClasses
         public int Urgency { get; set; }
         public int Type { get; set; }
         public int Distance { get; set; }
-        public int Ferrytime  { get; set; }
+        public int Ferrytime { get; set; }
         public int Ferryprice { get; set; }
         public int UnitsCount { get; set; }
+        public int ExpirationTime { get; set; }
+        public string CompanyTruck { get; set; }
+        public string TrailerVariant { get; set; }
+        public string TrailerDefinition { get; set; }
 
 
-        public JobAdded(string _SourceCity, string _SourceCompany, string _DestinationCity, string _DestinationCompany, string _Cargo, int _Urgency, int _Type, int _UnitsCount, int _Distance, int _Ferrytime, int _Ferryprice)
+        public JobAdded(string _SourceCity, string _SourceCompany, string _DestinationCity, string _DestinationCompany, string _Cargo, int _Urgency, int _Type, 
+            int _UnitsCount, int _Distance, int _Ferrytime, int _Ferryprice, int _ExpirationTime, string _CompanyTruck, string _TrailerVariant, string _TrailerDefinition)
         {
             SourceCity = _SourceCity;
             SourceCompany = _SourceCompany;
@@ -49,7 +54,11 @@ namespace TS_SE_Tool.CustomClasses
             Ferrytime = _Ferrytime;
             Ferryprice = _Ferryprice;
             UnitsCount = _UnitsCount;
-    }
+            ExpirationTime = _ExpirationTime;
+            CompanyTruck = _CompanyTruck;
+            TrailerVariant = _TrailerVariant;
+            TrailerDefinition = _TrailerDefinition;
+        }
 
     }
 }

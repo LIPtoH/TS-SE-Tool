@@ -1496,7 +1496,7 @@ namespace TS_SE_Tool
             }
         }
 
-        private void AddCargo()
+        private void AddCargo(bool JobEditing )
         {
             if ((((comboBoxFreightMarketSourceCity.SelectedIndex < 0) || (comboBoxFreightMarketSourceCompany.SelectedIndex < 0)) || ((comboBoxFreightMarketDestinationCity.SelectedIndex < 0) || (comboBoxFreightMarketDestinationCompany.SelectedIndex < 0))) || (comboBoxFreightMarketCargoList.SelectedIndex < 0) || comboBoxFreightMarketUrgency.SelectedIndex < 0)
             {
@@ -1507,131 +1507,225 @@ namespace TS_SE_Tool
             {
                 ShowStatusMessages("i", "");
 
+                //Getting data from form controls
                 string SourceCity = comboBoxFreightMarketSourceCity.SelectedValue.ToString();
                 string SourceCompany = comboBoxFreightMarketSourceCompany.SelectedValue.ToString();
                 string DestinationCity = comboBoxFreightMarketDestinationCity.SelectedValue.ToString();
                 string DestinationCompany = comboBoxFreightMarketDestinationCompany.SelectedValue.ToString();
                 string Cargo = comboBoxFreightMarketCargoList.SelectedValue.ToString().Split(new char[] { ',' })[0];
+                string Urgency = comboBoxFreightMarketUrgency.SelectedValue.ToString();
+                string TrailerDefinition = comboBoxFreightMarketTrailerDef.SelectedValue.ToString();
+                string TrailerVariant = comboBoxFreightMarketTrailerVariant.SelectedValue.ToString();
 
                 string SourceCityName = comboBoxFreightMarketSourceCity.Text;
                 string SourceCompanyName = comboBoxFreightMarketSourceCompany.Text;
                 string DestinationCityName = comboBoxFreightMarketDestinationCity.Text;
                 string DestinationCompanyName = comboBoxFreightMarketDestinationCompany.Text;
                 string CargoName = comboBoxFreightMarketCargoList.Text;
-
-                //comboBoxCargoList
-
+                
+                //Trying to get route data from database
                 string[] route = RouteList.GetRouteData(SourceCity, SourceCompany, DestinationCity, DestinationCompany);
                 string distance = route[4];
                 string FerryTime = route[5];
                 string FerryPrice = route[6];
-
+                
+                //Setting proper ferry time
                 if (FerryTime == "-1")
                 {
                     FerryTime = "0";
                 }
-
+                //Settign start point for loopback route
                 if (JobsAmountAdded == 0)
                 {
                     LoopStartCity = SourceCity;
                     LoopStartCompany = SourceCompany;
                 }
-
+                //Tracking total amount of jobs added
                 JobsAmountAdded++;
-
-                Array.Resize(ref JobsListAdded, JobsAmountAdded);
-                Array.Resize(ref ListSavefileCompanysString, JobsAmountAdded);
+                
+                // Prepairing structures
+                //Array.Resize(ref JobsListAdded, JobsAmountAdded);
+                //Array.Resize(ref ListSavefileCompanysString, JobsAmountAdded);
                 Array.Resize(ref EconomyEventUnitLinkStringList, JobsAmountAdded);
+                EconomyEventUnitLinkStringList[JobsAmountAdded - 1] = " unit_link: company.volatile." + SourceCompany + "." + SourceCity;
 
+                //local variables
+                int CargoType = -1, UnitsCount = 1;
                 string TruckName = "";
 
-                int CargoType = -1;
+                //Cargo cargo = CargoesList.Find(x => x.CargoName == Cargo);
 
+                //Local Trailer Def DT
                 DataTable TrailerDefDTs = ((DataTable)comboBoxFreightMarketTrailerDef.DataSource).DefaultView.ToTable();
                 CargoType = int.Parse(TrailerDefDTs.Rows[comboBoxFreightMarketTrailerDef.SelectedIndex]["CargoType"].ToString());
+                UnitsCount = int.Parse(TrailerDefDTs.Rows[comboBoxFreightMarketTrailerDef.SelectedIndex]["UnitsCount"].ToString());
 
                 List <CompanyTruck> CompanyTruckType = CompanyTruckListDB.Where(x => x.Type == CargoType).ToList();
                 TruckName = CompanyTruckType[RandomValue.Next(CompanyTruckType.Count())].TruckName;
-
-                Cargo cargo = CargoesList.Find(x => x.CargoName == Cargo);
-
-                string TrailerDefinition = "", TrailerVariant = "";
-
-                TrailerDefinition = comboBoxFreightMarketTrailerDef.SelectedValue.ToString();
-                TrailerVariant = comboBoxFreightMarketTrailerVariant.SelectedValue.ToString();
-                int UnitsCount = int.Parse(TrailerDefDTs.Rows[comboBoxFreightMarketTrailerDef.SelectedIndex]["UnitsCount"].ToString());//cargo.TrailerDefList.Find(x => x.DefName == TrailerDefinition).UnitsCount;
-
-                string Urgency = comboBoxFreightMarketUrgency.SelectedValue.ToString();
-
+                
                 //True Distance
                 int TrueDistance = (int)(int.Parse(distance) * ProgSettingsV.TimeMultiplier);
-
-                listBoxFreightMarketAddedJobs.Items.Add(new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, UnitsCount, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice)));
 
                 if (distance == "11111")
                 {
                     TrueDistance = (int)(5 * ProgSettingsV.TimeMultiplier);
                     unCertainRouteLength = "*";
                 }
-
-                ListSavefileCompanysString[JobsAmountAdded - 1] = "company : company.volatile." + SourceCompany + "." + SourceCity + " {";
-                EconomyEventUnitLinkStringList[JobsAmountAdded - 1] = " unit_link: company.volatile." + SourceCompany + "." + SourceCity;
-
+                //Time untill job expires
                 int ExpirationTime = InGameTime + (JobsAmountAdded * (ProgSettingsV.JobPickupTime * 60));
+                //Creating Job data
+                JobAdded tempJobData = new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, 
+                    UnitsCount, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice), ExpirationTime, TruckName, TrailerVariant, TrailerDefinition);
 
-                JobsListAdded[JobsAmountAdded - 1] = string.Concat(new object[] {
-                    " target: \"", DestinationCompany, ".", DestinationCity, "\"",
-                    "\n expiration_time: ", ExpirationTime.ToString(),
-                    "\n urgency: ", Urgency,
-                    "\n shortest_distance_km: ", TrueDistance,
-                    "\n ferry_time: ", FerryTime,
-                    "\n ferry_price: ", FerryPrice,
-                    "\n cargo: cargo.", Cargo,
-                    "\n company_truck: ", TruckName,
-                    "\n trailer_variant: ", TrailerVariant,
-                    "\n trailer_definition: ", TrailerDefinition,
-                    "\n units_count: ", UnitsCount.ToString()
-                 });
+                //Add Job data to program storage
+                string companyNameJob = "company : company.volatile." + SourceCompany + "." + SourceCity + " {";
 
-                LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName + "\n-----------\n" + JobsListAdded[JobsAmountAdded - 1] + "\n-----------");
+                if (AddedJobsDictionary.ContainsKey(companyNameJob))
+                    AddedJobsDictionary[companyNameJob].Add(tempJobData);
+                else
+                    AddedJobsDictionary.Add(companyNameJob, new List<JobAdded> { tempJobData });
 
+                string jobdata = "", tempStr = "";
+
+                if (JobEditing)
+                {
+                    companyNameJob = "company : company.volatile." + FreightMarketJob.SourceCompany + "." + FreightMarketJob.SourceCity + " {";
+                    AddedJobsDictionary[companyNameJob].Remove(FreightMarketJob);
+                    if (AddedJobsDictionary[companyNameJob].Count == 0)
+                        AddedJobsDictionary.Remove(companyNameJob);
+
+                    //Add Job data to Listbox
+                    listBoxFreightMarketAddedJobs.Items[listBoxFreightMarketAddedJobs.SelectedIndex] = tempJobData;
+
+                    jobdata += "\r\nLoad of " + FreightMarketJob.Cargo;
+                    jobdata += " of " + FreightMarketJob.UnitsCount + " units";
+                    
+                    if (FreightMarketJob.Type == 0)
+                        tempStr = "Normal";
+                    else if (FreightMarketJob.Type == 1)
+                        tempStr = "Heavy";
+                    else if (FreightMarketJob.Type == 2)
+                        tempStr = "Double";
+
+                    jobdata += "\r\nIn " + tempStr + " trailer ";
+                    jobdata += FreightMarketJob.TrailerDefinition;
+                    jobdata += " with " + FreightMarketJob.TrailerVariant + " appearance";
+
+                    tempStr = FreightMarketJob.Urgency.ToString();
+
+                    if (UrgencyLngDict.TryGetValue(tempStr, out string value))
+                    {
+                        if (value != null && value != "")
+                        {
+                            tempStr = value;
+                        }
+                    }
+
+                    jobdata += "\r\nUrgency " + tempStr;
+                    jobdata += "\r\nMinimum travel distance of " + FreightMarketJob.Distance + " km ";
+                    jobdata += "in " + FreightMarketJob.CompanyTruck;
+                    jobdata += "\r\nJob valid for " + (FreightMarketJob.ExpirationTime - InGameTime) + " minutes";
+                    if (FreightMarketJob.Ferrytime > 0 || FreightMarketJob.Ferryprice > 0)
+                    {
+                        jobdata += "\r\nExtra time on ferry - " + FreightMarketJob.Ferrytime;
+                        jobdata += "and it will cost " + FreightMarketJob.Ferryprice;
+                    }
+
+                    LogWriter("Edited Job:" + FreightMarketJob.SourceCity + " | " + FreightMarketJob.SourceCompany + " To " + FreightMarketJob.DestinationCity + " | " + FreightMarketJob.DestinationCompany +
+                        "\r\n-----------" + jobdata + "\r\n-----------");
+                }
+                else
+                {
+                    //Add Job data to Listbox
+                    listBoxFreightMarketAddedJobs.Items.Add(tempJobData);
+                }
+
+                //Write log
+                jobdata = ""; tempStr = "";
+
+                jobdata += "\r\nLoad of " + tempJobData.Cargo;
+                jobdata += " of " + tempJobData.UnitsCount + " units";
+
+
+                if (tempJobData.Type == 0)
+                    tempStr = "Normal";
+                else if (tempJobData.Type == 1)
+                    tempStr = "Heavy";
+                else if (tempJobData.Type == 2)
+                    tempStr = "Double";
+
+                jobdata += "\r\nIn " + tempStr + " trailer ";
+                jobdata += tempJobData.TrailerDefinition;
+                jobdata += " with " + tempJobData.TrailerVariant + " appearance";
+
+                tempStr = comboBoxFreightMarketUrgency.Text;
+
+                jobdata += "\r\nUrgency " + tempStr;
+                jobdata += "\r\nMinimum travel distance of " + tempJobData.Distance + " km ";
+                jobdata += "in " + tempJobData.CompanyTruck;
+                jobdata += "\r\nJob valid for " + (tempJobData.ExpirationTime - InGameTime) + " minutes";
+
+                if (tempJobData.Ferrytime > 0 || tempJobData.Ferryprice > 0)
+                {
+                    jobdata += "\r\nExtra time on ferry - " + tempJobData.Ferrytime;
+                    jobdata += "and it will cost " + tempJobData.Ferryprice;
+                }
+
+                LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName + 
+                    "\r\n-----------" + jobdata + "\r\n-----------"); //JobsListAdded[JobsAmountAdded - 1]
+
+
+                //Setting Form Controls
                 buttonMainWriteSave.Enabled = true;
                 buttonFreightMarketClearJobList.Enabled = true;
 
-                JobsTotalDistance += TrueDistance;//int.Parse(distance);
+                int JobsTotalDistance = 0;
+
+                foreach (JobAdded tmpItem in listBoxFreightMarketAddedJobs.Items)
+                {
+                    JobsTotalDistance += tmpItem.Distance;
+                }
 
                 labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes; //km";
 
-                comboBoxFreightMarketSourceCity.SelectedValue = comboBoxFreightMarketDestinationCity.SelectedValue;
-                comboBoxFreightMarketSourceCompany.SelectedValue = comboBoxFreightMarketDestinationCompany.SelectedValue;
-
-
-                int looptest;
-
-                if (JobsAmountAdded == 1)
+                if (!JobEditing)
                 {
-                    looptest = 1;
+                    comboBoxFreightMarketSourceCity.SelectedValue = comboBoxFreightMarketDestinationCity.SelectedValue;
+                    comboBoxFreightMarketSourceCompany.SelectedValue = comboBoxFreightMarketDestinationCompany.SelectedValue;
+
+                    //Check and set for loopback route
+                    int looptest;
+
+                    if (JobsAmountAdded == 1)
+                    {
+                        looptest = 1;
+                    }
+                    else
+                    {
+                        looptest = JobsAmountAdded + 1;
+                    }
+
+                    if (ProgSettingsV.LoopEvery != 0 && (looptest % ProgSettingsV.LoopEvery) == 0)
+                    {
+                        try
+                        {
+                            comboBoxFreightMarketDestinationCity.SelectedValue = LoopStartCity;
+                            comboBoxFreightMarketDestinationCompany.SelectedValue = LoopStartCompany;
+                        }
+                        catch
+                        {
+                            ShowStatusMessages("e", "error_could_not_complete_jobs_loop");
+                        }
+                    }
+                    else
+                    {
+                        triggerDestinationCitiesUpdate();
+                    }
                 }
                 else
                 {
-                    looptest = JobsAmountAdded + 1;
-                }
-
-                if (ProgSettingsV.LoopEvery != 0 && (looptest % ProgSettingsV.LoopEvery) == 0)
-                {
-                    try
-                    {
-                        comboBoxFreightMarketDestinationCity.SelectedValue = LoopStartCity;
-                        comboBoxFreightMarketDestinationCompany.SelectedValue = LoopStartCompany;
-                    }
-                    catch
-                    {
-                        ShowStatusMessages("e", "error_could_not_complete_jobs_loop");
-                    }
-                }
-                else
-                {
-                    triggerDestinationCitiesUpdate();
+                    listBoxFreightMarketAddedJobs.Enabled = true;
+                    //listBoxFreightMarketAddedJobs.Update();
                 }
             }
         }
@@ -2473,6 +2567,8 @@ namespace TS_SE_Tool
                                 DBDependencies.Add(reader["Dependency"].ToString());
                             }
                             //DBDependencies
+
+                            totalrecord = DBDependencies.Count();
                             break;
                         }
 

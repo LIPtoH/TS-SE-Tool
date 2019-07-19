@@ -23,6 +23,7 @@ namespace TS_SE_Tool
     {
         public string Country { get; set; }
         public string CityName;
+        public string CityNameTranslated;
         public List<Company> Companies = new List<Company>();
         public bool Disabled = false;
         public bool Visited = false;

@@ -39,6 +39,10 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.localPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.youTubeVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBoxProfiles = new System.Windows.Forms.ComboBox();
             this.buttonProfilesAndSavesRefreshAll = new System.Windows.Forms.Button();
             this.comboBoxSaves = new System.Windows.Forms.ComboBox();
@@ -173,6 +177,9 @@
             this.buttonConvoyToolsGPSStoredGPSPathPaste = new System.Windows.Forms.Button();
             this.buttonConvoyToolsGPSTruckPositionMultySavePaste = new System.Windows.Forms.Button();
             this.buttonConvoyToolsGPSTruckPositionMultySaveCopy = new System.Windows.Forms.Button();
+            this.contextMenuStripFreightMarketJobList = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenuStripFreightMarketJobListEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripFreightMarketJobListDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonMainWriteSave = new System.Windows.Forms.Button();
             this.buttonProfilesAndSavesOpenSaveFolder = new System.Windows.Forms.Button();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
@@ -222,6 +229,7 @@
             this.tabPageCargoMarket.SuspendLayout();
             this.tabPageConvoyTools.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.contextMenuStripFreightMarketJobList.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileAvatar)).BeginInit();
             this.groupBoxMainProfilesAndSaves.SuspendLayout();
@@ -298,7 +306,9 @@
             // toolStripMenuItemHelp
             // 
             this.toolStripMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemAbout});
+            this.toolStripMenuItemAbout,
+            this.toolStripSeparator3,
+            this.toolStripMenuItem1});
             this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
             this.toolStripMenuItemHelp.Size = new System.Drawing.Size(44, 20);
             this.toolStripMenuItemHelp.Text = "Help";
@@ -306,9 +316,35 @@
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(107, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(114, 22);
             this.toolStripMenuItemAbout.Text = "About";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(111, 6);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.localPDFToolStripMenuItem,
+            this.youTubeVideoToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
+            this.toolStripMenuItem1.Text = "How To";
+            // 
+            // localPDFToolStripMenuItem
+            // 
+            this.localPDFToolStripMenuItem.Name = "localPDFToolStripMenuItem";
+            this.localPDFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.localPDFToolStripMenuItem.Text = "Local PDF";
+            // 
+            // youTubeVideoToolStripMenuItem
+            // 
+            this.youTubeVideoToolStripMenuItem.Name = "youTubeVideoToolStripMenuItem";
+            this.youTubeVideoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.youTubeVideoToolStripMenuItem.Text = "YouTube video";
             // 
             // comboBoxProfiles
             // 
@@ -1340,6 +1376,7 @@
             this.comboBoxFreightMarketTrailerDef.IntegralHeight = false;
             this.comboBoxFreightMarketTrailerDef.ItemHeight = 24;
             this.comboBoxFreightMarketTrailerDef.Location = new System.Drawing.Point(72, 154);
+            this.comboBoxFreightMarketTrailerDef.Margin = new System.Windows.Forms.Padding(0);
             this.comboBoxFreightMarketTrailerDef.Name = "comboBoxFreightMarketTrailerDef";
             this.comboBoxFreightMarketTrailerDef.Size = new System.Drawing.Size(241, 32);
             this.comboBoxFreightMarketTrailerDef.TabIndex = 27;
@@ -1395,6 +1432,7 @@
             this.listBoxFreightMarketAddedJobs.TabIndex = 22;
             this.listBoxFreightMarketAddedJobs.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxAddedJobs_DrawItem);
             this.listBoxFreightMarketAddedJobs.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxAddedJobs_MeasureItem);
+            this.listBoxFreightMarketAddedJobs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxFreightMarketAddedJobs_MouseDown);
             // 
             // checkBoxFreightMarketRandomDest
             // 
@@ -1870,6 +1908,28 @@
             this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.Text = "Copy truck position from multiple saves";
             this.buttonConvoyToolsGPSTruckPositionMultySaveCopy.UseVisualStyleBackColor = true;
             // 
+            // contextMenuStripFreightMarketJobList
+            // 
+            this.contextMenuStripFreightMarketJobList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextMenuStripFreightMarketJobListEdit,
+            this.contextMenuStripFreightMarketJobListDelete});
+            this.contextMenuStripFreightMarketJobList.Name = "contextMenuStripFreightMarketJobList";
+            this.contextMenuStripFreightMarketJobList.Size = new System.Drawing.Size(108, 48);
+            // 
+            // contextMenuStripFreightMarketJobListEdit
+            // 
+            this.contextMenuStripFreightMarketJobListEdit.Name = "contextMenuStripFreightMarketJobListEdit";
+            this.contextMenuStripFreightMarketJobListEdit.Size = new System.Drawing.Size(107, 22);
+            this.contextMenuStripFreightMarketJobListEdit.Text = "Edit";
+            this.contextMenuStripFreightMarketJobListEdit.Click += new System.EventHandler(this.contextMenuStripFreightMarketJobListEdit_Click);
+            // 
+            // contextMenuStripFreightMarketJobListDelete
+            // 
+            this.contextMenuStripFreightMarketJobListDelete.Name = "contextMenuStripFreightMarketJobListDelete";
+            this.contextMenuStripFreightMarketJobListDelete.Size = new System.Drawing.Size(107, 22);
+            this.contextMenuStripFreightMarketJobListDelete.Text = "Delete";
+            this.contextMenuStripFreightMarketJobListDelete.Click += new System.EventHandler(this.contextMenuStripFreightMarketJobListDelete_Click);
+            // 
             // buttonMainWriteSave
             // 
             this.buttonMainWriteSave.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1936,6 +1996,7 @@
             // 
             // pictureBoxProfileAvatar
             // 
+            this.pictureBoxProfileAvatar.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBoxProfileAvatar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxProfileAvatar.Location = new System.Drawing.Point(6, 19);
             this.pictureBoxProfileAvatar.Name = "pictureBoxProfileAvatar";
@@ -2157,6 +2218,7 @@
             this.tabPageCargoMarket.PerformLayout();
             this.tabPageConvoyTools.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.contextMenuStripFreightMarketJobList.ResumeLayout(false);
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfileAvatar)).EndInit();
@@ -2336,6 +2398,13 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.RadioButton radioButtonMainGameSwitchETS;
         private System.Windows.Forms.RadioButton radioButtonMainGameSwitchATS;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem localPDFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem youTubeVideoToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripFreightMarketJobList;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuStripFreightMarketJobListEdit;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuStripFreightMarketJobListDelete;
     }
 }
 

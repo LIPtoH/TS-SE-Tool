@@ -35,6 +35,8 @@ namespace TS_SE_Tool
 
         public string GarageName { get; set; }
 
+        public string GarageNameTranslated { get; set; }
+
         public int GarageStatus { get; set; }
 
         public List<string> Vehicles { get; set; } = new List<string>();

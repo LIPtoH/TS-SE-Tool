@@ -951,8 +951,8 @@ namespace TS_SE_Tool
                     bool EconomySection = false, PlayerSection = false, GPSinserted = false;
                     bool editedcompany = false, visitedcitycompany = false, insidecompany = false, editedtruck = false, insidetruck = false,
                         editedtrailer = false, insidetrailer = false, hasslavetrailer = false;
-                    int JobIndex = 0, truckaccCount = 0;
-                    string trucknameless = "", cityname = "", companyname = "";
+                    int JobIndex = 0, truckaccCount = 0, AddedJobsNumberInCompany = 0;
+                    string trucknameless = "", cityname = "", companyname = "", AddedJobsCompanyCity = "";
                     string[] trailernameless = new string[1];
                     int[] traileraccessoriescount = new int[1];
                     int slavetrailerscount = 1;
@@ -1454,23 +1454,23 @@ namespace TS_SE_Tool
 
                         if (SaveInMemLine.StartsWith("company :"))
                         {
+                            editedcompany = false;
                             insidecompany = true;
+                            AddedJobsCompanyCity = SaveInMemLine;
                             cityname = SaveInMemLine.Split(new char[] { '.' })[3].Split(new char[] { ' ' })[0];
                             companyname = SaveInMemLine.Split(new char[] { '.' })[2];
 
                             visitedcitycompany = VisitedCities.Find(x => x.Name == cityname).Visited;
 
-                            for (int j = 0; j < ListSavefileCompanysString.Length; j++)
-                            {
-                                //find edited company
-                                if (SaveInMemLine == ListSavefileCompanysString[j])
-                                {
-                                    editedcompany = true;
-                                    JobIndex = j;
+                            if (AddedJobsDictionary.ContainsKey(AddedJobsCompanyCity))
+                            { 
+                                editedcompany = true;
+                                JobIndex = 0;
+                                AddedJobsNumberInCompany = AddedJobsDictionary[AddedJobsCompanyCity].Count();
 
-                                    continue;
-                                }
                             }
+                            goto EndWrite;
+                            //continue;
                         }
 
                         if (insidecompany && SaveInMemLine.StartsWith(" cargo_offer_seeds:"))
@@ -1494,7 +1494,7 @@ namespace TS_SE_Tool
 
                         if (insidecompany && SaveInMemLine.StartsWith(" discovered:"))
                         {
-                            writer.WriteLine(" discovered: " + visitedcitycompany);
+                            writer.WriteLine(" discovered: " + visitedcitycompany.ToString().ToLower());
                             visitedcitycompany = false;
 
                             continue;
@@ -1504,9 +1504,30 @@ namespace TS_SE_Tool
                         if (editedcompany && SaveInMemLine.StartsWith("job_offer_data : "))
                         {
                             writer.WriteLine(SaveInMemLine);
-                            writer.WriteLine(JobsListAdded[JobIndex]);
+                            
+                            JobAdded tempJobData = AddedJobsDictionary[AddedJobsCompanyCity][JobIndex];
+                            
+                                string companyJobData = string.Concat(new object[] {
+                                " target: \"", tempJobData.DestinationCompany, ".", tempJobData.DestinationCity, "\"",
+                                "\r\n expiration_time: ", tempJobData.ExpirationTime.ToString(),
+                                "\r\n urgency: ", tempJobData.Urgency.ToString(),
+                                "\r\n shortest_distance_km: ", tempJobData.Distance.ToString(),
+                                "\r\n ferry_time: ", tempJobData.Ferrytime.ToString(),
+                                "\r\n ferry_price: ", tempJobData.Ferryprice.ToString(),
+                                "\r\n cargo: cargo.", tempJobData.Cargo,
+                                "\r\n company_truck: ", tempJobData.CompanyTruck,
+                                "\r\n trailer_variant: ", tempJobData.TrailerVariant,
+                                "\r\n trailer_definition: ", tempJobData.TrailerDefinition,
+                                "\r\n units_count: ", tempJobData.UnitsCount.ToString()
+                                });                            
+
+                            writer.WriteLine(companyJobData);
+                            
                             line += 11;
-                            editedcompany = false;
+
+                            JobIndex++;
+                            if (JobIndex == AddedJobsNumberInCompany)
+                                editedcompany = false;
 
                             continue;
                         }

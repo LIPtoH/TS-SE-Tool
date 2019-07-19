@@ -43,7 +43,7 @@ namespace TS_SE_Tool
         internal string SupportedGameVersionATS;
 
         private int InGameTime;
-        private int JobsTotalDistance;
+        //private int JobsTotalDistance;
         private int JobsAmountAdded;
 
         private int[] UrgencyArray;
@@ -70,9 +70,11 @@ namespace TS_SE_Tool
         private string[] tempInfoFileInMemory;
         private string[] tempSavefileInMemory;
         private string[] tempProfileFileInMemory;
-        private string[] JobsListAdded;
         private string[] CitiesListAddedToCompare;
-        private string[] ListSavefileCompanysString;
+        //private string[] JobsListAdded;
+        private List<string>  ListSavefileCompanysString; //string[]
+        private Dictionary<string, List<JobAdded>> AddedJobsDictionary;
+        private JobAdded FreightMarketJob;
         private string[] EconomyEventUnitLinkStringList;
         private string[] EconomyEventQueueList;
 
@@ -212,6 +214,9 @@ namespace TS_SE_Tool
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
+            FormSplash WindowSplash = new FormSplash();
+            WindowSplash.ShowDialog();
+
             FillAllProfilesPaths();
         }
 
@@ -238,7 +243,8 @@ namespace TS_SE_Tool
         {
             DialogResult exitDR = DialogResult.Yes;
 
-            if (JobsListAdded != null && JobsListAdded.Length > 0)
+            //if (JobsListAdded != null && JobsListAdded.Length > 0)
+            if (AddedJobsDictionary != null && AddedJobsDictionary.Count > 0)
                 exitDR = MessageBox.Show("You have unsaved changes. Do you realy want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo);
             else
                 exitDR = MessageBox.Show("Do you realy want to close down application?", "Close Application", MessageBoxButtons.YesNo);

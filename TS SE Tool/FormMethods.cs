@@ -244,9 +244,11 @@ namespace TS_SE_Tool
             RandomValue = new Random();
             CitiesListAddedToCompare = new string[1];
 
-            JobsListAdded = new string[0];
+            //JobsListAdded = new string[0];
             LastModifiedTimestamp = new DateTime();
-            ListSavefileCompanysString = new string[0];
+            ListSavefileCompanysString = new List<string>();//string[0];
+
+            AddedJobsDictionary = new Dictionary<string, List<JobAdded>>();
 
             GPSbehind = new Dictionary<string, List<string>>();
             GPSahead = new Dictionary<string, List<string>>();
@@ -256,7 +258,7 @@ namespace TS_SE_Tool
 
             namelessList = new List<string>();
             namelessLast = "";
-            JobsTotalDistance = 0;
+            //JobsTotalDistance = 0;
             LoopStartCity = "";
             LoopStartCompany = "";
             ProgPrevVersion = 0f;
@@ -383,6 +385,7 @@ namespace TS_SE_Tool
 
             checkBoxProfilesAndSavesProfileBackups.Enabled = false;
             buttonProfilesAndSavesRefreshAll.Enabled = false;
+
             comboBoxPrevProfiles.Enabled = false;
             comboBoxProfiles.Enabled = false;
             comboBoxSaves.Enabled = false;
@@ -2265,6 +2268,18 @@ namespace TS_SE_Tool
         {
             listBoxVisitedCities.Items.Clear();
 
+            if (CitiesList.Count <= 0)
+                return;
+
+            foreach (City vc in CitiesList)
+            {
+                string Translated = vc.CityName;
+                CitiesLngDict.TryGetValue(vc.CityName, out Translated);
+                vc.CityNameTranslated = Translated;
+            }
+
+            CitiesList = CitiesList.OrderBy(x => x.CityNameTranslated).ToList();
+
             foreach (City vc in CitiesList)
             {
                 listBoxVisitedCities.Items.Add(vc);
@@ -2322,11 +2337,13 @@ namespace TS_SE_Tool
             RectangleF layout_rect = new RectangleF(x, y, width, height);
 
             // Draw the text.
-            string txt = "";
+            string txt = "", DisplayCityName = "";
 
-            CitiesLngDict.TryGetValue(vc.CityName, out string value);
-            if (value != null && value != "")
-                txt = value;
+            //CitiesLngDict.TryGetValue(vc.CityName, out string value);
+            DisplayCityName = vc.CityNameTranslated;
+
+            if (DisplayCityName != null && DisplayCityName != "")
+                txt = DisplayCityName;
             else
             {
                 txt = vc.CityName + " -n";
@@ -2383,10 +2400,23 @@ namespace TS_SE_Tool
         {
             listBoxGarages.Items.Clear();
 
+            if (GaragesList.Count <= 0)
+                return;
+
+            foreach (Garages garage in GaragesList)
+            {
+                string Translated = garage.GarageName;
+                CitiesLngDict.TryGetValue(garage.GarageName, out Translated);
+                garage.GarageNameTranslated = Translated;
+            }
+
+            GaragesList = GaragesList.OrderBy(x => x.GarageNameTranslated).ToList();
+
             foreach (Garages garage in from x in GaragesList where !x.IgnoreStatus select x)
             {
                 listBoxGarages.Items.Add(garage);
             }
+
             listBoxGarages.TopIndex = _vindex;
         }
 
@@ -3454,7 +3484,11 @@ namespace TS_SE_Tool
                 images++;
             }
 
-            float width = e.Bounds.Width - 25 * images - 4;
+            int rightOffset = 24;
+
+            float width = comboBoxFreightMarketTrailerDef.Width - 26 * images - rightOffset;
+
+            //e.Graphics.DrawRectangle(new Pen(Color.Red), e.Bounds.X, e.Bounds.Y, width, e.Bounds.Height);
 
             for (int i = 0; i < 5; i++)
             {
@@ -3464,7 +3498,7 @@ namespace TS_SE_Tool
                 }
 
                 RectangleF source_rect = new RectangleF(0, 0, 32, 32);
-                RectangleF dest_rect = new RectangleF((e.Bounds.Right - 26 * images) + 24 * xmult, e.Bounds.Top + 1, 24, 24);
+                RectangleF dest_rect = new RectangleF((e.Bounds.Left + width) + 24 * xmult, e.Bounds.Top + 1, 24, 24);
                 e.Graphics.DrawImage(TypeImgs[i], dest_rect, source_rect, GraphicsUnit.Pixel);
 
                 xmult++;
@@ -3477,7 +3511,7 @@ namespace TS_SE_Tool
             Font textfnt = new Font("Microsoft Sans Serif", fntsize);
 
             Size size = TextRenderer.MeasureText(txt, textfnt);
-            if (size.Width > width)
+            if (size.Width >= width - 21)
             {
                 fntsize = 7f;
                 textfnt = new Font("Microsoft Sans Serif", fntsize);
@@ -3813,7 +3847,15 @@ namespace TS_SE_Tool
         //Buttons
         private void buttonAddJob_Click(object sender, EventArgs e)
         {
-            AddCargo();
+            AddCargo(false);
+        }
+
+        private void buttonEditJob_Click(object sender, EventArgs e)
+        {
+            AddCargo(true);
+            buttonFreightMarketAddJob.Text = "Add Job to list";
+            buttonFreightMarketAddJob.Click -= buttonEditJob_Click;
+            buttonFreightMarketAddJob.Click += buttonAddJob_Click;
         }
 
         private void buttonClearJobList_Click(object sender, EventArgs e)
@@ -3824,11 +3866,12 @@ namespace TS_SE_Tool
         private void ClearJobData()
         {
             unCertainRouteLength = "";
-            JobsTotalDistance = 0;
+            //JobsTotalDistance = 0;
             JobsAmountAdded = 0;
 
-            Array.Resize(ref JobsListAdded, 0);
-            Array.Resize(ref ListSavefileCompanysString, 0);
+            //Array.Resize(ref JobsListAdded, 0);
+            AddedJobsDictionary.Clear();
+            ListSavefileCompanysString.Clear();//Array.Resize(ref ListSavefileCompanysString, 0);
             Array.Resize(ref EconomyEventUnitLinkStringList, 0);
 
             listBoxFreightMarketAddedJobs.Items.Clear();
@@ -3844,6 +3887,86 @@ namespace TS_SE_Tool
         private void buttonFreightMarketRandomizeCargo_Click(object sender, EventArgs e)
         {
             comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
+        }
+
+        //contextMenuStrip FreightMarketJobList
+
+        private void listBoxFreightMarketAddedJobs_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if( listBoxFreightMarketAddedJobs.Items.Count != 0)
+                {
+                    Rectangle rect = listBoxFreightMarketAddedJobs.GetItemRectangle(listBoxFreightMarketAddedJobs.Items.Count - 1);
+
+                    if (e.Y < rect.Bottom)
+                    {
+                        contextMenuStripFreightMarketJobList.Show(listBoxFreightMarketAddedJobs, e.Location);
+                        int index = listBoxFreightMarketAddedJobs.IndexFromPoint(e.Location);
+                        listBoxFreightMarketAddedJobs.SelectedIndex = index;
+                    }                        
+                }                
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                if (listBoxFreightMarketAddedJobs.Items.Count != 0)
+                {
+                    Rectangle rect = listBoxFreightMarketAddedJobs.GetItemRectangle(listBoxFreightMarketAddedJobs.Items.Count - 1);
+
+                    if (e.Y > rect.Bottom)
+                    {
+                        
+                    }
+                }
+            }
+        }
+
+        private void contextMenuStripFreightMarketJobListEdit_Click(object sender, EventArgs e)
+        {
+            FM_JobList_Edit();
+        }
+
+        private void contextMenuStripFreightMarketJobListDelete_Click(object sender, EventArgs e)
+        {
+            FM_JobList_Delete();
+        }
+
+        private void FM_JobList_Delete()
+        {
+            string companyNameJob = "company : company.volatile." + ((JobAdded)listBoxFreightMarketAddedJobs.SelectedItem).SourceCompany + "." + ((JobAdded)listBoxFreightMarketAddedJobs.SelectedItem).SourceCity + " {";
+            AddedJobsDictionary[companyNameJob].Remove((JobAdded)listBoxFreightMarketAddedJobs.SelectedItem);
+            if (AddedJobsDictionary[companyNameJob].Count == 0)
+                AddedJobsDictionary.Remove(companyNameJob);
+            listBoxFreightMarketAddedJobs.Items.Remove(listBoxFreightMarketAddedJobs.SelectedItem);
+        }
+
+        private void FM_JobList_Edit()
+        {
+            listBoxFreightMarketAddedJobs.Enabled = false;
+
+            comboBoxFreightMarketCountries.SelectedValue = "All";
+            comboBoxFreightMarketCompanies.SelectedValue = "All";
+
+            FreightMarketJob = (JobAdded)listBoxFreightMarketAddedJobs.SelectedItem;
+
+            comboBoxFreightMarketSourceCity.SelectedValue = FreightMarketJob.SourceCity;
+            comboBoxFreightMarketSourceCompany.SelectedValue = FreightMarketJob.SourceCompany;
+            comboBoxFreightMarketDestinationCity.SelectedValue = FreightMarketJob.DestinationCity;
+            comboBoxFreightMarketDestinationCompany.SelectedValue = FreightMarketJob.DestinationCompany;
+
+            comboBoxFreightMarketCargoList.SelectedValue = FreightMarketJob.Cargo;
+            comboBoxFreightMarketUrgency.SelectedValue = FreightMarketJob.Urgency;
+            comboBoxFreightMarketTrailerDef.SelectedValue = FreightMarketJob.TrailerDefinition;
+            comboBoxFreightMarketTrailerVariant.SelectedValue = FreightMarketJob.TrailerVariant;
+
+            buttonFreightMarketAddJob.Text = "Edit Job";
+            buttonFreightMarketAddJob.Click -= buttonAddJob_Click;
+            buttonFreightMarketAddJob.Click += buttonEditJob_Click;
+        }
+
+        private void FMEditJob()
+        {
         }
 
         //end Freight market tab
