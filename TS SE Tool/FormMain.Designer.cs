@@ -76,7 +76,7 @@
             this.buttonUserCompanyCitiesUnVisit = new System.Windows.Forms.Button();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonUserCompanyGaragesBuy = new System.Windows.Forms.Button();
-            this.buttonUserCompanyGaragesBuyUpgrade = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesBuyDowngrade = new System.Windows.Forms.Button();
             this.buttonUserCompanyGaragesSell = new System.Windows.Forms.Button();
             this.buttonUserCompanyGaragesUpgrade = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -124,6 +124,7 @@
             this.labelLicensePlateTr = new System.Windows.Forms.Label();
             this.labelUserTrailerLicensePlate = new System.Windows.Forms.Label();
             this.tabPageFreightMarket = new System.Windows.Forms.TabPage();
+            this.buttonFreightMarketCancelJobEdit = new System.Windows.Forms.Button();
             this.comboBoxFreightMarketTrailerVariant = new System.Windows.Forms.ComboBox();
             this.comboBoxFreightMarketTrailerDef = new System.Windows.Forms.ComboBox();
             this.labelFreightMarketTrailer = new System.Windows.Forms.Label();
@@ -718,7 +719,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesBuy, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesBuyUpgrade, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesBuyDowngrade, 1, 1);
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesSell, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesUpgrade, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -736,28 +737,27 @@
             this.buttonUserCompanyGaragesBuy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonUserCompanyGaragesBuy.Location = new System.Drawing.Point(3, 3);
             this.buttonUserCompanyGaragesBuy.Name = "buttonUserCompanyGaragesBuy";
-            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(91, 35);
+            this.tableLayoutPanel6.SetRowSpan(this.buttonUserCompanyGaragesBuy, 2);
+            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(91, 76);
             this.buttonUserCompanyGaragesBuy.TabIndex = 23;
             this.buttonUserCompanyGaragesBuy.Text = "Buy";
             this.buttonUserCompanyGaragesBuy.UseVisualStyleBackColor = true;
             this.buttonUserCompanyGaragesBuy.Click += new System.EventHandler(this.buttonGaragesBuy_Click);
             // 
-            // buttonUserCompanyGaragesBuyUpgrade
+            // buttonUserCompanyGaragesBuyDowngrade
             // 
-            this.tableLayoutPanel6.SetColumnSpan(this.buttonUserCompanyGaragesBuyUpgrade, 2);
-            this.buttonUserCompanyGaragesBuyUpgrade.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesBuyUpgrade.Location = new System.Drawing.Point(3, 44);
-            this.buttonUserCompanyGaragesBuyUpgrade.Name = "buttonUserCompanyGaragesBuyUpgrade";
-            this.buttonUserCompanyGaragesBuyUpgrade.Size = new System.Drawing.Size(188, 35);
-            this.buttonUserCompanyGaragesBuyUpgrade.TabIndex = 25;
-            this.buttonUserCompanyGaragesBuyUpgrade.Text = "Buy and Upgrade";
-            this.buttonUserCompanyGaragesBuyUpgrade.UseVisualStyleBackColor = true;
-            this.buttonUserCompanyGaragesBuyUpgrade.Click += new System.EventHandler(this.buttonGaragesBuyUpgrade_Click);
+            this.buttonUserCompanyGaragesBuyDowngrade.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyGaragesBuyDowngrade.Location = new System.Drawing.Point(100, 44);
+            this.buttonUserCompanyGaragesBuyDowngrade.Name = "buttonUserCompanyGaragesBuyDowngrade";
+            this.buttonUserCompanyGaragesBuyDowngrade.Size = new System.Drawing.Size(91, 35);
+            this.buttonUserCompanyGaragesBuyDowngrade.TabIndex = 25;
+            this.buttonUserCompanyGaragesBuyDowngrade.Text = "Downgrade";
+            this.buttonUserCompanyGaragesBuyDowngrade.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesBuyDowngrade.Click += new System.EventHandler(this.buttonGaragesDowngrade_Click);
             // 
             // buttonUserCompanyGaragesSell
             // 
             this.buttonUserCompanyGaragesSell.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesSell.Enabled = false;
             this.buttonUserCompanyGaragesSell.Location = new System.Drawing.Point(197, 3);
             this.buttonUserCompanyGaragesSell.Name = "buttonUserCompanyGaragesSell";
             this.tableLayoutPanel6.SetRowSpan(this.buttonUserCompanyGaragesSell, 2);
@@ -1316,6 +1316,7 @@
             // 
             // tabPageFreightMarket
             // 
+            this.tabPageFreightMarket.Controls.Add(this.buttonFreightMarketCancelJobEdit);
             this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketTrailerVariant);
             this.tabPageFreightMarket.Controls.Add(this.comboBoxFreightMarketTrailerDef);
             this.tabPageFreightMarket.Controls.Add(this.labelFreightMarketTrailer);
@@ -1352,6 +1353,18 @@
             this.tabPageFreightMarket.TabIndex = 3;
             this.tabPageFreightMarket.Text = "FreightMarket";
             this.tabPageFreightMarket.UseVisualStyleBackColor = true;
+            // 
+            // buttonFreightMarketCancelJobEdit
+            // 
+            this.buttonFreightMarketCancelJobEdit.Enabled = false;
+            this.buttonFreightMarketCancelJobEdit.Location = new System.Drawing.Point(250, 206);
+            this.buttonFreightMarketCancelJobEdit.Name = "buttonFreightMarketCancelJobEdit";
+            this.buttonFreightMarketCancelJobEdit.Size = new System.Drawing.Size(150, 23);
+            this.buttonFreightMarketCancelJobEdit.TabIndex = 29;
+            this.buttonFreightMarketCancelJobEdit.Text = "Cancel";
+            this.buttonFreightMarketCancelJobEdit.UseVisualStyleBackColor = true;
+            this.buttonFreightMarketCancelJobEdit.Visible = false;
+            this.buttonFreightMarketCancelJobEdit.Click += new System.EventHandler(this.buttonFreightMarketCancelJobEdit_Click);
             // 
             // comboBoxFreightMarketTrailerVariant
             // 
@@ -2324,7 +2337,7 @@
         private System.Windows.Forms.Button buttonUserCompanyGaragesSell;
         private System.Windows.Forms.Button buttonUserCompanyCitiesUnVisit;
         private System.Windows.Forms.Button buttonUserCompanyCitiesVisit;
-        private System.Windows.Forms.Button buttonUserCompanyGaragesBuyUpgrade;
+        private System.Windows.Forms.Button buttonUserCompanyGaragesBuyDowngrade;
         private System.Windows.Forms.Button buttonUserCompanyGaragesUpgrade;
         private System.Windows.Forms.Button buttonUserCompanyGaragesBuy;
         private System.Windows.Forms.GroupBox groupBoxUserTruckShareTruckSettings;
@@ -2405,6 +2418,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripFreightMarketJobList;
         private System.Windows.Forms.ToolStripMenuItem contextMenuStripFreightMarketJobListEdit;
         private System.Windows.Forms.ToolStripMenuItem contextMenuStripFreightMarketJobListDelete;
+        private System.Windows.Forms.Button buttonFreightMarketCancelJobEdit;
     }
 }
 

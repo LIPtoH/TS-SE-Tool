@@ -104,7 +104,10 @@ namespace TS_SE_Tool
         private List<string> DBDependencies;
         private List<string> SFDependencies;
 
-        private List<Garages> GaragesList;
+        public List<Garages> GaragesList;
+        public List<string> extraVehicles;
+        public List<string> extraDrivers;
+
         private List<VisitedCity> VisitedCities;
 
         private List<CompanyTruck> CompanyTruckList;
@@ -133,10 +136,10 @@ namespace TS_SE_Tool
         public PlainTXTResourceManager ResourceManagerMain;
 
         private Dictionary<string, string> dictionaryProfiles;
-        private Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict, CountriesLngDict, UrgencyLngDict;
+        public Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict, CountriesLngDict, UrgencyLngDict;
         
         public static Dictionary<string, string> CitiesLngDict, CustomStringsDict;
-        private Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
+        public Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
         private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary;
         private Dictionary<string, List<string>> UserTrailerDefDictionary;
 
@@ -153,7 +156,8 @@ namespace TS_SE_Tool
         private Image RepairImg, RefuelImg, CutomizeImg, PlayerCompanyLogo;
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs;
-        
+
+
         private ImageList TabpagesImages;
 
         private CheckBox[,] SkillButtonArray;
@@ -178,7 +182,6 @@ namespace TS_SE_Tool
 
             LoadExtCountries();
             
-            ToggleVisibility(false);
 
             //ToggleGame(GameType);
             radioButtonMainGameSwitchETS.Checked = true;
@@ -193,6 +196,8 @@ namespace TS_SE_Tool
             CreateProgressBarBitmap();
             CreateTruckPanelControls();
             CreateTrailerPanelControls();
+
+            ToggleVisibility(false);
 
             menuStripMain.Items.Find("toolStripMenuItemLanguage", false)[0].Image = ProgUIImgs[0];
 

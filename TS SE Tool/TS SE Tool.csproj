@@ -151,6 +151,12 @@
     <Compile Include="DataManipulation.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormGaragesSoldContent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGaragesSoldContent.Designer.cs">
+      <DependentUpon>FormGaragesSoldContent.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAddCustomFolder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAddCustomFolder.resx">
       <DependentUpon>FormAddCustomFolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormGaragesSoldContent.resx">
+      <DependentUpon>FormGaragesSoldContent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

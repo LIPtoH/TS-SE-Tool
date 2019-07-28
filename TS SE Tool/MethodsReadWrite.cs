@@ -1228,10 +1228,7 @@ namespace TS_SE_Tool
 
                             int capacity = 0;
 
-                            if (tempGarage.GarageStatus == 0)
-                            {
-                            }
-                            else if (tempGarage.GarageStatus == 2)
+                            if (tempGarage.GarageStatus == 2)
                             {
                                 capacity = 3;
                             }
@@ -1243,14 +1240,15 @@ namespace TS_SE_Tool
                             {
                                 capacity = 1;
                             }
+
                             writer.WriteLine(SaveInMemLine);
                             writer.WriteLine(" vehicles: " + capacity);
 
                             int cur = tempGarage.Vehicles.Count;
 
-                            if (capacity < cur)
+                            if (capacity < cur)//RE DO Try to save Drivers and Vehicles
                             {
-                                tempGarage.Vehicles.RemoveRange(capacity, cur - capacity);//RE DO Try to save Drivers and Vehicles
+                                tempGarage.Vehicles.RemoveRange(capacity, cur - capacity);
                                 tempGarage.Drivers.RemoveRange(capacity, cur - capacity);
                             }
                             else if (capacity > cur)
@@ -1264,12 +1262,14 @@ namespace TS_SE_Tool
                             {
                                 writer.WriteLine(" vehicles[" + i + "]: " + tempGarage.Vehicles[i]);
                             }
+
                             writer.WriteLine(" drivers: " + capacity);
                             //tempGarage.Drivers
                             for (int i = 0; i < capacity; i++)
                             {
                                 writer.WriteLine(" drivers[" + i + "]: " + tempGarage.Drivers[i]);
                             }
+
                             writer.WriteLine(" trailers: " + tempGarage.Trailers.Count);
 
                             int index = 0;
@@ -1278,6 +1278,7 @@ namespace TS_SE_Tool
                                 writer.WriteLine(" trailers[" + index + "]: " + temp);
                                 index++;
                             }
+
                             writer.WriteLine(" status: " + tempGarage.GarageStatus);
 
                             while (true)

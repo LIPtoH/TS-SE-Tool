@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.CustomClasses
 {
-    class UserCompanyTruckDataPart
+    public class UserCompanyTruckDataPart
     {
         public UserCompanyTruckDataPart()
         {

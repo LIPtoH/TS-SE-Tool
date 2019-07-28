@@ -218,6 +218,9 @@ namespace TS_SE_Tool
             UserTrailerDictionary = new Dictionary<string, UserCompanyTruckData>();
             UserTrailerDefDictionary = new Dictionary<string, List<string>>();
 
+            extraVehicles = new List<string>();
+            extraDrivers = new List<string>();
+
             VisitedCities = new List<VisitedCity>();
 
             CargoesListDB = new List<Cargo>();
@@ -1077,7 +1080,11 @@ namespace TS_SE_Tool
         internal void SelectColor(object sender, EventArgs e)
         {
             Button obj = sender as Button;
-            OpenPainter.ColorPicker.frmColorPicker frm = new OpenPainter.ColorPicker.frmColorPicker(obj.BackColor);
+            Color BC = obj.BackColor;
+            if (obj.Text != "")
+                BC = Color.White;
+
+            OpenPainter.ColorPicker.frmColorPicker frm = new OpenPainter.ColorPicker.frmColorPicker(BC);
             frm.Font = SystemFonts.DialogFont;
 
             if (frm.ShowDialog() == DialogResult.OK)
@@ -2263,7 +2270,8 @@ namespace TS_SE_Tool
                 e.Handled = true;
             }
         }
-
+        //Visited cities
+        //Fill
         public void FillVisitedCities(int _vindex)
         {
             listBoxVisitedCities.Items.Clear();
@@ -2287,7 +2295,7 @@ namespace TS_SE_Tool
 
             listBoxVisitedCities.TopIndex = _vindex;
         }
-
+        //Draw
         private int VisitedCitiesItemMargin = 3;
         private const float VisitedCitiesPictureHeight = 32;
 
@@ -2354,7 +2362,7 @@ namespace TS_SE_Tool
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
         }
-
+        //Buttons
         private void buttonCitiesVisit_Click(object sender, EventArgs e)
         {
             if (listBoxVisitedCities.SelectedItems.Count == 0)
@@ -2395,7 +2403,8 @@ namespace TS_SE_Tool
 
             FillVisitedCities(listBoxVisitedCities.TopIndex);
         }
-
+        //Garages
+        //Fill
         public void FillGaragesList(int _vindex)
         {
             listBoxGarages.Items.Clear();
@@ -2419,7 +2428,7 @@ namespace TS_SE_Tool
 
             listBoxGarages.TopIndex = _vindex;
         }
-
+        //Draw
         private int GarageItemMargin = 3;
         private const float GaragePictureHeight = 32;
 
@@ -2478,12 +2487,12 @@ namespace TS_SE_Tool
 
             foreach (string temp in grg.Vehicles)
             {
-                if (temp != "null")
+                if (temp != null)
                     curVeh++;
             }
             foreach (string temp in grg.Drivers)
             {
-                if (temp != "null")
+                if (temp != null)
                     curDr++;
             }
 
@@ -2524,87 +2533,92 @@ namespace TS_SE_Tool
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
         }
-
+        //Buttons
         private void buttonGaragesBuy_Click(object sender, EventArgs e)
         {
+            List<Garages> tmp;
+
             if (listBoxGarages.SelectedItems.Count == 0)
-            {
-                foreach (Garages garage in listBoxGarages.Items)
-                {
-                    if (garage.GarageStatus == 0 || garage.GarageStatus == 6)
-                        garage.GarageStatus = 2;
-                }
-            }
+                tmp = listBoxGarages.Items.Cast<Garages>().ToList();
             else
-                foreach (Garages garage in listBoxGarages.SelectedItems)
-                {
-                    if (garage.GarageStatus == 0 || garage.GarageStatus == 6)
-                        garage.GarageStatus = 2;
-                }
+                tmp = listBoxGarages.SelectedItems.Cast<Garages>().ToList();
+
+            foreach (Garages garage in tmp)
+            {
+                if (garage.GarageStatus == 0)
+                    garage.GarageStatus = 2;
+            }
 
             FillGaragesList(listBoxGarages.TopIndex);
         }
 
         private void buttonGaragesUpgrade_Click(object sender, EventArgs e)
         {
+            List<Garages> tmp;
+
             if (listBoxGarages.SelectedItems.Count == 0)
-            {
-                foreach (Garages garage in listBoxGarages.Items)
-                {
-                    if (garage.GarageStatus == 2 || garage.GarageStatus == 6)
-                        garage.GarageStatus = 3;
-                }
-            }
+                tmp = listBoxGarages.Items.Cast<Garages>().ToList();
             else
-                foreach (Garages garage in listBoxGarages.SelectedItems)
-                {
-                    if (garage.GarageStatus == 2 || garage.GarageStatus == 6)
-                        garage.GarageStatus = 3;
-                }
+                tmp = listBoxGarages.SelectedItems.Cast<Garages>().ToList();
+
+            foreach (Garages garage in tmp)
+            {
+                if (garage.GarageStatus == 2)
+                    garage.GarageStatus = 3;
+                else if (garage.GarageStatus == 6)
+                    garage.GarageStatus = 2;
+            }
+
 
             FillGaragesList(listBoxGarages.TopIndex);
         }
 
-        private void buttonGaragesBuyUpgrade_Click(object sender, EventArgs e)
+        private void buttonGaragesDowngrade_Click(object sender, EventArgs e)
         {
+            List<Garages> tmp;
+
             if (listBoxGarages.SelectedItems.Count == 0)
-            {
-                foreach (Garages garage in listBoxGarages.Items)
-                {
-                    garage.GarageStatus = 3;
-                }
-            }
+                tmp = listBoxGarages.Items.Cast<Garages>().ToList();
             else
-                foreach (Garages garage in listBoxGarages.SelectedItems)
-                {
-                    garage.GarageStatus = 3;
-                }
+                tmp = listBoxGarages.SelectedItems.Cast<Garages>().ToList();
+
+            foreach (Garages garage in tmp)
+            {
+                if (garage.GarageStatus == 3)
+                    garage.GarageStatus = 2;
+                else if (garage.GarageName == comboBoxUserCompanyHQcity.SelectedValue.ToString() || garage.GarageStatus == 2)
+                    garage.GarageStatus = 6;
+            }
 
             FillGaragesList(listBoxGarages.TopIndex);
         }
 
         private void buttonGaragesSell_Click(object sender, EventArgs e)
         {
+            /*
+            DialogResult res = MessageBox.Show("You will lose trucks, drivers and trailers in sold garages!", "Loosing items!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+            if (res == DialogResult.Cancel)
+                return;
+            */
+            List<Garages> tmp;
+
             if (listBoxGarages.SelectedItems.Count == 0)
-            {
-                foreach (Garages garage in listBoxGarages.Items)
-                {
-                    if (garage.GarageName == comboBoxUserCompanyHQcity.SelectedValue.ToString())
-                        garage.GarageStatus = 6;
-                    else
-                        garage.GarageStatus = 0;
-                }
-            }
+                tmp = listBoxGarages.Items.Cast<Garages>().ToList();
             else
-                foreach (Garages garage in listBoxGarages.SelectedItems)
-                {
-                    if (garage.GarageName == comboBoxUserCompanyHQcity.SelectedValue.ToString())
-                        garage.GarageStatus = 6;
-                    else
-                        garage.GarageStatus = 0;
-                }
+                tmp = listBoxGarages.SelectedItems.Cast<Garages>().ToList();
+
+            foreach (Garages garage in tmp)
+            {
+                if (garage.GarageName == PlayerProfileData.HQcity)
+                    garage.GarageStatus = 6;
+                else
+                    garage.GarageStatus = 0;
+            }
 
             FillGaragesList(listBoxGarages.TopIndex);
+
+            PrepareGarages();
         }
         //end User Company tab
 
@@ -3853,10 +3867,31 @@ namespace TS_SE_Tool
         private void buttonEditJob_Click(object sender, EventArgs e)
         {
             AddCargo(true);
+
+            buttonFreightMarketCancelJobEdit.Visible = false;
+            buttonFreightMarketCancelJobEdit.Enabled = false;
+            buttonFreightMarketAddJob.Width = 394;
+
             buttonFreightMarketAddJob.Text = "Add Job to list";
             buttonFreightMarketAddJob.Click -= buttonEditJob_Click;
             buttonFreightMarketAddJob.Click += buttonAddJob_Click;
         }
+
+        private void buttonFreightMarketCancelJobEdit_Click(object sender, EventArgs e)
+        {
+            listBoxFreightMarketAddedJobs.Enabled = true;
+            buttonFreightMarketCancelJobEdit.Visible = false;
+            buttonFreightMarketCancelJobEdit.Enabled = false;
+            buttonFreightMarketAddJob.Width = 394;
+
+            buttonFreightMarketAddJob.Text = "Add Job to list";
+            buttonFreightMarketAddJob.Click -= buttonEditJob_Click;
+            buttonFreightMarketAddJob.Click += buttonAddJob_Click;
+
+            comboBoxFreightMarketSourceCity.SelectedValue = ((JobAdded)listBoxFreightMarketAddedJobs.Items[listBoxFreightMarketAddedJobs.Items.Count - 1]).DestinationCity;
+            comboBoxFreightMarketSourceCompany.SelectedValue = ((JobAdded)listBoxFreightMarketAddedJobs.Items[listBoxFreightMarketAddedJobs.Items.Count - 1]).DestinationCompany;
+        }
+
 
         private void buttonClearJobList_Click(object sender, EventArgs e)
         {
@@ -3944,6 +3979,9 @@ namespace TS_SE_Tool
         private void FM_JobList_Edit()
         {
             listBoxFreightMarketAddedJobs.Enabled = false;
+            buttonFreightMarketAddJob.Width = 238;
+            buttonFreightMarketCancelJobEdit.Visible = true;
+            buttonFreightMarketCancelJobEdit.Enabled = true;
 
             comboBoxFreightMarketCountries.SelectedValue = "All";
             comboBoxFreightMarketCompanies.SelectedValue = "All";
@@ -3965,9 +4003,6 @@ namespace TS_SE_Tool
             buttonFreightMarketAddJob.Click += buttonEditJob_Click;
         }
 
-        private void FMEditJob()
-        {
-        }
 
         //end Freight market tab
 
@@ -4439,6 +4474,18 @@ namespace TS_SE_Tool
                 tabControlMain.TabPages["tabPageTrailer"].Enabled = false;
             }
 
+            int pSkillsNameHeight = 64, pSkillsNameWidth = 64;
+            for (int i = 0; i <6;i++)
+            {
+               Control[] tmp =  this.Controls.Find("profileSkillsPanel" + i.ToString(), true);
+                if(visible)
+                {
+                    Bitmap bgimg = new Bitmap(SkillImgS[i], pSkillsNameHeight, pSkillsNameWidth);
+                    tmp[0].BackgroundImage = bgimg;
+                }
+                else
+                    tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
+            }
             /*
             if (GameType == "ETS2")
             {

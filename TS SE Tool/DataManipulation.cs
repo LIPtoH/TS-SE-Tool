@@ -109,12 +109,22 @@ namespace TS_SE_Tool
 
                         while (true)//(!garageinfoended)
                         {
+                            string res = "";
+                            try
+                            {
+                                res = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                                if (res == "null")
+                                    res = null;
+                            }
+                            catch { }                            
+
                             if (tempSavefileInMemory[line].StartsWith(" vehicles["))
-                                tempGarage.Vehicles.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
+                                tempGarage.Vehicles.Add(res);
                             else if (tempSavefileInMemory[line].StartsWith(" drivers["))
-                                tempGarage.Drivers.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
+                                tempGarage.Drivers.Add(res);
                             else if (tempSavefileInMemory[line].StartsWith(" trailers["))
-                                tempGarage.Trailers.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
+                                tempGarage.Trailers.Add(res);
                             else if (tempSavefileInMemory[line].StartsWith(" status:"))
                                 tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
                             else if (tempSavefileInMemory[line].StartsWith("}"))
@@ -1453,7 +1463,146 @@ namespace TS_SE_Tool
                         VisitedCities.Add(new VisitedCity(city.CityName, 0, false));
                 }
             }
+        }
 
+        private void PrepareGarages()
+        {
+            List<string> extraTrailers = new List<string>();
+
+            foreach (Garages tempGarage in GaragesList)
+            {
+                int capacity = 0;
+
+                if (tempGarage.GarageStatus == 2)
+                {
+                    capacity = 3;
+                }
+                else if (tempGarage.GarageStatus == 3)
+                {
+                    capacity = 5;
+                }
+                else if (tempGarage.GarageStatus == 6)
+                {
+                    capacity = 1;
+                }
+
+                if (capacity == 0)
+                {
+                    //Move
+                    extraVehicles.AddRange(tempGarage.Vehicles);
+                    extraDrivers.AddRange(tempGarage.Drivers);
+                    extraTrailers.AddRange(tempGarage.Trailers);
+                    //Delete                    
+                    tempGarage.Vehicles.Clear();
+                    tempGarage.Drivers.Clear();
+                    tempGarage.Trailers.Clear();
+                }
+                else
+                {
+                    int cur = tempGarage.Vehicles.Count;
+
+                    if (capacity < cur)
+                    {
+                        extraVehicles.AddRange(tempGarage.Vehicles.GetRange(capacity, cur - capacity));
+                        extraDrivers.AddRange(tempGarage.Drivers.GetRange(capacity, cur - capacity));
+
+                        tempGarage.Vehicles.RemoveRange(capacity, cur - capacity);
+                        tempGarage.Drivers.RemoveRange(capacity, cur - capacity);
+                    }
+                    else if (capacity > cur)
+                    {
+                        string rstr = "null";
+                        tempGarage.Vehicles.AddRange(Enumerable.Repeat(rstr, capacity - cur));
+                        tempGarage.Drivers.AddRange(Enumerable.Repeat(rstr, capacity - cur));
+                    }
+                }
+            }
+
+            if (extraTrailers.Count > 0)
+            {
+                GaragesList[GaragesList.FindIndex(x => x.GarageName == PlayerProfileData.HQcity)].Trailers.AddRange(extraTrailers);
+            }
+
+            int iV = extraDrivers.Count();
+
+            for (int i = iV - 1; i >= 0; i--)
+            {
+                if(extraVehicles[i] == extraDrivers[i])
+                {
+                    extraVehicles.RemoveAt(i);
+                    extraDrivers.RemoveAt(i);
+                }
+            }
+
+            if (extraDrivers.Count() > 0)
+            {
+                if (extraDrivers.Contains(PlayerProfileData.UserDriver))
+                {
+                    Garages tmpG = new Garages(PlayerProfileData.HQcity);
+
+                    int hqIdx = GaragesList.IndexOf(tmpG);
+                    int sIdx = 0;
+
+                    int DrvIdx, VhcIdx;
+
+                    while (true)
+                    {
+                        DrvIdx = GaragesList[hqIdx].Drivers.FindIndex(sIdx, x => x == null);
+                        VhcIdx = GaragesList[hqIdx].Vehicles.FindIndex(sIdx, x => x == null);
+                        
+                        if (DrvIdx > -1 && VhcIdx > -1)
+                        {
+                            if (DrvIdx == VhcIdx)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                if (DrvIdx > VhcIdx)
+                                    sIdx = DrvIdx;
+                                else
+                                    sIdx = VhcIdx;
+                            }
+                        }
+                        else
+                        {
+                            DrvIdx = 0;
+                            break;
+                        }
+                    }
+
+                    extraDrivers.Add(GaragesList[hqIdx].Drivers[DrvIdx]);
+                    extraVehicles.Add(GaragesList[hqIdx].Vehicles[DrvIdx]);
+
+                    int tmpIdx = extraDrivers.IndexOf(PlayerProfileData.UserDriver);
+
+                    GaragesList[hqIdx].Drivers[DrvIdx] = extraDrivers[tmpIdx];
+                    GaragesList[hqIdx].Vehicles[DrvIdx] = extraVehicles[tmpIdx];
+
+                    extraDrivers.RemoveAt(tmpIdx);
+                    extraVehicles.RemoveAt(tmpIdx);
+                }
+
+                //extraDrivers.RemoveAll(x => x == null);
+                //extraVehicles.RemoveAll(x => x == null);
+
+                DialogResult res = MessageBox.Show("Do you want to save drivers and trucks from sold garages?", "Attension! Loosing content", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    /*
+                    int freeDrvSpots = 0, freeVhcSpots = 0;
+
+                    foreach (Garages tmpG in GaragesList )
+                    {
+                        freeDrvSpots += tmpG.Drivers.Count(x => x == null);
+                        freeVhcSpots += tmpG.Vehicles.Count(x => x == null);
+                    }
+                    */
+                    //Show form with Drivers and Trucks
+                    FormGaragesSoldContent testDialog = new FormGaragesSoldContent();
+                    testDialog.ShowDialog(this);
+                }
+            }
         }
 
         private void PrepareEvents()

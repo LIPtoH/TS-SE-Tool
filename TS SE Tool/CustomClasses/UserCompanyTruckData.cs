@@ -22,7 +22,7 @@ using TS_SE_Tool.CustomClasses;
 
 namespace TS_SE_Tool
 {
-    class UserCompanyTruckData
+    public class UserCompanyTruckData
     {
         public UserCompanyTruckData()
         {

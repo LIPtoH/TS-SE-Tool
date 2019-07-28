@@ -23,7 +23,7 @@ using System.Windows.Forms;
 
 namespace TS_SE_Tool
 {
-    class Garages
+    public class Garages
     {
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
@@ -33,11 +33,16 @@ namespace TS_SE_Tool
             GarageStatus = _GarageStatus;
         }
 
+        public Garages(string _GarageName)
+        {
+            GarageName = _GarageName;
+        }
+
         public string GarageName { get; set; }
 
         public string GarageNameTranslated { get; set; }
 
-        public int GarageStatus { get; set; }
+        public int GarageStatus { get; set; } = 0;
 
         public List<string> Vehicles { get; set; } = new List<string>();
 
