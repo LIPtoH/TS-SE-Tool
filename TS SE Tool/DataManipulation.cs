@@ -336,6 +336,13 @@ namespace TS_SE_Tool
                             line += int.Parse(LineArray[2]);
                             continue;
                         }
+
+                        if (tempSavefileInMemory[line].StartsWith(" driver_pool["))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            DriverPool.Add(chunkOfline[2]);
+                            continue;
+                        }
                     }
 
                     //Account Money
@@ -375,10 +382,10 @@ namespace TS_SE_Tool
                             continue;
                         }
 
-                        if (tempSavefileInMemory[line].StartsWith(" drivers[0]:"))
+                        if (tempSavefileInMemory[line].StartsWith(" truck_placement:"))
                         {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.UserDriver = chunkOfline[2];
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
+                            PlayerProfileData.UserCompanyAssignedTruckPlacement = chunkOfline[1].TrimStart(' ');
                             continue;
                         }
 
@@ -389,17 +396,47 @@ namespace TS_SE_Tool
                             continue;
                         }
 
+                        if (tempSavefileInMemory[line].StartsWith(" truck_profit_logs["))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
+                            string tKey = UserTruckDictionary.Keys.ElementAt(int.Parse(chunkOfline[1]));
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            UserTruckDictionary[tKey].TruckProfitLogs = chunkOfline[2];
+                            continue;
+                        }
+
+                        if (tempSavefileInMemory[line].StartsWith(" drivers["))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            UserDriverDictionary.Add(chunkOfline[2], new UserCompanyDriverData());
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
+                            if (int.Parse(chunkOfline[1]) == 0)
+                                PlayerProfileData.UserDriver = chunkOfline[2];
+                            continue;
+                        }
+
+                        if (tempSavefileInMemory[line].StartsWith(" driver_readiness_timer["))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
+                            string tKey = UserDriverDictionary.Keys.ElementAt(int.Parse(chunkOfline[1]));
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            UserDriverDictionary[tKey].DriverReadiness = int.Parse(chunkOfline[2]);
+                            continue;
+                        }
+
+                        if (tempSavefileInMemory[line].StartsWith(" driver_quit_warned["))
+                        {
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
+                            string tKey = UserDriverDictionary.Keys.ElementAt(int.Parse(chunkOfline[1]));
+                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            UserDriverDictionary[tKey].DriverQuitWarned = bool.Parse(chunkOfline[2]);
+                            continue;
+                        }
+
                         if (tempSavefileInMemory[line].StartsWith(" assigned_trailer:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
                             PlayerProfileData.UserCompanyAssignedTrailer = chunkOfline[2];
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" truck_placement:"))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            PlayerProfileData.UserCompanyAssignedTruckPlacement = chunkOfline[1].TrimStart(' ');
                             continue;
                         }
 
@@ -1511,7 +1548,7 @@ namespace TS_SE_Tool
                     }
                     else if (capacity > cur)
                     {
-                        string rstr = "null";
+                        string rstr = null;
                         tempGarage.Vehicles.AddRange(Enumerable.Repeat(rstr, capacity - cur));
                         tempGarage.Drivers.AddRange(Enumerable.Repeat(rstr, capacity - cur));
                     }
@@ -1521,6 +1558,7 @@ namespace TS_SE_Tool
             if (extraTrailers.Count > 0)
             {
                 GaragesList[GaragesList.FindIndex(x => x.GarageName == PlayerProfileData.HQcity)].Trailers.AddRange(extraTrailers);
+                extraTrailers.Clear();
             }
 
             int iV = extraDrivers.Count();
@@ -1582,27 +1620,23 @@ namespace TS_SE_Tool
                     extraDrivers.RemoveAt(tmpIdx);
                     extraVehicles.RemoveAt(tmpIdx);
                 }
+            }
+        }
 
-                //extraDrivers.RemoveAll(x => x == null);
-                //extraVehicles.RemoveAll(x => x == null);
+        private void PrepareDriversTrucks()
+        {
+            extraDrivers.RemoveAll(x => x == null);
 
-                DialogResult res = MessageBox.Show("Do you want to save drivers and trucks from sold garages?", "Attension! Loosing content", MessageBoxButtons.YesNo);
-                if (res == DialogResult.Yes)
+            foreach (string tmp in extraDrivers)
+            {
+                if (tmp != null)
                 {
-                    /*
-                    int freeDrvSpots = 0, freeVhcSpots = 0;
-
-                    foreach (Garages tmpG in GaragesList )
-                    {
-                        freeDrvSpots += tmpG.Drivers.Count(x => x == null);
-                        freeVhcSpots += tmpG.Vehicles.Count(x => x == null);
-                    }
-                    */
-                    //Show form with Drivers and Trucks
-                    FormGaragesSoldContent testDialog = new FormGaragesSoldContent();
-                    testDialog.ShowDialog(this);
+                    DriverPool.Add(tmp);
+                    UserDriverDictionary.Remove(tmp);
                 }
             }
+
+            extraVehicles.RemoveAll(x => x == null);
         }
 
         private void PrepareEvents()

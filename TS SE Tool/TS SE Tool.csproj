@@ -145,6 +145,7 @@
     <Compile Include="CustomClasses\PlayerProfile.cs" />
     <Compile Include="CustomClasses\ProgSettings.cs" />
     <Compile Include="CustomClasses\Routes.cs" />
+    <Compile Include="CustomClasses\UserCompanyDriverData.cs" />
     <Compile Include="CustomClasses\UserCompanyTruckData.cs" />
     <Compile Include="CustomClasses\UserCompanyTruckDataPart.cs" />
     <Compile Include="CustomClasses\VisitedCity.cs" />

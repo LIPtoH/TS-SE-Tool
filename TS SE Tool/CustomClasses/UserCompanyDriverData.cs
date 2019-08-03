@@ -22,17 +22,15 @@ using TS_SE_Tool.CustomClasses;
 
 namespace TS_SE_Tool
 {
-    public class UserCompanyTruckData
+    public class UserCompanyDriverData
     {
-        public UserCompanyTruckData()
+        public UserCompanyDriverData()
         {
 
         }
 
-        public List<UserCompanyTruckDataPart> Parts = new List<UserCompanyTruckDataPart>();
-        public string TruckType { get; set; } = "fromsave";
-        public bool Main { get; set; } = true;
-        public bool Users { get; set; } = true;
-        public string TruckProfitLogs { get; set; } = null;
+        //public string DriverName { get; set; } = null;
+        public int DriverReadiness { get; set; } = 0;
+        public bool DriverQuitWarned { get; set; } = false;
     }
 }

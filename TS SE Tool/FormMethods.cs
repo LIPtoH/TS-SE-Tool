@@ -215,6 +215,8 @@ namespace TS_SE_Tool
             UserColorsList = new List<Color>();
             GaragesList = new List<Garages>();
             UserTruckDictionary = new Dictionary<string, UserCompanyTruckData>();
+            UserDriverDictionary = new Dictionary<string, UserCompanyDriverData>();
+            DriverPool = new List<string>();
             UserTrailerDictionary = new Dictionary<string, UserCompanyTruckData>();
             UserTrailerDefDictionary = new Dictionary<string, List<string>>();
 
@@ -405,8 +407,24 @@ namespace TS_SE_Tool
 
         private void buttonWriteSave_Click(object sender, EventArgs e)
         {
+            if (extraDrivers.Count() > 0 || extraVehicles.Count() > 0)
+            {
+                DialogResult res = MessageBox.Show("Do you want to save Drivers and Trucks from sold garages?", "Attention! Loosing content", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    FormGaragesSoldContent testDialog = new FormGaragesSoldContent();
+                    testDialog.ShowDialog(this);
+                }
+            }
+
             ToggleVisibility(false);
             buttonMainWriteSave.Enabled = false;
+
+            string SiiSavePath = SavefilePath + @"\game.sii";
+
+            LogWriter("Backing up file to: " + SiiSavePath + "_backup");
+            File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
+
             WriteSaveFile(); //Save save file with or without changes
 
             buttonMainDecryptSave.Enabled = true;
@@ -2274,6 +2292,7 @@ namespace TS_SE_Tool
         //Fill
         public void FillVisitedCities(int _vindex)
         {
+            listBoxVisitedCities.BeginUpdate();
             listBoxVisitedCities.Items.Clear();
 
             if (CitiesList.Count <= 0)
@@ -2294,6 +2313,7 @@ namespace TS_SE_Tool
             }
 
             listBoxVisitedCities.TopIndex = _vindex;
+            listBoxVisitedCities.EndUpdate();
         }
         //Draw
         private int VisitedCitiesItemMargin = 3;
@@ -2407,6 +2427,7 @@ namespace TS_SE_Tool
         //Fill
         public void FillGaragesList(int _vindex)
         {
+            listBoxGarages.BeginUpdate();
             listBoxGarages.Items.Clear();
 
             if (GaragesList.Count <= 0)
@@ -2427,6 +2448,7 @@ namespace TS_SE_Tool
             }
 
             listBoxGarages.TopIndex = _vindex;
+            listBoxGarages.EndUpdate();
         }
         //Draw
         private int GarageItemMargin = 3;
@@ -2534,6 +2556,15 @@ namespace TS_SE_Tool
             e.DrawFocusRectangle();
         }
         //Buttons
+
+        private void buttonUserCompanyGaragesManage_Click(object sender, EventArgs e)
+        {
+            PrepareGarages();
+
+            FormGaragesSoldContent testDialog = new FormGaragesSoldContent();
+            testDialog.ShowDialog(this);
+        }
+
         private void buttonGaragesBuy_Click(object sender, EventArgs e)
         {
             List<Garages> tmp;
@@ -2548,6 +2579,8 @@ namespace TS_SE_Tool
                 if (garage.GarageStatus == 0)
                     garage.GarageStatus = 2;
             }
+
+            PrepareGarages();
 
             FillGaragesList(listBoxGarages.TopIndex);
         }
@@ -2569,6 +2602,7 @@ namespace TS_SE_Tool
                     garage.GarageStatus = 2;
             }
 
+            PrepareGarages();
 
             FillGaragesList(listBoxGarages.TopIndex);
         }
@@ -2586,21 +2620,17 @@ namespace TS_SE_Tool
             {
                 if (garage.GarageStatus == 3)
                     garage.GarageStatus = 2;
-                else if (garage.GarageName == comboBoxUserCompanyHQcity.SelectedValue.ToString() || garage.GarageStatus == 2)
+                else if (garage.GarageName == comboBoxUserCompanyHQcity.SelectedValue.ToString())
                     garage.GarageStatus = 6;
             }
+
+            PrepareGarages();
 
             FillGaragesList(listBoxGarages.TopIndex);
         }
 
         private void buttonGaragesSell_Click(object sender, EventArgs e)
         {
-            /*
-            DialogResult res = MessageBox.Show("You will lose trucks, drivers and trailers in sold garages!", "Loosing items!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-
-            if (res == DialogResult.Cancel)
-                return;
-            */
             List<Garages> tmp;
 
             if (listBoxGarages.SelectedItems.Count == 0)
@@ -2616,9 +2646,9 @@ namespace TS_SE_Tool
                     garage.GarageStatus = 0;
             }
 
-            FillGaragesList(listBoxGarages.TopIndex);
-
             PrepareGarages();
+
+            FillGaragesList(listBoxGarages.TopIndex);
         }
         //end User Company tab
 
@@ -5133,6 +5163,10 @@ namespace TS_SE_Tool
                 return -1;
         }
 
+        static string NullToString(object Value)
+        {
+            return Value == null ? "null" : Value.ToString();
+        }
         //end Form methods
     }
 }

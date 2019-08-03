@@ -55,7 +55,7 @@ namespace TS_SE_Tool
                     foreach (string tempD in tempG.Drivers)
                     {
                         if (tempD != null)
-                            treeViewSavedDrivers.Nodes[tempG.GarageName].Nodes.Add(tempD);
+                            treeViewSavedDrivers.Nodes[tempG.GarageName].Nodes.Add(tempD, tempD);
                     }
                     //Trucks tree
                     treeViewSavedTrucks.Nodes.Add(tempG.GarageName, "[ " + curVeh + " | " + tempG.Vehicles.Count + " ] " + tempG.GarageNameTranslated);
@@ -106,7 +106,24 @@ namespace TS_SE_Tool
             foreach (string tempV in MainForm.extraVehicles)
             {
                 if (tempV != null)
-                    treeViewSortingTrucks.Nodes.Add(tempV);
+                {
+                    //treeViewSortingTrucks.Nodes.Add(tempV);
+                    string TruckName = "";
+                    try
+                    {
+                        string templine = MainForm.UserTruckDictionary[tempV].Parts.Find(x => x.PartType == "truckbrandname").PartData.Find(xline => xline.StartsWith(" data_path:"));
+                        TruckName = templine.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
+                    }
+                    catch { }
+                    MainForm.TruckBrandsLngDict.TryGetValue(TruckName, out string trucknamevalue);
+
+                    if (trucknamevalue != null && trucknamevalue != "")
+                    {
+                        TruckName = trucknamevalue;
+                    }
+
+                    treeViewSortingTrucks.Nodes.Add(tempV, TruckName);
+                }
             }
             //Labels
             labelSortingDrivers.Text = "Drivers " + MainForm.extraDrivers.Count(x => x != null).ToString();
@@ -124,12 +141,58 @@ namespace TS_SE_Tool
 
         private void buttonMoveDriversOut_Click(object sender, EventArgs e)
         {
+            // Get the checked nodes.
+            List<TreeNode> checked_nodes = CheckedNodes(treeViewSavedDrivers, false);
 
+            if (checked_nodes.Count() != 0)
+            {
+                foreach (TreeNode tempD in checked_nodes)
+                {
+                    if (tempD != null)
+                    {
+                        Garages tempG = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == tempD.Parent.Name)];
+                        string driverNL = tempD.Name;
+
+                        tempG.Drivers[tempG.Drivers.FindIndex(x => x == driverNL)] = null;
+                        MainForm.extraDrivers.Add(driverNL);
+                        MainForm.extraVehicles.Add(null);
+
+                        checked_nodes.RemoveAt(0);
+                        if (checked_nodes.Count() == 0)
+                            goto NoMoreDrivers;
+                    }
+                }
+                NoMoreDrivers:
+                FillTreeView();
+            }
         }
 
         private void buttonMoveTrucksOut_Click(object sender, EventArgs e)
         {
+            // Get the checked nodes.
+            List<TreeNode> checked_nodes = CheckedNodes(treeViewSavedTrucks);
 
+            if (checked_nodes.Count() != 0)
+            {
+                foreach (TreeNode tempT in checked_nodes)
+                {
+                    if (tempT != null)
+                    {
+                        Garages tempG = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == tempT.Parent.Name)];
+                        string truckNL = tempT.Name;
+
+                        tempG.Vehicles[tempG.Vehicles.FindIndex(x => x == truckNL)] = null;
+                        MainForm.extraVehicles.Add(truckNL);
+                        MainForm.extraDrivers.Add(null);
+
+                        checked_nodes.RemoveAt(0);
+                        if (checked_nodes.Count() == 0)
+                            goto NoMoreTrucks;
+                    }
+                }
+                NoMoreTrucks:
+                FillTreeView();
+            }
         }
 
         private void buttonMoveDriversIn_Click(object sender, EventArgs e)
@@ -147,7 +210,9 @@ namespace TS_SE_Tool
                         {
                             if (tempG.Drivers[i] == null)
                             {
-                                tempG.Drivers[i] = checked_nodes[0].Text;
+                                string driverNL = checked_nodes[0].Name;
+                                tempG.Drivers[i] = driverNL;
+                                MainForm.extraVehicles[MainForm.extraVehicles.FindIndex(x => x == driverNL)] = null;
                                 checked_nodes.RemoveAt(0);
                                 if (checked_nodes.Count() == 0)
                                     goto NoMoreDrivers;
@@ -175,9 +240,9 @@ namespace TS_SE_Tool
                         {
                             if (tempG.Vehicles[i] == null)
                             {
-                                tempG.Vehicles[i] = checked_nodes[0].Text;
-                                //treeViewSortingTrucks.Nodes[0] .RemoveByKey(checked_nodes[0].Text);
-                                MainForm.extraVehicles.RemoveAt(0);
+                                string truckNL = checked_nodes[0].Name;
+                                tempG.Vehicles[i] = truckNL;
+                                MainForm.extraVehicles[MainForm.extraVehicles.FindIndex(x => x == truckNL)] = null;
                                 checked_nodes.RemoveAt(0);
                                 if (checked_nodes.Count() == 0)
                                     goto NoMoreTrucks;
@@ -196,10 +261,31 @@ namespace TS_SE_Tool
             foreach (TreeNode node in nodes)
             {
                 // Add this node.
-                if (node.Checked) checked_nodes.Add(node);
+                if (node.Checked)
+                    checked_nodes.Add(node);
 
                 // Check the node's descendants.
                 FindCheckedNodes(checked_nodes, node.Nodes);
+            }
+        }
+
+        private void FindCheckedNodes(List<TreeNode> checked_nodes, TreeNodeCollection nodes, bool FindParentsOrChild)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                // Add this node.
+                if (FindParentsOrChild)
+                    if (node.Checked && node.Parent == null)
+                        checked_nodes.Add(node);
+
+                // Check the node's descendants.
+                if (!FindParentsOrChild)
+                {
+                    if (node.Checked && node.Parent != null)
+                        checked_nodes.Add(node);
+                    FindCheckedNodes(checked_nodes, node.Nodes, FindParentsOrChild);
+                }
+                    
             }
         }
 
@@ -208,6 +294,15 @@ namespace TS_SE_Tool
         {
             List<TreeNode> checked_nodes = new List<TreeNode>();
             FindCheckedNodes(checked_nodes, trv.Nodes);
+            return checked_nodes;
+        }
+
+        private List<TreeNode> CheckedNodes(TreeView trv, bool FindParentsOrChild)
+        {
+            List<TreeNode> checked_nodes = new List<TreeNode>();
+
+            FindCheckedNodes(checked_nodes, trv.Nodes, FindParentsOrChild);
+
             return checked_nodes;
         }
     }
