@@ -89,16 +89,12 @@ namespace TS_SE_Tool
                 }
                 else
                 {
-                    //Button rb = new Button();
                     btn.Name = "buttonUC" + i.ToString();
                     btn.Text = null;
                     btn.Location = new Point(6 + (padding + width) * (i), 19);
                     btn.Size = new Size(width, 23);
                     btn.FlatStyle = FlatStyle.Flat;
-                    //rb.BackColor = UserColorsList[i];
                     btn.Enabled = false;
-                    //if (UserColorsList[i].A == 0)
-                    //    rb.Text = "X";
 
                     btn.Click += new EventHandler(MainForm.SelectColor);
 
@@ -107,10 +103,17 @@ namespace TS_SE_Tool
 
                 if (btn != null)
                 {
-                    btn.BackColor = MainForm.UserColorsList[i];
                     btn.Enabled = true;
                     if (MainForm.UserColorsList[i].A == 0)
+                    {
                         btn.Text = "X";
+                        btn.BackColor = Color.FromName("Control");
+                    }
+                    else
+                    {
+                        btn.Text = "";
+                        btn.BackColor = MainForm.UserColorsList[i];
+                    }
                 }
             }
         }
@@ -214,7 +217,7 @@ namespace TS_SE_Tool
 
                     foreach (Button t in UserColorsB)
                     {
-                        if (t.BackColor.A == 0 && impColors > 0)
+                        if (MainForm.UserColorsList[g].A == 0 && impColors > 0)
                         {
                             UserColorsCB[g].Checked = true;
                             impColors--;

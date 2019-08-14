@@ -87,7 +87,7 @@ namespace TS_SE_Tool
                     (FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductMinorPart / 10.0);
 
                 SavefileVersion = 0;
-                SupportedSavefileVersionETS2 = new int[] { 39, 40, 41 }; //Supported save version
+                SupportedSavefileVersionETS2 = new int[] { 39, 40, 41, 42 }; //Supported save version
                 SupportedGameVersionETS2 = "1.33.x - 1.35.x"; //Last game version Tested on
                 //SupportedSavefileVersionATS;
                 SupportedGameVersionATS = "1.33.x - 1.35.x"; //Last game version Tested on
@@ -311,14 +311,51 @@ namespace TS_SE_Tool
             FillFormCargoOffersControls();
         }
 
+        //Menu controls
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormSettings FormWindow = new FormSettings();
+            FormWindow.ShowDialog();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox aboutWindow = new AboutBox();
+            aboutWindow.ShowDialog();
+        }
+
+        private void localPDFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string pdf_path = Directory.GetCurrentDirectory() + @"\HowTo.pdf";
+            if (File.Exists(pdf_path))
+                Process.Start(pdf_path);
+        }
+
+        private void youTubeVideoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = "https://rebrand.ly/TS-SET-Tutorial";
+            Process.Start(url);
+        }
+
         //Main part controls
+        private void buttonRefreshAll_Click(object sender, EventArgs e)
+        {
+            buttonMainDecryptSave.Enabled = true;
+            buttonMainLoadSave.Enabled = true;
+
+            FillAllProfilesPaths();
+        }
 
         private void buttonOpenSaveFolder_Click(object sender, EventArgs e)
         {
             if(Directory.Exists(Globals.SavesHex[comboBoxSaves.SelectedIndex]))
                 Process.Start(Globals.SavesHex[comboBoxSaves.SelectedIndex]);
             //else
-
         }
 
         private void buttonMainAddCustomFolder_Click(object sender, EventArgs e)
@@ -351,8 +388,9 @@ namespace TS_SE_Tool
 
             if (file != null)
             {
-                LogWriter("Backing up file to: " + SiiSavePath + "_backup");
-                File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
+                LogWriter("Backing up file to: " + SavefilePath + @"\game_backup.sii");
+
+                File.Copy(SiiSavePath, SavefilePath + @"\game_backup.sii", true);
 
                 File.WriteAllLines(SiiSavePath, file);
 
@@ -422,8 +460,9 @@ namespace TS_SE_Tool
 
             string SiiSavePath = SavefilePath + @"\game.sii";
 
-            LogWriter("Backing up file to: " + SiiSavePath + "_backup");
-            File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
+            LogWriter("Backing up file to: " + SavefilePath + @"\game_backup.sii");
+            //File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
+            File.Copy(SiiSavePath, SavefilePath + @"\game_backup.sii", true);
 
             WriteSaveFile(); //Save save file with or without changes
 
@@ -565,8 +604,28 @@ namespace TS_SE_Tool
                     combDT.Rows.Add(folder, "[S] profiles");
                     tempList.Add(folder);
                 }
-            }
 
+                int index = 0;
+                if (ProgSettingsV.CustomPaths.Keys.Contains(GameType))
+                    foreach (string CustPath in ProgSettingsV.CustomPaths[GameType])
+                    {
+                        index++;
+                        if (Directory.Exists(CustPath))
+                        {
+                            if (Directory.Exists(CustPath + @"\profiles"))
+                            {
+                                combDT.Rows.Add(CustPath + @"\profiles", "[C] Custom path " + index.ToString());
+                                tempList.Add(CustPath + @"\profiles");
+                            }                                
+                            else
+                            {
+                                combDT.Rows.Add(CustPath, "[C] Custom path " + index.ToString());
+                                tempList.Add(CustPath);
+                            }                            
+                        }
+                    }
+            }
+            /*
             int index = 0;
             if (ProgSettingsV.CustomPaths.Keys.Contains(GameType))
                 foreach (string CustPath in ProgSettingsV.CustomPaths[GameType])
@@ -578,7 +637,7 @@ namespace TS_SE_Tool
                         tempList.Add(CustPath);
                     }   
                 }
-
+            */
             Globals.ProfilesPaths = tempList.ToArray();
             comboBoxPrevProfiles.ValueMember = "ProfileID";
             comboBoxPrevProfiles.DisplayMember = "ProfileName";
@@ -2200,7 +2259,6 @@ namespace TS_SE_Tool
             FillVisitedCities(0);
 
             textBoxUserCompanyMoneyAccount.Text = PlayerProfileData.AccountMoney.ToString();
-            comboBoxUserCompanyHQcity.SelectedValue = PlayerProfileData.HQcity;
             textBoxUserCompanyCompanyName.Text = PlayerProfileData.CompanyName;
 
             MemoryStream ms = new MemoryStream();
@@ -2248,7 +2306,10 @@ namespace TS_SE_Tool
             comboBoxUserCompanyHQcity.SelectedIndexChanged -= comboBoxUserCompanyHQcity_SelectedIndexChanged;
             comboBoxUserCompanyHQcity.ValueMember = "City";
             comboBoxUserCompanyHQcity.DisplayMember = "CityName";
+            comboBoxUserCompanyHQcity.BeginUpdate();
             comboBoxUserCompanyHQcity.DataSource = combDT;
+            comboBoxUserCompanyHQcity.SelectedValue = PlayerProfileData.HQcity;
+            comboBoxUserCompanyHQcity.EndUpdate();
             comboBoxUserCompanyHQcity.SelectedIndexChanged += comboBoxUserCompanyHQcity_SelectedIndexChanged;
         }
         
@@ -2583,6 +2644,7 @@ namespace TS_SE_Tool
             PrepareGarages();
 
             FillGaragesList(listBoxGarages.TopIndex);
+            FillHQcities();
         }
 
         private void buttonGaragesUpgrade_Click(object sender, EventArgs e)
@@ -2649,6 +2711,7 @@ namespace TS_SE_Tool
             PrepareGarages();
 
             FillGaragesList(listBoxGarages.TopIndex);
+            FillHQcities();
         }
         //end User Company tab
 
@@ -4718,7 +4781,7 @@ namespace TS_SE_Tool
             }
 
         }
-
+        
         private void CorrectControlsPositions()
         {
             //Truck

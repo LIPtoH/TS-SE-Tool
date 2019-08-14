@@ -100,7 +100,7 @@ namespace TS_SE_Tool
             foreach (string tempD in MainForm.extraDrivers)
             {
                 if (tempD != null)
-                    treeViewSortingDrivers.Nodes.Add(tempD);
+                    treeViewSortingDrivers.Nodes.Add(tempD, tempD);
             }
 
             foreach (string tempV in MainForm.extraVehicles)
@@ -153,9 +153,12 @@ namespace TS_SE_Tool
                         Garages tempG = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == tempD.Parent.Name)];
                         string driverNL = tempD.Name;
 
-                        tempG.Drivers[tempG.Drivers.FindIndex(x => x == driverNL)] = null;
-                        MainForm.extraDrivers.Add(driverNL);
-                        MainForm.extraVehicles.Add(null);
+                        if(driverNL != MainForm.PlayerProfileData.UserDriver)
+                        {
+                            tempG.Drivers[tempG.Drivers.FindIndex(x => x == driverNL)] = null;
+                            MainForm.extraDrivers.Add(driverNL);
+                            MainForm.extraVehicles.Add(null);
+                        }
 
                         checked_nodes.RemoveAt(0);
                         if (checked_nodes.Count() == 0)
@@ -212,7 +215,7 @@ namespace TS_SE_Tool
                             {
                                 string driverNL = checked_nodes[0].Name;
                                 tempG.Drivers[i] = driverNL;
-                                MainForm.extraVehicles[MainForm.extraVehicles.FindIndex(x => x == driverNL)] = null;
+                                MainForm.extraDrivers[MainForm.extraDrivers.FindIndex(x => x == driverNL)] = null;
                                 checked_nodes.RemoveAt(0);
                                 if (checked_nodes.Count() == 0)
                                     goto NoMoreDrivers;

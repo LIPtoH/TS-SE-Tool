@@ -48,7 +48,7 @@ namespace TS_SE_Tool
 
         private void linkLabelHelpYouTube_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string url = "https://www.youtube.com/";
+            string url = "https://rebrand.ly/TS-SET-Tutorial";
             System.Diagnostics.Process.Start(url);
         }
 

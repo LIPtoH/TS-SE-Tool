@@ -1468,77 +1468,84 @@ namespace TS_SE_Tool
                             continue;
                         }
 
-
-                        if (!GPSinserted && (SaveInMemLine.StartsWith("gps_waypoint_storage :") || SaveInMemLine.StartsWith("map_action :")))
+                        //GPS
+                        if ( SaveInMemLine.StartsWith("gps_waypoint_storage :")) //|| SaveInMemLine.StartsWith("map_action :")))
                         {
-                            //GPSbehindOnline
-                            if (GPSbehindOnline.Count > 0)
+                            if(!GPSinserted)
                             {
-                                foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSbehindOnline)
+                                //GPSbehindOnline
+                                if (GPSbehindOnline.Count > 0)
                                 {
-                                    writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
-
-                                    foreach (string templine in tempgpsdata.Value)
+                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSbehindOnline)
                                     {
-                                        writer.WriteLine(templine);
-                                    }
+                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
 
-                                    writer.WriteLine("}");
-                                    writer.WriteLine("");
+                                        foreach (string templine in tempgpsdata.Value)
+                                        {
+                                            writer.WriteLine(templine);
+                                        }
+
+                                        writer.WriteLine("}");
+                                        writer.WriteLine("");
+                                    }
+                                }
+
+                                //GPSaheadOnline
+                                if (GPSaheadOnline.Count > 0)
+                                {
+                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSaheadOnline)
+                                    {
+                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+
+                                        foreach (string templine in tempgpsdata.Value)
+                                        {
+                                            writer.WriteLine(templine);
+                                        }
+
+                                        writer.WriteLine("}");
+                                        writer.WriteLine("");
+                                    }
+                                }
+
+                                //GPSbehind
+                                if (GPSbehind.Count > 0)
+                                {
+                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSbehind)
+                                    {
+                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+
+                                        foreach (string templine in tempgpsdata.Value)
+                                        {
+                                            writer.WriteLine(templine);
+                                        }
+
+                                        writer.WriteLine("}");
+                                        writer.WriteLine("");
+                                    }
+                                }
+
+                                //GPSahead
+                                if (GPSahead.Count > 0)
+                                {
+                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSahead)
+                                    {
+                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+
+                                        foreach (string templine in tempgpsdata.Value)
+                                        {
+                                            writer.WriteLine(templine);
+                                        }
+
+                                        writer.WriteLine("}");
+                                        writer.WriteLine("");
+                                    }
                                 }
                             }
-
-                            //GPSaheadOnline
-                            if (GPSaheadOnline.Count > 0)
+                            else
                             {
-                                foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSaheadOnline)
-                                {
-                                    writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
 
-                                    foreach (string templine in tempgpsdata.Value)
-                                    {
-                                        writer.WriteLine(templine);
-                                    }
-
-                                    writer.WriteLine("}");
-                                    writer.WriteLine("");
-                                }
                             }
-
-                            //GPSbehind
-                            if (GPSbehind.Count > 0)
-                            {
-                                foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSbehind)
-                                {
-                                    writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
-
-                                    foreach (string templine in tempgpsdata.Value)
-                                    {
-                                        writer.WriteLine(templine);
-                                    }
-
-                                    writer.WriteLine("}");
-                                    writer.WriteLine("");
-                                }
-                            }
-
-                            //GPSahead
-                            if (GPSahead.Count > 0)
-                            {
-                                foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSahead)
-                                {
-                                    writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
-
-                                    foreach (string templine in tempgpsdata.Value)
-                                    {
-                                        writer.WriteLine(templine);
-                                    }
-
-                                    writer.WriteLine("}");
-                                    writer.WriteLine("");
-                                }
-                            }
-
+                            
                             while (true)
                             {
                                 if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage :"))

@@ -94,6 +94,7 @@
             this.Controls.Add(this.groupBoxImportedColors);
             this.Controls.Add(this.groupBoxUserColors);
             this.Name = "FormShareUserColors";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Share User Colors";
             this.ResumeLayout(false);
 

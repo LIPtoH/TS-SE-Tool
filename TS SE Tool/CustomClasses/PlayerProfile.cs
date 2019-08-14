@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace TS_SE_Tool
 {
-    class PlayerProfile
+    public class PlayerProfile
     {
         public string UserDriver { get; set; }
         public string HQcity { get; set; }

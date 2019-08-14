@@ -343,12 +343,14 @@
             this.localPDFToolStripMenuItem.Name = "localPDFToolStripMenuItem";
             this.localPDFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.localPDFToolStripMenuItem.Text = "Local PDF";
+            this.localPDFToolStripMenuItem.Click += new System.EventHandler(this.localPDFToolStripMenuItem_Click);
             // 
             // youTubeVideoToolStripMenuItem
             // 
             this.youTubeVideoToolStripMenuItem.Name = "youTubeVideoToolStripMenuItem";
             this.youTubeVideoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.youTubeVideoToolStripMenuItem.Text = "YouTube video";
+            this.youTubeVideoToolStripMenuItem.Click += new System.EventHandler(this.youTubeVideoToolStripMenuItem_Click);
             // 
             // comboBoxProfiles
             // 
@@ -2216,7 +2218,7 @@
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.menuStripMain);
             this.MainMenuStrip = this.menuStripMain;
-            this.MaximumSize = new System.Drawing.Size(1000, 660);
+            this.MaximumSize = new System.Drawing.Size(850, 660);
             this.MinimumSize = new System.Drawing.Size(850, 660);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

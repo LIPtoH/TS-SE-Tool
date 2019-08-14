@@ -123,7 +123,7 @@ namespace TS_SE_Tool
 
         private DateTime LastModifiedTimestamp;
 
-        private PlayerProfile PlayerProfileData;
+        public PlayerProfile PlayerProfileData;
 
         internal ProgSettings ProgSettingsV;
 
@@ -158,7 +158,6 @@ namespace TS_SE_Tool
         private Image RepairImg, RefuelImg, CutomizeImg, PlayerCompanyLogo;
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs;
-
 
         private ImageList TabpagesImages;
 
@@ -227,25 +226,6 @@ namespace TS_SE_Tool
             FillAllProfilesPaths();
         }
 
-        private void buttonRefreshAll_Click(object sender, EventArgs e)
-        {
-            buttonMainDecryptSave.Enabled = true;
-            buttonMainLoadSave.Enabled = true;
-
-            FillAllProfilesPaths();
-        }
-        
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FormSettings FormWindow = new FormSettings();
-            FormWindow.ShowDialog();
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult exitDR = DialogResult.Yes;
@@ -272,11 +252,6 @@ namespace TS_SE_Tool
             ExportFormControlstoLanguageFile();
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AboutBox aboutWindow = new AboutBox();
-            aboutWindow.ShowDialog();
-        }
     }
 
     public class Globals
