@@ -55,6 +55,7 @@ namespace TS_SE_Tool
             CorrectControlsPositions();
             this.ResumeLayout();
 
+            //Distances choice
             DataTable combDT = new DataTable();
             combDT.Columns.Add("ID");
             combDT.Columns.Add("DistDisplayName");
@@ -80,9 +81,38 @@ namespace TS_SE_Tool
             comboBoxSettingDistanceMesSelect.DataSource = combDT;
             comboBoxSettingDistanceMesSelect.SelectedValue = MainForm.ProgSettingsV.DistanceMes;
 
+            //Currency choise
+            combDT = new DataTable();
+            combDT.Columns.Add("ID");
+            combDT.Columns.Add("DistDisplayName");
+
+            //Dictionary<string, string> DistanceMesNames = new Dictionary<string, string> { { "km", "Kilometers" }, { "mi", "Miles" } };
+            //MainForm.CurrencyDictR
+
+            foreach (KeyValuePair<string, double> tempitem in MainForm.CurrencyDictR)
+            {
+                string value = MainForm.ResourceManagerMain.GetString(tempitem.Key, Thread.CurrentThread.CurrentUICulture);
+
+                if (value != null && value != "")
+                {
+                    combDT.Rows.Add(tempitem.Key, value);
+                }
+                else
+                {
+                    combDT.Rows.Add(tempitem.Key, tempitem.Key);
+                }
+            }
+
+            comboBoxSettingCurrencySelect.ValueMember = "ID";
+            comboBoxSettingCurrencySelect.DisplayMember = "DistDisplayName";
+            comboBoxSettingCurrencySelect.DataSource = combDT;
+            comboBoxSettingCurrencySelect.SelectedValue = MainForm.ProgSettingsV.CurrencyMes;
+
+            //Pickup time intervals
             numericUpDownSettingPickTimeD.Value = Math.Floor((decimal)(MainForm.ProgSettingsV.JobPickupTime / 24));
             numericUpDownSettingPickTimeH.Value = MainForm.ProgSettingsV.JobPickupTime - numericUpDownSettingPickTimeD.Value * 24;
 
+            //Loop width
             numericUpDownSettingLoopCitys.Value = MainForm.ProgSettingsV.LoopEvery;
         }
 
@@ -134,6 +164,7 @@ namespace TS_SE_Tool
             {
                 MainForm.DistanceMultiplier = MainForm.DistanceMultipliers[comboBoxSettingDistanceMesSelect.SelectedValue.ToString()];
                 MainForm.ProgSettingsV.DistanceMes = comboBoxSettingDistanceMesSelect.SelectedValue.ToString();
+                MainForm.ProgSettingsV.CurrencyMes = comboBoxSettingCurrencySelect.SelectedValue.ToString();
             }
                 
             MainForm.WriteConfig();

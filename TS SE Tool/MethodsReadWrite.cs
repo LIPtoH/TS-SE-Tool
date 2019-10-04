@@ -47,7 +47,7 @@ namespace TS_SE_Tool
                     {
                         case "ProgramVersion":
                             {
-                                ProgPrevVersion = double.Parse(line.Split(new char[] { '=' })[1]);
+                                ProgPrevVersion = line.Split(new char[] { '=' })[1];
                                 break;
                             }
 
@@ -91,6 +91,12 @@ namespace TS_SE_Tool
                             {
                                 ProgSettingsV.DistanceMes = line.Split(new char[] { '=' })[1];
                                 DistanceMultiplier = DistanceMultipliers[ProgSettingsV.DistanceMes];                                
+                                break;
+                            }
+                        case "CurrencyMes":
+                            {
+                                ProgSettingsV.CurrencyMes = line.Split(new char[] { '=' })[1];
+                                DistanceMultiplier = DistanceMultipliers[ProgSettingsV.DistanceMes];
                                 break;
                             }
                         case "CustomPathGame":
@@ -287,7 +293,8 @@ namespace TS_SE_Tool
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
-                    TruckBrandsLngDict.Add(tempFile[i].Split(new char[] { ';' })[0], tempFile[i].Split(new char[] { ';' })[1]);
+                    string[] tmp = tempFile[i].Split(new char[] { ';' });
+                    TruckBrandsLngDict.Add(tmp[0], tmp[1]);
                 }
             }
             catch
@@ -373,9 +380,8 @@ namespace TS_SE_Tool
             GameIconeImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
         }
 
-        private Image[] ExtImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y )
+        public Image[] ExtImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y )
         {
-            
             Image[] tempImgarray = new Image[_filenamesarray.Length];
 
             for (int i = 0; i < _filenamesarray.Length; i++)
@@ -397,7 +403,7 @@ namespace TS_SE_Tool
             return tempImgarray;
         }
 
-        private Image[] ExtImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y, int _newwidth, int _newheight)
+        public Image[] ExtImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y, int _newwidth, int _newheight)
         {
             MemoryStream ms;
             Image[] tempImgarray = new Image[_filenamesarray.Length];
@@ -704,12 +710,17 @@ namespace TS_SE_Tool
             ShowStatusMessages("i", "message_decoding_save_file");
 
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
+            Globals.SelectedSave = Globals.SavesHex[comboBoxSaves.SelectedIndex].Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+            LogWriter("Working on " + SavefilePath + " save file");
+
+            string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
+
+            Globals.SelectedProfile = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex].Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
             string SiiInfoPath = SavefilePath + @"\info.sii";
 
             string SiiSavePath = SavefilePath + @"\game.sii";
-
-            string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
 
             string dbPath = "dbs/" + GameType + "." + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + ".sdf";
             DBconnection = new SqlCeConnection("Data Source = " + dbPath);
@@ -923,6 +934,8 @@ namespace TS_SE_Tool
 
             //ToggleGame(GameType);
             ToggleVisibility(true);
+
+            LogWriter("Successfully completed work with " + SavefilePath + " save file");
         }
 
         //button_save_file
@@ -1936,6 +1949,48 @@ namespace TS_SE_Tool
             GC.WaitForPendingFinalizers();
         }
 
+        public void WriteInfoFile(string[] _infoFile, string _filePath, SavefileInfoData _infoData)
+        {
+            using (StreamWriter writer = new StreamWriter(_filePath, true))
+            {
+                string InMemLine = "";
+
+                for (int line = 0; line < _infoFile.Length; line++)
+                {
+                    InMemLine = _infoFile[line];
+
+                    if (InMemLine.StartsWith(" name:"))
+                    {
+                        if(_infoData.SaveName != null)
+                        {
+                            string t = _infoData.SaveName;
+
+                            if (_infoData.SaveName.Contains(" ") || _infoData.SaveName.Length == 0)
+                                t = "\"" + t + "\"";
+
+                            InMemLine = " name: " + t;
+                        }
+
+                        goto EndWrite;
+                    }
+
+                    if (InMemLine.StartsWith(" file_time:"))
+                    {
+                        if (_infoData.FileTime != 0)
+                        {
+                            InMemLine = " file_time: " + _infoData.FileTime.ToString();
+                        }
+
+                        goto EndWrite;
+                    }
+
+                    EndWrite:
+                    if(line > 0)
+                        writer.WriteLine();
+                    writer.Write(InMemLine);
+                }
+            }
+        }
         //Database
         public void ExportDB()
         {

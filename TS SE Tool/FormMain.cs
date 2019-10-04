@@ -36,136 +36,142 @@ namespace TS_SE_Tool
     {
         #region  Accesslevels
 
-        private int SavefileVersion;
-        internal int[] SupportedSavefileVersionETS2;
-        internal string SupportedGameVersionETS2;
+        private int SavefileVersion; //+
+        internal int[] SupportedSavefileVersionETS2; //Program
+        internal string SupportedGameVersionETS2;//Program
         //internal int SupportedSavefileVersionATS;
-        internal string SupportedGameVersionATS;
+        internal string SupportedGameVersionATS;//Program
 
-        private int InGameTime;
+        private int InGameTime; //+
         //private int JobsTotalDistance;
-        private int JobsAmountAdded;
+        private int JobsAmountAdded;//process result
 
-        private int[] UrgencyArray;
+        private int[] UrgencyArray;//Program
 
-        private double ProgPrevVersion;
+        private string ProgPrevVersion;//Program
 
-        private bool FileDecoded;
+        private bool FileDecoded;  //+
 
-        private string GameType;
-        private string SavefilePath;
-        private string LastVisitedCity;
-        private string LoopStartCity;
-        private string LoopStartCompany;
-        private string unCertainRouteLength;
+        private string GameType;//Program
+        private string SavefilePath; //+
+        private string LastVisitedCity; //+
+        private string LoopStartCity;//Program
+        private string LoopStartCompany;//Program
+        private string unCertainRouteLength;//Program
 
-        private bool UserCompanyAssignedTruckPlacementEdited;
+        private bool UserCompanyAssignedTruckPlacementEdited;//Program
 
-        private bool InfoDepContinue;
+        private bool InfoDepContinue;//Program
 
-        private string ProfileETS2;
-        private string ProfileATS;
+        private string ProfileETS2;//Program
+        private string ProfileATS;//Program
 
-        private string[] CountryDictionaryFile;
-        private string[] tempInfoFileInMemory;
-        private string[] tempSavefileInMemory;
-        private string[] tempProfileFileInMemory;
-        private string[] CitiesListAddedToCompare;
+        private string[] CountryDictionaryFile;//Program
+        //Raw data in memory
+        private string[] tempProfileFileInMemory; //Program
+        private string[] tempInfoFileInMemory;//Program
+        private string[] tempSavefileInMemory; //+
+        //
+        //private string[] CitiesListAddedToCompare;
         //private string[] JobsListAdded;
-        private List<string>  ListSavefileCompanysString; //string[]
-        private Dictionary<string, List<JobAdded>> AddedJobsDictionary;
-        private JobAdded FreightMarketJob;
-        private string[] EconomyEventUnitLinkStringList;
-        private string[] EconomyEventQueueList;
+        //private List<string>  ListSavefileCompanysString;
+        private Dictionary<string, List<JobAdded>> AddedJobsDictionary;//Program
+        private JobAdded FreightMarketJob;//Program
+        private string[] EconomyEventUnitLinkStringList;//Program
+        //private string[] EconomyEventQueueList;
 
-        private List<LevelNames> PlayerLevelNames;
+        private List<LevelNames> PlayerLevelNames;//Program
 
-        private string[,] EconomyEventsTable;
+        private string[,] EconomyEventsTable;//Program
 
-        private List<City> CitiesList;
-        private List<string> CitiesListDB;
-        private List<string> CitiesListDiff;
+        private List<City> CitiesList;//+
+        private List<string> CitiesListDB;//Program
+        private List<string> CitiesListDiff;//Program
 
-        private List<Cargo> CargoesList;
-        private List<Cargo> CargoesListDB;
-        private List<Cargo> CargoesListDiff;
+        private List<Cargo> CargoesList; //+
+        private List<Cargo> CargoesListDB;//Program
+        private List<Cargo> CargoesListDiff;//Program
 
-        private Dictionary<string, List<string>> TrailerDefinitionVariants;
-        private List<string> TrailerVariants;
+        private Dictionary<string, List<string>> TrailerDefinitionVariants;//Program
+        private List<string> TrailerVariants;//Program
 
         private List<string> HeavyCargoList;
 
-        private List<string> CompaniesList;
-        private List<string> CompaniesListDB;
-        private List<string> CompaniesListDiff;
+        private List<string> CompaniesList; //+
+        private List<string> CompaniesListDB;//Program
+        private List<string> CompaniesListDiff;//Program
 
-        private List<string> CountriesList;
+        private List<string> CountriesList;//Program
 
-        private List<string> DBDependencies;
-        private List<string> SFDependencies;
+        private List<string> DBDependencies;//Program DB
+        private List<string> SFDependencies;//Program Info
 
-        public List<Garages> GaragesList;
-        public List<string> extraVehicles;
-        public List<string> extraDrivers;
+        public List<Garages> GaragesList; //+
+        public List<string> extraVehicles;//process result
+        public List<string> extraDrivers;//process result
 
-        private List<VisitedCity> VisitedCities;
+        private List<VisitedCity> VisitedCities; //+
 
-        private List<CompanyTruck> CompanyTruckList;
-        private List<CompanyTruck> CompanyTruckListDB;
-        private List<CompanyTruck> CompanyTruckListDiff;
+        private List<CompanyTruck> CompanyTruckList;//Program
+        private List<CompanyTruck> CompanyTruckListDB;//Program
+        private List<CompanyTruck> CompanyTruckListDiff;//Program
 
-        private List<ExtCompany> ExternalCompanies;
-        private List<ExtCargo> ExtCargoList;
+        private List<ExtCompany> ExternalCompanies;//Program cache
+        private List<ExtCargo> ExtCargoList;//Program cache
 
-        internal List<Color> UserColorsList;
+        internal List<Color> UserColorsList; //+
 
-        private SqlCeConnection DBconnection;
+        private SqlCeConnection DBconnection;//Program
 
-        private DateTime LastModifiedTimestamp;
+        private DateTime LastModifiedTimestamp; //+
 
-        public PlayerProfile PlayerProfileData;
+        public PlayerProfile PlayerProfileData; //+
 
-        internal ProgSettings ProgSettingsV;
+        internal ProgSettings ProgSettingsV;//Program
 
-        private Random RandomValue;
+        private Random RandomValue;//Program
 
-        private CountryDictionary CountryDictionary;
+        private CountryDictionary CountryDictionary;//Program
 
-        private Routes RouteList;
+        private Routes RouteList;//Program DB
 
         public PlainTXTResourceManager ResourceManagerMain;
 
         private Dictionary<string, string> dictionaryProfiles;
         public Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict, CountriesLngDict, UrgencyLngDict;
-        
-        public static Dictionary<string, string> CitiesLngDict, CustomStringsDict;
-        public Dictionary<string, UserCompanyTruckData> UserTruckDictionary;
-        private List<string> DriverPool;
-        public Dictionary<string, UserCompanyDriverData> UserDriverDictionary;
-        private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary;
-        private Dictionary<string, List<string>> UserTrailerDefDictionary;
 
-        private List<string> namelessList;
-        private string namelessLast;
+        public static Dictionary<string, string> CitiesLngDict;//, CustomStringsDict;
+        public Dictionary<string, UserCompanyTruckData> UserTruckDictionary; //+
+        private List<string> DriverPool; //+
+        public Dictionary<string, UserCompanyDriverData> UserDriverDictionary; //+
+        private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary; //+
+        private Dictionary<string, List<string>> UserTrailerDefDictionary; //+
 
-        private Dictionary<string, List<string>> GPSbehind, GPSahead, GPSbehindOnline, GPSaheadOnline;
+        private List<string> namelessList;//Program
+        private string namelessLast;//Program
 
-        internal Dictionary<string, double> DistanceMultipliers;
+        private Dictionary<string, List<string>> GPSbehind, GPSahead, GPSbehindOnline, GPSaheadOnline; //+
 
-        private DataTable DistancesTable;
+        internal Dictionary<string, double> DistanceMultipliers; //Program
 
-        private Bitmap ProgressBarGradient;
-        private Image RepairImg, RefuelImg, CutomizeImg, PlayerCompanyLogo;
+        private DataTable DistancesTable; //Program
+
+        private Bitmap ProgressBarGradient; //Program
+        private Image RepairImg, RefuelImg, CutomizeImg, PlayerCompanyLogo; //Program
+
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
-            TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs;
+            TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs; //Program
 
-        private ImageList TabpagesImages;
+        private ImageList TabpagesImages; //Program
 
-        private CheckBox[,] SkillButtonArray;
-        private CheckBox[] ADRbuttonArray;
+        private CheckBox[,] SkillButtonArray; //Program
+        private CheckBox[] ADRbuttonArray; //Program
 
-        internal double DistanceMultiplier = 1;
-        private double km_to_mileconvert = 0.621371;
+        internal double DistanceMultiplier = 1; //Program
+        private double km_to_mileconvert = 0.621371; //Program
+
+        public Dictionary<string, List<string>> CurrencyDict;
+        public Dictionary<string, double> CurrencyDictR;
 
         #endregion
 
@@ -259,6 +265,8 @@ namespace TS_SE_Tool
         public static string[] ProfilesPaths;
         public static List<string> ProfilesHex;
         public static string[] SavesHex;
+        public static string SelectedProfile;
+        public static string SelectedSave;
         public static string CurrentGame = "";
         public static string ProfileSii = "";
         public static int[] PlayerLevelUps;

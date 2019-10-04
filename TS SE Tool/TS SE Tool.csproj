@@ -131,6 +131,9 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomClasses\Cargo.cs" />
+    <Compile Include="CustomClasses\SaveFileData.cs" />
+    <Compile Include="CustomClasses\SavefileInfoData.cs" />
+    <Compile Include="CustomClasses\TGASharpLib.cs" />
     <Compile Include="CustomClasses\TrailerDefinition.cs" />
     <Compile Include="CustomClasses\City.cs" />
     <Compile Include="CustomClasses\ExtCargo.cs" />
@@ -151,6 +154,12 @@
     <Compile Include="CustomClasses\VisitedCity.cs" />
     <Compile Include="DataManipulation.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormConvoyControlPositions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormConvoyControlPositions.Designer.cs">
+      <DependentUpon>FormConvoyControlPositions.cs</DependentUpon>
     </Compile>
     <Compile Include="FormGaragesSoldContent.cs">
       <SubType>Form</SubType>
@@ -207,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAddCustomFolder.resx">
       <DependentUpon>FormAddCustomFolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormConvoyControlPositions.resx">
+      <DependentUpon>FormConvoyControlPositions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormGaragesSoldContent.resx">
       <DependentUpon>FormGaragesSoldContent.cs</DependentUpon>
@@ -270,7 +282,7 @@ xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\Nativ
 if not exist "$(TargetDir)libs\amd64\" md "$(TargetDir)libs\amd64\"
 xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)libs\amd64\"
 
-ROBOCOPY "$(TargetDir) " "$(TargetDir)libs\ " /XF *.exe *.sdf *.config *.manifest *.cfg *.csv *.log *.pdb  /XD gameref img libs logs lang dbs /E /IS /MOVE
+ROBOCOPY "$(TargetDir) " "$(TargetDir)libs\ " /XF *.exe *.sdf *.config *.manifest *.cfg *.csv *.log *.pdb *.pdf  /XD gameref img libs logs lang dbs /E /IS /MOVE
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
 </Project>

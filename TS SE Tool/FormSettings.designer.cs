@@ -109,13 +109,11 @@
             // 
             // comboBoxSettingCurrencySelect
             // 
-            this.comboBoxSettingCurrencySelect.Enabled = false;
             this.comboBoxSettingCurrencySelect.FormattingEnabled = true;
             this.comboBoxSettingCurrencySelect.Location = new System.Drawing.Point(217, 97);
             this.comboBoxSettingCurrencySelect.Name = "comboBoxSettingCurrencySelect";
             this.comboBoxSettingCurrencySelect.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSettingCurrencySelect.TabIndex = 9;
-            this.comboBoxSettingCurrencySelect.Visible = false;
             // 
             // labelCurrency
             // 
@@ -125,7 +123,6 @@
             this.labelCurrency.Size = new System.Drawing.Size(49, 13);
             this.labelCurrency.TabIndex = 8;
             this.labelCurrency.Text = "Currency";
-            this.labelCurrency.Visible = false;
             // 
             // labelCity
             // 

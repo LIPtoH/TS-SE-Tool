@@ -156,7 +156,7 @@ namespace TS_SE_Tool
 
                             CompaniesList.Add(chunkOfline[2]); //add company to list
 
-                            //Add Company to City from companies list
+                            //Add Company to City from companies list                            
                             foreach (City tempcity in CitiesList.FindAll(x => x.CityName == chunkOfline[3]))
                             {
                                 tempcity.AddCompany(chunkOfline[2], 0);
@@ -1019,7 +1019,7 @@ namespace TS_SE_Tool
                     if (tempSavefileInMemory[line].StartsWith("economy_event_queue :"))
                     {
                         int newSize = int.Parse(tempSavefileInMemory[line + 1].Split(new char[] { ' ' })[2]); // queue size
-                        Array.Resize(ref EconomyEventQueueList, newSize);
+                        //Array.Resize(ref EconomyEventQueueList, newSize);
                         EconomyEventsTable = new string[newSize, 5];
 
                         continue;
@@ -1363,7 +1363,7 @@ namespace TS_SE_Tool
                 ShowStatusMessages("e", "error_save_version_not_detected");
         }
 
-        private string GetCustomSaveFilename(string _tempSaveFilePath)
+        public string GetCustomSaveFilename(string _tempSaveFilePath)
         {
             string chunkOfline;
 
@@ -1417,8 +1417,13 @@ namespace TS_SE_Tool
                         if (tempFile[line].StartsWith(" name:"))
                         {
                             chunkOfline = tempFile[line];
+                            string CustomName = chunkOfline.Split(new char[] { ' ' },3)[2];
+                            if (CustomName.StartsWith("\""))
+                            {
+                                CustomName = CustomName.Substring(1, CustomName.Length - 2);
+                            }
                             //SavefileVersion = int.Parse(chunkOfline[2]);
-                            return chunkOfline.Substring(7);
+                            return CustomName;//chunkOfline.Substring(7);
                         }
                     }
                 }
@@ -1502,6 +1507,7 @@ namespace TS_SE_Tool
             }
         }
 
+        //Apply new garage size and Copy extra items to temp Lists
         private void PrepareGarages()
         {
             List<string> extraTrailers = new List<string>();
@@ -1623,6 +1629,7 @@ namespace TS_SE_Tool
             }
         }
 
+        //Rearrange extra User Drivers to glogal Driver pool
         private void PrepareDriversTrucks()
         {
             extraDrivers.RemoveAll(x => x == null);
@@ -1638,7 +1645,7 @@ namespace TS_SE_Tool
 
             extraVehicles.RemoveAll(x => x == null);
         }
-
+        //Sort events by time
         private void PrepareEvents()
         {
             for (int i = 0; i < EconomyEventUnitLinkStringList.Length; i++)
@@ -1755,7 +1762,7 @@ namespace TS_SE_Tool
                     unCertainRouteLength = "*";
                 }
                 //Time untill job expires
-                int ExpirationTime = InGameTime + (JobsAmountAdded * (ProgSettingsV.JobPickupTime * 60));
+                int ExpirationTime = InGameTime + RandomValue.Next(180, 1800) + (JobsAmountAdded * ProgSettingsV.JobPickupTime * 60);
                 //Creating Job data
                 JobAdded tempJobData = new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, 
                     UnitsCount, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice), ExpirationTime, TruckName, TrailerVariant, TrailerDefinition);
@@ -1912,7 +1919,8 @@ namespace TS_SE_Tool
                 }
             }
         }
-
+        /*
+        //Get random number
         public IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)
         {
             Random rand = new Random();
@@ -1923,7 +1931,8 @@ namespace TS_SE_Tool
                 yield return values[rand.Next(size)];
             }
         }
-
+        */
+        /*
         private void LoadAdditionalCargo()
         {
             //NEED REWRITE
@@ -1952,7 +1961,8 @@ namespace TS_SE_Tool
             {
             }
         }
-
+        */
+        //Create DB
         private void CreateDatabase(string fileName)
         {
             string connectionString;
@@ -2018,7 +2028,7 @@ namespace TS_SE_Tool
                 UpdateDatabase(sql);
             }
         }
-
+        //Create DB structure
         private void CreateDatabaseStructure()
         {
             if (DBconnection.State == ConnectionState.Closed)
@@ -2110,7 +2120,7 @@ namespace TS_SE_Tool
 
             DBconnection.Close();
         }
-
+        //Help function for DB update
         private void UpdateDatabase(string _sql_string)
         {
             if (DBconnection.State == ConnectionState.Closed)
@@ -2137,7 +2147,7 @@ namespace TS_SE_Tool
                 DBconnection.Close();
             }
         }
-
+        //Clear DB
         internal void ClearDatabase()
         {
             string[] deletearray = { "DistancesTable", "CompaniesCargoTable", "CompaniesInCitysTable", "TrucksTable", "CargoesTable", "TrailerVariantTable", "TrailerDefinitionTable", "CompaniesTable", "CitysTable"};
@@ -2196,7 +2206,7 @@ namespace TS_SE_Tool
 
             LogWriter("Loaded " + RouteList.CountItems() + " routes from DataBase");
         }
-
+        //Upload data to DB
         private void AddDistances_DataTableToDB_Bulk(DataTable reader)//(bool keepNulls, DataTable reader)
         {
 
@@ -2276,7 +2286,7 @@ namespace TS_SE_Tool
             SqlCeEngine DBengine = new SqlCeEngine(DBconnection.ConnectionString);
             DBengine.Shrink();
         }
-
+        //Upload to DB
         private void InsertDataIntoDatabase(string _targetTable)
         {
             switch (_targetTable)
@@ -2724,7 +2734,7 @@ namespace TS_SE_Tool
                     }
             }
         }
-
+        //Load from DB
         private void GetDataFromDatabase(string _targetTable)
         {
             SqlCeDataReader reader = null;

@@ -23,7 +23,7 @@ namespace TS_SE_Tool
 {
     class ProgSettings
     {        
-        public ProgSettings(double _ProgramVersion, string _Language, bool _ProposeRandom, Int16 _JobPickupTime, byte _LoopEvery, double _TimeMultiplier, string _DistanceMes)
+        public ProgSettings(string _ProgramVersion, string _Language, bool _ProposeRandom, Int16 _JobPickupTime, byte _LoopEvery, double _TimeMultiplier, string _DistanceMes, string _CurrencyMes)
         {
             ProgramVersion = _ProgramVersion;
             Language = _Language;
@@ -32,24 +32,33 @@ namespace TS_SE_Tool
             LoopEvery = _LoopEvery;
             TimeMultiplier = _TimeMultiplier;
             DistanceMes = _DistanceMes;
-            CustomPaths = new Dictionary<string, List<string>>();//List<string>();
+            CurrencyMes = _CurrencyMes;
+            CustomPaths = new Dictionary<string, List<string>>();
         }
 
-        public double ProgramVersion { get; set; }
+        public ProgSettings()
+        {
 
-        public string Language { get; set; }
+        }
 
-        public bool ProposeRandom { get; set; }
+        //0.1, "Default", false, 72, 0, 1.0, "km", "EUR"
+        public string ProgramVersion { get; set; } = "0.0.1.0";
 
-        public Int16 JobPickupTime { get; set; }
+        public string Language { get; set; } = "Default";
 
-        public byte LoopEvery { get; set; }
+        public bool ProposeRandom { get; set; } = false;
 
-        public double TimeMultiplier { get; set; }
+        public Int16 JobPickupTime { get; set; } = 72;
 
-        public string DistanceMes { get; set; }
+        public byte LoopEvery { get; set; } = 0;
+
+        public double TimeMultiplier { get; set; } = 1.0;
+
+        public string DistanceMes { get; set; } = "km";
+
+        public string CurrencyMes { get; set; } = "EUR";
 
         //public List<string> CustomPaths { get; set; }
-        public Dictionary<string, List<string>> CustomPaths { get; set; }
+        public Dictionary<string, List<string>> CustomPaths { get; set; } = new Dictionary<string, List<string>>();
     }
 }

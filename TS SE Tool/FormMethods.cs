@@ -81,10 +81,10 @@ namespace TS_SE_Tool
             if (_initial)
             {
                 ResourceManagerMain = new PlainTXTResourceManager();
-                ProgSettingsV = new ProgSettings(0.1, "Default", false, 72, 0, 1.0, "km");
+                //ProgSettingsV = new ProgSettings("0.2.1.0", "Default", false, 72, 0, 1.0, "km", "EUR");
+                ProgSettingsV = new ProgSettings();
 
-                ProgSettingsV.ProgramVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductMajorPart +
-                    (FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductMinorPart / 10.0);
+                ProgSettingsV.ProgramVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
                 SavefileVersion = 0;
                 SupportedSavefileVersionETS2 = new int[] { 39, 40, 41, 42 }; //Supported save version
@@ -108,12 +108,12 @@ namespace TS_SE_Tool
                 CountriesLngDict = new Dictionary<string, string>();
                 CargoLngDict = new Dictionary<string, string>();
                 UrgencyLngDict = new Dictionary<string, string>();
-                CustomStringsDict = new Dictionary<string, string>();
+                //CustomStringsDict = new Dictionary<string, string>();
                 TruckBrandsLngDict = new Dictionary<string, string>();
 
                 GameType = "ETS2";
                 Globals.CurrentGame = dictionaryProfiles[GameType];
-                
+
                 DistancesTable = new DataTable();
                 DistancesTable.Columns.Add("SourceCity", typeof(string));
                 DistancesTable.Columns.Add("SourceCompany", typeof(string));
@@ -148,6 +148,134 @@ namespace TS_SE_Tool
                 PlayerLevelNames.Add(lvl_name7);
                 PlayerLevelNames.Add(lvl_name8);
                 PlayerLevelNames.Add(lvl_name9);
+
+
+                //currency format: [sign1] - [sign2] 1.234,- [sign3]
+                CurrencyDict = new Dictionary<string, List<string>>();
+                CurrencyDictR = new Dictionary<string, double>();
+
+                string curName = "EUR";
+                CurrencyDictR.Add(curName, 1);
+                string[] input = new string[] { "", "€", "" };
+                List<string> curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+                
+                curName = "CHF";
+                CurrencyDictR.Add(curName, 1.142);
+                input = new string[] { "", "", " CHF" };
+                curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+
+                curName = "CZK";
+                CurrencyDictR.Add(curName, 25.88);
+                input = new string[] { "", "", " Kč" };
+                curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+
+                curName = "GBP";
+                CurrencyDictR.Add(curName, 0.875);
+                input = new string[] { "", "£", "" };
+                curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+
+                curName = "PLN";
+                CurrencyDictR.Add(curName, 4.317);
+                input = new string[] { "", "", " zł" };
+                curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+
+                curName = "HUF";
+                CurrencyDictR.Add(curName, 325.3);
+                input = new string[] { "", "", " Ft" };
+                curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+
+                curName = "DKK";
+                CurrencyDictR.Add(curName, 7.46);
+                input = new string[] { "", "", " kr" };
+                curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+
+                curName = "SEK";
+                CurrencyDictR.Add(curName, 10.52);
+                input = new string[] { "", "", " kr" };
+                curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+
+                curName = "NOK";
+                CurrencyDictR.Add(curName, 9.51);
+                input = new string[] { "", "", " kr" };
+                curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+
+                curName = "RUB";
+                CurrencyDictR.Add(curName, 77.05);
+                input = new string[] { "", "₽", "" };
+                curLst = new List<string>(input);
+                CurrencyDict.Add(curName, curLst);
+                #region 
+                /*
+                currency_code[]: "EUR"
+                currency_ratio[]: 1
+                currency_sign1[]: ""
+                currency_sign2[]: "€"
+                currency_sign3[]: ""
+
+                currency_code[]: "CHF"
+                currency_ratio[]: 1.142
+                currency_sign1[]: ""
+                currency_sign2[]: ""
+                currency_sign3[]: " CHF"
+
+                currency_code[]: "CZK"
+                currency_ratio[]: 25.88
+                currency_sign1[]: ""
+                currency_sign2[]: ""
+                currency_sign3[]: " Kč"
+
+                currency_code[]: "GBP"
+                currency_ratio[]: 0.875
+                currency_sign1[]: ""
+                currency_sign2[]: "£"
+                currency_sign3[]: ""
+
+                currency_code[]: "PLN"
+                currency_ratio[]: 4.317
+                currency_sign1[]: ""
+                currency_sign2[]: ""
+                currency_sign3[]: " zł"
+
+                currency_code[]: "HUF"
+                currency_ratio[]: 325.3
+                currency_sign1[]: ""
+                currency_sign2[]: ""
+                currency_sign3[]: " Ft"
+
+                currency_code[]: "DKK"
+                currency_ratio[]: 7.46
+                currency_sign1[]: ""
+                currency_sign2[]: ""
+                currency_sign3[]: " kr"
+
+                currency_code[]: "SEK"
+                currency_ratio[]: 10.52
+                currency_sign1[]: ""
+                currency_sign2[]: ""
+                currency_sign3[]: " kr"
+
+                currency_code[]: "NOK"
+                currency_ratio[]: 9.51
+                currency_sign1[]: ""
+                currency_sign2[]: ""
+                currency_sign3[]: " kr"
+
+                currency_code[]: "RUB"
+                currency_ratio[]: 77.05
+                currency_sign1[]: ""
+                currency_sign2[]: "₽"
+                currency_sign3[]: ""
+                */
+                #endregion
 
                 //Urgency
                 UrgencyArray = new int[] { 0, 1, 2 };
@@ -239,7 +367,7 @@ namespace TS_SE_Tool
 
             ExtCargoList = new List<ExtCargo>();
 
-            EconomyEventQueueList = new string[0];
+            //EconomyEventQueueList = new string[0];
             EconomyEventsTable = new string[0, 0];
             EconomyEventUnitLinkStringList = new string[0];
 
@@ -247,11 +375,11 @@ namespace TS_SE_Tool
             LastVisitedCity = "";
             InGameTime = 0;
             RandomValue = new Random();
-            CitiesListAddedToCompare = new string[1];
+            //CitiesListAddedToCompare = new string[1];
 
             //JobsListAdded = new string[0];
             LastModifiedTimestamp = new DateTime();
-            ListSavefileCompanysString = new List<string>();//string[0];
+            //ListSavefileCompanysString = new List<string>();//string[0];
 
             AddedJobsDictionary = new Dictionary<string, List<JobAdded>>();
 
@@ -266,7 +394,7 @@ namespace TS_SE_Tool
             //JobsTotalDistance = 0;
             LoopStartCity = "";
             LoopStartCompany = "";
-            ProgPrevVersion = 0f;
+            ProgPrevVersion = "0.0.1.0";
 
             RouteList = new Routes();
             DistancesTable.Clear();
@@ -911,6 +1039,7 @@ namespace TS_SE_Tool
 
                 comboBoxSaves.Enabled = true;
                 comboBoxSaves.SelectedIndex = 0;
+
                 buttonProfilesAndSavesOpenSaveFolder.Enabled = true;
                 buttonMainDecryptSave.Enabled = true;
                 buttonMainLoadSave.Enabled = true;
@@ -3999,7 +4128,7 @@ namespace TS_SE_Tool
 
             //Array.Resize(ref JobsListAdded, 0);
             AddedJobsDictionary.Clear();
-            ListSavefileCompanysString.Clear();//Array.Resize(ref ListSavefileCompanysString, 0);
+            //ListSavefileCompanysString.Clear();//Array.Resize(ref ListSavefileCompanysString, 0);
             Array.Resize(ref EconomyEventUnitLinkStringList, 0);
 
             listBoxFreightMarketAddedJobs.Items.Clear();
@@ -4547,6 +4676,19 @@ namespace TS_SE_Tool
                 MessageBox.Show("Something gone wrong with decoding.");
             }
         }
+
+        private void buttonConvoyToolsGPSTruckPositionMultySaveCopy_Click(object sender, EventArgs e)
+        {
+            FormConvoyControlPositions FormWindow = new FormConvoyControlPositions(true);
+            FormWindow.ShowDialog();
+        }
+
+        private void buttonConvoyToolsGPSTruckPositionMultySavePaste_Click(object sender, EventArgs e)
+        {
+            FormConvoyControlPositions FormWindow = new FormConvoyControlPositions(false);
+            FormWindow.ShowDialog();
+        }
+
         //end Convoy Tools tab
 
         //Form methods
@@ -5229,6 +5371,29 @@ namespace TS_SE_Tool
         static string NullToString(object Value)
         {
             return Value == null ? "null" : Value.ToString();
+        }
+
+        public DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+
+        public double DateTimeToUnixTimeStamp(DateTime dateTime)
+        {
+            //Data time to utc
+            dateTime = dateTime.ToUniversalTime();
+
+            // Unix timestamp is seconds past epoch
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
+            double unixTimeStamp = dateTime.Subtract(dtDateTime).TotalSeconds;
+            return unixTimeStamp;
+
+            //dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            //return dtDateTime;
         }
         //end Form methods
     }

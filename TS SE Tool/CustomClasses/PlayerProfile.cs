@@ -19,19 +19,23 @@ namespace TS_SE_Tool
 {
     public class PlayerProfile
     {
-        public string UserDriver { get; set; }
-        public string HQcity { get; set; }
+        //Economy
         public uint ExperiencePoints { get; set; }
-        public uint AccountMoney { get; set; }
         public byte[] PlayerSkills { get; set; }
-        public string CompanyName { get; set; }
-        public string CompanyLogo { get; set; }
-        public int CreationTime { get; set; }
+        //Bank
+        public uint AccountMoney { get; set; }
+        //Player
+        public string HQcity { get; set; }
         public string UserCompanyAssignedTruck { get; set; }
         public string UserCompanyAssignedTruckPlacement { get; set; }
         public string UserCompanyAssignedTrailer { get; set; }
-        public string CurrentJob { get; set; }
         public List<string> UserCompanyAssignedSlaveTrailerPlacements = new List<string>();
+        public string CurrentJob { get; set; }
+        public string UserDriver { get; set; }
+        //Profile data
+        public string CompanyName { get; set; }
+        public string CompanyLogo { get; set; }
+        public int CreationTime { get; set; }
 
 
         public PlayerProfile(string _HQcity, uint _Expirience, byte[] _PlayerSkills, uint _AccountMoney)

@@ -115,7 +115,8 @@ namespace TS_SE_Tool
             }
         }
         */
-        private unsafe string[] NewDecodeFile (string _savefile_path)
+
+        public unsafe string[] NewDecodeFile (string _savefile_path)
         {
             ShowStatusMessages("i", "message_loading_save_file");
             LogWriter("Loading file into memory");
@@ -273,7 +274,7 @@ namespace TS_SE_Tool
         {
             return Convert.ToString(_integer, 2);
         }
-
+        /*
         private static byte[] AESDecrypt(byte[] _encryptedData, byte[] _keyBytes, byte[] _iv)
         {
             RijndaelManaged managed = new RijndaelManaged
@@ -287,7 +288,7 @@ namespace TS_SE_Tool
             };
             return managed.CreateDecryptor().TransformFinalBlock(_encryptedData, 0, _encryptedData.Length);
         }
-
+        */
         //SII decrypt
         [DllImport(@"libs/SII_Decrypt.dll", EntryPoint = "GetFileFormat")]
         public static extern Int32 SIIGetFileFormat(string FilePath);
