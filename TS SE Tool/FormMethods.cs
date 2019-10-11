@@ -62,6 +62,29 @@ namespace TS_SE_Tool
             toolStripStatusMessages.Text = GetranslatedString(_message);
         }
 
+        public void ShowStatusMessages(string _status, string _message, Form _senderForm, string _statusStrip, string _targetLabel)
+        {
+            StatusStrip tssm = (StatusStrip)_senderForm.Controls.Find("_statusStrip", true)[0];
+
+            if (_status == "e")
+            {   
+                tssm.Items["_targetLabel"].ForeColor = Color.Red;
+            }
+            else
+            if (_status == "i")
+            {
+                tssm.Items["_targetLabel"].ForeColor = Color.Red;
+            }
+            else
+            if (_status == "clear")
+            {
+                tssm.Items["_targetLabel"].Text = "";
+                return;
+            }
+
+            tssm.Items["_targetLabel"].Text = GetranslatedString(_message);
+        }
+
         private void ShowStatusMessages(string _status, string _message, string _option)
         {
 
@@ -1027,7 +1050,7 @@ namespace TS_SE_Tool
                         combDT.Rows.Add(profile, "- " + ProfileName + " -");
                     }
                     else
-                        combDT.Rows.Add(profile, GetCustomSaveFilename(profile));
+                        combDT.Rows.Add(profile, GetCustomSaveFilename(profile, this, "statusStripMain", "toolStripStatusMessages"));
 
                     NotANumber = false;
                 }
@@ -2647,7 +2670,7 @@ namespace TS_SE_Tool
         private void listBoxGarages_MeasureItem(object sender, MeasureItemEventArgs e)
         {
             // Get the ListBox and the item.
-            e.ItemHeight = (int)(GaragePictureHeight + 2 * GarageItemMargin);
+            //e.ItemHeight = (int)(GaragePictureHeight + 2 * GarageItemMargin);
         }
 
         private void listBoxGarages_DrawItem(object sender, DrawItemEventArgs e)

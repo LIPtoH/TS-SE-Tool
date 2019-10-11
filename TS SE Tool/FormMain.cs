@@ -50,7 +50,7 @@ namespace TS_SE_Tool
 
         private string ProgPrevVersion;//Program
 
-        private bool FileDecoded;  //+
+        public bool FileDecoded;  //+
 
         private string GameType;//Program
         private string SavefilePath; //+
@@ -267,6 +267,8 @@ namespace TS_SE_Tool
         public static string[] SavesHex;
         public static string SelectedProfile;
         public static string SelectedSave;
+        public static string SelectedProfilePath;
+        public static string SelectedSavePath;
         public static string CurrentGame = "";
         public static string ProfileSii = "";
         public static int[] PlayerLevelUps;

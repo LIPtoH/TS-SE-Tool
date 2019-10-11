@@ -1363,7 +1363,7 @@ namespace TS_SE_Tool
                 ShowStatusMessages("e", "error_save_version_not_detected");
         }
 
-        public string GetCustomSaveFilename(string _tempSaveFilePath)
+        public string GetCustomSaveFilename(string _tempSaveFilePath, Form _senderForm, string _statusStrip, string _targetLabel)
         {
             string chunkOfline;
 
@@ -1373,7 +1373,7 @@ namespace TS_SE_Tool
             if (!File.Exists(tempSiiInfoPath))
             {
                 LogWriter("File does not exist in " + tempSiiInfoPath);
-                ShowStatusMessages("e", "error_could_not_find_file");
+                ShowStatusMessages("e", "error_could_not_find_file", _senderForm, _statusStrip, _targetLabel);
             }
             else
             {   
@@ -1383,7 +1383,6 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        //tempFile = DecodeFile(tempSiiInfoPath);
                         tempFile = NewDecodeFile(tempSiiInfoPath);
 
                         if (FileDecoded)
@@ -1396,8 +1395,8 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        ShowStatusMessages("e", "error_could_not_decode_file");
                         LogWriter("Could not decrypt after 5 attempts");
+                        ShowStatusMessages("e", "error_could_not_decode_file", _senderForm, _statusStrip, _targetLabel);
                     }
                 }
                 catch
@@ -1408,7 +1407,7 @@ namespace TS_SE_Tool
                 if ((tempFile == null) || (tempFile[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Info file or wrong file format");
-                    ShowStatusMessages("e", "error_file_not_decoded");
+                    ShowStatusMessages("e", "error_file_not_decoded", _senderForm, _statusStrip, _targetLabel);
                 }
                 else if (tempFile != null)
                 {
@@ -1418,12 +1417,13 @@ namespace TS_SE_Tool
                         {
                             chunkOfline = tempFile[line];
                             string CustomName = chunkOfline.Split(new char[] { ' ' },3)[2];
+
                             if (CustomName.StartsWith("\""))
                             {
                                 CustomName = CustomName.Substring(1, CustomName.Length - 2);
                             }
-                            //SavefileVersion = int.Parse(chunkOfline[2]);
-                            return CustomName;//chunkOfline.Substring(7);
+
+                            return CustomName;
                         }
                     }
                 }

@@ -710,12 +710,14 @@ namespace TS_SE_Tool
             ShowStatusMessages("i", "message_decoding_save_file");
 
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
+            Globals.SelectedSavePath = SavefilePath;
             Globals.SelectedSave = Globals.SavesHex[comboBoxSaves.SelectedIndex].Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
             LogWriter("Working on " + SavefilePath + " save file");
 
             string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
 
+            Globals.SelectedProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
             Globals.SelectedProfile = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex].Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
             string SiiInfoPath = SavefilePath + @"\info.sii";

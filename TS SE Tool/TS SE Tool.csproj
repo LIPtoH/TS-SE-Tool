@@ -263,16 +263,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ContentWithTargetPath Include="SII_Decrypt.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>libs/SII_Decrypt.exe</TargetPath>
-    </ContentWithTargetPath>
-    <!--     <Content Include="SII_Decrypt.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  -->
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\MainIco.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
