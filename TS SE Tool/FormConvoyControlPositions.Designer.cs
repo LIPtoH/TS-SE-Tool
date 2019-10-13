@@ -117,6 +117,7 @@
             this.listBox2.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBox2_MeasureItem);
             this.listBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox2_DragDrop);
             this.listBox2.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox2_DragOver);
+            this.listBox2.DragLeave += new System.EventHandler(this.listBox2_DragLeave);
             this.listBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox2_MouseDown);
             // 
             // label2

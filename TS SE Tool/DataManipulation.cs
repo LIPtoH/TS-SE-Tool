@@ -39,7 +39,7 @@ namespace TS_SE_Tool
             string[] chunkOfline;
 
             LogWriter("Prepare started");
-            ShowStatusMessages("i", "message_preparing_data");
+            ShowStatusMessages("i", "message_preparing_data", this, statusStripMain.Name, "toolStripStatusMessages");
 
             int economyEventQueueIndex = 0;
             int EconomyEventline = 0;
@@ -1383,7 +1383,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempFile = NewDecodeFile(tempSiiInfoPath);
+                        tempFile = NewDecodeFile(tempSiiInfoPath, _senderForm, _statusStrip, _targetLabel);
 
                         if (FileDecoded)
                         {

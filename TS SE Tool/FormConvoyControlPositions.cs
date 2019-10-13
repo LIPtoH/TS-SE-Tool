@@ -28,6 +28,7 @@ namespace TS_SE_Tool
         public FormConvoyControlPositions(bool _exportState)
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.MainIco;
             exportState = _exportState;
             FormComponentsSetup(exportState);
             FillSaveListBox();
@@ -265,7 +266,7 @@ namespace TS_SE_Tool
                             int decodeAttempt = 0;
                             while (decodeAttempt < 5)
                             {
-                                tempSavefileInMemory = MainForm.NewDecodeFile(SiiSavePath);
+                                tempSavefileInMemory = MainForm.NewDecodeFile(SiiSavePath, this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
 
                                 if (MainForm.FileDecoded)
                                 {
@@ -338,7 +339,7 @@ namespace TS_SE_Tool
                                 Directory.CreateDirectory(fp);
 
                                 //Copy info file
-                                string[] infoSii = MainForm.NewDecodeFile(BaseSave + @"\info.sii");
+                                string[] infoSii = MainForm.NewDecodeFile(BaseSave + @"\info.sii", this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
 
                                 //Prepare data
                                 double tDT = MainForm.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
@@ -589,7 +590,7 @@ namespace TS_SE_Tool
                 foreach (DataRow temp in combDT.Rows)
                 {
                     //Load and scan save files for truck position
-                    string[] tSF = MainForm.NewDecodeFile(temp[0].ToString() + @"\game.sii");
+                    string[] tSF = MainForm.NewDecodeFile(temp[0].ToString() + @"\game.sii", this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
 
                     string[] chunkOfline;
                     string truckPosition = "";
@@ -732,6 +733,28 @@ namespace TS_SE_Tool
                 string Msg = ex.Message;
             }
             
+        }
+
+        private void listBox2_DragLeave(object sender, EventArgs e)
+        {
+            ListBox _lb = sender as ListBox;
+
+            try
+            {
+                //Create new datasource
+                DataTable combDT = ((DataTable)_lb.DataSource).Copy();
+
+                //Remove
+                ((DataTable)_lb.DataSource).Rows.Remove(((DataRowView)_lb.SelectedItem).Row);
+                //_lb.Items.Remove(_lb.SelectedItem);
+
+                //_lb.DataSource = combDT;
+                _lb.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                string Msg = ex.Message;
+            }
         }
 
         //Custom listbox Draw

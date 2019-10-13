@@ -746,8 +746,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        //tempProfileFileInMemory = DecodeFile(SiiProfilePath);
-                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath);
+                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath, this, "statusStripMain", "toolStripStatusMessages");
 
                         if (FileDecoded)
                         {
@@ -759,7 +758,7 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        ShowStatusMessages("e", "error_could_not_decode_file");
+                        ShowStatusMessages("e", "error_could_not_decode_file", this, "statusStripMain", "toolStripStatusMessages");
                         LogWriter("Could not decrypt after 5 attempts");
                     }
                 }
@@ -771,7 +770,7 @@ namespace TS_SE_Tool
                 if ((tempProfileFileInMemory == null) || (tempProfileFileInMemory[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Profile file or wrong file format");
-                    ShowStatusMessages("e", "error_file_not_decoded");
+                    ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
                 }
                 else if (tempProfileFileInMemory != null)
                 {
@@ -798,8 +797,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        //tempInfoFileInMemory = DecodeFile(SiiInfoPath);
-                        tempInfoFileInMemory = NewDecodeFile(SiiInfoPath);
+                        tempInfoFileInMemory = NewDecodeFile(SiiInfoPath, this, "statusStripMain", "toolStripStatusMessages");
 
                         if (FileDecoded)
                         {
@@ -810,7 +808,7 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        ShowStatusMessages("e", "error_could_not_decode_file");
+                        ShowStatusMessages("e", "error_could_not_decode_file", this, "statusStripMain", "toolStripStatusMessages");
                         LogWriter("Could not decrypt after 5 attempts");
                     }
                 }
@@ -822,7 +820,7 @@ namespace TS_SE_Tool
                 if ((tempInfoFileInMemory == null) || (tempInfoFileInMemory[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Info file or wrong file format");
-                    ShowStatusMessages("e", "error_file_not_decoded");
+                    ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
                 }
                 else if (tempInfoFileInMemory != null)
                 {
@@ -844,7 +842,7 @@ namespace TS_SE_Tool
             if (SavefileVersion > 0 && !SupportedSavefileVersionETS2.Contains(SavefileVersion))
             {
                 MessageBox.Show("Savefile version don't supported.\nYou cann't edit file with this version, but you can try to decode it.", "Wrong version");
-                ShowStatusMessages("clear", "");
+                ShowStatusMessages("clear", "", this, "statusStripMain", "toolStripStatusMessages");
                 return;
             }
             else if (SavefileVersion == 0)
@@ -852,7 +850,7 @@ namespace TS_SE_Tool
                 DialogResult result = MessageBox.Show("Savefile version was not recognised.\nDo you want to continue?", "Version not recognised", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
                 {
-                    ShowStatusMessages("clear", "");
+                    ShowStatusMessages("clear", "", this, "statusStripMain", "toolStripStatusMessages");
                     return;
                 }
             }
@@ -860,7 +858,7 @@ namespace TS_SE_Tool
             if (!File.Exists(SiiSavePath))
             {
                 LogWriter("File does not exist in " + SavefilePath);
-                ShowStatusMessages("e", "error_could_not_find_file");
+                ShowStatusMessages("e", "error_could_not_find_file", this, "statusStripMain", "toolStripStatusMessages");
             }
             else
             {
@@ -870,8 +868,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        //tempSavefileInMemory = DecodeFile(SiiSavePath);
-                        tempSavefileInMemory = NewDecodeFile(SiiSavePath);
+                        tempSavefileInMemory = NewDecodeFile(SiiSavePath, this, "statusStripMain", "toolStripStatusMessages");
 
                         if (FileDecoded)
                         {
@@ -882,7 +879,7 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        ShowStatusMessages("e", "error_could_not_decode_file");
+                        ShowStatusMessages("e", "error_could_not_decode_file", this, "statusStripMain", "toolStripStatusMessages");
                         LogWriter("Could not decrypt after 5 attempts");
                     }
                 }
@@ -894,7 +891,7 @@ namespace TS_SE_Tool
                 if ((tempSavefileInMemory == null) || (tempSavefileInMemory[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Save file or wrong file format");
-                    ShowStatusMessages("e", "error_file_not_decoded");
+                    ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
                 }
                 else if (tempSavefileInMemory != null)
                 {

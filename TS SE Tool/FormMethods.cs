@@ -64,25 +64,25 @@ namespace TS_SE_Tool
 
         public void ShowStatusMessages(string _status, string _message, Form _senderForm, string _statusStrip, string _targetLabel)
         {
-            StatusStrip tssm = (StatusStrip)_senderForm.Controls.Find("_statusStrip", true)[0];
+            StatusStrip tssm = (StatusStrip)_senderForm.Controls.Find(_statusStrip, true)[0];
 
             if (_status == "e")
             {   
-                tssm.Items["_targetLabel"].ForeColor = Color.Red;
+                tssm.Items[_targetLabel].ForeColor = Color.Red;
             }
             else
             if (_status == "i")
             {
-                tssm.Items["_targetLabel"].ForeColor = Color.Red;
+                tssm.Items[_targetLabel].ForeColor = Color.Black;
             }
             else
             if (_status == "clear")
             {
-                tssm.Items["_targetLabel"].Text = "";
+                tssm.Items[_targetLabel].Text = "";
                 return;
             }
 
-            tssm.Items["_targetLabel"].Text = GetranslatedString(_message);
+            tssm.Items[_targetLabel].Text = GetranslatedString(_message);
         }
 
         private void ShowStatusMessages(string _status, string _message, string _option)
@@ -473,13 +473,14 @@ namespace TS_SE_Tool
         {
             this.Close();
         }
-
+        //About
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox aboutWindow = new AboutBox();
             aboutWindow.ShowDialog();
         }
 
+        //How to
         private void localPDFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string pdf_path = Directory.GetCurrentDirectory() + @"\HowTo.pdf";
@@ -492,6 +493,26 @@ namespace TS_SE_Tool
             string url = "https://rebrand.ly/TS-SET-Tutorial";
             Process.Start(url);
         }
+
+        //Downloads
+        private void checkGitHubRelesesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = "https://github.com/LIPtoH/TS-SE-Tool/releases";
+            Process.Start(url);
+        }
+
+        private void checkTMPForumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = "https://forum.truckersmp.com/index.php?/topic/79561-ts-saveeditor-tool";
+            Process.Start(url);
+        }
+
+        private void checkSCSForumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = "https://forum.scssoft.com/viewtopic.php?f=34&t=266092";
+            Process.Start(url);
+        }
+
 
         //Main part controls
         private void buttonRefreshAll_Click(object sender, EventArgs e)
@@ -534,8 +555,7 @@ namespace TS_SE_Tool
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             string SiiSavePath = SavefilePath + @"\game.sii";
 
-            //string[] file = DecodeFile(SiiSavePath);
-            string[] file = NewDecodeFile(SiiSavePath);
+            string[] file = NewDecodeFile(SiiSavePath, this, "statusStripMain", "toolStripStatusMessages");
 
             if (file != null)
             {
@@ -1050,7 +1070,7 @@ namespace TS_SE_Tool
                         combDT.Rows.Add(profile, "- " + ProfileName + " -");
                     }
                     else
-                        combDT.Rows.Add(profile, GetCustomSaveFilename(profile, this, "statusStripMain", "toolStripStatusMessages"));
+                        combDT.Rows.Add(profile, GetCustomSaveFilename(profile, this, statusStripMain.Name, "toolStripStatusMessages"));
 
                     NotANumber = false;
                 }
@@ -2670,7 +2690,7 @@ namespace TS_SE_Tool
         private void listBoxGarages_MeasureItem(object sender, MeasureItemEventArgs e)
         {
             // Get the ListBox and the item.
-            //e.ItemHeight = (int)(GaragePictureHeight + 2 * GarageItemMargin);
+            e.ItemHeight = (int)(GaragePictureHeight + 2 * GarageItemMargin);
         }
 
         private void listBoxGarages_DrawItem(object sender, DrawItemEventArgs e)
@@ -4744,28 +4764,6 @@ namespace TS_SE_Tool
                 else
                     tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
             }
-            /*
-            if (GameType == "ETS2")
-            {
-                Globals.CurrentGame = dictionaryProfiles["ETS2"];
-                buttonMainGameSwitchETS.Enabled = false;
-                buttonMainGameSwitchATS.Enabled = true;
-                buttonMainGameSwitchETS.BackColor = Color.White;
-                buttonMainGameSwitchETS.ForeColor = Color.Black;
-                buttonMainGameSwitchATS.BackColor = Color.FromKnownColor(KnownColor.Control);
-                buttonMainGameSwitchATS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
-            }
-            else if (GameType == "ATS")
-            {
-                Globals.CurrentGame = dictionaryProfiles["ATS"];
-                buttonMainGameSwitchETS.Enabled = true;
-                buttonMainGameSwitchATS.Enabled = false;
-                buttonMainGameSwitchATS.BackColor = Color.White;
-                buttonMainGameSwitchATS.ForeColor = Color.Black;
-                buttonMainGameSwitchETS.BackColor = Color.FromKnownColor(KnownColor.Control);
-                buttonMainGameSwitchETS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
-            }
-            */
         }
 
         public void ToggleGame_Click(object sender, EventArgs e)

@@ -43,6 +43,10 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.localPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.youTubeVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkSCSForumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkTMPForumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkGitHubRelesesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBoxProfiles = new System.Windows.Forms.ComboBox();
             this.buttonProfilesAndSavesRefreshAll = new System.Windows.Forms.Button();
             this.comboBoxSaves = new System.Windows.Forms.ComboBox();
@@ -201,6 +205,7 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -312,7 +317,9 @@
             this.toolStripMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemAbout,
             this.toolStripSeparator3,
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.toolStripSeparator4,
+            this.downloadToolStripMenuItem});
             this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
             this.toolStripMenuItemHelp.Size = new System.Drawing.Size(44, 20);
             this.toolStripMenuItemHelp.Text = "Help";
@@ -320,14 +327,14 @@
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(114, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemAbout.Text = "About";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(111, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripMenuItem1
             // 
@@ -335,7 +342,7 @@
             this.localPDFToolStripMenuItem,
             this.youTubeVideoToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "How To";
             // 
             // localPDFToolStripMenuItem
@@ -351,6 +358,37 @@
             this.youTubeVideoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.youTubeVideoToolStripMenuItem.Text = "YouTube video";
             this.youTubeVideoToolStripMenuItem.Click += new System.EventHandler(this.youTubeVideoToolStripMenuItem_Click);
+            // 
+            // downloadToolStripMenuItem
+            // 
+            this.downloadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkSCSForumToolStripMenuItem,
+            this.checkTMPForumToolStripMenuItem,
+            this.checkGitHubRelesesToolStripMenuItem});
+            this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
+            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.downloadToolStripMenuItem.Text = "Download";
+            // 
+            // checkSCSForumToolStripMenuItem
+            // 
+            this.checkSCSForumToolStripMenuItem.Name = "checkSCSForumToolStripMenuItem";
+            this.checkSCSForumToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.checkSCSForumToolStripMenuItem.Text = "Check SCS Forum";
+            this.checkSCSForumToolStripMenuItem.Click += new System.EventHandler(this.checkSCSForumToolStripMenuItem_Click);
+            // 
+            // checkTMPForumToolStripMenuItem
+            // 
+            this.checkTMPForumToolStripMenuItem.Name = "checkTMPForumToolStripMenuItem";
+            this.checkTMPForumToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.checkTMPForumToolStripMenuItem.Text = "Check TMP Forum";
+            this.checkTMPForumToolStripMenuItem.Click += new System.EventHandler(this.checkTMPForumToolStripMenuItem_Click);
+            // 
+            // checkGitHubRelesesToolStripMenuItem
+            // 
+            this.checkGitHubRelesesToolStripMenuItem.Name = "checkGitHubRelesesToolStripMenuItem";
+            this.checkGitHubRelesesToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.checkGitHubRelesesToolStripMenuItem.Text = "Check GitHub Releases";
+            this.checkGitHubRelesesToolStripMenuItem.Click += new System.EventHandler(this.checkGitHubRelesesToolStripMenuItem_Click);
             // 
             // comboBoxProfiles
             // 
@@ -2212,6 +2250,11 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 45);
             this.tableLayoutPanel11.TabIndex = 22;
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2460,6 +2503,11 @@
         private System.Windows.Forms.Button buttonFreightMarketCancelJobEdit;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
         private System.Windows.Forms.Button buttonUserCompanyGaragesManage;
+        private System.Windows.Forms.ToolStripMenuItem downloadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkSCSForumToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkTMPForumToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkGitHubRelesesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

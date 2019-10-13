@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using System;
+using System.Windows.Forms;
 using System.Linq;
 using System.Diagnostics;
 using System.IO;
@@ -28,9 +29,9 @@ namespace TS_SE_Tool
 {
     public partial class FormMain
     {
-        public unsafe string[] NewDecodeFile (string _savefile_path)
+        public unsafe string[] NewDecodeFile (string _savefile_path, Form _senderForm, string _statusStrip, string _targetLabel)
         {
-            ShowStatusMessages("i", "message_loading_save_file");
+            ShowStatusMessages("i", "message_loading_save_file", _senderForm, _statusStrip, _targetLabel);
             LogWriter("Loading file into memory");
 
             //string FileData = "";
@@ -44,7 +45,7 @@ namespace TS_SE_Tool
             catch
             {
                 LogWriter("Could not find file in: " + _savefile_path);
-                ShowStatusMessages("e", "error_could_not_find_file");
+                ShowStatusMessages("e", "error_could_not_find_file", _senderForm, _statusStrip, _targetLabel);
 
                 FileDecoded = false;
                 return null;
@@ -70,7 +71,7 @@ namespace TS_SE_Tool
                 case 2:
                     // "SIIDEC_RESULT_FORMAT_ENCRYPTED";
                     {
-                        ShowStatusMessages("i", "message_decoding_save_file");
+                        ShowStatusMessages("i", "message_decoding_save_file", _senderForm, _statusStrip, _targetLabel);
                         LogWriter("Decoding file");
 
                         int result = -1;
@@ -104,7 +105,7 @@ namespace TS_SE_Tool
                 case 4:
                     // "SIIDEC_RESULT_FORMAT_3NK";
                     {
-                        ShowStatusMessages("i", "message_decoding_save_file");
+                        ShowStatusMessages("i", "message_decoding_save_file", _senderForm, _statusStrip, _targetLabel);
                         LogWriter("Decoding file");
 
                         int result = -1;

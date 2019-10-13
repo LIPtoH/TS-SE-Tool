@@ -17,6 +17,7 @@ namespace TS_SE_Tool
         public FormGaragesSoldContent()
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.MainIco;
             FillTreeView();
         }
 

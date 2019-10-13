@@ -44,7 +44,8 @@ namespace TS_SE_Tool
                 "PsColorPicker\r\nhttps://github.com/exectails/PsColorPicker\r\n\r\n" +
                 "SharpZipLib\r\nhttps://github.com/icsharpcode/SharpZipLib\r\n\r\n" +
                 "SqlCeBulkCopy\r\nhttps://github.com/ErikEJ/SqlCeBulkCopy\r\n\r\n" +
-                "DDSImageParser.cs\r\nhttps://gist.github.com/soeminnminn/e9c4c99867743a717f5b";
+                "DDSImageParser.cs\r\nhttps://gist.github.com/soeminnminn/e9c4c99867743a717f5b\r\n\r\n" +
+                "TGASharpLib\r\nhttps://github.com/ALEXGREENALEX/TGASharpLib";
 
             //String.Join(",", array.Select(p=>p.ToString()).ToArray());
 

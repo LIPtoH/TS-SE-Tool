@@ -24,8 +24,8 @@ namespace TS_SE_Tool
         public FormAddCustomFolder()
         {
             InitializeComponent();
-            //tableLayoutPanel1.ColumnStyles[3].Width = 0;
-            //this.Width = 390;
+            this.Icon = Properties.Resources.MainIco;
+
             ChangeCustomPathListVisibility();
             CustomPathsArr = new Dictionary<string, List<string>>();//(MainForm.ProgSettingsV.CustomPaths);
             foreach (KeyValuePair<string, List<string>> k1 in MainForm.ProgSettingsV.CustomPaths)
