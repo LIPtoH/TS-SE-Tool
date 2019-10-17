@@ -17,8 +17,8 @@ namespace TS_SE_Tool
     {
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
         bool exportState;
-        Dictionary<string,string> FoldersToClear = new Dictionary<string, string>();
-        Dictionary<string, string> NewSave = new Dictionary<string, string>();
+        Dictionary<string, string> FoldersToClear = new Dictionary<string, string>();
+        Dictionary<int, string[]> NewSave = new Dictionary<int, string[]>();
         string BaseSave = "";
         string preview_mat = "material : \"ui.rfx\"\r\n{\r\n	texture : \"preview.tobj\"\r\n	texture_name : \"texture\"\r\n}";
         byte[] preview_tobj = new byte[] { 1, 10, 177, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 3, 3, 2, 0, 2, 2, 2, 1, 0, 0, 0, 1, 0, 0 };
@@ -57,7 +57,7 @@ namespace TS_SE_Tool
                 buttonSave.Text = "Save";
                 radioButtonNamesNone.Visible = false;
 
-                listBox2.SelectionMode = SelectionMode.MultiSimple;
+                listBox2.SelectionMode = SelectionMode.One;
                 listBox1.SelectionMode = SelectionMode.None;
 
                 buttonSave.Enabled = false;
@@ -332,7 +332,7 @@ namespace TS_SE_Tool
 
                             //Create new numbered folder and new save files
                             int iSave = 0;
-                            foreach (KeyValuePair<string, string> entry in NewSave)
+                            foreach (KeyValuePair<int, string[]> entry in NewSave)
                             {
                                 //Create folder
                                 string fp = Directory.GetParent(Globals.SavesHex[0]).FullName + "\\" + NewCustomFolders[iSave].ToString();
@@ -345,7 +345,7 @@ namespace TS_SE_Tool
                                 double tDT = MainForm.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
 
                                 SavefileInfoData infoData = new SavefileInfoData();
-                                infoData.SaveName = entry.Key;//[iSave];
+                                infoData.SaveName = entry.Value[0];//Save name
                                 infoData.FileTime = Convert.ToInt32(Math.Floor(tDT));
 
                                 //Write info file
@@ -407,7 +407,7 @@ namespace TS_SE_Tool
 
                                         if (SaveInMemLine.StartsWith(" truck_placement:"))
                                         {
-                                            writer.Write("\r\n" + " truck_placement: " + entry.Value);
+                                            writer.Write("\r\n" + " truck_placement: " + entry.Value[1]);
                                             line++;
                                             writer.Write("\r\n" + " trailer_placement: (0, 0, 0) (1; 0, 0, 0)");
                                             line++;
@@ -483,8 +483,10 @@ namespace TS_SE_Tool
             }
             else
             {
-                if (listBox2.SelectedItems.Count == 0)
+
+                if (listBox2.SelectedItems.Count == 0 || listBox2.SelectionMode == SelectionMode.One)
                 {
+                    listBox2.SelectionMode = SelectionMode.MultiSimple;
                     //Select all
                     for (int i = 0; i < listBox2.Items.Count; i++)
                         listBox2.SetSelected(i, true);
@@ -496,22 +498,57 @@ namespace TS_SE_Tool
                     Dictionary<string,string> ExistingSave = new Dictionary<string, string>();
                     bool ExistingFlag = false;
 
+                    //Existing saves
                     foreach (DataRowView Dr in listBox1.Items)
                     {
                         if ((byte)Dr.Row.ItemArray[2] == 1)
                             ExistingSave.Add(Dr.Row.ItemArray[0].ToString(),Dr.Row.ItemArray[1].ToString());
                     }
 
+                    //Check if importing save file woth unique names
+                    List<string> ImportSaveNames = new List<string>();
+
                     foreach (DataRowView Dr in listBox2.SelectedItems)
                     {
-                        string SN = Dr.Row.ItemArray[2].ToString();
-                        string TP = Dr.Row.ItemArray[0].ToString();
+                        string SN = Dr.Row.ItemArray[2].ToString(); //Name
+                        ImportSaveNames.Add(SN);
+                    }
 
-                        NewSave.Add(SN, TP);
+                    int importSavesBe = ImportSaveNames.Count;
+                    int importSavesAf = ImportSaveNames.Distinct().Count();
+
+                    if(importSavesBe != importSavesAf)
+                    {
+                        DialogResult result = MessageBox.Show("You importing saves with non unique names.\nThis can lead to confusion. Do you want to continue?\nYes - Continue. No - Cancel.",
+                            "Non unique save file names", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                        if (result == DialogResult.Yes)
+                        {
+                            //Continue
+                        }
+                        else if (result == DialogResult.No)
+                        {
+                            return;
+                        }
+                    }
+
+                    //Importing saves
+                    int _ti = 0;
+                    foreach (DataRowView Dr in listBox2.SelectedItems)
+                    {
+                        string SN = Dr.Row.ItemArray[2].ToString(); //Name
+                        string TP = Dr.Row.ItemArray[0].ToString(); //Position
+
+                        string[] _t = { SN, TP };
+
+                        NewSave.Add(_ti, _t);
+                        _ti++;
+
+                        //Check unique
                         if (ExistingSave.ContainsValue(SN))                        
                             ExistingFlag = true;
                     }
 
+                    //If found similar save file names
                     if (ExistingFlag)
                     {
                         DialogResult result = MessageBox.Show("Some save files already exist.\nDo you want to overwrite save files?\nYes - overwrite. No - create saves with same names. Cancel - change selected saves.",
@@ -520,7 +557,7 @@ namespace TS_SE_Tool
                         {
                             //Overwriting
                             //Creating list for cleanup
-                            FoldersToClear = ExistingSave.Where(x => NewSave.ContainsKey(x.Value)).ToDictionary(x => x.Key, x => x.Value);
+                            FoldersToClear = ExistingSave.Where(x => ImportSaveNames.Contains(x.Value)).ToDictionary(x => x.Key, x => x.Value);
                             //Deleting from listbox and adding *new*
                         }
                         else if (result == DialogResult.No)
@@ -544,15 +581,16 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    foreach (KeyValuePair<string,string> tNS in NewSave)
+                    foreach (KeyValuePair<int, string[]> tNS in NewSave)
                     {
                         //Add row
-                        combDT.Rows.Add(tNS.Value, tNS.Key, 2);
+                        combDT.Rows.Add(tNS.Value[1], tNS.Value[0], 2);
                     }
 
                     listBox1.DataSource = combDT;
 
                     listBox2.ClearSelected();
+                    listBox1.TopIndex = 0;
                     listBox2.Enabled = false;
                     buttonExportImport.Enabled = false;
                     buttonMoveSaves.Enabled = false;
@@ -635,6 +673,8 @@ namespace TS_SE_Tool
             }
             else
             {
+                listBox2.SelectionMode = SelectionMode.One;
+
                 DataColumn dc = new DataColumn("truckPosition", typeof(string));
                 combDT.Columns.Add(dc);
 
@@ -643,6 +683,9 @@ namespace TS_SE_Tool
 
                 dc = new DataColumn("NewName", typeof(string));
                 combDT.Columns.Add(dc);
+
+                if (listBox2.DataSource != null)
+                    combDT = (DataTable)listBox2.DataSource;
 
                 try
                 {
@@ -699,6 +742,7 @@ namespace TS_SE_Tool
 
         private void listBox2_DragDrop(object sender, DragEventArgs e)
         {
+            object tSI = listBox2.SelectedItem; //ListBox.SelectedObjectCollection
             Point point = listBox2.PointToClient(new Point(e.X, e.Y));
             int index = listBox2.IndexFromPoint(point);
             if (index < 0)
@@ -726,35 +770,38 @@ namespace TS_SE_Tool
                 newrow.ItemArray = test;
                 combDT.Rows.InsertAt(newrow, index);
                 listBox2.DataSource = combDT;
+                listBox2.ClearSelected();
                 listBox2.SelectedIndex = index;
+                //listBox2.SelectedItem = tSI;
             }
             catch(Exception ex)
             {
                 string Msg = ex.Message;
-            }
-            
+            }            
         }
 
         private void listBox2_DragLeave(object sender, EventArgs e)
         {
             ListBox _lb = sender as ListBox;
+            Point _lbMousePoint = _lb.PointToClient(Control.MousePosition);
+            int pX = _lbMousePoint.X + 2, pY = _lbMousePoint.Y + 2;
 
-            try
-            {
-                //Create new datasource
-                DataTable combDT = ((DataTable)_lb.DataSource).Copy();
+            if (pX < 0 || pX >= _lb.Width || pY < 0 || pY >= _lb.Height)
+                try
+                {
+                    //Create new datasource
+                    DataTable combDT = ((DataTable)_lb.DataSource).Copy();
 
-                //Remove
-                ((DataTable)_lb.DataSource).Rows.Remove(((DataRowView)_lb.SelectedItem).Row);
-                //_lb.Items.Remove(_lb.SelectedItem);
+                    //Remove
+                    ((DataTable)_lb.DataSource).Rows.Remove(((DataRowView)_lb.SelectedItem).Row);
 
-                //_lb.DataSource = combDT;
-                _lb.SelectedIndex = 0;
-            }
-            catch (Exception ex)
-            {
-                string Msg = ex.Message;
-            }
+                    //Clear selection
+                    _lb.ClearSelected();
+                }
+                catch (Exception ex)
+                {
+                    string Msg = ex.Message;
+                }
         }
 
         //Custom listbox Draw
