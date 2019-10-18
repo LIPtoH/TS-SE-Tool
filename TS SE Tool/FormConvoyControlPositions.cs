@@ -48,6 +48,9 @@ namespace TS_SE_Tool
 
                 checkBoxCustomThumbnail.Visible = false;
                 buttonSelectCustomThumbnail.Visible = false;
+
+                listBox2.MouseDown += listBox2_MouseDown;
+                listBox2.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
             }
             else
             {
@@ -487,9 +490,14 @@ namespace TS_SE_Tool
                 if (listBox2.SelectedItems.Count == 0 || listBox2.SelectionMode == SelectionMode.One)
                 {
                     listBox2.SelectionMode = SelectionMode.MultiSimple;
+                    listBox2.MouseDown -= listBox2_MouseDown;
+                    listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
+                    //listBox2.SelectedIndex = -1;
                     //Select all
                     for (int i = 0; i < listBox2.Items.Count; i++)
                         listBox2.SetSelected(i, true);
+
+                    //listBox2.SelectedIndex = 0;
                 }
                 else
                 {
@@ -509,11 +517,11 @@ namespace TS_SE_Tool
                     List<string> ImportSaveNames = new List<string>();
 
                     foreach (DataRowView Dr in listBox2.SelectedItems)
-                    {
+                    {                        
                         string SN = Dr.Row.ItemArray[2].ToString(); //Name
                         ImportSaveNames.Add(SN);
                     }
-
+                    object s = listBox2.SelectedIndices;
                     int importSavesBe = ImportSaveNames.Count;
                     int importSavesAf = ImportSaveNames.Distinct().Count();
 
@@ -536,9 +544,10 @@ namespace TS_SE_Tool
                     foreach (DataRowView Dr in listBox2.SelectedItems)
                     {
                         string SN = Dr.Row.ItemArray[2].ToString(); //Name
+                        string ON = Dr.Row.ItemArray[1].ToString();//Original Name
                         string TP = Dr.Row.ItemArray[0].ToString(); //Position
 
-                        string[] _t = { SN, TP };
+                        string[] _t = { SN, TP, ON };
 
                         NewSave.Add(_ti, _t);
                         _ti++;
@@ -584,7 +593,7 @@ namespace TS_SE_Tool
                     foreach (KeyValuePair<int, string[]> tNS in NewSave)
                     {
                         //Add row
-                        combDT.Rows.Add(tNS.Value[1], tNS.Value[0], 2);
+                        combDT.Rows.Add(tNS.Value[1], tNS.Value[0], 2, tNS.Value[2]);
                     }
 
                     listBox1.DataSource = combDT;
@@ -673,6 +682,8 @@ namespace TS_SE_Tool
             }
             else
             {
+                listBox2.MouseDown += listBox2_MouseDown;
+                listBox2.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
                 listBox2.SelectionMode = SelectionMode.One;
 
                 DataColumn dc = new DataColumn("truckPosition", typeof(string));
@@ -711,7 +722,7 @@ namespace TS_SE_Tool
                         listBox2.DataSource = combDT;
                         listBox2.ValueMember = "truckPosition";
                         listBox2.DisplayMember = "saveName";
-                        listBox2.SelectedIndex = -1;
+                        listBox2.SelectedIndex = 0;
 
                         MessageBox.Show("Position data has been inserted.");
                     }
@@ -732,6 +743,7 @@ namespace TS_SE_Tool
         {
             if (listBox2.SelectedItem == null) return;
 
+            //listBox2.Items
             listBox2.DoDragDrop(listBox2.SelectedItem, DragDropEffects.Move);
         }
 
@@ -757,18 +769,23 @@ namespace TS_SE_Tool
             {
                 // find the row to move in the datasource
                 DataRowView rowToMove = (DataRowView)e.Data.GetData(typeof(DataRowView));
+
                 //clone it
                 DataRow oldrow = rowToMove.Row;
                 object[] test = oldrow.ItemArray;
+
                 //Remove
-                //object t1 = listBox2.SelectedItem;
                 ((DataTable)listBox2.DataSource).Rows.Remove(oldrow);
+
                 //Create new datasource
                 DataTable combDT = ((DataTable)listBox2.DataSource).Copy();
+
                 //Add row
                 DataRow newrow = combDT.NewRow();
                 newrow.ItemArray = test;
+
                 combDT.Rows.InsertAt(newrow, index);
+
                 listBox2.DataSource = combDT;
                 listBox2.ClearSelected();
                 listBox2.SelectedIndex = index;
@@ -883,6 +900,11 @@ namespace TS_SE_Tool
             e.ItemHeight = (int)(ItemHeight + 2 * ItemMargin);
         }
 
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBox2.Refresh();
+        }
+
         private void listBox2_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index == -1)
@@ -927,7 +949,25 @@ namespace TS_SE_Tool
                 SaveName = SaveDR[1].ToString();
             else if (radioButtonNamesCustom.Checked && textBoxCustomName.Text != "")
             {
-                SaveName = textBoxCustomName.Text + " " + (e.Index + 1).ToString("D" + decimalLength.ToString());
+                if (exportState)
+                    SaveName = textBoxCustomName.Text + (e.Index + 1).ToString("D" + decimalLength.ToString());
+                else
+                {
+                    if (listBox2.SelectionMode == SelectionMode.One)
+                    {
+                        SaveName = textBoxCustomName.Text + (e.Index + 1).ToString("D" + decimalLength.ToString());
+                    }
+                    else if(listBox2.SelectionMode == SelectionMode.MultiSimple)
+                        if (listBox2.SelectedIndices.Contains(e.Index))
+                        {
+                            decimalLength = listBox2.SelectedIndices.Count.ToString("D").Length;
+                            int indexInd = listBox2.SelectedIndices.IndexOf(e.Index);
+                            SaveName = textBoxCustomName.Text + (indexInd + 1).ToString("D" + decimalLength.ToString());
+                        }
+                        else
+                            SaveName = "";
+                }
+                    
             }
             else if (radioButtonNamesNone.Checked)
                 SaveName = "";
