@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+   Copyright 2016-2019 LIPtoH <liptoh.codebase@gmail.com>
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using System.IO;
 
 namespace TS_SE_Tool
 {
@@ -42,8 +58,13 @@ namespace TS_SE_Tool
 
         private void linkLabelHelpLocalPDF_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string file = "HowToUseIT.pdf";
-            System.Diagnostics.Process.Start(file);
+            string file = "HowTo.pdf";
+            if(File.Exists(file))
+                System.Diagnostics.Process.Start(file);
+            else
+            {
+                MessageBox.Show("Missing manual", "HowTo.pdf not found");
+            }
         }
 
         private void linkLabelHelpYouTube_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -32,8 +32,7 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelExistingSaves = new System.Windows.Forms.Label();
             this.buttonExportImport = new System.Windows.Forms.Button();
             this.buttonMoveSaves = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -45,6 +44,10 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonSelectCustomThumbnail = new System.Windows.Forms.Button();
             this.checkBoxCustomThumbnail = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.radioButtonSelect = new System.Windows.Forms.RadioButton();
+            this.labelExportImport = new System.Windows.Forms.Label();
+            this.radioButtonMove = new System.Windows.Forms.RadioButton();
             this.statusStripCCpositions = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusMessages = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
@@ -52,6 +55,7 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.statusStripCCpositions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,11 +68,11 @@
             this.tableLayoutPanel1.Controls.Add(this.buttonSave, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.listBox1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.listBox2, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.labelExistingSaves, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonExportImport, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.buttonMoveSaves, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -119,27 +123,16 @@
             this.listBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox2_DragDrop);
             this.listBox2.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox2_DragOver);
             this.listBox2.DragLeave += new System.EventHandler(this.listBox2_DragLeave);
-            //this.listBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox2_MouseDown);
             // 
-            // label2
+            // labelExistingSaves
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Existing saves";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(403, 8);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Exporting";
+            this.labelExistingSaves.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelExistingSaves.AutoSize = true;
+            this.labelExistingSaves.Location = new System.Drawing.Point(3, 8);
+            this.labelExistingSaves.Name = "labelExistingSaves";
+            this.labelExistingSaves.Size = new System.Drawing.Size(74, 13);
+            this.labelExistingSaves.TabIndex = 3;
+            this.labelExistingSaves.Text = "Existing saves";
             // 
             // buttonExportImport
             // 
@@ -200,6 +193,7 @@
             this.radioButtonNamesNone.TabIndex = 6;
             this.radioButtonNamesNone.Text = "Don\'t include names";
             this.radioButtonNamesNone.UseVisualStyleBackColor = true;
+            this.radioButtonNamesNone.Visible = false;
             this.radioButtonNamesNone.CheckedChanged += new System.EventHandler(this.NamesRadioButton_CheckedChanged);
             // 
             // radioButtonNamesCustom
@@ -264,6 +258,63 @@
             this.checkBoxCustomThumbnail.UseVisualStyleBackColor = true;
             this.checkBoxCustomThumbnail.CheckedChanged += new System.EventHandler(this.checkBoxCustomThumbnail_CheckedChanged);
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.radioButtonSelect, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.labelExportImport, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.radioButtonMove, 1, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(400, 0);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(200, 30);
+            this.tableLayoutPanel3.TabIndex = 8;
+            // 
+            // radioButtonSelect
+            // 
+            this.radioButtonSelect.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonSelect.AutoSize = true;
+            this.radioButtonSelect.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioButtonSelect.Location = new System.Drawing.Point(133, 3);
+            this.radioButtonSelect.Name = "radioButtonSelect";
+            this.radioButtonSelect.Size = new System.Drawing.Size(64, 24);
+            this.radioButtonSelect.TabIndex = 3;
+            this.radioButtonSelect.TabStop = true;
+            this.radioButtonSelect.Text = "Select";
+            this.radioButtonSelect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButtonSelect.UseVisualStyleBackColor = true;
+            this.radioButtonSelect.CheckedChanged += new System.EventHandler(this.radioButtonListBoxState_CheckedChanged);
+            // 
+            // labelExportImport
+            // 
+            this.labelExportImport.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelExportImport.AutoSize = true;
+            this.labelExportImport.Location = new System.Drawing.Point(3, 8);
+            this.labelExportImport.Name = "labelExportImport";
+            this.labelExportImport.Size = new System.Drawing.Size(51, 13);
+            this.labelExportImport.TabIndex = 4;
+            this.labelExportImport.Text = "Exporting";
+            // 
+            // radioButtonMove
+            // 
+            this.radioButtonMove.Appearance = System.Windows.Forms.Appearance.Button;
+            this.radioButtonMove.AutoSize = true;
+            this.radioButtonMove.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioButtonMove.Location = new System.Drawing.Point(63, 3);
+            this.radioButtonMove.Name = "radioButtonMove";
+            this.radioButtonMove.Size = new System.Drawing.Size(64, 24);
+            this.radioButtonMove.TabIndex = 2;
+            this.radioButtonMove.TabStop = true;
+            this.radioButtonMove.Text = "Move";
+            this.radioButtonMove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButtonMove.UseVisualStyleBackColor = true;
+            this.radioButtonMove.CheckedChanged += new System.EventHandler(this.radioButtonListBoxState_CheckedChanged);
+            // 
             // statusStripCCpositions
             // 
             this.statusStripCCpositions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -306,6 +357,8 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.statusStripCCpositions.ResumeLayout(false);
             this.statusStripCCpositions.PerformLayout();
             this.ResumeLayout(false);
@@ -320,8 +373,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelExistingSaves;
+        private System.Windows.Forms.Label labelExportImport;
         private System.Windows.Forms.Button buttonExportImport;
         private System.Windows.Forms.Button buttonMoveSaves;
         private System.Windows.Forms.TextBox textBoxCustomName;
@@ -335,5 +388,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button buttonSelectCustomThumbnail;
         private System.Windows.Forms.CheckBox checkBoxCustomThumbnail;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.RadioButton radioButtonSelect;
+        private System.Windows.Forms.RadioButton radioButtonMove;
     }
 }

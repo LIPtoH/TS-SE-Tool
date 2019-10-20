@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2016-2018 LIPtoH <liptoh.codebase@gmail.com>
+   Copyright 2016-2019 LIPtoH <liptoh.codebase@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -510,6 +510,12 @@ namespace TS_SE_Tool
         private void checkSCSForumToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string url = "https://forum.scssoft.com/viewtopic.php?f=34&t=266092";
+            Process.Start(url);
+        }
+        
+        private void latestStableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = "http://rebrand.ly/TS-SET-Download";
             Process.Start(url);
         }
 
@@ -4140,6 +4146,15 @@ namespace TS_SE_Tool
             buttonFreightMarketAddJob.Text = "Add Job to list";
             buttonFreightMarketAddJob.Click -= buttonEditJob_Click;
             buttonFreightMarketAddJob.Click += buttonAddJob_Click;
+
+            int JobsTotalDistance = 0;
+
+            foreach (JobAdded tmpItem in listBoxFreightMarketAddedJobs.Items)
+            {
+                JobsTotalDistance += tmpItem.Distance;
+            }
+
+            labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes;
         }
 
         private void buttonFreightMarketCancelJobEdit_Click(object sender, EventArgs e)
@@ -4166,12 +4181,9 @@ namespace TS_SE_Tool
         private void ClearJobData()
         {
             unCertainRouteLength = "";
-            //JobsTotalDistance = 0;
             JobsAmountAdded = 0;
 
-            //Array.Resize(ref JobsListAdded, 0);
             AddedJobsDictionary.Clear();
-            //ListSavefileCompanysString.Clear();//Array.Resize(ref ListSavefileCompanysString, 0);
             Array.Resize(ref EconomyEventUnitLinkStringList, 0);
 
             listBoxFreightMarketAddedJobs.Items.Clear();
@@ -4239,6 +4251,16 @@ namespace TS_SE_Tool
             if (AddedJobsDictionary[companyNameJob].Count == 0)
                 AddedJobsDictionary.Remove(companyNameJob);
             listBoxFreightMarketAddedJobs.Items.Remove(listBoxFreightMarketAddedJobs.SelectedItem);
+
+            //labelFreightMarketDistanceNumbers.Text = "0 " + ProgSettingsV.DistanceMes;
+            int JobsTotalDistance = 0;
+
+            foreach (JobAdded tmpItem in listBoxFreightMarketAddedJobs.Items)
+            {
+                JobsTotalDistance += tmpItem.Distance;
+            }
+
+            labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes;
         }
 
         private void FM_JobList_Edit()
@@ -4267,7 +4289,6 @@ namespace TS_SE_Tool
             buttonFreightMarketAddJob.Click -= buttonAddJob_Click;
             buttonFreightMarketAddJob.Click += buttonEditJob_Click;
         }
-
 
         //end Freight market tab
 

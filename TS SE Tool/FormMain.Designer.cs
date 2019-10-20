@@ -43,6 +43,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.localPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.youTubeVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkSCSForumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkTMPForumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -205,7 +206,8 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.latestStableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -359,9 +361,16 @@
             this.youTubeVideoToolStripMenuItem.Text = "YouTube video";
             this.youTubeVideoToolStripMenuItem.Click += new System.EventHandler(this.youTubeVideoToolStripMenuItem_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            // 
             // downloadToolStripMenuItem
             // 
             this.downloadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.latestStableToolStripMenuItem,
+            this.toolStripSeparator5,
             this.checkSCSForumToolStripMenuItem,
             this.checkTMPForumToolStripMenuItem,
             this.checkGitHubRelesesToolStripMenuItem});
@@ -2250,10 +2259,17 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 45);
             this.tableLayoutPanel11.TabIndex = 22;
             // 
-            // toolStripSeparator4
+            // latestStableToolStripMenuItem
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.latestStableToolStripMenuItem.Name = "latestStableToolStripMenuItem";
+            this.latestStableToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.latestStableToolStripMenuItem.Text = "Latest";
+            this.latestStableToolStripMenuItem.Click += new System.EventHandler(this.latestStableToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(192, 6);
             // 
             // FormMain
             // 
@@ -2508,6 +2524,8 @@
         private System.Windows.Forms.ToolStripMenuItem checkTMPForumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkGitHubRelesesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem latestStableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 

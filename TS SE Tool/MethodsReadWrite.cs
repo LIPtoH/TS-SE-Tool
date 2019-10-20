@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2016-2018 LIPtoH <liptoh.codebase@gmail.com>
+   Copyright 2016-2019 LIPtoH <liptoh.codebase@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -96,7 +96,7 @@ namespace TS_SE_Tool
                         case "CurrencyMes":
                             {
                                 ProgSettingsV.CurrencyMes = line.Split(new char[] { '=' })[1];
-                                DistanceMultiplier = DistanceMultipliers[ProgSettingsV.DistanceMes];
+                                //CurrencyMultiplier = CurrencyMultipliers[ProgSettingsV.CurrencyMes];
                                 break;
                             }
                         case "CustomPathGame":

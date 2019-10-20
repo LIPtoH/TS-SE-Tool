@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+   Copyright 2016-2019 LIPtoH <liptoh.codebase@gmail.com>
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -49,14 +64,19 @@ namespace TS_SE_Tool
                 checkBoxCustomThumbnail.Visible = false;
                 buttonSelectCustomThumbnail.Visible = false;
 
+                //radioButtonMove.Checked = true;
+                radioButtonMove.Visible = false;
+                radioButtonSelect.Visible = false;
                 listBox2.MouseDown += listBox2_MouseDown;
                 listBox2.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
             }
             else
             {
                 this.Text = "Importing CC positions";
+                labelExportImport.Text = "Importing";
                 buttonExportImport.Text = "Import";
-                buttonMoveSaves.Text = "< < <";
+                buttonMoveSaves.Text = "Prepare";
+                buttonMoveSaves.Enabled = false;
                 buttonSave.Text = "Save";
                 radioButtonNamesNone.Visible = false;
 
@@ -66,6 +86,10 @@ namespace TS_SE_Tool
                 buttonSave.Enabled = false;
                 buttonMoveSaves.Enabled = false;
                 buttonSelectCustomThumbnail.Enabled = false;
+
+                //radioButtonMove.Checked = true;
+                radioButtonMove.Enabled = false;
+                radioButtonSelect.Enabled = false;
             }
 
         }
@@ -489,10 +513,11 @@ namespace TS_SE_Tool
 
                 if (listBox2.SelectedItems.Count == 0 || listBox2.SelectionMode == SelectionMode.One)
                 {
-                    listBox2.SelectionMode = SelectionMode.MultiSimple;
-                    listBox2.MouseDown -= listBox2_MouseDown;
-                    listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
-                    //listBox2.SelectedIndex = -1;
+                    radioButtonSelect.Checked = true;
+                    //listBox2.SelectionMode = SelectionMode.MultiSimple;
+                    //listBox2.MouseDown -= listBox2_MouseDown;
+                    //listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
+
                     //Select all
                     for (int i = 0; i < listBox2.Items.Count; i++)
                         listBox2.SetSelected(i, true);
@@ -601,11 +626,16 @@ namespace TS_SE_Tool
                     listBox2.ClearSelected();
                     listBox1.TopIndex = 0;
                     listBox2.Enabled = false;
+
                     buttonExportImport.Enabled = false;
                     buttonMoveSaves.Enabled = false;
                     buttonSave.Enabled = true;
+
                     panel1.Enabled = false;
                     panel2.Enabled = false;
+
+                    radioButtonMove.Enabled = false;
+                    radioButtonSelect.Enabled = false;
                 }
             }
         }
@@ -682,9 +712,9 @@ namespace TS_SE_Tool
             }
             else
             {
-                listBox2.MouseDown += listBox2_MouseDown;
-                listBox2.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
-                listBox2.SelectionMode = SelectionMode.One;
+                //listBox2.MouseDown += listBox2_MouseDown;
+                //listBox2.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
+                //listBox2.SelectionMode = SelectionMode.One;
 
                 DataColumn dc = new DataColumn("truckPosition", typeof(string));
                 combDT.Columns.Add(dc);
@@ -724,6 +754,13 @@ namespace TS_SE_Tool
                         listBox2.DisplayMember = "saveName";
                         listBox2.SelectedIndex = 0;
 
+                        radioButtonMove.Checked = true;
+                        buttonMoveSaves.Enabled = true;
+
+                        radioButtonMove.Checked = true;
+                        radioButtonMove.Enabled = true;
+                        radioButtonSelect.Enabled = true;
+
                         MessageBox.Show("Position data has been inserted.");
                     }
                     else
@@ -733,8 +770,30 @@ namespace TS_SE_Tool
                 {
                     MessageBox.Show("Something gone wrong.");
                 }
+            }
+        }
+        
+        private void radioButtonListBoxState_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton _t = sender as RadioButton;
 
-                buttonMoveSaves.Enabled = true;
+            if (_t.Name == "radioButtonMove" && _t.Checked)
+            {
+                listBox2.SelectionMode = SelectionMode.One;
+                listBox2.MouseDown += listBox2_MouseDown;
+                listBox2.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
+
+                buttonMoveSaves.Text = "Prepare";
+                //buttonMoveSaves.Enabled = false;
+            }
+            else if (_t.Name == "radioButtonSelect" && _t.Checked)
+            {
+                listBox2.SelectionMode = SelectionMode.MultiSimple;
+                listBox2.MouseDown -= listBox2_MouseDown;
+                listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
+
+                buttonMoveSaves.Text = "< < <";
+                //buttonMoveSaves.Enabled = true;
             }
         }
         
@@ -814,6 +873,16 @@ namespace TS_SE_Tool
 
                     //Clear selection
                     _lb.ClearSelected();
+
+                    if( _lb.Items.Count == 0 && !exportState)
+                    {
+                        radioButtonMove.Checked = false;
+                        radioButtonSelect.Checked = false;
+
+                        buttonMoveSaves.Enabled = false;
+                        radioButtonMove.Enabled = false;
+                        radioButtonSelect.Enabled = false;
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2016-2018 LIPtoH <liptoh.codebase@gmail.com>
+   Copyright 2016-2019 LIPtoH <liptoh.codebase@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -55,6 +55,8 @@ namespace TS_SE_Tool
             CorrectControlsPositions();
             this.ResumeLayout();
 
+            bool _sgw = false;
+
             //Distances choice
             DataTable combDT = new DataTable();
             combDT.Columns.Add("ID");
@@ -81,14 +83,18 @@ namespace TS_SE_Tool
             comboBoxSettingDistanceMesSelect.DataSource = combDT;
             comboBoxSettingDistanceMesSelect.SelectedValue = MainForm.ProgSettingsV.DistanceMes;
 
+            if (comboBoxSettingDistanceMesSelect.SelectedValue == null)
+            {
+                _sgw = true;
+                comboBoxSettingDistanceMesSelect.SelectedIndex = 0;
+            }
+                
+
             //Currency choise
             combDT = new DataTable();
             combDT.Columns.Add("ID");
             combDT.Columns.Add("DistDisplayName");
-
-            //Dictionary<string, string> DistanceMesNames = new Dictionary<string, string> { { "km", "Kilometers" }, { "mi", "Miles" } };
-            //MainForm.CurrencyDictR
-
+            
             foreach (KeyValuePair<string, double> tempitem in MainForm.CurrencyDictR)
             {
                 string value = MainForm.ResourceManagerMain.GetString(tempitem.Key, Thread.CurrentThread.CurrentUICulture);
@@ -108,12 +114,22 @@ namespace TS_SE_Tool
             comboBoxSettingCurrencySelect.DataSource = combDT;
             comboBoxSettingCurrencySelect.SelectedValue = MainForm.ProgSettingsV.CurrencyMes;
 
+            if (comboBoxSettingCurrencySelect.SelectedValue == null)
+            {
+                _sgw = true;
+                comboBoxSettingCurrencySelect.SelectedIndex = 0;
+                MainForm.ProgSettingsV.CurrencyMes = comboBoxSettingCurrencySelect.SelectedValue.ToString();
+            }
+
             //Pickup time intervals
             numericUpDownSettingPickTimeD.Value = Math.Floor((decimal)(MainForm.ProgSettingsV.JobPickupTime / 24));
             numericUpDownSettingPickTimeH.Value = MainForm.ProgSettingsV.JobPickupTime - numericUpDownSettingPickTimeD.Value * 24;
 
             //Loop width
             numericUpDownSettingLoopCitys.Value = MainForm.ProgSettingsV.LoopEvery;
+
+            if (_sgw)
+                PrepareSettingsAndSave();
         }
 
         private void buttonSettingDBClear_Click(object sender, EventArgs e)
@@ -160,13 +176,16 @@ namespace TS_SE_Tool
 
         private void buttonSettingSave_Click(object sender, EventArgs e)
         {
-            if (comboBoxSettingDistanceMesSelect.SelectedValue != null)
-            {
-                MainForm.DistanceMultiplier = MainForm.DistanceMultipliers[comboBoxSettingDistanceMesSelect.SelectedValue.ToString()];
-                MainForm.ProgSettingsV.DistanceMes = comboBoxSettingDistanceMesSelect.SelectedValue.ToString();
-                MainForm.ProgSettingsV.CurrencyMes = comboBoxSettingCurrencySelect.SelectedValue.ToString();
-            }
-                
+            PrepareSettingsAndSave();
+        }
+
+        private void PrepareSettingsAndSave()
+        {
+            MainForm.DistanceMultiplier = MainForm.DistanceMultipliers[comboBoxSettingDistanceMesSelect.SelectedValue.ToString()];
+            MainForm.ProgSettingsV.DistanceMes = comboBoxSettingDistanceMesSelect.SelectedValue.ToString();
+            MainForm.ProgSettingsV.CurrencyMes = comboBoxSettingCurrencySelect.SelectedValue.ToString();
+            MainForm.ProgSettingsV.JobPickupTime = (short)(numericUpDownSettingPickTimeH.Value + numericUpDownSettingPickTimeD.Value * 24);
+
             MainForm.WriteConfig();
         }
 
