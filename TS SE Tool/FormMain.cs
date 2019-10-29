@@ -125,7 +125,8 @@ namespace TS_SE_Tool
 
         private DateTime LastModifiedTimestamp; //+
 
-        public PlayerProfile PlayerProfileData; //+
+        public PlayerData PlayerDataV; //+
+        public ProfileData ProfileDataV;
 
         internal ProgSettings ProgSettingsV;//Program
 
@@ -150,7 +151,7 @@ namespace TS_SE_Tool
         private List<string> namelessList;//Program
         private string namelessLast;//Program
 
-        private Dictionary<string, List<string>> GPSbehind, GPSahead, GPSbehindOnline, GPSaheadOnline; //+
+        private Dictionary<string, List<string>> GPSbehind, GPSahead, GPSAvoid, GPSbehindOnline, GPSaheadOnline; //+
 
         internal Dictionary<string, double> DistanceMultipliers; //Program
 

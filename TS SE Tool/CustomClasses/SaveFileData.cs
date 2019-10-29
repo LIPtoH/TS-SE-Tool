@@ -41,7 +41,7 @@ namespace TS_SE_Tool
         List<string> CompaniesList { get; set; } //Companies list
         List<Garages> GaragesList { get; set; } //Garagies
         int InGameTime { get; set; } //Ingame timestamp (hours)
-        PlayerProfile PlayerProfileData { get; set; } //Player profile Data
+        PlayerData PlayerProfileData { get; set; } //Player profile Data
         List<Color> UserColorsList; //User stored colors
         Dictionary<string, List<string>> GPSbehind, GPSahead, GPSbehindOnline, GPSaheadOnline; //GPS markers
         List<string> DriverPool; //Driver pool

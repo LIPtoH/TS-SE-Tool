@@ -109,7 +109,6 @@
             // 
             // comboBoxSettingCurrencySelect
             // 
-            this.comboBoxSettingCurrencySelect.Enabled = false;
             this.comboBoxSettingCurrencySelect.FormattingEnabled = true;
             this.comboBoxSettingCurrencySelect.Location = new System.Drawing.Point(217, 97);
             this.comboBoxSettingCurrencySelect.Name = "comboBoxSettingCurrencySelect";

@@ -131,6 +131,7 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomClasses\Cargo.cs" />
+    <Compile Include="CustomClasses\ProfileData.cs" />
     <Compile Include="CustomClasses\SaveFileData.cs" />
     <Compile Include="CustomClasses\SavefileInfoData.cs" />
     <Compile Include="CustomClasses\TGASharpLib.cs" />
@@ -145,7 +146,7 @@
     <Compile Include="CustomClasses\DDSImageParser.cs" />
     <Compile Include="CustomClasses\Garages.cs" />
     <Compile Include="CustomClasses\LevelNames.cs" />
-    <Compile Include="CustomClasses\PlayerProfile.cs" />
+    <Compile Include="CustomClasses\PlayerData.cs" />
     <Compile Include="CustomClasses\ProgSettings.cs" />
     <Compile Include="CustomClasses\Routes.cs" />
     <Compile Include="CustomClasses\UserCompanyDriverData.cs" />

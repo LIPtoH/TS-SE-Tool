@@ -701,7 +701,7 @@ namespace TS_SE_Tool
 
         private void LoadSaveFile()
         {
-            ToggleVisibility(false);
+            //ToggleVisibility(false);
             SetDefaultValues(false);
 
             ClearProfilePage();
@@ -841,8 +841,22 @@ namespace TS_SE_Tool
 
             if (SavefileVersion > 0 && !SupportedSavefileVersionETS2.Contains(SavefileVersion))
             {
-                MessageBox.Show("Savefile version don't supported.\nYou cann't edit file with this version, but you can try to decode it.", "Wrong version");
+                MessageBox.Show("Savefile version don't supported.\nYou cann't edit file with version " + SavefileVersion + ", but you can try to decode it.", "Wrong version");
                 ShowStatusMessages("clear", "", this, "statusStripMain", "toolStripStatusMessages");
+
+                radioButtonMainGameSwitchETS.Enabled = true;
+                radioButtonMainGameSwitchATS.Enabled = true;
+
+                checkBoxProfilesAndSavesProfileBackups.Enabled = true;
+                buttonProfilesAndSavesRefreshAll.Enabled = true;
+                comboBoxPrevProfiles.Enabled = true;
+                comboBoxProfiles.Enabled = true;
+                comboBoxSaves.Enabled = true;
+
+                buttonMainDecryptSave.Enabled = true;
+                buttonMainLoadSave.Enabled = true;
+                buttonMainWriteSave.Enabled = false;
+
                 return;
             }
             else if (SavefileVersion == 0)
@@ -992,14 +1006,14 @@ namespace TS_SE_Tool
                             //Experience points
                             if (SaveInMemLine.StartsWith(" experience_points"))
                             {
-                                writer.WriteLine(" experience_points: " + PlayerProfileData.ExperiencePoints.ToString());
+                                writer.WriteLine(" experience_points: " + PlayerDataV.ExperiencePoints.ToString());
                                 continue;
                             }
 
                             //Skills
                             if (SaveInMemLine.StartsWith(" adr:"))
                             {
-                                char[] ADR = Convert.ToString(PlayerProfileData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+                                char[] ADR = Convert.ToString(PlayerDataV.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
                                 Array.Reverse(ADR);
 
                                 writer.WriteLine(" adr: " + Convert.ToByte(new string(ADR), 2));
@@ -1007,27 +1021,27 @@ namespace TS_SE_Tool
                             }
                             if (SaveInMemLine.StartsWith(" long_dist:"))
                             {
-                                writer.WriteLine(" long_dist: " + PlayerProfileData.PlayerSkills[1].ToString());
+                                writer.WriteLine(" long_dist: " + PlayerDataV.PlayerSkills[1].ToString());
                                 continue;
                             }
                             if (SaveInMemLine.StartsWith(" heavy:"))
                             {
-                                writer.WriteLine(" heavy: " + PlayerProfileData.PlayerSkills[2].ToString());
+                                writer.WriteLine(" heavy: " + PlayerDataV.PlayerSkills[2].ToString());
                                 continue;
                             }
                             if (SaveInMemLine.StartsWith(" fragile:"))
                             {
-                                writer.WriteLine(" fragile: " + PlayerProfileData.PlayerSkills[3].ToString());
+                                writer.WriteLine(" fragile: " + PlayerDataV.PlayerSkills[3].ToString());
                                 continue;
                             }
                             if (SaveInMemLine.StartsWith(" urgent:"))
                             {
-                                writer.WriteLine(" urgent: " + PlayerProfileData.PlayerSkills[4].ToString());
+                                writer.WriteLine(" urgent: " + PlayerDataV.PlayerSkills[4].ToString());
                                 continue;
                             }
                             if (SaveInMemLine.StartsWith(" mechanical:"))
                             {
-                                writer.WriteLine(" mechanical: " + PlayerProfileData.PlayerSkills[5].ToString());
+                                writer.WriteLine(" mechanical: " + PlayerDataV.PlayerSkills[5].ToString());
                                 continue;
                             }
 
@@ -1155,7 +1169,7 @@ namespace TS_SE_Tool
                         //Account Money
                         if (tempSavefileInMemory[line].StartsWith(" money_account:"))
                         {
-                            writer.WriteLine(" money_account: " + PlayerProfileData.AccountMoney.ToString());
+                            writer.WriteLine(" money_account: " + PlayerDataV.AccountMoney.ToString());
                             continue;
                         }
 
@@ -1176,7 +1190,7 @@ namespace TS_SE_Tool
                             //HQ city
                             if (SaveInMemLine.StartsWith(" hq_city:"))
                             {
-                                writer.WriteLine(" hq_city: " + PlayerProfileData.HQcity);
+                                writer.WriteLine(" hq_city: " + PlayerDataV.HQcity);
                                 continue;
                             }
 
@@ -1184,11 +1198,11 @@ namespace TS_SE_Tool
                             {
                                 chunkOfline = SaveInMemLine.Split(new char[] { ' ' });
 
-                                if (PlayerProfileData.UserCompanyAssignedTruck != chunkOfline[2])
+                                if (PlayerDataV.UserCompanyAssignedTruck != chunkOfline[2])
                                 {
-                                    writer.WriteLine(" assigned_truck: " + PlayerProfileData.UserCompanyAssignedTruck);
+                                    writer.WriteLine(" assigned_truck: " + PlayerDataV.UserCompanyAssignedTruck);
                                     line++;
-                                    writer.WriteLine(" my_truck: " + PlayerProfileData.UserCompanyAssignedTruck);
+                                    writer.WriteLine(" my_truck: " + PlayerDataV.UserCompanyAssignedTruck);
                                     //Garage driver switch needed
                                     int indexuser = 0, indextarget = 0, indexgarage = 0, indexgarageuser = 0, indexgaragetrg = 0;
 
@@ -1197,7 +1211,7 @@ namespace TS_SE_Tool
                                         int i = 0;
                                         foreach (string tempvehicle in tempgarage.Vehicles)
                                         {
-                                            if (tempvehicle == PlayerProfileData.UserCompanyAssignedTruck)
+                                            if (tempvehicle == PlayerDataV.UserCompanyAssignedTruck)
                                             {
                                                 indextarget = i;
                                                 indexgaragetrg = indexgarage;
@@ -1209,7 +1223,7 @@ namespace TS_SE_Tool
                                         i = 0;
                                         foreach (string tempdriver in tempgarage.Drivers)
                                         {
-                                            if (tempdriver == PlayerProfileData.UserDriver)
+                                            if (tempdriver == PlayerDataV.UserDriver)
                                             {
                                                 indexuser = i;
                                                 indexgarageuser = indexgarage;
@@ -1236,7 +1250,7 @@ namespace TS_SE_Tool
 
                             if (SaveInMemLine.StartsWith(" truck_placement:") && UserCompanyAssignedTruckPlacementEdited)
                             {
-                                writer.WriteLine(" truck_placement: " + PlayerProfileData.UserCompanyAssignedTruckPlacement);
+                                writer.WriteLine(" truck_placement: " + PlayerDataV.UserCompanyAssignedTruckPlacement);
                                 line++;
                                 writer.WriteLine(" trailer_placement: (0, 0, 0) (1; 0, 0, 0)");
                                 line++;
@@ -1540,6 +1554,22 @@ namespace TS_SE_Tool
                                 if (GPSahead.Count > 0)
                                 {
                                     foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSahead)
+                                    {
+                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+
+                                        foreach (string templine in tempgpsdata.Value)
+                                        {
+                                            writer.WriteLine(templine);
+                                        }
+
+                                        writer.WriteLine("}");
+                                        writer.WriteLine("");
+                                    }
+                                }
+                                //GPS Avoid
+                                if (GPSAvoid.Count > 0)
+                                {
+                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSAvoid)
                                     {
                                         writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
 

@@ -25,7 +25,7 @@ namespace TS_SE_Tool
 {
     public class Garages
     {
-        FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+        private FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
         public Garages(string _GarageName, int _GarageStatus)
         {
@@ -52,6 +52,7 @@ namespace TS_SE_Tool
 
         public bool IgnoreStatus { get; set; } = true;
 
+        /*
         public override string ToString() {
             string output = "", status = "", statusStr = "";
 
@@ -92,12 +93,47 @@ namespace TS_SE_Tool
                 trueGarageName = value;
             else
             {
-                trueGarageName = GarageName;
+                trueGarageName = GarageName + " -n";
             }
 
             output = trueGarageName + "\n" + trueStatus;
 
             return output;
         }
+        */
+
+        public string GetStatusString()
+        {
+            string output = "", status = "", statusStr = "";
+
+            if (GarageStatus == 0)
+            {
+                statusStr = "Not owned";
+            }
+            else if (GarageStatus == 2)
+            {
+                statusStr = "Small";
+            }
+            else if (GarageStatus == 3)
+            {
+                statusStr = "Large";
+            }
+            else if (GarageStatus == 6)
+            {
+                statusStr = "Tiny";
+            }
+
+            status = MainForm.ResourceManagerMain.GetString(statusStr, Thread.CurrentThread.CurrentUICulture);
+
+            if (status != null && status != "")
+                output = status;
+            else
+            {
+                output = statusStr;
+            }
+
+            return output;
+        }
+
     }
 }

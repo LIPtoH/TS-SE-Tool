@@ -55,6 +55,11 @@ namespace TS_SE_Tool
             CorrectControlsPositions();
             this.ResumeLayout();
 
+            PopulateControls();
+        }
+
+        private void PopulateControls()
+        {
             bool _sgw = false;
 
             //Distances choice
@@ -62,9 +67,9 @@ namespace TS_SE_Tool
             combDT.Columns.Add("ID");
             combDT.Columns.Add("DistDisplayName");
 
-            Dictionary<string,string> DistanceMesNames =new Dictionary<string, string> { { "km", "Kilometers" }, { "mi", "Miles" } };
+            Dictionary<string, string> DistanceMesNames = new Dictionary<string, string> { { "km", "Kilometers" }, { "mi", "Miles" } };
 
-            foreach (KeyValuePair<string,string> tempitem in DistanceMesNames)
+            foreach (KeyValuePair<string, string> tempitem in DistanceMesNames)
             {
                 string value = MainForm.ResourceManagerMain.GetString(tempitem.Value, Thread.CurrentThread.CurrentUICulture);
 
@@ -88,13 +93,13 @@ namespace TS_SE_Tool
                 _sgw = true;
                 comboBoxSettingDistanceMesSelect.SelectedIndex = 0;
             }
-                
+
 
             //Currency choise
             combDT = new DataTable();
             combDT.Columns.Add("ID");
-            combDT.Columns.Add("DistDisplayName");
-            
+            combDT.Columns.Add("CurrencyDisplayName");
+
             foreach (KeyValuePair<string, double> tempitem in MainForm.CurrencyDictR)
             {
                 string value = MainForm.ResourceManagerMain.GetString(tempitem.Key, Thread.CurrentThread.CurrentUICulture);
@@ -110,7 +115,7 @@ namespace TS_SE_Tool
             }
 
             comboBoxSettingCurrencySelect.ValueMember = "ID";
-            comboBoxSettingCurrencySelect.DisplayMember = "DistDisplayName";
+            comboBoxSettingCurrencySelect.DisplayMember = "CurrencyDisplayName";
             comboBoxSettingCurrencySelect.DataSource = combDT;
             comboBoxSettingCurrencySelect.SelectedValue = MainForm.ProgSettingsV.CurrencyMes;
 
@@ -187,6 +192,8 @@ namespace TS_SE_Tool
             MainForm.ProgSettingsV.JobPickupTime = (short)(numericUpDownSettingPickTimeH.Value + numericUpDownSettingPickTimeD.Value * 24);
 
             MainForm.WriteConfig();
+
+            MainForm.FillAccountMoneyTB();
         }
 
         private void buttonSettingCancel_Click(object sender, EventArgs e)

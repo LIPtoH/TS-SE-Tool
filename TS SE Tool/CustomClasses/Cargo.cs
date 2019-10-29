@@ -23,6 +23,7 @@ namespace TS_SE_Tool
     class Cargo //: IEquatable<Cargo>
     {
         public string CargoName { get; set; }
+        public string CargoNameTranslated { get; set; }
         public List<TrailerDefinition> TrailerDefList = new List<TrailerDefinition>();
 
         public Cargo(string _CargoName, int _CargoType, string _TrailerDefinition, string _UnitsCount)

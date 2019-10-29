@@ -40,8 +40,12 @@ namespace TS_SE_Tool
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
 
-
             PopulateFormControlsk();
+
+            buttonReplaceColors.Enabled = false;
+            groupBoxImportedColors.Visible = false;
+
+            this.Size = new Size(this.Size.Width, 209);
         }
 
         private void PopulateFormControlsk()
@@ -57,33 +61,33 @@ namespace TS_SE_Tool
 
             for (int i = 0; i < colorcount; i++)
             {
-                Button rb = new Button();
-                groupBoxUserColors.Controls.Add(rb);
+                Button colorB = new Button();
+                groupBoxUserColors.Controls.Add(colorB);
 
-                rb.Name = "buttonUC" + i.ToString();
-                rb.Text = null;
-                rb.Location = new Point(15 + (padding + width) * (i), 16);
-                rb.Size = new Size(width, width);
-                rb.FlatStyle = FlatStyle.Flat;
-                rb.Enabled = false;
+                colorB.Name = "buttonUC" + i.ToString();
+                colorB.Text = null;
+                colorB.Location = new Point(15 + (padding + width) * (i), 16);
+                colorB.Size = new Size(width, width);
+                colorB.FlatStyle = FlatStyle.Flat;
+                colorB.Enabled = false;
 
-                rb.Click += new EventHandler(MainForm.SelectColor);
-                UserColorsB[i] = rb;
+                //rb.Click += new EventHandler(MainForm.SelectColor);
+                UserColorsB[i] = colorB;
 
-                CheckBox Ppanel = new CheckBox();
-                groupBoxUserColors.Controls.Add(Ppanel);
-                Ppanel.Parent = groupBoxUserColors;
+                CheckBox colorCB = new CheckBox();
+                groupBoxUserColors.Controls.Add(colorCB);
+                colorCB.Parent = groupBoxUserColors;
 
                 //Ppanel.Appearance = Appearance.Button;
-                Ppanel.FlatStyle = FlatStyle.Flat;
-                Ppanel.Size = new Size(width, width / 4);
-                Ppanel.Name = "checkboxUC" + i.ToString();
-                Ppanel.Checked = false;
-                Ppanel.Text = "";
-                Ppanel.AutoSize = true;
-                Ppanel.Location = new Point(15 + (48 - Ppanel.Width) / 2 + (padding + width) * (i), 24 + width);
+                colorCB.FlatStyle = FlatStyle.Flat;
+                colorCB.Size = new Size(width, width / 4);
+                colorCB.Name = "checkboxUC" + i.ToString();
+                colorCB.Checked = false;
+                colorCB.Text = "";
+                colorCB.AutoSize = true;
+                colorCB.Location = new Point(15 + (48 - colorCB.Width) / 2 + (padding + width) * (i), 24 + width);
 
-                UserColorsCB[i] = Ppanel;
+                UserColorsCB[i] = colorCB;
                 //Ppanel.Padding = new Padding(0, 0, 1, 2);
                 //Ppanel.BackgroundImageLayout = ImageLayout.Stretch;
             }
@@ -123,6 +127,7 @@ namespace TS_SE_Tool
                     {
                         btn.Text = "X";
                         btn.BackColor = Color.FromName("Control");
+                        UserColorsCB[i].Enabled = false;
                     }
                     else
                     {
@@ -180,15 +185,21 @@ namespace TS_SE_Tool
         {
             string tempData = "UserColors";
             int i = 0;
+            bool ready = false;
+
             foreach (CheckBox temp in UserColorsCB)
             {
                 if (temp.Checked)
                 {
                     tempData += "\r\n" + UserColorsB[i].BackColor.ToArgb().ToString();
                     temp.Checked = false;
+                    ready = true;
                 }
                 i++;
             }
+
+            if (!ready)
+                return;
 
             string asd = BitConverter.ToString(MainForm.zipText(tempData)).Replace("-", "");
             Clipboard.SetText(asd);
@@ -226,7 +237,12 @@ namespace TS_SE_Tool
                     }
 
                     int impColors = Lines.Length - 1;
-                    CreateImportColorsButtons(impColors);                                        
+                    CreateImportColorsButtons(impColors);
+
+                    foreach (CheckBox colorCB in UserColorsCB)
+                    {
+                        colorCB.Checked = false;
+                    }
 
                     int g = 0;
 
@@ -243,7 +259,19 @@ namespace TS_SE_Tool
                         g++;
                     }
 
+                    this.Size = new Size(this.Size.Width, 323);
+                    groupBoxImportedColors.Visible = true;
+                    buttonReplaceColors.Enabled = true;
+
+                    foreach (CheckBox colorCB in UserColorsCB)
+                    {
+                        colorCB.Enabled = true;
+                    }
+
+                    buttonExportColors.Enabled = false;
+
                     MessageBox.Show("Color data  has been inserted.");
+
                 }
                 else
                     MessageBox.Show("Wrong data. Expected Color data but\r\n" + Lines[0] + "\r\nwas found.");
@@ -287,6 +315,8 @@ namespace TS_SE_Tool
                 }
 
                 UpdateUserColorsButtons();
+
+                buttonExportColors.Enabled = true;
             }
         }
     }

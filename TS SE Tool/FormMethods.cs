@@ -104,16 +104,15 @@ namespace TS_SE_Tool
             if (_initial)
             {
                 ResourceManagerMain = new PlainTXTResourceManager();
-                //ProgSettingsV = new ProgSettings("0.2.1.0", "Default", false, 72, 0, 1.0, "km", "EUR");
                 ProgSettingsV = new ProgSettings();
 
                 ProgSettingsV.ProgramVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
                 SavefileVersion = 0;
-                SupportedSavefileVersionETS2 = new int[] { 39, 40, 41, 42 }; //Supported save version
-                SupportedGameVersionETS2 = "1.33.x - 1.35.x"; //Last game version Tested on
+                SupportedSavefileVersionETS2 = new int[] { 39, 40, 41, 42, 43, 44 }; //Supported save version
+                SupportedGameVersionETS2 = "1.33.x - 1.36.x"; //Last game version Tested on
                 //SupportedSavefileVersionATS;
-                SupportedGameVersionATS = "1.33.x - 1.35.x"; //Last game version Tested on
+                SupportedGameVersionATS = "1.33.x - 1.36.x"; //Last game version Tested on
 
                 ProfileETS2 = @"\Euro Truck Simulator 2";
                 ProfileATS = @"\American Truck Simulator";
@@ -344,7 +343,8 @@ namespace TS_SE_Tool
                 Globals.PlayerLevelUps = new int[] {200, 500, 700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300, 2500, 2700,
                     2900, 3100, 3300, 3500, 3700, 4000, 4300, 4600, 4900, 5200, 5500, 5800, 6100, 6400, 6700, 7000, 7300};
 
-            PlayerProfileData = new PlayerProfile("", 0, new byte[] { 0, 0, 0, 0, 0, 0 }, 0);
+            PlayerDataV = new PlayerData("", 0, new byte[] { 0, 0, 0, 0, 0, 0 }, 0);
+            ProfileDataV = new ProfileData();
 
             UserCompanyAssignedTruckPlacementEdited = false;
 
@@ -443,12 +443,10 @@ namespace TS_SE_Tool
             buttonMainDecryptSave.Enabled = false;
             buttonMainWriteSave.Enabled = true;
 
-            string t1 = "Trucking since:\n\r" + DateTimeOffset.FromUnixTimeSeconds(PlayerProfileData.CreationTime).DateTime.ToLocalTime().ToString();
+            string t1 = "Trucking since:\n\r" + DateTimeOffset.FromUnixTimeSeconds(ProfileDataV.CreationTime).DateTime.ToLocalTime().ToString();
             toolTipMain.SetToolTip(pictureBoxProfileAvatar, t1);
-
-            //string temptest = GetSpareNameless();
-            //ExportnamelessList();
-            //ExportTestnamelessList();
+            
+            AddTranslationToData();
 
             FillFormProfileControls();
             UpdateUserColorsButtons();
@@ -467,6 +465,8 @@ namespace TS_SE_Tool
         {
             FormSettings FormWindow = new FormSettings();
             FormWindow.ShowDialog();
+
+            textBoxUserCompanyMoneyAccount.Refresh();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1228,7 +1228,7 @@ namespace TS_SE_Tool
         {
             FormUpdatePlayerLevel();
 
-            char[] ADR = Convert.ToString(PlayerProfileData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+            char[] ADR = Convert.ToString(PlayerDataV.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
 
             for (int i = 0; i < ADR.Length; i++)
             {
@@ -1238,7 +1238,7 @@ namespace TS_SE_Tool
 
             for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < PlayerProfileData.PlayerSkills[i + 1]; j++)
+                for (int j = 0; j < PlayerDataV.PlayerSkills[i + 1]; j++)
                 {
                     SkillButtonArray[i, j].Checked = true;
                 }
@@ -1247,7 +1247,7 @@ namespace TS_SE_Tool
 
         private void FormUpdatePlayerLevel()
         {
-            int playerlvl = PlayerProfileData.getPlayerLvl()[0];
+            int playerlvl = PlayerDataV.getPlayerLvl()[0];
             labelPlayerLevelNumber.Text = playerlvl.ToString();
 
             for (int i = PlayerLevelNames.Count - 1; i >= 0; i--)
@@ -1258,8 +1258,8 @@ namespace TS_SE_Tool
                     break;
                 }
 
-            labelPlayerExperience.Text = PlayerProfileData.ExperiencePoints.ToString();
-            labelExperienceNxtLvlThreshhold.Text = "/   " + PlayerProfileData.getPlayerLvl()[1].ToString();
+            labelPlayerExperience.Text = PlayerDataV.ExperiencePoints.ToString();
+            labelExperienceNxtLvlThreshhold.Text = "/   " + PlayerDataV.getPlayerLvl()[1].ToString();
         }
 
         private void CreateUserColorsButtons()
@@ -1364,42 +1364,42 @@ namespace TS_SE_Tool
         //Profile buttons
         private void buttonPlayerLvlPlus01_Click(object sender, EventArgs e)
         {
-            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
+            PlayerDataV.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlPlus10_Click(object sender, EventArgs e)
         {
-            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
+            PlayerDataV.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMax_Click(object sender, EventArgs e)
         {
-            PlayerProfileData.getPlayerExp(150);
+            PlayerDataV.getPlayerExp(150);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMinus01_Click(object sender, EventArgs e)
         {
-            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
+            PlayerDataV.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMinus10_Click(object sender, EventArgs e)
         {
-            PlayerProfileData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
+            PlayerDataV.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMin_Click(object sender, EventArgs e)
         {
-            PlayerProfileData.getPlayerExp(0);
+            PlayerDataV.getPlayerExp(0);
 
             FormUpdatePlayerLevel();
         }
@@ -1418,7 +1418,7 @@ namespace TS_SE_Tool
                 {
                     SkillButtonArray[skillIndex, j].Checked = true;
                 }
-                PlayerProfileData.PlayerSkills[++skillIndex] = ++buttonIndex;
+                PlayerDataV.PlayerSkills[++skillIndex] = ++buttonIndex;
             }
             else
             {
@@ -1426,7 +1426,7 @@ namespace TS_SE_Tool
                 {
                     SkillButtonArray[skillIndex, j].Checked = false;
                 }
-                PlayerProfileData.PlayerSkills[++skillIndex] = buttonIndex;
+                PlayerDataV.PlayerSkills[++skillIndex] = buttonIndex;
             }
         }
 
@@ -1515,18 +1515,18 @@ namespace TS_SE_Tool
 
             if (thisbutton.Checked)
             {
-                char[] ADR = Convert.ToString(PlayerProfileData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+                char[] ADR = Convert.ToString(PlayerDataV.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
                 ADR[byte.Parse(thisbutton.Name.Substring(9, 1))] = '1';
 
-                PlayerProfileData.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
+                PlayerDataV.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
                 thisbutton.BackgroundImage = SkillImgSBG[1];
             }
             else
             {
-                char[] ADR = Convert.ToString(PlayerProfileData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+                char[] ADR = Convert.ToString(PlayerDataV.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
                 ADR[byte.Parse(thisbutton.Name.Substring(9, 1))] = '0';
                 string temp = new string(ADR);
-                PlayerProfileData.PlayerSkills[0] = Convert.ToByte(temp.PadLeft(8, '0'), 2);
+                PlayerDataV.PlayerSkills[0] = Convert.ToByte(temp.PadLeft(8, '0'), 2);
                 thisbutton.BackgroundImage = SkillImgSBG[1];
             }
         }
@@ -1985,7 +1985,7 @@ namespace TS_SE_Tool
             comboBoxUserTruckCompanyTrucks.ValueMember = "UserTruckNameless";
             comboBoxUserTruckCompanyTrucks.DisplayMember = "UserTruckName";
             comboBoxUserTruckCompanyTrucks.DataSource = combDT;
-            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerProfileData.UserCompanyAssignedTruck;
+            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataV.UserCompanyAssignedTruck;
         }
 
         private void comboBoxCompanyTrucks_SelectedIndexChanged(object sender, EventArgs e)
@@ -2000,12 +2000,12 @@ namespace TS_SE_Tool
 
         private void buttonUserTruckSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerProfileData.UserCompanyAssignedTruck;
+            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataV.UserCompanyAssignedTruck;
         }
 
         private void buttonUserTruckSwitchCurrent_Click(object sender, EventArgs e)
         {
-            PlayerProfileData.UserCompanyAssignedTruck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
+            PlayerDataV.UserCompanyAssignedTruck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
         }
 
         //Share buttons
@@ -2395,7 +2395,7 @@ namespace TS_SE_Tool
                 comboBoxUserTrailerCompanyTrailers.ValueMember = "UserTrailerkNameless";
                 comboBoxUserTrailerCompanyTrailers.DisplayMember = "UserTrailerName";
                 comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
-                comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerProfileData.UserCompanyAssignedTrailer;
+                comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataV.UserCompanyAssignedTrailer;
             }
             else
             {
@@ -2415,12 +2415,12 @@ namespace TS_SE_Tool
 
         private void buttonUserTrailerSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerProfileData.UserCompanyAssignedTrailer;
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataV.UserCompanyAssignedTrailer;
         }
 
         private void buttonUserTrailerSwitchCurrent_Click(object sender, EventArgs e)
         {
-            PlayerProfileData.UserCompanyAssignedTrailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+            PlayerDataV.UserCompanyAssignedTrailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
         }
 
         //end User Trailer tab
@@ -2435,13 +2435,13 @@ namespace TS_SE_Tool
 
             FillGaragesList(0);
             FillVisitedCities(0);
+            FillAccountMoneyTB();
 
-            textBoxUserCompanyMoneyAccount.Text = PlayerProfileData.AccountMoney.ToString();
-            textBoxUserCompanyCompanyName.Text = PlayerProfileData.CompanyName;
+            textBoxUserCompanyCompanyName.Text = PlayerDataV.CompanyName;
 
             MemoryStream ms = new MemoryStream();
 
-            Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + PlayerProfileData.CompanyLogo + ".dds");
+            Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + PlayerDataV.CompanyLogo + ".dds");
             if(temp != null)
             {
                 temp.Clone(new Rectangle(0, 0, 94, 94), temp.PixelFormat).Save(ms, ImageFormat.Png);
@@ -2456,6 +2456,21 @@ namespace TS_SE_Tool
             pictureBoxCompanyLogo.Image = PlayerCompanyLogo;
         }
 
+        public void FillAccountMoneyTB()
+        {
+            UInt64 valueBefore = (uint)Math.Floor(PlayerDataV.AccountMoney * CurrencyDictR[ProgSettingsV.CurrencyMes]);
+
+            string newtext = "";
+            if (CurrencyDict[ProgSettingsV.CurrencyMes][0] != "")
+                newtext += CurrencyDict[ProgSettingsV.CurrencyMes][0] + "-";
+
+            newtext += CurrencyDict[ProgSettingsV.CurrencyMes][1] + String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore) + ",-" + CurrencyDict[ProgSettingsV.CurrencyMes][2];
+
+            textBoxUserCompanyMoneyAccount.TextChanged -= textBoxMoneyAccount_TextChanged;
+            textBoxUserCompanyMoneyAccount.Text = newtext;
+            textBoxUserCompanyMoneyAccount.TextChanged += textBoxMoneyAccount_TextChanged;
+        }
+
         private void FillHQcities()
         {
             DataTable combDT = new DataTable();
@@ -2468,8 +2483,10 @@ namespace TS_SE_Tool
             //start filling
 
             //fill source and destination cities
-            foreach (Garages garage in from x in GaragesList where !x.IgnoreStatus && x.GarageStatus != 0 select x)
+            foreach (Garages garage in from x in GaragesList where x.GarageStatus != 0 && !x.IgnoreStatus select x)
             {
+                combDT.Rows.Add(garage.GarageName, garage.GarageNameTranslated);
+                /*
                 string CityName = garage.GarageName;
                 CitiesLngDict.TryGetValue(CityName, out string value);
 
@@ -2479,14 +2496,16 @@ namespace TS_SE_Tool
                 {
                     combDT.Rows.Add(CityName, CityName + " -n");
                 }
+                */
             }
+
             combDT.DefaultView.Sort = "CityName ASC";
             comboBoxUserCompanyHQcity.SelectedIndexChanged -= comboBoxUserCompanyHQcity_SelectedIndexChanged;
             comboBoxUserCompanyHQcity.ValueMember = "City";
             comboBoxUserCompanyHQcity.DisplayMember = "CityName";
             comboBoxUserCompanyHQcity.BeginUpdate();
             comboBoxUserCompanyHQcity.DataSource = combDT;
-            comboBoxUserCompanyHQcity.SelectedValue = PlayerProfileData.HQcity;
+            comboBoxUserCompanyHQcity.SelectedValue = PlayerDataV.HQcity;
             comboBoxUserCompanyHQcity.EndUpdate();
             comboBoxUserCompanyHQcity.SelectedIndexChanged += comboBoxUserCompanyHQcity_SelectedIndexChanged;
         }
@@ -2494,37 +2513,73 @@ namespace TS_SE_Tool
         private void comboBoxUserCompanyHQcity_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxUserCompanyHQcity.SelectedValue != null)
-                PlayerProfileData.HQcity = comboBoxUserCompanyHQcity.SelectedValue.ToString();
+                PlayerDataV.HQcity = comboBoxUserCompanyHQcity.SelectedValue.ToString();
         }
 
         private void textBoxMoneyAccount_TextChanged(object sender, EventArgs e)
         {
-            TextBox txtcur = sender as TextBox;
+            TextBox textBoxAccountMoney = sender as TextBox;
 
-            if (!string.IsNullOrEmpty(txtcur.Text))
+            string newtext = "";
+
+            if (!string.IsNullOrEmpty(textBoxAccountMoney.Text))
             {
-                UInt64 valueBefore = UInt64.Parse(txtcur.Text, NumberStyles.AllowThousands);
-                txtcur.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
-                txtcur.Select(txtcur.Text.Length, 0);
+                int testV = textBoxAccountMoney.SelectionStart;
 
-                PlayerProfileData.AccountMoney = UInt32.Parse(txtcur.Text, NumberStyles.AllowThousands);
+                string onlyDigits = new string(textBoxAccountMoney.Text.Where(c => char.IsDigit(c)).ToArray());
+                if (!UInt64.TryParse(onlyDigits, NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out ulong valueBefore))
+                {
+                    valueBefore = UInt64.MaxValue;
+                }
+                //[sign1] - [sign2] 1.234,- [sign3]
+                if (CurrencyDict[ProgSettingsV.CurrencyMes][0] != "")
+                    newtext += CurrencyDict[ProgSettingsV.CurrencyMes][0] + "-";
+
+                newtext += CurrencyDict[ProgSettingsV.CurrencyMes][1] + String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore) + ",-" + CurrencyDict[ProgSettingsV.CurrencyMes][2];
+
+                int cSpace1 = textBoxAccountMoney.Text.Substring(0, testV).Count(Char.IsWhiteSpace);
+
+                textBoxAccountMoney.TextChanged -= textBoxMoneyAccount_TextChanged;
+                textBoxAccountMoney.Text = newtext;
+                textBoxAccountMoney.TextChanged += textBoxMoneyAccount_TextChanged;
+
+                int cSpace2 = textBoxAccountMoney.Text.Substring(0, testV).Count(Char.IsWhiteSpace);
+
+                textBoxAccountMoney.SelectionStart = testV + cSpace2 - cSpace1;
+
+                PlayerDataV.AccountMoney = (uint)Math.Round(valueBefore / CurrencyDictR[ProgSettingsV.CurrencyMes]);
             }
         }
 
         private void textBoxMoneyAccount_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextBox txtcur = sender as TextBox;
+            TextBox textBoxAccountMoney = sender as TextBox;
             UInt64 valueBefore = 0;
+            string onlyDigits = new string(textBoxAccountMoney.Text.Where(c => char.IsDigit(c)).ToArray());
 
-            if (!string.IsNullOrEmpty(txtcur.Text))
-            {
-                valueBefore = UInt64.Parse(txtcur.Text, NumberStyles.AllowThousands);
-            }
+            int testV = textBoxAccountMoney.SelectionStart;
 
-            if (!Char.IsDigit(e.KeyChar) && !(valueBefore <= 999999999))
+            if (!string.IsNullOrEmpty(textBoxAccountMoney.Text))
             {
-                txtcur.Text = valueBefore.ToString();
-                e.Handled = true;
+                if (!Char.IsDigit(e.KeyChar))
+                {
+                    if(e.KeyChar == (char)Keys.Back)
+                    {
+                        return;
+                    }
+
+                    if(UInt64.TryParse(onlyDigits, NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out valueBefore))
+                    {
+                        textBoxAccountMoney.Text = valueBefore.ToString();
+                        e.Handled = true;
+                    }
+                    else
+                    {
+                        valueBefore = UInt64.MaxValue;
+                        textBoxAccountMoney.Text = valueBefore.ToString();
+                        e.Handled = true;
+                    }
+                }
             }
         }
         //Visited cities
@@ -2537,16 +2592,7 @@ namespace TS_SE_Tool
             if (CitiesList.Count <= 0)
                 return;
 
-            foreach (City vc in CitiesList)
-            {
-                string Translated = vc.CityName;
-                CitiesLngDict.TryGetValue(vc.CityName, out Translated);
-                vc.CityNameTranslated = Translated;
-            }
-
-            CitiesList = CitiesList.OrderBy(x => x.CityNameTranslated).ToList();
-
-            foreach (City vc in CitiesList)
+            foreach (City vc in from x in CitiesList where !x.Disabled select x)
             {
                 listBoxVisitedCities.Items.Add(vc);
             }
@@ -2604,18 +2650,20 @@ namespace TS_SE_Tool
             RectangleF layout_rect = new RectangleF(x, y, width, height);
 
             // Draw the text.
-            string txt = "", DisplayCityName = "";
+            string txt = "";//, DisplayCityName = "";
 
             //CitiesLngDict.TryGetValue(vc.CityName, out string value);
+            /*
             DisplayCityName = vc.CityNameTranslated;
 
             if (DisplayCityName != null && DisplayCityName != "")
                 txt = DisplayCityName;
             else
             {
-                txt = vc.CityName + " -n";
+                txt = vc.CityName + " -nt";
             }
-
+            */
+            txt = vc.CityNameTranslated;
             e.Graphics.DrawString(txt, Font, br, layout_rect);
 
             // Draw the focus rectangle if appropriate.
@@ -2671,15 +2719,6 @@ namespace TS_SE_Tool
 
             if (GaragesList.Count <= 0)
                 return;
-
-            foreach (Garages garage in GaragesList)
-            {
-                string Translated = garage.GarageName;
-                CitiesLngDict.TryGetValue(garage.GarageName, out Translated);
-                garage.GarageNameTranslated = Translated;
-            }
-
-            GaragesList = GaragesList.OrderBy(x => x.GarageNameTranslated).ToList();
 
             foreach (Garages garage in from x in GaragesList where !x.IgnoreStatus select x)
             {
@@ -2787,7 +2826,8 @@ namespace TS_SE_Tool
             height = e.Bounds.Bottom - GarageItemMargin - y;
             layout_rect = new RectangleF(x, y, width, height);
 
-            txt = lst.Items[e.Index].ToString();
+            //txt = lst.Items[e.Index].ToString();
+            txt = grg.GarageNameTranslated + "\n" + grg.GetStatusString();
             // Draw the text.
             e.Graphics.DrawString(txt, this.Font, br, layout_rect);
 
@@ -2880,7 +2920,7 @@ namespace TS_SE_Tool
 
             foreach (Garages garage in tmp)
             {
-                if (garage.GarageName == PlayerProfileData.HQcity)
+                if (garage.GarageName == PlayerDataV.HQcity)
                     garage.GarageStatus = 6;
                 else
                     garage.GarageStatus = 0;
@@ -3101,8 +3141,8 @@ namespace TS_SE_Tool
                 float width = (e.Bounds.Right - e.Bounds.Left - JobsItemMargin * 4 - UrgencyImg[Job.Urgency].Width) / 2;
                 float height = JobsTextHeigh;//e.Bounds.Bottom - JobsItemMargin - y;
                 RectangleF layout_rect = new RectangleF(x, y, width, height);
-
-                string txt = SourceCityName;
+                
+                string txt = "(" + CitiesList.Find(xc => xc.CityName == Job.SourceCity).Country.First() + ") " + SourceCityName;
                 StringFormat format = new StringFormat();
                 format.Alignment = StringAlignment.Near;
                 e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
@@ -3112,7 +3152,7 @@ namespace TS_SE_Tool
                 x = e.Bounds.Left + width + 3 * JobsItemMargin + UrgencyImg[Job.Urgency].Width;
                 layout_rect = new RectangleF(x, y, width, height);
                 format.Alignment = StringAlignment.Far;
-                txt = DestinationCityName;
+                txt = DestinationCityName + " (" + CitiesList.Find(xc => xc.CityName == Job.DestinationCity).Country.First() + ")";
                 e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
 
                 //Cargo
@@ -3254,22 +3294,18 @@ namespace TS_SE_Tool
         {
             //start filtering
             List<string> tempCompList = new List<string>();
+            Dictionary<string, string> sourceCompList = new Dictionary<string, string>();
 
             foreach (City city in CitiesList.FindAll(x => !x.Disabled))
             {
                 List<Company> source = city.ReturnCompanies();
 
-                foreach (Company company in from x in source.Distinct()
-                                            where !x.Excluded
-                                            select x)
+                foreach (Company company in from x in source where !x.Excluded select x)
                 {
-                    if (!tempCompList.Contains(company.CompanyName))
-                    {
-                        tempCompList.Add(company.CompanyName);
-                    }
+                    if(!sourceCompList.ContainsKey(company.CompanyName))
+                        sourceCompList.Add(company.CompanyName, company.CompanyNameTranslated);
                 }
             }
-            tempCompList = tempCompList.OrderBy(x => x).ToList();
             //end filtering
 
             DataTable combDT = new DataTable();
@@ -3279,16 +3315,10 @@ namespace TS_SE_Tool
             dc = new DataColumn("CompanyName", typeof(string));
             combDT.Columns.Add(dc);
 
-            foreach (string tempitem in tempCompList)
-                if (CompaniesLngDict.TryGetValue(tempitem, out string value))
-                    if (value != null && value != "")
-                    {
-                        combDT.Rows.Add(tempitem, value);
-                    }
-                    else
-                    {
-                        combDT.Rows.Add(tempitem, tempitem);
-                    }
+            foreach(KeyValuePair<string, string> tempitem in sourceCompList)
+            {
+                combDT.Rows.Add(tempitem.Key, tempitem.Value);
+            }
 
             DataTable sortedDT = combDT.DefaultView.Table.Copy();
 
@@ -3327,19 +3357,9 @@ namespace TS_SE_Tool
             //start filling
 
             //fill source and destination cities
-            foreach (City tempcity in from x in CitiesList
-                                      where !x.Disabled
-                                      select x)
+            foreach (City tempcity in from x in CitiesList where !x.Disabled select x)
             {
-                CitiesLngDict.TryGetValue(tempcity.CityName, out string value);
-                if (value != null && value != "")
-                {
-                    combDT.Rows.Add(tempcity.CityName, value);
-                }
-                else
-                {
-                    combDT.Rows.Add(tempcity.CityName, tempcity.CityName + " -n");
-                }
+                combDT.Rows.Add(tempcity.CityName, tempcity.CityNameTranslated);
             }
             combDT.DefaultView.Sort = "CityName ASC";
 
@@ -3911,15 +3931,11 @@ namespace TS_SE_Tool
         //Source city
         private void comboBoxSourceCity_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string city = comboBoxFreightMarketSourceCity.SelectedValue.ToString();
+            string _sourceCityName = comboBoxFreightMarketSourceCity.SelectedValue.ToString();
 
             comboBoxFreightMarketSourceCompany.SelectedIndex = -1;
 
-            City ccity = CitiesList.Find(x => x.CityName == city);
-
-            List<Company> list = ccity.ReturnCompanies();
-            List<Company> list2 = list.FindAll(x => !x.Excluded);
-
+            List<Company> sourceCompaniesList = CitiesList.Find(x => x.CityName == _sourceCityName).ReturnCompanies().FindAll(x => !x.Excluded);
 
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("Company", typeof(string));
@@ -3928,16 +3944,8 @@ namespace TS_SE_Tool
             dc = new DataColumn("CompanyName", typeof(string));
             combDT.Columns.Add(dc);
 
-            foreach (Company company in list2)
-                if (CompaniesLngDict.TryGetValue(company.CompanyName, out string value))
-                    if (value != "")
-                    {
-                        combDT.Rows.Add(company.CompanyName, value);
-                    }
-                    else
-                    {
-                        combDT.Rows.Add(company.CompanyName, company.CompanyName);
-                    }
+            foreach (Company company in sourceCompaniesList)
+                combDT.Rows.Add(company.CompanyName, company.CompanyNameTranslated);
 
             combDT.DefaultView.Sort = "CompanyName ASC";
 
@@ -3951,6 +3959,7 @@ namespace TS_SE_Tool
                 comboBoxFreightMarketSourceCompany.SelectedIndex = RandomValue.Next(comboBoxFreightMarketSourceCompany.Items.Count);
             }
         }
+
         //Source company
         private void comboBoxSourceCompany_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -4006,31 +4015,19 @@ namespace TS_SE_Tool
             combDT.Columns.Add(dc);
 
             //start filling
-            List<City> cities = CitiesList;
+            List<City> cities = CitiesList.FindAll(x => !x.Disabled);
 
-            if (_country_selected && checkBoxFreightMarketFilterDestination.Checked)
-            {
-                cities = CitiesList.FindAll(x => !x.Disabled && (x.Country == comboBoxFreightMarketCountries.SelectedValue.ToString()));
-            }
-            else
             if (_country_selected && !checkBoxFreightMarketFilterDestination.Checked)
             {
-                cities = CitiesList.FindAll(x => x.Country == comboBoxFreightMarketCountries.SelectedValue.ToString());
+                cities = cities.FindAll(x => x.Country == comboBoxFreightMarketCountries.SelectedValue.ToString());
             }
             else
             if (!(_country_selected || checkBoxFreightMarketFilterDestination.Checked))
             {
-                cities = CitiesList;
-            }
-            else
-            if (!(_country_selected || !checkBoxFreightMarketFilterDestination.Checked))
-            {
-                cities = CitiesList.FindAll(x => !x.Disabled);
             }
 
             foreach (City city in cities)
             {
-
                 List<Company> companyList = city.ReturnCompanies();
 
                 if (!_company_selected)
@@ -4053,13 +4050,14 @@ namespace TS_SE_Tool
                 }
 
                 if (companyList.Count > 0)
-                    if (CitiesLngDict.TryGetValue(city.CityName, out string CityNamevalue))
-                        if (CityNamevalue != null && CityNamevalue != "")
-                            combDT.Rows.Add(city.CityName, CityNamevalue);
-                        else
-                        {
-                            combDT.Rows.Add(city.CityName, city.CityName + " -n");
-                        }
+                {
+                    combDT.Rows.Add(city.CityName, city.CityNameTranslated);
+                    comboBoxFreightMarketDestinationCity.Enabled = true;
+                }
+                else
+                {
+                    comboBoxFreightMarketDestinationCity.Enabled = false;
+                }
             }
 
             combDT.DefaultView.Sort = "CityName ASC";
@@ -4104,6 +4102,8 @@ namespace TS_SE_Tool
 
             foreach (Company company in RealCompanies)
             {
+                combDT.Rows.Add(company.CompanyName, company.CompanyNameTranslated);
+                /*
                 CompaniesLngDict.TryGetValue(company.CompanyName, out string value);
                 if (value != null && value != "")
                 {
@@ -4113,6 +4113,7 @@ namespace TS_SE_Tool
                 {
                     combDT.Rows.Add(company.CompanyName, company.CompanyName + " -n");
                 }
+                */
             }
             
             combDT.DefaultView.Sort = "CompanyName ASC";
@@ -4171,8 +4172,7 @@ namespace TS_SE_Tool
             comboBoxFreightMarketSourceCity.SelectedValue = ((JobAdded)listBoxFreightMarketAddedJobs.Items[listBoxFreightMarketAddedJobs.Items.Count - 1]).DestinationCity;
             comboBoxFreightMarketSourceCompany.SelectedValue = ((JobAdded)listBoxFreightMarketAddedJobs.Items[listBoxFreightMarketAddedJobs.Items.Count - 1]).DestinationCompany;
         }
-
-
+        
         private void buttonClearJobList_Click(object sender, EventArgs e)
         {
             ClearJobData();
@@ -4201,8 +4201,7 @@ namespace TS_SE_Tool
             comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
         }
 
-        //contextMenuStrip FreightMarketJobList
-
+        //contextMenuStrip Freight Market JobList
         private void listBoxFreightMarketAddedJobs_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -4313,6 +4312,8 @@ namespace TS_SE_Tool
             //fill source and destination cities
             foreach (City tempcity in from x in CitiesList where !x.Disabled select x)
             {
+                combDT.Rows.Add(tempcity.CityName, tempcity.CityNameTranslated);
+                /*
                 CitiesLngDict.TryGetValue(tempcity.CityName, out string value);
                 if (value != null && value != "")
                     combDT.Rows.Add(tempcity.CityName, value);
@@ -4320,6 +4321,7 @@ namespace TS_SE_Tool
                 {
                     combDT.Rows.Add(tempcity.CityName, tempcity.CityName + " -n");
                 }
+                */
             }
 
             combDT.DefaultView.Sort = "CityName ASC";
@@ -4361,6 +4363,8 @@ namespace TS_SE_Tool
 
             foreach (Company company in RealCompanies)
             {
+                combDT.Rows.Add(company.CompanyName, company.CompanyNameTranslated);
+                /*
                 CompaniesLngDict.TryGetValue(company.CompanyName, out string value);
                 if (value != null && value != "")
                 {
@@ -4368,15 +4372,15 @@ namespace TS_SE_Tool
                 }
                 else
                 {
-                    combDT.Rows.Add(company.CompanyName, company.CompanyName);
+                    combDT.Rows.Add(company.CompanyName, company.CompanyName + " -n");
                 }
+                */
             }
 
             combDT.DefaultView.Sort = "CompanyName ASC";
 
             comboBoxSourceCargoMarketCompany.ValueMember = "Company";
             comboBoxSourceCargoMarketCompany.DisplayMember = "CompanyName";
-
             comboBoxSourceCargoMarketCompany.DataSource = combDT;
         }
 
@@ -4400,18 +4404,25 @@ namespace TS_SE_Tool
             listBoxCargoMarketCargoListForCompany.Items.Clear();
 
             ExtCompany t = ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString());
-            foreach (string cargo in ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).outCargo)
+
+            if (t != null)
             {
-                if (comboBoxCMTrailerTypes.SelectedValue != null && ExtCargoList.Count > 0)
-                {
-                    ExtCargo temp = ExtCargoList.Find(x => x.CargoName == cargo);
-                    if(temp != null)
+                List<string> oC = t.outCargo;
+
+                if (oC != null)
+                    foreach (string cargo in oC)
                     {
-                        if(temp.BodyTypes.Contains(comboBoxCMTrailerTypes.SelectedValue.ToString()))
-                            listBoxCargoMarketCargoListForCompany.Items.Add(cargo);
+                        if (comboBoxCMTrailerTypes.SelectedValue != null && ExtCargoList.Count > 0)
+                        {
+                            ExtCargo temp = ExtCargoList.Find(x => x.CargoName == cargo);
+                            if (temp != null)
+                            {
+                                if (temp.BodyTypes.Contains(comboBoxCMTrailerTypes.SelectedValue.ToString()))
+                                    listBoxCargoMarketCargoListForCompany.Items.Add(cargo);
+                            }
+                        }
                     }
-                }                    
-            }   
+            }
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -4450,8 +4461,8 @@ namespace TS_SE_Tool
                         cargoforseed += tempOutCargo[Cargoreminder];
                     }
                     */
-                    listBoxCargoMarketSourceCargoSeeds.Items.Add("" + cargoseed.ToString() + " | Time left " + ((cargoseed - InGameTime) / 60).ToString() + "h " + 
-                        ((cargoseed - InGameTime) % 60).ToString() + "m " + cargoforseed);
+                    listBoxCargoMarketSourceCargoSeeds.Items.Add("" + cargoseed.ToString().PadRight(12, ' ') + " | Time left " + ((cargoseed - InGameTime) / 60).ToString().PadLeft(2) + " h " + 
+                        ((cargoseed - InGameTime) % 60).ToString().PadLeft(2) + " m " + cargoforseed);
 
                     //seedindex++;
                 }
@@ -4540,9 +4551,7 @@ namespace TS_SE_Tool
 
             foreach (string trailertype in TrailerTypes)
             {
-                //CompaniesLngDict.TryGetValue(trailertype.CompanyName, out string value);
                 combDT.Rows.Add(trailertype, CultureInfo.InvariantCulture.TextInfo.ToTitleCase(trailertype));
-                
             }
 
             combDT.DefaultView.Sort = "TrailerTypeName ASC";
@@ -4559,7 +4568,7 @@ namespace TS_SE_Tool
         {
             string tempString = "GPS_TruckPosition\r\n";
 
-            tempString += PlayerProfileData.UserCompanyAssignedTruckPlacement;
+            tempString += PlayerDataV.UserCompanyAssignedTruckPlacement;
             string asd = BitConverter.ToString(zipText(tempString)).Replace("-", "");
             Clipboard.SetText(asd);
             MessageBox.Show("Truck GPS position has been copied.");
@@ -4581,7 +4590,7 @@ namespace TS_SE_Tool
                         tempstr.Add(Lines[i]);
                     }
 
-                    PlayerProfileData.UserCompanyAssignedTruckPlacement = tempstr[0];
+                    PlayerDataV.UserCompanyAssignedTruckPlacement = tempstr[0];
                     //PlayerProfileData.UserCompanyAssignedTrailerPlacement = "(0, 0, 0) (1; 0, 0, 0)";
 
                     MessageBox.Show("Truck GPS position has been inserted.");
@@ -4599,7 +4608,7 @@ namespace TS_SE_Tool
         private void buttonGPSStoredGPSPathCopy_Click(object sender, EventArgs e)
         {
             string tempData = "GPS_Path\r\n";
-
+            //GPS Behind
             if (GPSbehind.Count > 0)
             {
                 tempData += "GPSbehind\r\n";
@@ -4612,9 +4621,19 @@ namespace TS_SE_Tool
                     }
                 }
             }
-            //GPSahead
+            //GPS Ahead
             tempData += "GPSahead\r\n";
             foreach (KeyValuePair<string, List<string>> temp in GPSahead)
+            {
+                tempData += "waypoint\r\n";
+                foreach (string tempLines in temp.Value)
+                {
+                    tempData += tempLines + "\r\n";
+                }
+            }
+            //GPS Avoid
+            tempData += "GPSavoid\r\n";
+            foreach (KeyValuePair<string, List<string>> temp in GPSAvoid)
             {
                 tempData += "waypoint\r\n";
                 foreach (string tempLines in temp.Value)
@@ -4638,12 +4657,13 @@ namespace TS_SE_Tool
 
                 if (Lines[0] == "GPS_Path")
                 {
-                    Dictionary<int, List<string>> tempGPSbehind, tempGPSahead;
+                    Dictionary<int, List<string>> tempGPSbehind, tempGPSahead, tempGPSavoid;
 
                     tempGPSbehind = new Dictionary<int, List<string>>();
                     tempGPSahead = new Dictionary<int, List<string>>();
+                    tempGPSavoid = new Dictionary<int, List<string>>();
 
-                    bool tagGPSbehind = false, tagGPSahead = false;//, tagWP = false;
+                    bool tagGPSbehind = false, tagGPSahead = false, tagGPSavoid = false;
 
                     for (int i = 1; i < Lines.Length; i++)
                     {
@@ -4707,10 +4727,44 @@ namespace TS_SE_Tool
                                 }
                             }
                             while (i < Lines.Length && Lines[i] != "");
+
+                            tagGPSahead = false;
+                        }
+
+                        //GPS Avoid
+                        if (Lines[i].StartsWith("GPSavoid"))
+                        {
+                            tagGPSavoid = true;
+                            continue;
+                        }
+
+                        if (tagGPSavoid)
+                        {
+                            int wp = 0;
+                            do
+                            {
+                                if (Lines[i].StartsWith("waypoint"))
+                                {
+                                    i++;
+                                    List<string> tmpList = new List<string>();
+
+                                    while (!Lines[i].StartsWith("waypoint") && !Lines[i].StartsWith("GPSavoid") && Lines[i] != "" && i < Lines.Length)
+                                    {
+                                        tmpList.Add(Lines[i]);
+                                        i++;
+                                    }
+
+                                    tempGPSavoid.Add(wp, tmpList);
+                                    wp++;
+                                }
+                            }
+                            while (!Lines[i].StartsWith("GPSavoid") && Lines[i] != "" && i < Lines.Length);
+
+                            tagGPSavoid = false;
                         }
                     }
 
-                    //GPSbehind = tempGPSbehind;
+                    //GPSbehind = tempGPSbehind
                     if (tempGPSbehind.Count > 0)
                     {
                         GPSbehind.Clear();
@@ -4720,13 +4774,23 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    //GPSahead = tempGPSahead;
+                    //GPSahead = tempGPSahead
                     if (tempGPSahead.Count > 0)
                     {
                         GPSahead.Clear();
                         foreach (KeyValuePair<int, List<string>> temp in tempGPSahead)
                         {
                             GPSahead.Add(GetSpareNameless(), temp.Value);
+                        }
+                    }
+
+                    //GPSavoid = tempGPSavoid
+                    if (tempGPSavoid.Count > 0)
+                    {
+                        GPSAvoid.Clear();
+                        foreach (KeyValuePair<int, List<string>> temp in tempGPSavoid)
+                        {
+                            GPSAvoid.Add(GetSpareNameless(), temp.Value);
                         }
                     }
 
@@ -4789,9 +4853,7 @@ namespace TS_SE_Tool
 
         public void ToggleGame_Click(object sender, EventArgs e)
         {
-            //Button gamebutton = sender as Button;
-
-            if (radioButtonMainGameSwitchETS.Checked)//gamebutton.Name == "buttonMainGameSwitchETS")
+            if (radioButtonMainGameSwitchETS.Checked)
                 ToggleGame("ETS2");
             else
                 ToggleGame("ATS");
@@ -4819,27 +4881,17 @@ namespace TS_SE_Tool
             if (_game == "ETS2")
             {
                 Globals.CurrentGame = dictionaryProfiles["ETS2"];
-                //radioButtonMainGameSwitchETS.Enabled = false;
-                //radioButtonMainGameSwitchATS.Enabled = true;
                 GameType = _game;
-                //buttonMainGameSwitchETS.BackColor = Color.White;
-                //buttonMainGameSwitchETS.ForeColor = Color.Black;
-                //buttonMainGameSwitchATS.BackColor = Color.FromKnownColor(KnownColor.Control);
-                //buttonMainGameSwitchATS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
             }
             else
             {
                 Globals.CurrentGame = dictionaryProfiles["ATS"];
-                //radioButtonMainGameSwitchETS.Enabled = true;
-                //radioButtonMainGameSwitchATS.Enabled = false;
                 GameType = _game;
-                //buttonMainGameSwitchATS.BackColor = Color.White;
-                //buttonMainGameSwitchATS.ForeColor = Color.Black;
-                //buttonMainGameSwitchETS.BackColor = Color.FromKnownColor(KnownColor.Control);
-                //buttonMainGameSwitchETS.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
             }
         }
 
+        //Language
+        //tool strip click
         private void toolstripChangeLanguage(object sender, EventArgs e)
         {
             ToolStripItem obj = sender as ToolStripItem;
@@ -4853,7 +4905,7 @@ namespace TS_SE_Tool
 
             ChangeLanguage();
         }
-
+        //Master
         private void ChangeLanguage()
         {
             try
@@ -4899,6 +4951,7 @@ namespace TS_SE_Tool
 
                 LoadTruckBrandsLng();
 
+                AddTranslationToData();
                 RefreshComboboxes();
                 CorrectControlsPositions();
             }
@@ -4907,7 +4960,7 @@ namespace TS_SE_Tool
             }            
             //rm.ReleaseAllResources();
         }
-
+        //Help methods for searching controls
         private void HelpTranslateFormMethod (Control parent, PlainTXTResourceManager _rm, CultureInfo _ci)
         {
             foreach (Control c in parent.Controls)
@@ -4965,7 +5018,7 @@ namespace TS_SE_Tool
             }
 
         }
-        
+        //Correct positions
         private void CorrectControlsPositions()
         {
             //Truck
@@ -4977,11 +5030,11 @@ namespace TS_SE_Tool
             //Freight Market
             labelFreightMarketDistanceNumbers.Location = new Point( labelFreightMarketDistance.Location.X + labelFreightMarketDistance.Width + 6, labelFreightMarketDistanceNumbers.Location.Y);
         }
-
+        //Translate CB
         private void RefreshComboboxes()
         {
-            int savedindex = 0, i = 0, j = 0;
-            string savedvalue = "";
+            int savedindex = 0, j = 0;
+            string savedvalue = "", ntFormat = " -nt";
             DataTable temptable = new DataTable();
             
             //Countries ComboBoxes
@@ -4994,16 +5047,22 @@ namespace TS_SE_Tool
                     savedvalue = comboBoxFreightMarketCountries.SelectedValue.ToString();
 
                 comboBoxFreightMarketCountries.SelectedIndexChanged -= comboBoxCountries_SelectedIndexChanged;
-                i = 0;
+                //i = 0;
                 foreach (DataRow temp in temptable.Rows)
                 {
-                    try
+                    string source = temp[0].ToString();
+
+                    CountriesLngDict.TryGetValue(source, out string value);
+
+                    if (value != null && value != "")
                     {
-                        temp[1] = CountriesLngDict[temp[0].ToString()];
+                        temp[1] = value;
                     }
-                    catch
-                    { }
-                    i++;
+                    else
+                    {
+                        string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(source);
+                        temp[1] = CapName;
+                    }
                 }
 
                 DataTable sortedDT = temptable.DefaultView.Table.Copy();
@@ -5044,16 +5103,21 @@ namespace TS_SE_Tool
                     savedvalue = comboBoxFreightMarketCompanies.SelectedValue.ToString();
 
                 comboBoxFreightMarketCompanies.SelectedIndexChanged -= comboBoxCompanies_SelectedIndexChanged;
-                i = 0;
+                //i = 0;
                 foreach (DataRow temp in temptable.Rows)
                 {
-                    try
+                    string source = temp[0].ToString();
+
+                    CompaniesLngDict.TryGetValue(source, out string value);
+
+                    if (value != null && value != "")
                     {
-                        temp[1] = CompaniesLngDict[temp[0].ToString()];
+                        temp[1] = value;
                     }
-                    catch
-                    { }
-                    i++;
+                    else
+                    {
+                        temp[1] = source + ntFormat;
+                    }
                 }
 
                 DataTable sortedDT = temptable.DefaultView.Table.Copy();
@@ -5099,16 +5163,21 @@ namespace TS_SE_Tool
                         savedvalue = tempCB.SelectedValue.ToString();
 
                     tempCB.SelectedIndexChanged -= CitiesCBeh[j];
-                    i = 0;
+                    //i = 0;
                     foreach (DataRow temp in temptable.Rows)
                     {
-                        try
+                        string source = temp[0].ToString();
+
+                        CitiesLngDict.TryGetValue(source, out string value);
+
+                        if (value != null && value != "")
                         {
-                            temp[1] = CitiesLngDict[temp[0].ToString()];
+                            temp[1] = value;
                         }
-                        catch
-                        { }
-                        i++;
+                        else
+                        {
+                            temp[1] = source + ntFormat;
+                        }
                     }
 
                     if (savedindex != -1)
@@ -5136,16 +5205,21 @@ namespace TS_SE_Tool
 
                     tempCB.SelectedIndexChanged -= CompaniesCBeh[j];
 
-                    i = 0;
+                    //i = 0;
                     foreach (DataRow temp in temptable.Rows)
                     {
-                        try
+                        string source = temp[0].ToString();
+
+                        CompaniesLngDict.TryGetValue(source, out string value);
+
+                        if (value != null && value != "")
                         {
-                            temp[1] = CompaniesLngDict[temp[0].ToString()];
+                            temp[1] = value;
                         }
-                        catch
-                        { }
-                        i++;
+                        else
+                        {
+                            temp[1] = source + ntFormat;
+                        }
                     }
 
                     if (savedindex != -1)
@@ -5168,16 +5242,21 @@ namespace TS_SE_Tool
 
                 comboBoxFreightMarketCargoList.SelectedIndexChanged -= comboBoxCargoList_SelectedIndexChanged;
 
-                i = 0;
+                //i = 0;
                 foreach (DataRow temp in temptable.Rows)
                 {
-                    try
+                    string source = temp[0].ToString();
+
+                    CargoLngDict.TryGetValue(source, out string value);
+
+                    if (value != null && value != "")
                     {
-                        temp[1] = CargoLngDict[temp[0].ToString()];
+                        temp[1] = value;
                     }
-                    catch
-                    { }
-                    i++;
+                    else
+                    {
+                        temp[1] = source + ntFormat;
+                    }
                 }
 
                 if (savedindex != -1)
@@ -5190,16 +5269,21 @@ namespace TS_SE_Tool
             temptable = comboBoxFreightMarketUrgency.DataSource as DataTable;
             if (temptable != null)
             {
-                i = 0;
+                //i = 0;
                 foreach (DataRow temp in temptable.Rows)
                 {
-                    try
+                    string source = temp[0].ToString();
+
+                    UrgencyLngDict.TryGetValue(source, out string value);
+
+                    if (value != null && value != "")
                     {
-                        temp[1] = UrgencyLngDict[temp[0].ToString()];
+                        temp[1] = value;
                     }
-                    catch
-                    { }
-                    i++;
+                    else
+                    {
+                        temp[1] = source + ntFormat;
+                    }
                 }
             }
 
@@ -5207,17 +5291,22 @@ namespace TS_SE_Tool
             //ListBoxes
             FillVisitedCities(listBoxVisitedCities.TopIndex);
             FillGaragesList(listBoxGarages.TopIndex);
+
+            listBoxFreightMarketAddedJobs.Refresh();
         }
-        
+        //Get translation line
         private string GetranslatedString(string _key)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentUICulture;
+
             try
             {
                 PlainTXTResourceManager rm = new PlainTXTResourceManager();
-                string res = rm.GetString(_key, ci);
-                if(res != null)
-                    return res;
+
+                string resultString = rm.GetString(_key, ci);
+
+                if(resultString != null)
+                    return resultString;
                 else
                     return _key;
             }
@@ -5227,14 +5316,78 @@ namespace TS_SE_Tool
             }
         }
 
+        private void AddTranslationToData()
+        {
+            string ntFormat = " -nt";
+            //Countries
+            /*
+            foreach (string tempitem in CountriesList)
+            {
+                CountriesLngDict.TryGetValue(tempitem, out string value);
+
+                if (value != null && value != "")
+                {
+                    tempitem.CountryNameTranslated = value;
+                }
+                else
+                {
+                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tempitem);
+                    tempitem.CountryNameTranslated = CapName;
+                }
+            }
+            */
+            //Cities
+            foreach (City _city in from x in CitiesList where !x.Disabled select x)
+            {
+                CitiesLngDict.TryGetValue(_city.CityName, out string _translated);
+
+                if (_translated != null && _translated != "")
+                {
+                    _city.CityNameTranslated = _translated;
+                }
+                else
+                {
+                    _city.CityNameTranslated = _city.CityName + ntFormat;
+                }
+            }
+
+            CitiesList = CitiesList.OrderBy(x => x.CityNameTranslated).ToList();
+
+            //Garages
+            foreach (Garages _garage in GaragesList)
+            {
+                CitiesLngDict.TryGetValue(_garage.GarageName, out string _translated);
+
+                if (_translated != null && _translated != "")
+                {
+                    _garage.GarageNameTranslated = _translated;
+                }
+                else
+                {
+                    _garage.GarageNameTranslated = _garage.GarageName + ntFormat;
+                }
+            }
+
+            GaragesList = GaragesList.OrderBy(x => x.GarageNameTranslated).ToList();
+
+            //Companies
+
+
+        }
+        //Language End
+
+        //IMG
+        //Custom PB color gradient
         private void CreateProgressBarBitmap()
         {
             ProgressBarGradient = new Bitmap(100, 1);
 
             LinearGradientBrush br = new LinearGradientBrush(new RectangleF(0, 0, 100, 1), Color.Black, Color.Black, 0, false);
             ColorBlend cb = new ColorBlend();
+
             cb.Positions = new[] { 0.0f, 0.5f, 1f };
             cb.Colors = new[] { Color.FromArgb(255, 255, 0, 0), Color.FromArgb(255, 255, 255, 0), Color.FromArgb(255, 0, 255, 0), };
+
             br.InterpolationColors = cb;
 
             //puts the gradient scale onto a bitmap which allows for getting a color from pixel
@@ -5242,87 +5395,61 @@ namespace TS_SE_Tool
             g.FillRectangle(br, new RectangleF(0, 0, ProgressBarGradient.Width, ProgressBarGradient.Height));
         }
 
-        private Color GetProgressbarColor(decimal value)
+        private Color GetProgressbarColor(decimal _value)
         {
-            return ProgressBarGradient.GetPixel(Convert.ToInt32((1 - value) * 99), 0);
+            return ProgressBarGradient.GetPixel(Convert.ToInt32((1 - _value) * 99), 0);
         }
 
-        private string GetSpareNameless()
+        private Bitmap ConvertBitmapToGrayscale(Image _source)
         {
-            if (namelessLast == "")
+            Bitmap bm = new Bitmap(_source);
+            /*
+            // Loop through the images pixels to reset color.
+            for (int xCoordinate = 0; xCoordinate < bm.Width; xCoordinate++)
             {
-                namelessLast = namelessList.Last();
-            }
-
-            ushort incr = 48;
-
-            string[] namelessNumbers = namelessLast.Split(new char[] { '.' });
-            ushort[] namelessNumArray = new ushort[namelessNumbers.Length];
-
-            Array.Reverse(namelessNumbers);
-            bool first = true, overflow = false;
-
-            for (int i = 0; i < namelessNumbers.Length; i++)
-            {
-                namelessNumArray[i] = UInt16.Parse(namelessNumbers[i], NumberStyles.HexNumber);
-
-                try
+                for (int yCoordinate = 0; yCoordinate < bm.Height; yCoordinate++)
                 {
-                    if (first)
-                    {
-                        namelessNumArray[i] = checked((ushort)(namelessNumArray[i] + incr));
-                    }
-                    else
-                    if (overflow)
-                    {
-                        namelessNumArray[i] = checked((ushort)(namelessNumArray[i]+ 1));
-                        overflow = false;
-                    }
-                }
-                catch (OverflowException)
-                {
-                    if (first)
-                    {
-                        namelessNumArray[i] = (ushort)(namelessNumArray[i] + incr);
-                    }
-                    else
-                    {
-                        namelessNumArray[i] = (ushort)(namelessNumArray[i] + 1);
-                    }
-                    overflow = true;
-                }
-
-                if (i == (namelessNumbers.Length - 1) && overflow )
-                {
-                    Array.Resize(ref namelessNumArray, namelessNumArray.Length + 1);
-
-                    namelessNumArray[namelessNumbers.Length - 1] = 1;
-                }
-
-                if (first)
-                    first = false;
-            }
-
-            namelessLast = "";
-
-            for (int i = 0; i < namelessNumArray.Length; i++)
-            {
-                if (i < namelessNumArray.Length - 1)
-                {
-                    namelessLast = "." + namelessNumArray[i].ToString("x4") + namelessLast;
-                }
-                else
-                {
-                    namelessLast = namelessNumArray[i].ToString("x") + namelessLast;
+                    Color pixelColor = bm.GetPixel(xCoordinate, yCoordinate);
+                    int rgb = (int)Math.Round(.299 * pixelColor.R + .587 * pixelColor.G + .114 * pixelColor.B);
+                    bm.SetPixel(xCoordinate, yCoordinate, Color.FromArgb(rgb, rgb, rgb, rgb));
                 }
             }
-            //namelessLast
-            return namelessLast;
+            */
+            //get a graphics object from the new image
+            Graphics g = Graphics.FromImage(bm);
+
+            //create the grayscale ColorMatrix
+            ColorMatrix colorMatrix = new ColorMatrix(
+               new float[][]
+               {
+                 new float[] {.299f, .299f, .299f, 0, 0},
+                 new float[] {.587f, .587f, .587f, 0, 0},
+                 new float[] {.114f, .114f, .114f, 0, 0},
+                 new float[] {0, 0, 0, 1, 0},
+                 new float[] {0, 0, 0, 0, 1}
+               });
+
+            //create some image attributes
+            ImageAttributes attributes = new ImageAttributes();
+
+            //set the color matrix attribute
+            attributes.SetColorMatrix(colorMatrix);
+
+            //draw the original image on the new image
+            //using the grayscale color matrix
+            g.DrawImage(_source, new Rectangle(0, 0, _source.Width, _source.Height), 0, 0, _source.Width, _source.Height, GraphicsUnit.Pixel, attributes);
+
+            //dispose the Graphics object
+            g.Dispose();
+
+            return bm;
         }
-        
-        internal byte[] zipText(string text)
+        //IMG End
+
+        //ZIP text
+        internal byte[] zipText(string _text)
         {
-            if (text == null)
+            if (_text == null)
                 return null;
 
             using (Stream memOutput = new MemoryStream())
@@ -5331,7 +5458,7 @@ namespace TS_SE_Tool
                 {
                     using (StreamWriter writer = new StreamWriter(zipOut))
                     {
-                        writer.Write(text);
+                        writer.Write(_text);
 
                         writer.Flush();
                         zipOut.Finish();
@@ -5349,7 +5476,7 @@ namespace TS_SE_Tool
         internal string unzipText(string _sbytes)
         {
             string[] pairs = new string[_sbytes.Length / 2];
-            byte[] bytes;// = new byte[0];
+            byte[] bytes;
 
             for (int i = 0; i < _sbytes.Length / 2; i++)
             {
@@ -5373,70 +5500,128 @@ namespace TS_SE_Tool
                 return text;
             }
         }
+        //ZIP End
 
-        private Bitmap ConvertBitmapToGrayscale(Image source)
+        //DateTime
+        public DateTime UnixTimeStampToDateTime(double _unixTimeStamp)
         {
-            Bitmap bm = new Bitmap(source);
+            // Unix timestamp is seconds past epoch
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(_unixTimeStamp).ToLocalTime();
 
-            int x, y;
-
-            // Loop through the images pixels to reset color.
-            for (x = 0; x < bm.Width; x++)
-            {
-                for (y = 0; y < bm.Height; y++)
-                {
-                    Color pixelColor = bm.GetPixel(x, y);
-                    int rgb = (int)Math.Round(.299 * pixelColor.R + .587 * pixelColor.G + .114 * pixelColor.B);
-                    bm.SetPixel(x, y, Color.FromArgb(rgb, rgb, rgb, rgb));
-                    //bm.SetPixel(x, y, newColor); // Now greyscale
-                }
-            }
-            return bm;
+            return dtDateTime;
         }
 
-        private int FindByValue (ComboBox inputComboBox, string value)
+        public double DateTimeToUnixTimeStamp(DateTime _dateTime)
         {
-            DataTable combDT = new DataTable();
-            combDT = inputComboBox.DataSource as DataTable;
+            //Data time to utc
+            _dateTime = _dateTime.ToUniversalTime();
 
-            string fcol = combDT.Columns[0].ToString();
+            // Unix timestamp is seconds past epoch
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
-            string searchExpression = fcol + " = '" + value + @"'";
-            DataRow[] foundRows = combDT.Select(searchExpression);
+            double unixTimeStamp = _dateTime.Subtract(dtDateTime).TotalSeconds;
+            return unixTimeStamp;
+        }
+        //DateTime End
 
-            if (foundRows.Length > 0)
+        //Extra
+        //Search index in CB by Value
+        private int FindByValue (ComboBox _inputComboBox, string _value)
+        {
+            DataTable _combDT = new DataTable();
+            _combDT = _inputComboBox.DataSource as DataTable;
+
+            string fcol = _combDT.Columns[0].ToString();
+
+            string _searchExpression = fcol + " = '" + _value + @"'";
+            DataRow[] _foundRows = _combDT.Select(_searchExpression);
+
+            if (_foundRows.Length > 0)
                 return 0;
             else
                 return -1;
         }
 
-        static string NullToString(object Value)
+        static string NullToString(object _value)
         {
-            return Value == null ? "null" : Value.ToString();
+            return _value == null ? "null" : _value.ToString();
         }
 
-        public DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        //Iterating throught nameless
+        private string GetSpareNameless()
         {
-            // Unix timestamp is seconds past epoch
-            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            return dtDateTime;
+            if (namelessLast == "")
+            {
+                namelessLast = namelessList.Last();
+            }
+
+            ushort _incr = 48;
+
+            string[] _namelessNumbers = namelessLast.Split(new char[] { '.' });
+            ushort[] _namelessNumArray = new ushort[_namelessNumbers.Length];
+
+            Array.Reverse(_namelessNumbers);
+            bool _first = true, _overflow = false;
+
+            for (int i = 0; i < _namelessNumbers.Length; i++)
+            {
+                _namelessNumArray[i] = UInt16.Parse(_namelessNumbers[i], NumberStyles.HexNumber);
+
+                try
+                {
+                    if (_first)
+                    {
+                        _namelessNumArray[i] = checked((ushort)(_namelessNumArray[i] + _incr));
+                    }
+                    else
+                    if (_overflow)
+                    {
+                        _namelessNumArray[i] = checked((ushort)(_namelessNumArray[i] + 1));
+                        _overflow = false;
+                    }
+                }
+                catch (OverflowException)
+                {
+                    if (_first)
+                    {
+                        _namelessNumArray[i] = (ushort)(_namelessNumArray[i] + _incr);
+                    }
+                    else
+                    {
+                        _namelessNumArray[i] = (ushort)(_namelessNumArray[i] + 1);
+                    }
+                    _overflow = true;
+                }
+
+                if (i == (_namelessNumbers.Length - 1) && _overflow)
+                {
+                    Array.Resize(ref _namelessNumArray, _namelessNumArray.Length + 1);
+
+                    _namelessNumArray[_namelessNumbers.Length - 1] = 1;
+                }
+
+                if (_first)
+                    _first = false;
+            }
+
+            namelessLast = "";
+
+            for (int i = 0; i < _namelessNumArray.Length; i++)
+            {
+                if (i < _namelessNumArray.Length - 1)
+                {
+                    namelessLast = "." + _namelessNumArray[i].ToString("x4") + namelessLast;
+                }
+                else
+                {
+                    namelessLast = _namelessNumArray[i].ToString("x") + namelessLast;
+                }
+            }
+            //namelessLast
+            return namelessLast;
         }
 
-        public double DateTimeToUnixTimeStamp(DateTime dateTime)
-        {
-            //Data time to utc
-            dateTime = dateTime.ToUniversalTime();
-
-            // Unix timestamp is seconds past epoch
-            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-
-            double unixTimeStamp = dateTime.Subtract(dtDateTime).TotalSeconds;
-            return unixTimeStamp;
-
-            //dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            //return dtDateTime;
-        }
         //end Form methods
     }
 }

@@ -16,11 +16,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Windows.Forms;
 
 namespace TS_SE_Tool
 {
     class City
     {
+        private FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+
         public string Country { get; set; }
         public string CityName;
         public string CityNameTranslated;
@@ -63,11 +66,20 @@ namespace TS_SE_Tool
                 {
                     company.Excluded = true;
                 }
+
+                MainForm.CompaniesLngDict.TryGetValue(company.CompanyName, out string value);
+
+                if (value != "" && value != null)
+                {
+                    company.CompanyNameTranslated = value;
+                }
+                else
+                {
+                    company.CompanyNameTranslated = company.CompanyName + " -nt";
+                }
             }
 
-            int num = (from x in Companies
-                       where x.Excluded
-                       select x).Count();
+            int num = (from x in Companies where x.Excluded select x).Count();
 
             if (num >= Companies.Count)
             {

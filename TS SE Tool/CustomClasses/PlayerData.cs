@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace TS_SE_Tool
 {
-    public class PlayerProfile
+    public class PlayerData
     {
         //Economy
         public uint ExperiencePoints { get; set; }
@@ -38,7 +38,7 @@ namespace TS_SE_Tool
         public int CreationTime { get; set; }
 
 
-        public PlayerProfile(string _HQcity, uint _Expirience, byte[] _PlayerSkills, uint _AccountMoney)
+        public PlayerData(string _HQcity, uint _Expirience, byte[] _PlayerSkills, uint _AccountMoney)
         {
             HQcity = _HQcity;
             ExperiencePoints = _Expirience;
@@ -46,7 +46,7 @@ namespace TS_SE_Tool
             AccountMoney = _AccountMoney;
         }
 
-        public PlayerProfile(string _CompanyName, int _CreationTime)
+        public PlayerData(string _CompanyName, int _CreationTime)
         {
             CompanyName = _CompanyName;
             CreationTime = _CreationTime;

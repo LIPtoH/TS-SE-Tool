@@ -169,7 +169,7 @@ namespace TS_SE_Tool
                         Garages tempG = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == tempD.Parent.Name)];
                         string driverNL = tempD.Name;
 
-                        if(driverNL != MainForm.PlayerProfileData.UserDriver)
+                        if(driverNL != MainForm.PlayerDataV.UserDriver)
                         {
                             tempG.Drivers[tempG.Drivers.FindIndex(x => x == driverNL)] = null;
                             MainForm.extraDrivers.Add(driverNL);

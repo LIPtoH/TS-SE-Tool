@@ -192,7 +192,7 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" experience_points"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.ExperiencePoints = uint.Parse(chunkOfline[2]);
+                            PlayerDataV.ExperiencePoints = uint.Parse(chunkOfline[2]);
                             continue;
                         }
 
@@ -203,38 +203,38 @@ namespace TS_SE_Tool
 
                             char[] ADR = Convert.ToString(byte.Parse(LineArray[2]), 2).PadLeft(6, '0').ToCharArray();
                             Array.Reverse(ADR);
-                            PlayerProfileData.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
+                            PlayerDataV.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
                             //PlayerProfileData.PlayerSkills[0] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" long_dist:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.PlayerSkills[1] = byte.Parse(LineArray[2]);
+                            PlayerDataV.PlayerSkills[1] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" heavy:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.PlayerSkills[2] = byte.Parse(LineArray[2]);
+                            PlayerDataV.PlayerSkills[2] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" fragile:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.PlayerSkills[3] = byte.Parse(LineArray[2]);
+                            PlayerDataV.PlayerSkills[3] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" urgent:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.PlayerSkills[4] = byte.Parse(LineArray[2]);
+                            PlayerDataV.PlayerSkills[4] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" mechanical:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.PlayerSkills[5] = byte.Parse(LineArray[2]);
+                            PlayerDataV.PlayerSkills[5] = byte.Parse(LineArray[2]);
                             continue;
                         }
 
@@ -297,6 +297,7 @@ namespace TS_SE_Tool
                         }
 
                         //Offline
+                        //Normal
                         if (tempSavefileInMemory[line].StartsWith(" stored_gps_behind_waypoints:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
@@ -318,6 +319,19 @@ namespace TS_SE_Tool
                             {
                                 line++;
                                 GPSahead.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
+                            }
+                            continue;
+                        }
+                        //Avoid
+                        if (tempSavefileInMemory[line].StartsWith(" stored_gps_avoid_waypoints:"))
+                        {
+                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                            int gpscount = int.Parse(LineArray[2]);
+
+                            for (int i = 0; i < gpscount; i++)
+                            {
+                                line++;
+                                GPSAvoid.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
                             }
                             continue;
                         }
@@ -349,7 +363,7 @@ namespace TS_SE_Tool
                     if (tempSavefileInMemory[line].StartsWith(" money_account:"))
                     {
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        PlayerProfileData.AccountMoney = uint.Parse(chunkOfline[2]);
+                        PlayerDataV.AccountMoney = uint.Parse(chunkOfline[2]);
                         continue;
                     }
 
@@ -371,21 +385,21 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" hq_city:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.HQcity = chunkOfline[2];
+                            PlayerDataV.HQcity = chunkOfline[2];
                             continue;
                         }
 
                         if (tempSavefileInMemory[line].StartsWith(" assigned_truck:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.UserCompanyAssignedTruck = chunkOfline[2];
+                            PlayerDataV.UserCompanyAssignedTruck = chunkOfline[2];
                             continue;
                         }
 
                         if (tempSavefileInMemory[line].StartsWith(" truck_placement:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            PlayerProfileData.UserCompanyAssignedTruckPlacement = chunkOfline[1].TrimStart(' ');
+                            PlayerDataV.UserCompanyAssignedTruckPlacement = chunkOfline[1].TrimStart(' ');
                             continue;
                         }
 
@@ -411,7 +425,7 @@ namespace TS_SE_Tool
                             UserDriverDictionary.Add(chunkOfline[2], new UserCompanyDriverData());
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
                             if (int.Parse(chunkOfline[1]) == 0)
-                                PlayerProfileData.UserDriver = chunkOfline[2];
+                                PlayerDataV.UserDriver = chunkOfline[2];
                             continue;
                         }
 
@@ -436,7 +450,7 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" assigned_trailer:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerProfileData.UserCompanyAssignedTrailer = chunkOfline[2];
+                            PlayerDataV.UserCompanyAssignedTrailer = chunkOfline[2];
                             continue;
                         }
 
@@ -459,7 +473,7 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" current_job:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            PlayerProfileData.CurrentJob = chunkOfline[1].TrimStart(' ');
+                            PlayerDataV.CurrentJob = chunkOfline[1].TrimStart(' ');
                             continue;
                         }
                     }
@@ -1099,7 +1113,6 @@ namespace TS_SE_Tool
             CountryDictionary.SaveDictionaryFile(); //Save country-city list to file
 
             //Filter garages
-
             foreach (City tempcity in from x in CitiesList where !x.Disabled select x)
             {
                 Garages tmpgrg = GaragesList.Find(x => x.GarageName == tempcity.CityName);
@@ -1441,34 +1454,123 @@ namespace TS_SE_Tool
                 if (tempProfileFileInMemory[line].StartsWith(" logo:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    PlayerProfileData.CompanyLogo = chunkOfline[2];
+                    PlayerDataV.CompanyLogo = chunkOfline[2];
                     continue; //searching
                 }
 
                 if (tempProfileFileInMemory[line].StartsWith(" company_name:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    string compName = "";
+                    string result = "";
+
                     if (chunkOfline[2].StartsWith("\"") && chunkOfline[2].EndsWith("\""))
                     {
                         string compNameH = chunkOfline[2].Trim('"');
                         string compNameH2 = string.Join("", compNameH.Split(new string[] { "\\x" }, StringSplitOptions.RemoveEmptyEntries));
-                        compName = FromHexToString(compNameH2);
+                        result = FromHexToString(compNameH2);
 
-                        if (compName == null)
+                        if (result == null)
                         {
-                            compName = Regex.Unescape(chunkOfline[2]);
-                            compName = compName.Remove(compName.Length - 1, 1).Remove(0, 1);
+                            result = Regex.Unescape(chunkOfline[2]);
+                            result = result.Trim('"');//.Remove(result.Length - 1, 1).Remove(0, 1);
                         }
                     }
 
-                    if (compName == "")
-                        PlayerProfileData.CompanyName = chunkOfline[2];
+                    if (result == "")
+                    {
+                        PlayerDataV.CompanyName = chunkOfline[2];
+                        ProfileDataV.CompanyName = chunkOfline[2];
+                    }   
                     else
-                        PlayerProfileData.CompanyName = compName;
+                    {
+                        PlayerDataV.CompanyName = result;
+                        ProfileDataV.CompanyName = result;
+                    }                        
 
                     continue; //searching
                 }
+
+                if (tempProfileFileInMemory[line].StartsWith(" cached_experience:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.CachedExperiencePoints = int.Parse(chunkOfline[2]);
+                    continue; //searching
+                }
+
+                if (tempProfileFileInMemory[line].StartsWith(" cached_distance:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.CachedDistance = int.Parse(chunkOfline[2]);
+                    continue; //searching
+                }
+
+                //User data
+                if (tempProfileFileInMemory[line].StartsWith(" user_data[4]:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+
+                    //CultureInfo culture = 
+                    NumberFormatInfo nfi = new CultureInfo(CultureInfo.CurrentCulture.Name, false).NumberFormat;
+                    nfi.NumberDecimalSeparator = ".";
+
+                    double.TryParse(chunkOfline[2].Trim('"'), NumberStyles.AllowDecimalPoint, nfi, out double res);
+                    
+                    ProfileDataV.RoadsExplored = res;                   
+
+                    continue; //searching
+                }
+
+                if (tempProfileFileInMemory[line].StartsWith(" user_data[5]:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.DeliveriesFinished = int.Parse(chunkOfline[2]);
+                    continue; //searching
+                }
+
+                if (tempProfileFileInMemory[line].StartsWith(" user_data[7]:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.OwnedGaradesSmall = int.Parse(chunkOfline[2]);
+                    continue; //searching
+                }
+
+                if (tempProfileFileInMemory[line].StartsWith(" user_data[8]:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.OwnedGaradesLarge = int.Parse(chunkOfline[2]);
+                    continue; //searching
+                }
+
+                if (tempProfileFileInMemory[line].StartsWith(" user_data[9]:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.GameTimeSpent = int.Parse(chunkOfline[2]);
+                    continue; //searching
+                }
+
+                if (tempProfileFileInMemory[line].StartsWith(" user_data[10]:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.RealTimeSpent = int.Parse(chunkOfline[2]);
+                    continue; //searching
+                }
+
+                if (tempProfileFileInMemory[line].StartsWith(" user_data[6]:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.OwnedTrucks = int.Parse(chunkOfline[2].Trim('"'));
+                    continue; //searching
+                }
+
+                if (tempProfileFileInMemory[line].StartsWith(" user_data[16]:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.OwnedTrailers = int.Parse(chunkOfline[2]);
+                    continue; //searching
+                }
+
+
+                //User data end
 
                 if (tempProfileFileInMemory[line].StartsWith(" cached_discovery:"))
                 {
@@ -1477,10 +1579,47 @@ namespace TS_SE_Tool
                     continue; //searching
                 }
 
+                if (tempProfileFileInMemory[line].StartsWith(" profile_name:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' }, 3);
+                    string result = "";
+
+                    if (chunkOfline[2].StartsWith("\"") && chunkOfline[2].EndsWith("\""))
+                    {
+                        string compNameH = chunkOfline[2].Trim('"');
+                        string compNameH2 = string.Join("", compNameH.Split(new string[] { "\\x" }, StringSplitOptions.RemoveEmptyEntries));
+                        result = FromHexToString(compNameH2);
+
+                        if (result == null)
+                        {
+                            result = Regex.Unescape(chunkOfline[2]);
+                            result = result.Trim('"');//.Remove(result.Length - 1, 1).Remove(0, 1);
+                        }
+                    }
+
+                    if (result == "")
+                    {
+                        ProfileDataV.ProfileName = chunkOfline[2];
+                    }
+                    else
+                    {
+                        ProfileDataV.ProfileName = result;
+                    }
+
+                    continue; //searching
+                }
+
                 if (tempProfileFileInMemory[line].StartsWith(" creation_time:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    PlayerProfileData.CreationTime = int.Parse(chunkOfline[2]);
+                    ProfileDataV.CreationTime = int.Parse(chunkOfline[2]);
+                    continue; //searching
+                }
+
+                if (tempProfileFileInMemory[line].StartsWith(" save_time:"))
+                {
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    ProfileDataV.SaveTime = int.Parse(chunkOfline[2]);
                     continue; //searching
                 }
             }
@@ -1563,7 +1702,7 @@ namespace TS_SE_Tool
 
             if (extraTrailers.Count > 0)
             {
-                GaragesList[GaragesList.FindIndex(x => x.GarageName == PlayerProfileData.HQcity)].Trailers.AddRange(extraTrailers);
+                GaragesList[GaragesList.FindIndex(x => x.GarageName == PlayerDataV.HQcity)].Trailers.AddRange(extraTrailers);
                 extraTrailers.Clear();
             }
 
@@ -1580,9 +1719,9 @@ namespace TS_SE_Tool
 
             if (extraDrivers.Count() > 0)
             {
-                if (extraDrivers.Contains(PlayerProfileData.UserDriver))
+                if (extraDrivers.Contains(PlayerDataV.UserDriver))
                 {
-                    Garages tmpG = new Garages(PlayerProfileData.HQcity);
+                    Garages tmpG = new Garages(PlayerDataV.HQcity);
 
                     int hqIdx = GaragesList.IndexOf(tmpG);
                     int sIdx = 0;
@@ -1618,7 +1757,7 @@ namespace TS_SE_Tool
                     extraDrivers.Add(GaragesList[hqIdx].Drivers[DrvIdx]);
                     extraVehicles.Add(GaragesList[hqIdx].Vehicles[DrvIdx]);
 
-                    int tmpIdx = extraDrivers.IndexOf(PlayerProfileData.UserDriver);
+                    int tmpIdx = extraDrivers.IndexOf(PlayerDataV.UserDriver);
 
                     GaragesList[hqIdx].Drivers[DrvIdx] = extraDrivers[tmpIdx];
                     GaragesList[hqIdx].Vehicles[DrvIdx] = extraVehicles[tmpIdx];
@@ -1734,16 +1873,12 @@ namespace TS_SE_Tool
                 JobsAmountAdded++;
                 
                 // Prepairing structures
-                //Array.Resize(ref JobsListAdded, JobsAmountAdded);
-                //Array.Resize(ref ListSavefileCompanysString, JobsAmountAdded);
                 Array.Resize(ref EconomyEventUnitLinkStringList, JobsAmountAdded);
                 EconomyEventUnitLinkStringList[JobsAmountAdded - 1] = " unit_link: company.volatile." + SourceCompany + "." + SourceCity;
 
                 //local variables
                 int CargoType = -1, UnitsCount = 1;
                 string TruckName = "";
-
-                //Cargo cargo = CargoesList.Find(x => x.CargoName == Cargo);
 
                 //Local Trailer Def DT
                 DataTable TrailerDefDTs = ((DataTable)comboBoxFreightMarketTrailerDef.DataSource).DefaultView.ToTable();
@@ -1862,7 +1997,7 @@ namespace TS_SE_Tool
                 }
 
                 LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName + 
-                    "\r\n-----------" + jobdata + "\r\n-----------"); //JobsListAdded[JobsAmountAdded - 1]
+                    "\r\n-----------" + jobdata + "\r\n-----------");
 
 
                 //Setting Form Controls
