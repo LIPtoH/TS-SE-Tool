@@ -1460,19 +1460,25 @@ namespace TS_SE_Tool
 
                 if (tempProfileFileInMemory[line].StartsWith(" company_name:"))
                 {
-                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
+                    chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' },3);
                     string result = "";
 
                     if (chunkOfline[2].StartsWith("\"") && chunkOfline[2].EndsWith("\""))
                     {
                         string compNameH = chunkOfline[2].Trim('"');
-                        string compNameH2 = string.Join("", compNameH.Split(new string[] { "\\x" }, StringSplitOptions.RemoveEmptyEntries));
-                        result = FromHexToString(compNameH2);
+                        //try find \x
 
-                        if (result == null)
+                        for (int i=0; i < compNameH.Length; i++)
                         {
-                            result = Regex.Unescape(chunkOfline[2]);
-                            result = result.Trim('"');//.Remove(result.Length - 1, 1).Remove(0, 1);
+                            if (compNameH[i] == '\\')
+                            {
+                                string temp = compNameH.Substring(i+2, 2) + compNameH.Substring(i + 6, 2);
+                                string r = FromHexToString(temp);
+                                result += r;
+                                i += 7;
+                            }
+                            else
+                                result += compNameH[i];
                         }
                     }
 

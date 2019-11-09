@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelCustomPathDir = new System.Windows.Forms.Label();
             this.buttonChooseFolder = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.groupBoxFolderType = new System.Windows.Forms.GroupBox();
+            this.radioButtonUnknownFolderType = new System.Windows.Forms.RadioButton();
+            this.radioButtonSaveFolderType = new System.Windows.Forms.RadioButton();
+            this.radioButtonProfileFolderType = new System.Windows.Forms.RadioButton();
+            this.radioButtonRootFolderType = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAddCustomPath = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBoxGameType = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.radioButtonGameTypeETS2 = new System.Windows.Forms.RadioButton();
             this.radioButtonGameTypeATS = new System.Windows.Forms.RadioButton();
@@ -48,9 +48,9 @@
             this.Del = new System.Windows.Forms.DataGridViewButtonColumn();
             this.buttonSave = new System.Windows.Forms.Button();
             this.folderBrowserDialogAddCustomFolder = new System.Windows.Forms.FolderBrowserDialog();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxFolderType.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupBoxGameType.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -59,7 +59,7 @@
             // 
             this.labelCustomPathDir.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelCustomPathDir.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.labelCustomPathDir, 3);
+            this.tableLayoutPanel1.SetColumnSpan(this.labelCustomPathDir, 2);
             this.labelCustomPathDir.Location = new System.Drawing.Point(3, 38);
             this.labelCustomPathDir.Name = "labelCustomPathDir";
             this.labelCustomPathDir.Size = new System.Drawing.Size(72, 13);
@@ -71,88 +71,88 @@
             this.buttonChooseFolder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonChooseFolder.Location = new System.Drawing.Point(3, 3);
             this.buttonChooseFolder.Name = "buttonChooseFolder";
-            this.buttonChooseFolder.Size = new System.Drawing.Size(113, 24);
+            this.buttonChooseFolder.Size = new System.Drawing.Size(180, 24);
             this.buttonChooseFolder.TabIndex = 1;
             this.buttonChooseFolder.Text = "Choose folder";
             this.buttonChooseFolder.UseVisualStyleBackColor = true;
             this.buttonChooseFolder.Click += new System.EventHandler(this.buttonChooseFolder_Click);
             // 
-            // groupBox1
+            // groupBoxFolderType
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.groupBox1, 3);
-            this.groupBox1.Controls.Add(this.radioButton4);
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 63);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(367, 119);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Folder type";
+            this.tableLayoutPanel1.SetColumnSpan(this.groupBoxFolderType, 2);
+            this.groupBoxFolderType.Controls.Add(this.radioButtonUnknownFolderType);
+            this.groupBoxFolderType.Controls.Add(this.radioButtonSaveFolderType);
+            this.groupBoxFolderType.Controls.Add(this.radioButtonProfileFolderType);
+            this.groupBoxFolderType.Controls.Add(this.radioButtonRootFolderType);
+            this.groupBoxFolderType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxFolderType.Location = new System.Drawing.Point(3, 63);
+            this.groupBoxFolderType.Name = "groupBoxFolderType";
+            this.groupBoxFolderType.Size = new System.Drawing.Size(366, 119);
+            this.groupBoxFolderType.TabIndex = 2;
+            this.groupBoxFolderType.TabStop = false;
+            this.groupBoxFolderType.Text = "Folder type";
             // 
-            // radioButton4
+            // radioButtonUnknownFolderType
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Checked = true;
-            this.radioButton4.Location = new System.Drawing.Point(7, 20);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(71, 17);
-            this.radioButton4.TabIndex = 3;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "Unknown";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButtonFolderType_CheckedChanged);
+            this.radioButtonUnknownFolderType.AutoSize = true;
+            this.radioButtonUnknownFolderType.Checked = true;
+            this.radioButtonUnknownFolderType.Location = new System.Drawing.Point(7, 20);
+            this.radioButtonUnknownFolderType.Name = "radioButtonUnknownFolderType";
+            this.radioButtonUnknownFolderType.Size = new System.Drawing.Size(71, 17);
+            this.radioButtonUnknownFolderType.TabIndex = 3;
+            this.radioButtonUnknownFolderType.TabStop = true;
+            this.radioButtonUnknownFolderType.Text = "Unknown";
+            this.radioButtonUnknownFolderType.UseVisualStyleBackColor = true;
+            this.radioButtonUnknownFolderType.CheckedChanged += new System.EventHandler(this.radioButtonFolderType_CheckedChanged);
             // 
-            // radioButton3
+            // radioButtonSaveFolderType
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(7, 91);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(80, 17);
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.Text = "save Folder";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButtonFolderType_CheckedChanged);
+            this.radioButtonSaveFolderType.AutoSize = true;
+            this.radioButtonSaveFolderType.Location = new System.Drawing.Point(7, 91);
+            this.radioButtonSaveFolderType.Name = "radioButtonSaveFolderType";
+            this.radioButtonSaveFolderType.Size = new System.Drawing.Size(80, 17);
+            this.radioButtonSaveFolderType.TabIndex = 2;
+            this.radioButtonSaveFolderType.Text = "save Folder";
+            this.radioButtonSaveFolderType.UseVisualStyleBackColor = true;
+            this.radioButtonSaveFolderType.CheckedChanged += new System.EventHandler(this.radioButtonFolderType_CheckedChanged);
             // 
-            // radioButton2
+            // radioButtonProfileFolderType
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(7, 67);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(85, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "profile Folder";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButtonFolderType_CheckedChanged);
+            this.radioButtonProfileFolderType.AutoSize = true;
+            this.radioButtonProfileFolderType.Location = new System.Drawing.Point(7, 67);
+            this.radioButtonProfileFolderType.Name = "radioButtonProfileFolderType";
+            this.radioButtonProfileFolderType.Size = new System.Drawing.Size(85, 17);
+            this.radioButtonProfileFolderType.TabIndex = 1;
+            this.radioButtonProfileFolderType.Text = "profile Folder";
+            this.radioButtonProfileFolderType.UseVisualStyleBackColor = true;
+            this.radioButtonProfileFolderType.CheckedChanged += new System.EventHandler(this.radioButtonFolderType_CheckedChanged);
             // 
-            // radioButton1
+            // radioButtonRootFolderType
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(7, 43);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(75, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.Text = "root Folder";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButtonFolderType_CheckedChanged);
+            this.radioButtonRootFolderType.AutoSize = true;
+            this.radioButtonRootFolderType.Location = new System.Drawing.Point(7, 43);
+            this.radioButtonRootFolderType.Name = "radioButtonRootFolderType";
+            this.radioButtonRootFolderType.Size = new System.Drawing.Size(75, 17);
+            this.radioButtonRootFolderType.TabIndex = 0;
+            this.radioButtonRootFolderType.Text = "root Folder";
+            this.radioButtonRootFolderType.UseVisualStyleBackColor = true;
+            this.radioButtonRootFolderType.CheckedChanged += new System.EventHandler(this.radioButtonFolderType_CheckedChanged);
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 301F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 302F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.buttonChooseFolder, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.groupBoxFolderType, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.labelCustomPathDir, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.buttonAddCustomPath, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox2, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.buttonEditCPlist, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.buttonSave, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.groupBoxGameType, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.buttonEditCPlist, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.buttonSave, 1, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -171,23 +171,23 @@
             this.buttonAddCustomPath.Enabled = false;
             this.buttonAddCustomPath.Location = new System.Drawing.Point(3, 254);
             this.buttonAddCustomPath.Name = "buttonAddCustomPath";
-            this.buttonAddCustomPath.Size = new System.Drawing.Size(113, 24);
+            this.buttonAddCustomPath.Size = new System.Drawing.Size(180, 24);
             this.buttonAddCustomPath.TabIndex = 3;
             this.buttonAddCustomPath.Text = "ADD";
             this.buttonAddCustomPath.UseVisualStyleBackColor = true;
             this.buttonAddCustomPath.Click += new System.EventHandler(this.buttonAddCustomPath_Click);
             // 
-            // groupBox2
+            // groupBoxGameType
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.groupBox2, 3);
-            this.groupBox2.Controls.Add(this.tableLayoutPanel2);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 188);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(367, 60);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Game type";
+            this.tableLayoutPanel1.SetColumnSpan(this.groupBoxGameType, 2);
+            this.groupBoxGameType.Controls.Add(this.tableLayoutPanel2);
+            this.groupBoxGameType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxGameType.Location = new System.Drawing.Point(3, 188);
+            this.groupBoxGameType.Name = "groupBoxGameType";
+            this.groupBoxGameType.Size = new System.Drawing.Size(366, 60);
+            this.groupBoxGameType.TabIndex = 4;
+            this.groupBoxGameType.TabStop = false;
+            this.groupBoxGameType.Text = "Game type";
             // 
             // tableLayoutPanel2
             // 
@@ -201,7 +201,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(361, 41);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(360, 41);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // radioButtonGameTypeETS2
@@ -228,7 +228,7 @@
             this.radioButtonGameTypeATS.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.radioButtonGameTypeATS.Location = new System.Drawing.Point(183, 3);
             this.radioButtonGameTypeATS.Name = "radioButtonGameTypeATS";
-            this.radioButtonGameTypeATS.Size = new System.Drawing.Size(175, 35);
+            this.radioButtonGameTypeATS.Size = new System.Drawing.Size(174, 35);
             this.radioButtonGameTypeATS.TabIndex = 1;
             this.radioButtonGameTypeATS.TabStop = true;
             this.radioButtonGameTypeATS.Text = "ATS";
@@ -238,9 +238,9 @@
             // buttonEditCPlist
             // 
             this.buttonEditCPlist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonEditCPlist.Location = new System.Drawing.Point(257, 3);
+            this.buttonEditCPlist.Location = new System.Drawing.Point(189, 3);
             this.buttonEditCPlist.Name = "buttonEditCPlist";
-            this.buttonEditCPlist.Size = new System.Drawing.Size(113, 24);
+            this.buttonEditCPlist.Size = new System.Drawing.Size(180, 24);
             this.buttonEditCPlist.TabIndex = 5;
             this.buttonEditCPlist.Text = "Edit list";
             this.buttonEditCPlist.UseVisualStyleBackColor = true;
@@ -255,22 +255,22 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Path,
             this.Del});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(376, 3);
+            this.dataGridView1.Location = new System.Drawing.Point(375, 3);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.tableLayoutPanel1.SetRowSpan(this.dataGridView1, 4);
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(295, 245);
+            this.dataGridView1.Size = new System.Drawing.Size(296, 245);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -296,9 +296,9 @@
             // buttonSave
             // 
             this.buttonSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonSave.Location = new System.Drawing.Point(257, 254);
+            this.buttonSave.Location = new System.Drawing.Point(189, 254);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(113, 24);
+            this.buttonSave.Size = new System.Drawing.Size(180, 24);
             this.buttonSave.TabIndex = 7;
             this.buttonSave.Text = "SAVE";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -316,11 +316,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Custom folders";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAddCustomFolder_FormClosing);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxFolderType.ResumeLayout(false);
+            this.groupBoxFolderType.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.groupBoxGameType.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -332,15 +332,15 @@
 
         private System.Windows.Forms.Label labelCustomPathDir;
         private System.Windows.Forms.Button buttonChooseFolder;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.GroupBox groupBoxFolderType;
+        private System.Windows.Forms.RadioButton radioButtonSaveFolderType;
+        private System.Windows.Forms.RadioButton radioButtonProfileFolderType;
+        private System.Windows.Forms.RadioButton radioButtonRootFolderType;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton radioButtonUnknownFolderType;
         private System.Windows.Forms.Button buttonAddCustomPath;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogAddCustomFolder;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBoxGameType;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.RadioButton radioButtonGameTypeETS2;
         private System.Windows.Forms.RadioButton radioButtonGameTypeATS;

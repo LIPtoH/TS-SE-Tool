@@ -22,6 +22,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
@@ -39,6 +41,20 @@ namespace TS_SE_Tool
         {
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
+
+            try
+            {
+                string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
+                if (translatedString != null)
+                    this.Text = translatedString;
+            }
+            catch
+            {
+            }
+
+            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
+
+            CorrectControlsPositions();
 
             PopulateFormControlsk();
 
@@ -62,7 +78,7 @@ namespace TS_SE_Tool
             for (int i = 0; i < colorcount; i++)
             {
                 Button colorB = new Button();
-                groupBoxUserColors.Controls.Add(colorB);
+                groupBoxProfileUserColors.Controls.Add(colorB);
 
                 colorB.Name = "buttonUC" + i.ToString();
                 colorB.Text = null;
@@ -75,8 +91,8 @@ namespace TS_SE_Tool
                 UserColorsB[i] = colorB;
 
                 CheckBox colorCB = new CheckBox();
-                groupBoxUserColors.Controls.Add(colorCB);
-                colorCB.Parent = groupBoxUserColors;
+                groupBoxProfileUserColors.Controls.Add(colorCB);
+                colorCB.Parent = groupBoxProfileUserColors;
 
                 //Ppanel.Appearance = Appearance.Button;
                 colorCB.FlatStyle = FlatStyle.Flat;
@@ -102,9 +118,9 @@ namespace TS_SE_Tool
                 Button btn = null;
                 string btnname = "buttonUC" + i.ToString();
 
-                if (groupBoxUserColors.Controls.ContainsKey(btnname))
+                if (groupBoxProfileUserColors.Controls.ContainsKey(btnname))
                 {
-                    btn = groupBoxUserColors.Controls[btnname] as Button;
+                    btn = groupBoxProfileUserColors.Controls[btnname] as Button;
                 }
                 else
                 {
@@ -117,7 +133,7 @@ namespace TS_SE_Tool
 
                     btn.Click += new EventHandler(MainForm.SelectColor);
 
-                    groupBoxUserColors.Controls.Add(btn);
+                    groupBoxProfileUserColors.Controls.Add(btn);
                 }
 
                 if (btn != null)
@@ -268,7 +284,7 @@ namespace TS_SE_Tool
                         colorCB.Enabled = true;
                     }
 
-                    buttonExportColors.Enabled = false;
+                    buttonExport.Enabled = false;
 
                     MessageBox.Show("Color data  has been inserted.");
 
@@ -316,8 +332,13 @@ namespace TS_SE_Tool
 
                 UpdateUserColorsButtons();
 
-                buttonExportColors.Enabled = true;
+                buttonExport.Enabled = true;
             }
+        }
+
+        private void CorrectControlsPositions()
+        {
+
         }
     }
 }

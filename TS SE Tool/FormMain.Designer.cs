@@ -45,6 +45,8 @@
             this.youTubeVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.latestStableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.checkSCSForumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkTMPForumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkGitHubRelesesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,16 +57,16 @@
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageProfile = new System.Windows.Forms.TabPage();
             this.groupBoxProfilePlayerLevel = new System.Windows.Forms.GroupBox();
-            this.labelPlayerExperience = new System.Windows.Forms.Label();
-            this.buttonPlayerLevelMinus10 = new System.Windows.Forms.Button();
             this.panelPlayerLevel = new System.Windows.Forms.Panel();
-            this.labelPlayerLevelName = new System.Windows.Forms.Label();
-            this.labelPlayerLevelNumber = new System.Windows.Forms.Label();
-            this.labelExperienceNxtLvlThreshhold = new System.Windows.Forms.Label();
-            this.buttonPlayerLevelPlus01 = new System.Windows.Forms.Button();
-            this.buttonPlayerLevelPlus10 = new System.Windows.Forms.Button();
-            this.buttonPlayerLevelMinus01 = new System.Windows.Forms.Button();
             this.buttonPlayerLevelMaximum = new System.Windows.Forms.Button();
+            this.buttonPlayerLevelPlus10 = new System.Windows.Forms.Button();
+            this.buttonPlayerLevelPlus01 = new System.Windows.Forms.Button();
+            this.labelExperienceNxtLvlThreshhold = new System.Windows.Forms.Label();
+            this.labelPlayerExperience = new System.Windows.Forms.Label();
+            this.labelPlayerLevelName = new System.Windows.Forms.Label();
+            this.buttonPlayerLevelMinus10 = new System.Windows.Forms.Button();
+            this.buttonPlayerLevelMinus01 = new System.Windows.Forms.Button();
+            this.labelPlayerLevelNumber = new System.Windows.Forms.Label();
             this.buttonPlayerLevelMinimum = new System.Windows.Forms.Button();
             this.groupBoxProfileSkill = new System.Windows.Forms.GroupBox();
             this.groupBoxProfileUserColors = new System.Windows.Forms.GroupBox();
@@ -206,8 +208,6 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.latestStableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -329,14 +329,14 @@
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(128, 22);
             this.toolStripMenuItemAbout.Text = "About";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(125, 6);
             // 
             // toolStripMenuItem1
             // 
@@ -344,7 +344,7 @@
             this.localPDFToolStripMenuItem,
             this.youTubeVideoToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(128, 22);
             this.toolStripMenuItem1.Text = "How To";
             // 
             // localPDFToolStripMenuItem
@@ -364,7 +364,7 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(125, 6);
             // 
             // downloadToolStripMenuItem
             // 
@@ -375,8 +375,20 @@
             this.checkTMPForumToolStripMenuItem,
             this.checkGitHubRelesesToolStripMenuItem});
             this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
-            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.downloadToolStripMenuItem.Text = "Download";
+            // 
+            // latestStableToolStripMenuItem
+            // 
+            this.latestStableToolStripMenuItem.Name = "latestStableToolStripMenuItem";
+            this.latestStableToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.latestStableToolStripMenuItem.Text = "Latest";
+            this.latestStableToolStripMenuItem.Click += new System.EventHandler(this.latestStableToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(192, 6);
             // 
             // checkSCSForumToolStripMenuItem
             // 
@@ -475,113 +487,40 @@
             // 
             // groupBoxProfilePlayerLevel
             // 
-            this.groupBoxProfilePlayerLevel.Controls.Add(this.labelPlayerExperience);
-            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelMinus10);
             this.groupBoxProfilePlayerLevel.Controls.Add(this.panelPlayerLevel);
-            this.groupBoxProfilePlayerLevel.Controls.Add(this.labelExperienceNxtLvlThreshhold);
-            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelPlus01);
-            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelPlus10);
-            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelMinus01);
-            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelMaximum);
-            this.groupBoxProfilePlayerLevel.Controls.Add(this.buttonPlayerLevelMinimum);
+            this.groupBoxProfilePlayerLevel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBoxProfilePlayerLevel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxProfilePlayerLevel.Location = new System.Drawing.Point(6, 6);
             this.groupBoxProfilePlayerLevel.Name = "groupBoxProfilePlayerLevel";
+            this.groupBoxProfilePlayerLevel.Padding = new System.Windows.Forms.Padding(0);
             this.groupBoxProfilePlayerLevel.Size = new System.Drawing.Size(420, 83);
             this.groupBoxProfilePlayerLevel.TabIndex = 0;
             this.groupBoxProfilePlayerLevel.TabStop = false;
             this.groupBoxProfilePlayerLevel.Text = "Player level";
             // 
-            // labelPlayerExperience
-            // 
-            this.labelPlayerExperience.Location = new System.Drawing.Point(110, 53);
-            this.labelPlayerExperience.Name = "labelPlayerExperience";
-            this.labelPlayerExperience.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.labelPlayerExperience.Size = new System.Drawing.Size(115, 13);
-            this.labelPlayerExperience.TabIndex = 39;
-            this.labelPlayerExperience.Text = "0";
-            // 
-            // buttonPlayerLevelMinus10
-            // 
-            this.buttonPlayerLevelMinus10.Location = new System.Drawing.Point(6, 19);
-            this.buttonPlayerLevelMinus10.Name = "buttonPlayerLevelMinus10";
-            this.buttonPlayerLevelMinus10.Size = new System.Drawing.Size(36, 23);
-            this.buttonPlayerLevelMinus10.TabIndex = 37;
-            this.buttonPlayerLevelMinus10.Text = "- 10";
-            this.buttonPlayerLevelMinus10.UseVisualStyleBackColor = true;
-            this.buttonPlayerLevelMinus10.Click += new System.EventHandler(this.buttonPlayerLvlMinus10_Click);
-            // 
             // panelPlayerLevel
             // 
+            this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelMaximum);
+            this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelPlus10);
+            this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelPlus01);
+            this.panelPlayerLevel.Controls.Add(this.labelExperienceNxtLvlThreshhold);
+            this.panelPlayerLevel.Controls.Add(this.labelPlayerExperience);
             this.panelPlayerLevel.Controls.Add(this.labelPlayerLevelName);
+            this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelMinus10);
+            this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelMinus01);
             this.panelPlayerLevel.Controls.Add(this.labelPlayerLevelNumber);
-            this.panelPlayerLevel.Location = new System.Drawing.Point(110, 19);
+            this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelMinimum);
+            this.panelPlayerLevel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPlayerLevel.Location = new System.Drawing.Point(0, 13);
+            this.panelPlayerLevel.Margin = new System.Windows.Forms.Padding(0);
             this.panelPlayerLevel.Name = "panelPlayerLevel";
-            this.panelPlayerLevel.Size = new System.Drawing.Size(220, 26);
+            this.panelPlayerLevel.Padding = new System.Windows.Forms.Padding(3);
+            this.panelPlayerLevel.Size = new System.Drawing.Size(420, 70);
             this.panelPlayerLevel.TabIndex = 5;
-            // 
-            // labelPlayerLevelName
-            // 
-            this.labelPlayerLevelName.AutoSize = true;
-            this.labelPlayerLevelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelPlayerLevelName.Location = new System.Drawing.Point(51, 7);
-            this.labelPlayerLevelName.Name = "labelPlayerLevelName";
-            this.labelPlayerLevelName.Size = new System.Drawing.Size(54, 16);
-            this.labelPlayerLevelName.TabIndex = 16;
-            this.labelPlayerLevelName.Text = "Newbie";
-            // 
-            // labelPlayerLevelNumber
-            // 
-            this.labelPlayerLevelNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelPlayerLevelNumber.Location = new System.Drawing.Point(0, 1);
-            this.labelPlayerLevelNumber.Name = "labelPlayerLevelNumber";
-            this.labelPlayerLevelNumber.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.labelPlayerLevelNumber.Size = new System.Drawing.Size(48, 25);
-            this.labelPlayerLevelNumber.TabIndex = 11;
-            this.labelPlayerLevelNumber.Text = "000";
-            this.labelPlayerLevelNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelExperienceNxtLvlThreshhold
-            // 
-            this.labelExperienceNxtLvlThreshhold.AutoSize = true;
-            this.labelExperienceNxtLvlThreshhold.Location = new System.Drawing.Point(231, 53);
-            this.labelExperienceNxtLvlThreshhold.Name = "labelExperienceNxtLvlThreshhold";
-            this.labelExperienceNxtLvlThreshhold.Size = new System.Drawing.Size(27, 13);
-            this.labelExperienceNxtLvlThreshhold.TabIndex = 38;
-            this.labelExperienceNxtLvlThreshhold.Text = "/   0";
-            // 
-            // buttonPlayerLevelPlus01
-            // 
-            this.buttonPlayerLevelPlus01.Location = new System.Drawing.Point(336, 19);
-            this.buttonPlayerLevelPlus01.Name = "buttonPlayerLevelPlus01";
-            this.buttonPlayerLevelPlus01.Size = new System.Drawing.Size(36, 23);
-            this.buttonPlayerLevelPlus01.TabIndex = 12;
-            this.buttonPlayerLevelPlus01.Text = "+ 1";
-            this.buttonPlayerLevelPlus01.UseVisualStyleBackColor = true;
-            this.buttonPlayerLevelPlus01.Click += new System.EventHandler(this.buttonPlayerLvlPlus01_Click);
-            // 
-            // buttonPlayerLevelPlus10
-            // 
-            this.buttonPlayerLevelPlus10.Location = new System.Drawing.Point(378, 19);
-            this.buttonPlayerLevelPlus10.Name = "buttonPlayerLevelPlus10";
-            this.buttonPlayerLevelPlus10.Size = new System.Drawing.Size(36, 23);
-            this.buttonPlayerLevelPlus10.TabIndex = 13;
-            this.buttonPlayerLevelPlus10.Text = "+ 10";
-            this.buttonPlayerLevelPlus10.UseVisualStyleBackColor = true;
-            this.buttonPlayerLevelPlus10.Click += new System.EventHandler(this.buttonPlayerLvlPlus10_Click);
-            // 
-            // buttonPlayerLevelMinus01
-            // 
-            this.buttonPlayerLevelMinus01.Location = new System.Drawing.Point(48, 19);
-            this.buttonPlayerLevelMinus01.Name = "buttonPlayerLevelMinus01";
-            this.buttonPlayerLevelMinus01.Size = new System.Drawing.Size(36, 23);
-            this.buttonPlayerLevelMinus01.TabIndex = 36;
-            this.buttonPlayerLevelMinus01.Text = "- 1";
-            this.buttonPlayerLevelMinus01.UseVisualStyleBackColor = true;
-            this.buttonPlayerLevelMinus01.Click += new System.EventHandler(this.buttonPlayerLvlMinus01_Click);
             // 
             // buttonPlayerLevelMaximum
             // 
-            this.buttonPlayerLevelMaximum.Location = new System.Drawing.Point(336, 48);
+            this.buttonPlayerLevelMaximum.Location = new System.Drawing.Point(336, 35);
             this.buttonPlayerLevelMaximum.Name = "buttonPlayerLevelMaximum";
             this.buttonPlayerLevelMaximum.Size = new System.Drawing.Size(78, 23);
             this.buttonPlayerLevelMaximum.TabIndex = 14;
@@ -589,9 +528,88 @@
             this.buttonPlayerLevelMaximum.UseVisualStyleBackColor = true;
             this.buttonPlayerLevelMaximum.Click += new System.EventHandler(this.buttonPlayerLvlMax_Click);
             // 
+            // buttonPlayerLevelPlus10
+            // 
+            this.buttonPlayerLevelPlus10.Location = new System.Drawing.Point(378, 6);
+            this.buttonPlayerLevelPlus10.Name = "buttonPlayerLevelPlus10";
+            this.buttonPlayerLevelPlus10.Size = new System.Drawing.Size(36, 23);
+            this.buttonPlayerLevelPlus10.TabIndex = 13;
+            this.buttonPlayerLevelPlus10.Text = "+ 10";
+            this.buttonPlayerLevelPlus10.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelPlus10.Click += new System.EventHandler(this.buttonPlayerLvlPlus10_Click);
+            // 
+            // buttonPlayerLevelPlus01
+            // 
+            this.buttonPlayerLevelPlus01.Location = new System.Drawing.Point(336, 6);
+            this.buttonPlayerLevelPlus01.Name = "buttonPlayerLevelPlus01";
+            this.buttonPlayerLevelPlus01.Size = new System.Drawing.Size(36, 23);
+            this.buttonPlayerLevelPlus01.TabIndex = 12;
+            this.buttonPlayerLevelPlus01.Text = "+ 1";
+            this.buttonPlayerLevelPlus01.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelPlus01.Click += new System.EventHandler(this.buttonPlayerLvlPlus01_Click);
+            // 
+            // labelExperienceNxtLvlThreshhold
+            // 
+            this.labelExperienceNxtLvlThreshhold.AutoSize = true;
+            this.labelExperienceNxtLvlThreshhold.Location = new System.Drawing.Point(211, 40);
+            this.labelExperienceNxtLvlThreshhold.Name = "labelExperienceNxtLvlThreshhold";
+            this.labelExperienceNxtLvlThreshhold.Size = new System.Drawing.Size(27, 13);
+            this.labelExperienceNxtLvlThreshhold.TabIndex = 38;
+            this.labelExperienceNxtLvlThreshhold.Text = "/   0";
+            // 
+            // labelPlayerExperience
+            // 
+            this.labelPlayerExperience.Location = new System.Drawing.Point(90, 40);
+            this.labelPlayerExperience.Name = "labelPlayerExperience";
+            this.labelPlayerExperience.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelPlayerExperience.Size = new System.Drawing.Size(115, 13);
+            this.labelPlayerExperience.TabIndex = 39;
+            this.labelPlayerExperience.Text = "0";
+            // 
+            // labelPlayerLevelName
+            // 
+            this.labelPlayerLevelName.AutoSize = true;
+            this.labelPlayerLevelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelPlayerLevelName.Location = new System.Drawing.Point(162, 12);
+            this.labelPlayerLevelName.Name = "labelPlayerLevelName";
+            this.labelPlayerLevelName.Size = new System.Drawing.Size(54, 16);
+            this.labelPlayerLevelName.TabIndex = 16;
+            this.labelPlayerLevelName.Text = "Newbie";
+            // 
+            // buttonPlayerLevelMinus10
+            // 
+            this.buttonPlayerLevelMinus10.Location = new System.Drawing.Point(6, 6);
+            this.buttonPlayerLevelMinus10.Name = "buttonPlayerLevelMinus10";
+            this.buttonPlayerLevelMinus10.Size = new System.Drawing.Size(36, 23);
+            this.buttonPlayerLevelMinus10.TabIndex = 37;
+            this.buttonPlayerLevelMinus10.Text = "- 10";
+            this.buttonPlayerLevelMinus10.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelMinus10.Click += new System.EventHandler(this.buttonPlayerLvlMinus10_Click);
+            // 
+            // buttonPlayerLevelMinus01
+            // 
+            this.buttonPlayerLevelMinus01.Location = new System.Drawing.Point(48, 6);
+            this.buttonPlayerLevelMinus01.Name = "buttonPlayerLevelMinus01";
+            this.buttonPlayerLevelMinus01.Size = new System.Drawing.Size(36, 23);
+            this.buttonPlayerLevelMinus01.TabIndex = 36;
+            this.buttonPlayerLevelMinus01.Text = "- 1";
+            this.buttonPlayerLevelMinus01.UseVisualStyleBackColor = true;
+            this.buttonPlayerLevelMinus01.Click += new System.EventHandler(this.buttonPlayerLvlMinus01_Click);
+            // 
+            // labelPlayerLevelNumber
+            // 
+            this.labelPlayerLevelNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelPlayerLevelNumber.Location = new System.Drawing.Point(108, 6);
+            this.labelPlayerLevelNumber.Name = "labelPlayerLevelNumber";
+            this.labelPlayerLevelNumber.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelPlayerLevelNumber.Size = new System.Drawing.Size(48, 25);
+            this.labelPlayerLevelNumber.TabIndex = 11;
+            this.labelPlayerLevelNumber.Text = "000";
+            this.labelPlayerLevelNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // buttonPlayerLevelMinimum
             // 
-            this.buttonPlayerLevelMinimum.Location = new System.Drawing.Point(6, 48);
+            this.buttonPlayerLevelMinimum.Location = new System.Drawing.Point(6, 35);
             this.buttonPlayerLevelMinimum.Name = "buttonPlayerLevelMinimum";
             this.buttonPlayerLevelMinimum.Size = new System.Drawing.Size(78, 23);
             this.buttonPlayerLevelMinimum.TabIndex = 35;
@@ -927,9 +945,9 @@
             // textBoxUserCompanyCompanyName
             // 
             this.textBoxUserCompanyCompanyName.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxUserCompanyCompanyName.Enabled = false;
             this.textBoxUserCompanyCompanyName.Location = new System.Drawing.Point(278, 6);
             this.textBoxUserCompanyCompanyName.Name = "textBoxUserCompanyCompanyName";
+            this.textBoxUserCompanyCompanyName.ReadOnly = true;
             this.textBoxUserCompanyCompanyName.Size = new System.Drawing.Size(224, 20);
             this.textBoxUserCompanyCompanyName.TabIndex = 14;
             // 
@@ -947,6 +965,7 @@
             // comboBoxUserCompanyHQcity
             // 
             this.comboBoxUserCompanyHQcity.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.comboBoxUserCompanyHQcity.Enabled = false;
             this.comboBoxUserCompanyHQcity.FormattingEnabled = true;
             this.comboBoxUserCompanyHQcity.Location = new System.Drawing.Point(278, 72);
             this.comboBoxUserCompanyHQcity.Name = "comboBoxUserCompanyHQcity";
@@ -1373,7 +1392,7 @@
             this.groupBoxUserTrailerTrailerDetails.Controls.Add(this.labelUserTrailerLicensePlate);
             this.groupBoxUserTrailerTrailerDetails.Location = new System.Drawing.Point(3, 107);
             this.groupBoxUserTrailerTrailerDetails.Name = "groupBoxUserTrailerTrailerDetails";
-            this.groupBoxUserTrailerTrailerDetails.Size = new System.Drawing.Size(550, 250);
+            this.groupBoxUserTrailerTrailerDetails.Size = new System.Drawing.Size(558, 250);
             this.groupBoxUserTrailerTrailerDetails.TabIndex = 30;
             this.groupBoxUserTrailerTrailerDetails.TabStop = false;
             this.groupBoxUserTrailerTrailerDetails.Text = "Details";
@@ -2137,6 +2156,14 @@
             this.checkBoxProfilesAndSavesProfileBackups.UseVisualStyleBackColor = true;
             this.checkBoxProfilesAndSavesProfileBackups.CheckedChanged += new System.EventHandler(this.checkBoxProfileBackups_CheckedChanged);
             // 
+            // toolTipMain
+            // 
+            this.toolTipMain.AutomaticDelay = 200;
+            this.toolTipMain.AutoPopDelay = 15000;
+            this.toolTipMain.InitialDelay = 200;
+            this.toolTipMain.ReshowDelay = 200;
+            this.toolTipMain.ShowAlways = true;
+            // 
             // groupBoxMainProfilesAndSaves
             // 
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRefreshAll);
@@ -2259,18 +2286,6 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 45);
             this.tableLayoutPanel11.TabIndex = 22;
             // 
-            // latestStableToolStripMenuItem
-            // 
-            this.latestStableToolStripMenuItem.Name = "latestStableToolStripMenuItem";
-            this.latestStableToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.latestStableToolStripMenuItem.Text = "Latest";
-            this.latestStableToolStripMenuItem.Click += new System.EventHandler(this.latestStableToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(192, 6);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2292,7 +2307,6 @@
             this.tabControlMain.ResumeLayout(false);
             this.tabPageProfile.ResumeLayout(false);
             this.groupBoxProfilePlayerLevel.ResumeLayout(false);
-            this.groupBoxProfilePlayerLevel.PerformLayout();
             this.panelPlayerLevel.ResumeLayout(false);
             this.panelPlayerLevel.PerformLayout();
             this.groupBoxProfileUserColors.ResumeLayout(false);

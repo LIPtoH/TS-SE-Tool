@@ -149,6 +149,7 @@ namespace TS_SE_Tool
 
                 PlayerLevelNames = new List<LevelNames>();
 
+                #region Player level names
                 LevelNames lvl_name0 = new LevelNames(0, "Newbie", "FFE0E0E0");
                 LevelNames lvl_name1 = new LevelNames(5, "Enthusiast", "FF45C294");
                 LevelNames lvl_name2 = new LevelNames(10, "Workhorse", "FF75BAEA");
@@ -170,11 +171,12 @@ namespace TS_SE_Tool
                 PlayerLevelNames.Add(lvl_name7);
                 PlayerLevelNames.Add(lvl_name8);
                 PlayerLevelNames.Add(lvl_name9);
+                #endregion
 
-
-                //currency format: [sign1] - [sign2] 1.234,- [sign3]
                 CurrencyDict = new Dictionary<string, List<string>>();
                 CurrencyDictR = new Dictionary<string, double>();
+
+                #region Currency
 
                 string curName = "EUR";
                 CurrencyDictR.Add(curName, 1);
@@ -235,70 +237,8 @@ namespace TS_SE_Tool
                 input = new string[] { "", "₽", "" };
                 curLst = new List<string>(input);
                 CurrencyDict.Add(curName, curLst);
-                #region 
-                /*
-                currency_code[]: "EUR"
-                currency_ratio[]: 1
-                currency_sign1[]: ""
-                currency_sign2[]: "€"
-                currency_sign3[]: ""
-
-                currency_code[]: "CHF"
-                currency_ratio[]: 1.142
-                currency_sign1[]: ""
-                currency_sign2[]: ""
-                currency_sign3[]: " CHF"
-
-                currency_code[]: "CZK"
-                currency_ratio[]: 25.88
-                currency_sign1[]: ""
-                currency_sign2[]: ""
-                currency_sign3[]: " Kč"
-
-                currency_code[]: "GBP"
-                currency_ratio[]: 0.875
-                currency_sign1[]: ""
-                currency_sign2[]: "£"
-                currency_sign3[]: ""
-
-                currency_code[]: "PLN"
-                currency_ratio[]: 4.317
-                currency_sign1[]: ""
-                currency_sign2[]: ""
-                currency_sign3[]: " zł"
-
-                currency_code[]: "HUF"
-                currency_ratio[]: 325.3
-                currency_sign1[]: ""
-                currency_sign2[]: ""
-                currency_sign3[]: " Ft"
-
-                currency_code[]: "DKK"
-                currency_ratio[]: 7.46
-                currency_sign1[]: ""
-                currency_sign2[]: ""
-                currency_sign3[]: " kr"
-
-                currency_code[]: "SEK"
-                currency_ratio[]: 10.52
-                currency_sign1[]: ""
-                currency_sign2[]: ""
-                currency_sign3[]: " kr"
-
-                currency_code[]: "NOK"
-                currency_ratio[]: 9.51
-                currency_sign1[]: ""
-                currency_sign2[]: ""
-                currency_sign3[]: " kr"
-
-                currency_code[]: "RUB"
-                currency_ratio[]: 77.05
-                currency_sign1[]: ""
-                currency_sign2[]: "₽"
-                currency_sign3[]: ""
-                */
-                #endregion
-
+                #endregion 
+                
                 //Urgency
                 UrgencyArray = new int[] { 0, 1, 2 };
 
@@ -443,8 +383,8 @@ namespace TS_SE_Tool
             buttonMainDecryptSave.Enabled = false;
             buttonMainWriteSave.Enabled = true;
 
-            string t1 = "Trucking since:\n\r" + DateTimeOffset.FromUnixTimeSeconds(ProfileDataV.CreationTime).DateTime.ToLocalTime().ToString();
-            toolTipMain.SetToolTip(pictureBoxProfileAvatar, t1);
+            //string t1 = "Trucking since:\n\r" + DateTimeOffset.FromUnixTimeSeconds(ProfileDataV.CreationTime).DateTime.ToLocalTime().ToString();
+            //toolTipMain.SetToolTip(pictureBoxProfileAvatar, t1);
             
             AddTranslationToData();
 
@@ -993,7 +933,43 @@ namespace TS_SE_Tool
                 string[] imgpaths = new string[] { @"img\unknown.dds" };
                 pictureBoxProfileAvatar.Image = ExtImgLoader(imgpaths, 95, 95, 0, 0)[0];
             }
-            //DateTime CreationDate = (new DateTime(1970, 1, 1, 0, 0, 0, 0)).AddSeconds(CreationTime); //trucking since
+
+            try
+            {
+                //Read profile data
+                string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
+
+                LoadProfileDataFile();
+                //CheckProfileInfoData();
+
+                //Add text to avatar
+                string t1 = "Trucking since: " + DateTimeOffset.FromUnixTimeSeconds(ProfileDataV.CreationTime).DateTime.ToLocalTime().ToString();
+
+                int playerlvl = ProfileDataV.getPlayerLvl()[0];
+                string playerLvlName = "";
+                for (int i = PlayerLevelNames.Count - 1; i >= 0; i--)
+                    if (PlayerLevelNames[i].LevelLimit <= playerlvl)
+                    {
+                        playerLvlName = PlayerLevelNames[i].LevelName;
+                        break;
+                    }
+
+                t1 += "\r\n" + playerLvlName + " (Level " + playerlvl.ToString() + ")";
+                t1 += "\r\nDistance driven: " + ProfileDataV.CachedDistance + " km";
+                t1 += "\r\nRoads explored: " + (ProfileDataV.RoadsExplored * 100).ToString("0.00") + "%";
+                t1 += "\r\nDeliveries finished: " + ProfileDataV.DeliveriesFinished;
+                t1 += "\r\nOwned Garages: small: " + ProfileDataV.OwnedGaradesSmall + ",large: " + ProfileDataV.OwnedGaradesLarge;
+                t1 += "\r\nOwned Trucks: " + ProfileDataV.OwnedTrucks;
+                t1 += "\r\nOwned Trailers: " + ProfileDataV.OwnedTrailers;
+                t1 += "\r\nTotal game time spent: " + ProfileDataV.GameTimeSpent / 1440 + " days " + Math.Floor(((decimal)(ProfileDataV.GameTimeSpent % 1440) / 1440) * 24) + " hour(s)";
+                t1 += "\r\nPlaying time: " + ProfileDataV.RealTimeSpent / 60 + "h " + ProfileDataV.RealTimeSpent % 60 + " min";
+
+
+                //Add to Avatar
+                toolTipMain.SetToolTip(pictureBoxProfileAvatar, t1);
+            }
+            catch
+            { }
         }
 
         private void comboBoxProfiles_DropDown(object sender, EventArgs e)
@@ -1153,7 +1129,7 @@ namespace TS_SE_Tool
 
                 Label slabel = new Label();
                 groupBoxProfileSkill.Controls.Add(slabel);
-                slabel.Name = "labelProfileSkillName" + i.ToString();
+                slabel.Name = "labelProfileSkill" + i.ToString() + "Name";
                 slabel.Location = new Point(pSkillsNamelOffset * 2 + pSkillsNameWidth, 17 + (pSkillsNameHeight + pSkillsNameOffset) * i);
                 slabel.Text = toolskillimgtooltip[i];
                 slabel.AutoSize = true;
@@ -1339,7 +1315,7 @@ namespace TS_SE_Tool
             if (obj.Text != "")
                 BC = Color.White;
 
-            OpenPainter.ColorPicker.frmColorPicker frm = new OpenPainter.ColorPicker.frmColorPicker(BC);
+            OpenPainter.ColorPicker.FormColorPicker frm = new OpenPainter.ColorPicker.FormColorPicker(BC);
             frm.Font = SystemFonts.DialogFont;
 
             if (frm.ShowDialog() == DialogResult.OK)
@@ -1676,6 +1652,7 @@ namespace TS_SE_Tool
             buttonInfo.Text = "";
             buttonInfo.FlatAppearance.BorderSize = 0;
             buttonInfo.Enabled = false;
+            buttonInfo.Dock = DockStyle.Fill;
 
             Button buttonR = new Button();
             tableLayoutPanel8.Controls.Add(buttonR, 3, 1);            
@@ -1687,6 +1664,7 @@ namespace TS_SE_Tool
             buttonR.Text = "";
             buttonR.FlatAppearance.BorderSize = 0;
             buttonR.Click += new EventHandler(buttonTruckRepair_Click);
+            buttonR.Dock = DockStyle.Fill;
 
             Button buttonF = new Button();
             tableLayoutPanel8.Controls.Add(buttonF, 4, 1);
@@ -1698,9 +1676,10 @@ namespace TS_SE_Tool
             buttonF.Text = "";
             buttonF.FlatAppearance.BorderSize = 0;
             buttonF.Click += new EventHandler(buttonTruckReFuel_Click);
+            buttonF.Dock = DockStyle.Fill;
 
         }
-        
+
         public void buttonTruckReFuel_Click(object sender, EventArgs e)
         {
             int i = 0;
@@ -2138,7 +2117,7 @@ namespace TS_SE_Tool
             buttonR.Text = "";
             buttonR.FlatAppearance.BorderSize = 0;
             buttonR.Click += new EventHandler(buttonTrailerRepair_Click);
-
+            buttonR.Dock = DockStyle.Fill;
 
             Button buttonInfo = new Button();
             //tabPageTrailer.Controls.Add(buttonInfo);
@@ -2152,6 +2131,7 @@ namespace TS_SE_Tool
             buttonInfo.Text = "";
             buttonInfo.FlatAppearance.BorderSize = 0;
             buttonInfo.Enabled = false;
+            buttonInfo.Dock = DockStyle.Fill;
         }
 
         public void buttonTrailerRepair_Click(object sender, EventArgs e)
@@ -2439,6 +2419,8 @@ namespace TS_SE_Tool
 
             textBoxUserCompanyCompanyName.Text = PlayerDataV.CompanyName;
 
+            //FromStringToHex(PlayerDataV.CompanyName);
+
             MemoryStream ms = new MemoryStream();
 
             Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + PlayerDataV.CompanyLogo + ".dds");
@@ -2486,17 +2468,6 @@ namespace TS_SE_Tool
             foreach (Garages garage in from x in GaragesList where x.GarageStatus != 0 && !x.IgnoreStatus select x)
             {
                 combDT.Rows.Add(garage.GarageName, garage.GarageNameTranslated);
-                /*
-                string CityName = garage.GarageName;
-                CitiesLngDict.TryGetValue(CityName, out string value);
-
-                if (value != null && value != "")
-                    combDT.Rows.Add(CityName, value);
-                else
-                {
-                    combDT.Rows.Add(CityName, CityName + " -n");
-                }
-                */
             }
 
             combDT.DefaultView.Sort = "CityName ASC";
@@ -4961,13 +4932,15 @@ namespace TS_SE_Tool
             //rm.ReleaseAllResources();
         }
         //Help methods for searching controls
-        private void HelpTranslateFormMethod (Control parent, PlainTXTResourceManager _rm, CultureInfo _ci)
+        internal void HelpTranslateFormMethod (Control parent, PlainTXTResourceManager _rm, CultureInfo _ci)
         {
+            char[] charsToTrim = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
             foreach (Control c in parent.Controls)
             {
                 try
                 {
-                    string translatedString = _rm.GetString(c.Name, _ci);
+
+                    string translatedString = _rm.GetString(c.Name.TrimEnd(charsToTrim), _ci);
                     if (translatedString != null)
                         c.Text = translatedString;
                 }
@@ -5397,24 +5370,16 @@ namespace TS_SE_Tool
 
         private Color GetProgressbarColor(decimal _value)
         {
+            if (_value < 0)
+                _value = 0;
+            else if (_value > 1)
+                _value = 1;
             return ProgressBarGradient.GetPixel(Convert.ToInt32((1 - _value) * 99), 0);
         }
 
         private Bitmap ConvertBitmapToGrayscale(Image _source)
         {
             Bitmap bm = new Bitmap(_source);
-            /*
-            // Loop through the images pixels to reset color.
-            for (int xCoordinate = 0; xCoordinate < bm.Width; xCoordinate++)
-            {
-                for (int yCoordinate = 0; yCoordinate < bm.Height; yCoordinate++)
-                {
-                    Color pixelColor = bm.GetPixel(xCoordinate, yCoordinate);
-                    int rgb = (int)Math.Round(.299 * pixelColor.R + .587 * pixelColor.G + .114 * pixelColor.B);
-                    bm.SetPixel(xCoordinate, yCoordinate, Color.FromArgb(rgb, rgb, rgb, rgb));
-                }
-            }
-            */
             //get a graphics object from the new image
             Graphics g = Graphics.FromImage(bm);
 

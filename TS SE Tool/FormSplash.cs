@@ -24,18 +24,31 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
     public partial class FormSplash : Form
     {
+        FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
         public FormSplash()
         {
             InitializeComponent();
 
+            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
 
             labelTSSE.Text = AssemblyProduct;
-            labelTSSEVersion.Text = String.Format("{0} (alpha)", AssemblyVersion);
+
+            try
+            {
+                string translatedString = MainForm.ResourceManagerMain.GetString(labelVersion.Name, Thread.CurrentThread.CurrentUICulture);
+                if (translatedString != null)
+                    labelVersion.Text = String.Format(translatedString, AssemblyVersion);
+            }
+            catch
+            {
+                labelVersion.Text = String.Format("{0} (alpha)", AssemblyVersion);
+            }
         }
 
         private void FormSplash_Load(object sender, EventArgs e)

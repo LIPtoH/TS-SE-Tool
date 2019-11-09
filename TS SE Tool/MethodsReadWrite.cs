@@ -922,6 +922,60 @@ namespace TS_SE_Tool
             }
         }
 
+        private void LoadProfileDataFile()
+        {
+            string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
+
+            //Profile Info
+            if (!File.Exists(SiiProfilePath))
+            {
+                LogWriter("File does not exist in " + SiiProfilePath);
+                ShowStatusMessages("e", "error_could_not_find_file");
+            }
+            else
+            {
+                FileDecoded = false;
+                try
+                {
+                    int decodeAttempt = 0;
+                    while (decodeAttempt < 5)
+                    {
+                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath, this, "statusStripMain", "toolStripStatusMessages");
+
+                        if (FileDecoded)
+                        {
+                            break;
+                        }
+
+                        decodeAttempt++;
+                    }
+
+                    if (decodeAttempt == 5)
+                    {
+                        ShowStatusMessages("e", "error_could_not_decode_file", this, "statusStripMain", "toolStripStatusMessages");
+                        LogWriter("Could not decrypt after 5 attempts");
+                    }
+                }
+                catch
+                {
+                    LogWriter("Could not read: " + SiiProfilePath);
+                }
+
+                if ((tempProfileFileInMemory == null) || (tempProfileFileInMemory[0] != "SiiNunit"))
+                {
+                    LogWriter("Wrongly decoded Profile file or wrong file format");
+                    ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
+                }
+                else if (tempProfileFileInMemory != null)
+                {
+                    ShowStatusMessages("clear","");
+                    CheckProfileInfoData();
+                }
+            }
+
+            tempProfileFileInMemory = null; //clearmemory
+        }
+
         private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             toolStripProgressBarMain.Value = e.ProgressPercentage;
@@ -1402,31 +1456,14 @@ namespace TS_SE_Tool
 
                             writer.WriteLine(SaveInMemLine);
                             writer.WriteLine(" vehicles: " + capacity);
-                            /*
-                            int cur = tempGarage.Vehicles.Count;
-                            
-                            if (capacity < cur)//RE DO Try to save Drivers and Vehicles
-                            {
-                                tempGarage.Vehicles.RemoveRange(capacity, cur - capacity);
-                                tempGarage.Drivers.RemoveRange(capacity, cur - capacity);
-                            }
-                            else if (capacity > cur)
-                            {
-                                string rstr = "null";
-                                tempGarage.Vehicles.AddRange(Enumerable.Repeat(rstr, capacity - cur));
-                                tempGarage.Drivers.AddRange(Enumerable.Repeat(rstr, capacity - cur));
-                            }
-                            */
+
                             for (int i = 0; i < capacity; i++)
                             {
-                                //string tmpstr = tempGarage.Vehicles[i];
-                                //if (tmpstr == null)
-                                //    tmpstr = 
                                 writer.WriteLine(" vehicles[" + i + "]: " + NullToString(tempGarage.Vehicles[i]));
                             }
 
                             writer.WriteLine(" drivers: " + capacity);
-                            //tempGarage.Drivers
+
                             for (int i = 0; i < capacity; i++)
                             {
                                 writer.WriteLine(" drivers[" + i + "]: " + NullToString(tempGarage.Drivers[i]));
@@ -1567,7 +1604,7 @@ namespace TS_SE_Tool
                                     }
                                 }
                                 //GPS Avoid
-                                if (GPSAvoid.Count > 0)
+                                if (GPSAvoid != null && GPSAvoid.Count > 0)
                                 {
                                     foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSAvoid)
                                     {

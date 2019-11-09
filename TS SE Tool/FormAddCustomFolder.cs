@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
@@ -40,6 +41,18 @@ namespace TS_SE_Tool
         {
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
+
+            try
+            {
+                string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
+                if (translatedString != null)
+                    this.Text = translatedString;
+            }
+            catch
+            {
+            }
+
+            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
 
             ChangeCustomPathListVisibility();
             CustomPathsArr = new Dictionary<string, List<string>>();//(MainForm.ProgSettingsV.CustomPaths);
@@ -91,11 +104,11 @@ namespace TS_SE_Tool
                     GameSFsaveFolder = true;
                 }
 
-                radioButton1.Checked = GameSFrootFolder;
-                radioButton2.Checked = GameSFprofileFolder;
-                radioButton3.Checked = GameSFsaveFolder;
+                radioButtonRootFolderType.Checked = GameSFrootFolder;
+                radioButtonProfileFolderType.Checked = GameSFprofileFolder;
+                radioButtonSaveFolderType.Checked = GameSFsaveFolder;
 
-                if (radioButton1.Checked || radioButton2.Checked || radioButton3.Checked)
+                if (radioButtonRootFolderType.Checked || radioButtonProfileFolderType.Checked || radioButtonSaveFolderType.Checked)
                     buttonAddCustomPath.Enabled = true;
             }
         }
@@ -132,7 +145,7 @@ namespace TS_SE_Tool
             labelCustomPathDir.Text = "Choose folder...";
             //radioButtonGameTypeETS2.Checked = false;
             //radioButtonGameTypeATS.Checked = false;
-            radioButton4.Checked = true;
+            radioButtonUnknownFolderType.Checked = true;
         }
 
         static string GetDirectoryName2(string f)
@@ -176,17 +189,57 @@ namespace TS_SE_Tool
         {
             if (ListOpen)
             {
-                tableLayoutPanel1.ColumnStyles[3].Width = 0;
-                this.Width = 390;
+                tableLayoutPanel1.ColumnStyles[2].Width = 0;
+                int w = 390;
+                this.MinimumSize = new Size(w, this.Height);
+                this.Width = w;
+                this.MaximumSize = new Size(this.Width, this.Height);
+
+                int xP = this.Location.X + 150;
+                if (xP > Screen.PrimaryScreen.WorkingArea.Width)
+                    xP = Screen.PrimaryScreen.WorkingArea.Width - this.Width;
+                this.Location = new Point(xP, this.Location.Y);
+
                 ListOpen = false;
-                buttonEditCPlist.Text = "Edit list" + " ▶";
+
+                try
+                {
+                    string translatedString = MainForm.ResourceManagerMain.GetString(buttonEditCPlist.Name, Thread.CurrentThread.CurrentUICulture);
+                    if (translatedString != null)
+                        buttonEditCPlist.Text = translatedString + " ▶";
+                    
+                }
+                catch
+                {
+                    buttonEditCPlist.Text = "Edit list" + " ▶";
+                }
             }
             else
             {
-                tableLayoutPanel1.ColumnStyles[3].Width = 300;
-                this.Width = 690;
+                tableLayoutPanel1.ColumnStyles[2].Width = 300;
+                int w = 690;
+                this.MaximumSize = new Size(w, this.Height);
+                this.Width = w;
+                this.MinimumSize = new Size(this.Width, this.Height);
+
+                int xP = this.Location.X - 150;
+                if (xP < 0)
+                    xP = 0;
+                this.Location = new Point(xP, this.Location.Y);
+
                 ListOpen = true;
-                buttonEditCPlist.Text = "Edit list" + " ◀";
+
+                try
+                {
+                    string translatedString = MainForm.ResourceManagerMain.GetString(buttonEditCPlist.Name, Thread.CurrentThread.CurrentUICulture);
+                    if (translatedString != null)
+                        buttonEditCPlist.Text = translatedString + " ◀";
+
+                }
+                catch
+                {
+                    buttonEditCPlist.Text = "Edit list" + " ◀";
+                }
 
                 UpdatedataGridView();
             }

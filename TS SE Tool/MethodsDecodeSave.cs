@@ -29,7 +29,7 @@ namespace TS_SE_Tool
 {
     public partial class FormMain
     {
-        public unsafe string[] NewDecodeFile (string _savefile_path, Form _senderForm, string _statusStrip, string _targetLabel)
+        public unsafe string[] NewDecodeFile(string _savefile_path, Form _senderForm, string _statusStrip, string _targetLabel)
         {
             ShowStatusMessages("i", "message_loading_save_file", _senderForm, _statusStrip, _targetLabel);
             LogWriter("Loading file into memory");
@@ -56,7 +56,7 @@ namespace TS_SE_Tool
 
             fixed (byte* ptr = FileDataB)
             {
-               MemFileFrm = SIIGetMemoryFormat(ptr, buff);
+                MemFileFrm = SIIGetMemoryFormat(ptr, buff);
             }
 
             switch (MemFileFrm)
@@ -66,7 +66,7 @@ namespace TS_SE_Tool
                     {
                         FileDecoded = true;
                         string BigS = Encoding.UTF8.GetString(FileDataB);
-                        return BigS.Split(new string[] { "\r\n"}, StringSplitOptions.None);
+                        return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
                     }
                 case 2:
                     // "SIIDEC_RESULT_FORMAT_ENCRYPTED";
@@ -81,7 +81,7 @@ namespace TS_SE_Tool
                         fixed (byte* ptr = FileDataB)
                         {
                             result = SIIDecryptAndDecodeMemory(ptr, buff, null, newbuffP);
-                        }                        
+                        }
 
                         if (result == 0)
                         {
@@ -90,7 +90,7 @@ namespace TS_SE_Tool
                             fixed (byte* ptr = FileDataB)
                             {
                                 fixed (byte* ptr2 = newFileData)
-                                result = SIIDecryptAndDecodeMemory(ptr, buff, ptr2, newbuffP);
+                                    result = SIIDecryptAndDecodeMemory(ptr, buff, ptr2, newbuffP);
                             }
 
                             FileDecoded = true;
@@ -101,7 +101,7 @@ namespace TS_SE_Tool
                         return null;
                     }
                 case 3:
-                    // "SIIDEC_RESULT_FORMAT_BINARY";
+                // "SIIDEC_RESULT_FORMAT_BINARY";
                 case 4:
                     // "SIIDEC_RESULT_FORMAT_3NK";
                     {
@@ -136,31 +136,56 @@ namespace TS_SE_Tool
                 case -1:
                 // "SIIDEC_RESULT_GENERIC_ERROR";
                 case 10:
-                    // "SIIDEC_RESULT_FORMAT_UNKNOWN";
+                // "SIIDEC_RESULT_FORMAT_UNKNOWN";
                 case 11:
-                    // "SIIDEC_RESULT_TOO_FEW_DATA";
+                // "SIIDEC_RESULT_TOO_FEW_DATA";
                 default:
                     // "UNEXPECTED_ERROR";
                     return null;
             }
         }
 
-        public static string FromHexToString(string hex)
+        public static string FromHexToString(string _hex)
         {
             try
             {
-                byte[] raw = new byte[hex.Length / 2];
+                byte[] raw = new byte[_hex.Length / 2];
                 for (int i = 0; i < raw.Length; i++)
                 {
-                    raw[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
+                    raw[i] = Convert.ToByte(_hex.Substring(i * 2, 2), 16);
                 }
 
-                return Encoding.UTF8.GetString(raw); //ASCII
+                return Encoding.UTF8.GetString(raw); //UTF8
             }
             catch
             {
                 return null;
             }
+        }
+
+        public static string FromStringToHex(string _sourceString)
+        {
+            string result = "";
+            for (int i = 0; i < _sourceString.Length; i++)
+            {
+                char tempChar = _sourceString[i];
+
+                if ((tempChar >= 'a' && tempChar <= 'z') || (tempChar >= 'A' && tempChar <= 'Z') || Char.IsDigit(tempChar) || Char.IsWhiteSpace(tempChar))
+                {
+                    result += tempChar;
+                }
+                else
+                {
+                    byte[] tarray = Encoding.UTF8.GetBytes(new char[] { tempChar} );
+
+                    foreach(byte tb in tarray )
+                    {
+                        result += "\\x" + tb.ToString("x");
+                    }
+                }
+
+            }
+            return result;
         }
 
         public static decimal HexFloatToDecimalFloat(string _hexFloat)

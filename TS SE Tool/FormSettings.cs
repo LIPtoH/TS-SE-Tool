@@ -50,7 +50,7 @@ namespace TS_SE_Tool
             {
             }
 
-            HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
 
             CorrectControlsPositions();
             this.ResumeLayout();
@@ -204,23 +204,6 @@ namespace TS_SE_Tool
         private void numericUpDownSettingLoopCitys_ValueChanged(object sender, EventArgs e)
         {
             MainForm.ProgSettingsV.LoopEvery = Convert.ToByte(numericUpDownSettingLoopCitys.Value);
-        }
-
-        private void HelpTranslateFormMethod(Control parent, PlainTXTResourceManager _rm, CultureInfo _ci)
-        {
-            foreach (Control c in parent.Controls)
-            {
-                try
-                {
-                    string translatedString = _rm.GetString(c.Name, _ci);
-                    if (translatedString != null)
-                        c.Text = translatedString;
-                }
-                catch
-                {
-                }
-                HelpTranslateFormMethod(c, _rm, _ci);
-            }
         }
 
         private void CorrectControlsPositions()

@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBoxUserColors = new System.Windows.Forms.GroupBox();
+            this.groupBoxProfileUserColors = new System.Windows.Forms.GroupBox();
             this.groupBoxImportedColors = new System.Windows.Forms.GroupBox();
-            this.buttonImportColors = new System.Windows.Forms.Button();
-            this.buttonExportColors = new System.Windows.Forms.Button();
+            this.buttonImport = new System.Windows.Forms.Button();
+            this.buttonExport = new System.Windows.Forms.Button();
             this.buttonReplaceColors = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // groupBoxUserColors
+            // groupBoxProfileUserColors
             // 
-            this.groupBoxUserColors.Location = new System.Drawing.Point(12, 12);
-            this.groupBoxUserColors.Name = "groupBoxUserColors";
-            this.groupBoxUserColors.Size = new System.Drawing.Size(472, 100);
-            this.groupBoxUserColors.TabIndex = 0;
-            this.groupBoxUserColors.TabStop = false;
-            this.groupBoxUserColors.Text = "User colors";
+            this.groupBoxProfileUserColors.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxProfileUserColors.Name = "groupBoxProfileUserColors";
+            this.groupBoxProfileUserColors.Size = new System.Drawing.Size(472, 100);
+            this.groupBoxProfileUserColors.TabIndex = 0;
+            this.groupBoxProfileUserColors.TabStop = false;
+            this.groupBoxProfileUserColors.Text = "User colors";
             // 
             // groupBoxImportedColors
             // 
@@ -53,25 +53,25 @@
             this.groupBoxImportedColors.TabStop = false;
             this.groupBoxImportedColors.Text = "Imported colors";
             // 
-            // buttonImportColors
+            // buttonImport
             // 
-            this.buttonImportColors.Location = new System.Drawing.Point(188, 118);
-            this.buttonImportColors.Name = "buttonImportColors";
-            this.buttonImportColors.Size = new System.Drawing.Size(170, 46);
-            this.buttonImportColors.TabIndex = 2;
-            this.buttonImportColors.Text = "Import";
-            this.buttonImportColors.UseVisualStyleBackColor = true;
-            this.buttonImportColors.Click += new System.EventHandler(this.buttonImportColors_Click);
+            this.buttonImport.Location = new System.Drawing.Point(188, 118);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(170, 46);
+            this.buttonImport.TabIndex = 2;
+            this.buttonImport.Text = "Import";
+            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.Click += new System.EventHandler(this.buttonImportColors_Click);
             // 
-            // buttonExportColors
+            // buttonExport
             // 
-            this.buttonExportColors.Location = new System.Drawing.Point(12, 118);
-            this.buttonExportColors.Name = "buttonExportColors";
-            this.buttonExportColors.Size = new System.Drawing.Size(170, 46);
-            this.buttonExportColors.TabIndex = 3;
-            this.buttonExportColors.Text = "Export";
-            this.buttonExportColors.UseVisualStyleBackColor = true;
-            this.buttonExportColors.Click += new System.EventHandler(this.buttonExportColors_Click);
+            this.buttonExport.Location = new System.Drawing.Point(12, 118);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(170, 46);
+            this.buttonExport.TabIndex = 3;
+            this.buttonExport.Text = "Export";
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExportColors_Click);
             // 
             // buttonReplaceColors
             // 
@@ -89,10 +89,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(496, 284);
             this.Controls.Add(this.buttonReplaceColors);
-            this.Controls.Add(this.buttonExportColors);
-            this.Controls.Add(this.buttonImportColors);
+            this.Controls.Add(this.buttonExport);
+            this.Controls.Add(this.buttonImport);
             this.Controls.Add(this.groupBoxImportedColors);
-            this.Controls.Add(this.groupBoxUserColors);
+            this.Controls.Add(this.groupBoxProfileUserColors);
             this.Name = "FormShareUserColors";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Share User Colors";
@@ -102,10 +102,10 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBoxUserColors;
+        private System.Windows.Forms.GroupBox groupBoxProfileUserColors;
         private System.Windows.Forms.GroupBox groupBoxImportedColors;
-        private System.Windows.Forms.Button buttonImportColors;
-        private System.Windows.Forms.Button buttonExportColors;
+        private System.Windows.Forms.Button buttonImport;
+        private System.Windows.Forms.Button buttonExport;
         private System.Windows.Forms.Button buttonReplaceColors;
     }
 }

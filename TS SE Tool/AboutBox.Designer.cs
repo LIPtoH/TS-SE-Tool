@@ -31,7 +31,7 @@
             this.labelProductName = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.labelCopyright = new System.Windows.Forms.Label();
-            this.labelCompanyName = new System.Windows.Forms.Label();
+            this.labelSupportedGameVersions = new System.Windows.Forms.Label();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,12 +45,12 @@
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.ColumnCount = 2;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.22642F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.77358F));
             this.tableLayoutPanel.Controls.Add(this.labelProductName, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.labelVersion, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.labelCopyright, 0, 4);
-            this.tableLayoutPanel.Controls.Add(this.labelCompanyName, 0, 6);
+            this.tableLayoutPanel.Controls.Add(this.labelSupportedGameVersions, 0, 6);
             this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 0, 10);
             this.tableLayoutPanel.Controls.Add(this.label2, 0, 8);
             this.tableLayoutPanel.Controls.Add(this.label1, 0, 7);
@@ -121,19 +121,19 @@
             this.labelCopyright.Text = "Copyright";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelCompanyName
+            // labelSupportedGameVersions
             // 
-            this.tableLayoutPanel.SetColumnSpan(this.labelCompanyName, 2);
-            this.labelCompanyName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCompanyName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelCompanyName.Location = new System.Drawing.Point(6, 111);
-            this.labelCompanyName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.labelCompanyName.MaximumSize = new System.Drawing.Size(0, 17);
-            this.labelCompanyName.Name = "labelCompanyName";
-            this.labelCompanyName.Size = new System.Drawing.Size(256, 17);
-            this.labelCompanyName.TabIndex = 22;
-            this.labelCompanyName.Text = "Supported game versions";
-            this.labelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tableLayoutPanel.SetColumnSpan(this.labelSupportedGameVersions, 2);
+            this.labelSupportedGameVersions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelSupportedGameVersions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelSupportedGameVersions.Location = new System.Drawing.Point(6, 111);
+            this.labelSupportedGameVersions.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.labelSupportedGameVersions.MaximumSize = new System.Drawing.Size(0, 17);
+            this.labelSupportedGameVersions.Name = "labelSupportedGameVersions";
+            this.labelSupportedGameVersions.Size = new System.Drawing.Size(256, 17);
+            this.labelSupportedGameVersions.TabIndex = 22;
+            this.labelSupportedGameVersions.Text = "Supported game versions";
+            this.labelSupportedGameVersions.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxDescription
             // 
@@ -171,7 +171,7 @@
             // labelETS2version
             // 
             this.labelETS2version.AutoSize = true;
-            this.labelETS2version.Location = new System.Drawing.Point(69, 134);
+            this.labelETS2version.Location = new System.Drawing.Point(46, 134);
             this.labelETS2version.Name = "labelETS2version";
             this.labelETS2version.Size = new System.Drawing.Size(35, 13);
             this.labelETS2version.TabIndex = 27;
@@ -180,7 +180,7 @@
             // labelATSversion
             // 
             this.labelATSversion.AutoSize = true;
-            this.labelATSversion.Location = new System.Drawing.Point(69, 157);
+            this.labelATSversion.Location = new System.Drawing.Point(46, 157);
             this.labelATSversion.Name = "labelATSversion";
             this.labelATSversion.Size = new System.Drawing.Size(35, 13);
             this.labelATSversion.TabIndex = 28;
@@ -238,7 +238,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.Label labelCopyright;
-        private System.Windows.Forms.Label labelCompanyName;
+        private System.Windows.Forms.Label labelSupportedGameVersions;
         private System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
