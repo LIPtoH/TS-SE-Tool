@@ -208,8 +208,8 @@ namespace OpenPainter.ColorPicker
 		/// </summary>
 		private void InitializeComponent()
 		{
-            OpenPainter.ColorPicker.AdobeColors.HSB hsb9 = new OpenPainter.ColorPicker.AdobeColors.HSB();
-            OpenPainter.ColorPicker.AdobeColors.HSB hsb10 = new OpenPainter.ColorPicker.AdobeColors.HSB();
+            OpenPainter.ColorPicker.AdobeColors.HSB hsb1 = new OpenPainter.ColorPicker.AdobeColors.HSB();
+            OpenPainter.ColorPicker.AdobeColors.HSB hsb2 = new OpenPainter.ColorPicker.AdobeColors.HSB();
             this.m_cmd_OK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.m_txt_Hue = new System.Windows.Forms.TextBox();
@@ -480,6 +480,7 @@ namespace OpenPainter.ColorPicker
             // 
             this.m_lbl_Primary_Color.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.m_lbl_Primary_Color.BackColor = System.Drawing.Color.White;
+            this.m_lbl_Primary_Color.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.m_lbl_Primary_Color.Location = new System.Drawing.Point(29, 14);
             this.m_lbl_Primary_Color.Name = "m_lbl_Primary_Color";
             this.m_lbl_Primary_Color.Size = new System.Drawing.Size(58, 25);
@@ -490,6 +491,7 @@ namespace OpenPainter.ColorPicker
             // 
             this.m_lbl_Secondary_Color.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.m_lbl_Secondary_Color.BackColor = System.Drawing.Color.Silver;
+            this.m_lbl_Secondary_Color.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.m_lbl_Secondary_Color.Location = new System.Drawing.Point(29, 39);
             this.m_lbl_Secondary_Color.Name = "m_lbl_Secondary_Color";
             this.m_lbl_Secondary_Color.Size = new System.Drawing.Size(58, 25);
@@ -587,10 +589,10 @@ namespace OpenPainter.ColorPicker
             // m_ctrl_BigBox
             // 
             this.m_ctrl_BigBox.BaseColorComponent = OpenPainter.ColorPicker.ColorComponent.Hue;
-            hsb9.B = 1D;
-            hsb9.H = 0D;
-            hsb9.S = 1D;
-            this.m_ctrl_BigBox.HSB = hsb9;
+            hsb1.B = 1D;
+            hsb1.H = 0D;
+            hsb1.S = 1D;
+            this.m_ctrl_BigBox.HSB = hsb1;
             this.m_ctrl_BigBox.Location = new System.Drawing.Point(3, 3);
             this.m_ctrl_BigBox.Name = "m_ctrl_BigBox";
             this.m_ctrl_BigBox.RGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -602,10 +604,10 @@ namespace OpenPainter.ColorPicker
             // m_ctrl_ThinBox
             // 
             this.m_ctrl_ThinBox.BaseColorComponent = OpenPainter.ColorPicker.ColorComponent.Hue;
-            hsb10.B = 1D;
-            hsb10.H = 0D;
-            hsb10.S = 1D;
-            this.m_ctrl_ThinBox.HSB = hsb10;
+            hsb2.B = 1D;
+            hsb2.H = 0D;
+            hsb2.S = 1D;
+            this.m_ctrl_ThinBox.HSB = hsb2;
             this.m_ctrl_ThinBox.Location = new System.Drawing.Point(275, 3);
             this.m_ctrl_ThinBox.Name = "m_ctrl_ThinBox";
             this.m_ctrl_ThinBox.RGB = System.Drawing.Color.Red;

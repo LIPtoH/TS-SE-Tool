@@ -403,7 +403,7 @@ namespace TS_SE_Tool
 
                                 if (!checkBoxCustomThumbnail.Checked)
                                 {
-                                    string[] imgpaths = new string[] { @"img\autosave.dds" };
+                                    string[] imgpaths = new string[] { "img\\" + MainForm.GameType + "\\autosave.dds" };
                                     newbmp = new Bitmap(MainForm.ExtImgLoader(imgpaths, 256, 128, 0, 0)[0]);
                                 }
                                 else if (checkBoxCustomThumbnail.Checked && Thumbnails.Length != 0)

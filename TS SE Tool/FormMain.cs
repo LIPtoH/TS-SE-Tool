@@ -52,7 +52,7 @@ namespace TS_SE_Tool
 
         public bool FileDecoded;  //+
 
-        private string GameType;//Program
+        internal string GameType;//Program
         private string SavefilePath; //+
         private string LastVisitedCity; //+
         private string LoopStartCity;//Program
@@ -160,7 +160,7 @@ namespace TS_SE_Tool
         private Bitmap ProgressBarGradient; //Program
         private Image RepairImg, RefuelImg, CutomizeImg, PlayerCompanyLogo; //Program
 
-        private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
+        private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs; //Program
 
         private ImageList TabpagesImages; //Program

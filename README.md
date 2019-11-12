@@ -10,12 +10,12 @@ Windows
 Dependence
 .NET Framework 4.6.1
 
-##You can:
+## You can:
 * add Custom paths for save files.
 * edit Local and Steam save files.
 * edit player level and skill.
 * edit and share saved user colors for truck and trailer.
-* edit company HQ and amount of money on account.
+* edit amount of money on account.
 * visit cities and be able to grab cargo from discovered cities.
 * buy and\or upgrade garages.
 * repair and\or refuel your truck.
@@ -25,12 +25,12 @@ Dependence
 * make basic edits to Cargo market.
 * share GPS coordinates and paths that can be useful for Convoys.
 
-##Short term goals:
+## Short term goals:
 * finish sharing functions for truck parts.
 * add editing and share functions for trailers.
  
 
-##Long term goals:
+## Long term goals:
 * add the ability to creat jobs for Cargo market (have couple ideas)
 * get map data from game\game generated files.
 * scan mods for data (trucks, cargo...)

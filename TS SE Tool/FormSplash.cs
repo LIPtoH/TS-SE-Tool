@@ -39,16 +39,12 @@ namespace TS_SE_Tool
 
             labelTSSE.Text = AssemblyProduct;
 
-            try
-            {
-                string translatedString = MainForm.ResourceManagerMain.GetString(labelVersion.Name, Thread.CurrentThread.CurrentUICulture);
-                if (translatedString != null)
-                    labelVersion.Text = String.Format(translatedString, AssemblyVersion);
-            }
-            catch
-            {
+            string translatedString = MainForm.ResourceManagerMain.GetString(labelVersion.Name, Thread.CurrentThread.CurrentUICulture);
+            if (translatedString != null)
+                labelVersion.Text = String.Format(translatedString, AssemblyVersion);
+            else
                 labelVersion.Text = String.Format("{0} (alpha)", AssemblyVersion);
-            }
+
         }
 
         private void FormSplash_Load(object sender, EventArgs e)

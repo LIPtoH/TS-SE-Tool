@@ -57,6 +57,8 @@ namespace TS_SE_Tool
                 string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
                 if (translatedString != null)
                     this.Text = String.Format(translatedString, AssemblyTitle);
+                else
+                    this.Text = String.Format("About {0}", AssemblyTitle);
             }
             catch
             {
@@ -67,6 +69,9 @@ namespace TS_SE_Tool
                 string translatedString = MainForm.ResourceManagerMain.GetString(labelVersion.Name, Thread.CurrentThread.CurrentUICulture);
                 if (translatedString != null)
                     labelVersion.Text = String.Format(translatedString, AssemblyVersion);
+                else
+                    labelVersion.Text = String.Format("Version {0} (alpha)", AssemblyVersion);
+
             }
             catch
             {

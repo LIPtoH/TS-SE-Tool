@@ -207,11 +207,12 @@ namespace TS_SE_Tool
                     string translatedString = MainForm.ResourceManagerMain.GetString(buttonEditCPlist.Name, Thread.CurrentThread.CurrentUICulture);
                     if (translatedString != null)
                         buttonEditCPlist.Text = translatedString + " ▶";
-                    
+                    else
+                        buttonEditCPlist.Text = "Edit list" + " ▶";
+
                 }
                 catch
                 {
-                    buttonEditCPlist.Text = "Edit list" + " ▶";
                 }
             }
             else
@@ -234,11 +235,12 @@ namespace TS_SE_Tool
                     string translatedString = MainForm.ResourceManagerMain.GetString(buttonEditCPlist.Name, Thread.CurrentThread.CurrentUICulture);
                     if (translatedString != null)
                         buttonEditCPlist.Text = translatedString + " ◀";
+                    else
+                        buttonEditCPlist.Text = "Edit list" + " ◀";
 
                 }
                 catch
                 {
-                    buttonEditCPlist.Text = "Edit list" + " ◀";
                 }
 
                 UpdatedataGridView();

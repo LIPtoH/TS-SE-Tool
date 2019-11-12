@@ -354,9 +354,12 @@ namespace TS_SE_Tool
 
             imgpaths = new string[] { @"img\profiles.dds", @"img\comp_man.dds", @"img\truck_service.dds", @"img\trailers.dds", @"img\company_job.dds", @"img\cargo_market.dds", @"img\maps.dds" };
             TabpagesImages.Images.AddRange (ExtImgLoader(imgpaths, 64, 64, 64, 0));
-
+            //Garages
             imgpaths = new string[] { @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_small_ico.dds", @"img\garage_large_ico.dds", @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_tiny_ico.dds" };
             GaragesImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
+            //HQ garages
+            imgpaths = new string[] { @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\hq_garage_ico_small_n.dds", @"img\hq_garage_ico_big_n.dds", @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\hq_garage_ico_tiny_n.dds" };
+            GaragesHQImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
 
             imgpaths = new string[] { @"img\city_pin_0.dds", @"img\city_pin_1.dds"};
             CitiesImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);

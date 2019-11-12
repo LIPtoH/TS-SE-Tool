@@ -251,7 +251,8 @@ namespace TS_SE_Tool
                 SkillImgSBG = new Image[5];
                 SkillImgS = new Image[6];
                 ADRbuttonArray = new CheckBox[6];
-                GaragesImg = new Image[4];
+                GaragesImg = new Image[1];
+                GaragesHQImg = new Image[1];
                 CitiesImg = new Image[2];
                 UrgencyImg = new Image[3];
                 CargoTypeImg = new Image[3];
@@ -2721,8 +2722,11 @@ namespace TS_SE_Tool
 
             // Draw the background.
             e.DrawBackground();
-
-            Image grgicon = GaragesImg[grg.GarageStatus];
+            Image grgicon;
+            if (grg.GarageName != PlayerDataV.HQcity)
+                grgicon = GaragesImg[grg.GarageStatus];
+            else
+                grgicon = GaragesHQImg[grg.GarageStatus];
 
             // Draw the picture.
             float scale = GaragePictureHeight / grgicon.Height;
