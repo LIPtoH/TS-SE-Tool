@@ -1831,7 +1831,7 @@ namespace TS_SE_Tool
             }
         }
 
-        private void AddCargo(bool JobEditing )
+        private void AddCargo(bool JobEditing ,Dictionary<String,String> PairsFormCode = null)
         {
             if ((((comboBoxFreightMarketSourceCity.SelectedIndex < 0) || (comboBoxFreightMarketSourceCompany.SelectedIndex < 0)) || ((comboBoxFreightMarketDestinationCity.SelectedIndex < 0) || (comboBoxFreightMarketDestinationCompany.SelectedIndex < 0))) || (comboBoxFreightMarketCargoList.SelectedIndex < 0) || comboBoxFreightMarketUrgency.SelectedIndex < 0)
             {
@@ -1841,16 +1841,30 @@ namespace TS_SE_Tool
             else
             {
                 ShowStatusMessages("i", "");
-
-                //Getting data from form controls
-                string SourceCity = comboBoxFreightMarketSourceCity.SelectedValue.ToString();
-                string SourceCompany = comboBoxFreightMarketSourceCompany.SelectedValue.ToString();
-                string DestinationCity = comboBoxFreightMarketDestinationCity.SelectedValue.ToString();
-                string DestinationCompany = comboBoxFreightMarketDestinationCompany.SelectedValue.ToString();
-                string Cargo = comboBoxFreightMarketCargoList.SelectedValue.ToString().Split(new char[] { ',' })[0];
-                string Urgency = comboBoxFreightMarketUrgency.SelectedValue.ToString();
-                string TrailerDefinition = comboBoxFreightMarketTrailerDef.SelectedValue.ToString();
-                string TrailerVariant = comboBoxFreightMarketTrailerVariant.SelectedValue.ToString();
+                if (PairsFormCode==null)
+                {
+                    //Getting data from form controls
+                    PairsFormCode = new Dictionary<string, string>
+                    {
+                        ["SourceCity"] = comboBoxFreightMarketSourceCity.SelectedValue.ToString(),
+                        ["SourceCompany"] = comboBoxFreightMarketSourceCompany.SelectedValue.ToString(),
+                        ["DestinationCity"] = comboBoxFreightMarketDestinationCity.SelectedValue.ToString(),
+                        ["DestinationCompany"] = comboBoxFreightMarketDestinationCompany.SelectedValue.ToString(),
+                        ["Cargo"] = comboBoxFreightMarketCargoList.SelectedValue.ToString().Split(new char[] { ',' })[0],
+                        ["Urgency"] = comboBoxFreightMarketUrgency.SelectedValue.ToString(),
+                        ["TrailerDefinition"] = comboBoxFreightMarketTrailerDef.SelectedValue.ToString(),
+                        ["TrailerVariant"] = comboBoxFreightMarketTrailerVariant.SelectedValue.ToString()
+                    };
+                    FormToCode(PairsFormCode);
+                }
+                string SourceCity = PairsFormCode["SourceCity"];
+                string SourceCompany = PairsFormCode["SourceCompany"];
+                string DestinationCity = PairsFormCode["DestinationCity"];
+                string DestinationCompany = PairsFormCode["DestinationCompany"];
+                string Cargo = PairsFormCode["Cargo"];
+                string Urgency = PairsFormCode["Urgency"];
+                string TrailerDefinition = PairsFormCode["TrailerDefinition"];
+                string TrailerVariant = PairsFormCode["TrailerVariant"];
 
                 string SourceCityName = comboBoxFreightMarketSourceCity.Text;
                 string SourceCompanyName = comboBoxFreightMarketSourceCompany.Text;
@@ -2060,6 +2074,40 @@ namespace TS_SE_Tool
                 }
             }
         }
+
+        private string FormToCode(Dictionary<string, string> PairsFormCode)
+        {
+            string code = GameType;
+            foreach (string key in PairsFormCode.Keys)
+            {
+                string codeHex = new Utils.HexString().ConvertStringToHex(PairsFormCode[key]);
+                code +="-" + codeHex;
+            }
+            textBoxCode.Text = code;
+            return code;
+        }
+
+        private Dictionary<string, string> CodeToForm(string code)
+        {
+            Dictionary<string, string> pairs = null;
+            if (code!=null && code!=string.Empty)
+            {
+                string[] parms = code.Split('-');
+                pairs = new Dictionary<string, string>()
+                {
+                    ["SourceCity"] = new Utils.HexString().ConvertHexToString(parms[1]),
+                    ["SourceCompany"] = new Utils.HexString().ConvertHexToString(parms[2]),
+                    ["DestinationCity"] = new Utils.HexString().ConvertHexToString(parms[3]),
+                    ["DestinationCompany"] = new Utils.HexString().ConvertHexToString(parms[4]),
+                    ["Cargo"] = new Utils.HexString().ConvertHexToString(parms[5]),
+                    ["Urgency"] = new Utils.HexString().ConvertHexToString(parms[6]),
+                    ["TrailerDefinition"] = new Utils.HexString().ConvertHexToString(parms[7]),
+                    ["TrailerVariant"] = new Utils.HexString().ConvertHexToString(parms[8])
+                };
+            }
+            return pairs;
+        }
+
         /*
         //Get random number
         public IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)

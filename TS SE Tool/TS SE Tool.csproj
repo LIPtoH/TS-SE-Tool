@@ -215,6 +215,7 @@
     <Compile Include="RMcode\PlainTXTResourceManager.cs" />
     <Compile Include="RMcode\PlainTXTResourceReader.cs" />
     <Compile Include="RMcode\PlainTXTResourceSet.cs" />
+    <Compile Include="Utils\HexString.cs" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>

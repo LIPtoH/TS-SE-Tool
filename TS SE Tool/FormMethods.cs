@@ -3343,7 +3343,9 @@ namespace TS_SE_Tool
             comboBoxFreightMarketSourceCity.DataSource = combDT;
             //end filling
 
+            var tmp = comboBoxFreightMarketSourceCity.SelectedValue;
             comboBoxFreightMarketSourceCity.SelectedValue = LastVisitedCity;
+            comboBoxFreightMarketSourceCity.SelectedValue = comboBoxFreightMarketSourceCity.SelectedValue == null ? tmp : LastVisitedCity;
             //end
         }
         //Cargo list
@@ -3906,6 +3908,10 @@ namespace TS_SE_Tool
         //Source city
         private void comboBoxSourceCity_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (comboBoxFreightMarketSourceCity.SelectedValue == null)
+            {
+                return;
+            }
             string _sourceCityName = comboBoxFreightMarketSourceCity.SelectedValue.ToString();
 
             comboBoxFreightMarketSourceCompany.SelectedIndex = -1;
@@ -4419,7 +4425,12 @@ namespace TS_SE_Tool
                 //List<string> tempOutCargo = ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCompanyCM.SelectedValue.ToString()).outCargo;
 
                 //int seedindex = 0;
-                foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds)
+                if (comboBoxCargoMarketSourceCity.SelectedValue == null)
+                {
+                    return;
+                }
+                City city = CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString());
+                foreach (int cargoseed in city.ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds)
                 {
                     //int Cargoreminder2 = (cargoseed - InGameTime + (int)numericUpDown2.Value) % (tempOutCargo.Count() - (int)numericUpDown1.Value);
                     //tempOutCargo.Sort();
@@ -5591,6 +5602,13 @@ namespace TS_SE_Tool
             return namelessLast;
         }
 
+        private void buttonCodePar_Click(object sender, EventArgs e)
+        {
+            var pairs = CodeToForm(textBoxCode.Text);
+            AddCargo(false, pairs);
+            textBoxCode.Text = string.Empty;
+        }
         //end Form methods
     }
+
 }
