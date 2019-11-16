@@ -3089,7 +3089,7 @@ namespace TS_SE_Tool
 
                     xmult++;
                 }
-                
+
 
                 // Draw the text.
                 string value = "", SourceCityName = "", DestinationCityName = "";
@@ -3108,7 +3108,7 @@ namespace TS_SE_Tool
                 {
                     DestinationCityName = Job.DestinationCity + " -n";
                 }
-                
+
                 //Source City
                 // Find the area in which to put the text.
                 float x = e.Bounds.Left + JobsItemMargin;
@@ -3116,74 +3116,80 @@ namespace TS_SE_Tool
                 float width = (e.Bounds.Right - e.Bounds.Left - JobsItemMargin * 4 - UrgencyImg[Job.Urgency].Width) / 2;
                 float height = JobsTextHeigh;//e.Bounds.Bottom - JobsItemMargin - y;
                 RectangleF layout_rect = new RectangleF(x, y, width, height);
-                
-                string txt = "(" + CitiesList.Find(xc => xc.CityName == Job.SourceCity).Country.First() + ") " + SourceCityName;
-                StringFormat format = new StringFormat();
-                format.Alignment = StringAlignment.Near;
-                e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
-
-                //Destination City
-                // Find the area in which to put the text.
-                x = e.Bounds.Left + width + 3 * JobsItemMargin + UrgencyImg[Job.Urgency].Width;
-                layout_rect = new RectangleF(x, y, width, height);
-                format.Alignment = StringAlignment.Far;
-                txt = DestinationCityName + " (" + CitiesList.Find(xc => xc.CityName == Job.DestinationCity).Country.First() + ")";
-                e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
-
-                //Cargo
-                // Find the area in which to put the text.
-                x = e.Bounds.Left + picture_width + 4 * JobsItemMargin;// + 32 * 2;
-                y = e.Bounds.Top + JobsItemMargin * 2 + UrgencyImg[Job.Urgency].Height;
-                width = e.Bounds.Right - JobsItemMargin - x;
-                height = e.Bounds.Bottom - JobsItemMargin - y;
-                layout_rect = new RectangleF(x, y, width, height);
-
-                if (CargoLngDict.TryGetValue(Job.Cargo, out string CargoName))
+                try //如果某些工作已经加入到列表，点击“Save”按钮会报错，先用try...catch块解决报错问题，不会影响正常使用
                 {
-                    if (CargoName != null && CargoName != "")
+                    string txt = "(" + CitiesList.Find(xc => xc.CityName == Job.SourceCity).Country.First() + ") " + SourceCityName;
+                    StringFormat format = new StringFormat();
+                    format.Alignment = StringAlignment.Near;
+                    e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
+
+                    //Destination City
+                    // Find the area in which to put the text.
+                    x = e.Bounds.Left + width + 3 * JobsItemMargin + UrgencyImg[Job.Urgency].Width;
+                    layout_rect = new RectangleF(x, y, width, height);
+                    format.Alignment = StringAlignment.Far;
+                    txt = DestinationCityName + " (" + CitiesList.Find(xc => xc.CityName == Job.DestinationCity).Country.First() + ")";
+                    e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
+
+                    //Cargo
+                    // Find the area in which to put the text.
+                    x = e.Bounds.Left + picture_width + 4 * JobsItemMargin;// + 32 * 2;
+                    y = e.Bounds.Top + JobsItemMargin * 2 + UrgencyImg[Job.Urgency].Height;
+                    width = e.Bounds.Right - JobsItemMargin - x;
+                    height = e.Bounds.Bottom - JobsItemMargin - y;
+                    layout_rect = new RectangleF(x, y, width, height);
+
+                    if (CargoLngDict.TryGetValue(Job.Cargo, out string CargoName))
                     {
-                        txt = CargoName;
+                        if (CargoName != null && CargoName != "")
+                        {
+                            txt = CargoName;
+                        }
+                        else
+                            txt = Job.Cargo;
                     }
                     else
                         txt = Job.Cargo;
-                }
-                else
-                    txt = Job.Cargo;
 
-                if (CargoMass > 0)
-                    txt += " (" + CargoMass + " kg)";
+                    if (CargoMass > 0)
+                        txt += " (" + CargoMass + " kg)";
 
-                e.Graphics.DrawString(txt, this.Font, br, layout_rect);
+                    e.Graphics.DrawString(txt, this.Font, br, layout_rect);
 
-                // Find the area in which to put Distance text.
-                if (Job.Distance == 11111)
-                {
-                    txt = Math.Floor(5 * DistanceMultiplier).ToString() + "* ";
-                }
-                else
-                {
-                    txt = Math.Floor(Job.Distance * DistanceMultiplier).ToString() + " ";
-                }
-
-                txt += ProgSettingsV.DistanceMes + " ";
-
-                if (Job.Ferrytime > 0)
-                {
-                    txt += "(Ferry ";
-
-                    if(Job.Ferrytime < 60)
-                        txt += Job.Ferrytime.ToString() + "min - ";
+                    // Find the area in which to put Distance text.
+                    if (Job.Distance == 11111)
+                    {
+                        txt = Math.Floor(5 * DistanceMultiplier).ToString() + "* ";
+                    }
                     else
-                        txt += (Job.Ferrytime / 60).ToString() + "h - ";
+                    {
+                        txt = Math.Floor(Job.Distance * DistanceMultiplier).ToString() + " ";
+                    }
 
-                    txt += Job.Ferryprice.ToString() + " €)";
+                    txt += ProgSettingsV.DistanceMes + " ";
+
+                    if (Job.Ferrytime > 0)
+                    {
+                        txt += "(Ferry ";
+
+                        if (Job.Ferrytime < 60)
+                            txt += Job.Ferrytime.ToString() + "min - ";
+                        else
+                            txt += (Job.Ferrytime / 60).ToString() + "h - ";
+
+                        txt += Job.Ferryprice.ToString() + " €)";
+                    }
+
+                    layout_rect = new RectangleF(x, y + 14, width, height);
+                    e.Graphics.DrawString(txt, this.Font, br, layout_rect);
+
+                    // Draw the focus rectangle if appropriate.
+                    e.DrawFocusRectangle();
                 }
-
-                layout_rect = new RectangleF(x, y + 14, width, height);
-                e.Graphics.DrawString(txt, this.Font, br, layout_rect);
-
-                // Draw the focus rectangle if appropriate.
-                e.DrawFocusRectangle();
+                catch (Exception ex)
+                {
+                    LogWriter(ex.Message);
+                }
             }
         }
 
