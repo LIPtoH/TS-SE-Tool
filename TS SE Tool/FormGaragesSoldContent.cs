@@ -71,14 +71,32 @@ namespace TS_SE_Tool
                     foreach (string tempD in tempG.Drivers)
                     {
                         if (tempD != null)
-                            treeViewSavedDrivers.Nodes[tempG.GarageName].Nodes.Add(tempD, tempD);
+                        {
+                            string DriverName = tempD;
+
+                            if (MainForm.PlayerDataV.UserDriver == DriverName)
+                            {
+                                DriverName = MainForm.FromHexToString(Globals.SelectedProfile);
+                            }
+                            else
+                            {
+                                MainForm.DriverNames.TryGetValue(DriverName, out string _resultvalue);
+
+                                if (_resultvalue != null && _resultvalue != "")
+                                {
+                                    DriverName = _resultvalue;
+                                }
+                            }
+
+                            treeViewSavedDrivers.Nodes[tempG.GarageName].Nodes.Add(tempD, DriverName);
+                        }                            
                     }
                     //Trucks tree
                     treeViewSavedTrucks.Nodes.Add(tempG.GarageName, "[ " + curVeh + " | " + tempG.Vehicles.Count + " ] " + tempG.GarageNameTranslated);
                     foreach (string tempV in tempG.Vehicles)
                     {
                         if (tempV != null)
-                        {                           
+                        {
                             string TruckName = "";
                             try
                             {   

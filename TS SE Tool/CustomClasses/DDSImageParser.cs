@@ -618,7 +618,9 @@ namespace S16.Drawing
         #region Decompress Methods
         private byte[] DecompressData(DDSStruct header, byte[] data, PixelFormat pixelFormat)
         {
+            #if DEBUG
             System.Diagnostics.Debug.WriteLine(pixelFormat);
+            #endif
             // allocate bitmap
             byte[] rawData = null;
 

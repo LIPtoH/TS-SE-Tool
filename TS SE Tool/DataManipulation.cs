@@ -109,6 +109,9 @@ namespace TS_SE_Tool
 
                         while (true)//(!garageinfoended)
                         {
+                            if (tempSavefileInMemory[line].StartsWith("}"))
+                                break;
+
                             string res = "";
                             try
                             {
@@ -126,9 +129,7 @@ namespace TS_SE_Tool
                             else if (tempSavefileInMemory[line].StartsWith(" trailers["))
                                 tempGarage.Trailers.Add(res);
                             else if (tempSavefileInMemory[line].StartsWith(" status:"))
-                                tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
-                            else if (tempSavefileInMemory[line].StartsWith("}"))
-                                break;//garageinfoended = true;
+                                tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);                            
 
                             line++;
                         }
@@ -422,10 +423,11 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" drivers["))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            UserDriverDictionary.Add(chunkOfline[2], new UserCompanyDriverData());
+                            string temp = chunkOfline[2];
+                            UserDriverDictionary.Add(temp, new UserCompanyDriverData());
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
                             if (int.Parse(chunkOfline[1]) == 0)
-                                PlayerDataV.UserDriver = chunkOfline[2];
+                                PlayerDataV.UserDriver = temp;
                             continue;
                         }
 
@@ -988,8 +990,7 @@ namespace TS_SE_Tool
 
                                                 if (!TrailerDefinitionVariants.ContainsKey(trailerdefinition))
                                                 {
-                                                    List<string> tmp = new List<string>();
-                                                    tmp.Add(trailervariant);
+                                                    List<string> tmp = new List<string> { trailervariant };
                                                     TrailerDefinitionVariants.Add(trailerdefinition, tmp);
                                                 }
                                                 else
@@ -1472,10 +1473,42 @@ namespace TS_SE_Tool
                         {
                             if (compNameH[i] == '\\')
                             {
-                                string temp = compNameH.Substring(i+2, 2) + compNameH.Substring(i + 6, 2);
-                                string r = FromHexToString(temp);
-                                result += r;
-                                i += 7;
+                                char t = compNameH[i];
+                                string temp = compNameH.Substring(i + 1, 1);
+                                
+                                if(temp == "\\")
+                                {
+                                    result += temp;
+                                    i += 1;
+                                }
+                                else if (temp == "x")
+                                {
+                                    string tempChar = "";
+                                    checkForChar:
+
+                                    tempChar += compNameH.Substring(i + 2, 2);
+                                    string r = FromHexToString(tempChar);
+                                    char tChar = Convert.ToChar(r);
+
+                                    if (Char.IsControl(tChar) || tChar != 65533)
+                                    {
+                                        result += r;
+                                        i += 3;
+                                    }
+                                    else
+                                    {
+                                        i += 4;
+
+                                        goto checkForChar;
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    result += temp;
+                                    i += 1;
+                                }
+                                
                             }
                             else
                                 result += compNameH[i];
@@ -1588,13 +1621,16 @@ namespace TS_SE_Tool
                 if (tempProfileFileInMemory[line].StartsWith(" profile_name:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' }, 3);
-                    string result = "";
+                    string result = null;
 
                     if (chunkOfline[2].StartsWith("\"") && chunkOfline[2].EndsWith("\""))
                     {
                         string compNameH = chunkOfline[2].Trim('"');
-                        string compNameH2 = string.Join("", compNameH.Split(new string[] { "\\x" }, StringSplitOptions.RemoveEmptyEntries));
-                        result = FromHexToString(compNameH2);
+                        if(compNameH.Contains("\\x"))
+                        {
+                            string compNameH2 = string.Join("", compNameH.Split(new string[] { "\\x" }, StringSplitOptions.RemoveEmptyEntries));
+                            result = FromHexToString(compNameH2);
+                        }
 
                         if (result == null)
                         {

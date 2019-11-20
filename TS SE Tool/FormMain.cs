@@ -133,13 +133,14 @@ namespace TS_SE_Tool
         private Random RandomValue;//Program
 
         private CountryDictionary CountryDictionary;//Program
+        private Dictionary<string,Country> CountriesDataList;
 
         private Routes RouteList;//Program DB
 
         public PlainTXTResourceManager ResourceManagerMain;
 
         private Dictionary<string, string> dictionaryProfiles;
-        public Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict, CountriesLngDict, UrgencyLngDict;
+        public Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict, CountriesLngDict, UrgencyLngDict, DriverNames;
 
         public static Dictionary<string, string> CitiesLngDict;//, CustomStringsDict;
         public Dictionary<string, UserCompanyTruckData> UserTruckDictionary; //+
@@ -258,7 +259,6 @@ namespace TS_SE_Tool
         {
             ExportFormControlstoLanguageFile();
         }
-
     }
 
     public class Globals

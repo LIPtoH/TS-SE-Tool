@@ -186,6 +186,21 @@ namespace TS_SE_Tool
             {
                 LogWriter("CityToCountry.csv file is missing in lang directory");
             }
+
+            try
+            {
+                CountryDictionaryFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\CountryProperties.csv");
+
+                for (int i = 0; i < CountryDictionaryFile.Length; i++)
+                {
+                    string[] csvParts = CountryDictionaryFile[i].Split(new char[] { ';' });
+                    CountriesDataList.Add(csvParts[0], new Country(csvParts[0], csvParts[1], csvParts[2].Replace('.',',')));
+                }
+            }
+            catch
+            {
+                LogWriter("CountryProperties.csv file is missing in lang directory");
+            }
         }
 
         private void LoadExtCargoes()
@@ -295,6 +310,26 @@ namespace TS_SE_Tool
                 {
                     string[] tmp = tempFile[i].Split(new char[] { ';' });
                     TruckBrandsLngDict.Add(tmp[0], tmp[1]);
+                }
+            }
+            catch
+            {
+                LogWriter("truck_brands.txt file is missing");
+            }
+        }
+
+        private void LoadDriverNamesLng()
+        {
+            DriverNames.Clear();
+
+            try
+            {
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\Default\" + GameType + "\\driver_names.csv");
+
+                for (int i = 0; i < tempFile.Length; i++)
+                {
+                    string[] tmp = tempFile[i].Split(new char[] { ';' });
+                    DriverNames.Add(tmp[0], tmp[1]);
                 }
             }
             catch

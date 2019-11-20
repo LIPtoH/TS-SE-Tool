@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Resources;
 using System.Globalization;
+using System.IO;
 
 namespace TS_SE_Tool
 {
@@ -45,8 +46,11 @@ namespace TS_SE_Tool
             }
             else
             {
-                rs = new PlainTXTResourceSet(culture);//(dsn, culture);
-                MyResourceSets.Add(culture.Name, rs);
+                if(File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + culture.Name + @"\lngfile.txt"))
+                {
+                    rs = new PlainTXTResourceSet(culture);//(dsn, culture);
+                    MyResourceSets.Add(culture.Name, rs);
+                }
             }
 
             return rs;

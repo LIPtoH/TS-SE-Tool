@@ -121,9 +121,7 @@ namespace TS_SE_Tool
                 comboBoxProfiles.FlatStyle =
                 comboBoxSaves.FlatStyle = FlatStyle.Flat;
 
-                dictionaryProfiles = new Dictionary<string, string>();
-                dictionaryProfiles.Add("ETS2", ProfileETS2);
-                dictionaryProfiles.Add("ATS", ProfileATS);
+                dictionaryProfiles = new Dictionary<string, string> { { "ETS2", ProfileETS2 }, { "ATS", ProfileATS } };
 
                 CompaniesLngDict = new Dictionary<string, string>();
                 CitiesLngDict = new Dictionary<string, string>();
@@ -132,6 +130,7 @@ namespace TS_SE_Tool
                 UrgencyLngDict = new Dictionary<string, string>();
                 //CustomStringsDict = new Dictionary<string, string>();
                 TruckBrandsLngDict = new Dictionary<string, string>();
+                DriverNames = new Dictionary<string, string>();
 
                 GameType = "ETS2";
                 Globals.CurrentGame = dictionaryProfiles[GameType];
@@ -146,6 +145,7 @@ namespace TS_SE_Tool
                 DistancesTable.Columns.Add("FerryPrice", typeof(int));
 
                 CountryDictionary = new CountryDictionary();
+                CountriesDataList = new Dictionary<string, Country>();
 
                 PlayerLevelNames = new List<LevelNames>();
 
@@ -242,9 +242,7 @@ namespace TS_SE_Tool
                 //Urgency
                 UrgencyArray = new int[] { 0, 1, 2 };
 
-                DistanceMultipliers = new Dictionary<string, double>();
-                DistanceMultipliers.Add("km", 1);
-                DistanceMultipliers.Add("mi", km_to_mileconvert);
+                DistanceMultipliers = new Dictionary<string, double> { { "km", 1 },{ "mi", km_to_mileconvert } };
 
                 ADRImgS = new Image[6];
                 ADRImgSGrey = new Image[6];
@@ -3109,30 +3107,90 @@ namespace TS_SE_Tool
                     DestinationCityName = Job.DestinationCity + " -n";
                 }
                 
-                //Source City
                 // Find the area in which to put the text.
                 float x = e.Bounds.Left + JobsItemMargin;
                 float y = e.Bounds.Top - JobsItemMargin + JobsTextHeigh / 2;
                 float width = (e.Bounds.Right - e.Bounds.Left - JobsItemMargin * 4 - UrgencyImg[Job.Urgency].Width) / 2;
-                float height = JobsTextHeigh;//e.Bounds.Bottom - JobsItemMargin - y;
+                float height = JobsTextHeigh;
+
                 RectangleF layout_rect = new RectangleF(x, y, width, height);
-                
-                string txt = "(" + CitiesList.Find(xc => xc.CityName == Job.SourceCity).Country.First() + ") " + SourceCityName;
+
                 StringFormat format = new StringFormat();
+                string txt = "";
+
+                //Extra fonts
+                Font BoldFont = new Font(this.Font, FontStyle.Bold);
+
+                //Source City
+                string CountryName = CitiesList.Find(xc => xc.CityName == Job.SourceCity).Country;
+                int CountryCodeLength = 0;
+
+                if (CountryName != "")
+                {
+                    if(CountriesDataList.ContainsKey(CountryName))
+                    {
+                        txt = "(" + CountriesDataList[CountryName].ShortName + ") ";
+                    }
+                    else
+                    {
+                        txt = "(" + CitiesList.Find(xc => xc.CityName == Job.SourceCity).Country.First() + ") ";
+                    }
+
+                    CountryCodeLength = Convert.ToInt32(e.Graphics.MeasureString(txt, BoldFont).Width);
+
+                    format.Alignment = StringAlignment.Near;
+                    layout_rect.Width = CountryCodeLength + JobsItemMargin;
+
+                    e.Graphics.DrawString(txt, BoldFont, br, layout_rect, format);
+                }
+
+                format = new StringFormat();
                 format.Alignment = StringAlignment.Near;
+                layout_rect.X += + CountryCodeLength + JobsItemMargin;
+                layout_rect.Width = width - CountryCodeLength - JobsItemMargin;
+
+                txt = SourceCityName;
+
+                //Draw
                 e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
 
                 //Destination City
                 // Find the area in which to put the text.
-                x = e.Bounds.Left + width + 3 * JobsItemMargin + UrgencyImg[Job.Urgency].Width;
-                layout_rect = new RectangleF(x, y, width, height);
+
+                CountryName = CitiesList.Find(xc => xc.CityName == Job.DestinationCity).Country;
+                CountryCodeLength = 0;
+
                 format.Alignment = StringAlignment.Far;
-                txt = DestinationCityName + " (" + CitiesList.Find(xc => xc.CityName == Job.DestinationCity).Country.First() + ")";
+
+                if (CountryName != "")
+                {
+                    if (CountriesDataList.ContainsKey(CountryName))
+                    {
+                        txt = " (" + CountriesDataList[CountryName].ShortName + ")";
+                    }
+                    else
+                    {
+                        txt = " (" + CitiesList.Find(xc => xc.CityName == Job.DestinationCity).Country.First() + ")";
+                    }
+                    CountryCodeLength = Convert.ToInt32(e.Graphics.MeasureString(txt, BoldFont).Width);
+
+                    layout_rect.Width = CountryCodeLength + JobsItemMargin;
+                    layout_rect.X = e.Bounds.Right - CountryCodeLength - JobsItemMargin * 2;
+                    e.Graphics.DrawString(txt, BoldFont, br, layout_rect, format);
+                }
+
+                x = e.Bounds.Left + width + 3 * JobsItemMargin + UrgencyImg[Job.Urgency].Width;
+                layout_rect.X = x;
+                layout_rect.Width = width - CountryCodeLength;
+
+                txt = DestinationCityName;
+
+                //Draw
                 e.Graphics.DrawString(txt, this.Font, br, layout_rect, format);
 
                 //Cargo
                 // Find the area in which to put the text.
-                x = e.Bounds.Left + picture_width + 4 * JobsItemMargin;// + 32 * 2;
+                x = e.Bounds.Left + picture_width + 4 * JobsItemMargin;
                 y = e.Bounds.Top + JobsItemMargin * 2 + UrgencyImg[Job.Urgency].Height;
                 width = e.Bounds.Right - JobsItemMargin - x;
                 height = e.Bounds.Bottom - JobsItemMargin - y;
@@ -4925,6 +4983,7 @@ namespace TS_SE_Tool
                 //LngFileLoader("custom_strings.txt", CustomStringsDict, ProgSettingsV.Language);
 
                 LoadTruckBrandsLng();
+                LoadDriverNamesLng();
 
                 AddTranslationToData();
                 RefreshComboboxes();
@@ -5274,6 +5333,9 @@ namespace TS_SE_Tool
         //Get translation line
         private string GetranslatedString(string _key)
         {
+            if (_key == "")
+                return "";
+
             CultureInfo ci = Thread.CurrentThread.CurrentUICulture;
 
             try

@@ -145,7 +145,7 @@ namespace TS_SE_Tool
             }
         }
 
-        public static string FromHexToString(string _hex)
+        public string FromHexToString(string _hex)
         {
             try
             {
