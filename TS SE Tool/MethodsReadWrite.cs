@@ -21,6 +21,7 @@ using System.Data.SqlServerCe;
 using System.Threading;
 using System.Drawing;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -193,6 +194,8 @@ namespace TS_SE_Tool
 
                 for (int i = 0; i < CountryDictionaryFile.Length; i++)
                 {
+                    if (CountryDictionaryFile[i].StartsWith("#"))
+                        continue;
                     string[] csvParts = CountryDictionaryFile[i].Split(new char[] { ';' });
                     CountriesDataList.Add(csvParts[0], new Country(csvParts[0], csvParts[1], csvParts[2].Replace('.',',')));
                 }
@@ -244,16 +247,20 @@ namespace TS_SE_Tool
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
-                    string[] tmp = new string[2];
-                    try
+                    if (tempFile[i] != "" && !tempFile[i].StartsWith("["))
                     {
-                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                    }
-                    catch
-                    { }
+                        string[] tmp = new string[2];
+                        try
+                        {
+                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                        }
+                        catch
+                        { }
 
-                    if (tmp[0] != "")
-                        _destDict.Add(tmp[0], tmp[1]);
+                        if (tmp[0] != "" || tmp[1] != "")
+                            _destDict.Add(tmp[0], tmp[1]);
+                    }
+                        
                 }
             }
             catch
@@ -275,21 +282,24 @@ namespace TS_SE_Tool
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
-                    string[] tmp = new string[2];
-                    try
+                    if (tempFile[i] != "" && !tempFile[i].StartsWith("["))
                     {
-                        tmp = tempFile[i].Split(new char[] { ';' }, 2);
-                    }
-                    catch
-                    { }
+                        string[] tmp = new string[2];
+                        try
+                        {
+                            tmp = tempFile[i].Split(new char[] { ';' }, 2);
+                        }
+                        catch
+                        { }
 
-                    if (tmp[0] != null && tmp[0] != "")
-                    {
-                        if (_destDict.ContainsKey(tmp[0]))
-                            _destDict[tmp[0]] = tmp[1];
-                        else
-                            _destDict.Add(tmp[0], tmp[1]);
-                    }
+                        if (tmp[0] != null && tmp[0] != "")
+                        {
+                            if (_destDict.ContainsKey(tmp[0]))
+                                _destDict[tmp[0]] = tmp[1];
+                            else
+                                _destDict.Add(tmp[0], tmp[1]);
+                        }
+                    }                        
                 }
             }
             catch
@@ -2144,7 +2154,6 @@ namespace TS_SE_Tool
         {
             if (Directory.Exists(Directory.GetCurrentDirectory() + @"\lang"))
             {
-                //string[] langfiles = Directory.GetFiles(Directory.GetCurrentDirectory() + @"\lang", "??-??.txt");
                 string[] langfolders = Directory.GetDirectories(Directory.GetCurrentDirectory() + @"\lang","??-??", SearchOption.TopDirectoryOnly);
                 string langTag;
 
@@ -2173,9 +2182,9 @@ namespace TS_SE_Tool
                         TSitem.Name = langNameShort + "_" + countryShort + "_ToolStripMenuItemTranslation";
                         TSitem.Text = CorrectedNativeName;
 
-                        TSitem.Click += new EventHandler(toolstripChangeLanguage);//+= ChangeLanguage(TSitem,);
+                        TSitem.Click += new EventHandler(toolstripChangeLanguage);
 
-                        flagpath = folder + @"\flag.png";//Directory.GetCurrentDirectory() + @"\lang\flags\" + countryShort + ".png";
+                        flagpath = folder + @"\flag.png";
 
                         if (File.Exists(flagpath))
                         {
@@ -2187,13 +2196,47 @@ namespace TS_SE_Tool
 
                         byte[] bytes = Encoding.UTF8.GetBytes(flagpath);
                     }
-                }
+                }                
             }
             else
             {
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\lang");
             }
+
+            ArrayList oAList = new ArrayList(toolStripMenuItemLanguage.DropDownItems);
+            IComparer myComparer = new TSSETtoolstripLanguage();
+            oAList.Sort(myComparer);
+
+            toolStripMenuItemLanguage.DropDownItems.Clear();
+
+            //Button make blank folder for Culture
+            ToolStripItem TSitemBlank = new ToolStripMenuItem();
+            TSitemBlank.Name = "toolStripMenuItemTranslationCreateBlankFolder";
+            TSitemBlank.Text = "Make Blank translation for system language (" + CultureInfo.InstalledUICulture.NativeName + ")";
+
+            TSitemBlank.Click += new EventHandler(makeToolStripMenuItem_Click);
+
+            toolStripMenuItemLanguage.DropDownItems.Add(TSitemBlank);
+            //Separator
+            toolStripMenuItemLanguage.DropDownItems.Add( new ToolStripSeparator());
+
+            foreach (ToolStripItem oItem in oAList)
+            {
+                toolStripMenuItemLanguage.DropDownItems.Add(oItem);
+            }
         }
+
+        public class TSSETtoolstripLanguage : IComparer
+        {
+            int IComparer.Compare(Object x, Object y)
+            {
+                ToolStripItem oItem1 = x as ToolStripItem;
+                ToolStripItem oItem2 = y as ToolStripItem;
+
+                return ((new CaseInsensitiveComparer()).Compare(oItem1.Text, oItem2.Text));
+            }
+        }
+
         //Caching
         private void CacheGameData()
         {

@@ -28,6 +28,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Deployment.Application;
+using System.Threading;
 
 
 namespace TS_SE_Tool
@@ -257,7 +258,18 @@ namespace TS_SE_Tool
 
         private void makeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExportFormControlstoLanguageFile();
+            //Set default culture
+            string sysCI = CultureInfo.InstalledUICulture.Name;
+
+            string folderPath = Directory.GetCurrentDirectory() + @"\lang\" + sysCI;
+
+            if(!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            Process.Start(folderPath);
+
+            //Copy default files
+
         }
     }
 

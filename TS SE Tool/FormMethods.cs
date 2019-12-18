@@ -922,10 +922,18 @@ namespace TS_SE_Tool
             {
                 string AvatarPath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\avatar.png";
 
-                Bitmap Source = new Bitmap(AvatarPath);
-                Rectangle SourceRect = new Rectangle(0, 0, 95, 95);
-                Bitmap Cropped = Source.Clone(SourceRect, Source.PixelFormat);
-                pictureBoxProfileAvatar.Image = Cropped;
+                if(File.Exists(AvatarPath))
+                {
+                    Bitmap Source = new Bitmap(AvatarPath);
+                    Rectangle SourceRect = new Rectangle(0, 0, 95, 95);
+                    Bitmap Cropped = Source.Clone(SourceRect, Source.PixelFormat);
+                    pictureBoxProfileAvatar.Image = Cropped;
+                }
+                else
+                {
+                    string[] imgpaths = new string[] { @"img\unknown.dds" };
+                    pictureBoxProfileAvatar.Image = ExtImgLoader(imgpaths, 95, 95, 0, 0)[0];
+                }                
             }
             catch
             {
@@ -3294,12 +3302,12 @@ namespace TS_SE_Tool
             }
 
             combDT.DefaultView.Sort = "CountryName ASC";
-
+            //All item
             DataTable dt2 = combDT.DefaultView.ToTable();
             DataRow row1 = dt2.NewRow();
-            row1[0] = "All";
+            row1[0] = "+all";
 
-            CountriesLngDict.TryGetValue("All", out value);
+            CountriesLngDict.TryGetValue("+all", out value);
 
             if (value != null && value != "")
             {
@@ -3311,11 +3319,28 @@ namespace TS_SE_Tool
             }
 
             dt2.Rows.InsertAt(row1, 0);
+            //Unsorted item
+            row1 = dt2.NewRow();
+            row1[0] = "+unsorted";
 
+            CountriesLngDict.TryGetValue("+unsorted", out value);
+
+            if (value != null && value != "")
+            {
+                row1[1] = value;
+            }
+            else
+            {
+                row1[1] = "Unsorted";
+            }
+
+            dt2.Rows.InsertAt(row1, 1);
+
+            //Finish
             comboBoxFreightMarketCountries.ValueMember = "Country";
             comboBoxFreightMarketCountries.DisplayMember = "CountryName";
             comboBoxFreightMarketCountries.DataSource = dt2;
-            comboBoxFreightMarketCountries.SelectedValue = "All";
+            comboBoxFreightMarketCountries.SelectedValue = "+all";
         }
 
         private void comboBoxCountries_SelectedIndexChanged(object sender, EventArgs e)
@@ -3361,9 +3386,9 @@ namespace TS_SE_Tool
             sortedDT.DefaultView.Sort = "";
             
             DataRow row = sortedDT.NewRow();
-            string tvalue;
-            CompaniesLngDict.TryGetValue("All", out tvalue);
-            row.ItemArray = new object [] { "All", tvalue };
+            string tvalue = "All";
+            CompaniesLngDict.TryGetValue("+all", out tvalue);
+            row.ItemArray = new object [] { "+all", tvalue };
 
             sortedDT.Rows.InsertAt(row, 0);
             //
@@ -4035,7 +4060,7 @@ namespace TS_SE_Tool
         private void triggerDestinationCitiesUpdate()
         {
             if (comboBoxFreightMarketCompanies.SelectedIndex != -1)
-                SetupDestinationCities(!(comboBoxFreightMarketCountries.SelectedValue.ToString() == "All"), !(comboBoxFreightMarketCompanies.SelectedValue.ToString() == "All"));
+                SetupDestinationCities(!(comboBoxFreightMarketCountries.SelectedValue.ToString() == "+all"), !(comboBoxFreightMarketCompanies.SelectedValue.ToString() == "+all"));
         }
 
         private void SetupDestinationCities(bool _country_selected, bool _company_selected)
@@ -4052,46 +4077,63 @@ namespace TS_SE_Tool
 
             if (_country_selected && !checkBoxFreightMarketFilterDestination.Checked)
             {
-                cities = cities.FindAll(x => x.Country == comboBoxFreightMarketCountries.SelectedValue.ToString());
+                if(comboBoxFreightMarketCountries.SelectedValue.ToString() == "+unsorted")
+                {
+                    cities = cities.FindAll(x => x.Country == "");
+                }
+                else
+                    cities = cities.FindAll(x => x.Country == comboBoxFreightMarketCountries.SelectedValue.ToString());
             }
             else
             if (!(_country_selected || checkBoxFreightMarketFilterDestination.Checked))
             {
             }
 
-            foreach (City city in cities)
+            if (cities.Count > 0)
             {
-                List<Company> companyList = city.ReturnCompanies();
+                foreach (City city in cities)
+                {
+                    List<Company> companyList = city.ReturnCompanies();
 
-                if (!_company_selected)
-                {
-                }
-                else
-                if (_company_selected && checkBoxFreightMarketFilterDestination.Checked)
-                {
-                    companyList = companyList.FindAll(x => (x.CompanyName == comboBoxFreightMarketCompanies.SelectedValue.ToString()) && !x.Excluded);
-                }
-                else
-                if (!(_company_selected || !checkBoxFreightMarketFilterDestination.Checked))
-                {
-                    companyList = companyList.FindAll(x => !x.Excluded);
-                }
-                else
-                if (_company_selected && !checkBoxFreightMarketFilterDestination.Checked)
-                {
-                    companyList = companyList.FindAll(x => x.CompanyName == comboBoxFreightMarketCompanies.SelectedValue.ToString());
-                }
+                    if (!_company_selected)
+                    {
+                    }
+                    else
+                    if (_company_selected && checkBoxFreightMarketFilterDestination.Checked)
+                    {
+                        companyList = companyList.FindAll(x => (x.CompanyName == comboBoxFreightMarketCompanies.SelectedValue.ToString()) && !x.Excluded);
+                    }
+                    else
+                    if (!(_company_selected || !checkBoxFreightMarketFilterDestination.Checked))
+                    {
+                        companyList = companyList.FindAll(x => !x.Excluded);
+                    }
+                    else
+                    if (_company_selected && !checkBoxFreightMarketFilterDestination.Checked)
+                    {
+                        companyList = companyList.FindAll(x => x.CompanyName == comboBoxFreightMarketCompanies.SelectedValue.ToString());
+                    }
 
-                if (companyList.Count > 0)
-                {
-                    combDT.Rows.Add(city.CityName, city.CityNameTranslated);
-                    comboBoxFreightMarketDestinationCity.Enabled = true;
+                    if (companyList.Count > 0)
+                    {
+                        combDT.Rows.Add(city.CityName, city.CityNameTranslated);
+                        comboBoxFreightMarketDestinationCity.Enabled = true;
+                        comboBoxFreightMarketDestinationCompany.Enabled = true;
+                    }
+                    else
+                    {
+                        comboBoxFreightMarketDestinationCity.Enabled = false;
+                    }
                 }
-                else
-                {
-                    comboBoxFreightMarketDestinationCity.Enabled = false;
-                }
+                //comboBoxFreightMarketDestinationCity.Enabled = true;
             }
+            else
+            {
+                comboBoxFreightMarketDestinationCity.Text = "";
+                comboBoxFreightMarketDestinationCity.Enabled = false;
+                comboBoxFreightMarketDestinationCompany.Text = "";
+                comboBoxFreightMarketDestinationCompany.Enabled = false;
+            }                
 
             combDT.DefaultView.Sort = "CityName ASC";
 
@@ -4113,7 +4155,7 @@ namespace TS_SE_Tool
         //Destination companies
         private void triggerDestinationCompaniesUpdate()
         {
-            SetupDestinationCompanies(!(comboBoxFreightMarketCompanies.SelectedValue.ToString() == "All"));
+            SetupDestinationCompanies(!(comboBoxFreightMarketCompanies.SelectedValue.ToString() == "+all"));
         }
 
         private void SetupDestinationCompanies(bool _company_selected)
@@ -4302,8 +4344,8 @@ namespace TS_SE_Tool
             buttonFreightMarketCancelJobEdit.Visible = true;
             buttonFreightMarketCancelJobEdit.Enabled = true;
 
-            comboBoxFreightMarketCountries.SelectedValue = "All";
-            comboBoxFreightMarketCompanies.SelectedValue = "All";
+            comboBoxFreightMarketCountries.SelectedValue = "+all";
+            comboBoxFreightMarketCompanies.SelectedValue = "+all";
 
             FreightMarketJob = (JobAdded)listBoxFreightMarketAddedJobs.SelectedItem;
 
@@ -5002,7 +5044,6 @@ namespace TS_SE_Tool
             {
                 try
                 {
-
                     string translatedString = _rm.GetString(c.Name.TrimEnd(charsToTrim), _ci);
                     if (translatedString != null)
                         c.Text = translatedString;
@@ -5107,8 +5148,8 @@ namespace TS_SE_Tool
                 dv.Sort = "CountryName ASC";
                 sortedDT = dv.ToTable();
                 sortedDT.DefaultView.Sort = "";
-
-                DataRow sourceRow = sortedDT.Select("Country = 'All'")[0];
+                //Shift All
+                DataRow sourceRow = sortedDT.Select("Country = '+all'")[0];
                 int rowi = sortedDT.Rows.IndexOf(sourceRow);
 
                 DataRow row = sortedDT.NewRow();
@@ -5116,6 +5157,15 @@ namespace TS_SE_Tool
 
                 sortedDT.Rows.RemoveAt(rowi);
                 sortedDT.Rows.InsertAt(row, 0);
+                //Shift Unsorted
+                sourceRow = sortedDT.Select("Country = '+unsorted'")[0];
+                rowi = sortedDT.Rows.IndexOf(sourceRow);
+
+                row = sortedDT.NewRow();
+                row.ItemArray = sourceRow.ItemArray;
+
+                sortedDT.Rows.RemoveAt(rowi);
+                sortedDT.Rows.InsertAt(row, 1);
 
 
                 comboBoxFreightMarketCountries.DataSource = sortedDT;
@@ -5123,7 +5173,7 @@ namespace TS_SE_Tool
                 if (savedindex != -1)
                     comboBoxFreightMarketCountries.SelectedValue = savedvalue;
                 else
-                    comboBoxFreightMarketCountries.SelectedValue = "All";
+                    comboBoxFreightMarketCountries.SelectedValue = "+all";
 
                 comboBoxFreightMarketCountries.SelectedIndexChanged += comboBoxCountries_SelectedIndexChanged;
             }
@@ -5163,7 +5213,7 @@ namespace TS_SE_Tool
                 sortedDT = dv.ToTable();
                 sortedDT.DefaultView.Sort = "";
 
-                DataRow sourceRow = sortedDT.Select("Company = 'All'")[0];
+                DataRow sourceRow = sortedDT.Select("Company = '+all'")[0];
                 int rowi = sortedDT.Rows.IndexOf(sourceRow);
 
                 DataRow row = sortedDT.NewRow();
@@ -5178,7 +5228,7 @@ namespace TS_SE_Tool
                 if (savedindex != -1)
                     comboBoxFreightMarketCompanies.SelectedValue = savedvalue;
                 else
-                    comboBoxFreightMarketCompanies.SelectedValue = "All";
+                    comboBoxFreightMarketCompanies.SelectedValue = "+all";
 
                 comboBoxFreightMarketCompanies.SelectedIndexChanged += comboBoxCompanies_SelectedIndexChanged;
             }

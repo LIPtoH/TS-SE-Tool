@@ -84,7 +84,7 @@ namespace TS_SE_Tool
 
                                 if (_resultvalue != null && _resultvalue != "")
                                 {
-                                    DriverName = _resultvalue;
+                                    DriverName = _resultvalue.TrimStart(new char[] { '+'});
                                 }
                             }
 

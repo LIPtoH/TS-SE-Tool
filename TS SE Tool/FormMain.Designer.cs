@@ -35,8 +35,6 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemLanguage = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemCreateTrFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -293,26 +291,9 @@
             // 
             // toolStripMenuItemLanguage
             // 
-            this.toolStripMenuItemLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemCreateTrFile,
-            this.toolStripSeparator2});
             this.toolStripMenuItemLanguage.Name = "toolStripMenuItemLanguage";
             this.toolStripMenuItemLanguage.Size = new System.Drawing.Size(71, 20);
             this.toolStripMenuItemLanguage.Text = "Language";
-            // 
-            // toolStripMenuItemCreateTrFile
-            // 
-            this.toolStripMenuItemCreateTrFile.Name = "toolStripMenuItemCreateTrFile";
-            this.toolStripMenuItemCreateTrFile.Size = new System.Drawing.Size(162, 22);
-            this.toolStripMenuItemCreateTrFile.Text = "Make translation";
-            this.toolStripMenuItemCreateTrFile.Visible = false;
-            this.toolStripMenuItemCreateTrFile.Click += new System.EventHandler(this.makeToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
-            this.toolStripSeparator2.Visible = false;
             // 
             // toolStripMenuItemHelp
             // 
@@ -2429,13 +2410,11 @@
         private System.Windows.Forms.Button buttonPlayerLevelMinimum;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSettings;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCreateTrFile;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.Label labelExperienceNxtLvlThreshhold;
         private System.Windows.Forms.ComboBox comboBoxUserTruckCompanyTrucks;
         private System.Windows.Forms.Button buttonUserTruckSwitchCurrent;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.GroupBox groupBoxUserTruckTruckDetails;
         private System.Windows.Forms.Button buttonUserTruckSelectCurrent;
         private System.Windows.Forms.Panel panelPlayerLevel;

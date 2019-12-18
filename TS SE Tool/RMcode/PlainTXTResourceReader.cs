@@ -52,7 +52,7 @@ namespace TS_SE_Tool
 
                     if (line != "" && !line.StartsWith("["))
                     {
-                        linechunk = line.Split(new char[] { '=' }, 2);
+                        linechunk = line.Split(new char[] { ';' }, 2);
                         dict.Add(linechunk[0], linechunk[1]);
                     }
                 }
@@ -74,7 +74,7 @@ namespace TS_SE_Tool
 
                     if (line != "" && !line.StartsWith("["))
                     {
-                        linechunk = line.Split(new char[] { '=' }, 2);
+                        linechunk = line.Split(new char[] { ';' }, 2);
                         //dict.Add(linechunk[0], linechunk[1]);
                         if (dict.ContainsKey(linechunk[0]))
                             dict[linechunk[0]] = linechunk[1];

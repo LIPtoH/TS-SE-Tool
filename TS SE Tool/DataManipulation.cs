@@ -3444,6 +3444,10 @@ namespace TS_SE_Tool
             {
                 SqlCeConnection tDBconnection;
                 string _fileName = Directory.GetCurrentDirectory() + @"\gameref\cache\" + GameType + "\\" + _dbname + ".sdf";
+
+                if (!File.Exists(_fileName))
+                    return;
+
                 tDBconnection = new SqlCeConnection("Data Source = " + _fileName + ";");
 
                 if (tDBconnection.State == ConnectionState.Closed)
