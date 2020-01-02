@@ -25,12 +25,17 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
 using System.Threading;
+using System.Net;
+using System.Net.Mime;
 
 namespace TS_SE_Tool
 {
     public partial class FormSplash : Form
     {
+        string NewVersion = "";
+        bool NVavailible = false;
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+
         public FormSplash()
         {
             InitializeComponent();
@@ -44,12 +49,11 @@ namespace TS_SE_Tool
                 labelVersion.Text = String.Format(translatedString, AssemblyVersion);
             else
                 labelVersion.Text = String.Format("{0} (alpha)", AssemblyVersion);
-
         }
 
         private void FormSplash_Load(object sender, EventArgs e)
         {
-
+            CheckLatestVersion();
         }
 
         private void linkFirst_Click(object sender, EventArgs e)
@@ -64,6 +68,11 @@ namespace TS_SE_Tool
             System.Diagnostics.Process.Start(url);
         }
 
+        private void linkLabelNewVersion_Click(object sender, EventArgs e)
+        {
+            string url = "https://rebrand.ly/TS-SET-Download";
+            System.Diagnostics.Process.Start(url);
+        }
 
         private void linkLabelHelpLocalPDF_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -107,5 +116,68 @@ namespace TS_SE_Tool
                 return ((AssemblyProductAttribute)attributes[0]).Product;
             }
         }
+
+        public string GetFilename(string url)
+        {
+            string result = null;
+
+            using (WebClient client = new WebClient())
+            {
+                try
+                {
+                    client.OpenRead(url);
+
+                    string header_contentDisposition = client.ResponseHeaders["content-disposition"];
+                    result = new ContentDisposition(header_contentDisposition).FileName;
+                }
+                catch { }
+            }
+
+            return result;
+        }
+        
+        private async void CheckLatestVersion()
+        {
+            button1.Text = "Checking for updates";
+            await Task.Run(() => Check());
+
+            if (NVavailible)
+            {
+                bool betterVersion = false;
+                string[] numArr = NewVersion.Split(new char[] { '.' });
+                string[] currArr = AssemblyVersion.Split(new char[] { '.' });
+
+                for (byte i = 0; i < numArr.Length; i++)
+                {
+                    if (byte.Parse(numArr[i]) > byte.Parse(currArr[i]))
+                    {
+                        betterVersion = true;
+                        break;
+                    }
+                }
+
+                if (betterVersion)
+                {
+                    tableLayoutPanel2.RowStyles[3] = new RowStyle(SizeType.Absolute, 30F);
+                    linkLabelNewVersion.Text = String.Format("New version {0} available", NewVersion);
+                    linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+                }
+            }
+
+            button1.Click += new EventHandler(this.button1_Click);
+            button1.Text = "OK";
+        }
+
+        private void Check()
+        {
+            string newversion = GetFilename("https://rebrand.ly/TS-SET-Download");
+
+            if (newversion != null && !newversion.Contains(AssemblyVersion))
+            {
+                NVavailible = true;
+                NewVersion = newversion.Replace("TS.SE.Tool.", "").Replace(".zip", "");
+            }
+        }
     }
 }
+

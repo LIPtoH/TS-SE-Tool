@@ -34,19 +34,20 @@
             this.labelTSSE = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.labelDownloadDescription = new System.Windows.Forms.Label();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.labelor = new System.Windows.Forms.Label();
+            this.linkSecond = new System.Windows.Forms.LinkLabel();
+            this.linkFirst = new System.Windows.Forms.LinkLabel();
+            this.labelHowtoDescription = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.linkLabelHelpLocalPDF = new System.Windows.Forms.LinkLabel();
             this.linkLabelHelpYouTube = new System.Windows.Forms.LinkLabel();
             this.labelor2 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelor = new System.Windows.Forms.Label();
-            this.linkFirst = new System.Windows.Forms.LinkLabel();
-            this.linkSecond = new System.Windows.Forms.LinkLabel();
-            this.labelHowtoDescription = new System.Windows.Forms.Label();
+            this.linkLabelNewVersion = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -61,20 +62,19 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 81.25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 274);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 290);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(10, 232);
+            this.button1.Location = new System.Drawing.Point(10, 245);
             this.button1.Margin = new System.Windows.Forms.Padding(10);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(240, 32);
+            this.button1.Size = new System.Drawing.Size(240, 35);
             this.button1.TabIndex = 0;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -82,25 +82,27 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.labelTSSE, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.labelVersion, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.labelDownloadDescription, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 7);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 4);
-            this.tableLayoutPanel2.Controls.Add(this.labelHowtoDescription, 0, 6);
+            this.tableLayoutPanel2.Controls.Add(this.labelDownloadDescription, 0, 4);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 5);
+            this.tableLayoutPanel2.Controls.Add(this.labelHowtoDescription, 0, 7);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 8);
+            this.tableLayoutPanel2.Controls.Add(this.linkLabelNewVersion, 0, 3);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 9;
+            this.tableLayoutPanel2.RowCount = 10;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(260, 222);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(260, 235);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // labelTSSE
@@ -136,6 +138,70 @@
             this.labelDownloadDescription.TabIndex = 2;
             this.labelDownloadDescription.Text = "You can download latest version from";
             this.labelDownloadDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 3;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel4.Controls.Add(this.labelor, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.linkSecond, 2, 0);
+            this.tableLayoutPanel4.Controls.Add(this.linkFirst, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 103);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(254, 24);
+            this.tableLayoutPanel4.TabIndex = 8;
+            // 
+            // labelor
+            // 
+            this.labelor.AutoSize = true;
+            this.labelor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelor.Location = new System.Drawing.Point(104, 0);
+            this.labelor.Name = "labelor";
+            this.labelor.Size = new System.Drawing.Size(44, 24);
+            this.labelor.TabIndex = 5;
+            this.labelor.Text = "or";
+            this.labelor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // linkSecond
+            // 
+            this.linkSecond.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkSecond.Location = new System.Drawing.Point(154, 0);
+            this.linkSecond.Name = "linkSecond";
+            this.linkSecond.Size = new System.Drawing.Size(97, 24);
+            this.linkSecond.TabIndex = 4;
+            this.linkSecond.TabStop = true;
+            this.linkSecond.Text = "TruckersMP Forum";
+            this.linkSecond.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkSecond.Click += new System.EventHandler(this.linkSecond_Click);
+            // 
+            // linkFirst
+            // 
+            this.linkFirst.AutoSize = true;
+            this.linkFirst.Dock = System.Windows.Forms.DockStyle.Right;
+            this.linkFirst.Location = new System.Drawing.Point(38, 0);
+            this.linkFirst.Name = "linkFirst";
+            this.linkFirst.Size = new System.Drawing.Size(60, 24);
+            this.linkFirst.TabIndex = 3;
+            this.linkFirst.TabStop = true;
+            this.linkFirst.Text = "SCS Forum";
+            this.linkFirst.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkFirst.Click += new System.EventHandler(this.linkFirst_Click);
+            // 
+            // labelHowtoDescription
+            // 
+            this.labelHowtoDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelHowtoDescription.AutoSize = true;
+            this.labelHowtoDescription.Location = new System.Drawing.Point(3, 154);
+            this.labelHowtoDescription.Name = "labelHowtoDescription";
+            this.labelHowtoDescription.Size = new System.Drawing.Size(254, 13);
+            this.labelHowtoDescription.TabIndex = 6;
+            this.labelHowtoDescription.Text = "How to use it";
+            this.labelHowtoDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel3
             // 
@@ -188,75 +254,22 @@
             this.labelor2.Text = "or";
             this.labelor2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tableLayoutPanel4
+            // linkLabelNewVersion
             // 
-            this.tableLayoutPanel4.ColumnCount = 3;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel4.Controls.Add(this.labelor, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.linkSecond, 2, 0);
-            this.tableLayoutPanel4.Controls.Add(this.linkFirst, 0, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 103);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(254, 24);
-            this.tableLayoutPanel4.TabIndex = 8;
-            // 
-            // labelor
-            // 
-            this.labelor.AutoSize = true;
-            this.labelor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelor.Location = new System.Drawing.Point(104, 0);
-            this.labelor.Name = "labelor";
-            this.labelor.Size = new System.Drawing.Size(44, 24);
-            this.labelor.TabIndex = 5;
-            this.labelor.Text = "or";
-            this.labelor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // linkFirst
-            // 
-            this.linkFirst.AutoSize = true;
-            this.linkFirst.Dock = System.Windows.Forms.DockStyle.Right;
-            this.linkFirst.Location = new System.Drawing.Point(38, 0);
-            this.linkFirst.Name = "linkFirst";
-            this.linkFirst.Size = new System.Drawing.Size(60, 24);
-            this.linkFirst.TabIndex = 3;
-            this.linkFirst.TabStop = true;
-            this.linkFirst.Text = "SCS Forum";
-            this.linkFirst.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkFirst.Click += new System.EventHandler(this.linkFirst_Click);
-            // 
-            // linkSecond
-            // 
-            this.linkSecond.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkSecond.Location = new System.Drawing.Point(154, 0);
-            this.linkSecond.Name = "linkSecond";
-            this.linkSecond.Size = new System.Drawing.Size(97, 24);
-            this.linkSecond.TabIndex = 4;
-            this.linkSecond.TabStop = true;
-            this.linkSecond.Text = "TruckersMP Forum";
-            this.linkSecond.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkSecond.Click += new System.EventHandler(this.linkSecond_Click);
-            // 
-            // labelHowtoDescription
-            // 
-            this.labelHowtoDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelHowtoDescription.AutoSize = true;
-            this.labelHowtoDescription.Location = new System.Drawing.Point(3, 154);
-            this.labelHowtoDescription.Name = "labelHowtoDescription";
-            this.labelHowtoDescription.Size = new System.Drawing.Size(254, 13);
-            this.labelHowtoDescription.TabIndex = 6;
-            this.labelHowtoDescription.Text = "How to use it";
-            this.labelHowtoDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabelNewVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabelNewVersion.AutoSize = true;
+            this.linkLabelNewVersion.Location = new System.Drawing.Point(3, 70);
+            this.linkLabelNewVersion.Name = "linkLabelNewVersion";
+            this.linkLabelNewVersion.Size = new System.Drawing.Size(254, 1);
+            this.linkLabelNewVersion.TabIndex = 9;
+            this.linkLabelNewVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabelNewVersion.Click += new System.EventHandler(this.linkLabelNewVersion_Click);
             // 
             // FormSplash
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(260, 274);
+            this.ClientSize = new System.Drawing.Size(260, 290);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -268,10 +281,10 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -293,5 +306,6 @@
         private System.Windows.Forms.LinkLabel linkLabelHelpYouTube;
         private System.Windows.Forms.Label labelor2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.LinkLabel linkLabelNewVersion;
     }
 }

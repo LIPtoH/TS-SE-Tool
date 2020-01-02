@@ -3409,6 +3409,11 @@ namespace TS_SE_Tool
             DataColumn dc = new DataColumn("City", typeof(string));
             combDT.Columns.Add(dc);
 
+            var keys = new DataColumn[1];
+            keys[0] = dc;
+            // Set the PrimaryKeys property to the array.
+            combDT.PrimaryKey = keys;
+
             dc = new DataColumn("CityName", typeof(string));
             combDT.Columns.Add(dc);
 
@@ -3425,8 +3430,9 @@ namespace TS_SE_Tool
             comboBoxFreightMarketSourceCity.DisplayMember = "CityName";
             comboBoxFreightMarketSourceCity.DataSource = combDT;
             //end filling
-
-            comboBoxFreightMarketSourceCity.SelectedValue = LastVisitedCity;
+            DataRow foundRow = combDT.Rows.Find(new object[1] { LastVisitedCity });
+            if (combDT.Rows.Find(new object[1] { LastVisitedCity }) != null)
+                comboBoxFreightMarketSourceCity.SelectedValue = LastVisitedCity;
             //end
         }
         //Cargo list
@@ -3989,6 +3995,9 @@ namespace TS_SE_Tool
         //Source city
         private void comboBoxSourceCity_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (comboBoxFreightMarketSourceCity.SelectedValue == null)
+                return;
+
             string _sourceCityName = comboBoxFreightMarketSourceCity.SelectedValue.ToString();
 
             comboBoxFreightMarketSourceCompany.SelectedIndex = -1;
