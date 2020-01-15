@@ -13,6 +13,21 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -149,25 +164,31 @@
     <Compile Include="DataManipulation.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormColorPicker.cs">
+    <Compile Include="Forms\FormCheckUpdates.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormConvoyControlPositions.cs">
+    <Compile Include="Forms\FormCheckUpdates.Designer.cs">
+      <DependentUpon>FormCheckUpdates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormColorPicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormConvoyControlPositions.Designer.cs">
+    <Compile Include="Forms\FormConvoyControlPositions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormConvoyControlPositions.Designer.cs">
       <DependentUpon>FormConvoyControlPositions.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormGaragesSoldContent.cs">
+    <Compile Include="Forms\FormGaragesSoldContent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormGaragesSoldContent.Designer.cs">
+    <Compile Include="Forms\FormGaragesSoldContent.Designer.cs">
       <DependentUpon>FormGaragesSoldContent.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormAddCustomFolder.cs">
+    <Compile Include="Forms\FormAddCustomFolder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormAddCustomFolder.Designer.cs">
+    <Compile Include="Forms\FormAddCustomFolder.Designer.cs">
       <DependentUpon>FormAddCustomFolder.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain.cs">
@@ -179,22 +200,28 @@
     <Compile Include="FormMethods.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSettings.cs">
+    <Compile Include="Forms\FormProgramSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSettings.designer.cs">
+    <Compile Include="Forms\FormProgramSettings.Designer.cs">
+      <DependentUpon>FormProgramSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSettings.designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormShareUserColors.cs">
+    <Compile Include="Forms\FormShareUserColors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormShareUserColors.Designer.cs">
+    <Compile Include="Forms\FormShareUserColors.Designer.cs">
       <DependentUpon>FormShareUserColors.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormSplash.cs">
+    <Compile Include="Forms\FormSplash.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSplash.Designer.cs">
+    <Compile Include="Forms\FormSplash.Designer.cs">
       <DependentUpon>FormSplash.cs</DependentUpon>
     </Compile>
     <Compile Include="MethodsDecodeSave.cs">
@@ -211,28 +238,34 @@
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormAddCustomFolder.resx">
+    <EmbeddedResource Include="Forms\FormCheckUpdates.resx">
+      <DependentUpon>FormCheckUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddCustomFolder.resx">
       <DependentUpon>FormAddCustomFolder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormColorPicker.resx">
+    <EmbeddedResource Include="Forms\FormColorPicker.resx">
       <DependentUpon>FormColorPicker.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormConvoyControlPositions.resx">
+    <EmbeddedResource Include="Forms\FormConvoyControlPositions.resx">
       <DependentUpon>FormConvoyControlPositions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormGaragesSoldContent.resx">
+    <EmbeddedResource Include="Forms\FormGaragesSoldContent.resx">
       <DependentUpon>FormGaragesSoldContent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSettings.resx">
+    <EmbeddedResource Include="Forms\FormProgramSettings.resx">
+      <DependentUpon>FormProgramSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormShareUserColors.resx">
+    <EmbeddedResource Include="Forms\FormShareUserColors.resx">
       <DependentUpon>FormShareUserColors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSplash.resx">
+    <EmbeddedResource Include="Forms\FormSplash.resx">
       <DependentUpon>FormSplash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -270,6 +303,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(TargetDir)libs\x86\" md "$(TargetDir)libs\x86\"
@@ -277,7 +322,7 @@ xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\Nativ
 if not exist "$(TargetDir)libs\amd64\" md "$(TargetDir)libs\amd64\"
 xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)libs\amd64\"
 
-ROBOCOPY "$(TargetDir) " "$(TargetDir)libs\ " /XF *.exe *.sdf *.config *.manifest *.cfg *.csv *.log *.pdb *.pdf  /XD gameref img libs logs lang dbs /E /IS /MOVE
+ROBOCOPY "$(TargetDir) " "$(TargetDir)libs\ " /XF *.exe *.sdf *.config *.manifest *.cfg *.csv *.log *.pdb *.pdf  /XD gameref img libs logs lang dbs updater /E /IS /MOVE
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
 </Project>

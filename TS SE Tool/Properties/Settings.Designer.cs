@@ -22,5 +22,29 @@ namespace TS_SE_Tool.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowSplashOnStartup {
+            get {
+                return ((bool)(this["ShowSplashOnStartup"]));
+            }
+            set {
+                this["ShowSplashOnStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CheckUpdatesOnStartup {
+            get {
+                return ((bool)(this["CheckUpdatesOnStartup"]));
+            }
+            set {
+                this["CheckUpdatesOnStartup"] = value;
+            }
+        }
     }
 }

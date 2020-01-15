@@ -206,6 +206,7 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.programSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -263,6 +264,7 @@
             // toolStripMenuItemProgram
             // 
             this.toolStripMenuItemProgram.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.programSettingsToolStripMenuItem,
             this.toolStripMenuItemSettings,
             this.toolStripSeparator1,
             this.toolStripMenuItemExit});
@@ -273,19 +275,19 @@
             // toolStripMenuItemSettings
             // 
             this.toolStripMenuItemSettings.Name = "toolStripMenuItemSettings";
-            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(116, 22);
+            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemSettings.Text = "Settings";
             this.toolStripMenuItemSettings.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(116, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -395,6 +397,7 @@
             // comboBoxProfiles
             // 
             this.comboBoxProfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProfiles.Enabled = false;
             this.comboBoxProfiles.FormattingEnabled = true;
             this.comboBoxProfiles.Location = new System.Drawing.Point(6, 133);
             this.comboBoxProfiles.Name = "comboBoxProfiles";
@@ -416,6 +419,7 @@
             // comboBoxSaves
             // 
             this.comboBoxSaves.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSaves.Enabled = false;
             this.comboBoxSaves.FormattingEnabled = true;
             this.comboBoxSaves.Location = new System.Drawing.Point(6, 160);
             this.comboBoxSaves.Name = "comboBoxSaves";
@@ -427,6 +431,7 @@
             // buttonMainDecryptSave
             // 
             this.buttonMainDecryptSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMainDecryptSave.Enabled = false;
             this.buttonMainDecryptSave.Location = new System.Drawing.Point(3, 3);
             this.buttonMainDecryptSave.Name = "buttonMainDecryptSave";
             this.buttonMainDecryptSave.Size = new System.Drawing.Size(116, 39);
@@ -2043,6 +2048,7 @@
             // buttonProfilesAndSavesOpenSaveFolder
             // 
             this.buttonProfilesAndSavesOpenSaveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
             this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(6, 187);
             this.buttonProfilesAndSavesOpenSaveFolder.Name = "buttonProfilesAndSavesOpenSaveFolder";
             this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(226, 41);
@@ -2083,6 +2089,7 @@
             // buttonMainLoadSave
             // 
             this.buttonMainLoadSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMainLoadSave.Enabled = false;
             this.buttonMainLoadSave.Location = new System.Drawing.Point(125, 3);
             this.buttonMainLoadSave.Name = "buttonMainLoadSave";
             this.buttonMainLoadSave.Size = new System.Drawing.Size(116, 39);
@@ -2118,6 +2125,7 @@
             // 
             this.comboBoxPrevProfiles.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxPrevProfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPrevProfiles.Enabled = false;
             this.comboBoxPrevProfiles.FormattingEnabled = true;
             this.comboBoxPrevProfiles.Location = new System.Drawing.Point(6, 106);
             this.comboBoxPrevProfiles.Name = "comboBoxPrevProfiles";
@@ -2266,6 +2274,13 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 45);
             this.tableLayoutPanel11.TabIndex = 22;
+            // 
+            // programSettingsToolStripMenuItem
+            // 
+            this.programSettingsToolStripMenuItem.Name = "programSettingsToolStripMenuItem";
+            this.programSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.programSettingsToolStripMenuItem.Text = "Program settings";
+            this.programSettingsToolStripMenuItem.Click += new System.EventHandler(this.programSettingsToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -2519,6 +2534,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem latestStableToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem programSettingsToolStripMenuItem;
     }
 }
 

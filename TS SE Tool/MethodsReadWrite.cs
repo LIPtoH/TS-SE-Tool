@@ -1072,6 +1072,7 @@ namespace TS_SE_Tool
                 PrepareGarages();
                 PrepareDriversTrucks();
                 PrepareVisitedCities();
+                PrintAddedJobs();
 
                 File.WriteAllText(SiiSavePath, tempSavefileInMemory[0] + "\r\n");
 

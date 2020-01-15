@@ -1867,9 +1867,63 @@ namespace TS_SE_Tool
             }
         }
 
+        private void PrintAddedJobs()
+        {
+            foreach (JobAdded tempJobData in AddedJobsList)
+            {
+                string SourceCityName = CitiesList.Find(x => x.CityName == tempJobData.SourceCity).CityNameTranslated;
+                string SourceCompanyName = tempJobData.SourceCompany;
+                CompaniesLngDict.TryGetValue(SourceCompanyName, out SourceCompanyName);
+
+                string DestinationCityName = CitiesList.Find(x => x.CityName == tempJobData.DestinationCity).CityNameTranslated;
+                string DestinationCompanyName = tempJobData.DestinationCompany;
+                CompaniesLngDict.TryGetValue(DestinationCompanyName, out DestinationCompanyName);
+
+                #region WriteLog
+                //Write log
+                string jobdata = "", tempStr = "";
+
+                jobdata += "\r\nLoad of " + tempJobData.Cargo;
+                jobdata += " of " + tempJobData.UnitsCount + " units";
+
+                if (tempJobData.Type == 0)
+                    tempStr = "Normal";
+                else if (tempJobData.Type == 1)
+                    tempStr = "Heavy";
+                else if (tempJobData.Type == 2)
+                    tempStr = "Double";
+
+                jobdata += "\r\nIn " + tempStr + " trailer ";
+                jobdata += tempJobData.TrailerDefinition;
+                jobdata += " with " + tempJobData.TrailerVariant + " appearance";
+
+                tempStr = FreightMarketJob.Urgency.ToString();
+
+                if (UrgencyLngDict.TryGetValue(tempStr, out string value))                
+                    if (value != null && value != "")                    
+                        tempStr = value;
+
+                jobdata += "\r\nUrgency " + tempStr;
+                jobdata += "\r\nMinimum travel distance of " + tempJobData.Distance + " km ";
+                jobdata += "in " + tempJobData.CompanyTruck;
+                jobdata += "\r\nJob valid for " + (tempJobData.ExpirationTime - InGameTime) + " minutes";
+
+                if (tempJobData.Ferrytime > 0 || tempJobData.Ferryprice > 0)
+                {
+                    jobdata += "\r\nExtra time on ferry - " + tempJobData.Ferrytime;
+                    jobdata += "and it will cost " + tempJobData.Ferryprice;
+                }
+
+                LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName +
+                    "\r\n-----------" + jobdata + "\r\n-----------");
+
+                #endregion
+            }
+        }
+
         private void AddCargo(bool JobEditing )
         {
-            if ((((comboBoxFreightMarketSourceCity.SelectedIndex < 0) || (comboBoxFreightMarketSourceCompany.SelectedIndex < 0)) || ((comboBoxFreightMarketDestinationCity.SelectedIndex < 0) || (comboBoxFreightMarketDestinationCompany.SelectedIndex < 0))) || (comboBoxFreightMarketCargoList.SelectedIndex < 0) || comboBoxFreightMarketUrgency.SelectedIndex < 0)
+            if (comboBoxFreightMarketSourceCity.SelectedIndex < 0 || comboBoxFreightMarketSourceCompany.SelectedIndex < 0 || comboBoxFreightMarketDestinationCity.SelectedIndex < 0 || comboBoxFreightMarketDestinationCompany.SelectedIndex < 0 || comboBoxFreightMarketCargoList.SelectedIndex < 0 || comboBoxFreightMarketUrgency.SelectedIndex < 0 || comboBoxFreightMarketTrailerDef.SelectedIndex < 0 || comboBoxFreightMarketTrailerVariant.SelectedIndex < 0)
             {
                 LogWriter("Missing selection of Source, Destination or Cargo settings");
                 ShowStatusMessages("e", "error_job_parameters_not_filled");
@@ -1878,6 +1932,7 @@ namespace TS_SE_Tool
             {
                 ShowStatusMessages("i", "");
 
+                #region SetupVariables
                 //Getting data from form controls
                 string SourceCity = comboBoxFreightMarketSourceCity.SelectedValue.ToString();
                 string SourceCompany = comboBoxFreightMarketSourceCompany.SelectedValue.ToString();
@@ -1899,24 +1954,11 @@ namespace TS_SE_Tool
                 string distance = route[4];
                 string FerryTime = route[5];
                 string FerryPrice = route[6];
-                
                 //Setting proper ferry time
                 if (FerryTime == "-1")
                 {
                     FerryTime = "0";
                 }
-                //Settign start point for loopback route
-                if (JobsAmountAdded == 0)
-                {
-                    LoopStartCity = SourceCity;
-                    LoopStartCompany = SourceCompany;
-                }
-                //Tracking total amount of jobs added
-                JobsAmountAdded++;
-                
-                // Prepairing structures
-                Array.Resize(ref EconomyEventUnitLinkStringList, JobsAmountAdded);
-                EconomyEventUnitLinkStringList[JobsAmountAdded - 1] = " unit_link: company.volatile." + SourceCompany + "." + SourceCity;
 
                 //local variables
                 int CargoType = -1, UnitsCount = 1;
@@ -1926,7 +1968,7 @@ namespace TS_SE_Tool
                 DataTable TrailerDefDTs = ((DataTable)comboBoxFreightMarketTrailerDef.DataSource).DefaultView.ToTable();
                 CargoType = int.Parse(TrailerDefDTs.Rows[comboBoxFreightMarketTrailerDef.SelectedIndex]["CargoType"].ToString());
                 UnitsCount = int.Parse(TrailerDefDTs.Rows[comboBoxFreightMarketTrailerDef.SelectedIndex]["UnitsCount"].ToString());
-
+                //Company truck for QJ
                 List <CompanyTruck> CompanyTruckType = CompanyTruckListDB.Where(x => x.Type == CargoType).ToList();
                 TruckName = CompanyTruckType[RandomValue.Next(CompanyTruckType.Count())].TruckName;
                 
@@ -1940,123 +1982,35 @@ namespace TS_SE_Tool
                 }
                 //Time untill job expires
                 int ExpirationTime = InGameTime + RandomValue.Next(180, 1800) + (JobsAmountAdded * ProgSettingsV.JobPickupTime * 60);
+                #endregion
+
                 //Creating Job data
                 JobAdded tempJobData = new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType, 
                     UnitsCount, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice), ExpirationTime, TruckName, TrailerVariant, TrailerDefinition);
+                
+                //Settign start point for loopback route
+                if (JobsAmountAdded == 0)
+                {
+                    LoopStartCity = SourceCity;
+                    LoopStartCompany = SourceCompany;
+                }
 
                 //Add Job data to program storage
                 string companyNameJob = "company : company.volatile." + SourceCompany + "." + SourceCity + " {";
 
-                if (AddedJobsDictionary.ContainsKey(companyNameJob))
-                    AddedJobsDictionary[companyNameJob].Add(tempJobData);
-                else
-                    AddedJobsDictionary.Add(companyNameJob, new List<JobAdded> { tempJobData });
-
-                string jobdata = "", tempStr = "";
-
-                if (JobEditing)
-                {
-                    companyNameJob = "company : company.volatile." + FreightMarketJob.SourceCompany + "." + FreightMarketJob.SourceCity + " {";
-                    AddedJobsDictionary[companyNameJob].Remove(FreightMarketJob);
-                    if (AddedJobsDictionary[companyNameJob].Count == 0)
-                        AddedJobsDictionary.Remove(companyNameJob);
-
-                    //Add Job data to Listbox
-                    listBoxFreightMarketAddedJobs.Items[listBoxFreightMarketAddedJobs.SelectedIndex] = tempJobData;
-
-                    jobdata += "\r\nLoad of " + FreightMarketJob.Cargo;
-                    jobdata += " of " + FreightMarketJob.UnitsCount + " units";
-                    
-                    if (FreightMarketJob.Type == 0)
-                        tempStr = "Normal";
-                    else if (FreightMarketJob.Type == 1)
-                        tempStr = "Heavy";
-                    else if (FreightMarketJob.Type == 2)
-                        tempStr = "Double";
-
-                    jobdata += "\r\nIn " + tempStr + " trailer ";
-                    jobdata += FreightMarketJob.TrailerDefinition;
-                    jobdata += " with " + FreightMarketJob.TrailerVariant + " appearance";
-
-                    tempStr = FreightMarketJob.Urgency.ToString();
-
-                    if (UrgencyLngDict.TryGetValue(tempStr, out string value))
-                    {
-                        if (value != null && value != "")
-                        {
-                            tempStr = value;
-                        }
-                    }
-
-                    jobdata += "\r\nUrgency " + tempStr;
-                    jobdata += "\r\nMinimum travel distance of " + FreightMarketJob.Distance + " km ";
-                    jobdata += "in " + FreightMarketJob.CompanyTruck;
-                    jobdata += "\r\nJob valid for " + (FreightMarketJob.ExpirationTime - InGameTime) + " minutes";
-                    if (FreightMarketJob.Ferrytime > 0 || FreightMarketJob.Ferryprice > 0)
-                    {
-                        jobdata += "\r\nExtra time on ferry - " + FreightMarketJob.Ferrytime;
-                        jobdata += "and it will cost " + FreightMarketJob.Ferryprice;
-                    }
-
-                    LogWriter("Edited Job:" + FreightMarketJob.SourceCity + " | " + FreightMarketJob.SourceCompany + " To " + FreightMarketJob.DestinationCity + " | " + FreightMarketJob.DestinationCompany +
-                        "\r\n-----------" + jobdata + "\r\n-----------");
-                }
-                else
-                {
-                    //Add Job data to Listbox
-                    listBoxFreightMarketAddedJobs.Items.Add(tempJobData);
-                }
-
-                //Write log
-                jobdata = ""; tempStr = "";
-
-                jobdata += "\r\nLoad of " + tempJobData.Cargo;
-                jobdata += " of " + tempJobData.UnitsCount + " units";
-
-
-                if (tempJobData.Type == 0)
-                    tempStr = "Normal";
-                else if (tempJobData.Type == 1)
-                    tempStr = "Heavy";
-                else if (tempJobData.Type == 2)
-                    tempStr = "Double";
-
-                jobdata += "\r\nIn " + tempStr + " trailer ";
-                jobdata += tempJobData.TrailerDefinition;
-                jobdata += " with " + tempJobData.TrailerVariant + " appearance";
-
-                tempStr = comboBoxFreightMarketUrgency.Text;
-
-                jobdata += "\r\nUrgency " + tempStr;
-                jobdata += "\r\nMinimum travel distance of " + tempJobData.Distance + " km ";
-                jobdata += "in " + tempJobData.CompanyTruck;
-                jobdata += "\r\nJob valid for " + (tempJobData.ExpirationTime - InGameTime) + " minutes";
-
-                if (tempJobData.Ferrytime > 0 || tempJobData.Ferryprice > 0)
-                {
-                    jobdata += "\r\nExtra time on ferry - " + tempJobData.Ferrytime;
-                    jobdata += "and it will cost " + tempJobData.Ferryprice;
-                }
-
-                LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName + 
-                    "\r\n-----------" + jobdata + "\r\n-----------");
-
-
-                //Setting Form Controls
-                buttonMainWriteSave.Enabled = true;
-                buttonFreightMarketClearJobList.Enabled = true;
-
-                int JobsTotalDistance = 0;
-
-                foreach (JobAdded tmpItem in listBoxFreightMarketAddedJobs.Items)
-                {
-                    JobsTotalDistance += tmpItem.Distance;
-                }
-
-                labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes; //km";
-
                 if (!JobEditing)
                 {
+                    //Adding new Job
+                    //Tracking total amount of jobs added
+                    JobsAmountAdded++;
+
+                    // Prepairing structures
+                    Array.Resize(ref EconomyEventUnitLinkStringList, JobsAmountAdded);
+                    EconomyEventUnitLinkStringList[JobsAmountAdded - 1] = " unit_link: company.volatile." + SourceCompany + "." + SourceCity;
+
+                    //Add Job data to Listbox
+                    listBoxFreightMarketAddedJobs.Items.Add(tempJobData);
+
                     comboBoxFreightMarketSourceCity.SelectedValue = comboBoxFreightMarketDestinationCity.SelectedValue;
                     comboBoxFreightMarketSourceCompany.SelectedValue = comboBoxFreightMarketDestinationCompany.SelectedValue;
 
@@ -2064,13 +2018,9 @@ namespace TS_SE_Tool
                     int looptest;
 
                     if (JobsAmountAdded == 1)
-                    {
                         looptest = 1;
-                    }
                     else
-                    {
                         looptest = JobsAmountAdded + 1;
-                    }
 
                     if (ProgSettingsV.LoopEvery != 0 && (looptest % ProgSettingsV.LoopEvery) == 0)
                     {
@@ -2091,54 +2041,39 @@ namespace TS_SE_Tool
                 }
                 else
                 {
+                    //Editin Job
+                    AddedJobsDictionary[companyNameJob].Remove(FreightMarketJob);
+                    if (AddedJobsDictionary[companyNameJob].Count == 0)
+                        AddedJobsDictionary.Remove(companyNameJob);
+
+                    AddedJobsList.Remove(FreightMarketJob);
+
+                    //Add Job data to Listbox
+                    listBoxFreightMarketAddedJobs.Items[listBoxFreightMarketAddedJobs.SelectedIndex] = tempJobData;
                     listBoxFreightMarketAddedJobs.Enabled = true;
-                    //listBoxFreightMarketAddedJobs.Update();
                 }
-            }
-        }
-        /*
-        //Get random number
-        public IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)
-        {
-            Random rand = new Random();
-            List<TValue> values = Enumerable.ToList(dict.Values);
-            int size = dict.Count;
-            while (true)
-            {
-                yield return values[rand.Next(size)];
-            }
-        }
-        */
-        /*
-        private void LoadAdditionalCargo()
-        {
-            //NEED REWRITE
-            try
-            {
-                string[] strArray = File.ReadAllLines(Directory.GetCurrentDirectory() + "/extra_cargo.txt");
-                for (int i = 0; i < strArray.Length; i++)
+
+                //Adding Job to strucktures
+                if (AddedJobsDictionary.ContainsKey(companyNameJob))
+                    AddedJobsDictionary[companyNameJob].Add(tempJobData);
+                else
+                    AddedJobsDictionary.Add(companyNameJob, new List<JobAdded> { tempJobData });
+
+                AddedJobsList.Add(tempJobData);
+                //
+
+                //Total distance for Form label
+                int JobsTotalDistance = 0;
+
+                foreach (JobAdded tmpItem in listBoxFreightMarketAddedJobs.Items)
                 {
-                    if (strArray[i].StartsWith("cargo."))
-                    {
-                        string str = "";
-                        string[] strArray2 = strArray[i].Split(new char[] { '.' });
-                        for (int j = 1; j < strArray2.Length; j++)
-                        {
-                            if (j > 1)
-                            {
-                                str = str + ".";
-                            }
-                            str = str + strArray2[j];
-                        }
-                        //CargoesList.Add(new Cargo(str, 0, 0));
-                    }
+                    JobsTotalDistance += tmpItem.Distance;
                 }
-            }
-            catch
-            {
+
+                labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes;
             }
         }
-        */
+
         //Create DB
         private void CreateDatabase(string fileName)
         {
@@ -2386,7 +2321,6 @@ namespace TS_SE_Tool
         //Upload data to DB
         private void AddDistances_DataTableToDB_Bulk(DataTable reader)//(bool keepNulls, DataTable reader)
         {
-
             using (SqlCeBulkCopy bc = new SqlCeBulkCopy(DBconnection))
             {
                 bc.DestinationTableName = "tempBulkDistancesTable";
@@ -3534,5 +3468,53 @@ namespace TS_SE_Tool
             catch
             { }
         }
+
+        //
+        
+        /*
+        //Get random number
+        public IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)
+        {
+            Random rand = new Random();
+            List<TValue> values = Enumerable.ToList(dict.Values);
+            int size = dict.Count;
+            while (true)
+            {
+                yield return values[rand.Next(size)];
+            }
+        }
+        */
+        
+        /*
+        private void LoadAdditionalCargo()
+        {
+            //NEED REWRITE
+            try
+            {
+                string[] strArray = File.ReadAllLines(Directory.GetCurrentDirectory() + "/extra_cargo.txt");
+                for (int i = 0; i < strArray.Length; i++)
+                {
+                    if (strArray[i].StartsWith("cargo."))
+                    {
+                        string str = "";
+                        string[] strArray2 = strArray[i].Split(new char[] { '.' });
+                        for (int j = 1; j < strArray2.Length; j++)
+                        {
+                            if (j > 1)
+                            {
+                                str = str + ".";
+                            }
+                            str = str + strArray2[j];
+                        }
+                        //CargoesList.Add(new Cargo(str, 0, 0));
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+        */
+
     }
 }

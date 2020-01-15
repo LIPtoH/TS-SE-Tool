@@ -208,8 +208,8 @@ namespace OpenPainter.ColorPicker
 		/// </summary>
 		private void InitializeComponent()
 		{
-            OpenPainter.ColorPicker.AdobeColors.HSB hsb1 = new OpenPainter.ColorPicker.AdobeColors.HSB();
-            OpenPainter.ColorPicker.AdobeColors.HSB hsb2 = new OpenPainter.ColorPicker.AdobeColors.HSB();
+            OpenPainter.ColorPicker.AdobeColors.HSB hsb5 = new OpenPainter.ColorPicker.AdobeColors.HSB();
+            OpenPainter.ColorPicker.AdobeColors.HSB hsb6 = new OpenPainter.ColorPicker.AdobeColors.HSB();
             this.m_cmd_OK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.m_txt_Hue = new System.Windows.Forms.TextBox();
@@ -365,6 +365,7 @@ namespace OpenPainter.ColorPicker
             this.m_txt_Hex.Size = new System.Drawing.Size(57, 20);
             this.m_txt_Hex.TabIndex = 19;
             this.m_txt_Hex.Leave += new System.EventHandler(this.m_txt_Hex_Leave);
+            this.m_txt_Hex.Validated += new System.EventHandler(this.m_txt_Hex_Leave);
             // 
             // m_rbtn_Hue
             // 
@@ -589,10 +590,10 @@ namespace OpenPainter.ColorPicker
             // m_ctrl_BigBox
             // 
             this.m_ctrl_BigBox.BaseColorComponent = OpenPainter.ColorPicker.ColorComponent.Hue;
-            hsb1.B = 1D;
-            hsb1.H = 0D;
-            hsb1.S = 1D;
-            this.m_ctrl_BigBox.HSB = hsb1;
+            hsb5.B = 1D;
+            hsb5.H = 0D;
+            hsb5.S = 1D;
+            this.m_ctrl_BigBox.HSB = hsb5;
             this.m_ctrl_BigBox.Location = new System.Drawing.Point(3, 3);
             this.m_ctrl_BigBox.Name = "m_ctrl_BigBox";
             this.m_ctrl_BigBox.RGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -604,10 +605,10 @@ namespace OpenPainter.ColorPicker
             // m_ctrl_ThinBox
             // 
             this.m_ctrl_ThinBox.BaseColorComponent = OpenPainter.ColorPicker.ColorComponent.Hue;
-            hsb2.B = 1D;
-            hsb2.H = 0D;
-            hsb2.S = 1D;
-            this.m_ctrl_ThinBox.HSB = hsb2;
+            hsb6.B = 1D;
+            hsb6.H = 0D;
+            hsb6.S = 1D;
+            this.m_ctrl_ThinBox.HSB = hsb6;
             this.m_ctrl_ThinBox.Location = new System.Drawing.Point(275, 3);
             this.m_ctrl_ThinBox.Name = "m_ctrl_ThinBox";
             this.m_ctrl_ThinBox.RGB = System.Drawing.Color.Red;
@@ -738,7 +739,7 @@ namespace OpenPainter.ColorPicker
 
 		private void frmColorPicker_Load(object sender, System.EventArgs e)
 		{
-
+            
 		}
 
 
@@ -814,6 +815,8 @@ namespace OpenPainter.ColorPicker
 			var text = m_txt_Hex.Text.ToUpper();
 			var has_illegal_chars = false;
 
+            text = text.TrimStart(new char[] { '#', ' ' }).TrimEnd(new char[] { ' ' });
+
 			if (text.Length <= 0)
 				has_illegal_chars = true;
 
@@ -845,13 +848,12 @@ namespace OpenPainter.ColorPicker
 
 			UpdateTextBoxes();
 		}
+        
+        #endregion
 
+        #region Color Boxes
 
-		#endregion
-
-		#region Color Boxes
-
-		private void m_lbl_Primary_Color_Click(object sender, System.EventArgs e)
+        private void m_lbl_Primary_Color_Click(object sender, System.EventArgs e)
 		{
 			_rgb = m_lbl_Primary_Color.BackColor;
 			_hsl = AdobeColors.RGB_to_HSB(_rgb);
@@ -1459,14 +1461,14 @@ namespace OpenPainter.ColorPicker
 
 			UpdateTextBoxes();
 		}
+        
+        #endregion
 
-		#endregion
+        #endregion
 
-		#endregion
+        #region Private Functions
 
-		#region Private Functions
-
-		private void WriteHexData(Color rgb)
+        private void WriteHexData(Color rgb)
 		{
 			string red = Convert.ToString(rgb.R, 16);
 			if (red.Length < 2) red = "0" + red;
@@ -1543,6 +1545,5 @@ namespace OpenPainter.ColorPicker
 
 			base.Dispose(disposing);
 		}
-
     }
 }

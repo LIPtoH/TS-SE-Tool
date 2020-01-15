@@ -68,7 +68,7 @@ namespace TS_SE_Tool
 
             radioButtonGameTypeETS2.Checked = true;
         }
-
+        //Buttons
         private void buttonChooseFolder_Click(object sender, EventArgs e)
         {
             // Show the FolderBrowserDialog.            
@@ -109,8 +109,16 @@ namespace TS_SE_Tool
                 radioButtonSaveFolderType.Checked = GameSFsaveFolder;
 
                 if (radioButtonRootFolderType.Checked || radioButtonProfileFolderType.Checked || radioButtonSaveFolderType.Checked)
+                {
                     buttonAddCustomPath.Enabled = true;
+                    groupBoxFolderType.Enabled = true;
+                }
             }
+        }
+
+        private void buttonEditCPlist_Click(object sender, EventArgs e)
+        {
+            ChangeCustomPathListVisibility();
         }
 
         private void buttonAddCustomPath_Click(object sender, EventArgs e)
@@ -141,25 +149,22 @@ namespace TS_SE_Tool
                 MessageBox.Show("Path " + SelectedfolderPath + " added to the " + GameType + " list", "Custom path", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            buttonAddCustomPath.Enabled = false;
             labelCustomPathDir.Text = "Choose folder...";
-            //radioButtonGameTypeETS2.Checked = false;
-            //radioButtonGameTypeATS.Checked = false;
+
+            groupBoxFolderType.Enabled = false;
             radioButtonUnknownFolderType.Checked = true;
+
+            buttonAddCustomPath.Enabled = false;
+            buttonSave.Enabled = true;
         }
 
-        static string GetDirectoryName2(string f)
+        private void buttonSave_Click(object sender, EventArgs e)
         {
-            try
-            {
-                return f.Substring(f.LastIndexOf('\\') + 1, f.Length - f.LastIndexOf('\\') - 1);
-            }
-            catch
-            {
-                return string.Empty;
-            }
+            MainForm.ProgSettingsV.CustomPaths = new Dictionary<string, List<string>>(CustomPathsArr);
+            CustomPathChanged = false;
+            buttonSave.Enabled = false;
         }
-
+        //Radio button
         private void radioButtonFolderType_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton a = sender as RadioButton;
@@ -179,12 +184,7 @@ namespace TS_SE_Tool
             if (ListOpen)
                 UpdatedataGridView();
         }
-
-        private void buttonEditCPlist_Click(object sender, EventArgs e)
-        {
-            ChangeCustomPathListVisibility();
-        }
-
+        //Methods
         private void ChangeCustomPathListVisibility()
         {
             if (ListOpen)
@@ -263,6 +263,7 @@ namespace TS_SE_Tool
                     CustomPathsArr.Remove(GameType);
 
                 UpdatedataGridView();
+                buttonSave.Enabled = true;
             }
         }
 
@@ -283,12 +284,6 @@ namespace TS_SE_Tool
             dataGridView1.DataSource = combDT;
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
-            MainForm.ProgSettingsV.CustomPaths = new Dictionary<string, List<string>>(CustomPathsArr);
-            CustomPathChanged = false;
-        }
-
         private void FormAddCustomFolder_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult exitDR = DialogResult.No;
@@ -307,5 +302,19 @@ namespace TS_SE_Tool
                 }
             }
         }
+
+        //Extra
+        static string GetDirectoryName2(string f)
+        {
+            try
+            {
+                return f.Substring(f.LastIndexOf('\\') + 1, f.Length - f.LastIndexOf('\\') - 1);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+        
     }
 }

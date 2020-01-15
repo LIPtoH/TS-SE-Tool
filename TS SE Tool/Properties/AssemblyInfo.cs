@@ -21,11 +21,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("TS SE Tool")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Small tool for editing save files of Euro Truck Simulator 2 and American Truck Simulator")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TS SE Tool")]
-[assembly: AssemblyCopyright("Copyright © 2016 - 2019")]
+[assembly: AssemblyCopyright("Copyright © 2016 - 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

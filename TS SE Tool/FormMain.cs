@@ -77,6 +77,7 @@ namespace TS_SE_Tool
         //private string[] JobsListAdded;
         //private List<string>  ListSavefileCompanysString;
         private Dictionary<string, List<JobAdded>> AddedJobsDictionary;//Program
+        private List<JobAdded> AddedJobsList;
         private JobAdded FreightMarketJob;//Program
         private string[] EconomyEventUnitLinkStringList;//Program
         //private string[] EconomyEventQueueList;
@@ -229,9 +230,11 @@ namespace TS_SE_Tool
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            FormSplash WindowSplash = new FormSplash();
-            WindowSplash.ShowDialog();
-
+            if(Properties.Settings.Default.ShowSplashOnStartup || Properties.Settings.Default.CheckUpdatesOnStartup)
+            {
+                FormSplash WindowSplash = new FormSplash();
+                WindowSplash.ShowDialog();
+            }
             FillAllProfilesPaths();
         }
 

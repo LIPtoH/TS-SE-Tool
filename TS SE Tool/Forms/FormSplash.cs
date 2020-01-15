@@ -32,9 +32,10 @@ namespace TS_SE_Tool
 {
     public partial class FormSplash : Form
     {
-        string NewVersion = "";
+        string[] NewVersion = { "", "" };
         bool NVavailible = false;
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+        bool CheckForUpdates = Properties.Settings.Default.CheckUpdatesOnStartup; //Make it into settings
 
         public FormSplash()
         {
@@ -55,7 +56,7 @@ namespace TS_SE_Tool
         {
             CheckLatestVersion();
         }
-
+        //Actions
         private void linkFirst_Click(object sender, EventArgs e)
         {
             string url = "https://forum.scssoft.com/viewtopic.php?f=34&t=266092";
@@ -95,7 +96,7 @@ namespace TS_SE_Tool
         {
             this.Close();
         }
-
+        //Extra
         public string AssemblyVersion
         {
             get
@@ -138,28 +139,50 @@ namespace TS_SE_Tool
         
         private async void CheckLatestVersion()
         {
-            button1.Text = "Checking for updates";
-            await Task.Run(() => Check());
-
-            if (NVavailible)
+            if (CheckForUpdates)
             {
-                bool betterVersion = false;
-                string[] numArr = NewVersion.Split(new char[] { '.' });
-                string[] currArr = AssemblyVersion.Split(new char[] { '.' });
+                button1.Text = "Checking for updates";
+                await Task.Run(() => Check());
 
-                for (byte i = 0; i < numArr.Length; i++)
+                if (NVavailible)
                 {
-                    if (byte.Parse(numArr[i]) > byte.Parse(currArr[i]))
+                    bool betterVersion = false;
+                    string[] numArr = NewVersion[0].Split(new char[] { '.' });
+                    string[] currArr = AssemblyVersion.Split(new char[] { '.' });
+
+                    for (byte i = 0; i < numArr.Length; i++)
                     {
-                        betterVersion = true;
-                        break;
+                        if (byte.Parse(numArr[i]) > byte.Parse(currArr[i]))
+                        {
+                            betterVersion = true;
+                            break;
+                        }
+                    }
+
+                    tableLayoutPanel2.RowStyles[3] = new RowStyle(SizeType.Absolute, 30F);
+
+                    if (betterVersion)
+                    {
+                        linkLabelNewVersion.Text = String.Format("New version {0} available!", NewVersion[0]);
+                        linkLabelNewVersion.LinkColor = Color.LimeGreen;
+                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+                    }
+                    else
+                    {
+                        linkLabelNewVersion.Text = String.Format("You are using latest version!", NewVersion[0]);
+                        linkLabelNewVersion.LinkBehavior = LinkBehavior.NeverUnderline;
+                        linkLabelNewVersion.Links[0].Enabled = false;
+                        linkLabelNewVersion.DisabledLinkColor = Color.LimeGreen;
+                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
                     }
                 }
-
-                if (betterVersion)
+                else
                 {
                     tableLayoutPanel2.RowStyles[3] = new RowStyle(SizeType.Absolute, 30F);
-                    linkLabelNewVersion.Text = String.Format("New version {0} available", NewVersion);
+                    linkLabelNewVersion.Text = String.Format("Cannot check for updates!", NewVersion[0]);
+                    linkLabelNewVersion.LinkBehavior = LinkBehavior.NeverUnderline;
+                    linkLabelNewVersion.Links[0].Enabled = false;
+                    linkLabelNewVersion.DisabledLinkColor = Color.Crimson;
                     linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
                 }
             }
@@ -170,14 +193,36 @@ namespace TS_SE_Tool
 
         private void Check()
         {
-            string newversion = GetFilename("https://rebrand.ly/TS-SET-Download");
+            string newversionData = GetLatestVersionData("https://rebrand.ly/TS-SET-CheckVersion");
 
-            if (newversion != null && !newversion.Contains(AssemblyVersion))
+            if (newversionData != null)
             {
-                NVavailible = true;
-                NewVersion = newversion.Replace("TS.SE.Tool.", "").Replace(".zip", "");
+                NewVersion = newversionData.Split(new char[] { '\t' });
+
+                if (NewVersion[0] != null && !NewVersion[0].Contains(AssemblyVersion))
+                {
+                    NVavailible = true;
+                    NewVersion[0] = NewVersion[0].Replace("TS.SE.Tool.", "").Replace(".zip", "");
+                }
             }
         }
+
+        public string GetLatestVersionData(string url)
+        {
+            string result = null;
+
+            using (WebClient client = new WebClient())
+            {
+                try
+                {
+                    result = client.DownloadString(url);
+                }
+                catch { }
+                client.Dispose();
+            }
+            return result;
+        }
+
     }
 }
 
