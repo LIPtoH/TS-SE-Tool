@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TS SE Tool", "TS SE Tool\TS SE Tool.csproj", "{95EBA823-26BF-4A49-A674-E294B403BC99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TS SET Updater", "TS SET Updater\TS SET Updater.csproj", "{A1CB3D84-3A41-41B4-BF2C-8E6EF25D5707}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{95EBA823-26BF-4A49-A674-E294B403BC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95EBA823-26BF-4A49-A674-E294B403BC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95EBA823-26BF-4A49-A674-E294B403BC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1CB3D84-3A41-41B4-BF2C-8E6EF25D5707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1CB3D84-3A41-41B4-BF2C-8E6EF25D5707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1CB3D84-3A41-41B4-BF2C-8E6EF25D5707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1CB3D84-3A41-41B4-BF2C-8E6EF25D5707}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
