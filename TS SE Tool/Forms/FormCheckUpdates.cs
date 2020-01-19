@@ -47,6 +47,7 @@ namespace TS_SE_Tool
 
             bool properFileDownloaded = false;
             byte trysCount = 0;
+
             do
             {
                 trysCount++;
@@ -72,6 +73,7 @@ namespace TS_SE_Tool
                 buttonDownload.Click -= new EventHandler(this.buttonDownload_Click);
                 buttonDownload.Text = "Update";
                 buttonDownload.Click += new EventHandler(this.buttonUpdate_Click);
+                buttonDownload.Enabled = true;
                 if (true)
                     buttonDownload.PerformClick();
             }
@@ -84,6 +86,7 @@ namespace TS_SE_Tool
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             //Close Start updater and TSSET
+            buttonDownload.Enabled = false;
             labelStatus.Text = "Starting Updater";
             //copy updater
             if (File.Exists(Directory.GetCurrentDirectory() + @"\updater\updater.exe"))
@@ -94,21 +97,24 @@ namespace TS_SE_Tool
             {
                 MessageBox.Show("Unable to find Updater.exe. Please update manually. New version located in Updater folder.", "File not exist");
                 labelStatus.Text = "Updater.exe doesn't exist";
-                buttonDownload.Enabled = false;
+                buttonOK.Text = "OK";
                 return;
             }
 
             if (File.Exists(Directory.GetCurrentDirectory() + @"\updater.exe"))
             {
-                Process.Start(Directory.GetCurrentDirectory() + @"\updater.exe", "true " + NewVersion[1]);
+                Process.Start(Directory.GetCurrentDirectory() + @"\updater.exe", "true " + NewVersion[1] + " " + Process.GetCurrentProcess().Id.ToString());
                 Application.Exit();
+                buttonOK.Text = "Close";
             }
             else
             {
                 MessageBox.Show("Unable to find Updater.exe. Please update manually. New version located in Updater folder.", "File not exist");
                 labelStatus.Text = "Updater.exe doesn't exist";
-                buttonDownload.Enabled = false;
+                buttonOK.Text = "OK";
             }
+
+            buttonOK.Enabled = true;
         }
 
         private async void CheckLatestVersion()
@@ -178,20 +184,30 @@ namespace TS_SE_Tool
             }
         }
 
-        private void startDownload()
+        private void startDownload() //async 
         {
-            var url = "https://rebrand.ly/TS-SET-Download";
-            var filename = Directory.GetCurrentDirectory() + @"\updater\ts.set.newversion.zip";
-
-            Thread thread = new Thread(() => {
-                WebClient client = new WebClient();
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(url), filename);
-            });
-            thread.Start();
             labelStatus.ForeColor = this.ForeColor;
             labelStatus.Text = "Downloading...";
+
+            Task t = Task.Run( () => {
+                var url = "https://rebrand.ly/TS-SET-Download";
+                var filename = Directory.GetCurrentDirectory() + @"\updater\ts.set.newversion.zip";
+
+                try
+                {
+                    using (WebClient webClient = new WebClient())
+                    {
+                        webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+                        webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+                        webClient.DownloadFile(new Uri(url), filename); //DownloadFileTaskAsync
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            });
+            t.Wait();
         }
 
         void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)

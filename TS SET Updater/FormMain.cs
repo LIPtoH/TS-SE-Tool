@@ -38,10 +38,18 @@ namespace TS_SET_Updater
             }
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
+        private void FormMain_Shown(object sender, EventArgs e)
         {
             if (updateStatus)
+            {
+                extWinPos wp = new extWinPos();
+                Rectangle wpR = wp.GetExtWinRectangle(ProcessID);
+                this.Location = new Point(wpR.X + (wpR.Width - this.Width) / 2, wpR.Y + (wpR.Height - this.Height) / 2);
+
+                MessageBox.Show(Location.ToString());
+
                 Updater();
+            }
             else
                 createDatafile(FileHash);
         }
@@ -49,8 +57,9 @@ namespace TS_SET_Updater
         private async void Updater()
         {
             Process tsset = Process.GetProcessById(ProcessID);
+            
             string SourceFileName = tsset.MainModule.FileName;
-
+            
             tsset.WaitForExit();
 
             string updFilePath = @".\updater\ts.set.newversion.zip";
@@ -61,18 +70,26 @@ namespace TS_SET_Updater
 
                 if (goodFile)
                 {
-                    string zipPath = @".\updater\ts.set.newversion.zip";
+                    this.Size = new Size(300, 160);
+
                     string extractPath = @".\";
-                    string[] dt = Directory.GetDirectories(extractPath);
 
                     labelStatus.Text = "Extracting update files.";
-                    await Task.Run(() => ExtractZipFile(zipPath, extractPath));
-                    //ZipFile.ExtractToDirectory(zipPath, extractPath);
+                    progressBar1.Visible = true;
+                    await Task.Run(() => ExtractZipFile(updFilePath, extractPath));
+
                     labelStatus.Text = "All files extracted.";
+                    progressBar1.Visible = false;
+
+                    this.Size = new Size(300, 130);
+
                     try
-                    {
-                        if(File.Exists(@".\TS SE Tool.exe"))
-                            Process.Start(@".\TS SE Tool.exe");
+                    {   
+                        if(File.Exists(SourceFileName)) // SourceFileName
+                        {
+                            Process.Start(SourceFileName); // SourceFileName
+                            File.Delete(updFilePath);
+                        }                            
                     }
                     catch
                     {
@@ -85,12 +102,16 @@ namespace TS_SET_Updater
                 }
                 else
                 {
+                    labelStatus.Text = "Error";
                     MessageBox.Show("Update file failed integrity check. Please update manually of try again.", "File was corrupted");
+                    Application.Exit();
                 }
             }
             else
             {
+                labelStatus.Text = "Error";
                 MessageBox.Show("Unable to find Update files. Please update manually.", "File not exist");
+                Application.Exit();
             }
         }
 
@@ -100,15 +121,23 @@ namespace TS_SET_Updater
         {
             int persentagComplete = zipProgress.Processed / zipProgress.Total * 100;
 
-            //labelStatus.Text = "Progress " + persentagComplete.ToString() + " %";
             progressBar1.Value = persentagComplete;
         }
 
         public void ExtractZipFile (string _zipPath, string _extractPath)
         {
+            _progress = new Progress<ZipProgress>();
+            _progress.ProgressChanged += Report;
+
             Stream zipReadingStream = File.OpenRead(_zipPath);
-            ZipArchive zip = new ZipArchive(zipReadingStream);
-            zip.ExtractToDirectory(_extractPath, _progress, true);
+            if (zipReadingStream != null)
+            {
+                ZipArchive zip = new ZipArchive(zipReadingStream);
+                zip.ExtractToDirectory(_extractPath, _progress, true);
+                zipReadingStream.Close();
+            }
+            else
+                MessageBox.Show("zipReadingStream null");
         }
 
         private bool checkFileHash(string _filepath, string _hashtocompare)
@@ -120,7 +149,7 @@ namespace TS_SET_Updater
                 using (var stream = File.OpenRead(_filepath))
                 {
                     var fileHash = hash.ComputeHash(stream);
-                    string newHash = BitConverter.ToString(fileHash).Replace("-", "").ToLowerInvariant();
+                    string newHash = BitConverter.ToString(fileHash).Replace("-", "").ToUpperInvariant();
 
                     if (_hashtocompare == newHash)
                         SameHash = true;
@@ -161,5 +190,6 @@ namespace TS_SET_Updater
             }
 
         }
+
     }    
 }

@@ -48,6 +48,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -56,6 +57,7 @@
             this.groupBoxDataBase.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingLoopCitys)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingPickTimeH)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -83,17 +85,16 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.buttonCancel);
-            this.splitContainer1.Panel2.Controls.Add(this.buttonSave);
-            this.splitContainer1.Panel2MinSize = 50;
-            this.splitContainer1.Size = new System.Drawing.Size(350, 241);
-            this.splitContainer1.SplitterDistance = 187;
+            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainer1.Panel2MinSize = 40;
+            this.splitContainer1.Size = new System.Drawing.Size(354, 221);
+            this.splitContainer1.SplitterDistance = 175;
             this.splitContainer1.TabIndex = 0;
             // 
             // labelDistance
             // 
             this.labelDistance.AutoSize = true;
-            this.labelDistance.Location = new System.Drawing.Point(12, 73);
+            this.labelDistance.Location = new System.Drawing.Point(12, 67);
             this.labelDistance.Name = "labelDistance";
             this.labelDistance.Size = new System.Drawing.Size(49, 13);
             this.labelDistance.TabIndex = 11;
@@ -102,7 +103,7 @@
             // comboBoxSettingDistanceMesSelect
             // 
             this.comboBoxSettingDistanceMesSelect.FormattingEnabled = true;
-            this.comboBoxSettingDistanceMesSelect.Location = new System.Drawing.Point(217, 70);
+            this.comboBoxSettingDistanceMesSelect.Location = new System.Drawing.Point(217, 64);
             this.comboBoxSettingDistanceMesSelect.Name = "comboBoxSettingDistanceMesSelect";
             this.comboBoxSettingDistanceMesSelect.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSettingDistanceMesSelect.TabIndex = 10;
@@ -110,7 +111,7 @@
             // comboBoxSettingCurrencySelect
             // 
             this.comboBoxSettingCurrencySelect.FormattingEnabled = true;
-            this.comboBoxSettingCurrencySelect.Location = new System.Drawing.Point(217, 97);
+            this.comboBoxSettingCurrencySelect.Location = new System.Drawing.Point(217, 91);
             this.comboBoxSettingCurrencySelect.Name = "comboBoxSettingCurrencySelect";
             this.comboBoxSettingCurrencySelect.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSettingCurrencySelect.TabIndex = 9;
@@ -118,7 +119,7 @@
             // labelCurrency
             // 
             this.labelCurrency.AutoSize = true;
-            this.labelCurrency.Location = new System.Drawing.Point(12, 100);
+            this.labelCurrency.Location = new System.Drawing.Point(12, 94);
             this.labelCurrency.Name = "labelCurrency";
             this.labelCurrency.Size = new System.Drawing.Size(49, 13);
             this.labelCurrency.TabIndex = 8;
@@ -127,7 +128,7 @@
             // labelCity
             // 
             this.labelCity.AutoSize = true;
-            this.labelCity.Location = new System.Drawing.Point(263, 45);
+            this.labelCity.Location = new System.Drawing.Point(264, 40);
             this.labelCity.Name = "labelCity";
             this.labelCity.Size = new System.Drawing.Size(23, 13);
             this.labelCity.TabIndex = 7;
@@ -213,7 +214,7 @@
             // 
             // numericUpDownSettingLoopCitys
             // 
-            this.numericUpDownSettingLoopCitys.Location = new System.Drawing.Point(217, 43);
+            this.numericUpDownSettingLoopCitys.Location = new System.Drawing.Point(217, 38);
             this.numericUpDownSettingLoopCitys.Name = "numericUpDownSettingLoopCitys";
             this.numericUpDownSettingLoopCitys.Size = new System.Drawing.Size(40, 20);
             this.numericUpDownSettingLoopCitys.TabIndex = 1;
@@ -223,7 +224,7 @@
             // labelLoopEvery
             // 
             this.labelLoopEvery.AutoSize = true;
-            this.labelLoopEvery.Location = new System.Drawing.Point(12, 45);
+            this.labelLoopEvery.Location = new System.Drawing.Point(12, 40);
             this.labelLoopEvery.Name = "labelLoopEvery";
             this.labelLoopEvery.Size = new System.Drawing.Size(61, 13);
             this.labelLoopEvery.TabIndex = 0;
@@ -259,10 +260,10 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(263, 15);
+            this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonCancel.Location = new System.Drawing.Point(230, 3);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(121, 36);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -270,25 +271,41 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSave.Location = new System.Drawing.Point(12, 15);
+            this.buttonSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonSave.Location = new System.Drawing.Point(3, 3);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonSave.Size = new System.Drawing.Size(121, 36);
             this.buttonSave.TabIndex = 0;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSettingSave_Click);
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.buttonSave, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.buttonCancel, 2, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(354, 42);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 241);
+            this.ClientSize = new System.Drawing.Size(354, 221);
             this.Controls.Add(this.splitContainer1);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(560, 280);
+            this.MaximumSize = new System.Drawing.Size(370, 260);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(280, 280);
+            this.MinimumSize = new System.Drawing.Size(370, 260);
             this.Name = "FormSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -302,6 +319,7 @@
             this.groupBoxDataBase.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingLoopCitys)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingPickTimeH)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -328,5 +346,6 @@
         private System.Windows.Forms.Label labelHourShort;
         private System.Windows.Forms.NumericUpDown numericUpDownSettingPickTimeD;
         private System.Windows.Forms.Label labelCurrency;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
