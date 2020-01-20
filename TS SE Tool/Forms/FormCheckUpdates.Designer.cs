@@ -55,16 +55,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(284, 186);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(300, 200);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // buttonOK
             // 
             this.buttonOK.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonOK.Enabled = false;
-            this.buttonOK.Location = new System.Drawing.Point(3, 149);
+            this.buttonOK.Location = new System.Drawing.Point(3, 163);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(278, 34);
+            this.buttonOK.Size = new System.Drawing.Size(294, 34);
             this.buttonOK.TabIndex = 0;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -75,7 +75,7 @@
             this.labelStatus.AutoSize = true;
             this.labelStatus.Location = new System.Drawing.Point(3, 23);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(278, 13);
+            this.labelStatus.Size = new System.Drawing.Size(294, 13);
             this.labelStatus.TabIndex = 1;
             this.labelStatus.Text = "Loading...";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -85,7 +85,7 @@
             this.buttonDownload.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonDownload.Location = new System.Drawing.Point(3, 63);
             this.buttonDownload.Name = "buttonDownload";
-            this.buttonDownload.Size = new System.Drawing.Size(278, 34);
+            this.buttonDownload.Size = new System.Drawing.Size(294, 34);
             this.buttonDownload.TabIndex = 3;
             this.buttonDownload.Text = "Download";
             this.buttonDownload.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             this.progressBarDownload.Dock = System.Windows.Forms.DockStyle.Fill;
             this.progressBarDownload.Location = new System.Drawing.Point(3, 103);
             this.progressBarDownload.Name = "progressBarDownload";
-            this.progressBarDownload.Size = new System.Drawing.Size(278, 19);
+            this.progressBarDownload.Size = new System.Drawing.Size(294, 19);
             this.progressBarDownload.Step = 1;
             this.progressBarDownload.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBarDownload.TabIndex = 4;
@@ -106,7 +106,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 186);
+            this.ClientSize = new System.Drawing.Size(300, 200);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

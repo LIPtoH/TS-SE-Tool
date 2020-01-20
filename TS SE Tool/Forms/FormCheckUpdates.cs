@@ -25,14 +25,15 @@ namespace TS_SE_Tool
         public FormCheckUpdates()
         {
             InitializeComponent();
-            this.Size = new Size(300, 140);
+            this.Size = new Size(300, 130);
         }
 
         private void FormCheckUpdates_Load(object sender, EventArgs e)
         {
             CheckLatestVersion();
+            buttonDownload.Text = "Download && Update";
         }
-
+        //Buttons
         private void buttonOk_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -71,7 +72,7 @@ namespace TS_SE_Tool
             if (properFileDownloaded)
             {
                 buttonDownload.Click -= new EventHandler(this.buttonDownload_Click);
-                buttonDownload.Text = "Update";
+                //buttonDownload.Text = "Update";
                 buttonDownload.Click += new EventHandler(this.buttonUpdate_Click);
                 buttonDownload.Enabled = true;
                 if (true)
@@ -86,8 +87,9 @@ namespace TS_SE_Tool
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             //Close Start updater and TSSET
-            buttonDownload.Enabled = false;
+            buttonDownload.Visible = false;
             labelStatus.Text = "Starting Updater";
+            buttonOK.Text = "OK";
             //copy updater
             if (File.Exists(Directory.GetCurrentDirectory() + @"\updater\updater.exe"))
             {
@@ -97,26 +99,26 @@ namespace TS_SE_Tool
             {
                 MessageBox.Show("Unable to find Updater.exe. Please update manually. New version located in Updater folder.", "File not exist");
                 labelStatus.Text = "Updater.exe doesn't exist";
-                buttonOK.Text = "OK";
                 return;
             }
 
             if (File.Exists(Directory.GetCurrentDirectory() + @"\updater.exe"))
             {
+                this.Size = new Size(300, 130);
                 Process.Start(Directory.GetCurrentDirectory() + @"\updater.exe", "true " + NewVersion[1] + " " + Process.GetCurrentProcess().Id.ToString());
+                labelStatus.Text = "You can now finish your work.\r\nUpdate will start on exit.";
+
                 Application.Exit();
-                buttonOK.Text = "Close";
             }
             else
             {
                 MessageBox.Show("Unable to find Updater.exe. Please update manually. New version located in Updater folder.", "File not exist");
                 labelStatus.Text = "Updater.exe doesn't exist";
-                buttonOK.Text = "OK";
             }
 
             buttonOK.Enabled = true;
         }
-
+        //Events
         private async void CheckLatestVersion()
         {
             labelStatus.Text = "Checking for updates";

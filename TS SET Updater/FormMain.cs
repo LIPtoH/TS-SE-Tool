@@ -46,8 +46,6 @@ namespace TS_SET_Updater
                 Rectangle wpR = wp.GetExtWinRectangle(ProcessID);
                 this.Location = new Point(wpR.X + (wpR.Width - this.Width) / 2, wpR.Y + (wpR.Height - this.Height) / 2);
 
-                MessageBox.Show(Location.ToString());
-
                 Updater();
             }
             else
@@ -57,10 +55,11 @@ namespace TS_SET_Updater
         private async void Updater()
         {
             Process tsset = Process.GetProcessById(ProcessID);
-            
             string SourceFileName = tsset.MainModule.FileName;
-            
+            this.Text = "Updater Waiting for " + Path.GetFileName(SourceFileName) + " exit";
             tsset.WaitForExit();
+            this.Text = "Updater";
+            this.WindowState = FormWindowState.Normal;
 
             string updFilePath = @".\updater\ts.set.newversion.zip";
 
