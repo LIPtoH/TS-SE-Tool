@@ -46,6 +46,7 @@ namespace OpenPainter.ColorPicker
         private Panel panel1;
         private AdobeColors.CMYK _cmyk;
         private TableLayoutPanel tableLayoutPanel2;
+        private Button buttonApply;
         TS_SE_Tool.FormMain MainForm = Application.OpenForms.OfType<TS_SE_Tool.FormMain>().Single();
 
         public FormColorPicker(Color starting_color)
@@ -82,7 +83,7 @@ namespace OpenPainter.ColorPicker
 			m_lbl_Primary_Color.BackColor = starting_color;
 			m_lbl_Secondary_Color.BackColor = starting_color;
 
-			m_rbtn_Hue.Checked = true;
+            m_rbtn_Hue.Checked = true;
 		}
 
 		/// <summary>
@@ -208,8 +209,8 @@ namespace OpenPainter.ColorPicker
 		/// </summary>
 		private void InitializeComponent()
 		{
-            OpenPainter.ColorPicker.AdobeColors.HSB hsb5 = new OpenPainter.ColorPicker.AdobeColors.HSB();
-            OpenPainter.ColorPicker.AdobeColors.HSB hsb6 = new OpenPainter.ColorPicker.AdobeColors.HSB();
+            OpenPainter.ColorPicker.AdobeColors.HSB hsb1 = new OpenPainter.ColorPicker.AdobeColors.HSB();
+            OpenPainter.ColorPicker.AdobeColors.HSB hsb2 = new OpenPainter.ColorPicker.AdobeColors.HSB();
             this.m_cmd_OK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.m_txt_Hue = new System.Windows.Forms.TextBox();
@@ -250,6 +251,7 @@ namespace OpenPainter.ColorPicker
             this.buttonClearColor = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonApply = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -590,10 +592,10 @@ namespace OpenPainter.ColorPicker
             // m_ctrl_BigBox
             // 
             this.m_ctrl_BigBox.BaseColorComponent = OpenPainter.ColorPicker.ColorComponent.Hue;
-            hsb5.B = 1D;
-            hsb5.H = 0D;
-            hsb5.S = 1D;
-            this.m_ctrl_BigBox.HSB = hsb5;
+            hsb1.B = 1D;
+            hsb1.H = 0D;
+            hsb1.S = 1D;
+            this.m_ctrl_BigBox.HSB = hsb1;
             this.m_ctrl_BigBox.Location = new System.Drawing.Point(3, 3);
             this.m_ctrl_BigBox.Name = "m_ctrl_BigBox";
             this.m_ctrl_BigBox.RGB = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -605,10 +607,10 @@ namespace OpenPainter.ColorPicker
             // m_ctrl_ThinBox
             // 
             this.m_ctrl_ThinBox.BaseColorComponent = OpenPainter.ColorPicker.ColorComponent.Hue;
-            hsb6.B = 1D;
-            hsb6.H = 0D;
-            hsb6.S = 1D;
-            this.m_ctrl_ThinBox.HSB = hsb6;
+            hsb2.B = 1D;
+            hsb2.H = 0D;
+            hsb2.S = 1D;
+            this.m_ctrl_ThinBox.HSB = hsb2;
             this.m_ctrl_ThinBox.Location = new System.Drawing.Point(275, 3);
             this.m_ctrl_ThinBox.Name = "m_ctrl_ThinBox";
             this.m_ctrl_ThinBox.RGB = System.Drawing.Color.Red;
@@ -619,7 +621,7 @@ namespace OpenPainter.ColorPicker
             // 
             // buttonClearColor
             // 
-            this.buttonClearColor.Location = new System.Drawing.Point(436, 26);
+            this.buttonClearColor.Location = new System.Drawing.Point(439, 12);
             this.buttonClearColor.Name = "buttonClearColor";
             this.buttonClearColor.Size = new System.Drawing.Size(79, 34);
             this.buttonClearColor.TabIndex = 47;
@@ -646,6 +648,7 @@ namespace OpenPainter.ColorPicker
             // panel1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
+            this.panel1.Controls.Add(this.buttonApply);
             this.panel1.Controls.Add(this.tableLayoutPanel2);
             this.panel1.Controls.Add(this.m_ctrl_BigBox);
             this.panel1.Controls.Add(this.buttonClearColor);
@@ -685,6 +688,15 @@ namespace OpenPainter.ColorPicker
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(527, 276);
             this.panel1.TabIndex = 6;
+            // 
+            // buttonApply
+            // 
+            this.buttonApply.Location = new System.Drawing.Point(439, 53);
+            this.buttonApply.Name = "buttonApply";
+            this.buttonApply.Size = new System.Drawing.Size(79, 23);
+            this.buttonApply.TabIndex = 49;
+            this.buttonApply.Text = "Apply";
+            this.buttonApply.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel2
             // 

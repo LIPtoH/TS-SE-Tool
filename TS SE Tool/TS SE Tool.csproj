@@ -131,11 +131,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox.cs">
+    <Compile Include="Forms\FormAboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
+    <Compile Include="Forms\FormAboutBox.Designer.cs">
+      <DependentUpon>FormAboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomClasses\Cargo.cs" />
     <Compile Include="CustomClasses\Country.cs" />
@@ -235,8 +235,8 @@
     <Compile Include="RMcode\PlainTXTResourceManager.cs" />
     <Compile Include="RMcode\PlainTXTResourceReader.cs" />
     <Compile Include="RMcode\PlainTXTResourceSet.cs" />
-    <EmbeddedResource Include="AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FormAboutBox.resx">
+      <DependentUpon>FormAboutBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCheckUpdates.resx">
       <DependentUpon>FormCheckUpdates.cs</DependentUpon>

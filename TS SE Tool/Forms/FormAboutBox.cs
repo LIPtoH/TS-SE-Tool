@@ -25,9 +25,9 @@ using System.Threading;
 
 namespace TS_SE_Tool
 {
-    partial class AboutBox : Form
+    partial class FormAboutBox : Form
     {
-        public AboutBox()
+        public FormAboutBox()
         {
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;

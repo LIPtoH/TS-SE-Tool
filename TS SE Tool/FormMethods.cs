@@ -419,7 +419,7 @@ namespace TS_SE_Tool
         //About
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AboutBox aboutWindow = new AboutBox();
+            FormAboutBox aboutWindow = new FormAboutBox();
             aboutWindow.ShowDialog();
         }
 
