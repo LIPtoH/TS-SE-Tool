@@ -114,14 +114,15 @@ namespace TS_SE_Tool
                 //SupportedSavefileVersionATS;
                 SupportedGameVersionATS = "1.33.x - 1.36.x"; //Last game version Tested on
 
-                ProfileETS2 = @"\Euro Truck Simulator 2";
-                ProfileATS = @"\American Truck Simulator";
-
                 comboBoxPrevProfiles.FlatStyle =
                 comboBoxProfiles.FlatStyle =
                 comboBoxSaves.FlatStyle = FlatStyle.Flat;
 
+                ProfileETS2 = @"\Euro Truck Simulator 2";
+                ProfileATS = @"\American Truck Simulator";
                 dictionaryProfiles = new Dictionary<string, string> { { "ETS2", ProfileETS2 }, { "ATS", ProfileATS } };
+                GameType = "ETS2";
+                //Globals.CurrentGame = dictionaryProfiles[GameType];
 
                 CompaniesLngDict = new Dictionary<string, string>();
                 CitiesLngDict = new Dictionary<string, string>();
@@ -131,10 +132,7 @@ namespace TS_SE_Tool
                 //CustomStringsDict = new Dictionary<string, string>();
                 TruckBrandsLngDict = new Dictionary<string, string>();
                 DriverNames = new Dictionary<string, string>();
-
-                GameType = "ETS2";
-                Globals.CurrentGame = dictionaryProfiles[GameType];
-
+                
                 DistancesTable = new DataTable();
                 DistancesTable.Columns.Add("SourceCity", typeof(string));
                 DistancesTable.Columns.Add("SourceCompany", typeof(string));
@@ -329,7 +327,6 @@ namespace TS_SE_Tool
 
             ExtCargoList = new List<ExtCargo>();
 
-            //EconomyEventQueueList = new string[0];
             EconomyEventsTable = new string[0, 0];
             EconomyEventUnitLinkStringList = new string[0];
 
@@ -337,11 +334,8 @@ namespace TS_SE_Tool
             LastVisitedCity = "";
             InGameTime = 0;
             RandomValue = new Random();
-            //CitiesListAddedToCompare = new string[1];
 
-            //JobsListAdded = new string[0];
             LastModifiedTimestamp = new DateTime();
-            //ListSavefileCompanysString = new List<string>();//string[0];
 
             AddedJobsDictionary = new Dictionary<string, List<JobAdded>>();
             AddedJobsList = new List<JobAdded>();
@@ -354,7 +348,6 @@ namespace TS_SE_Tool
 
             namelessList = new List<string>();
             namelessLast = "";
-            //JobsTotalDistance = 0;
             LoopStartCity = "";
             LoopStartCompany = "";
             ProgPrevVersion = "0.0.1.0";
@@ -363,13 +356,34 @@ namespace TS_SE_Tool
             DistancesTable.Clear();
 
             components = null;
-
-            //Clear elements
-            ClearFormControls();
         }
 
-        private void ClearFormControls()
+        private void ClearFormControls(bool _initial)
         {
+            //Profile
+            //Level
+            FormUpdatePlayerLevel();
+            //Skills
+            foreach (CheckBox temp in ADRbuttonArray)
+                temp.Checked = false;
+
+            foreach (CheckBox temp in SkillButtonArray)
+                temp.Checked = false;
+
+            //User Colors
+            for (int i = 0; i < 8; i++)
+                UserColorsList.Add(Color.FromArgb(0, 0, 0, 0));
+
+            UpdateUserColorsButtons();
+            UserColorsList.Clear();
+
+            //Company
+
+            //Truck
+
+            //Trailer
+
+            //FreightMarket
             comboBoxFreightMarketTrailerVariant.SelectedIndex = -1;
             comboBoxFreightMarketTrailerVariant.DataSource = null;
             comboBoxFreightMarketTrailerDef.SelectedIndex = -1;
@@ -380,21 +394,16 @@ namespace TS_SE_Tool
 
         private void PopulateFormControlsk()
         {
-            buttonMainDecryptSave.Enabled = false;
-            buttonMainWriteSave.Enabled = true;
-
             AddTranslationToData();
-
-            FillFormProfileControls();
+            
+            FillFormProfileControls();//Profile
             UpdateUserColorsButtons();
-            FillFormCompanyControls();
 
-            FillUserCompanyTrucksList();
-            FillUserCompanyTrailerList();
-
-            FillFormFreightMarketControls();
-
-            FillFormCargoOffersControls();
+            FillFormCompanyControls();//Company
+            FillUserCompanyTrucksList();//Truck
+            FillUserCompanyTrailerList();//Trailer
+            FillFormFreightMarketControls();//FreightMarket
+            FillFormCargoOffersControls();//CargoMarket
         }
 
         //Menu controls
@@ -429,6 +438,8 @@ namespace TS_SE_Tool
             string pdf_path = Directory.GetCurrentDirectory() + @"\HowTo.pdf";
             if (File.Exists(pdf_path))
                 Process.Start(pdf_path);
+            else
+                MessageBox.Show("Missing manual. Try to repair via update", "HowTo.pdf not found");            
         }
 
         private void youTubeVideoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -460,9 +471,6 @@ namespace TS_SE_Tool
         {
             FormCheckUpdates FormWindow = new FormCheckUpdates();
             FormWindow.ShowDialog();
-
-            //string url = "http://rebrand.ly/TS-SET-Download";
-            //Process.Start(url);
         }
 
 
@@ -491,18 +499,9 @@ namespace TS_SE_Tool
         private void buttonDecryptSave_Click(object sender, EventArgs e)
         {
             SetDefaultValues(false);
+            ClearFormControls(true);
 
-            radioButtonMainGameSwitchETS.Enabled = false;
-            radioButtonMainGameSwitchATS.Enabled = false;
-
-            checkBoxProfilesAndSavesProfileBackups.Enabled = false;
-            buttonProfilesAndSavesRefreshAll.Enabled = false;
-            comboBoxPrevProfiles.Enabled = false;
-            comboBoxProfiles.Enabled = false;
-            comboBoxSaves.Enabled = false;
-
-            buttonMainDecryptSave.Enabled = false;
-            buttonMainLoadSave.Enabled = false;
+            ToggleMainControlsAccess(false);
 
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             string SiiSavePath = SavefilePath + @"\game.sii";
@@ -523,19 +522,8 @@ namespace TS_SE_Tool
             else
                 ShowStatusMessages("e", "error_could_not_decode_file");
 
-            radioButtonMainGameSwitchETS.Enabled = true;
-            radioButtonMainGameSwitchATS.Enabled = true;
-
-
-            checkBoxProfilesAndSavesProfileBackups.Enabled = true;
-            buttonProfilesAndSavesRefreshAll.Enabled = true;
-            comboBoxPrevProfiles.Enabled = true;
-            comboBoxProfiles.Enabled = true;
-            comboBoxSaves.Enabled = true;
-
+            ToggleMainControlsAccess(true);
             buttonMainDecryptSave.Enabled = false;
-            buttonMainLoadSave.Enabled = true;
-
 
             ToggleGame(GameType);
 
@@ -546,19 +534,10 @@ namespace TS_SE_Tool
 
         private void LoadSaveFile_Click(object sender, EventArgs e)
         {
-            comboBoxPrevProfiles.Enabled = false;
-            comboBoxProfiles.Enabled = false;
-            comboBoxSaves.Enabled = false;
 
-            radioButtonMainGameSwitchETS.Enabled = false;
-            radioButtonMainGameSwitchATS.Enabled = false;
+            ToggleMainControlsAccess(false);
 
-            checkBoxProfilesAndSavesProfileBackups.Enabled = false;
-            buttonProfilesAndSavesRefreshAll.Enabled = false;
-
-            buttonMainDecryptSave.Enabled = false;
-            buttonMainLoadSave.Enabled = false;
-            buttonMainWriteSave.Enabled = false;
+            ToggleControlsAccess(false);
 
             LoadSaveFile(); //Load save file
             //GC
@@ -578,7 +557,7 @@ namespace TS_SE_Tool
                 }
             }
 
-            ToggleVisibility(false);
+            ToggleControlsAccess(false);
             buttonMainWriteSave.Enabled = false;
 
             string SiiSavePath = SavefilePath + @"\game.sii";
@@ -616,7 +595,7 @@ namespace TS_SE_Tool
             string MyDocumentsPath = "";
             string RemoteUserdataDirectory = "";
 
-            MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Globals.CurrentGame;
+            MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + dictionaryProfiles[GameType];// Globals.CurrentGame;
 
             try
             {
@@ -870,14 +849,14 @@ namespace TS_SE_Tool
                     combDT.Rows.Add(SelectedFolder, "[C] Custom profile");
                 }
 
+                Globals.ProfilesHex = NewProfileHex;
+
                 comboBoxProfiles.ValueMember = "ProfilePath";
                 comboBoxProfiles.DisplayMember = "ProfileName";
                 comboBoxProfiles.DataSource = combDT;
 
                 if (comboBoxProfiles.Items.Count > 0)
                 {
-                    Globals.ProfilesHex = NewProfileHex;
-
                     //comboBoxProfiles.SelectedIndex = 0;
                     comboBoxProfiles.Enabled = true;
                     //comboBoxSaves.Enabled = true;
@@ -1005,6 +984,8 @@ namespace TS_SE_Tool
             string SelectedFolder = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
 
             List<string> includedFiles = new List<string>();
+            string[] t1 = Directory.GetFiles(SelectedFolder);
+            List<string> t2 = t1.Select(Path.GetFileName).ToList();
             includedFiles = Directory.GetFiles(SelectedFolder).Select(Path.GetFileName).ToList();
 
             if (includedFiles.Contains("game.sii"))
@@ -1261,14 +1242,15 @@ namespace TS_SE_Tool
 
         private void CreateUserColorsButtons()
         {
-            int padding = 6, width = 108, height = 46, colorcount = 8;
+            int padding = 6, width = 72, height = 48, colorcount = 8;
+            int usableSpace = groupBoxProfileUserColors.Bounds.Width;
 
             for (int i = 0; i < colorcount; i++)
             {
                 Button rb = new Button();
                 rb.Name = "buttonUC" + i.ToString();
                 rb.Text = null;
-                rb.Location = new Point(8, 32 + (padding + height) * i);
+                rb.Location = new Point((usableSpace - width) / 2, 32 + (padding + height) * i);
                 rb.Size = new Size(width, height);
                 rb.FlatStyle = FlatStyle.Flat;
                 rb.Enabled = false;
@@ -1560,14 +1542,6 @@ namespace TS_SE_Tool
             }
         }
 
-        private void ClearProfilePage()
-        {
-            foreach (CheckBox temp in ADRbuttonArray)
-                temp.Checked = false;
-
-            foreach (CheckBox temp in SkillButtonArray)
-                temp.Checked = false;
-        }
         //end Skill buttons
         //end Profile tab
 
@@ -2378,8 +2352,6 @@ namespace TS_SE_Tool
             {
                 if (UserTrailer.Value.Main)
                 {
-                    string trailerdef = UserTrailerDictionary[UserTrailer.Key].Parts.Find(x => x.PartType == "trailerdef").PartNameless;
-
                     string trailername = "";
 
                     if (UserTrailerDictionary[UserTrailer.Key].Users)
@@ -2387,10 +2359,64 @@ namespace TS_SE_Tool
                     else
                         trailername = "[Q] ";
 
-                    if (trailerdef.Contains("_nameless"))
-                        trailername += UserTrailerDefDictionary[trailerdef].Find(x => x.StartsWith(" source_name:")).Split(new char[] { '"' })[1];
+                    trailername += UserTrailer.Key;
+
+                    string trailerdef = UserTrailerDictionary[UserTrailer.Key].Parts.Find(x => x.PartType == "trailerdef").PartNameless;
+
+                    /*
+                    try
+                    {
+                        string source_name = UserTrailerDefDictionary[trailerdef].Find(x => x.StartsWith(" source_name:")).Split(':')[1];
+
+                        if (!source_name.Contains("null"))
+                        {
+                            trailername += source_name.Split(new char[] { '"' })[1].Trim(new char[] { ' ' }) + " | ";
+                        }
+                    }
+                    catch { }
+                    */
+
+                    trailername += " [ ";
+
+                    if (UserTrailerDefDictionary.Count > 0)
+                    {
+                        if (UserTrailerDefDictionary.ContainsKey(trailerdef))
+                        {
+                            string[] trailerDefPropertys = { "body_type", "axles", "chain_type" };
+                            string[] trailerDefExtra = { "{0}", "{0} axles", "{0}" };
+
+                            int iCounter = 0;
+                            List<string> CurTrailerDef = UserTrailerDefDictionary[trailerdef];
+
+                            bool wasfound = false;
+
+                            foreach (string Property in trailerDefPropertys)
+                            {
+                                try
+                                {
+                                    string tmp = CurTrailerDef.Find(x => x.StartsWith(" " + Property + ":")).Split(':')[1].Trim(new char[] { ' ' });
+
+                                    if (wasfound)
+                                        trailername += " ";
+                                    trailername += String.Format(trailerDefExtra[iCounter], tmp);
+
+                                    wasfound = true;
+                                }
+                                catch { wasfound = false; }
+                                iCounter++;
+                            }
+                        }
+                        else
+                        {
+                            trailername += trailerdef;
+                        }
+                    }
                     else
+                    {
                         trailername += trailerdef;
+                    }
+
+                    trailername += " ]";
 
                     combDT.Rows.Add(UserTrailer.Key, trailername);
                 }
@@ -4975,11 +5001,11 @@ namespace TS_SE_Tool
         //end Convoy Tools tab
 
         //Form methods
-        private void ToggleVisibility(bool visible)
+        private void ToggleControlsAccess(bool _state)
         {
             foreach (TabPage tp in tabControlMain.TabPages)
             {
-                tp.Enabled = visible;
+                tp.Enabled = _state;
             }
 
             if (comboBoxUserTruckCompanyTrucks.Items.Count == 0)
@@ -4993,19 +5019,35 @@ namespace TS_SE_Tool
             }
 
             int pSkillsNameHeight = 64, pSkillsNameWidth = 64;
-            for (int i = 0; i <6;i++)
+            for (int i = 0; i < 6; i++)
             {
-               Control[] tmp =  this.Controls.Find("profileSkillsPanel" + i.ToString(), true);
-                if(visible)
-                {
-                    Bitmap bgimg = new Bitmap(SkillImgS[i], pSkillsNameHeight, pSkillsNameWidth);
-                    tmp[0].BackgroundImage = bgimg;
-                }
-                else
+                Control[] tmp = this.Controls.Find("profileSkillsPanel" + i.ToString(), true);
+                Bitmap bgimg = new Bitmap(SkillImgS[i], pSkillsNameHeight, pSkillsNameWidth);
+                tmp[0].BackgroundImage = bgimg;
+                if (!_state)
                     tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
             }
         }
 
+        private void ToggleMainControlsAccess(bool _state)
+        {
+            radioButtonMainGameSwitchETS.Enabled = _state;
+            radioButtonMainGameSwitchATS.Enabled = _state;
+
+            checkBoxProfilesAndSavesProfileBackups.Enabled = _state;
+            buttonProfilesAndSavesRefreshAll.Enabled = _state;
+
+            comboBoxPrevProfiles.Enabled = _state;
+            comboBoxProfiles.Enabled = _state;
+            comboBoxSaves.Enabled = _state;
+
+            buttonMainDecryptSave.Enabled = _state;
+            buttonMainLoadSave.Enabled = _state;
+
+            buttonMainWriteSave.Enabled = _state;
+        }
+
+        //
         public void ToggleGame_Click(object sender, EventArgs e)
         {
             if (radioButtonMainGameSwitchETS.Checked)
@@ -5026,23 +5068,20 @@ namespace TS_SE_Tool
                     return;
                 else
                 {
-                    ToggleVisibility(false);
-                    buttonMainWriteSave.Enabled = false;
                     buttonMainDecryptSave.Enabled = true;
+
+                    buttonMainWriteSave.Enabled = false;
+
+                    ToggleControlsAccess(false);
                     SetDefaultValues(false);
+                    ClearFormControls(true);
                 }
             }
 
             if (_game == "ETS2")
-            {
-                Globals.CurrentGame = dictionaryProfiles["ETS2"];
                 GameType = _game;
-            }
             else
-            {
-                Globals.CurrentGame = dictionaryProfiles["ATS"];
                 GameType = _game;
-            }
         }
 
         //Language
@@ -5238,15 +5277,18 @@ namespace TS_SE_Tool
                 sortedDT.Rows.RemoveAt(rowi);
                 sortedDT.Rows.InsertAt(row, 0);
                 //Shift Unsorted
-                sourceRow = sortedDT.Select("Country = '+unsorted'")[0];
-                rowi = sortedDT.Rows.IndexOf(sourceRow);
+                try
+                {
+                    sourceRow = sortedDT.Select("Country = '+unsorted'")[0];
+                    rowi = sortedDT.Rows.IndexOf(sourceRow);
 
-                row = sortedDT.NewRow();
-                row.ItemArray = sourceRow.ItemArray;
+                    row = sortedDT.NewRow();
+                    row.ItemArray = sourceRow.ItemArray;
 
-                sortedDT.Rows.RemoveAt(rowi);
-                sortedDT.Rows.InsertAt(row, 1);
-
+                    sortedDT.Rows.RemoveAt(rowi);
+                    sortedDT.Rows.InsertAt(row, 1);
+                }
+                catch { }
 
                 comboBoxFreightMarketCountries.DataSource = sortedDT;
                 

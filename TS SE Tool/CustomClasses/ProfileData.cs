@@ -20,23 +20,23 @@ namespace TS_SE_Tool
     public class ProfileData
     {
         public string CompanyName { get; set; }
-        public int CachedExperiencePoints { get; set; }
-        public int CachedDistance { get; set; }
+        public uint CachedExperiencePoints { get; set; }
+        public uint CachedDistance { get; set; }
         //user_data
         //public uint SomeTime { get; set; } //0
         public double RoadsExplored { get; set; } //4
-        public int DeliveriesFinished { get; set; } //5
-        public int OwnedGaradesSmall { get; set; } //7
-        public int OwnedGaradesLarge { get; set; } //8
-        public int GameTimeSpent { get; set; } //9
-        public int RealTimeSpent { get; set; } //10
+        public uint DeliveriesFinished { get; set; } //5
+        public uint OwnedGaradesSmall { get; set; } //7
+        public uint OwnedGaradesLarge { get; set; } //8
+        public ulong GameTimeSpent { get; set; } //9
+        public uint RealTimeSpent { get; set; } //10
         public List<string> OwnedTruckList = new List<string>(); // 12
-        public int OwnedTrucks { get; set; } //6
-        public int OwnedTrailers { get; set; } //16
+        public uint OwnedTrucks { get; set; } //6
+        public uint OwnedTrailers { get; set; } //16
         //End
         public string ProfileName { get; set; }
-        public int CreationTime { get; set; }
-        public int SaveTime { get; set; }
+        public uint CreationTime { get; set; }
+        public uint SaveTime { get; set; }
 
         public int[] getPlayerLvl()
         {

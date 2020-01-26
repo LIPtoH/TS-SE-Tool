@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBoxCheckUpdatesOnStartup = new System.Windows.Forms.CheckBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.labelShowSplashOnStartup = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.checkBoxShowSplashOnStartup = new System.Windows.Forms.CheckBox();
+            this.checkBoxCheckUpdatesOnStartup = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,27 +61,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(264, 219);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 68);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(129, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Check updates on startup";
-            // 
-            // checkBoxCheckUpdatesOnStartup
-            // 
-            this.checkBoxCheckUpdatesOnStartup.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.checkBoxCheckUpdatesOnStartup.AutoSize = true;
-            this.checkBoxCheckUpdatesOnStartup.Location = new System.Drawing.Point(214, 68);
-            this.checkBoxCheckUpdatesOnStartup.Name = "checkBoxCheckUpdatesOnStartup";
-            this.checkBoxCheckUpdatesOnStartup.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxCheckUpdatesOnStartup.TabIndex = 1;
-            this.checkBoxCheckUpdatesOnStartup.UseVisualStyleBackColor = true;
-            this.checkBoxCheckUpdatesOnStartup.CheckedChanged += new System.EventHandler(this.checkBoxCheckUpdatesOnStartup_CheckedChanged);
-            // 
             // buttonSave
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.buttonSave, 2);
@@ -105,15 +84,39 @@
             this.labelShowSplashOnStartup.TabIndex = 3;
             this.labelShowSplashOnStartup.Text = "Show splash screen on startup";
             // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 68);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(129, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Check updates on startup";
+            // 
             // checkBoxShowSplashOnStartup
             // 
-            this.checkBoxShowSplashOnStartup.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.checkBoxShowSplashOnStartup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxShowSplashOnStartup.AutoSize = true;
+            this.checkBoxShowSplashOnStartup.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxShowSplashOnStartup.Location = new System.Drawing.Point(214, 38);
             this.checkBoxShowSplashOnStartup.Name = "checkBoxShowSplashOnStartup";
-            this.checkBoxShowSplashOnStartup.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxShowSplashOnStartup.Size = new System.Drawing.Size(47, 14);
             this.checkBoxShowSplashOnStartup.TabIndex = 5;
             this.checkBoxShowSplashOnStartup.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCheckUpdatesOnStartup
+            // 
+            this.checkBoxCheckUpdatesOnStartup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxCheckUpdatesOnStartup.AutoSize = true;
+            this.checkBoxCheckUpdatesOnStartup.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxCheckUpdatesOnStartup.Location = new System.Drawing.Point(214, 68);
+            this.checkBoxCheckUpdatesOnStartup.Name = "checkBoxCheckUpdatesOnStartup";
+            this.checkBoxCheckUpdatesOnStartup.Size = new System.Drawing.Size(47, 14);
+            this.checkBoxCheckUpdatesOnStartup.TabIndex = 1;
+            this.checkBoxCheckUpdatesOnStartup.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxCheckUpdatesOnStartup.UseVisualStyleBackColor = true;
+            this.checkBoxCheckUpdatesOnStartup.CheckedChanged += new System.EventHandler(this.checkBoxCheckUpdatesOnStartup_CheckedChanged);
             // 
             // FormProgramSettings
             // 
@@ -125,7 +128,7 @@
             this.MinimizeBox = false;
             this.Name = "FormProgramSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormProgramSettings";
+            this.Text = "Program Settings";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

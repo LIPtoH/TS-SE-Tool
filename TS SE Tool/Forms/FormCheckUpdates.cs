@@ -19,7 +19,7 @@ namespace TS_SE_Tool
 {
     public partial class FormCheckUpdates : Form
     {
-        bool NVavailible = false;
+        bool NVavailible = false, CheckComplete = false;
         string[] NewVersion = { "", "" };
 
         public FormCheckUpdates()
@@ -124,7 +124,7 @@ namespace TS_SE_Tool
             labelStatus.Text = "Checking for updates";
             await Task.Run(() => Check());
 
-            if (NVavailible)
+            if (CheckComplete && NVavailible)
             {
                 bool betterVersion = false;
                 string[] numArr = NewVersion[0].Split(new char[] { '.' });
@@ -157,6 +157,14 @@ namespace TS_SE_Tool
                     labelStatus.Text = String.Format("You are using latest version!");
                     labelStatus.ForeColor = Color.LimeGreen;
                     labelStatus.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                    buttonDownload.Visible = true;
+                    buttonDownload.Click += new EventHandler(this.buttonDownload_Click);
+                    buttonDownload.Text = "Download && Repair";
+
+                    this.Size = new Size(300, 225);
+
+                    buttonOK.Text = "Cancel";
                 }
             }
             else
@@ -176,9 +184,10 @@ namespace TS_SE_Tool
 
             if (newversionData != null)
             {
+                CheckComplete = true;
                 NewVersion = newversionData.Split(new char[] { '\t' });
 
-                if (NewVersion[0] != null && !NewVersion[0].Contains(AssemblyVersion))
+                if (NewVersion[0] != null && NewVersion[0].Contains("TS.SE.Tool"))
                 {
                     NVavailible = true;
                     NewVersion[0] = NewVersion[0].Replace("TS.SE.Tool.", "").Replace(".zip", "");

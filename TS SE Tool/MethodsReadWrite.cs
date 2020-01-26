@@ -174,13 +174,15 @@ namespace TS_SE_Tool
 
         private void LoadExtCountries()
         {
+            string[] inputFile;
+
             try
             {
-                CountryDictionaryFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\CityToCountry.csv");
+                inputFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\CityToCountry.csv");
 
-                for (int i = 0; i < CountryDictionaryFile.Length; i++)
+                for (int i = 0; i < inputFile.Length; i++)
                 {
-                    CountryDictionary.AddCountry(CountryDictionaryFile[i].Split(new char[] { ';' })[0], CountryDictionaryFile[i].Split(new char[] { ';' })[1]);
+                    CountryDictionary.AddCountry(inputFile[i].Split(new char[] { ';' })[0], inputFile[i].Split(new char[] { ';' })[1]);
                 }
             }
             catch
@@ -190,13 +192,14 @@ namespace TS_SE_Tool
 
             try
             {
-                CountryDictionaryFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\CountryProperties.csv");
+                inputFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\CountryProperties.csv");
 
-                for (int i = 0; i < CountryDictionaryFile.Length; i++)
+                for (int i = 0; i < inputFile.Length; i++)
                 {
-                    if (CountryDictionaryFile[i].StartsWith("#"))
+                    if (inputFile[i].StartsWith("#"))
                         continue;
-                    string[] csvParts = CountryDictionaryFile[i].Split(new char[] { ';' });
+
+                    string[] csvParts = inputFile[i].Split(new char[] { ';' });
                     CountriesDataList.Add(csvParts[0], new Country(csvParts[0], csvParts[1], csvParts[2].Replace('.',',')));
                 }
             }
@@ -318,6 +321,9 @@ namespace TS_SE_Tool
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
+                    if (tempFile[i].StartsWith("#"))
+                        continue;
+
                     string[] tmp = tempFile[i].Split(new char[] { ';' });
                     TruckBrandsLngDict.Add(tmp[0], tmp[1]);
                 }
@@ -751,8 +757,8 @@ namespace TS_SE_Tool
         {
             //ToggleVisibility(false);
             SetDefaultValues(false);
+            ClearFormControls(true);
 
-            ClearProfilePage();
             ClearJobData();
 
             ShowStatusMessages("i", "message_decoding_save_file");
@@ -819,6 +825,12 @@ namespace TS_SE_Tool
                 {
                     LogWriter("Wrongly decoded Profile file or wrong file format");
                     ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
+
+                    tempProfileFileInMemory = null;
+
+                    SetDefaultValues(false);
+                    ToggleMainControlsAccess(true);
+                    ToggleControlsAccess(false);
                 }
                 else if (tempProfileFileInMemory != null)
                 {
@@ -869,6 +881,12 @@ namespace TS_SE_Tool
                 {
                     LogWriter("Wrongly decoded Info file or wrong file format");
                     ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
+
+                    tempInfoFileInMemory = null;
+
+                    SetDefaultValues(false);
+                    ToggleMainControlsAccess(true);
+                    ToggleControlsAccess(false);
                 }
                 else if (tempInfoFileInMemory != null)
                 {
@@ -954,6 +972,12 @@ namespace TS_SE_Tool
                 {
                     LogWriter("Wrongly decoded Save file or wrong file format");
                     ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
+
+                    tempSavefileInMemory = null;
+
+                    SetDefaultValues(false);
+                    ToggleMainControlsAccess(true);
+                    ToggleControlsAccess(false);
                 }
                 else if (tempSavefileInMemory != null)
                 {
@@ -1013,6 +1037,12 @@ namespace TS_SE_Tool
                 {
                     LogWriter("Wrongly decoded Profile file or wrong file format");
                     ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
+
+                    tempProfileFileInMemory = null;
+
+                    SetDefaultValues(false);
+                    ToggleMainControlsAccess(true);
+                    ToggleControlsAccess(false);
                 }
                 else if (tempProfileFileInMemory != null)
                 {
@@ -1032,25 +1062,68 @@ namespace TS_SE_Tool
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolStripProgressBarMain.Value = 0;
+            //ClearFormControls(false);
             PopulateFormControlsk();
 
-            radioButtonMainGameSwitchETS.Enabled = true;
-            radioButtonMainGameSwitchATS.Enabled = true;
-
-            checkBoxProfilesAndSavesProfileBackups.Enabled = true;
-            buttonProfilesAndSavesRefreshAll.Enabled = true;
-            comboBoxPrevProfiles.Enabled = true;
-            comboBoxProfiles.Enabled = true;
-            comboBoxSaves.Enabled = true;
-
+            ToggleMainControlsAccess(true);
             buttonMainDecryptSave.Enabled = false;
-            buttonMainLoadSave.Enabled = true;
-            buttonMainWriteSave.Enabled = true;
-
-            //ToggleGame(GameType);
-            ToggleVisibility(true);
+            ToggleControlsAccess(true);
 
             LogWriter("Successfully completed work with " + SavefilePath + " save file");
+        }
+
+        private void PrintAddedJobs()
+        {
+            foreach (JobAdded tempJobData in AddedJobsList)
+            {
+                string SourceCityName = CitiesList.Find(x => x.CityName == tempJobData.SourceCity).CityNameTranslated;
+                string SourceCompanyName = tempJobData.SourceCompany;
+                CompaniesLngDict.TryGetValue(SourceCompanyName, out SourceCompanyName);
+
+                string DestinationCityName = CitiesList.Find(x => x.CityName == tempJobData.DestinationCity).CityNameTranslated;
+                string DestinationCompanyName = tempJobData.DestinationCompany;
+                CompaniesLngDict.TryGetValue(DestinationCompanyName, out DestinationCompanyName);
+
+                #region WriteLog
+                //Write log
+                string jobdata = "", tempStr = "";
+
+                jobdata += "\r\nLoad of " + tempJobData.Cargo;
+                jobdata += " of " + tempJobData.UnitsCount + " units";
+
+                if (tempJobData.Type == 0)
+                    tempStr = "Normal";
+                else if (tempJobData.Type == 1)
+                    tempStr = "Heavy";
+                else if (tempJobData.Type == 2)
+                    tempStr = "Double";
+
+                jobdata += "\r\nIn " + tempStr + " trailer ";
+                jobdata += tempJobData.TrailerDefinition;
+                jobdata += " with " + tempJobData.TrailerVariant + " appearance";
+
+                tempStr = tempJobData.Urgency.ToString();
+
+                if (UrgencyLngDict.TryGetValue(tempStr, out string value))
+                    if (value != null && value != "")
+                        tempStr = value;
+
+                jobdata += "\r\nUrgency " + tempStr;
+                jobdata += "\r\nMinimum travel distance of " + tempJobData.Distance + " km ";
+                jobdata += "in " + tempJobData.CompanyTruck;
+                jobdata += "\r\nJob valid for " + (tempJobData.ExpirationTime - InGameTime) + " minutes";
+
+                if (tempJobData.Ferrytime > 0 || tempJobData.Ferryprice > 0)
+                {
+                    jobdata += "\r\nExtra time on ferry - " + tempJobData.Ferrytime;
+                    jobdata += "and it will cost " + tempJobData.Ferryprice;
+                }
+
+                LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName +
+                    "\r\n-----------" + jobdata + "\r\n-----------");
+
+                #endregion
+            }
         }
 
         //button_save_file
@@ -2059,6 +2132,7 @@ namespace TS_SE_Tool
 
             //dispose attempt
             SetDefaultValues(false);
+            ClearFormControls(true);
 
             GC.Collect();
             GC.WaitForPendingFinalizers();

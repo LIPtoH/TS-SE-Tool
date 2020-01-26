@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItemProgram = new System.Windows.Forms.ToolStripMenuItem();
+            this.programSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -206,7 +207,6 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.programSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -272,22 +272,29 @@
             this.toolStripMenuItemProgram.Size = new System.Drawing.Size(65, 20);
             this.toolStripMenuItemProgram.Text = "Program";
             // 
+            // programSettingsToolStripMenuItem
+            // 
+            this.programSettingsToolStripMenuItem.Name = "programSettingsToolStripMenuItem";
+            this.programSettingsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.programSettingsToolStripMenuItem.Text = "Program settings";
+            this.programSettingsToolStripMenuItem.Click += new System.EventHandler(this.programSettingsToolStripMenuItem_Click);
+            // 
             // toolStripMenuItemSettings
             // 
             this.toolStripMenuItemSettings.Name = "toolStripMenuItemSettings";
-            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(164, 22);
             this.toolStripMenuItemSettings.Text = "Settings";
             this.toolStripMenuItemSettings.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(164, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -430,11 +437,11 @@
             // 
             // buttonMainDecryptSave
             // 
-            this.buttonMainDecryptSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMainDecryptSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonMainDecryptSave.Enabled = false;
-            this.buttonMainDecryptSave.Location = new System.Drawing.Point(3, 3);
+            this.buttonMainDecryptSave.Location = new System.Drawing.Point(6, 186);
             this.buttonMainDecryptSave.Name = "buttonMainDecryptSave";
-            this.buttonMainDecryptSave.Size = new System.Drawing.Size(116, 39);
+            this.buttonMainDecryptSave.Size = new System.Drawing.Size(110, 23);
             this.buttonMainDecryptSave.TabIndex = 5;
             this.buttonMainDecryptSave.Text = "Decrypt";
             this.buttonMainDecryptSave.UseVisualStyleBackColor = true;
@@ -2036,7 +2043,7 @@
             // 
             this.buttonMainWriteSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMainWriteSave.Enabled = false;
-            this.buttonMainWriteSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonMainWriteSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonMainWriteSave.Location = new System.Drawing.Point(3, 486);
             this.buttonMainWriteSave.Name = "buttonMainWriteSave";
             this.buttonMainWriteSave.Size = new System.Drawing.Size(238, 84);
@@ -2047,11 +2054,11 @@
             // 
             // buttonProfilesAndSavesOpenSaveFolder
             // 
-            this.buttonProfilesAndSavesOpenSaveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonProfilesAndSavesOpenSaveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
-            this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(6, 187);
+            this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(122, 186);
             this.buttonProfilesAndSavesOpenSaveFolder.Name = "buttonProfilesAndSavesOpenSaveFolder";
-            this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(226, 41);
+            this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(110, 23);
             this.buttonProfilesAndSavesOpenSaveFolder.TabIndex = 8;
             this.buttonProfilesAndSavesOpenSaveFolder.Text = "Open Folder";
             this.buttonProfilesAndSavesOpenSaveFolder.UseVisualStyleBackColor = true;
@@ -2090,9 +2097,10 @@
             // 
             this.buttonMainLoadSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMainLoadSave.Enabled = false;
-            this.buttonMainLoadSave.Location = new System.Drawing.Point(125, 3);
+            this.buttonMainLoadSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonMainLoadSave.Location = new System.Drawing.Point(3, 3);
             this.buttonMainLoadSave.Name = "buttonMainLoadSave";
-            this.buttonMainLoadSave.Size = new System.Drawing.Size(116, 39);
+            this.buttonMainLoadSave.Size = new System.Drawing.Size(238, 56);
             this.buttonMainLoadSave.TabIndex = 11;
             this.buttonMainLoadSave.Text = "Load";
             this.buttonMainLoadSave.UseVisualStyleBackColor = true;
@@ -2155,6 +2163,7 @@
             // 
             // groupBoxMainProfilesAndSaves
             // 
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonMainDecryptSave);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRefreshAll);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.checkBoxProfilesAndSavesProfileBackups);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.pictureBoxProfileAvatar);
@@ -2165,7 +2174,7 @@
             this.groupBoxMainProfilesAndSaves.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxMainProfilesAndSaves.Location = new System.Drawing.Point(3, 83);
             this.groupBoxMainProfilesAndSaves.Name = "groupBoxMainProfilesAndSaves";
-            this.groupBoxMainProfilesAndSaves.Size = new System.Drawing.Size(238, 234);
+            this.groupBoxMainProfilesAndSaves.Size = new System.Drawing.Size(238, 215);
             this.groupBoxMainProfilesAndSaves.TabIndex = 21;
             this.groupBoxMainProfilesAndSaves.TabStop = false;
             this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
@@ -2199,8 +2208,8 @@
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 5;
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 240F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 221F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel16.Size = new System.Drawing.Size(244, 573);
@@ -2261,26 +2270,18 @@
             // 
             // tableLayoutPanel11
             // 
-            this.tableLayoutPanel11.ColumnCount = 2;
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.Controls.Add(this.buttonMainDecryptSave, 0, 0);
-            this.tableLayoutPanel11.Controls.Add(this.buttonMainLoadSave, 1, 0);
+            this.tableLayoutPanel11.ColumnCount = 1;
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel11.Controls.Add(this.buttonMainLoadSave, 0, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(0, 320);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(0, 301);
             this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 1;
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 45);
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
-            // 
-            // programSettingsToolStripMenuItem
-            // 
-            this.programSettingsToolStripMenuItem.Name = "programSettingsToolStripMenuItem";
-            this.programSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.programSettingsToolStripMenuItem.Text = "Program settings";
-            this.programSettingsToolStripMenuItem.Click += new System.EventHandler(this.programSettingsToolStripMenuItem_Click);
             // 
             // FormMain
             // 

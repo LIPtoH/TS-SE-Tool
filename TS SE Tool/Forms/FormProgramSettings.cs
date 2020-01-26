@@ -15,6 +15,7 @@ namespace TS_SE_Tool
         public FormProgramSettings()
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.MainIco;
             LoadSettings();
         }
 
@@ -30,6 +31,7 @@ namespace TS_SE_Tool
             Properties.Settings.Default.ShowSplashOnStartup = checkBoxShowSplashOnStartup.Checked;
             Properties.Settings.Default.CheckUpdatesOnStartup = checkBoxCheckUpdatesOnStartup.Checked;
             Properties.Settings.Default.Save();
+            this.Close();
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
