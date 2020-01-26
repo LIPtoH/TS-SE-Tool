@@ -63,6 +63,7 @@ namespace TS_SE_Tool
 
                 checkBoxCustomThumbnail.Visible = false;
                 buttonSelectCustomThumbnail.Visible = false;
+                labelThumbnailDescription.Visible = false;
 
                 //radioButtonMove.Checked = true;
                 radioButtonMove.Visible = false;
@@ -213,9 +214,9 @@ namespace TS_SE_Tool
                         Image loadedImage = Image.FromFile(file);
                         Bitmap temp = (Bitmap)loadedImage;
 
-                        int _width = 256, _height = 128;
+                        int _trgWidth = 256, _trgHeight = 128, _srcWidth, _srcHeight;
                         //Check resolution
-                        if(loadedImage.Width != _width || loadedImage.Height != _height)
+                        if(loadedImage.Width != _trgWidth || loadedImage.Height != _trgHeight)
                         {
                             //Check aspect ratio
                             double aspect = (double) loadedImage.Width / loadedImage.Height;
@@ -223,23 +224,23 @@ namespace TS_SE_Tool
                             if (aspect == 2)
                             {
                                 //Right aspect
-                                temp = new Bitmap(loadedImage, new Size(_width, _height));
+                                temp = new Bitmap(loadedImage, new Size(_trgWidth, _trgHeight));
                             }
                             else
                             {
                                 //Wrong aspect. Set new width and height
                                 if(aspect > 2)
                                 {
-                                    _height = loadedImage.Height;
-                                    _width = _height * 2;
+                                    _srcHeight = loadedImage.Height;
+                                    _srcWidth = _trgHeight * 2;
                                 }
                                 else
                                 {
-                                    _width = loadedImage.Width;
-                                    _height = _width * 2;
+                                    _srcWidth = loadedImage.Width;
+                                    _srcHeight = _trgWidth * 2;
                                 }
 
-                                temp = new Bitmap(temp.Clone(new Rectangle(0, 0, _width, _height), temp.PixelFormat),256,128);
+                                temp = new Bitmap(temp.Clone(new Rectangle(0, 0, _srcWidth, _srcHeight), temp.PixelFormat), _trgWidth, _trgHeight);
                             }
                         }
 

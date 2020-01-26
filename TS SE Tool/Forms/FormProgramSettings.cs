@@ -7,15 +7,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
     public partial class FormProgramSettings : Form
     {
+        FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
         public FormProgramSettings()
         {
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
+
+            this.SuspendLayout();
+
+            try
+            {
+                string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
+                if (translatedString != null)
+                    this.Text = translatedString;
+            }
+            catch
+            {
+            }
+
+            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
+
+            this.ResumeLayout();
+
             LoadSettings();
         }
 

@@ -51,6 +51,7 @@
             this.statusStripCCpositions = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusMessages = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.labelThumbnailDescription = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -229,6 +230,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.labelThumbnailDescription);
             this.panel2.Controls.Add(this.buttonSelectCustomThumbnail);
             this.panel2.Controls.Add(this.checkBoxCustomThumbnail);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -340,6 +342,19 @@
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(200, 16);
             // 
+            // labelThumbnailDescription
+            // 
+            this.labelThumbnailDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelThumbnailDescription.Location = new System.Drawing.Point(3, 52);
+            this.labelThumbnailDescription.MaximumSize = new System.Drawing.Size(190, 0);
+            this.labelThumbnailDescription.Name = "labelThumbnailDescription";
+            this.labelThumbnailDescription.Size = new System.Drawing.Size(185, 52);
+            this.labelThumbnailDescription.TabIndex = 2;
+            this.labelThumbnailDescription.Text = "Image size needs to be at least 256x128 and with aspect ratio of 2:1. Otherwise i" +
+    "t will grab part of the image from Top Left corner.";
+            this.labelThumbnailDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormConvoyControlPositions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -391,5 +406,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.RadioButton radioButtonSelect;
         private System.Windows.Forms.RadioButton radioButtonMove;
+        private System.Windows.Forms.Label labelThumbnailDescription;
     }
 }
