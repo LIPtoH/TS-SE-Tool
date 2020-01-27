@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItemProgram = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemProgramSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,12 +39,12 @@
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.localPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.youTubeVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemTutorial = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemLocalPDF = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemYouTubeVideo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.latestStableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDownload = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCheckUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.checkSCSForumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkTMPForumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -206,7 +207,6 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.programSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -264,13 +264,20 @@
             // toolStripMenuItemProgram
             // 
             this.toolStripMenuItemProgram.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.programSettingsToolStripMenuItem,
+            this.toolStripMenuItemProgramSettings,
             this.toolStripMenuItemSettings,
             this.toolStripSeparator1,
             this.toolStripMenuItemExit});
             this.toolStripMenuItemProgram.Name = "toolStripMenuItemProgram";
             this.toolStripMenuItemProgram.Size = new System.Drawing.Size(65, 20);
             this.toolStripMenuItemProgram.Text = "Program";
+            // 
+            // toolStripMenuItemProgramSettings
+            // 
+            this.toolStripMenuItemProgramSettings.Name = "toolStripMenuItemProgramSettings";
+            this.toolStripMenuItemProgramSettings.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemProgramSettings.Text = "Program settings";
+            this.toolStripMenuItemProgramSettings.Click += new System.EventHandler(this.programSettingsToolStripMenuItem_Click);
             // 
             // toolStripMenuItemSettings
             // 
@@ -302,9 +309,9 @@
             this.toolStripMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemAbout,
             this.toolStripSeparator3,
-            this.toolStripMenuItem1,
+            this.toolStripMenuItemTutorial,
             this.toolStripSeparator4,
-            this.downloadToolStripMenuItem});
+            this.toolStripMenuItemDownload});
             this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
             this.toolStripMenuItemHelp.Size = new System.Drawing.Size(44, 20);
             this.toolStripMenuItemHelp.Text = "Help";
@@ -312,61 +319,61 @@
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemAbout.Text = "About";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(125, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
-            // toolStripMenuItem1
+            // toolStripMenuItemTutorial
             // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.localPDFToolStripMenuItem,
-            this.youTubeVideoToolStripMenuItem});
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(128, 22);
-            this.toolStripMenuItem1.Text = "How To";
+            this.toolStripMenuItemTutorial.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemLocalPDF,
+            this.toolStripMenuItemYouTubeVideo});
+            this.toolStripMenuItemTutorial.Name = "toolStripMenuItemTutorial";
+            this.toolStripMenuItemTutorial.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemTutorial.Text = "How To";
             // 
-            // localPDFToolStripMenuItem
+            // toolStripMenuItemLocalPDF
             // 
-            this.localPDFToolStripMenuItem.Name = "localPDFToolStripMenuItem";
-            this.localPDFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.localPDFToolStripMenuItem.Text = "Local PDF";
-            this.localPDFToolStripMenuItem.Click += new System.EventHandler(this.localPDFToolStripMenuItem_Click);
+            this.toolStripMenuItemLocalPDF.Name = "toolStripMenuItemLocalPDF";
+            this.toolStripMenuItemLocalPDF.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemLocalPDF.Text = "Local PDF";
+            this.toolStripMenuItemLocalPDF.Click += new System.EventHandler(this.localPDFToolStripMenuItem_Click);
             // 
-            // youTubeVideoToolStripMenuItem
+            // toolStripMenuItemYouTubeVideo
             // 
-            this.youTubeVideoToolStripMenuItem.Name = "youTubeVideoToolStripMenuItem";
-            this.youTubeVideoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.youTubeVideoToolStripMenuItem.Text = "YouTube video";
-            this.youTubeVideoToolStripMenuItem.Click += new System.EventHandler(this.youTubeVideoToolStripMenuItem_Click);
+            this.toolStripMenuItemYouTubeVideo.Name = "toolStripMenuItemYouTubeVideo";
+            this.toolStripMenuItemYouTubeVideo.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemYouTubeVideo.Text = "YouTube video";
+            this.toolStripMenuItemYouTubeVideo.Click += new System.EventHandler(this.youTubeVideoToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(125, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
-            // downloadToolStripMenuItem
+            // toolStripMenuItemDownload
             // 
-            this.downloadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.latestStableToolStripMenuItem,
+            this.toolStripMenuItemDownload.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemCheckUpdates,
             this.toolStripSeparator5,
             this.checkSCSForumToolStripMenuItem,
             this.checkTMPForumToolStripMenuItem,
             this.checkGitHubRelesesToolStripMenuItem});
-            this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
-            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.downloadToolStripMenuItem.Text = "Download";
+            this.toolStripMenuItemDownload.Name = "toolStripMenuItemDownload";
+            this.toolStripMenuItemDownload.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemDownload.Text = "Download";
             // 
-            // latestStableToolStripMenuItem
+            // toolStripMenuItemCheckUpdates
             // 
-            this.latestStableToolStripMenuItem.Name = "latestStableToolStripMenuItem";
-            this.latestStableToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.latestStableToolStripMenuItem.Text = "Latest";
-            this.latestStableToolStripMenuItem.Click += new System.EventHandler(this.latestStableToolStripMenuItem_Click);
+            this.toolStripMenuItemCheckUpdates.Name = "toolStripMenuItemCheckUpdates";
+            this.toolStripMenuItemCheckUpdates.Size = new System.Drawing.Size(195, 22);
+            this.toolStripMenuItemCheckUpdates.Text = "Check updates";
+            this.toolStripMenuItemCheckUpdates.Click += new System.EventHandler(this.latestStableToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -430,11 +437,11 @@
             // 
             // buttonMainDecryptSave
             // 
-            this.buttonMainDecryptSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMainDecryptSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonMainDecryptSave.Enabled = false;
-            this.buttonMainDecryptSave.Location = new System.Drawing.Point(3, 3);
+            this.buttonMainDecryptSave.Location = new System.Drawing.Point(6, 186);
             this.buttonMainDecryptSave.Name = "buttonMainDecryptSave";
-            this.buttonMainDecryptSave.Size = new System.Drawing.Size(116, 39);
+            this.buttonMainDecryptSave.Size = new System.Drawing.Size(110, 23);
             this.buttonMainDecryptSave.TabIndex = 5;
             this.buttonMainDecryptSave.Text = "Decrypt";
             this.buttonMainDecryptSave.UseVisualStyleBackColor = true;
@@ -2036,7 +2043,7 @@
             // 
             this.buttonMainWriteSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMainWriteSave.Enabled = false;
-            this.buttonMainWriteSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonMainWriteSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonMainWriteSave.Location = new System.Drawing.Point(3, 486);
             this.buttonMainWriteSave.Name = "buttonMainWriteSave";
             this.buttonMainWriteSave.Size = new System.Drawing.Size(238, 84);
@@ -2047,11 +2054,11 @@
             // 
             // buttonProfilesAndSavesOpenSaveFolder
             // 
-            this.buttonProfilesAndSavesOpenSaveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonProfilesAndSavesOpenSaveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
-            this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(6, 187);
+            this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(122, 186);
             this.buttonProfilesAndSavesOpenSaveFolder.Name = "buttonProfilesAndSavesOpenSaveFolder";
-            this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(226, 41);
+            this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(110, 23);
             this.buttonProfilesAndSavesOpenSaveFolder.TabIndex = 8;
             this.buttonProfilesAndSavesOpenSaveFolder.Text = "Open Folder";
             this.buttonProfilesAndSavesOpenSaveFolder.UseVisualStyleBackColor = true;
@@ -2090,9 +2097,10 @@
             // 
             this.buttonMainLoadSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMainLoadSave.Enabled = false;
-            this.buttonMainLoadSave.Location = new System.Drawing.Point(125, 3);
+            this.buttonMainLoadSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonMainLoadSave.Location = new System.Drawing.Point(3, 3);
             this.buttonMainLoadSave.Name = "buttonMainLoadSave";
-            this.buttonMainLoadSave.Size = new System.Drawing.Size(116, 39);
+            this.buttonMainLoadSave.Size = new System.Drawing.Size(238, 56);
             this.buttonMainLoadSave.TabIndex = 11;
             this.buttonMainLoadSave.Text = "Load";
             this.buttonMainLoadSave.UseVisualStyleBackColor = true;
@@ -2155,6 +2163,7 @@
             // 
             // groupBoxMainProfilesAndSaves
             // 
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonMainDecryptSave);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRefreshAll);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.checkBoxProfilesAndSavesProfileBackups);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.pictureBoxProfileAvatar);
@@ -2165,7 +2174,7 @@
             this.groupBoxMainProfilesAndSaves.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxMainProfilesAndSaves.Location = new System.Drawing.Point(3, 83);
             this.groupBoxMainProfilesAndSaves.Name = "groupBoxMainProfilesAndSaves";
-            this.groupBoxMainProfilesAndSaves.Size = new System.Drawing.Size(238, 234);
+            this.groupBoxMainProfilesAndSaves.Size = new System.Drawing.Size(238, 215);
             this.groupBoxMainProfilesAndSaves.TabIndex = 21;
             this.groupBoxMainProfilesAndSaves.TabStop = false;
             this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
@@ -2199,8 +2208,8 @@
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 5;
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 240F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 221F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel16.Size = new System.Drawing.Size(244, 573);
@@ -2261,26 +2270,18 @@
             // 
             // tableLayoutPanel11
             // 
-            this.tableLayoutPanel11.ColumnCount = 2;
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.Controls.Add(this.buttonMainDecryptSave, 0, 0);
-            this.tableLayoutPanel11.Controls.Add(this.buttonMainLoadSave, 1, 0);
+            this.tableLayoutPanel11.ColumnCount = 1;
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel11.Controls.Add(this.buttonMainLoadSave, 0, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(0, 320);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(0, 301);
             this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 1;
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 45);
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
-            // 
-            // programSettingsToolStripMenuItem
-            // 
-            this.programSettingsToolStripMenuItem.Name = "programSettingsToolStripMenuItem";
-            this.programSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.programSettingsToolStripMenuItem.Text = "Program settings";
-            this.programSettingsToolStripMenuItem.Click += new System.EventHandler(this.programSettingsToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -2518,23 +2519,23 @@
         private System.Windows.Forms.RadioButton radioButtonMainGameSwitchETS;
         private System.Windows.Forms.RadioButton radioButtonMainGameSwitchATS;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem localPDFToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem youTubeVideoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemTutorial;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemLocalPDF;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemYouTubeVideo;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripFreightMarketJobList;
         private System.Windows.Forms.ToolStripMenuItem contextMenuStripFreightMarketJobListEdit;
         private System.Windows.Forms.ToolStripMenuItem contextMenuStripFreightMarketJobListDelete;
         private System.Windows.Forms.Button buttonFreightMarketCancelJobEdit;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
         private System.Windows.Forms.Button buttonUserCompanyGaragesManage;
-        private System.Windows.Forms.ToolStripMenuItem downloadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDownload;
         private System.Windows.Forms.ToolStripMenuItem checkSCSForumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkTMPForumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkGitHubRelesesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem latestStableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCheckUpdates;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem programSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemProgramSettings;
     }
 }
 

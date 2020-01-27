@@ -1532,14 +1532,14 @@ namespace TS_SE_Tool
                 if (tempProfileFileInMemory[line].StartsWith(" cached_experience:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.CachedExperiencePoints = int.Parse(chunkOfline[2]);
+                    ProfileDataV.CachedExperiencePoints = uint.Parse(chunkOfline[2]);
                     continue; //searching
                 }
 
                 if (tempProfileFileInMemory[line].StartsWith(" cached_distance:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.CachedDistance = int.Parse(chunkOfline[2]);
+                    ProfileDataV.CachedDistance = uint.Parse(chunkOfline[2]);
                     continue; //searching
                 }
 
@@ -1562,49 +1562,49 @@ namespace TS_SE_Tool
                 if (tempProfileFileInMemory[line].StartsWith(" user_data[5]:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.DeliveriesFinished = int.Parse(chunkOfline[2]);
+                    ProfileDataV.DeliveriesFinished = uint.Parse(chunkOfline[2]);
                     continue; //searching
                 }
 
                 if (tempProfileFileInMemory[line].StartsWith(" user_data[7]:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.OwnedGaradesSmall = int.Parse(chunkOfline[2]);
+                    ProfileDataV.OwnedGaradesSmall = uint.Parse(chunkOfline[2]);
                     continue; //searching
                 }
 
                 if (tempProfileFileInMemory[line].StartsWith(" user_data[8]:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.OwnedGaradesLarge = int.Parse(chunkOfline[2]);
+                    ProfileDataV.OwnedGaradesLarge = uint.Parse(chunkOfline[2]);
                     continue; //searching
                 }
 
                 if (tempProfileFileInMemory[line].StartsWith(" user_data[9]:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.GameTimeSpent = int.Parse(chunkOfline[2]);
+                    ProfileDataV.GameTimeSpent = ulong.Parse(chunkOfline[2]);
                     continue; //searching
                 }
 
                 if (tempProfileFileInMemory[line].StartsWith(" user_data[10]:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.RealTimeSpent = int.Parse(chunkOfline[2]);
+                    ProfileDataV.RealTimeSpent = uint.Parse(chunkOfline[2]);
                     continue; //searching
                 }
 
                 if (tempProfileFileInMemory[line].StartsWith(" user_data[6]:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.OwnedTrucks = int.Parse(chunkOfline[2].Trim('"'));
+                    ProfileDataV.OwnedTrucks = uint.Parse(chunkOfline[2].Trim('"'));
                     continue; //searching
                 }
 
                 if (tempProfileFileInMemory[line].StartsWith(" user_data[16]:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.OwnedTrailers = int.Parse(chunkOfline[2]);
+                    ProfileDataV.OwnedTrailers = uint.Parse(chunkOfline[2]);
                     continue; //searching
                 }
 
@@ -1654,14 +1654,14 @@ namespace TS_SE_Tool
                 if (tempProfileFileInMemory[line].StartsWith(" creation_time:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.CreationTime = int.Parse(chunkOfline[2]);
+                    ProfileDataV.CreationTime = uint.Parse(chunkOfline[2]);
                     continue; //searching
                 }
 
                 if (tempProfileFileInMemory[line].StartsWith(" save_time:"))
                 {
                     chunkOfline = tempProfileFileInMemory[line].Split(new char[] { ' ' });
-                    ProfileDataV.SaveTime = int.Parse(chunkOfline[2]);
+                    ProfileDataV.SaveTime = uint.Parse(chunkOfline[2]);
                     continue; //searching
                 }
             }
@@ -1864,60 +1864,6 @@ namespace TS_SE_Tool
                         }
                     }
                 }
-            }
-        }
-
-        private void PrintAddedJobs()
-        {
-            foreach (JobAdded tempJobData in AddedJobsList)
-            {
-                string SourceCityName = CitiesList.Find(x => x.CityName == tempJobData.SourceCity).CityNameTranslated;
-                string SourceCompanyName = tempJobData.SourceCompany;
-                CompaniesLngDict.TryGetValue(SourceCompanyName, out SourceCompanyName);
-
-                string DestinationCityName = CitiesList.Find(x => x.CityName == tempJobData.DestinationCity).CityNameTranslated;
-                string DestinationCompanyName = tempJobData.DestinationCompany;
-                CompaniesLngDict.TryGetValue(DestinationCompanyName, out DestinationCompanyName);
-
-                #region WriteLog
-                //Write log
-                string jobdata = "", tempStr = "";
-
-                jobdata += "\r\nLoad of " + tempJobData.Cargo;
-                jobdata += " of " + tempJobData.UnitsCount + " units";
-
-                if (tempJobData.Type == 0)
-                    tempStr = "Normal";
-                else if (tempJobData.Type == 1)
-                    tempStr = "Heavy";
-                else if (tempJobData.Type == 2)
-                    tempStr = "Double";
-
-                jobdata += "\r\nIn " + tempStr + " trailer ";
-                jobdata += tempJobData.TrailerDefinition;
-                jobdata += " with " + tempJobData.TrailerVariant + " appearance";
-
-                tempStr = FreightMarketJob.Urgency.ToString();
-
-                if (UrgencyLngDict.TryGetValue(tempStr, out string value))                
-                    if (value != null && value != "")                    
-                        tempStr = value;
-
-                jobdata += "\r\nUrgency " + tempStr;
-                jobdata += "\r\nMinimum travel distance of " + tempJobData.Distance + " km ";
-                jobdata += "in " + tempJobData.CompanyTruck;
-                jobdata += "\r\nJob valid for " + (tempJobData.ExpirationTime - InGameTime) + " minutes";
-
-                if (tempJobData.Ferrytime > 0 || tempJobData.Ferryprice > 0)
-                {
-                    jobdata += "\r\nExtra time on ferry - " + tempJobData.Ferrytime;
-                    jobdata += "and it will cost " + tempJobData.Ferryprice;
-                }
-
-                LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName +
-                    "\r\n-----------" + jobdata + "\r\n-----------");
-
-                #endregion
             }
         }
 

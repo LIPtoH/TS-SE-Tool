@@ -21,6 +21,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
 
+using System.Configuration;
+
 namespace TS_SE_Tool
 {
     static class Program

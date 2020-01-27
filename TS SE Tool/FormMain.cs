@@ -67,7 +67,6 @@ namespace TS_SE_Tool
         private string ProfileETS2;//Program
         private string ProfileATS;//Program
 
-        private string[] CountryDictionaryFile;//Program
         //Raw data in memory
         private string[] tempProfileFileInMemory; //Program
         private string[] tempInfoFileInMemory;//Program
@@ -191,8 +190,7 @@ namespace TS_SE_Tool
             SetDefaultValues(true);
             LoadConfig();            
 
-            LoadExtCountries();
-            
+            LoadExtCountries();            
 
             //ToggleGame(GameType);
             radioButtonMainGameSwitchETS.Checked = true;
@@ -203,12 +201,15 @@ namespace TS_SE_Tool
 
             CacheGameData();
 
+            //
             CreateProfilePanelControls();
             CreateProgressBarBitmap();
             CreateTruckPanelControls();
             CreateTrailerPanelControls();
+            //
+            ClearFormControls(true);//Clear elements
 
-            ToggleVisibility(false);
+            ToggleControlsAccess(false);
 
             menuStripMain.Items.Find("toolStripMenuItemLanguage", false)[0].Image = ProgUIImgs[0];
 
@@ -230,11 +231,19 @@ namespace TS_SE_Tool
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            if(Properties.Settings.Default.ShowSplashOnStartup || Properties.Settings.Default.CheckUpdatesOnStartup)
+            try
             {
+                if (Properties.Settings.Default.ShowSplashOnStartup || Properties.Settings.Default.CheckUpdatesOnStartup)
+                {
+                    FormSplash WindowSplash = new FormSplash();
+                    WindowSplash.ShowDialog();
+                }
+            }
+            catch {
                 FormSplash WindowSplash = new FormSplash();
                 WindowSplash.ShowDialog();
             }
+
             FillAllProfilesPaths();
         }
 
@@ -278,15 +287,18 @@ namespace TS_SE_Tool
 
     public class Globals
     {
+        //-----
         public static string[] ProfilesPaths;
         public static List<string> ProfilesHex;
-        public static string[] SavesHex;
+        //
         public static string SelectedProfile;
-        public static string SelectedSave;
         public static string SelectedProfilePath;
+        //----
+        public static string[] SavesHex;
+        //
+        public static string SelectedSave;
         public static string SelectedSavePath;
-        public static string CurrentGame = "";
-        public static string ProfileSii = "";
+        //----
         public static int[] PlayerLevelUps;
     }
 
