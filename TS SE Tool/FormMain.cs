@@ -209,6 +209,7 @@ namespace TS_SE_Tool
             //
             ClearFormControls(true);//Clear elements
 
+            //ToggleMainControlsAccess(false);
             ToggleControlsAccess(false);
 
             menuStripMain.Items.Find("toolStripMenuItemLanguage", false)[0].Image = ProgUIImgs[0];

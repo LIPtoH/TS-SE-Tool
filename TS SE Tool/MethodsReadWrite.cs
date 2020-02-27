@@ -922,6 +922,7 @@ namespace TS_SE_Tool
                 buttonMainDecryptSave.Enabled = true;
                 buttonMainLoadSave.Enabled = true;
                 buttonMainWriteSave.Enabled = false;
+                buttonMainWriteSave.Visible = false;
 
                 return;
             }

@@ -360,6 +360,7 @@ namespace TS_SE_Tool
 
         private void ClearFormControls(bool _initial)
         {
+            this.SuspendLayout();
             //Profile
             //Level
             FormUpdatePlayerLevel();
@@ -371,6 +372,7 @@ namespace TS_SE_Tool
                 temp.Checked = false;
 
             //User Colors
+            UserColorsList.Clear();
             for (int i = 0; i < 8; i++)
                 UserColorsList.Add(Color.FromArgb(0, 0, 0, 0));
 
@@ -378,18 +380,37 @@ namespace TS_SE_Tool
             UserColorsList.Clear();
 
             //Company
+            pictureBoxCompanyLogo.Image = null;
 
+            textBoxUserCompanyCompanyName.Text = "";
+            textBoxUserCompanyMoneyAccount.Text = "";
+            comboBoxUserCompanyHQcity.DataSource = null;
+
+            listBoxVisitedCities.Items.Clear();
+            listBoxGarages.Items.Clear();
             //Truck
 
             //Trailer
 
             //FreightMarket
-            comboBoxFreightMarketTrailerVariant.SelectedIndex = -1;
-            comboBoxFreightMarketTrailerVariant.DataSource = null;
-            comboBoxFreightMarketTrailerDef.SelectedIndex = -1;
-            comboBoxFreightMarketTrailerDef.DataSource = null;
-            comboBoxFreightMarketCargoList.SelectedIndex = -1;
+            comboBoxFreightMarketCountries.DataSource = null;
+            comboBoxFreightMarketCompanies.DataSource = null;
+
+            comboBoxFreightMarketSourceCity.DataSource = null;
+            comboBoxFreightMarketSourceCompany.DataSource = null;
+
+            comboBoxFreightMarketDestinationCity.DataSource = null;
+            comboBoxFreightMarketDestinationCompany.DataSource = null;
+
             comboBoxFreightMarketCargoList.DataSource = null;
+            comboBoxFreightMarketUrgency.DataSource = null;
+
+            comboBoxFreightMarketTrailerDef.DataSource = null;
+            comboBoxFreightMarketTrailerVariant.DataSource = null;
+
+            listBoxFreightMarketAddedJobs.Items.Clear();
+            //
+            this.ResumeLayout();
         }
 
         private void PopulateFormControlsk()
@@ -397,8 +418,6 @@ namespace TS_SE_Tool
             AddTranslationToData();
             
             FillFormProfileControls();//Profile
-            UpdateUserColorsButtons();
-
             FillFormCompanyControls();//Company
             FillUserCompanyTrucksList();//Truck
             FillUserCompanyTrailerList();//Trailer
@@ -534,7 +553,6 @@ namespace TS_SE_Tool
 
         private void LoadSaveFile_Click(object sender, EventArgs e)
         {
-
             ToggleMainControlsAccess(false);
 
             ToggleControlsAccess(false);
@@ -558,7 +576,6 @@ namespace TS_SE_Tool
             }
 
             ToggleControlsAccess(false);
-            buttonMainWriteSave.Enabled = false;
 
             string SiiSavePath = SavefilePath + @"\game.sii";
 
@@ -1221,6 +1238,8 @@ namespace TS_SE_Tool
                     SkillButtonArray[i, j].Checked = true;
                 }
             }
+
+            UpdateUserColorsButtons();
         }
 
         private void FormUpdatePlayerLevel()
@@ -2033,6 +2052,7 @@ namespace TS_SE_Tool
         private void CreateTrailerPanelControls()
         {
             CreateTrailerPanelProgressBars();
+            CreateTrailerPanelButtons();
         }
 
         private void CreateTrailerPanelProgressBars()
@@ -2089,8 +2109,6 @@ namespace TS_SE_Tool
                 button.FlatAppearance.BorderSize = 0;
                 button.Click += new EventHandler(buttonTrailerElRepair_Click);
             }
-
-            CreateTrailerPanelButtons();
         }
 
         private void CreateTrailerPanelButtons()
@@ -2102,7 +2120,7 @@ namespace TS_SE_Tool
 
             Button buttonR = new Button();
             //tabPageTrailer.Controls.Add(buttonR);
-            tableLayoutPanel13.Controls.Add(buttonR, 3, 1);
+            tableLayoutPanelUserTruckTrailer.Controls.Add(buttonR, 3, 1);
             buttonR.Location = new Point(topbutoffset, tOffset);
             buttonR.FlatStyle = FlatStyle.Flat;
             buttonR.Size = new Size(RepairImg.Height, RepairImg.Height);
@@ -2116,11 +2134,11 @@ namespace TS_SE_Tool
 
             Button buttonInfo = new Button();
             //tabPageTrailer.Controls.Add(buttonInfo);
-            tableLayoutPanel13.Controls.Add(buttonInfo, 0, 1);
+            tableLayoutPanelUserTruckTrailer.Controls.Add(buttonInfo, 0, 1);
             //buttonInfo.Location = new Point(labelUserTrailerTrailer.Location.X + (comboBoxUserTrailerCompanyTrailers.Location.X - labelUserTrailerTrailer.Location.X - CutomizeImg.Width - pOffset) / 2, buttonUserTruckSelectCurrent.Location.Y + pOffset);
             buttonInfo.FlatStyle = FlatStyle.Flat;
             buttonInfo.Size = new Size(CutomizeImg.Width, CutomizeImg.Height);
-            buttonInfo.Name = "buttonTruckInfo";
+            buttonInfo.Name = "buttonTrailerInfo";
             buttonInfo.BackgroundImage = ConvertBitmapToGrayscale(CutomizeImg);
             buttonInfo.BackgroundImageLayout = ImageLayout.Zoom;
             buttonInfo.Text = "";
@@ -2224,6 +2242,9 @@ namespace TS_SE_Tool
         private void UpdateTrailerPanelProgressBars()
         {
             UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTrailer);
+
+            if (SelectedUserCompanyTrailer == null)
+                return;
 
             for (int i = 0; i < 4; i++)
             {
@@ -2348,6 +2369,9 @@ namespace TS_SE_Tool
             dc = new DataColumn("UserTrailerName", typeof(string));
             combDT.Columns.Add(dc);
 
+            
+            combDT.Rows.Add("null", "-- NONE --"); //none
+
             foreach (KeyValuePair<string, UserCompanyTruckData> UserTrailer in UserTrailerDictionary)
             {
                 if (UserTrailer.Value.Main)
@@ -2441,9 +2465,19 @@ namespace TS_SE_Tool
         {
             ComboBox cmbbx = sender as ComboBox;
 
-            if (cmbbx.SelectedIndex != -1)
+            if (cmbbx.SelectedIndex != -1 && cmbbx.SelectedValue.ToString() != "null")
             {
                 UpdateTrailerPanelProgressBars();
+                tableLayoutPanelUserTruckTrailer.Controls.Find("buttonTrailerRepair", false)[0].Enabled = true;
+                groupBoxUserTrailerTrailerDetails.Enabled = true;
+                groupBoxUserTrailerShareTrailerSettings.Enabled = true;
+
+            }
+            else
+            {
+                tableLayoutPanelUserTruckTrailer.Controls.Find("buttonTrailerRepair", false)[0].Enabled = false;
+                groupBoxUserTrailerTrailerDetails.Enabled = false;
+                groupBoxUserTrailerShareTrailerSettings.Enabled = false;
             }
         }
 
@@ -3436,7 +3470,8 @@ namespace TS_SE_Tool
 
         private void comboBoxCountries_SelectedIndexChanged(object sender, EventArgs e)
         {
-            triggerDestinationCitiesUpdate();
+            if(comboBoxFreightMarketCountries.SelectedIndex != -1)
+                triggerDestinationCitiesUpdate();
         }
         //Main companies
         public void FillcomboBoxCompanies()
@@ -3491,7 +3526,8 @@ namespace TS_SE_Tool
 
         private void comboBoxCompanies_SelectedIndexChanged(object sender, EventArgs e)
         {
-            triggerDestinationCitiesUpdate();
+            if (comboBoxFreightMarketCompanies.SelectedIndex != -1)
+                triggerDestinationCitiesUpdate();
         }        
         //Source city
         public void FillcomboBoxSourceCity()
@@ -3563,10 +3599,11 @@ namespace TS_SE_Tool
         //Source company
         private void comboBoxSourceCompany_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ProgSettingsV.ProposeRandom)
-            {
-                comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
-            }
+            if (comboBoxFreightMarketSourceCompany.SelectedIndex != -1)
+                if (ProgSettingsV.ProposeRandom)
+                {
+                    comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
+                }
         }
         //Destination city
         private void comboBoxDestinationCity_SelectedIndexChanged(object sender, EventArgs e)
@@ -3605,7 +3642,7 @@ namespace TS_SE_Tool
 
         private void triggerDestinationCitiesUpdate()
         {
-            if (comboBoxFreightMarketCompanies.SelectedIndex != -1)
+            if (comboBoxFreightMarketCountries.SelectedIndex != -1 && comboBoxFreightMarketCompanies.SelectedIndex != -1)
                 SetupDestinationCities(!(comboBoxFreightMarketCountries.SelectedValue.ToString() == "+all"), !(comboBoxFreightMarketCompanies.SelectedValue.ToString() == "+all"));
         }
 
@@ -3745,11 +3782,11 @@ namespace TS_SE_Tool
 
         private void comboBoxDestinationCompany_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ProgSettingsV.ProposeRandom)
-            {
-                comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
-            }
-            
+            if (comboBoxFreightMarketDestinationCompany.SelectedIndex != -1)
+                if (ProgSettingsV.ProposeRandom)
+                {
+                    comboBoxFreightMarketCargoList.SelectedIndex = RandomValue.Next(comboBoxFreightMarketCargoList.Items.Count);
+                }            
         }
         //Cargo list
         public void FillcomboBoxCargoList()
@@ -5003,6 +5040,9 @@ namespace TS_SE_Tool
         //Form methods
         private void ToggleControlsAccess(bool _state)
         {
+            buttonMainWriteSave.Enabled = _state;
+            buttonMainWriteSave.Visible = _state;
+
             foreach (TabPage tp in tabControlMain.TabPages)
             {
                 tp.Enabled = _state;
@@ -5069,8 +5109,6 @@ namespace TS_SE_Tool
                 else
                 {
                     buttonMainDecryptSave.Enabled = true;
-
-                    buttonMainWriteSave.Enabled = false;
 
                     ToggleControlsAccess(false);
                     SetDefaultValues(false);

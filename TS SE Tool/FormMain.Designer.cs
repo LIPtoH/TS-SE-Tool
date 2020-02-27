@@ -124,7 +124,7 @@
             this.buttonShareTrailerWholeTrailerCopy = new System.Windows.Forms.Button();
             this.buttonShareTrailerTrailerDetailsCopy = new System.Windows.Forms.Button();
             this.groupBoxUserTruckTrailer = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelUserTruckTrailer = new System.Windows.Forms.TableLayoutPanel();
             this.comboBoxUserTrailerCompanyTrailers = new System.Windows.Forms.ComboBox();
             this.buttonUserTrailerSwitchCurrent = new System.Windows.Forms.Button();
             this.buttonUserTrailerSelectCurrent = new System.Windows.Forms.Button();
@@ -233,7 +233,7 @@
             this.groupBoxUserTrailerShareTrailerSettings.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             this.groupBoxUserTruckTrailer.SuspendLayout();
-            this.tableLayoutPanel13.SuspendLayout();
+            this.tableLayoutPanelUserTruckTrailer.SuspendLayout();
             this.groupBoxUserTrailerTrailerDetails.SuspendLayout();
             this.tabPageFreightMarket.SuspendLayout();
             this.tabPageCargoMarket.SuspendLayout();
@@ -275,26 +275,26 @@
             // toolStripMenuItemProgramSettings
             // 
             this.toolStripMenuItemProgramSettings.Name = "toolStripMenuItemProgramSettings";
-            this.toolStripMenuItemProgramSettings.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemProgramSettings.Size = new System.Drawing.Size(164, 22);
             this.toolStripMenuItemProgramSettings.Text = "Program settings";
             this.toolStripMenuItemProgramSettings.Click += new System.EventHandler(this.programSettingsToolStripMenuItem_Click);
             // 
             // toolStripMenuItemSettings
             // 
             this.toolStripMenuItemSettings.Name = "toolStripMenuItemSettings";
-            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(164, 22);
             this.toolStripMenuItemSettings.Text = "Settings";
             this.toolStripMenuItemSettings.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(164, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -319,14 +319,14 @@
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(128, 22);
             this.toolStripMenuItemAbout.Text = "About";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(125, 6);
             // 
             // toolStripMenuItemTutorial
             // 
@@ -334,27 +334,27 @@
             this.toolStripMenuItemLocalPDF,
             this.toolStripMenuItemYouTubeVideo});
             this.toolStripMenuItemTutorial.Name = "toolStripMenuItemTutorial";
-            this.toolStripMenuItemTutorial.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemTutorial.Size = new System.Drawing.Size(128, 22);
             this.toolStripMenuItemTutorial.Text = "How To";
             // 
             // toolStripMenuItemLocalPDF
             // 
             this.toolStripMenuItemLocalPDF.Name = "toolStripMenuItemLocalPDF";
-            this.toolStripMenuItemLocalPDF.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemLocalPDF.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemLocalPDF.Text = "Local PDF";
             this.toolStripMenuItemLocalPDF.Click += new System.EventHandler(this.localPDFToolStripMenuItem_Click);
             // 
             // toolStripMenuItemYouTubeVideo
             // 
             this.toolStripMenuItemYouTubeVideo.Name = "toolStripMenuItemYouTubeVideo";
-            this.toolStripMenuItemYouTubeVideo.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemYouTubeVideo.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemYouTubeVideo.Text = "YouTube video";
             this.toolStripMenuItemYouTubeVideo.Click += new System.EventHandler(this.youTubeVideoToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(125, 6);
             // 
             // toolStripMenuItemDownload
             // 
@@ -365,7 +365,7 @@
             this.checkTMPForumToolStripMenuItem,
             this.checkGitHubRelesesToolStripMenuItem});
             this.toolStripMenuItemDownload.Name = "toolStripMenuItemDownload";
-            this.toolStripMenuItemDownload.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemDownload.Size = new System.Drawing.Size(128, 22);
             this.toolStripMenuItemDownload.Text = "Download";
             // 
             // toolStripMenuItemCheckUpdates
@@ -1315,7 +1315,7 @@
             // 
             // groupBoxUserTruckTrailer
             // 
-            this.groupBoxUserTruckTrailer.Controls.Add(this.tableLayoutPanel13);
+            this.groupBoxUserTruckTrailer.Controls.Add(this.tableLayoutPanelUserTruckTrailer);
             this.groupBoxUserTruckTrailer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxUserTruckTrailer.Location = new System.Drawing.Point(3, 3);
             this.groupBoxUserTruckTrailer.Name = "groupBoxUserTruckTrailer";
@@ -1324,29 +1324,29 @@
             this.groupBoxUserTruckTrailer.TabStop = false;
             this.groupBoxUserTruckTrailer.Text = "Trailer";
             // 
-            // tableLayoutPanel13
+            // tableLayoutPanelUserTruckTrailer
             // 
-            this.tableLayoutPanel13.ColumnCount = 5;
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel13.Controls.Add(this.comboBoxUserTrailerCompanyTrailers, 0, 0);
-            this.tableLayoutPanel13.Controls.Add(this.buttonUserTrailerSwitchCurrent, 2, 1);
-            this.tableLayoutPanel13.Controls.Add(this.buttonUserTrailerSelectCurrent, 1, 1);
-            this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel13.Name = "tableLayoutPanel13";
-            this.tableLayoutPanel13.RowCount = 2;
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(552, 79);
-            this.tableLayoutPanel13.TabIndex = 0;
+            this.tableLayoutPanelUserTruckTrailer.ColumnCount = 5;
+            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
+            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanelUserTruckTrailer.Controls.Add(this.comboBoxUserTrailerCompanyTrailers, 0, 0);
+            this.tableLayoutPanelUserTruckTrailer.Controls.Add(this.buttonUserTrailerSwitchCurrent, 2, 1);
+            this.tableLayoutPanelUserTruckTrailer.Controls.Add(this.buttonUserTrailerSelectCurrent, 1, 1);
+            this.tableLayoutPanelUserTruckTrailer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelUserTruckTrailer.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanelUserTruckTrailer.Name = "tableLayoutPanelUserTruckTrailer";
+            this.tableLayoutPanelUserTruckTrailer.RowCount = 2;
+            this.tableLayoutPanelUserTruckTrailer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelUserTruckTrailer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelUserTruckTrailer.Size = new System.Drawing.Size(552, 79);
+            this.tableLayoutPanelUserTruckTrailer.TabIndex = 0;
             // 
             // comboBoxUserTrailerCompanyTrailers
             // 
-            this.tableLayoutPanel13.SetColumnSpan(this.comboBoxUserTrailerCompanyTrailers, 5);
+            this.tableLayoutPanelUserTruckTrailer.SetColumnSpan(this.comboBoxUserTrailerCompanyTrailers, 5);
             this.comboBoxUserTrailerCompanyTrailers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxUserTrailerCompanyTrailers.FormattingEnabled = true;
             this.comboBoxUserTrailerCompanyTrailers.Location = new System.Drawing.Point(3, 3);
@@ -2331,7 +2331,7 @@
             this.groupBoxUserTrailerShareTrailerSettings.ResumeLayout(false);
             this.tableLayoutPanel14.ResumeLayout(false);
             this.groupBoxUserTruckTrailer.ResumeLayout(false);
-            this.tableLayoutPanel13.ResumeLayout(false);
+            this.tableLayoutPanelUserTruckTrailer.ResumeLayout(false);
             this.groupBoxUserTrailerTrailerDetails.ResumeLayout(false);
             this.groupBoxUserTrailerTrailerDetails.PerformLayout();
             this.tabPageFreightMarket.ResumeLayout(false);
@@ -2511,7 +2511,7 @@
         private System.Windows.Forms.Button buttonShareTrailerWholeTrailerCopy;
         private System.Windows.Forms.Button buttonShareTrailerTrailerDetailsCopy;
         private System.Windows.Forms.GroupBox groupBoxUserTruckTrailer;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelUserTruckTrailer;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
