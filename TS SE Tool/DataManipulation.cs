@@ -526,6 +526,16 @@ namespace TS_SE_Tool
                                 line++;
                             }
                         }
+                        else
+                        if (GPSAvoid.ContainsKey(nameless))
+                        {
+                            line++;
+                            while (!tempSavefileInMemory[line].StartsWith("}"))
+                            {
+                                GPSAvoid[nameless].Add(tempSavefileInMemory[line]);
+                                line++;
+                            }
+                        }
                     }
 
                     if (tempSavefileInMemory[line].StartsWith("player_job :"))

@@ -1153,7 +1153,7 @@ namespace TS_SE_Tool
                 using (StreamWriter writer = new StreamWriter(SiiSavePath, true))
                 {
 
-                    bool EconomySection = false, PlayerSection = false, GPSinserted = false;
+                    bool EconomySection = false, PlayerSection = false, GPSinserted = false, police_ctrl = false, map_action = false;
                     bool editedcompany = false, visitedcitycompany = false, insidecompany = false, editedtruck = false, savingtruck = true, 
                         editedtrailer = false, insidetrailer = false, hasslavetrailer = false; //insidetruck = false, 
                     int JobIndex = 0, truckaccCount = 0, AddedJobsNumberInCompany = 0;
@@ -1251,6 +1251,7 @@ namespace TS_SE_Tool
 
                             if (SaveInMemLine.StartsWith(" stored_gps_behind_waypoints:"))
                             {
+                                //behind
                                 writer.WriteLine(" stored_gps_behind_waypoints: " + GPSbehind.Count);
 
                                 int count = 0;
@@ -1259,7 +1260,7 @@ namespace TS_SE_Tool
                                     writer.WriteLine(" stored_gps_behind_waypoints[" + count + "]: _nameless." + temp.Key);
                                     count++;
                                 }
-
+                                //ahead
                                 writer.WriteLine(" stored_gps_ahead_waypoints: " + GPSahead.Count);
 
                                 count = 0;
@@ -1268,6 +1269,16 @@ namespace TS_SE_Tool
                                     writer.WriteLine(" stored_gps_ahead_waypoints[" + count + "]: _nameless." + temp.Key);
                                     count++;
                                 }
+                                //avoid
+                                
+                                writer.WriteLine(" stored_gps_avoid_waypoints: " + GPSAvoid.Count);
+
+                                count = 0;
+                                foreach (KeyValuePair<string, List<string>> temp in GPSAvoid)
+                                {
+                                    writer.WriteLine(" stored_gps_avoid_waypoints[" + count + "]: _nameless." + temp.Key);
+                                    count++;
+                                }                                
 
                                 while (!tempSavefileInMemory[line].StartsWith(" stored_start_tollgate_pos:"))
                                 {
@@ -1654,105 +1665,57 @@ namespace TS_SE_Tool
                             continue;
                         }
 
+                        //police_ctrl :
+                        if (SaveInMemLine.StartsWith("police_ctrl :"))
+                        {
+                            police_ctrl = true;
+                        }
+
                         //GPS
-                        if ( SaveInMemLine.StartsWith("gps_waypoint_storage :")) //|| SaveInMemLine.StartsWith("map_action :")))
+                        if (!GPSinserted && (SaveInMemLine.StartsWith("gps_waypoint_storage :") || SaveInMemLine.StartsWith("map_action :")))
                         {
                             if(!GPSinserted)
                             {
-                                //GPSbehindOnline
-                                if (GPSbehindOnline.Count > 0)
+                                if(!police_ctrl)
                                 {
-                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSbehindOnline)
+                                    //GPSbehindOnline
+                                    if (GPSbehindOnline.Count > 0)
                                     {
-                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+                                        WriteGPSdata(GPSbehindOnline, writer);
+                                    }
 
-                                        foreach (string templine in tempgpsdata.Value)
-                                        {
-                                            writer.WriteLine(templine);
-                                        }
-
-                                        writer.WriteLine("}");
-                                        writer.WriteLine("");
+                                    //GPSaheadOnline
+                                    if (GPSaheadOnline.Count > 0)
+                                    {
+                                        WriteGPSdata(GPSaheadOnline, writer);
                                     }
                                 }
 
-                                //GPSaheadOnline
-                                if (GPSaheadOnline.Count > 0)
+                                if(police_ctrl && !map_action)
                                 {
-                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSaheadOnline)
+                                    //GPSbehind
+                                    if (GPSbehind.Count > 0)
                                     {
-                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+                                        WriteGPSdata(GPSbehind, writer);
+                                    }
 
-                                        foreach (string templine in tempgpsdata.Value)
-                                        {
-                                            writer.WriteLine(templine);
-                                        }
-
-                                        writer.WriteLine("}");
-                                        writer.WriteLine("");
+                                    //GPSahead
+                                    if (GPSahead.Count > 0)
+                                    {
+                                        WriteGPSdata(GPSahead, writer);
+                                    }
+                                    //GPS Avoid
+                                    if (GPSAvoid.Count > 0)
+                                    {
+                                        WriteGPSdata(GPSAvoid, writer);
                                     }
                                 }
-
-                                //GPSbehind
-                                if (GPSbehind.Count > 0)
-                                {
-                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSbehind)
-                                    {
-                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
-
-                                        foreach (string templine in tempgpsdata.Value)
-                                        {
-                                            writer.WriteLine(templine);
-                                        }
-
-                                        writer.WriteLine("}");
-                                        writer.WriteLine("");
-                                    }
-                                }
-
-                                //GPSahead
-                                if (GPSahead.Count > 0)
-                                {
-                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSahead)
-                                    {
-                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
-
-                                        foreach (string templine in tempgpsdata.Value)
-                                        {
-                                            writer.WriteLine(templine);
-                                        }
-
-                                        writer.WriteLine("}");
-                                        writer.WriteLine("");
-                                    }
-                                }
-                                //GPS Avoid
-                                if (GPSAvoid != null && GPSAvoid.Count > 0)
-                                {
-                                    foreach (KeyValuePair<string, List<string>> tempgpsdata in GPSAvoid)
-                                    {
-                                        writer.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
-
-                                        foreach (string templine in tempgpsdata.Value)
-                                        {
-                                            writer.WriteLine(templine);
-                                        }
-
-                                        writer.WriteLine("}");
-                                        writer.WriteLine("");
-                                    }
-                                }
-                            }
-                            else
-                            {
-
                             }
                             
                             while (true)
                             {
                                 if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage :"))
                                 {
-                                    //line++;
                                     do
                                     {
                                         line++;
@@ -1770,8 +1733,15 @@ namespace TS_SE_Tool
                             }
 
                             line--;
-                            GPSinserted = true;
+                            if (police_ctrl && !map_action)
+                                GPSinserted = true;
                             continue;
+                        }
+
+                        //map_action :
+                        if (!map_action && SaveInMemLine.StartsWith("map_action :"))
+                        {
+                            map_action = true;
                         }
 
                         if (SaveInMemLine.StartsWith("registry :"))
@@ -2137,6 +2107,22 @@ namespace TS_SE_Tool
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        private void WriteGPSdata(Dictionary<string,List<string>> _inputGPSdata, StreamWriter _inputWriter )
+        {
+            foreach (KeyValuePair<string, List<string>> tempgpsdata in _inputGPSdata)
+            {
+                _inputWriter.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+
+                foreach (string templine in tempgpsdata.Value)
+                {
+                    _inputWriter.WriteLine(templine);
+                }
+
+                _inputWriter.WriteLine("}");
+                _inputWriter.WriteLine("");
+            }
         }
 
         public void WriteInfoFile(string[] _infoFile, string _filePath, SavefileInfoData _infoData)

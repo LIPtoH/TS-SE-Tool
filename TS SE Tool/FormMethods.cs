@@ -342,6 +342,7 @@ namespace TS_SE_Tool
 
             GPSbehind = new Dictionary<string, List<string>>();
             GPSahead = new Dictionary<string, List<string>>();
+            GPSAvoid = new Dictionary<string, List<string>>();
 
             GPSbehindOnline = new Dictionary<string, List<string>>();
             GPSaheadOnline = new Dictionary<string, List<string>>();
@@ -4839,24 +4840,32 @@ namespace TS_SE_Tool
                     }
                 }
             }
+
             //GPS Ahead
-            tempData += "GPSahead\r\n";
-            foreach (KeyValuePair<string, List<string>> temp in GPSahead)
+            if (GPSahead.Count > 0)
             {
-                tempData += "waypoint\r\n";
-                foreach (string tempLines in temp.Value)
+                tempData += "GPSahead\r\n";
+                foreach (KeyValuePair<string, List<string>> temp in GPSahead)
                 {
-                    tempData += tempLines + "\r\n";
+                    tempData += "waypoint\r\n";
+                    foreach (string tempLines in temp.Value)
+                    {
+                        tempData += tempLines + "\r\n";
+                    }
                 }
-            }
+            }                
+
             //GPS Avoid
-            tempData += "GPSavoid\r\n";
-            foreach (KeyValuePair<string, List<string>> temp in GPSAvoid)
+            if (GPSAvoid != null)
             {
-                tempData += "waypoint\r\n";
-                foreach (string tempLines in temp.Value)
+                tempData += "GPSavoid\r\n";
+                foreach (KeyValuePair<string, List<string>> temp in GPSAvoid)
                 {
-                    tempData += tempLines + "\r\n";
+                    tempData += "waypoint\r\n";
+                    foreach (string tempLines in temp.Value)
+                    {
+                        tempData += tempLines + "\r\n";
+                    }
                 }
             }
 
@@ -4902,7 +4911,7 @@ namespace TS_SE_Tool
                                     i++;
                                     List<string> tmpList = new List<string>();
 
-                                    while (!Lines[i].StartsWith("waypoint") && !Lines[i].StartsWith("GPSahead") && Lines[i] != "" && i < Lines.Length)
+                                    while (!Lines[i].StartsWith("waypoint") && !Lines[i].StartsWith("GPS") && Lines[i] != "" && i < Lines.Length)
                                     {
                                         tmpList.Add(Lines[i]);
                                         i++;
@@ -4912,7 +4921,7 @@ namespace TS_SE_Tool
                                     wp++;
                                 }
                             }
-                            while (!Lines[i].StartsWith("GPSahead") && Lines[i] != "" && i < Lines.Length);
+                            while (!Lines[i].StartsWith("GPS") && Lines[i] != "" && i < Lines.Length);
 
                             tagGPSbehind = false;
                         }
@@ -4934,7 +4943,7 @@ namespace TS_SE_Tool
                                     i++;
                                     List<string> tmpList = new List<string>();
 
-                                    while (!Lines[i].StartsWith("waypoint") && Lines[i] != "" && i < Lines.Length)
+                                    while (!Lines[i].StartsWith("waypoint") && !Lines[i].StartsWith("GPS") && Lines[i] != "" && i < Lines.Length)
                                     {
                                         tmpList.Add(Lines[i]);
                                         i++;
@@ -4944,7 +4953,7 @@ namespace TS_SE_Tool
                                     wp++;
                                 }
                             }
-                            while (i < Lines.Length && Lines[i] != "");
+                            while (!Lines[i].StartsWith("GPS") && Lines[i] != "" && i < Lines.Length);
 
                             tagGPSahead = false;
                         }
@@ -4966,7 +4975,7 @@ namespace TS_SE_Tool
                                     i++;
                                     List<string> tmpList = new List<string>();
 
-                                    while (!Lines[i].StartsWith("waypoint") && !Lines[i].StartsWith("GPSavoid") && Lines[i] != "" && i < Lines.Length)
+                                    while (!Lines[i].StartsWith("waypoint") && !Lines[i].StartsWith("GPS") && Lines[i] != "" && i < Lines.Length)
                                     {
                                         tmpList.Add(Lines[i]);
                                         i++;
@@ -4976,7 +4985,7 @@ namespace TS_SE_Tool
                                     wp++;
                                 }
                             }
-                            while (!Lines[i].StartsWith("GPSavoid") && Lines[i] != "" && i < Lines.Length);
+                            while (!Lines[i].StartsWith("GPS") && Lines[i] != "" && i < Lines.Length);
 
                             tagGPSavoid = false;
                         }
@@ -5012,7 +5021,7 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    MessageBox.Show("GPS Path data  has been inserted.");
+                    MessageBox.Show("GPS Path data has been inserted.");
                 }
                 else
                     MessageBox.Show("Wrong data. Expected GPS Path data but\r\n" + Lines[0] + "\r\nwas found.");
