@@ -49,8 +49,8 @@ namespace TS_SE_Tool
                 "DDSImageParser.cs\r\nhttps://gist.github.com/soeminnminn/e9c4c99867743a717f5b\r\n\r\n" +
                 "TGASharpLib\r\nhttps://github.com/ALEXGREENALEX/TGASharpLib";
 
-            labelETS2version.Text = String.Join(", ", MainForm.SupportedSavefileVersionETS2.Select(p => p.ToString()).ToArray()) + " (" + MainForm.SupportedGameVersionETS2 + ")";
-            labelATSversion.Text = String.Join(", ", MainForm.SupportedSavefileVersionETS2.Select(p => p.ToString()).ToArray()) + " (" + MainForm.SupportedGameVersionATS + ")";
+            labelETS2version.Text = String.Join(" - ", MainForm.SupportedSavefileVersionETS2.Select(p => p.ToString()).ToArray()) + " (" + MainForm.SupportedGameVersionETS2 + ")";
+            labelATSversion.Text = String.Join(" - ", MainForm.SupportedSavefileVersionETS2.Select(p => p.ToString()).ToArray()) + " (" + MainForm.SupportedGameVersionATS + ")";
 
             try
             {

@@ -905,7 +905,7 @@ namespace TS_SE_Tool
                 return;
             }
 
-            if (SavefileVersion > 0 && !SupportedSavefileVersionETS2.Contains(SavefileVersion))
+            if (SavefileVersion > 0 && SavefileVersion > SupportedSavefileVersionETS2[0] && SavefileVersion > SupportedSavefileVersionETS2[1])
             {
                 MessageBox.Show("Savefile version don't supported.\nYou cann't edit file with version " + SavefileVersion + ", but you can try to decode it.", "Wrong version");
                 ShowStatusMessages("clear", "", this, "statusStripMain", "toolStripStatusMessages");
