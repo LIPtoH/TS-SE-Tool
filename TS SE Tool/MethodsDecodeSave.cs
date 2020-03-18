@@ -176,14 +176,17 @@ namespace TS_SE_Tool
                 }
                 else
                 {
-                    byte[] tarray = Encoding.UTF8.GetBytes(new char[] { tempChar} );
+                    byte[] tarray = Encoding.UTF8.GetBytes(new char[] { tempChar });
 
-                    foreach(byte tb in tarray )
-                    {
-                        result += "\\x" + tb.ToString("x");
-                    }
+                    if (tarray.Length > 1)
+                        foreach (byte tb in tarray)
+                            result += "\\x" + tb.ToString("x");
+                    else
+                        if(tempChar == '"')
+                            result += "\\\"";
+                        else
+                            result += tempChar;
                 }
-
             }
             return result;
         }

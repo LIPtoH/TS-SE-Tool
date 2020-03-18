@@ -2497,18 +2497,16 @@ namespace TS_SE_Tool
         //User Company tab
         private void FillFormCompanyControls()
         {
+            textBoxUserCompanyCompanyName.Text = PlayerDataV.CompanyName;
+            //textBoxUserCompanyCompanyName.ReadOnly = false;
+            FillAccountMoneyTB();
+            FillHQcities();
+
             listBoxVisitedCities.DrawMode = DrawMode.OwnerDrawVariable;
             listBoxGarages.DrawMode = DrawMode.OwnerDrawVariable;
 
-            FillHQcities();
-
-            FillGaragesList(0);
             FillVisitedCities(0);
-            FillAccountMoneyTB();
-
-            textBoxUserCompanyCompanyName.Text = PlayerDataV.CompanyName;
-
-            //FromStringToHex(PlayerDataV.CompanyName);
+            FillGaragesList(0);
 
             MemoryStream ms = new MemoryStream();
 
@@ -2574,6 +2572,49 @@ namespace TS_SE_Tool
         {
             if (comboBoxUserCompanyHQcity.SelectedValue != null)
                 PlayerDataV.HQcity = comboBoxUserCompanyHQcity.SelectedValue.ToString();
+        }
+
+        private void textBoxUserCompanyCompanyName_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxUserCompanyCompanyName.Text.Length > 20)
+            {
+                textBoxUserCompanyCompanyName.Text = textBoxUserCompanyCompanyName.Text.Remove(20);
+                textBoxUserCompanyCompanyName.Select(20, 0);
+            }
+
+            if (textBoxUserCompanyCompanyName.Text.Length == 0)
+            {
+                labelUserCompanyCompanyName.ForeColor = Color.Red;
+                labelCompanyNameSize.ForeColor = Color.Red;
+                labelCompanyNameSize.Font = new Font(labelCompanyNameSize.Font, FontStyle.Bold);
+            }
+            else if (textBoxUserCompanyCompanyName.Text.Length == 20)
+            {
+                labelUserCompanyCompanyName.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+                labelCompanyNameSize.ForeColor = Color.DarkGreen;
+                labelCompanyNameSize.Font = new Font(labelCompanyNameSize.Font, FontStyle.Bold);
+            }
+            else
+            {
+                labelUserCompanyCompanyName.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+                labelCompanyNameSize.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+                labelCompanyNameSize.Font = new Font(labelCompanyNameSize.Font, FontStyle.Regular);
+            }
+
+            labelCompanyNameSize.Text = textBoxUserCompanyCompanyName.Text.Length.ToString() + " / 20";
+
+        }
+        
+        private void textBoxUserCompanyCompanyName_Validating(object sender, CancelEventArgs e)
+        {
+            TextBox txtbx = sender as TextBox;
+
+            if(txtbx.TextLength == 0)
+            {
+                // Cancel the event and select the text to be corrected by the user.
+                MessageBox.Show("Company name empty");
+                e.Cancel = true;
+            }
         }
 
         private void textBoxMoneyAccount_TextChanged(object sender, EventArgs e)

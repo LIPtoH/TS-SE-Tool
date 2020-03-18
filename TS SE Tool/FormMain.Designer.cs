@@ -93,8 +93,8 @@
             this.labelUserCompanyMoneyAccount = new System.Windows.Forms.Label();
             this.labelUserCompanyHQcity = new System.Windows.Forms.Label();
             this.textBoxUserCompanyCompanyName = new System.Windows.Forms.TextBox();
-            this.textBoxUserCompanyMoneyAccount = new System.Windows.Forms.TextBox();
             this.comboBoxUserCompanyHQcity = new System.Windows.Forms.ComboBox();
+            this.textBoxUserCompanyMoneyAccount = new System.Windows.Forms.TextBox();
             this.tabPageTruck = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxUserTruckTruck = new System.Windows.Forms.GroupBox();
@@ -207,6 +207,7 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.labelCompanyNameSize = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -872,17 +873,19 @@
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 289F));
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Controls.Add(this.pictureBoxCompanyLogo, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyCompanyName, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyMoneyAccount, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyHQcity, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.textBoxUserCompanyCompanyName, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.textBoxUserCompanyMoneyAccount, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.comboBoxUserCompanyHQcity, 2, 2);
+            this.tableLayoutPanel3.Controls.Add(this.textBoxUserCompanyMoneyAccount, 2, 1);
+            this.tableLayoutPanel3.Controls.Add(this.labelCompanyNameSize, 3, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -897,7 +900,10 @@
             // pictureBoxCompanyLogo
             // 
             this.pictureBoxCompanyLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxCompanyLogo.Location = new System.Drawing.Point(3, 3);
+            this.pictureBoxCompanyLogo.Location = new System.Drawing.Point(10, 3);
+            this.pictureBoxCompanyLogo.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
+            this.pictureBoxCompanyLogo.MaximumSize = new System.Drawing.Size(92, 92);
+            this.pictureBoxCompanyLogo.MinimumSize = new System.Drawing.Size(92, 92);
             this.pictureBoxCompanyLogo.Name = "pictureBoxCompanyLogo";
             this.tableLayoutPanel3.SetRowSpan(this.pictureBoxCompanyLogo, 3);
             this.pictureBoxCompanyLogo.Size = new System.Drawing.Size(92, 92);
@@ -909,7 +915,7 @@
             // 
             this.labelUserCompanyCompanyName.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyCompanyName.AutoSize = true;
-            this.labelUserCompanyCompanyName.Location = new System.Drawing.Point(131, 10);
+            this.labelUserCompanyCompanyName.Location = new System.Drawing.Point(115, 10);
             this.labelUserCompanyCompanyName.Name = "labelUserCompanyCompanyName";
             this.labelUserCompanyCompanyName.Size = new System.Drawing.Size(80, 13);
             this.labelUserCompanyCompanyName.TabIndex = 15;
@@ -919,7 +925,7 @@
             // 
             this.labelUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyMoneyAccount.AutoSize = true;
-            this.labelUserCompanyMoneyAccount.Location = new System.Drawing.Point(131, 43);
+            this.labelUserCompanyMoneyAccount.Location = new System.Drawing.Point(115, 43);
             this.labelUserCompanyMoneyAccount.Name = "labelUserCompanyMoneyAccount";
             this.labelUserCompanyMoneyAccount.Size = new System.Drawing.Size(81, 13);
             this.labelUserCompanyMoneyAccount.TabIndex = 22;
@@ -929,7 +935,7 @@
             // 
             this.labelUserCompanyHQcity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyHQcity.AutoSize = true;
-            this.labelUserCompanyHQcity.Location = new System.Drawing.Point(131, 76);
+            this.labelUserCompanyHQcity.Location = new System.Drawing.Point(115, 76);
             this.labelUserCompanyHQcity.Name = "labelUserCompanyHQcity";
             this.labelUserCompanyHQcity.Size = new System.Drawing.Size(42, 13);
             this.labelUserCompanyHQcity.TabIndex = 4;
@@ -938,33 +944,35 @@
             // textBoxUserCompanyCompanyName
             // 
             this.textBoxUserCompanyCompanyName.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxUserCompanyCompanyName.Location = new System.Drawing.Point(278, 6);
+            this.textBoxUserCompanyCompanyName.Location = new System.Drawing.Point(248, 6);
             this.textBoxUserCompanyCompanyName.Name = "textBoxUserCompanyCompanyName";
             this.textBoxUserCompanyCompanyName.ReadOnly = true;
-            this.textBoxUserCompanyCompanyName.Size = new System.Drawing.Size(224, 20);
+            this.textBoxUserCompanyCompanyName.Size = new System.Drawing.Size(255, 20);
             this.textBoxUserCompanyCompanyName.TabIndex = 14;
-            // 
-            // textBoxUserCompanyMoneyAccount
-            // 
-            this.textBoxUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxUserCompanyMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(278, 39);
-            this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
-            this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(224, 20);
-            this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
-            this.textBoxUserCompanyMoneyAccount.TextChanged += new System.EventHandler(this.textBoxMoneyAccount_TextChanged);
-            this.textBoxUserCompanyMoneyAccount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxMoneyAccount_KeyPress);
+            this.textBoxUserCompanyCompanyName.TextChanged += new System.EventHandler(this.textBoxUserCompanyCompanyName_TextChanged);
+            this.textBoxUserCompanyCompanyName.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxUserCompanyCompanyName_Validating);
             // 
             // comboBoxUserCompanyHQcity
             // 
             this.comboBoxUserCompanyHQcity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.comboBoxUserCompanyHQcity.Enabled = false;
             this.comboBoxUserCompanyHQcity.FormattingEnabled = true;
-            this.comboBoxUserCompanyHQcity.Location = new System.Drawing.Point(278, 72);
+            this.comboBoxUserCompanyHQcity.Location = new System.Drawing.Point(248, 72);
             this.comboBoxUserCompanyHQcity.Name = "comboBoxUserCompanyHQcity";
-            this.comboBoxUserCompanyHQcity.Size = new System.Drawing.Size(224, 21);
+            this.comboBoxUserCompanyHQcity.Size = new System.Drawing.Size(255, 21);
             this.comboBoxUserCompanyHQcity.TabIndex = 12;
             this.comboBoxUserCompanyHQcity.SelectedIndexChanged += new System.EventHandler(this.comboBoxUserCompanyHQcity_SelectedIndexChanged);
+            // 
+            // textBoxUserCompanyMoneyAccount
+            // 
+            this.textBoxUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBoxUserCompanyMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(248, 39);
+            this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
+            this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(255, 20);
+            this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
+            this.textBoxUserCompanyMoneyAccount.TextChanged += new System.EventHandler(this.textBoxMoneyAccount_TextChanged);
+            this.textBoxUserCompanyMoneyAccount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxMoneyAccount_KeyPress);
             // 
             // tabPageTruck
             // 
@@ -2283,6 +2291,20 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
             // 
+            // labelCompanyNameSize
+            // 
+            this.labelCompanyNameSize.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelCompanyNameSize.AutoSize = true;
+            this.labelCompanyNameSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelCompanyNameSize.Location = new System.Drawing.Point(509, 0);
+            this.labelCompanyNameSize.Name = "labelCompanyNameSize";
+            this.labelCompanyNameSize.Size = new System.Drawing.Size(52, 33);
+            this.labelCompanyNameSize.TabIndex = 23;
+            this.labelCompanyNameSize.Text = "0 / 20";
+            this.labelCompanyNameSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2536,6 +2558,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCheckUpdates;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemProgramSettings;
+        private System.Windows.Forms.Label labelCompanyNameSize;
     }
 }
 
