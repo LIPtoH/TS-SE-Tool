@@ -894,6 +894,10 @@ namespace TS_SE_Tool
                     //textBoxDynamic.Text += LastModifiedTimestamp.ToString();
 
                     CheckSaveInfoData();
+
+                    SavefileInfoData InfoData = new SavefileInfoData();
+                    InfoData.PrepareInfo(tempInfoFileInMemory);
+
                 }
             }
 
@@ -2137,11 +2141,11 @@ namespace TS_SE_Tool
 
                     if (InMemLine.StartsWith(" name:"))
                     {
-                        if(_infoData.SaveName != null)
+                        if(_infoData.Name != null)
                         {
-                            string t = _infoData.SaveName;
+                            string t = _infoData.Name;
 
-                            if (_infoData.SaveName.Contains(" ") || _infoData.SaveName.Length == 0)
+                            if (_infoData.Name.Contains(" ") || _infoData.Name.Length == 0)
                                 t = "\"" + t + "\"";
 
                             InMemLine = " name: " + t;

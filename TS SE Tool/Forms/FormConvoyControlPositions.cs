@@ -373,8 +373,8 @@ namespace TS_SE_Tool
                                 double tDT = MainForm.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
 
                                 SavefileInfoData infoData = new SavefileInfoData();
-                                infoData.SaveName = entry.Value[0];//Save name
-                                infoData.FileTime = Convert.ToInt32(Math.Floor(tDT));
+                                infoData.Name = entry.Value[0];//Save name
+                                infoData.FileTime = Convert.ToUInt32(Math.Floor(tDT));
 
                                 //Write info file
                                 MainForm.WriteInfoFile(infoSii, fp + "\\info.sii", infoData);
