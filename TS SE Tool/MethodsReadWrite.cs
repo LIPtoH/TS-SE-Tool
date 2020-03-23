@@ -889,15 +889,11 @@ namespace TS_SE_Tool
                     ToggleControlsAccess(false);
                 }
                 else if (tempInfoFileInMemory != null)
-                {
-                    //LastModifiedTimestamp = File.GetLastWriteTime(SiiInfoPath);
-                    //textBoxDynamic.Text += LastModifiedTimestamp.ToString();
-
+                {   
                     CheckSaveInfoData();
 
-                    SavefileInfoData InfoData = new SavefileInfoData();
-                    InfoData.PrepareInfo(tempInfoFileInMemory);
-
+                    //SavefileInfoData InfoData = new SavefileInfoData();
+                    //InfoData.PrepareInfo(tempInfoFileInMemory);
                 }
             }
 
