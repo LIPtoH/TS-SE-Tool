@@ -1476,49 +1476,58 @@ namespace TS_SE_Tool
 
                     if (chunkOfline[2].StartsWith("\"") && chunkOfline[2].EndsWith("\""))
                     {
-                        string compNameH = chunkOfline[2].Trim('"');
-                        //try find \x
+                        string compNameH = chunkOfline[2].Remove(chunkOfline[2].Length - 1, 1).Remove(0, 1);
 
-                        for (int i=0; i < compNameH.Length; i++)
+                        for (int i = 0; i < compNameH.Length; i++)
                         {
                             if (compNameH[i] == '\\')
                             {
-                                char t = compNameH[i];
-                                string temp = compNameH.Substring(i + 1, 1);
-                                
-                                if(temp == "\\")
+                                int j = i + 1;
+                                if (j < compNameH.Length)
                                 {
-                                    result += temp;
-                                    i += 1;
-                                }
-                                else if (temp == "x")
-                                {
-                                    string tempChar = "";
-                                    checkForChar:
+                                    string temp = compNameH.Substring(j, 1);
 
-                                    tempChar += compNameH.Substring(i + 2, 2);
-                                    string r = FromHexToString(tempChar);
-                                    char tChar = Convert.ToChar(r);
-
-                                    if (Char.IsControl(tChar) || tChar != 65533)
+                                    if (temp == "\\")
                                     {
-                                        result += r;
-                                        i += 3;
+                                        result += temp;
+                                        i += 1;
+                                    }
+                                    else if (temp == "x")
+                                    {
+                                        string tempChar = "";
+                                        checkForChar:
+
+                                        j = i + 2;
+                                        if (j < compNameH.Length - 1)
+                                        {
+                                            tempChar += compNameH.Substring(j, 2);
+                                            string r = FromHexToString(tempChar);
+                                            char tChar = Convert.ToChar(r);
+
+                                            if (!Char.IsControl(tChar))
+                                            {
+                                                if (tChar <= 0xFFFF)
+                                                    if (tChar != 65533)
+                                                    {
+                                                        result += r;
+                                                        i += 3;
+                                                    }
+                                                    else
+                                                    {
+                                                        i += 4;
+                                                        goto checkForChar;
+                                                    }
+                                            }
+                                            else
+                                                i += 3;
+                                        }
                                     }
                                     else
                                     {
-                                        i += 4;
-
-                                        goto checkForChar;
+                                        result += temp;
+                                        i += 1;
                                     }
-                                    
-                                }
-                                else
-                                {
-                                    result += temp;
-                                    i += 1;
-                                }
-                                
+                                }                                
                             }
                             else
                                 result += compNameH[i];
