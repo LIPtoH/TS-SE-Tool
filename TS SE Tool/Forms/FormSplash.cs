@@ -97,10 +97,6 @@ namespace TS_SE_Tool
 
         private void linkLabelNewVersion_Click(object sender, EventArgs e)
         {
-            /*
-            string url = "https://rebrand.ly/TS-SET-Download";
-            System.Diagnostics.Process.Start(url);
-            */
             button1.Enabled = false;
 
             bool properFileDownloaded = false;
@@ -180,7 +176,7 @@ namespace TS_SE_Tool
 
         private void linkLabelHelpYouTube_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string url = "https://rebrand.ly/TS-SET-Tutorial";
+            string url = "https://liptoh.now.im/TS-SET-Tutorial";
             System.Diagnostics.Process.Start(url);
         }
 
@@ -299,7 +295,7 @@ namespace TS_SE_Tool
 
         private void Check()
         {
-            string newversionData = GetLatestVersionData("https://rebrand.ly/TS-SET-CheckVersion");
+            string newversionData = GetLatestVersionData("https://liptoh.now.im/TS-SET-CheckVersion");
 
             if (newversionData != null)
             {
@@ -356,7 +352,7 @@ namespace TS_SE_Tool
             linkLabelNewVersion.Text = "Downloading...";
 
             Task t = Task.Run(() => {
-                var url = "https://rebrand.ly/TS-SET-Download";
+                var url = "https://liptoh.now.im/TS-SET-Download";
                 var filename = Directory.GetCurrentDirectory() + @"\updater\ts.set.newversion.zip";
 
                 try

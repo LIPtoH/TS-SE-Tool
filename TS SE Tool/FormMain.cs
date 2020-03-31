@@ -183,8 +183,6 @@ namespace TS_SE_Tool
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
 
-            //buttonGameETS.Enabled = true;
-            //buttonGameATS.Enabled = false;
             GetTranslationFiles();
 
             SetDefaultValues(true);
@@ -192,7 +190,6 @@ namespace TS_SE_Tool
 
             LoadExtCountries();            
 
-            //ToggleGame(GameType);
             radioButtonMainGameSwitchETS.Checked = true;
             LoadExtImages();
             
@@ -244,15 +241,12 @@ namespace TS_SE_Tool
                 FormSplash WindowSplash = new FormSplash();
                 WindowSplash.ShowDialog();
             }
-
-            FillAllProfilesPaths();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult exitDR = DialogResult.Yes;
 
-            //if (JobsListAdded != null && JobsListAdded.Length > 0)
             if (AddedJobsDictionary != null && AddedJobsDictionary.Count > 0)
                 exitDR = MessageBox.Show("You have unsaved changes. Do you realy want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo);
             else

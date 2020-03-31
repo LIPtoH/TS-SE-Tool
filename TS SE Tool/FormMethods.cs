@@ -464,7 +464,7 @@ namespace TS_SE_Tool
 
         private void youTubeVideoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string url = "https://rebrand.ly/TS-SET-Tutorial";
+            string url = "https://liptoh.now.im/TS-SET-Tutorial";
             Process.Start(url);
         }
 
