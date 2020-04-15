@@ -18,7 +18,7 @@ using System.Drawing;
 
 namespace TS_SE_Tool
 {
-    class LevelNames
+    public class LevelNames
     {
         public LevelNames (int _LevelLimit, string _LevelName, string _NameColor)
         {

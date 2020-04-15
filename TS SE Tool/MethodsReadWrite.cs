@@ -834,9 +834,7 @@ namespace TS_SE_Tool
                 }
                 else if (tempProfileFileInMemory != null)
                 {
-                    //LastModifiedTimestamp = File.GetLastWriteTime(SiiInfoPath);
-                    //textBoxDynamic.Text += LastModifiedTimestamp.ToString();
-                    CheckProfileInfoData();
+                    SFProfileData.Prepare(tempProfileFileInMemory);
                 }
             }
 
@@ -891,9 +889,6 @@ namespace TS_SE_Tool
                 else if (tempInfoFileInMemory != null)
                 {   
                     CheckSaveInfoData();
-
-                    //SavefileInfoData InfoData = new SavefileInfoData();
-                    //InfoData.PrepareInfo(tempInfoFileInMemory);
                 }
             }
 
@@ -1048,7 +1043,8 @@ namespace TS_SE_Tool
                 else if (tempProfileFileInMemory != null)
                 {
                     ShowStatusMessages("clear","");
-                    CheckProfileInfoData();
+                    //CheckProfileInfoData();
+                    SFProfileData.Prepare(tempProfileFileInMemory);
                 }
             }
 
@@ -2125,7 +2121,7 @@ namespace TS_SE_Tool
             }
         }
 
-        public void WriteInfoFile(string[] _infoFile, string _filePath, SavefileInfoData _infoData)
+        public void WriteInfoFile(string[] _infoFile, string _filePath, SaveFileInfoData _infoData)
         {
             using (StreamWriter writer = new StreamWriter(_filePath, true))
             {

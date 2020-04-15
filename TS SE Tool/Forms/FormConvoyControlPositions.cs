@@ -372,7 +372,7 @@ namespace TS_SE_Tool
                                 //Prepare data
                                 double tDT = MainForm.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
 
-                                SavefileInfoData infoData = new SavefileInfoData();
+                                SaveFileInfoData infoData = new SaveFileInfoData();
                                 infoData.Name = entry.Value[0];//Save name
                                 infoData.FileTime = Convert.ToUInt32(Math.Floor(tDT));
 

@@ -81,7 +81,7 @@ namespace TS_SE_Tool
         private string[] EconomyEventUnitLinkStringList;//Program
         //private string[] EconomyEventQueueList;
 
-        private List<LevelNames> PlayerLevelNames;//Program
+        public List<LevelNames> PlayerLevelNames;//Program
 
         private string[,] EconomyEventsTable;//Program
 
@@ -127,7 +127,7 @@ namespace TS_SE_Tool
         private DateTime LastModifiedTimestamp; //+
 
         public PlayerData PlayerDataV; //+
-        public ProfileData ProfileDataV;
+        public SaveFileProfileData SFProfileData;
 
         internal ProgSettings ProgSettingsV;//Program
 

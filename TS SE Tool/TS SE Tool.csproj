@@ -131,36 +131,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomClasses\Utilities\TextUtilities.cs" />
     <Compile Include="Forms\FormAboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FormAboutBox.Designer.cs">
       <DependentUpon>FormAboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomClasses\Cargo.cs" />
-    <Compile Include="CustomClasses\Country.cs" />
-    <Compile Include="CustomClasses\ProfileData.cs" />
-    <Compile Include="CustomClasses\SaveFileData.cs" />
-    <Compile Include="CustomClasses\SavefileInfoData.cs" />
-    <Compile Include="CustomClasses\TGASharpLib.cs" />
-    <Compile Include="CustomClasses\TrailerDefinition.cs" />
-    <Compile Include="CustomClasses\City.cs" />
-    <Compile Include="CustomClasses\ExtCargo.cs" />
-    <Compile Include="CustomClasses\ExtCompany.cs" />
+    <Compile Include="CustomClasses\Save\Items\Cargo.cs" />
+    <Compile Include="CustomClasses\Save\Items\Country.cs" />
+    <Compile Include="CustomClasses\Save\SaveFileProfileData.cs" />
+    <Compile Include="CustomClasses\Save\SaveFileData.cs" />
+    <Compile Include="CustomClasses\Save\SaveFileInfoData.cs" />
+    <Compile Include="CustomClasses\Utilities\TGASharpLib.cs" />
+    <Compile Include="CustomClasses\Save\Items\TrailerDefinition.cs" />
+    <Compile Include="CustomClasses\Save\Items\City.cs" />
+    <Compile Include="CustomClasses\ExternalData\ExtCargo.cs" />
+    <Compile Include="CustomClasses\ExternalData\ExtCompany.cs" />
     <Compile Include="CustomClasses\JobAdded.cs" />
-    <Compile Include="CustomClasses\Company.cs" />
-    <Compile Include="CustomClasses\CompanyTruck.cs" />
-    <Compile Include="CustomClasses\CountryDictionary.cs" />
-    <Compile Include="CustomClasses\DDSImageParser.cs" />
-    <Compile Include="CustomClasses\Garages.cs" />
-    <Compile Include="CustomClasses\LevelNames.cs" />
-    <Compile Include="CustomClasses\PlayerData.cs" />
-    <Compile Include="CustomClasses\ProgSettings.cs" />
-    <Compile Include="CustomClasses\Routes.cs" />
-    <Compile Include="CustomClasses\UserCompanyDriverData.cs" />
-    <Compile Include="CustomClasses\UserCompanyTruckData.cs" />
-    <Compile Include="CustomClasses\UserCompanyTruckDataPart.cs" />
-    <Compile Include="CustomClasses\VisitedCity.cs" />
+    <Compile Include="CustomClasses\Save\Items\Company.cs" />
+    <Compile Include="CustomClasses\Save\Items\CompanyTruck.cs" />
+    <Compile Include="CustomClasses\ExternalData\CountryDictionary.cs" />
+    <Compile Include="CustomClasses\Utilities\DDSImageParser.cs" />
+    <Compile Include="CustomClasses\Save\Items\Garages.cs" />
+    <Compile Include="CustomClasses\ExternalData\LevelNames.cs" />
+    <Compile Include="CustomClasses\Save\Items\PlayerData.cs" />
+    <Compile Include="CustomClasses\Program\ProgSettings.cs" />
+    <Compile Include="CustomClasses\ExternalData\Routes.cs" />
+    <Compile Include="CustomClasses\Save\Items\UserCompanyDriverData.cs" />
+    <Compile Include="CustomClasses\Save\Items\UserCompanyTruckData.cs" />
+    <Compile Include="CustomClasses\Save\Items\UserCompanyTruckDataPart.cs" />
+    <Compile Include="CustomClasses\Save\Items\VisitedCity.cs" />
     <Compile Include="DataManipulation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -315,6 +316,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(TargetDir)libs\x86\" md "$(TargetDir)libs\x86\"

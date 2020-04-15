@@ -281,7 +281,7 @@ namespace TS_SE_Tool
                     2900, 3100, 3300, 3500, 3700, 4000, 4300, 4600, 4900, 5200, 5500, 5800, 6100, 6400, 6700, 7000, 7300};
 
             PlayerDataV = new PlayerData("", 0, new byte[] { 0, 0, 0, 0, 0, 0 }, 0);
-            ProfileDataV = new ProfileData();
+            SFProfileData = new SaveFileProfileData();
 
             UserCompanyAssignedTruckPlacementEdited = false;
 
@@ -943,33 +943,9 @@ namespace TS_SE_Tool
                 string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
 
                 LoadProfileDataFile();
-                //CheckProfileInfoData();
 
-                //Add text to avatar
-                string t1 = "Trucking since: " + DateTimeOffset.FromUnixTimeSeconds(ProfileDataV.CreationTime).DateTime.ToLocalTime().ToString();
-
-                int playerlvl = ProfileDataV.getPlayerLvl()[0];
-                string playerLvlName = "";
-                for (int i = PlayerLevelNames.Count - 1; i >= 0; i--)
-                    if (PlayerLevelNames[i].LevelLimit <= playerlvl)
-                    {
-                        playerLvlName = PlayerLevelNames[i].LevelName;
-                        break;
-                    }
-
-                t1 += "\r\n" + playerLvlName + " (Level " + playerlvl.ToString() + ")";
-                t1 += "\r\nDistance driven: " + ProfileDataV.CachedDistance + " km";
-                t1 += "\r\nRoads explored: " + (ProfileDataV.RoadsExplored * 100).ToString("0.00") + "%";
-                t1 += "\r\nDeliveries finished: " + ProfileDataV.DeliveriesFinished;
-                t1 += "\r\nOwned Garages: small: " + ProfileDataV.OwnedGaradesSmall + ",large: " + ProfileDataV.OwnedGaradesLarge;
-                t1 += "\r\nOwned Trucks: " + ProfileDataV.OwnedTrucks;
-                t1 += "\r\nOwned Trailers: " + ProfileDataV.OwnedTrailers;
-                t1 += "\r\nTotal game time spent: " + ProfileDataV.GameTimeSpent / 1440 + " days " + Math.Floor(((decimal)(ProfileDataV.GameTimeSpent % 1440) / 1440) * 24) + " hour(s)";
-                t1 += "\r\nPlaying time: " + ProfileDataV.RealTimeSpent / 60 + "h " + ProfileDataV.RealTimeSpent % 60 + " min";
-
-
-                //Add to Avatar
-                toolTipMain.SetToolTip(pictureBoxProfileAvatar, t1);
+                //Add tooltip to Avatar
+                toolTipMain.SetToolTip(pictureBoxProfileAvatar, SFProfileData.GetProfileSummary(PlayerLevelNames));
             }
             catch
             { }
@@ -2497,7 +2473,7 @@ namespace TS_SE_Tool
         //User Company tab
         private void FillFormCompanyControls()
         {
-            textBoxUserCompanyCompanyName.Text = PlayerDataV.CompanyName;
+            textBoxUserCompanyCompanyName.Text = SFProfileData.CompanyName;
             //textBoxUserCompanyCompanyName.ReadOnly = false;
             FillAccountMoneyTB();
             FillHQcities();
@@ -2510,7 +2486,7 @@ namespace TS_SE_Tool
 
             MemoryStream ms = new MemoryStream();
 
-            Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + PlayerDataV.CompanyLogo + ".dds");
+            Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + SFProfileData.Logo + ".dds");
             if(temp != null)
             {
                 temp.Clone(new Rectangle(0, 0, 94, 94), temp.PixelFormat).Save(ms, ImageFormat.Png);
@@ -2602,19 +2578,19 @@ namespace TS_SE_Tool
             }
 
             labelCompanyNameSize.Text = textBoxUserCompanyCompanyName.Text.Length.ToString() + " / 20";
-
         }
         
         private void textBoxUserCompanyCompanyName_Validating(object sender, CancelEventArgs e)
         {
             TextBox txtbx = sender as TextBox;
 
-            if(txtbx.TextLength == 0)
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                MessageBox.Show("Company name empty");
-                e.Cancel = true;
-            }
+            if (txtbx.ReadOnly == false)
+                if (txtbx.TextLength == 0)
+                {
+                    // Cancel the event and select the text to be corrected by the user.
+                    MessageBox.Show("Company name empty");
+                    e.Cancel = true;
+                }
         }
 
         private void textBoxMoneyAccount_TextChanged(object sender, EventArgs e)

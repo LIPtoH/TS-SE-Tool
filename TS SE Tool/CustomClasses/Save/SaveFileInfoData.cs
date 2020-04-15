@@ -23,7 +23,7 @@ using System.IO;
 
 namespace TS_SE_Tool
 {
-    public class SavefileInfoData
+    public class SaveFileInfoData
     {
         private string SaveContainerNameless { get; set; } = "";
         public string Name { get; set; } = "\"\"";
@@ -33,7 +33,7 @@ namespace TS_SE_Tool
 
         public List<string> Dependencies { get; set; }
 
-        public string GetText()
+        public string GetDataText()
         {
             string OutputText = "SiiNunit\r\n{\r\n";
 
@@ -58,67 +58,66 @@ namespace TS_SE_Tool
 
         public void WriteToStream (StreamWriter _streamWriter)
         {
-            _streamWriter.Write(GetText());
+            _streamWriter.Write(GetDataText());
         }
 
-        public void PrepareInfo(string[] _InfoFileLines)
+        public void Prepare(string[] _FileLines)
         {
             string[] chunkOfline;
-            List<string> SavefileDependencies = new List<string>();
 
-            for (int line = 0; line < _InfoFileLines.Length; line++)
+            for (int line = 0; line < _FileLines.Length; line++)
             {
-                if (_InfoFileLines[line].StartsWith("save_container :"))
+                if (_FileLines[line].StartsWith("save_container :"))
                 {
-                    chunkOfline = _InfoFileLines[line].Split(new char[] { ' ' });
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
                     SaveContainerNameless = chunkOfline[2];
                     continue;
                 }
 
-                if (_InfoFileLines[line].StartsWith(" name:"))
+                if (_FileLines[line].StartsWith(" name:"))
                 {
-                    chunkOfline = _InfoFileLines[line].Split(new char[] { ' ' });
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
                     Name = chunkOfline[2];
                     continue;
                 }
 
-                if (_InfoFileLines[line].StartsWith(" time:"))
+                if (_FileLines[line].StartsWith(" time:"))
                 {
-                    chunkOfline = _InfoFileLines[line].Split(new char[] { ' ' });
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
                     Time = uint.Parse(chunkOfline[2]);
                     continue;
                 }
 
-                if (_InfoFileLines[line].StartsWith(" file_time:"))
+                if (_FileLines[line].StartsWith(" file_time:"))
                 {
-                    chunkOfline = _InfoFileLines[line].Split(new char[] { ' ' });
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
                     FileTime = uint.Parse(chunkOfline[2]);
                     continue;
                 }
 
-                if (_InfoFileLines[line].StartsWith(" version:"))
+                if (_FileLines[line].StartsWith(" version:"))
                 {
-                    chunkOfline = _InfoFileLines[line].Split(new char[] { ' ' });
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
                     Version = short.Parse(chunkOfline[2]);
                     continue;
                 }
 
-                if (_InfoFileLines[line].StartsWith(" dependencies:"))
+                if (_FileLines[line].StartsWith(" dependencies:"))
                 {
-                    chunkOfline = _InfoFileLines[line].Split(new char[] { ' ' });
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
                     Dependencies = new List<string>();
                     Dependencies.Capacity = short.Parse(chunkOfline[2]);
                     continue;
                 }
 
-                if (_InfoFileLines[line].StartsWith(" dependencies["))
+                if (_FileLines[line].StartsWith(" dependencies["))
                 {
-                    chunkOfline = _InfoFileLines[line].Split(new char[] { '"' });
+                    chunkOfline = _FileLines[line].Split(new char[] { '"' });
                     Dependencies.Add(chunkOfline[1]);
                     continue;
                 }
 
-                if (_InfoFileLines[line].StartsWith("}"))
+                if (_FileLines[line].StartsWith("}"))
                 {
                     break;
                 }
