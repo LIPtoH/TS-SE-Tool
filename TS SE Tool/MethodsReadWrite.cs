@@ -514,16 +514,7 @@ namespace TS_SE_Tool
             }
 
             newEntries = newEntries.Distinct().ToList();
-
-            /*
-            string language = ProgSettingsV.Language;
-
-            if (language != "Default")
-                language = language += "\\";
-
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "companies_translate.txt"))
-                language = "";
-            */
+            
             try
             {
                 using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\companies_translate.txt", true))
@@ -559,15 +550,7 @@ namespace TS_SE_Tool
             }
 
             newEntries = newEntries.Distinct().ToList();
-            /*
-            string language = ProgSettingsV.Language;
 
-            if (language != "Default")
-                language = language += "\\";
-
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "cities_translate.txt"))
-                language = "";
-                */
             try
             {
                 using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\cities_translate.txt", true))
@@ -603,15 +586,7 @@ namespace TS_SE_Tool
             }
 
             newEntries = newEntries.Distinct().ToList();
-            /*
-            string language = ProgSettingsV.Language;
 
-            if (language != "Default")
-                language = language += "\\";
-
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + "cargo_translate.txt"))
-                language = "";
-                */
             try
             {
                 using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\cargo_translate.txt", true))

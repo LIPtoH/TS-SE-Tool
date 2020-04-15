@@ -280,7 +280,7 @@ namespace TS_SE_Tool
                 Globals.PlayerLevelUps = new int[] {200, 500, 700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300, 2500, 2700,
                     2900, 3100, 3300, 3500, 3700, 4000, 4300, 4600, 4900, 5200, 5500, 5800, 6100, 6400, 6700, 7000, 7300};
 
-            PlayerDataV = new PlayerData("", 0, new byte[] { 0, 0, 0, 0, 0, 0 }, 0);
+            PlayerDataV = new PlayerData();
             SFProfileData = new SaveFileProfileData();
 
             UserCompanyAssignedTruckPlacementEdited = false;

@@ -20,37 +20,18 @@ namespace TS_SE_Tool
     public class PlayerData
     {
         //Economy
-        public uint ExperiencePoints { get; set; }
-        public byte[] PlayerSkills { get; set; }
+        public uint ExperiencePoints { get; set; } = 0;
+        public byte[] PlayerSkills { get; set; } = new byte[] { 0, 0, 0, 0, 0, 0 };
         //Bank
-        public uint AccountMoney { get; set; }
+        public uint AccountMoney { get; set; } = 0;
         //Player
-        public string HQcity { get; set; }
-        public string UserCompanyAssignedTruck { get; set; }
-        public string UserCompanyAssignedTruckPlacement { get; set; }
-        public string UserCompanyAssignedTrailer { get; set; }
+        public string HQcity { get; set; } = "";
+        public string UserCompanyAssignedTruck { get; set; } = "";
+        public string UserCompanyAssignedTruckPlacement { get; set; } = "";
+        public string UserCompanyAssignedTrailer { get; set; } = "";
         public List<string> UserCompanyAssignedSlaveTrailerPlacements = new List<string>();
-        public string CurrentJob { get; set; }
-        public string UserDriver { get; set; }
-        //Profile data
-        public string CompanyName { get; set; }
-        public string CompanyLogo { get; set; }
-        public int CreationTime { get; set; }
-
-
-        public PlayerData(string _HQcity, uint _Expirience, byte[] _PlayerSkills, uint _AccountMoney)
-        {
-            HQcity = _HQcity;
-            ExperiencePoints = _Expirience;
-            PlayerSkills = _PlayerSkills;
-            AccountMoney = _AccountMoney;
-        }
-
-        public PlayerData(string _CompanyName, int _CreationTime)
-        {
-            CompanyName = _CompanyName;
-            CreationTime = _CreationTime;
-        }
+        public string CurrentJob { get; set; } = "";
+        public string UserDriver { get; set; } = "";
 
         public void UpdatePlayerSkills(byte _ADR, byte _LongDistances, byte _HeavyCargo, byte _FragileCargo, byte _UrgentJobs, byte _MechanicalSkill)
         {
@@ -64,9 +45,9 @@ namespace TS_SE_Tool
 
         public int[] getPlayerLvl()
         {
-            int CurrentLVL = 0;
-            int lvlthreshhold = 0;
+            int CurrentLVL = 0, lvlthreshhold = 0;
             int[] Result;
+
             foreach (int lvlstep in Globals.PlayerLevelUps)
             {
                 lvlthreshhold += lvlstep;
