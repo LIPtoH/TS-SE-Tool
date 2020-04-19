@@ -59,29 +59,55 @@ namespace TS_SE_Tool
         private void CorrectControlsPositions()
         {
             //Longest setting string
-            Control[] labellist = { labelJobPickupTime, labelLoopEvery, labelDistance, labelCurrency };
             int longeststr = 0, margin = 6;
 
-            foreach (Control c in labellist)
-            {
-                Label temp = c as Label;
-                if (c.Width > longeststr)
-                    longeststr = c.Width;
-            }
+            Control[] labellist = new Control[] { labelJobPickupTime, labelLoopEvery, labelDistance, labelCurrency, labelCurrency };
 
-            Control[][] Controllist = new Control[4][];
+            longeststr = CorrectControlsPositionsLoongest(labellist);
+
+            Control[][] Controllist = new Control[5][];
             Controllist[0] = new Control[] { numericUpDownSettingPickTimeD, labelDayShort, numericUpDownSettingPickTimeH, labelHourShort };
             Controllist[1] = new Control[] { numericUpDownSettingLoopCitys, labelCity };
             Controllist[2] = new Control[] { comboBoxSettingDistanceMesSelect };
-            Controllist[3] = new Control[] { comboBoxSettingCurrencySelectETS2 };
+            Controllist[3] = new Control[] { labelCurrencyETS2 };
+            Controllist[4] = new Control[] { labelCurrencyATS };
 
-            foreach (Control[] cc in Controllist)
+            CorrectControlsPositionsMover(Controllist, longeststr, margin);
+
+            //
+            labellist = new Control[] { labelCurrencyETS2, labelCurrencyATS };
+            longeststr = CorrectControlsPositionsLoongest(labellist);
+
+            Controllist = new Control[2][];
+            Controllist[0] = new Control[] { comboBoxSettingCurrencySelectETS2 };
+            Controllist[1] = new Control[] { comboBoxSettingCurrencySelectATS };
+
+            CorrectControlsPositionsMover(Controllist, longeststr, margin);
+        }
+
+        private int CorrectControlsPositionsLoongest(Control[] _inputList)
+        {
+            int longeststr = 0;
+
+            foreach (Control c in _inputList)
             {
-                int margincount = 2, startX = longeststr;
+                Label temp = c as Label;
+                if (c.Width > longeststr)
+                    longeststr = c.Width + c.Location.X;
+            }
+
+            return longeststr;
+        }
+
+        private void CorrectControlsPositionsMover(Control[][] _Controllist, int _longeststr, int _margin)
+        {
+            foreach (Control[] cc in _Controllist)
+            {
+                int margincount = 2, startX = _longeststr;
 
                 foreach (Control c in cc)
                 {
-                    c.Location = new Point(startX + margin * margincount, c.Location.Y);
+                    c.Location = new Point(startX + _margin * margincount, c.Location.Y);
                     startX += c.Width;
                     margincount++;
                 }

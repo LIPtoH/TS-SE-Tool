@@ -33,6 +33,9 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelCurrencyATS = new System.Windows.Forms.Label();
+            this.comboBoxSettingCurrencySelectATS = new System.Windows.Forms.ComboBox();
+            this.labelCurrencyETS2 = new System.Windows.Forms.Label();
             this.labelDistance = new System.Windows.Forms.Label();
             this.labelJobPickupTime = new System.Windows.Forms.Label();
             this.comboBoxSettingDistanceMesSelect = new System.Windows.Forms.ComboBox();
@@ -49,9 +52,6 @@
             this.labelDayShort = new System.Windows.Forms.Label();
             this.numericUpDownSettingPickTimeD = new System.Windows.Forms.NumericUpDown();
             this.labelHourShort = new System.Windows.Forms.Label();
-            this.labelCurrencyETS2 = new System.Windows.Forms.Label();
-            this.comboBoxSettingCurrencySelectATS = new System.Windows.Forms.ComboBox();
-            this.labelCurrencyATS = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingPickTimeH)).BeginInit();
@@ -62,45 +62,46 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.buttonSave, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.buttonCancel, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.buttonCancel, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(364, 261);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // buttonSave
             // 
             this.buttonSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonSave.Location = new System.Drawing.Point(3, 214);
+            this.buttonSave.Location = new System.Drawing.Point(3, 224);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(146, 44);
+            this.buttonSave.Size = new System.Drawing.Size(176, 34);
             this.buttonSave.TabIndex = 0;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSettingSave_Click);
             // 
             // buttonCancel
             // 
             this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonCancel.Location = new System.Drawing.Point(215, 214);
+            this.buttonCancel.Location = new System.Drawing.Point(185, 224);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(146, 44);
+            this.buttonCancel.Size = new System.Drawing.Size(176, 34);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonSettingCancel_Click);
             // 
             // panel1
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.panel1, 3);
+            this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
             this.panel1.Controls.Add(this.labelCurrencyATS);
             this.panel1.Controls.Add(this.comboBoxSettingCurrencySelectATS);
             this.panel1.Controls.Add(this.labelCurrencyETS2);
@@ -120,8 +121,34 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(358, 205);
+            this.panel1.Size = new System.Drawing.Size(358, 215);
             this.panel1.TabIndex = 2;
+            // 
+            // labelCurrencyATS
+            // 
+            this.labelCurrencyATS.AutoSize = true;
+            this.labelCurrencyATS.Location = new System.Drawing.Point(171, 124);
+            this.labelCurrencyATS.Name = "labelCurrencyATS";
+            this.labelCurrencyATS.Size = new System.Drawing.Size(28, 13);
+            this.labelCurrencyATS.TabIndex = 14;
+            this.labelCurrencyATS.Text = "ATS";
+            // 
+            // comboBoxSettingCurrencySelectATS
+            // 
+            this.comboBoxSettingCurrencySelectATS.FormattingEnabled = true;
+            this.comboBoxSettingCurrencySelectATS.Location = new System.Drawing.Point(214, 121);
+            this.comboBoxSettingCurrencySelectATS.Name = "comboBoxSettingCurrencySelectATS";
+            this.comboBoxSettingCurrencySelectATS.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxSettingCurrencySelectATS.TabIndex = 13;
+            // 
+            // labelCurrencyETS2
+            // 
+            this.labelCurrencyETS2.AutoSize = true;
+            this.labelCurrencyETS2.Location = new System.Drawing.Point(171, 95);
+            this.labelCurrencyETS2.Name = "labelCurrencyETS2";
+            this.labelCurrencyETS2.Size = new System.Drawing.Size(37, 13);
+            this.labelCurrencyETS2.TabIndex = 12;
+            this.labelCurrencyETS2.Text = "ETS 2";
             // 
             // labelDistance
             // 
@@ -283,32 +310,6 @@
             this.labelHourShort.Size = new System.Drawing.Size(13, 13);
             this.labelHourShort.TabIndex = 5;
             this.labelHourShort.Text = "h";
-            // 
-            // labelCurrencyETS2
-            // 
-            this.labelCurrencyETS2.AutoSize = true;
-            this.labelCurrencyETS2.Location = new System.Drawing.Point(171, 95);
-            this.labelCurrencyETS2.Name = "labelCurrencyETS2";
-            this.labelCurrencyETS2.Size = new System.Drawing.Size(37, 13);
-            this.labelCurrencyETS2.TabIndex = 12;
-            this.labelCurrencyETS2.Text = "ETS 2";
-            // 
-            // comboBoxSettingCurrencySelectATS
-            // 
-            this.comboBoxSettingCurrencySelectATS.FormattingEnabled = true;
-            this.comboBoxSettingCurrencySelectATS.Location = new System.Drawing.Point(214, 121);
-            this.comboBoxSettingCurrencySelectATS.Name = "comboBoxSettingCurrencySelectATS";
-            this.comboBoxSettingCurrencySelectATS.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxSettingCurrencySelectATS.TabIndex = 13;
-            // 
-            // labelCurrencyATS
-            // 
-            this.labelCurrencyATS.AutoSize = true;
-            this.labelCurrencyATS.Location = new System.Drawing.Point(171, 124);
-            this.labelCurrencyATS.Name = "labelCurrencyATS";
-            this.labelCurrencyATS.Size = new System.Drawing.Size(28, 13);
-            this.labelCurrencyATS.TabIndex = 14;
-            this.labelCurrencyATS.Text = "ATS";
             // 
             // FormSettings
             // 
