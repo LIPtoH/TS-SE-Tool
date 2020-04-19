@@ -173,9 +173,14 @@ namespace TS_SE_Tool
         internal double DistanceMultiplier = 1; //Program
         private double km_to_mileconvert = 0.621371; //Program
 
-        public Dictionary<string, List<string>> CurrencyDict;
-        public Dictionary<string, double> CurrencyDictR;
+        public Dictionary<string, List<string>> CurrencyDictFormat;
+        public Dictionary<string, double> CurrencyDictConversion;
 
+        public Dictionary<string, List<string>> CurrencyDictFormatETS2 = new Dictionary<string, List<string>>();
+        public Dictionary<string, double> CurrencyDictConversionETS2 = new Dictionary<string, double>();
+
+        public Dictionary<string, List<string>> CurrencyDictFormatATS = new Dictionary<string, List<string>>();
+        public Dictionary<string, double> CurrencyDictConversionATS = new Dictionary<string, double>();
         #endregion
 
         public FormMain()
@@ -295,6 +300,7 @@ namespace TS_SE_Tool
         public static string SelectedSavePath;
         //----
         public static int[] PlayerLevelUps;
+        public static string CurrencyName;
     }
 
 }

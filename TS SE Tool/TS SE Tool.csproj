@@ -131,7 +131,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomClasses\Utilities\DateTimeUtilities.cs" />
     <Compile Include="CustomClasses\Utilities\TextUtilities.cs" />
+    <Compile Include="CustomClasses\Utilities\ZipDataUtilitiescs.cs" />
+    <Compile Include="Forms\FormMainControlsMethods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainTabs\FormMethodsCargoMarkerTab.cs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainTabs\FormMethodsCompanyTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainTabs\FormMethodsConvoyToolsTab.cs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainTabs\FormMethodsFreightMarketTab.cs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainTabs\FormMethodsProfileTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainTabs\FormMethodsTrailerTab.cs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainTabs\FormMethodsTruckTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FormAboutBox.cs">
       <SubType>Form</SubType>
     </Compile>

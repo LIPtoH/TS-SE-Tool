@@ -22,7 +22,8 @@ using System.Threading.Tasks;
 namespace TS_SE_Tool
 {
     class ProgSettings
-    {        
+    {     
+        /*
         public ProgSettings(string _ProgramVersion, string _Language, bool _ProposeRandom, Int16 _JobPickupTime, byte _LoopEvery, double _TimeMultiplier, string _DistanceMes, string _CurrencyMes)
         {
             ProgramVersion = _ProgramVersion;
@@ -32,10 +33,10 @@ namespace TS_SE_Tool
             LoopEvery = _LoopEvery;
             TimeMultiplier = _TimeMultiplier;
             DistanceMes = _DistanceMes;
-            CurrencyMes = _CurrencyMes;
+            CurrencyMesETS2 = _CurrencyMes;
             CustomPaths = new Dictionary<string, List<string>>();
         }
-
+        */
         public ProgSettings()
         {
 
@@ -56,7 +57,9 @@ namespace TS_SE_Tool
 
         public string DistanceMes { get; set; } = "km";
 
-        public string CurrencyMes { get; set; } = "EUR";
+        public string CurrencyMesETS2 { get; set; } = "EUR";
+
+        public string CurrencyMesATS { get; set; } = "USD";
 
         //public List<string> CustomPaths { get; set; }
         public Dictionary<string, List<string>> CustomPaths { get; set; } = new Dictionary<string, List<string>>();

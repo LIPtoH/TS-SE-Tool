@@ -23,7 +23,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using TS_SE_Tool.CustomClasses;
 using System.Globalization;
 using System.Threading;
 
@@ -47,8 +46,7 @@ namespace TS_SE_Tool
                     this.Text = translatedString;
             }
             catch
-            {
-            }
+            { }
 
             MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
 
@@ -56,6 +54,38 @@ namespace TS_SE_Tool
             this.ResumeLayout();
 
             PopulateControls();
+        }
+
+        private void CorrectControlsPositions()
+        {
+            //Longest setting string
+            Control[] labellist = { labelJobPickupTime, labelLoopEvery, labelDistance, labelCurrency };
+            int longeststr = 0, margin = 6;
+
+            foreach (Control c in labellist)
+            {
+                Label temp = c as Label;
+                if (c.Width > longeststr)
+                    longeststr = c.Width;
+            }
+
+            Control[][] Controllist = new Control[4][];
+            Controllist[0] = new Control[] { numericUpDownSettingPickTimeD, labelDayShort, numericUpDownSettingPickTimeH, labelHourShort };
+            Controllist[1] = new Control[] { numericUpDownSettingLoopCitys, labelCity };
+            Controllist[2] = new Control[] { comboBoxSettingDistanceMesSelect };
+            Controllist[3] = new Control[] { comboBoxSettingCurrencySelectETS2 };
+
+            foreach (Control[] cc in Controllist)
+            {
+                int margincount = 2, startX = longeststr;
+
+                foreach (Control c in cc)
+                {
+                    c.Location = new Point(startX + margin * margincount, c.Location.Y);
+                    startX += c.Width;
+                    margincount++;
+                }
+            }
         }
 
         private void PopulateControls()
@@ -96,11 +126,12 @@ namespace TS_SE_Tool
 
 
             //Currency choise
+            //ETS2
             combDT = new DataTable();
             combDT.Columns.Add("ID");
             combDT.Columns.Add("CurrencyDisplayName");
 
-            foreach (KeyValuePair<string, double> tempitem in MainForm.CurrencyDictR)
+            foreach (KeyValuePair<string, double> tempitem in MainForm.CurrencyDictConversionETS2)
             {
                 string value = MainForm.ResourceManagerMain.GetString(tempitem.Key, Thread.CurrentThread.CurrentUICulture);
 
@@ -114,17 +145,48 @@ namespace TS_SE_Tool
                 }
             }
 
-            comboBoxSettingCurrencySelect.ValueMember = "ID";
-            comboBoxSettingCurrencySelect.DisplayMember = "CurrencyDisplayName";
-            comboBoxSettingCurrencySelect.DataSource = combDT;
-            comboBoxSettingCurrencySelect.SelectedValue = MainForm.ProgSettingsV.CurrencyMes;
+            comboBoxSettingCurrencySelectETS2.ValueMember = "ID";
+            comboBoxSettingCurrencySelectETS2.DisplayMember = "CurrencyDisplayName";
+            comboBoxSettingCurrencySelectETS2.DataSource = combDT;
+            comboBoxSettingCurrencySelectETS2.SelectedValue = MainForm.ProgSettingsV.CurrencyMesETS2;
 
-            if (comboBoxSettingCurrencySelect.SelectedValue == null)
+            if (comboBoxSettingCurrencySelectETS2.SelectedValue == null)
             {
                 _sgw = true;
-                comboBoxSettingCurrencySelect.SelectedIndex = 0;
-                MainForm.ProgSettingsV.CurrencyMes = comboBoxSettingCurrencySelect.SelectedValue.ToString();
+                comboBoxSettingCurrencySelectETS2.SelectedIndex = 0;
+                MainForm.ProgSettingsV.CurrencyMesETS2 = comboBoxSettingCurrencySelectETS2.SelectedValue.ToString();
             }
+            //ATS
+            combDT = new DataTable();
+            combDT.Columns.Add("ID");
+            combDT.Columns.Add("CurrencyDisplayName");
+
+            foreach (KeyValuePair<string, double> tempitem in MainForm.CurrencyDictConversionATS)
+            {
+                string value = MainForm.ResourceManagerMain.GetString(tempitem.Key, Thread.CurrentThread.CurrentUICulture);
+
+                if (value != null && value != "")
+                {
+                    combDT.Rows.Add(tempitem.Key, value);
+                }
+                else
+                {
+                    combDT.Rows.Add(tempitem.Key, tempitem.Key);
+                }
+            }
+
+            comboBoxSettingCurrencySelectATS.ValueMember = "ID";
+            comboBoxSettingCurrencySelectATS.DisplayMember = "CurrencyDisplayName";
+            comboBoxSettingCurrencySelectATS.DataSource = combDT;
+            comboBoxSettingCurrencySelectATS.SelectedValue = MainForm.ProgSettingsV.CurrencyMesATS;
+
+            if (comboBoxSettingCurrencySelectATS.SelectedValue == null)
+            {
+                _sgw = true;
+                comboBoxSettingCurrencySelectATS.SelectedIndex = 0;
+                MainForm.ProgSettingsV.CurrencyMesATS = comboBoxSettingCurrencySelectATS.SelectedValue.ToString();
+            }
+
 
             //Pickup time intervals
             numericUpDownSettingPickTimeD.Value = Math.Floor((decimal)(MainForm.ProgSettingsV.JobPickupTime / 24));
@@ -136,7 +198,9 @@ namespace TS_SE_Tool
             if (_sgw)
                 PrepareSettingsAndSave();
         }
-
+        
+        //Events
+        //DB
         private void buttonSettingDBClear_Click(object sender, EventArgs e)
         {
             MainForm.ClearDatabase();
@@ -150,6 +214,12 @@ namespace TS_SE_Tool
         private void buttonSettingDBImport_Click(object sender, EventArgs e)
         {
             MainForm.ImportDB();
+        }
+        
+        //Pickup window
+        private void numericUpDownSettingPickTimeD_ValueChanged(object sender, EventArgs e)
+        {
+            numericUpDownSettingPickTimeH.Value = 0;
         }
 
         private void numericUpDownSettingPickTimeH_ValueChanged(object sender, EventArgs e)
@@ -173,12 +243,14 @@ namespace TS_SE_Tool
                 }
             }
         }
-        
-        private void numericUpDownSettingPickTimeD_ValueChanged(object sender, EventArgs e)
+
+        //
+        private void numericUpDownSettingLoopCitys_ValueChanged(object sender, EventArgs e)
         {
-            numericUpDownSettingPickTimeH.Value = 0;
+            MainForm.ProgSettingsV.LoopEvery = Convert.ToByte(numericUpDownSettingLoopCitys.Value);
         }
 
+        //Buttons
         private void buttonSettingSave_Click(object sender, EventArgs e)
         {
             PrepareSettingsAndSave();
@@ -188,10 +260,20 @@ namespace TS_SE_Tool
         {
             MainForm.DistanceMultiplier = MainForm.DistanceMultipliers[comboBoxSettingDistanceMesSelect.SelectedValue.ToString()];
             MainForm.ProgSettingsV.DistanceMes = comboBoxSettingDistanceMesSelect.SelectedValue.ToString();
-            MainForm.ProgSettingsV.CurrencyMes = comboBoxSettingCurrencySelect.SelectedValue.ToString();
+            MainForm.ProgSettingsV.CurrencyMesETS2 = comboBoxSettingCurrencySelectETS2.SelectedValue.ToString();
+            MainForm.ProgSettingsV.CurrencyMesATS = comboBoxSettingCurrencySelectATS.SelectedValue.ToString();
             MainForm.ProgSettingsV.JobPickupTime = (short)(numericUpDownSettingPickTimeH.Value + numericUpDownSettingPickTimeD.Value * 24);
 
             MainForm.WriteConfig();
+
+            if (MainForm.GameType == "ETS2")
+            {
+                Globals.CurrencyName = MainForm.ProgSettingsV.CurrencyMesETS2;
+            }
+            else
+            {
+                Globals.CurrencyName = MainForm.ProgSettingsV.CurrencyMesATS;
+            }
 
             MainForm.FillAccountMoneyTB();
         }
@@ -199,43 +281,6 @@ namespace TS_SE_Tool
         private void buttonSettingCancel_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void numericUpDownSettingLoopCitys_ValueChanged(object sender, EventArgs e)
-        {
-            MainForm.ProgSettingsV.LoopEvery = Convert.ToByte(numericUpDownSettingLoopCitys.Value);
-        }
-
-        private void CorrectControlsPositions()
-        {
-            //Longest setting string
-            Control[] labellist = { labelJobPickupTime, labelLoopEvery, labelDistance, labelCurrency };
-            int longeststr = 0, margin = 6;
-
-            foreach (Control c in labellist)
-            {
-                Label temp = c as Label;
-                if (c.Width > longeststr)
-                    longeststr = c.Width;
-            }
-
-            Control[][] Controllist = new Control[4][];
-            Controllist[0] = new Control[] { numericUpDownSettingPickTimeD, labelDayShort, numericUpDownSettingPickTimeH, labelHourShort };
-            Controllist[1] = new Control[] { numericUpDownSettingLoopCitys, labelCity };
-            Controllist[2] = new Control[] { comboBoxSettingDistanceMesSelect };
-            Controllist[3] = new Control[] { comboBoxSettingCurrencySelect };
-
-            foreach (Control[] cc in Controllist)
-            {
-                int margincount = 2, startX = longeststr;
-                
-                foreach (Control c in cc)
-                {
-                    c.Location = new Point(startX + margin * margincount, c.Location.Y);
-                    startX += c.Width;
-                    margincount++;
-                }
-            }
         }
     }
 }

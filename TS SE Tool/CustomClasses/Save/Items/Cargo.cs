@@ -15,8 +15,6 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using TS_SE_Tool.CustomClasses;
 
 namespace TS_SE_Tool
 {

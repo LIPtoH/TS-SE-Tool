@@ -19,7 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TS_SE_Tool.CustomClasses
+namespace TS_SE_Tool
 {
     public class UserCompanyTruckDataPart
     {

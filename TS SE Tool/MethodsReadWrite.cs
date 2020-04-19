@@ -94,10 +94,14 @@ namespace TS_SE_Tool
                                 DistanceMultiplier = DistanceMultipliers[ProgSettingsV.DistanceMes];                                
                                 break;
                             }
-                        case "CurrencyMes":
+                        case "CurrencyMesETS2":
                             {
-                                ProgSettingsV.CurrencyMes = line.Split(new char[] { '=' })[1];
-                                //CurrencyMultiplier = CurrencyMultipliers[ProgSettingsV.CurrencyMes];
+                                ProgSettingsV.CurrencyMesETS2 = line.Split(new char[] { '=' })[1];
+                                break;
+                            }
+                        case "CurrencyMesATS":
+                            {
+                                ProgSettingsV.CurrencyMesATS = line.Split(new char[] { '=' })[1];
                                 break;
                             }
                         case "CustomPathGame":

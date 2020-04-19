@@ -370,7 +370,7 @@ namespace TS_SE_Tool
                                 string[] infoSii = MainForm.NewDecodeFile(BaseSave + @"\info.sii", this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
 
                                 //Prepare data
-                                double tDT = MainForm.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
+                                double tDT = Utilities.DateTimeUtilities.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
 
                                 SaveFileInfoData infoData = new SaveFileInfoData();
                                 infoData.Name = entry.Value[0];//Save name
@@ -706,7 +706,7 @@ namespace TS_SE_Tool
                     toolStripProgressBar.Value = CustomInc;
                 }
 
-                string Converted = BitConverter.ToString(MainForm.zipText(tempData)).Replace("-", "");
+                string Converted = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempData)).Replace("-", "");
                 Clipboard.SetText(Converted);
                 toolStripProgressBar.Value = 0;
                 MessageBox.Show("Positions has been copied.");
@@ -731,7 +731,7 @@ namespace TS_SE_Tool
 
                 try
                 {
-                    string inputData = MainForm.unzipText(Clipboard.GetText());
+                    string inputData = Utilities.ZipDataUtilitiescs.unzipText(Clipboard.GetText());
                     string[] Lines = inputData.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
                     if (Lines[0] == "CCpositions")

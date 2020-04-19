@@ -24,7 +24,6 @@ using System.Threading;
 using System.Drawing;
 using System.Globalization;
 using System.Collections;
-using TS_SE_Tool.CustomClasses;
 using ErikEJ.SqlCe;
 using System.ComponentModel;
 using System.Reflection;

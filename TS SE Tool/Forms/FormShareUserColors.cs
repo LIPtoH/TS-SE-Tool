@@ -217,7 +217,7 @@ namespace TS_SE_Tool
             if (!ready)
                 return;
 
-            string asd = BitConverter.ToString(MainForm.zipText(tempData)).Replace("-", "");
+            string asd = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempData)).Replace("-", "");
             Clipboard.SetText(asd);
             MessageBox.Show("Color data has been copied.");
         }
@@ -240,7 +240,7 @@ namespace TS_SE_Tool
 
             try
             {
-                string inputData = MainForm.unzipText(Clipboard.GetText());
+                string inputData = Utilities.ZipDataUtilitiescs.unzipText(Clipboard.GetText());
                 string[] Lines = inputData.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (Lines[0] == "UserColors")
