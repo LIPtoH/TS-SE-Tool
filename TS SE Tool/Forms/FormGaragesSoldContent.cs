@@ -76,7 +76,7 @@ namespace TS_SE_Tool
 
                             if (MainForm.PlayerDataV.UserDriver == DriverName)
                             {
-                                DriverName = MainForm.FromHexToString(Globals.SelectedProfile);
+                                DriverName = Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                             }
                             else
                             {

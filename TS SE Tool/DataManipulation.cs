@@ -251,7 +251,7 @@ namespace TS_SE_Tool
                                     userColorStr = "4294967295";
                                 }
 
-                                userColorStr = IntegerToHexString(Convert.ToUInt32(userColorStr));
+                                userColorStr = Utilities.NumericUtilities.IntegerToHexString(Convert.ToUInt32(userColorStr));
                                 userColorStr = userColorStr.Substring(2);
 
                                 int _B = int.Parse(userColorStr.Substring(0, 2), NumberStyles.HexNumber);

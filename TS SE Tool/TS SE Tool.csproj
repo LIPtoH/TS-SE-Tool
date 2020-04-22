@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomClasses\Utilities\DateTimeUtilities.cs" />
+    <Compile Include="CustomClasses\Utilities\NumericUtilities.cs" />
     <Compile Include="CustomClasses\Utilities\TextUtilities.cs" />
     <Compile Include="CustomClasses\Utilities\ZipDataUtilitiescs.cs" />
     <Compile Include="Forms\FormMainControlsMethods.cs">

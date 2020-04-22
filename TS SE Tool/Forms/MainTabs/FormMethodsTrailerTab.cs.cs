@@ -266,7 +266,7 @@ namespace TS_SE_Tool
                     if (wear != "0" && wear != "1")
                         try
                         {
-                            _wear = HexFloatToDecimalFloat(wear);
+                            _wear = Utilities.NumericUtilities.HexFloatToDecimalFloat(wear);
                         }
                         catch
                         {

@@ -618,7 +618,7 @@ namespace TS_SE_Tool
                 {
                     foreach (string profile in Globals.ProfilesHex)
                     {
-                        Profile = FromHexToString(Path.GetFileName(profile));
+                        Profile = Utilities.TextUtilities.FromHexToString(Path.GetFileName(profile));
                         if (Profile != null && Directory.Exists(profile + @"\save"))
                         {
                             combDT.Rows.Add(profile, Profile);

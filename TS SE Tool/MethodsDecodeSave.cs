@@ -15,14 +15,8 @@
 */
 using System;
 using System.Windows.Forms;
-using System.Linq;
-using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Security.Cryptography;
-using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using System.Runtime.InteropServices;
 
 namespace TS_SE_Tool
@@ -143,77 +137,6 @@ namespace TS_SE_Tool
                     // "UNEXPECTED_ERROR";
                     return null;
             }
-        }
-
-        public string FromHexToString(string _hex)
-        {
-            try
-            {
-                byte[] raw = new byte[_hex.Length / 2];
-                for (int i = 0; i < raw.Length; i++)
-                {
-                    raw[i] = Convert.ToByte(_hex.Substring(i * 2, 2), 16);
-                }
-
-                return Encoding.UTF8.GetString(raw); //UTF8
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public static string FromStringToHex(string _sourceString)
-        {
-            string result = "";
-            for (int i = 0; i < _sourceString.Length; i++)
-            {
-                char tempChar = _sourceString[i];
-
-                if ((tempChar >= 'a' && tempChar <= 'z') || (tempChar >= 'A' && tempChar <= 'Z') || Char.IsDigit(tempChar) || Char.IsWhiteSpace(tempChar))
-                {
-                    result += tempChar;
-                }
-                else
-                {
-                    byte[] tarray = Encoding.UTF8.GetBytes(new char[] { tempChar });
-
-                    if (tarray.Length > 1)
-                        foreach (byte tb in tarray)
-                            result += "\\x" + tb.ToString("x");
-                    else
-                        if(tempChar == '"')
-                            result += "\\\"";
-                        else
-                            result += tempChar;
-                }
-            }
-            return result;
-        }
-
-        public static decimal HexFloatToDecimalFloat(string _hexFloat)
-        {
-            string binarystring = String.Join(String.Empty, _hexFloat.Substring(1).Select(c => Convert.ToString(Convert.ToInt32(c.ToString(), 16), 2).PadLeft(4, '0')));
-
-            short sign = Convert.ToInt16(binarystring.Substring(0, 1), 2);
-            int exp = Convert.ToInt32(binarystring.Substring(1, 8), 2);
-            int mantis = Convert.ToInt32(binarystring.Substring(9, 23), 2);
-
-            string decstrign = sign.ToString() + " " + exp.ToString() + " " + mantis.ToString();
-
-            decimal decformat = (decimal)(Math.Pow(-1, sign) * Math.Pow(2, (exp - 127)) * (1 + (mantis / Math.Pow(2, 23))));
-
-            return decformat;
-        }
-
-        public static string IntegerToHexString(uint _integer)
-        {
-            return _integer.ToString("X2");
-        }
-
-        public static string IntegerToBinString(int _integer)
-        {
-            return Convert.ToString(_integer, 2);
         }
 
         //SII decrypt

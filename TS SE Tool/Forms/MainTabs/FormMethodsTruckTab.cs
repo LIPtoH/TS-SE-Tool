@@ -261,7 +261,7 @@ namespace TS_SE_Tool
                     decimal _wear = 0;
 
                     if (wear != "0" && wear != "1")
-                        _wear = HexFloatToDecimalFloat(wear);
+                        _wear = Utilities.NumericUtilities.HexFloatToDecimalFloat(wear);
                     else
                     if (wear == "1")
                         _wear = 1;
@@ -309,7 +309,7 @@ namespace TS_SE_Tool
                 decimal _fuel = 0;
 
                 if (fuel != "0" && fuel != "1")
-                    _fuel = HexFloatToDecimalFloat(fuel);
+                    _fuel = Utilities.NumericUtilities.HexFloatToDecimalFloat(fuel);
                 else
                 if (fuel == "1")
                     _fuel = 1;
