@@ -195,12 +195,50 @@ namespace TS_SE_Tool
                 tabControlMain.TabPages["tabPageTrailer"].Enabled = false;
             }
 
+            //Visual - Images
+
+            //Profile
             int pSkillsNameHeight = 64, pSkillsNameWidth = 64;
             for (int i = 0; i < 6; i++)
             {
                 Control[] tmp = this.Controls.Find("profileSkillsPanel" + i.ToString(), true);
                 Bitmap bgimg = new Bitmap(SkillImgS[i], pSkillsNameHeight, pSkillsNameWidth);
                 tmp[0].BackgroundImage = bgimg;
+                if (!_state)
+                    tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
+            }
+
+            Control[] tmp2;
+
+            //Truck
+            tmp2 = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckReFuel", true);
+            tmp2[0].BackgroundImage = RefuelImg;
+            if (!_state)
+                tmp2[0].BackgroundImage = ConvertBitmapToGrayscale(tmp2[0].BackgroundImage);
+
+            tmp2 = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckRepair", true);
+                tmp2[0].BackgroundImage = RepairImg;
+                if (!_state)
+                    tmp2[0].BackgroundImage = ConvertBitmapToGrayscale(tmp2[0].BackgroundImage);
+
+            for (int i = 0; i < 5; i++)
+            {
+                Control[] tmp = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckElRepair" + i.ToString(), true);
+                tmp[0].BackgroundImage = RepairImg;
+                if (!_state)
+                    tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
+            }
+
+            //Trailer
+            tmp2 = tabControlMain.TabPages["tabPageTrailer"].Controls.Find("buttonTrailerRepair", true);
+            tmp2[0].BackgroundImage = RepairImg;
+            if (!_state)
+                tmp2[0].BackgroundImage = ConvertBitmapToGrayscale(tmp2[0].BackgroundImage);
+
+            for (int i = 0; i < 4; i++)
+            {
+                Control[] tmp = tabControlMain.TabPages["tabPageTrailer"].Controls.Find("buttonTrailerElRepair" + i.ToString(), true);
+                tmp[0].BackgroundImage = RepairImg;
                 if (!_state)
                     tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
             }

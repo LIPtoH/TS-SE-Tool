@@ -95,6 +95,7 @@
             this.textBoxUserCompanyCompanyName = new System.Windows.Forms.TextBox();
             this.comboBoxUserCompanyHQcity = new System.Windows.Forms.ComboBox();
             this.textBoxUserCompanyMoneyAccount = new System.Windows.Forms.TextBox();
+            this.labelCompanyNameSize = new System.Windows.Forms.Label();
             this.tabPageTruck = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxUserTruckTruck = new System.Windows.Forms.GroupBox();
@@ -207,7 +208,6 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelCompanyNameSize = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -877,7 +877,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58F));
             this.tableLayoutPanel3.Controls.Add(this.pictureBoxCompanyLogo, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyCompanyName, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyMoneyAccount, 1, 1);
@@ -973,6 +973,20 @@
             this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
             this.textBoxUserCompanyMoneyAccount.TextChanged += new System.EventHandler(this.textBoxMoneyAccount_TextChanged);
             this.textBoxUserCompanyMoneyAccount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxMoneyAccount_KeyPress);
+            // 
+            // labelCompanyNameSize
+            // 
+            this.labelCompanyNameSize.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelCompanyNameSize.AutoSize = true;
+            this.labelCompanyNameSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelCompanyNameSize.Location = new System.Drawing.Point(509, 0);
+            this.labelCompanyNameSize.Name = "labelCompanyNameSize";
+            this.labelCompanyNameSize.Size = new System.Drawing.Size(52, 33);
+            this.labelCompanyNameSize.TabIndex = 23;
+            this.labelCompanyNameSize.Text = "0 / 20";
+            this.labelCompanyNameSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tabPageTruck
             // 
@@ -2290,20 +2304,6 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
-            // 
-            // labelCompanyNameSize
-            // 
-            this.labelCompanyNameSize.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelCompanyNameSize.AutoSize = true;
-            this.labelCompanyNameSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelCompanyNameSize.Location = new System.Drawing.Point(509, 0);
-            this.labelCompanyNameSize.Name = "labelCompanyNameSize";
-            this.labelCompanyNameSize.Size = new System.Drawing.Size(52, 33);
-            this.labelCompanyNameSize.TabIndex = 23;
-            this.labelCompanyNameSize.Text = "0 / 20";
-            this.labelCompanyNameSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormMain
             // 
