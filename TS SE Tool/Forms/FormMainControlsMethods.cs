@@ -466,9 +466,7 @@ namespace TS_SE_Tool
                 }
             }
             catch
-            {
-
-            }
+            { }
 
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("ProfileID", typeof(string));
@@ -486,15 +484,11 @@ namespace TS_SE_Tool
                     {
                         if (Path.GetFileName(folder).StartsWith("profiles")) //Documents
                         {
-                            combDT.Rows.Add(folder, "[L] " + Path.GetFileName(folder));
-
-                            tempList.Add(folder);
-                        }
-                        if (Path.GetFileName(folder).StartsWith("steam_profiles")) //Documents
-                        {
-                            combDT.Rows.Add(folder, "[L] " + Path.GetFileName(folder));
-
-                            tempList.Add(folder);
+                            if (Directory.Exists(folder) && Directory.GetDirectories(folder).Count() > 0)
+                            {
+                                combDT.Rows.Add(folder, "[L] " + Path.GetFileName(folder));
+                                tempList.Add(folder);
+                            }
                         }
                     }
 
@@ -504,9 +498,11 @@ namespace TS_SE_Tool
                     {
                         if (Path.GetFileName(folder).StartsWith("profiles")) //Steam
                         {
-                            combDT.Rows.Add(folder, "[S] " + Path.GetFileName(folder));
-
-                            tempList.Add(folder);
+                            if (Directory.Exists(folder) && Directory.GetDirectories(folder).Count() > 0)
+                            {
+                                combDT.Rows.Add(folder, "[S] " + Path.GetFileName(folder));
+                                tempList.Add(folder);
+                            }                                
                         }
                     }
             }
@@ -514,7 +510,7 @@ namespace TS_SE_Tool
             {
                 string folder = MyDocumentsPath + @"\profiles";
 
-                if (Directory.Exists(folder))
+                if (Directory.Exists(folder) && Directory.GetDirectories(folder).Count() > 0)
                 {
                     combDT.Rows.Add(folder, "[L] profiles");
                     tempList.Add(folder);
@@ -522,7 +518,7 @@ namespace TS_SE_Tool
 
                 folder = RemoteUserdataDirectory + @"\profiles";
 
-                if (Directory.Exists(folder))
+                if (Directory.Exists(folder) && Directory.GetDirectories(folder).Count() > 0)
                 {
                     combDT.Rows.Add(folder, "[S] profiles");
                     tempList.Add(folder);
@@ -555,13 +551,9 @@ namespace TS_SE_Tool
             comboBoxPrevProfiles.DisplayMember = "ProfileName";
             comboBoxPrevProfiles.DataSource = combDT;
 
-
             if (comboBoxPrevProfiles.Items.Count > 0)
             {
                 comboBoxPrevProfiles.Enabled = true;
-                //comboBoxProfiles.Enabled = true;
-                //comboBoxSaves.Enabled = true;
-                //comboBoxPrevProfiles.SelectedIndex = 0;
                 buttonProfilesAndSavesOpenSaveFolder.Enabled = true;
                 buttonMainDecryptSave.Enabled = true;
                 buttonMainLoadSave.Enabled = true;
@@ -589,9 +581,9 @@ namespace TS_SE_Tool
                 return;
             }
 
-            string sv = comboBoxPrevProfiles.SelectedValue.ToString();
-
             FillProfiles();
+
+            string sv = comboBoxPrevProfiles.SelectedValue.ToString();
 
             int index = FindByValue(comboBoxPrevProfiles, sv);
 
@@ -708,7 +700,7 @@ namespace TS_SE_Tool
                 buttonMainDecryptSave.Enabled = false;
                 buttonMainLoadSave.Enabled = false;
 
-                MessageBox.Show("No profiles found");
+                MessageBox.Show("Please select another folder","No valid profiles found");
             }
         }
 

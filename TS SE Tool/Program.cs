@@ -100,8 +100,8 @@ namespace TS_SE_Tool
             {
                 try
                 {
-                    MessageBox.Show("Fatal Non-UI Error", "Fatal Non-UI Error. Could not write the error to the event log.\r\nReason: " 
-                        + exc.Message, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show("Fatal Non-UI Error. Could not write the error to the event log.\r\nReason: " 
+                        + exc.Message, "Fatal Non-UI Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 finally
                 {
