@@ -468,6 +468,10 @@ namespace TS_SE_Tool
                     string translatedString = _rm.GetString(c.Name.TrimEnd(charsToTrim), _ci);
                     if (translatedString != null)
                         c.Text = translatedString;
+
+                    string TolltipString = _rm.GetString("tooltip" + c.Name.TrimEnd(charsToTrim), _ci);
+                    if (TolltipString != null)
+                        toolTipMain.SetToolTip(c, TolltipString);
                 }
                 catch
                 {   

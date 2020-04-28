@@ -50,7 +50,7 @@ namespace TS_SE_Tool
                     string[] linechunk;
                     string line = reader.ReadLine();
 
-                    if (line != "" && !line.StartsWith("["))
+                    if (line != "" && !line.StartsWith("[") && !line.StartsWith("#"))
                     {
                         linechunk = line.Split(new char[] { ';' }, 2);
                         dict.Add(linechunk[0], linechunk[1]);
@@ -72,14 +72,12 @@ namespace TS_SE_Tool
                     string[] linechunk;
                     string line = reader.ReadLine();
 
-                    if (line != "" && !line.StartsWith("["))
+                    if (line != "" && !line.StartsWith("[") && !line.StartsWith("#"))
                     {
                         linechunk = line.Split(new char[] { ';' }, 2);
-                        //dict.Add(linechunk[0], linechunk[1]);
+
                         if (dict.ContainsKey(linechunk[0]))
                             dict[linechunk[0]] = linechunk[1];
-                        else
-                            dict.Add(linechunk[0], linechunk[1]);
                     }
                 }
 
