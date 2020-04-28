@@ -273,7 +273,8 @@ namespace TS_SE_Tool
                 GameIconeImg = new Image[2];
                 TruckPartsImg = new Image[5];
                 TrailerPartsImg = new Image[4];
-                ProgUIImgs = new Image[0];
+
+                ProgUIImgsDict = new Dictionary<string, Image>();
 
                 TabpagesImages = new ImageList();
 

@@ -362,12 +362,13 @@ namespace TS_SE_Tool
         {
             string[] imgpaths;
 
-            imgpaths = new string[] { @"img\UI\globe-with-meridians.png"};
-            Array.Resize(ref ProgUIImgs, imgpaths.Length);
-            
+            string[] imgNames = new string[] { "Language", "github", "SCS", "TMP", "PDF", "YouTube", "ProgramSettings", "Settings", "Cross", "Info", "Download", "Question", "NetworkCloud", "Reload", "EditList" };
+            imgpaths = new string[] { @"img\UI\globe.png", @"img\UI\github.png", @"img\UI\SCS.png", @"img\UI\TMP.png", @"img\UI\PDF.png", @"img\UI\YouTube.png", @"img\UI\pSettings.png", @"img\UI\Settings.png",
+                                    @"img\UI\quit.png", @"img\UI\info.png", @"img\UI\download.png", @"img\UI\question.png", @"img\UI\networkCloud.png", @"img\UI\reload.png", @"img\UI\edit.png"};
+
             for(int i = 0; i < imgpaths.Length; i++)
             {
-                ProgUIImgs[i] = Bitmap.FromFile(imgpaths[i]);
+                ProgUIImgsDict.Add(imgNames[i], Bitmap.FromFile(imgpaths[i]));
             }
 
             MemoryStream ms = new MemoryStream();

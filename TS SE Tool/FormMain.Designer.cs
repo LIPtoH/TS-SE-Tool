@@ -202,6 +202,7 @@
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
+            this.buttonProfilesAndSavesEditProfile = new System.Windows.Forms.Button();
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
@@ -409,18 +410,19 @@
             this.comboBoxProfiles.FormattingEnabled = true;
             this.comboBoxProfiles.Location = new System.Drawing.Point(6, 133);
             this.comboBoxProfiles.Name = "comboBoxProfiles";
-            this.comboBoxProfiles.Size = new System.Drawing.Size(226, 21);
+            this.comboBoxProfiles.Size = new System.Drawing.Size(197, 21);
             this.comboBoxProfiles.TabIndex = 1;
             this.comboBoxProfiles.DropDown += new System.EventHandler(this.comboBoxProfiles_DropDown);
             this.comboBoxProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfiles_SelectedIndexChanged);
             // 
             // buttonProfilesAndSavesRefreshAll
             // 
-            this.buttonProfilesAndSavesRefreshAll.Location = new System.Drawing.Point(122, 42);
+            this.buttonProfilesAndSavesRefreshAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonProfilesAndSavesRefreshAll.Location = new System.Drawing.Point(209, 106);
             this.buttonProfilesAndSavesRefreshAll.Name = "buttonProfilesAndSavesRefreshAll";
-            this.buttonProfilesAndSavesRefreshAll.Size = new System.Drawing.Size(110, 23);
+            this.buttonProfilesAndSavesRefreshAll.Size = new System.Drawing.Size(21, 21);
             this.buttonProfilesAndSavesRefreshAll.TabIndex = 2;
-            this.buttonProfilesAndSavesRefreshAll.Text = "Refresh";
+            this.buttonProfilesAndSavesRefreshAll.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonProfilesAndSavesRefreshAll.UseVisualStyleBackColor = true;
             this.buttonProfilesAndSavesRefreshAll.Click += new System.EventHandler(this.buttonRefreshAll_Click);
             // 
@@ -431,7 +433,7 @@
             this.comboBoxSaves.FormattingEnabled = true;
             this.comboBoxSaves.Location = new System.Drawing.Point(6, 160);
             this.comboBoxSaves.Name = "comboBoxSaves";
-            this.comboBoxSaves.Size = new System.Drawing.Size(226, 21);
+            this.comboBoxSaves.Size = new System.Drawing.Size(197, 21);
             this.comboBoxSaves.TabIndex = 3;
             this.comboBoxSaves.DropDown += new System.EventHandler(this.comboBoxSaves_DropDown);
             this.comboBoxSaves.SelectedIndexChanged += new System.EventHandler(this.comboBoxSaves_SelectedIndexChanged);
@@ -440,7 +442,7 @@
             // 
             this.buttonMainDecryptSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonMainDecryptSave.Enabled = false;
-            this.buttonMainDecryptSave.Location = new System.Drawing.Point(6, 186);
+            this.buttonMainDecryptSave.Location = new System.Drawing.Point(6, 201);
             this.buttonMainDecryptSave.Name = "buttonMainDecryptSave";
             this.buttonMainDecryptSave.Size = new System.Drawing.Size(110, 23);
             this.buttonMainDecryptSave.TabIndex = 5;
@@ -2078,7 +2080,7 @@
             // 
             this.buttonProfilesAndSavesOpenSaveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
-            this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(122, 186);
+            this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(122, 201);
             this.buttonProfilesAndSavesOpenSaveFolder.Name = "buttonProfilesAndSavesOpenSaveFolder";
             this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(110, 23);
             this.buttonProfilesAndSavesOpenSaveFolder.TabIndex = 8;
@@ -2159,15 +2161,17 @@
             this.comboBoxPrevProfiles.FormattingEnabled = true;
             this.comboBoxPrevProfiles.Location = new System.Drawing.Point(6, 106);
             this.comboBoxPrevProfiles.Name = "comboBoxPrevProfiles";
-            this.comboBoxPrevProfiles.Size = new System.Drawing.Size(226, 21);
+            this.comboBoxPrevProfiles.Size = new System.Drawing.Size(197, 21);
             this.comboBoxPrevProfiles.TabIndex = 19;
             this.comboBoxPrevProfiles.DropDown += new System.EventHandler(this.comboBoxPrevProfiles_DropDown);
             this.comboBoxPrevProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxPrevProfiles_SelectedIndexChanged);
             // 
             // checkBoxProfilesAndSavesProfileBackups
             // 
+            this.checkBoxProfilesAndSavesProfileBackups.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxProfilesAndSavesProfileBackups.AutoSize = true;
-            this.checkBoxProfilesAndSavesProfileBackups.Location = new System.Drawing.Point(122, 19);
+            this.checkBoxProfilesAndSavesProfileBackups.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxProfilesAndSavesProfileBackups.Location = new System.Drawing.Point(158, 83);
             this.checkBoxProfilesAndSavesProfileBackups.Name = "checkBoxProfilesAndSavesProfileBackups";
             this.checkBoxProfilesAndSavesProfileBackups.Size = new System.Drawing.Size(68, 17);
             this.checkBoxProfilesAndSavesProfileBackups.TabIndex = 20;
@@ -2185,6 +2189,7 @@
             // 
             // groupBoxMainProfilesAndSaves
             // 
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesEditProfile);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonMainDecryptSave);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRefreshAll);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.checkBoxProfilesAndSavesProfileBackups);
@@ -2196,10 +2201,20 @@
             this.groupBoxMainProfilesAndSaves.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxMainProfilesAndSaves.Location = new System.Drawing.Point(3, 83);
             this.groupBoxMainProfilesAndSaves.Name = "groupBoxMainProfilesAndSaves";
-            this.groupBoxMainProfilesAndSaves.Size = new System.Drawing.Size(238, 215);
+            this.groupBoxMainProfilesAndSaves.Size = new System.Drawing.Size(238, 230);
             this.groupBoxMainProfilesAndSaves.TabIndex = 21;
             this.groupBoxMainProfilesAndSaves.TabStop = false;
             this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
+            // 
+            // buttonProfilesAndSavesEditProfile
+            // 
+            this.buttonProfilesAndSavesEditProfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonProfilesAndSavesEditProfile.Enabled = false;
+            this.buttonProfilesAndSavesEditProfile.Location = new System.Drawing.Point(209, 133);
+            this.buttonProfilesAndSavesEditProfile.Name = "buttonProfilesAndSavesEditProfile";
+            this.buttonProfilesAndSavesEditProfile.Size = new System.Drawing.Size(21, 21);
+            this.buttonProfilesAndSavesEditProfile.TabIndex = 21;
+            this.buttonProfilesAndSavesEditProfile.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel15
             // 
@@ -2230,7 +2245,7 @@
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 5;
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 221F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 236F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
@@ -2297,7 +2312,7 @@
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel11.Controls.Add(this.buttonMainLoadSave, 0, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(0, 301);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(0, 316);
             this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 1;
@@ -2559,6 +2574,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemProgramSettings;
         private System.Windows.Forms.Label labelCompanyNameSize;
+        private System.Windows.Forms.Button buttonProfilesAndSavesEditProfile;
     }
 }
 

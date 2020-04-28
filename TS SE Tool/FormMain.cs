@@ -163,7 +163,9 @@ namespace TS_SE_Tool
         private Image RepairImg, RefuelImg, CutomizeImg, PlayerCompanyLogo; //Program
 
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
-            TruckPartsImg, TrailerPartsImg, GameIconeImg, ProgUIImgs; //Program
+            TruckPartsImg, TrailerPartsImg, GameIconeImg; //Program
+
+        private Dictionary<string, Image> ProgUIImgsDict;
 
         private ImageList TabpagesImages; //Program
 
@@ -213,8 +215,28 @@ namespace TS_SE_Tool
 
             //ToggleMainControlsAccess(false);
             ToggleControlsAccess(false);
+            //
+            toolStripMenuItemProgram.DropDownItems["toolStripMenuItemProgramSettings"].Image = ProgUIImgsDict["ProgramSettings"];
+            toolStripMenuItemProgram.DropDownItems["toolStripMenuItemSettings"].Image = ProgUIImgsDict["Settings"];
+            toolStripMenuItemProgram.DropDownItems["toolStripMenuItemExit"].Image = ProgUIImgsDict["Cross"];
 
-            menuStripMain.Items.Find("toolStripMenuItemLanguage", false)[0].Image = ProgUIImgs[0];
+            menuStripMain.Items["toolStripMenuItemLanguage"].Image = ProgUIImgsDict["Language"];
+
+            toolStripMenuItemHelp.DropDownItems["toolStripMenuItemAbout"].Image = ProgUIImgsDict["Info"];
+            toolStripMenuItemHelp.DropDownItems["toolStripMenuItemTutorial"].Image = ProgUIImgsDict["Question"];
+            toolStripMenuItemHelp.DropDownItems["toolStripMenuItemDownload"].Image = ProgUIImgsDict["Download"];
+
+            toolStripMenuItemTutorial.DropDownItems["toolStripMenuItemLocalPDF"].Image = ProgUIImgsDict["PDF"];
+            toolStripMenuItemTutorial.DropDownItems["toolStripMenuItemYouTubeVideo"].Image = ProgUIImgsDict["YouTube"];
+
+            toolStripMenuItemDownload.DropDownItems["toolStripMenuItemCheckUpdates"].Image = ProgUIImgsDict["NetworkCloud"];
+            toolStripMenuItemDownload.DropDownItems["checkSCSForumToolStripMenuItem"].Image = ProgUIImgsDict["SCS"];
+            toolStripMenuItemDownload.DropDownItems["checkTMPForumToolStripMenuItem"].Image = ProgUIImgsDict["TMP"];
+            toolStripMenuItemDownload.DropDownItems["checkGitHubRelesesToolStripMenuItem"].Image = ProgUIImgsDict["github"];
+
+            //
+            buttonProfilesAndSavesRefreshAll.BackgroundImage = ProgUIImgsDict["Reload"];
+            buttonProfilesAndSavesEditProfile.BackgroundImage = ProgUIImgsDict["EditList"];
 
             tabControlMain.ImageList = TabpagesImages;
 
