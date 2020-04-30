@@ -23,9 +23,9 @@ namespace TS_SE_Tool
 {
     public partial class FormMain
     {
-        public unsafe string[] NewDecodeFile(string _savefile_path, Form _senderForm, string _statusStrip, string _targetLabel)
+        public unsafe string[] NewDecodeFile(string _savefile_path)
         {
-            ShowStatusMessages("i", "message_loading_save_file", _senderForm, _statusStrip, _targetLabel);
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_loading_save_file");
             LogWriter("Loading file into memory");
 
             //string FileData = "";
@@ -39,7 +39,7 @@ namespace TS_SE_Tool
             catch
             {
                 LogWriter("Could not find file in: " + _savefile_path);
-                ShowStatusMessages("e", "error_could_not_find_file", _senderForm, _statusStrip, _targetLabel);
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
 
                 FileDecoded = false;
                 return null;
@@ -65,7 +65,7 @@ namespace TS_SE_Tool
                 case 2:
                     // "SIIDEC_RESULT_FORMAT_ENCRYPTED";
                     {
-                        ShowStatusMessages("i", "message_decoding_save_file", _senderForm, _statusStrip, _targetLabel);
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
                         LogWriter("Decoding file");
 
                         int result = -1;
@@ -87,9 +87,11 @@ namespace TS_SE_Tool
                                     result = SIIDecryptAndDecodeMemory(ptr, buff, ptr2, newbuffP);
                             }
 
+                            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
                             FileDecoded = true;
                             string BigS = Encoding.UTF8.GetString(newFileData);
                             return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
                         }
 
                         return null;
@@ -99,7 +101,7 @@ namespace TS_SE_Tool
                 case 4:
                     // "SIIDEC_RESULT_FORMAT_3NK";
                     {
-                        ShowStatusMessages("i", "message_decoding_save_file", _senderForm, _statusStrip, _targetLabel);
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
                         LogWriter("Decoding file");
 
                         int result = -1;
@@ -121,6 +123,7 @@ namespace TS_SE_Tool
                                     result = SIIDecodeMemory(ptr, buff, ptr2, newbuffP);
                             }
 
+                            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
                             FileDecoded = true;
                             string BigS = Encoding.UTF8.GetString(newFileData);
                             return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);

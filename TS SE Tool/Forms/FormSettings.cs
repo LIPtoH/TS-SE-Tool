@@ -53,6 +53,7 @@ namespace TS_SE_Tool
             CorrectControlsPositions();
             this.ResumeLayout();
 
+            MainForm.LoadConfig();
             PopulateControls();
         }
 

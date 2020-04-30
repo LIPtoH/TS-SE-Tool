@@ -769,7 +769,7 @@ namespace TS_SE_Tool
                 comboBoxFreightMarketDestinationCity.Text = "";
                 comboBoxFreightMarketDestinationCompany.Text = "";
 
-                ShowStatusMessages("e", "message_no_matching_cities");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "message_no_matching_cities");
             }
             else
             {
@@ -778,7 +778,7 @@ namespace TS_SE_Tool
                 else
                     comboBoxFreightMarketDestinationCity.SelectedValue = prevValue;
 
-                ShowStatusMessages("i", "");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
             }
 
         }

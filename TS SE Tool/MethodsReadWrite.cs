@@ -36,7 +36,7 @@ namespace TS_SE_Tool
     {
         private BackgroundWorker worker;
 
-        private void LoadConfig()
+        internal void LoadConfig()
         {
             try
             {
@@ -172,7 +172,7 @@ namespace TS_SE_Tool
             catch
             {
                 LogWriter("Could not write to " + Directory.GetCurrentDirectory());
-                ShowStatusMessages("e", "error_could_not_write_to_file", Directory.GetCurrentDirectory());
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_write_to_file", Directory.GetCurrentDirectory() + @"\config.cfg");
             }
         }
 
@@ -725,7 +725,7 @@ namespace TS_SE_Tool
             catch
             {
                 LogWriter("Could not find file in: " + _filePath);
-                ShowStatusMessages("e", "error_could_not_find_file");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
 
                 FileDecoded = false;
                 return null;
@@ -735,13 +735,12 @@ namespace TS_SE_Tool
 
         private void LoadSaveFile()
         {
-            //ToggleVisibility(false);
             SetDefaultValues(false);
             ClearFormControls(true);
 
             ClearJobData();
 
-            ShowStatusMessages("i", "message_decoding_save_file");
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
 
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             Globals.SelectedSavePath = SavefilePath;
@@ -770,7 +769,7 @@ namespace TS_SE_Tool
             if (!File.Exists(SiiProfilePath))
             {
                 LogWriter("File does not exist in " + SiiProfilePath);
-                ShowStatusMessages("e", "error_could_not_find_file");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
             {
@@ -780,7 +779,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath, this, "statusStripMain", "toolStripStatusMessages");
+                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath);
 
                         if (FileDecoded)
                         {
@@ -792,7 +791,7 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        ShowStatusMessages("e", "error_could_not_decode_file", this, "statusStripMain", "toolStripStatusMessages");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                         LogWriter("Could not decrypt after 5 attempts");
                     }
                 }
@@ -804,7 +803,7 @@ namespace TS_SE_Tool
                 if ((tempProfileFileInMemory == null) || (tempProfileFileInMemory[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Profile file or wrong file format");
-                    ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
                     tempProfileFileInMemory = null;
 
@@ -825,7 +824,7 @@ namespace TS_SE_Tool
             if (!File.Exists(SiiInfoPath))
             {
                 LogWriter("File does not exist in " + SiiInfoPath);
-                ShowStatusMessages("e", "error_could_not_find_file");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
             {
@@ -835,7 +834,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempInfoFileInMemory = NewDecodeFile(SiiInfoPath, this, "statusStripMain", "toolStripStatusMessages");
+                        tempInfoFileInMemory = NewDecodeFile(SiiInfoPath);
 
                         if (FileDecoded)
                         {
@@ -846,7 +845,7 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        ShowStatusMessages("e", "error_could_not_decode_file", this, "statusStripMain", "toolStripStatusMessages");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                         LogWriter("Could not decrypt after 5 attempts");
                     }
                 }
@@ -858,7 +857,7 @@ namespace TS_SE_Tool
                 if ((tempInfoFileInMemory == null) || (tempInfoFileInMemory[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Info file or wrong file format");
-                    ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
                     tempInfoFileInMemory = null;
 
@@ -883,7 +882,7 @@ namespace TS_SE_Tool
             if (SavefileVersion > 0 && SavefileVersion > SupportedSavefileVersionETS2[0] && SavefileVersion > SupportedSavefileVersionETS2[1])
             {
                 MessageBox.Show("Savefile version don't supported.\nYou cann't edit file with version " + SavefileVersion + ", but you can try to decode it.", "Wrong version");
-                ShowStatusMessages("clear", "", this, "statusStripMain", "toolStripStatusMessages");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
 
                 radioButtonMainGameSwitchETS.Enabled = true;
                 radioButtonMainGameSwitchATS.Enabled = true;
@@ -906,7 +905,7 @@ namespace TS_SE_Tool
                 DialogResult result = MessageBox.Show("Savefile version was not recognised.\nDo you want to continue?", "Version not recognised", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
                 {
-                    ShowStatusMessages("clear", "", this, "statusStripMain", "toolStripStatusMessages");
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
                     return;
                 }
             }
@@ -914,7 +913,7 @@ namespace TS_SE_Tool
             if (!File.Exists(SiiSavePath))
             {
                 LogWriter("File does not exist in " + SavefilePath);
-                ShowStatusMessages("e", "error_could_not_find_file", this, "statusStripMain", "toolStripStatusMessages");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
             {
@@ -924,7 +923,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempSavefileInMemory = NewDecodeFile(SiiSavePath, this, "statusStripMain", "toolStripStatusMessages");
+                        tempSavefileInMemory = NewDecodeFile(SiiSavePath);
 
                         if (FileDecoded)
                         {
@@ -935,8 +934,8 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        ShowStatusMessages("e", "error_could_not_decode_file", this, "statusStripMain", "toolStripStatusMessages");
                         LogWriter("Could not decrypt after 5 attempts");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                     }
                 }
                 catch
@@ -947,7 +946,7 @@ namespace TS_SE_Tool
                 if ((tempSavefileInMemory == null) || (tempSavefileInMemory[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Save file or wrong file format");
-                    ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
                     tempSavefileInMemory = null;
 
@@ -978,7 +977,7 @@ namespace TS_SE_Tool
             if (!File.Exists(SiiProfilePath))
             {
                 LogWriter("File does not exist in " + SiiProfilePath);
-                ShowStatusMessages("e", "error_could_not_find_file");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
             {
@@ -988,7 +987,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath, this, "statusStripMain", "toolStripStatusMessages");
+                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath);
 
                         if (FileDecoded)
                         {
@@ -1000,8 +999,8 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        ShowStatusMessages("e", "error_could_not_decode_file", this, "statusStripMain", "toolStripStatusMessages");
                         LogWriter("Could not decrypt after 5 attempts");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                     }
                 }
                 catch
@@ -1012,7 +1011,7 @@ namespace TS_SE_Tool
                 if ((tempProfileFileInMemory == null) || (tempProfileFileInMemory[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Profile file or wrong file format");
-                    ShowStatusMessages("e", "error_file_not_decoded", this, "statusStripMain", "toolStripStatusMessages");
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
                     tempProfileFileInMemory = null;
 
@@ -1022,8 +1021,7 @@ namespace TS_SE_Tool
                 }
                 else if (tempProfileFileInMemory != null)
                 {
-                    ShowStatusMessages("clear","");
-                    //CheckProfileInfoData();
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
                     SFProfileData.Prepare(tempProfileFileInMemory);
                 }
             }
@@ -1109,11 +1107,11 @@ namespace TS_SE_Tool
             string[] chunkOfline;
             string SiiSavePath = SavefilePath + @"\game.sii";
 
-            ShowStatusMessages("i", "message_saving_file");
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_saving_file");
 
             if (File.GetLastWriteTime(SiiSavePath) > LastModifiedTimestamp)
             {
-                ShowStatusMessages("e", "error_file_was_modified");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_was_modified");
                 LogWriter("Save game was modified - reload file to prevent progress loss");
             }
             else
@@ -2074,7 +2072,7 @@ namespace TS_SE_Tool
                 }
             }
 
-            ShowStatusMessages("i", "message_file_saved");
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_file_saved");
             LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
 
             //dispose attempt
@@ -2160,7 +2158,7 @@ namespace TS_SE_Tool
         public void ImportDB()
         {
             LogWriter("Import started");
-            ShowStatusMessages("i", "message_import_database");
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_import_database");
 
             try
             {
@@ -2182,7 +2180,7 @@ namespace TS_SE_Tool
             catch
             {
                 LogWriter("Import failed, wrong file format or missing file");
-                ShowStatusMessages("e", "error_during_importing_db");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_during_importing_db");
             }
 
             LogWriter("Import finished");

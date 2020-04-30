@@ -188,6 +188,8 @@ namespace TS_SE_Tool
         public FormMain()
         {
             InitializeComponent();
+            UpdateStatusBarMessage.OnNewStatusMessage += UpdateStatusBarMessage_OnNewStatusMessage;
+
             this.Icon = Properties.Resources.MainIco;
 
             GetTranslationFiles();
@@ -250,6 +252,7 @@ namespace TS_SE_Tool
             comboBoxFreightMarketUrgency.DrawMode = DrawMode.OwnerDrawVariable;
             comboBoxFreightMarketTrailerDef.DrawMode = DrawMode.OwnerDrawVariable;
             comboBoxFreightMarketTrailerVariant.DrawMode = DrawMode.OwnerDrawVariable;
+
 
             ChangeLanguage();
         }

@@ -38,7 +38,7 @@ namespace TS_SE_Tool
             string[] chunkOfline;
 
             LogWriter("Prepare started");
-            ShowStatusMessages("i", "message_preparing_data", this, statusStripMain.Name, "toolStripStatusMessages");
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_preparing_data");
 
             int economyEventQueueIndex = 0;
             int EconomyEventline = 0;
@@ -1076,7 +1076,7 @@ namespace TS_SE_Tool
                 }
                 catch (Exception ex)
                 {
-                    ShowStatusMessages("i", "error_exception");
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                     MessageBox.Show(ex.Message, "Exception.\r\n" + line.ToString() + " | " + tempSavefileInMemory[line], MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -1261,10 +1261,8 @@ namespace TS_SE_Tool
             worker.ReportProgress(90);
             GetAllDistancesFromDB();
             worker.ReportProgress(100);
-
-            //ToggleVisibility(true); //set controls to visible
-
-            ShowStatusMessages("i", "message_operation_finished");
+            
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_operation_finished");
             LogWriter("Prepare ended");
         }
 
@@ -1383,20 +1381,20 @@ namespace TS_SE_Tool
                 }
 
             if (SavefileVersion == 0)
-                ShowStatusMessages("e", "error_save_version_not_detected");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_save_version_not_detected");
         }
 
-        public string GetCustomSaveFilename(string _tempSaveFilePath, Form _senderForm, string _statusStrip, string _targetLabel)
+        public string GetCustomSaveFilename(string _tempSaveFilePath)
         {
             string chunkOfline;
 
             string tempSiiInfoPath = _tempSaveFilePath + @"\info.sii";
             string[] tempFile = null;
-            //////
+
             if (!File.Exists(tempSiiInfoPath))
             {
                 LogWriter("File does not exist in " + tempSiiInfoPath);
-                ShowStatusMessages("e", "error_could_not_find_file", _senderForm, _statusStrip, _targetLabel);
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
             {   
@@ -1406,7 +1404,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempFile = NewDecodeFile(tempSiiInfoPath, _senderForm, _statusStrip, _targetLabel);
+                        tempFile = NewDecodeFile(tempSiiInfoPath);
 
                         if (FileDecoded)
                         {
@@ -1419,7 +1417,7 @@ namespace TS_SE_Tool
                     if (decodeAttempt == 5)
                     {
                         LogWriter("Could not decrypt after 5 attempts");
-                        ShowStatusMessages("e", "error_could_not_decode_file", _senderForm, _statusStrip, _targetLabel);
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                     }
                 }
                 catch
@@ -1430,7 +1428,7 @@ namespace TS_SE_Tool
                 if ((tempFile == null) || (tempFile[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Info file or wrong file format");
-                    ShowStatusMessages("e", "error_file_not_decoded", _senderForm, _statusStrip, _targetLabel);
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
                 }
                 else if (tempFile != null)
                 {
@@ -1660,11 +1658,11 @@ namespace TS_SE_Tool
             if (comboBoxFreightMarketSourceCity.SelectedIndex < 0 || comboBoxFreightMarketSourceCompany.SelectedIndex < 0 || comboBoxFreightMarketDestinationCity.SelectedIndex < 0 || comboBoxFreightMarketDestinationCompany.SelectedIndex < 0 || comboBoxFreightMarketCargoList.SelectedIndex < 0 || comboBoxFreightMarketUrgency.SelectedIndex < 0 || comboBoxFreightMarketTrailerDef.SelectedIndex < 0 || comboBoxFreightMarketTrailerVariant.SelectedIndex < 0)
             {
                 LogWriter("Missing selection of Source, Destination or Cargo settings");
-                ShowStatusMessages("e", "error_job_parameters_not_filled");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_job_parameters_not_filled");
             }
             else
             {
-                ShowStatusMessages("i", "");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
 
                 #region SetupVariables
                 //Getting data from form controls
@@ -1765,7 +1763,7 @@ namespace TS_SE_Tool
                         }
                         catch
                         {
-                            ShowStatusMessages("e", "error_could_not_complete_jobs_loop");
+                            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_complete_jobs_loop");
                         }
                     }
                     else
@@ -1820,7 +1818,7 @@ namespace TS_SE_Tool
 
             if (!File.Exists(fileName))
             {
-                ShowStatusMessages("e", "message_database_missing_creating_db");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "message_database_missing_creating_db");
 
                 connectionString = string.Format("DataSource ='{0}';", fileName);
 
@@ -1828,7 +1826,7 @@ namespace TS_SE_Tool
 
                 Engine.CreateDatabase();
 
-                ShowStatusMessages("i", "message_database_created");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_database_created");
 
                 CreateDatabaseStructure();
             }
@@ -1863,12 +1861,8 @@ namespace TS_SE_Tool
                 sql = "ALTER TABLE [Dependencies] ALTER COLUMN Dependency NVARCHAR(256) NOT NULL;";
                 UpdateDatabase(sql);
 
-                //string DBVersion1 = Assembly.GetExecutingAssembly().GetName().Version.Major.ToString();
-                //string DBVersion2 = Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString();
-                //string DBVersion3 = Assembly.GetExecutingAssembly().GetName().Version.Build.ToString();
-                //string DBVersion4 = Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString();
 
-                string DBVersionNew = "0.2.0";//DBVersion1 + DBVersion2 + DBVersion3; //Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                string DBVersionNew = "0.2.0";
                 sql = "UPDATE [DatabaseDetails] SET DBVersion = '" + DBVersionNew + "' " +
                         "WHERE ID_DBline = 1;";
                 UpdateDatabase(sql);
@@ -1882,7 +1876,7 @@ namespace TS_SE_Tool
                 DBconnection.Open();
             }
 
-            ShowStatusMessages("e", "message_database_missing_creating_db_structure");
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "message_database_missing_creating_db_structure");
 
             SqlCeCommand cmd;
 
@@ -1949,16 +1943,16 @@ namespace TS_SE_Tool
                     try
                     {
                         cmd.ExecuteNonQuery();
-                        ShowStatusMessages("i", "message_database_created");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_database_created");
                     }
                     catch (SqlCeException sqlexception)
                     {
-                        ShowStatusMessages("i", "error_sql_exception");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
                         MessageBox.Show(sqlexception.Message, "SQL Exception. Create DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     catch (Exception ex)
                     {
-                        ShowStatusMessages("i", "error_exception");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                         MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -1973,19 +1967,18 @@ namespace TS_SE_Tool
                 DBconnection.Open();
             try
             {
-
                 SqlCeCommand command = DBconnection.CreateCommand();
                 command.CommandText = _sql_string;
                 command.ExecuteNonQuery();
             }
             catch (SqlCeException sqlexception)
             {
-                ShowStatusMessages("i", "error_sql_exception");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
                 MessageBox.Show(sqlexception.Message + "\r\n" + _sql_string, "SQL Exception. Update DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                ShowStatusMessages("i", "error_exception");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                 MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -2037,14 +2030,14 @@ namespace TS_SE_Tool
             }
             catch (SqlCeException sqlexception)
             {
-                ShowStatusMessages("i", "error_sql_exception");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
                 MessageBox.Show(sqlexception.Message, "SQL Exception. Load all Distances", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 LogWriter("Getting Data went wrong");
             }
             catch (Exception ex)
             {
-                ShowStatusMessages("i", "error_exception");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                 MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 LogWriter("Getting Data went wrong");
@@ -2794,16 +2787,16 @@ namespace TS_SE_Tool
                     try
                     {
                         cmd.ExecuteNonQuery();
-                        //ShowStatusMessages("i", "message_database_created");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_database_created");
                     }
                     catch (SqlCeException sqlexception)
                     {
-                        //ShowStatusMessages("i", "error_sql_exception");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
                         MessageBox.Show(sqlexception.Message, "SQL Exception. Ext Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     catch (Exception ex)
                     {
-                        //ShowStatusMessages("i", "error_exception");
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                         MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }

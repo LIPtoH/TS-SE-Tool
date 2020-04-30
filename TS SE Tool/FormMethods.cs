@@ -16,79 +16,98 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
-using ICSharpCode.SharpZipLib.GZip;
-using Microsoft.Win32;
 
 namespace TS_SE_Tool
 {
+    public enum SMStatus : byte
+    {
+        Clear = 0,
+        Info = 1,
+        Error = 2
+    }
+    
+    public delegate void AddStatusMessageDelegate(SMStatus _status, string _message, string _option);
+
+    public static class UpdateStatusBarMessage
+    {
+        public static FormMain MainForm;
+
+        public static event AddStatusMessageDelegate OnNewStatusMessage;
+
+        public static void ShowStatusMessage(SMStatus _status)
+        {
+            ThreadSafeStatusMessage(_status, null, null);
+        }
+
+        public static void ShowStatusMessage(SMStatus _status, string _message)
+        {
+            ThreadSafeStatusMessage(_status, _message, null);
+        }
+
+        public static void ShowStatusMessage(SMStatus _status, string _message, string _option)
+        {
+            ThreadSafeStatusMessage(_status, _message, _option);
+        }
+
+        private static void ThreadSafeStatusMessage(SMStatus _status, string _message, string _option)
+        {
+            if (MainForm != null && MainForm.InvokeRequired)        // we are in a different thread to the main window
+                MainForm.Invoke(new AddStatusMessageDelegate(ThreadSafeStatusMessage), new object[] { _status, _message, _option });     // call self from main thread
+            else
+                OnNewStatusMessage(_status, _message, _option);
+        }
+    }
+
     public partial class FormMain
     {
-        private void ShowStatusMessages(string _status, string _message)
+        void UpdateStatusBarMessage_OnNewStatusMessage(SMStatus _status)
         {
-            if (_status == "e")
-            {
-                toolStripStatusMessages.ForeColor = Color.Red;
-            }
-            else
-            if (_status == "i")
-            {
-                toolStripStatusMessages.ForeColor = Color.Black;
-            }
-            else
-            if (_status == "clear")
-            {
-                toolStripStatusMessages.Text = "";
-                return;
-            }
-
-            toolStripStatusMessages.Text = GetranslatedString(_message);
+            UpdateStatusBarMessage_OnNewStatusMessage(_status, null, null);
         }
 
-        private void ShowStatusMessages(string _status, string _message, string _option)
+        void UpdateStatusBarMessage_OnNewStatusMessage(SMStatus _status, string _message)
         {
-            if (_status == "e")
-            {
-                toolStripStatusMessages.ForeColor = Color.Red;
-            }
-            if (_status == "i")
-            {
-                toolStripStatusMessages.ForeColor = Color.Black;
-            }
-
-            toolStripStatusMessages.Text = GetranslatedString(_message) + " (" + _option + ")";
+            UpdateStatusBarMessage_OnNewStatusMessage(_status, _message, null);
         }
 
-        public void ShowStatusMessages(string _status, string _message, Form _senderForm, string _statusStrip, string _targetLabel)
+        void UpdateStatusBarMessage_OnNewStatusMessage(SMStatus _status, string _message, string _option)
         {
-            StatusStrip tssm = (StatusStrip)_senderForm.Controls.Find(_statusStrip, true)[0];
-
-            if (_status == "e")
-            {   
-                tssm.Items[_targetLabel].ForeColor = Color.Red;
-            }
-            else
-            if (_status == "i")
+            switch (_status)
             {
-                tssm.Items[_targetLabel].ForeColor = Color.Black;
-            }
-            else
-            if (_status == "clear")
-            {
-                tssm.Items[_targetLabel].Text = "";
-                return;
+                case SMStatus.Clear:
+                    {
+                        toolStripStatusMessages.Text = "";
+                        return;
+                    }
+                case SMStatus.Info:
+                    {
+                        toolStripStatusMessages.ForeColor = Color.Black;
+                        break;
+                    }
+                case SMStatus.Error:
+                    {
+                        toolStripStatusMessages.ForeColor = Color.Red;
+                        break;
+                    }
             }
 
-            tssm.Items[_targetLabel].Text = GetranslatedString(_message);
+            if (_message != null)
+            {
+                string toolTipText = GetranslatedString(_message);
+
+                if (_option != null)
+                    toolTipText += " (" + _option + ")";
+
+                toolStripStatusMessages.Text = toolTipText;
+            }
         }
 
         public void SetDefaultValues(bool _initial)

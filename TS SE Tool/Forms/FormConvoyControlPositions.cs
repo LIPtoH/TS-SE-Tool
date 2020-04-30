@@ -143,7 +143,7 @@ namespace TS_SE_Tool
                         combDT.Rows.Add(profile, "- " + ProfileName + " -", 0, File.GetLastWriteTime(profile + @"\game.sii").ToString());
                     }
                     else
-                        combDT.Rows.Add(profile, MainForm.GetCustomSaveFilename(profile, this, "statusStripCCpositions", "toolStripStatusMessages"), 1, File.GetLastWriteTime(profile + @"\game.sii").ToString());
+                        combDT.Rows.Add(profile, MainForm.GetCustomSaveFilename(profile), 1, File.GetLastWriteTime(profile + @"\game.sii").ToString());
 
                     NotANumber = false;
                 }
@@ -284,7 +284,7 @@ namespace TS_SE_Tool
                     if (!File.Exists(SiiSavePath))
                     {
                         MessageBox.Show("File does not exist in " + SiiSavePath);
-                        MainForm.ShowStatusMessages("e", "error_could_not_find_file", this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
                     }
                     else
                     {
@@ -294,7 +294,7 @@ namespace TS_SE_Tool
                             int decodeAttempt = 0;
                             while (decodeAttempt < 5)
                             {
-                                tempSavefileInMemory = MainForm.NewDecodeFile(SiiSavePath, this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
+                                tempSavefileInMemory = MainForm.NewDecodeFile(SiiSavePath);
 
                                 if (MainForm.FileDecoded)
                                 {
@@ -306,7 +306,7 @@ namespace TS_SE_Tool
                             if (decodeAttempt == 5)
                             {
                                 MessageBox.Show("Could not decrypt after 5 attempts");
-                                MainForm.ShowStatusMessages("e", "error_could_not_decode_file", this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
+                                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
                             }
                         }
                         catch
@@ -317,7 +317,7 @@ namespace TS_SE_Tool
                         if ((tempSavefileInMemory == null) || (tempSavefileInMemory[0] != "SiiNunit"))
                         {
                             MessageBox.Show("Wrongly decoded Save file or wrong file format");
-                            MainForm.ShowStatusMessages("e", "error_file_not_decoded", this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
+                            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
                         }
                         else
                         {
@@ -367,7 +367,7 @@ namespace TS_SE_Tool
                                 Directory.CreateDirectory(fp);
 
                                 //Copy info file
-                                string[] infoSii = MainForm.NewDecodeFile(BaseSave + @"\info.sii", this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
+                                string[] infoSii = MainForm.NewDecodeFile(BaseSave + @"\info.sii");
 
                                 //Prepare data
                                 double tDT = Utilities.DateTimeUtilities.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
@@ -668,7 +668,7 @@ namespace TS_SE_Tool
                 foreach (DataRow temp in combDT.Rows)
                 {
                     //Load and scan save files for truck position
-                    string[] tSF = MainForm.NewDecodeFile(temp[0].ToString() + @"\game.sii", this, statusStripCCpositions.Name, statusStripCCpositions.Items[0].Name);
+                    string[] tSF = MainForm.NewDecodeFile(temp[0].ToString() + @"\game.sii");
 
                     string[] chunkOfline;
                     string truckPosition = "";

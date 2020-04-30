@@ -322,7 +322,7 @@ namespace TS_SE_Tool
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             string SiiSavePath = SavefilePath + @"\game.sii";
 
-            string[] file = NewDecodeFile(SiiSavePath, this, "statusStripMain", "toolStripStatusMessages");
+            string[] file = NewDecodeFile(SiiSavePath);
 
             if (file != null)
             {
@@ -332,11 +332,11 @@ namespace TS_SE_Tool
 
                 File.WriteAllLines(SiiSavePath, file);
 
-                ShowStatusMessages("i", "");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
             }
 
             else
-                ShowStatusMessages("e", "error_could_not_decode_file");
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
 
             ToggleMainControlsAccess(true);
             buttonMainDecryptSave.Enabled = false;
@@ -689,7 +689,7 @@ namespace TS_SE_Tool
                     buttonMainDecryptSave.Enabled = false;
                     buttonMainLoadSave.Enabled = false;
 
-                    ShowStatusMessages("e", "No valid Profiles was found");
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_No valid Profiles was found");
                 }
             }
             else
@@ -828,7 +828,7 @@ namespace TS_SE_Tool
                         combDT.Rows.Add(profile, "- " + ProfileName + " -");
                     }
                     else
-                        combDT.Rows.Add(profile, GetCustomSaveFilename(profile, this, statusStripMain.Name, "toolStripStatusMessages"));
+                        combDT.Rows.Add(profile, GetCustomSaveFilename(profile));
 
                     NotANumber = false;
                 }
@@ -847,7 +847,7 @@ namespace TS_SE_Tool
                     buttonMainDecryptSave.Enabled = true;
                     buttonMainLoadSave.Enabled = true;
 
-                    ShowStatusMessages("i", "");
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
                 }
                 else
                 {
@@ -859,7 +859,7 @@ namespace TS_SE_Tool
                     buttonMainDecryptSave.Enabled = false;
                     buttonMainLoadSave.Enabled = false;
 
-                    ShowStatusMessages("e", "No valid Saves was found");
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_No valid Saves was found");
                 }
             }
             else
