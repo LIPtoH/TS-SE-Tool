@@ -188,73 +188,37 @@ namespace TS_SE_Tool
         public FormMain()
         {
             InitializeComponent();
-            UpdateStatusBarMessage.OnNewStatusMessage += UpdateStatusBarMessage_OnNewStatusMessage;
 
-            this.Icon = Properties.Resources.MainIco;
-
-            GetTranslationFiles();
-
-            SetDefaultValues(true);
-            LoadConfig();            
-
-            LoadExtCountries();            
-
-            radioButtonMainGameSwitchETS.Checked = true;
-            LoadExtImages();
-            
-            radioButtonMainGameSwitchETS.Image = GameIconeImg[0];
-            radioButtonMainGameSwitchATS.Image = GameIconeImg[1];
-
+            //Non program task
             CacheGameData();
 
-            //
+            //Program
+            UpdateStatusBarMessage.OnNewStatusMessage += UpdateStatusBarMessage_OnNewStatusMessage;
+            this.Icon = Properties.Resources.MainIco;
+
+            SetDefaultValues(true);
+            LoadConfig();
+
+            LoadExtCountries();
+            LoadExtImages();
+            AddImagesToControls();
+
+            //Create page controls
             CreateProfilePanelControls();
             CreateProgressBarBitmap();
             CreateTruckPanelControls();
             CreateTrailerPanelControls();
-            //
-            ClearFormControls(true);//Clear elements
 
-            //ToggleMainControlsAccess(false);
+            //Clear elements
+            ClearFormControls(true);
+
             ToggleControlsAccess(false);
-            //
-            toolStripMenuItemProgram.DropDownItems["toolStripMenuItemProgramSettings"].Image = ProgUIImgsDict["ProgramSettings"];
-            toolStripMenuItemProgram.DropDownItems["toolStripMenuItemSettings"].Image = ProgUIImgsDict["Settings"];
-            toolStripMenuItemProgram.DropDownItems["toolStripMenuItemExit"].Image = ProgUIImgsDict["Cross"];
-
-            menuStripMain.Items["toolStripMenuItemLanguage"].Image = ProgUIImgsDict["Language"];
-
-            toolStripMenuItemHelp.DropDownItems["toolStripMenuItemAbout"].Image = ProgUIImgsDict["Info"];
-            toolStripMenuItemHelp.DropDownItems["toolStripMenuItemTutorial"].Image = ProgUIImgsDict["Question"];
-            toolStripMenuItemHelp.DropDownItems["toolStripMenuItemDownload"].Image = ProgUIImgsDict["Download"];
-
-            toolStripMenuItemTutorial.DropDownItems["toolStripMenuItemLocalPDF"].Image = ProgUIImgsDict["PDF"];
-            toolStripMenuItemTutorial.DropDownItems["toolStripMenuItemYouTubeVideo"].Image = ProgUIImgsDict["YouTube"];
-
-            toolStripMenuItemDownload.DropDownItems["toolStripMenuItemCheckUpdates"].Image = ProgUIImgsDict["NetworkCloud"];
-            toolStripMenuItemDownload.DropDownItems["checkSCSForumToolStripMenuItem"].Image = ProgUIImgsDict["SCS"];
-            toolStripMenuItemDownload.DropDownItems["checkTMPForumToolStripMenuItem"].Image = ProgUIImgsDict["TMP"];
-            toolStripMenuItemDownload.DropDownItems["checkGitHubRelesesToolStripMenuItem"].Image = ProgUIImgsDict["github"];
-
-            //
-            buttonProfilesAndSavesRefreshAll.BackgroundImage = ProgUIImgsDict["Reload"];
-            buttonProfilesAndSavesEditProfile.BackgroundImage = ProgUIImgsDict["EditList"];
-
-            tabControlMain.ImageList = TabpagesImages;
-
-            for (int i = 0; i < TabpagesImages.Images.Count; i++)
-            {
-                tabControlMain.TabPages[i].ImageIndex = i;
-            }
-
-            listBoxFreightMarketAddedJobs.DrawMode = DrawMode.OwnerDrawVariable;
-            comboBoxFreightMarketCargoList.DrawMode = DrawMode.OwnerDrawVariable;
-            comboBoxFreightMarketUrgency.DrawMode = DrawMode.OwnerDrawVariable;
-            comboBoxFreightMarketTrailerDef.DrawMode = DrawMode.OwnerDrawVariable;
-            comboBoxFreightMarketTrailerVariant.DrawMode = DrawMode.OwnerDrawVariable;
-
-
+            
+            //Language
+            GetTranslationFiles();
             ChangeLanguage();
+
+            DetectGame();
         }
 
         private void FormMain_Shown(object sender, EventArgs e)

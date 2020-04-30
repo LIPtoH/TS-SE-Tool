@@ -2304,6 +2304,7 @@
             this.radioButtonMainGameSwitchATS.Text = "ATS";
             this.radioButtonMainGameSwitchATS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.radioButtonMainGameSwitchATS.UseVisualStyleBackColor = true;
+            this.radioButtonMainGameSwitchATS.CheckedChanged += new System.EventHandler(this.ToggleGame_Click);
             // 
             // tableLayoutPanel11
             // 

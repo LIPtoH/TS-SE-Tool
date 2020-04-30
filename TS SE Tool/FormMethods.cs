@@ -24,6 +24,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace TS_SE_Tool
 {
@@ -114,6 +115,12 @@ namespace TS_SE_Tool
         {
             if (_initial)
             {
+                listBoxFreightMarketAddedJobs.DrawMode = DrawMode.OwnerDrawVariable;
+                comboBoxFreightMarketCargoList.DrawMode = DrawMode.OwnerDrawVariable;
+                comboBoxFreightMarketUrgency.DrawMode = DrawMode.OwnerDrawVariable;
+                comboBoxFreightMarketTrailerDef.DrawMode = DrawMode.OwnerDrawVariable;
+                comboBoxFreightMarketTrailerVariant.DrawMode = DrawMode.OwnerDrawVariable;
+                
                 ResourceManagerMain = new PlainTXTResourceManager();
                 ProgSettingsV = new ProgSettings();
 
@@ -407,6 +414,67 @@ namespace TS_SE_Tool
             DistancesTable.Clear();
 
             components = null;
+        }
+
+        private void AddImagesToControls()
+        {
+            //Main menu
+            //Program
+            toolStripMenuItemProgram.DropDownItems["toolStripMenuItemProgramSettings"].Image = ProgUIImgsDict["ProgramSettings"];
+            toolStripMenuItemProgram.DropDownItems["toolStripMenuItemSettings"].Image = ProgUIImgsDict["Settings"];
+            toolStripMenuItemProgram.DropDownItems["toolStripMenuItemExit"].Image = ProgUIImgsDict["Cross"];
+            //Language
+            menuStripMain.Items["toolStripMenuItemLanguage"].Image = ProgUIImgsDict["Language"];
+            //Help
+            toolStripMenuItemHelp.DropDownItems["toolStripMenuItemAbout"].Image = ProgUIImgsDict["Info"];
+            toolStripMenuItemHelp.DropDownItems["toolStripMenuItemTutorial"].Image = ProgUIImgsDict["Question"];
+            toolStripMenuItemHelp.DropDownItems["toolStripMenuItemDownload"].Image = ProgUIImgsDict["Download"];
+                //Help - How to
+                toolStripMenuItemTutorial.DropDownItems["toolStripMenuItemLocalPDF"].Image = ProgUIImgsDict["PDF"];
+                toolStripMenuItemTutorial.DropDownItems["toolStripMenuItemYouTubeVideo"].Image = ProgUIImgsDict["YouTube"];
+                //Help - Download
+                toolStripMenuItemDownload.DropDownItems["toolStripMenuItemCheckUpdates"].Image = ProgUIImgsDict["NetworkCloud"];
+                toolStripMenuItemDownload.DropDownItems["checkSCSForumToolStripMenuItem"].Image = ProgUIImgsDict["SCS"];
+                toolStripMenuItemDownload.DropDownItems["checkTMPForumToolStripMenuItem"].Image = ProgUIImgsDict["TMP"];
+                toolStripMenuItemDownload.DropDownItems["checkGitHubRelesesToolStripMenuItem"].Image = ProgUIImgsDict["github"];
+
+            //Main controls
+            radioButtonMainGameSwitchETS.Image = GameIconeImg[0];
+            radioButtonMainGameSwitchATS.Image = GameIconeImg[1];
+            //
+            buttonProfilesAndSavesRefreshAll.BackgroundImage = ProgUIImgsDict["Reload"];
+            buttonProfilesAndSavesEditProfile.BackgroundImage = ProgUIImgsDict["EditList"];
+
+            //Tab pages
+            tabControlMain.ImageList = TabpagesImages;
+
+            for (int i = 0; i < TabpagesImages.Images.Count; i++)
+            {
+                tabControlMain.TabPages[i].ImageIndex = i;
+            }
+        }
+
+        private void DetectGame()
+        {
+            try
+            {
+                //Searching for ETS2
+                Process[] ets2proc = Process.GetProcessesByName("eurotrucks2");
+
+                //Searching for ETS2
+                Process[] atsproc = Process.GetProcessesByName("amtrucks");
+
+                if (ets2proc.Count() > 0)
+                    radioButtonMainGameSwitchETS.Checked = true;
+                else if (atsproc.Count() > 0)
+                    radioButtonMainGameSwitchATS.Checked = true;
+                else
+                    radioButtonMainGameSwitchETS.Checked = true;
+            }
+            catch
+            {
+                radioButtonMainGameSwitchETS.Checked = true;
+            }
         }
 
         private void ClearFormControls(bool _initial)
