@@ -23,8 +23,6 @@ namespace TS_SE_Tool
 {
     public class SaveFileProfileData
     {
-        //private FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
-
         private string UserProfileNameless { get; set; } = "";
         //---
         private ushort Face { get; set; } = 0;
@@ -37,30 +35,30 @@ namespace TS_SE_Tool
         public uint CachedDistance { get; set; } = 0;
         #region UserData
         //user_data
-        private uint SomeTimeUD0 { get; set; } = 0;             //0 WoT profile connection date ???
-        private string LicensePlateUD1 { get; set; } = "";      //1 //WoT licenseplate
-        private string SomeCheckSumUD2 { get; set; } = "";      //2 
-        private byte WoTConnectedUD3 { get; set; } = 0;         //3 //isWoTConnected ??? 
+        private uint SomeTimeUD0 { get; set; } = 0;             //0 WoT profile connection date
+        private string LicensePlateUD1 { get; set; } = "";      //1 WoT licenseplate
+        private string SomeCheckSumUD2 { get; set; } = "";      //2 ???
+        private byte WoTConnectedUD3 { get; set; } = 0;         //3 isWoTConnected?
         public decimal RoadsExploredUD4 { get; set; } = 0.0M;   //4 Road explored persentage
         public uint DeliveriesFinishedUD5 { get; set; } = 0;    //5 Finished deliveries
         public uint OwnedTrucksUD6 { get; set; } = 0;           //6 Owned trucks count
         public uint OwnedGaradesSmallUD7 { get; set; } = 0;     //7 Small garages 
-        public uint OwnedGaradesLargeUD8 { get; set; } = 0;     //8 large garages
+        public uint OwnedGaradesLargeUD8 { get; set; } = 0;     //8 Large garages
         public ulong GameTimeSpentUD9 { get; set; } = 0;        //9 Game time spent
         public uint RealTimeSpentUD10 { get; set; } = 0;        //10 Real time spent
-        public string CurrentTruckUD11 { get; set; } = "";      //11
-        public List<string> OwnedTruckListUD12;                 // 12 Owned trucks brand:model:count;
-        private string SomeUserDataUD13 { get; set; } = "";     //13
-        private uint SomeUserDataUD14 { get; set; } = 0;        //14 0
-        private string SomeUserDataUD15 { get; set; } = "";     //15 production
-        public uint OwnedTrailersUD16 { get; set; } = 0;        //16
+        public string CurrentTruckUD11 { get; set; } = "";      //11 Current truck //brand.model
+        public List<string> OwnedTruckListUD12;                 //12 Owned trucks //brand.model:count;
+        private string SomeUserDataUD13 { get; set; } = "";     //13 ???
+        private uint SomeUserDataUD14 { get; set; } = 0;        //14 ??? //0
+        private string SomeUserDataUD15 { get; set; } = "";     //15 ??? //production
+        public uint OwnedTrailersUD16 { get; set; } = 0;        //16 Owned trailers
         #endregion 
-        private List<string> ActiveMods; //Count
-        private uint Customization { get; set; } = 0; //FlagFormat
+        private List<string> ActiveMods;                        //Count
+        private uint Customization { get; set; } = 0;           //FlagFormat
         //cached_stats
-        private List<ushort> CachedStats; // Some stats ???
+        private List<ushort> CachedStats;                       //Some stats ???
         //cached_discovery
-        private List<ushort> CachedDiscovery; // Some discoveries
+        private List<ushort> CachedDiscovery;                   //Some discoveries
 
         //End
         private byte Version { get; set; } = 0;
@@ -451,6 +449,14 @@ namespace TS_SE_Tool
             OutputText += " male: " + GenederMale.ToString().ToLower() + "\r\n";
             OutputText += " cached_experience: " + CachedExperiencePoints.ToString() + "\r\n";
             OutputText += " cached_distance: " + CachedDistance.ToString() + "\r\n";
+
+            if (Version == 4)
+            {
+                OutputText += " version: " + Version.ToString() + "\r\n";
+                OutputText += " online_user_name: " + OnlineUserName + "\r\n";
+                OutputText += " online_password: " + OnlinePassword + "\r\n";
+            }
+
             OutputText += " user_data: 17";
             OutputText += " user_data[0]: " + string.IsNullOrEmpty(SomeTimeUD0.ToString()) ?? "\"\"" + "\r\n";
             OutputText += " user_data[1]: \"" + string.IsNullOrEmpty(LicensePlateUD1) + "\"\r\n";
@@ -490,9 +496,13 @@ namespace TS_SE_Tool
                 OutputText += " cached_discovery[" + i.ToString() + "]: " + CachedDiscovery[i].ToString() + "\r\n";
             }
 
-            OutputText += " version: " + Version.ToString() + "\r\n";
-            OutputText += " online_user_name: " + OnlineUserName + "\r\n";
-            OutputText += " online_password: " + OnlinePassword + "\r\n";
+            if (Version == 5)
+            {
+                OutputText += " version: " + Version.ToString() + "\r\n";
+                OutputText += " online_user_name: " + OnlineUserName + "\r\n";
+                OutputText += " online_password: " + OnlinePassword + "\r\n";
+            }
+
             OutputText += " profile_name: " + ProfileName + "\r\n";
             OutputText += " creation_time: " + CreationTime.ToString() + "\r\n";
             OutputText += " save_time: " + SaveTime.ToString() + "\r\n";
