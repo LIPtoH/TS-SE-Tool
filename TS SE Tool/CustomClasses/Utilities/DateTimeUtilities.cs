@@ -24,21 +24,24 @@ namespace TS_SE_Tool.Utilities
         public static DateTime UnixTimeStampToDateTime(double _unixTimeStamp)
         {
             // Unix timestamp is seconds past epoch
-            //DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-
             DateTime dtDateTime = EpochTime.AddSeconds(_unixTimeStamp).ToLocalTime();
 
             return dtDateTime;
         }
 
-        public static double DateTimeToUnixTimeStamp(DateTime _dateTime)
+        public static uint DateTimeToUnixTimeStamp(DateTime _dateTime)
         {
             // Unix timestamp is seconds past epoch
-            //DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-
-            double unixTimeStamp = _dateTime.ToUniversalTime().Subtract(EpochTime).TotalSeconds;
+            uint unixTimeStamp = Convert.ToUInt32(Math.Floor(_dateTime.ToUniversalTime().Subtract(EpochTime).TotalSeconds));
 
             return unixTimeStamp;
+        }
+
+        public static uint DateTimeToUnixTimeStamp()
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime _dateTime = DateTime.Now;
+            return DateTimeToUnixTimeStamp(_dateTime);
         }
     }
 }

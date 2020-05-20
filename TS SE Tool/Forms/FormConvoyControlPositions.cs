@@ -370,11 +370,11 @@ namespace TS_SE_Tool
                                 string[] infoSii = MainForm.NewDecodeFile(BaseSave + @"\info.sii");
 
                                 //Prepare data
-                                double tDT = Utilities.DateTimeUtilities.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
+                                uint tDT = Utilities.DateTimeUtilities.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
 
                                 SaveFileInfoData infoData = new SaveFileInfoData();
-                                infoData.Name = entry.Value[0];//Save name
-                                infoData.FileTime = Convert.ToUInt32(Math.Floor(tDT));
+                                infoData.Name = entry.Value[0]; //Save name
+                                infoData.FileTime = tDT;        //Time
 
                                 //Write info file
                                 MainForm.WriteInfoFile(infoSii, fp + "\\info.sii", infoData);

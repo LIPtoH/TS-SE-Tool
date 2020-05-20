@@ -132,9 +132,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomClasses\Utilities\DateTimeUtilities.cs" />
+    <Compile Include="CustomClasses\Utilities\IO_Utilities.cs" />
     <Compile Include="CustomClasses\Utilities\NumericUtilities.cs" />
     <Compile Include="CustomClasses\Utilities\TextUtilities.cs" />
     <Compile Include="CustomClasses\Utilities\ZipDataUtilitiescs.cs" />
+    <Compile Include="Forms\ProfileEditor\FormProfileEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProfileEditor\FormProfileEditor.Designer.cs">
+      <DependentUpon>FormProfileEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormMainControlsMethods.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,9 +232,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMethods.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FormMethods.cs" />
     <Compile Include="Forms\FormProgramSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -252,6 +257,18 @@
     <Compile Include="Forms\FormSplash.Designer.cs">
       <DependentUpon>FormSplash.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ProfileEditor\FormProfileEditorRenameClone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProfileEditor\FormProfileEditorRenameClone.Designer.cs">
+      <DependentUpon>FormProfileEditorRenameClone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProfileEditor\FormProfileEditorSettingsImportExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProfileEditor\FormProfileEditorSettingsImportExport.Designer.cs">
+      <DependentUpon>FormProfileEditorSettingsImportExport.cs</DependentUpon>
+    </Compile>
     <Compile Include="MethodsDecodeSave.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -263,6 +280,9 @@
     <Compile Include="RMcode\PlainTXTResourceManager.cs" />
     <Compile Include="RMcode\PlainTXTResourceReader.cs" />
     <Compile Include="RMcode\PlainTXTResourceSet.cs" />
+    <EmbeddedResource Include="Forms\ProfileEditor\FormProfileEditor.resx">
+      <DependentUpon>FormProfileEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAboutBox.resx">
       <DependentUpon>FormAboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -295,6 +315,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormSplash.resx">
       <DependentUpon>FormSplash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProfileEditor\FormProfileEditorRenameClone.resx">
+      <DependentUpon>FormProfileEditorRenameClone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProfileEditor\FormProfileEditorSettingsImportExport.resx">
+      <DependentUpon>FormProfileEditorSettingsImportExport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

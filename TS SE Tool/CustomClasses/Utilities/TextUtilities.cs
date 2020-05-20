@@ -73,8 +73,25 @@ namespace TS_SE_Tool.Utilities
             }
             catch
             {
-                return "";
+                return null;
             }
+        }
+
+        public static string FromStringToHex(string _input)
+        {
+            try
+            {
+                return ByteArrayToString(Encoding.UTF8.GetBytes(_input.ToCharArray()));
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static string ByteArrayToString(byte[] _ba)
+        {
+            return BitConverter.ToString(_ba).Replace("-", "");
         }
     }
 }

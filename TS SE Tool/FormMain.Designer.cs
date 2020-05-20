@@ -2209,12 +2209,12 @@
             // buttonProfilesAndSavesEditProfile
             // 
             this.buttonProfilesAndSavesEditProfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonProfilesAndSavesEditProfile.Enabled = false;
             this.buttonProfilesAndSavesEditProfile.Location = new System.Drawing.Point(209, 133);
             this.buttonProfilesAndSavesEditProfile.Name = "buttonProfilesAndSavesEditProfile";
             this.buttonProfilesAndSavesEditProfile.Size = new System.Drawing.Size(21, 21);
             this.buttonProfilesAndSavesEditProfile.TabIndex = 21;
             this.buttonProfilesAndSavesEditProfile.UseVisualStyleBackColor = true;
+            this.buttonProfilesAndSavesEditProfile.Click += new System.EventHandler(this.buttonProfilesAndSavesEditProfile_Click);
             // 
             // tableLayoutPanel15
             // 
@@ -2398,7 +2398,6 @@
 
         private System.Windows.Forms.MenuStrip menuStripMain;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemProgram;
-        private System.Windows.Forms.ComboBox comboBoxProfiles;
         private System.Windows.Forms.Button buttonProfilesAndSavesRefreshAll;
         private System.Windows.Forms.ComboBox comboBoxSaves;
         private System.Windows.Forms.Button buttonMainDecryptSave;
@@ -2576,6 +2575,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemProgramSettings;
         private System.Windows.Forms.Label labelCompanyNameSize;
         private System.Windows.Forms.Button buttonProfilesAndSavesEditProfile;
+        internal System.Windows.Forms.ComboBox comboBoxProfiles;
     }
 }
 

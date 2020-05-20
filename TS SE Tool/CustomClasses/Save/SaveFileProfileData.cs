@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace TS_SE_Tool
 {
@@ -35,10 +36,10 @@ namespace TS_SE_Tool
         public uint CachedDistance { get; set; } = 0;
         #region UserData
         //user_data
-        private uint SomeTimeUD0 { get; set; } = 0;             //0 WoT profile connection date
-        private string LicensePlateUD1 { get; set; } = "";      //1 WoT licenseplate
-        private string SomeCheckSumUD2 { get; set; } = "";      //2 ???
-        private byte WoTConnectedUD3 { get; set; } = 0;         //3 isWoTConnected?
+        private uint? SomeTimeUD0 { get; set; } = null;         //0 WoT profile connection date
+        private string LicensePlateUD1 { get; set; } = null;    //1 WoT licenseplate
+        private string SomeCheckSumUD2 { get; set; } = null;    //2 ???
+        private byte? WoTConnectedUD3 { get; set; } = null;     //3 isWoTConnected?
         public decimal RoadsExploredUD4 { get; set; } = 0.0M;   //4 Road explored persentage
         public uint DeliveriesFinishedUD5 { get; set; } = 0;    //5 Finished deliveries
         public uint OwnedTrucksUD6 { get; set; } = 0;           //6 Owned trucks count
@@ -49,7 +50,7 @@ namespace TS_SE_Tool
         public string CurrentTruckUD11 { get; set; } = "";      //11 Current truck //brand.model
         public List<string> OwnedTruckListUD12;                 //12 Owned trucks //brand.model:count;
         private string SomeUserDataUD13 { get; set; } = "";     //13 ???
-        private uint SomeUserDataUD14 { get; set; } = 0;        //14 ??? //0
+        private uint? SomeUserDataUD14 { get; set; } = null;    //14 ??? //0
         private string SomeUserDataUD15 { get; set; } = "";     //15 ??? //production
         public uint OwnedTrailersUD16 { get; set; } = 0;        //16 Owned trailers
         #endregion 
@@ -207,28 +208,28 @@ namespace TS_SE_Tool
                 if (_FileLines[line].StartsWith(" user_data[0]:"))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    SomeTimeUD0 = (chunkOfline[2] != "\"\"") ? uint.Parse(chunkOfline[2].Trim(CharsToTrim)) : 0;
+                    SomeTimeUD0 = (chunkOfline[2] != "\"\"") ? uint.Parse(chunkOfline[2].Trim(CharsToTrim)) : (uint?)null;
                     continue;
                 }
 
                 if (_FileLines[line].StartsWith(" user_data[1]:"))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    LicensePlateUD1 = (chunkOfline[2] != "\"\"") ? chunkOfline[2].Trim(CharsToTrim) : "";
+                    LicensePlateUD1 = (chunkOfline[2] != "\"\"") ? chunkOfline[2].Trim(CharsToTrim) : null;
                     continue;
                 }
 
                 if (_FileLines[line].StartsWith(" user_data[2]:"))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    SomeCheckSumUD2 = (chunkOfline[2] != "\"\"") ? chunkOfline[2].Trim(CharsToTrim) : "";
+                    SomeCheckSumUD2 = (chunkOfline[2] != "\"\"") ? chunkOfline[2].Trim(CharsToTrim) : null;
                     continue;
                 }
 
                 if (_FileLines[line].StartsWith(" user_data[3]:"))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    WoTConnectedUD3 = (chunkOfline[2] != "\"\"") ? byte.Parse(chunkOfline[2].Trim(CharsToTrim)) : (byte)0;
+                    WoTConnectedUD3 = (chunkOfline[2] != "\"\"") ? byte.Parse(chunkOfline[2].Trim(CharsToTrim)) : (byte?)null;
                     continue;
                 }
 
@@ -305,7 +306,7 @@ namespace TS_SE_Tool
                 if (_FileLines[line].StartsWith(" user_data[14]:"))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    SomeUserDataUD14 = (chunkOfline[2] != "\"\"") ? uint.Parse(chunkOfline[2].Trim(CharsToTrim)) : 0;
+                    SomeUserDataUD14 = (chunkOfline[2] != "\"\"") ? uint.Parse(chunkOfline[2].Trim(CharsToTrim)) : (uint?)null;
                     continue;
                 }
 
@@ -443,9 +444,9 @@ namespace TS_SE_Tool
             OutputText += "user_profile : " + UserProfileNameless + " {\r\n";
             OutputText += " face: " + Face.ToString() + "\r\n";
             OutputText += " brand: " + Brand + "\r\n";
-            OutputText += " map_path: \"" + MapPath + "\"\r\n";
+            OutputText += " map_path: " + MapPath + "\r\n";
             OutputText += " logo: " + Logo + "\r\n";
-            OutputText += " company_name: " + CompanyName + "\r\n";
+            OutputText += " company_name: " + (!CheckStringContainsUnescape(CompanyName) ? CompanyName : "\"" + CompanyName + "\"") + "\r\n";
             OutputText += " male: " + GenederMale.ToString().ToLower() + "\r\n";
             OutputText += " cached_experience: " + CachedExperiencePoints.ToString() + "\r\n";
             OutputText += " cached_distance: " + CachedDistance.ToString() + "\r\n";
@@ -453,27 +454,27 @@ namespace TS_SE_Tool
             if (Version == 4)
             {
                 OutputText += " version: " + Version.ToString() + "\r\n";
-                OutputText += " online_user_name: " + OnlineUserName + "\r\n";
-                OutputText += " online_password: " + OnlinePassword + "\r\n";
+                OutputText += " online_user_name: " + (!string.IsNullOrEmpty(OnlineUserName) ? OnlineUserName : "\"\"") + "\r\n";
+                OutputText += " online_password: " + (!string.IsNullOrEmpty(OnlinePassword) ? OnlinePassword : "\"\"") + "\r\n";
             }
 
-            OutputText += " user_data: 17";
-            OutputText += " user_data[0]: " + string.IsNullOrEmpty(SomeTimeUD0.ToString()) ?? "\"\"" + "\r\n";
-            OutputText += " user_data[1]: \"" + string.IsNullOrEmpty(LicensePlateUD1) + "\"\r\n";
-            OutputText += " user_data[2]: " + string.IsNullOrEmpty(SomeCheckSumUD2) ?? "\"\"" + "\r\n";
-            OutputText += " user_data[3]: " + string.IsNullOrEmpty(WoTConnectedUD3.ToString()) ?? "\"\"" + "\r\n";
-            OutputText += " user_data[4]: \"" + RoadsExploredUD4.ToString() + "\"\r\n";
+            OutputText += " user_data: 17\r\n";
+            OutputText += " user_data[0]: " + ((SomeTimeUD0 != null) ? SomeTimeUD0.ToString() : "\"\"") + "\r\n";
+            OutputText += " user_data[1]: " + ((LicensePlateUD1 != null) ? LicensePlateUD1 : "\"\"") + "\r\n";
+            OutputText += " user_data[2]: " + ((SomeCheckSumUD2 != null) ? SomeCheckSumUD2 : "\"\"") + "\r\n";
+            OutputText += " user_data[3]: " + ((WoTConnectedUD3 != null) ? WoTConnectedUD3.ToString() : "\"\"") + "\r\n";
+            OutputText += " user_data[4]: \"" + RoadsExploredUD4.ToString(CultureInfo.InvariantCulture) + "\"\r\n";
             OutputText += " user_data[5]: " + DeliveriesFinishedUD5.ToString() + "\r\n";
             OutputText += " user_data[6]: " + OwnedTrucksUD6.ToString() + "\r\n";
             OutputText += " user_data[7]: " + OwnedGaradesSmallUD7.ToString() + "\r\n";
             OutputText += " user_data[8]: " + OwnedGaradesLargeUD8.ToString() + "\r\n";
             OutputText += " user_data[9]: " + GameTimeSpentUD9.ToString() + "\r\n";
             OutputText += " user_data[10]: " + RealTimeSpentUD10.ToString() + "\r\n";
-            OutputText += " user_data[11]: \"" + CurrentTruckUD11 + "\"";
-            OutputText += " user_data[12]: \"" + string.Join(",", OwnedTruckListUD12) + "\"";
-            OutputText += " user_data[13]: " + string.IsNullOrEmpty(SomeUserDataUD13) ?? "\"\"" + "\r\n";
-            OutputText += " user_data[14]: " + string.IsNullOrEmpty(SomeUserDataUD14.ToString()) ?? "\"\"" + "\r\n";
-            OutputText += " user_data[15]: " + string.IsNullOrEmpty(SomeUserDataUD15) ?? "\"\"" + "\r\n";
+            OutputText += " user_data[11]: \"" + CurrentTruckUD11 + "\"" + "\r\n";
+            OutputText += " user_data[12]: \"" + string.Join(",", OwnedTruckListUD12) + "\"" + "\r\n";
+            OutputText += " user_data[13]: " + (!string.IsNullOrEmpty(SomeUserDataUD13) ? SomeUserDataUD13 : "\"\"") + "\r\n";
+            OutputText += " user_data[14]: " + ((SomeUserDataUD14 != null) ? SomeUserDataUD14.ToString() : "\"\"") + "\r\n";
+            OutputText += " user_data[15]: " + (!string.IsNullOrEmpty(SomeUserDataUD15) ? SomeUserDataUD15 : "\"\"") + "\r\n";
             OutputText += " user_data[16]: " + OwnedTrailersUD16.ToString() + "\r\n";
 
             OutputText += " active_mods: " + ActiveMods.Capacity.ToString() + "\r\n";
@@ -499,17 +500,25 @@ namespace TS_SE_Tool
             if (Version == 5)
             {
                 OutputText += " version: " + Version.ToString() + "\r\n";
-                OutputText += " online_user_name: " + OnlineUserName + "\r\n";
-                OutputText += " online_password: " + OnlinePassword + "\r\n";
+                OutputText += " online_user_name: " + (!string.IsNullOrEmpty(OnlineUserName) ? OnlineUserName : "\"\"") + "\r\n"; 
+                OutputText += " online_password: " + (!string.IsNullOrEmpty(OnlinePassword) ? OnlinePassword : "\"\"") + "\r\n"; 
             }
 
-            OutputText += " profile_name: " + ProfileName + "\r\n";
+            OutputText += " profile_name: " + (!CheckStringContainsUnescape(ProfileName) ? ProfileName : "\"" + ProfileName + "\"") + "\r\n";
             OutputText += " creation_time: " + CreationTime.ToString() + "\r\n";
             OutputText += " save_time: " + SaveTime.ToString() + "\r\n";
 
             OutputText += "}\r\n\r\n}";
 
             return OutputText;
+        }
+
+        private bool CheckStringContainsUnescape(string _input)
+        {
+            if (_input.Contains(' ') || _input != System.Text.RegularExpressions.Regex.Unescape(_input))
+                return true;
+            else
+                return false;
         }
 
         public void WriteToStream(StreamWriter _streamWriter)
