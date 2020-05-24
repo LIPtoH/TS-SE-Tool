@@ -30,15 +30,15 @@ namespace TS_SE_Tool
     public partial class FormProfileEditorRenameClone : Form
     {
         public string ReturnNewName { get; set; }
-        public List<string> ReturnClonedNames { get; set; }
+        public List<string> ReturnClonedNames { get; set; } = new List<string>();
         public bool ReturnRenamedSuccessful { get; set; } = false;
         public bool ReturnCloningSuccessful { get; set; } = false;
 
         private string FormMode;
 
         public new FormMain ParentForm;
-        private string InitialName = "";
-        private string InitialPath = "";
+        public string InitialName = "";
+        public string InitialPath = "";
         private byte NameLengthLimit = 30;
 
         private bool aboveLimitLength = false;
@@ -58,6 +58,8 @@ namespace TS_SE_Tool
 
         private void SetupForm()
         {
+            //
+
             switch (FormMode)
             {
                 case "rename":
@@ -234,15 +236,25 @@ namespace TS_SE_Tool
             {
                 case "rename":
                     {
-                        if (textBoxNewName.Text != InitialName)
-                        {
-                            string NewProfileName = "", NewFolderName = "", NewFolderPath = "";
-                            byte progress = 0;
+                        string NewProfileName = NewProfileName = textBoxNewName.Text.Trim(new char[] { ' ' }) , NewFolderName = "", NewFolderPath = "";
+                        byte progress = 0;
 
+                        //Get existing folders
+                        string[] existingDirs = Directory.GetDirectories(InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1));
+
+                        List<string> existingDirList = new List<string>();
+
+                        foreach (string dir in existingDirs)
+                        {
+                            //Get name 
+                            existingDirList.Add(Utilities.TextUtilities.FromHexToString(Path.GetFileName(dir)));
+                        }
+
+                        if (NewProfileName != InitialName || existingDirList.Contains(NewProfileName))
+                        {
                             try
                             {
-                                //New folder name
-                                NewProfileName = textBoxNewName.Text.Trim(new char[] { ' ' });
+                                //New folder name                                
                                 NewFolderName = Utilities.TextUtilities.FromStringToHex(NewProfileName);
                                 NewFolderPath = InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1) + NewFolderName;
 
@@ -334,6 +346,16 @@ namespace TS_SE_Tool
                     }
                 case "clone":
                     {
+                        //Get existing folders
+                        string[] existingDirs = Directory.GetDirectories(InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1));
+
+                        List<string> existingDirList = new List<string>();
+
+                        foreach (string dir in existingDirs)
+                        {
+                            //Get name 
+                            existingDirList.Add(Utilities.TextUtilities.FromHexToString(Path.GetFileName(dir)));
+                        }
 
                         foreach (string newfile in textBoxNewName.Lines)
                         {
@@ -342,12 +364,18 @@ namespace TS_SE_Tool
 
                             try
                             {
+                                //Check empty lines
                                 if (newfile.Length == 0 || newfile.Trim(new char[] { ' ' }).Length == 0)
                                     continue;
 
-                                //New folder
                                 NewProfileName = newfile.Trim(new char[] { ' ' });
-                                NewFolderPath = InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1) + Utilities.TextUtilities.FromStringToHex(NewProfileName);
+                                //Check existing folders
+                                if (NewProfileName == InitialName || existingDirList.Contains(NewProfileName))
+                                    continue;
+
+                                //New folder
+                                string NewProfileNameHex = Utilities.TextUtilities.FromStringToHex(NewProfileName);
+                                NewFolderPath = InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1) + NewProfileNameHex;
 
                                 progress = 1;
 
@@ -359,14 +387,14 @@ namespace TS_SE_Tool
 
                                 progress = 2;
 
-                                //Copy profile files .cfg .sii
+                                //Copy profile files .cfg .sii .png
                                 //Get the files in the initial directory and copy them to the new location.
-                                var files = Directory.EnumerateFiles(InitialPath, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".cfg") || s.EndsWith(".sii")).ToArray();
+                                var files = Directory.EnumerateFiles(InitialPath, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".cfg") || s.EndsWith(".sii") || s.EndsWith(".png")).ToArray();
 
                                 //Iterate files
                                 foreach (string file in files)
                                 {
-                                    string temppath = Path.Combine(NewFolderPath, Path.GetDirectoryName(file)); //new file path with name
+                                    string temppath = Path.Combine(NewFolderPath, Path.GetFileName(file)); //new file path with name
 
                                     FileInfo tFI = new FileInfo(file); //fileinfo
                                     tFI.CopyTo(temppath, false); //Copy
@@ -413,7 +441,8 @@ namespace TS_SE_Tool
                                 progress = 9;
 
                                 //Cloned folders
-                                ReturnClonedNames.Add(newfile);
+                                existingDirList.Add(NewProfileName);
+                                ReturnClonedNames.Add(NewProfileName);
                             }
                             catch {
 
@@ -454,7 +483,6 @@ namespace TS_SE_Tool
                                         Directory.Delete(NewFolderPath);
                                         break;
                                 }
-
                             }
                         }
 

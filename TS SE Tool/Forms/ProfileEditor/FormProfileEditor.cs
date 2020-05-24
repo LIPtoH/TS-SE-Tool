@@ -58,15 +58,24 @@ namespace TS_SE_Tool
         //Rename
         private void buttonRenameProfile_Click(object sender, EventArgs e)
         {
-            using (var form = new FormProfileEditorRenameClone("rename"))
+            using (var dForm = new FormProfileEditorRenameClone("rename"))
             {
-                var result = form.ShowDialog();
+                dForm.ParentForm = ParentForm;
+                dForm.InitialName = WorkingProfileName;
+                dForm.InitialPath = WorkingProfilePath;
+
+                DialogResult result = dForm.ShowDialog();
+
                 if (result == DialogResult.OK)
                 {
-                    if (form.ReturnRenamedSuccessful)
+                    if (dForm.ReturnRenamedSuccessful)
                     {
-                        MessageBox.Show("New Profile name " + form.ReturnNewName);
-                        labelProfileNameValue.Text = form.ReturnNewName;
+                        WorkingProfileName = dForm.ReturnNewName;
+                        WorkingProfilePath = WorkingProfilePath.Remove(WorkingProfilePath.LastIndexOf('\\') + 1) + Utilities.TextUtilities.FromStringToHex(WorkingProfileName);
+
+                        labelProfileNameValue.Text = dForm.ReturnNewName;
+
+                        MessageBox.Show("New Profile name - " + dForm.ReturnNewName);
                     }
                 }
             }
@@ -75,27 +84,32 @@ namespace TS_SE_Tool
         //Clone
         private void buttonCloneProfile_Click(object sender, EventArgs e)
         {
-            using (var form = new FormProfileEditorRenameClone("clone"))
+            using (var dForm = new FormProfileEditorRenameClone("clone"))
             {
-                var result = form.ShowDialog();
+                dForm.ParentForm = ParentForm;
+                dForm.InitialName = WorkingProfileName;
+                dForm.InitialPath = WorkingProfilePath;
+
+                DialogResult result = dForm.ShowDialog();
+
                 if (result == DialogResult.OK)
                 {
-                    if (form.ReturnCloningSuccessful)
+                    if (dForm.ReturnCloningSuccessful)
                     {
-
-                        MessageBox.Show("Created new Profiles:\r\n" + string.Join("\r\n", form.ReturnClonedNames));
-
+                        MessageBox.Show("Created new Profiles (" + dForm.ReturnClonedNames.Count.ToString() + "):\r\n\r\n" + string.Join("\r\n", dForm.ReturnClonedNames));
                     }
+                    else
+                        MessageBox.Show("No profiles created due to duplicating names.");
                 }
             }
         }
 
         private void buttonExportSettings_Click(object sender, EventArgs e)
         {
-            using (var form = new FormProfileEditorSettingsImportExport("export"))
+            using (var dForm = new FormProfileEditorSettingsImportExport("export"))
             {
-                form.ParentForm = ParentForm;
-                DialogResult result = form.ShowDialog();
+                dForm.ParentForm = ParentForm;
+                DialogResult result = dForm.ShowDialog();
 
                 if (result == DialogResult.OK)
                 {
@@ -108,10 +122,10 @@ namespace TS_SE_Tool
 
         private void buttonImportSettings_Click(object sender, EventArgs e)
         {
-            using (var form = new FormProfileEditorSettingsImportExport("import"))
+            using (var dForm = new FormProfileEditorSettingsImportExport("import"))
             {
-                form.ParentForm = ParentForm;
-                DialogResult result = form.ShowDialog();
+                dForm.ParentForm = ParentForm;
+                DialogResult result = dForm.ShowDialog();
 
                 if (result == DialogResult.OK)
                 {

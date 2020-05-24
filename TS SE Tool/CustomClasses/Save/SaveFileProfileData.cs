@@ -411,7 +411,7 @@ namespace TS_SE_Tool
                             result = System.Text.RegularExpressions.Regex.Unescape(compNameH);
                     }
 
-                    ProfileName = (result == "") ? chunkOfline[2] : result;
+                    ProfileName = (result == null) ? chunkOfline[2] : result;
 
                     continue;
                 }
@@ -460,7 +460,7 @@ namespace TS_SE_Tool
 
             OutputText += " user_data: 17\r\n";
             OutputText += " user_data[0]: " + ((SomeTimeUD0 != null) ? SomeTimeUD0.ToString() : "\"\"") + "\r\n";
-            OutputText += " user_data[1]: " + ((LicensePlateUD1 != null) ? LicensePlateUD1 : "\"\"") + "\r\n";
+            OutputText += " user_data[1]: " + ((LicensePlateUD1 != null) ? "\"" + LicensePlateUD1 + "\"" : "\"\"") + "\r\n";
             OutputText += " user_data[2]: " + ((SomeCheckSumUD2 != null) ? SomeCheckSumUD2 : "\"\"") + "\r\n";
             OutputText += " user_data[3]: " + ((WoTConnectedUD3 != null) ? WoTConnectedUD3.ToString() : "\"\"") + "\r\n";
             OutputText += " user_data[4]: \"" + RoadsExploredUD4.ToString(CultureInfo.InvariantCulture) + "\"\r\n";
