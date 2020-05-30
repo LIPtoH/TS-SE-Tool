@@ -138,7 +138,7 @@
             this.comboBoxSettingCurrencySelectATS.FormattingEnabled = true;
             this.comboBoxSettingCurrencySelectATS.Location = new System.Drawing.Point(214, 121);
             this.comboBoxSettingCurrencySelectATS.Name = "comboBoxSettingCurrencySelectATS";
-            this.comboBoxSettingCurrencySelectATS.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxSettingCurrencySelectATS.Size = new System.Drawing.Size(70, 21);
             this.comboBoxSettingCurrencySelectATS.TabIndex = 13;
             // 
             // labelCurrencyETS2
@@ -154,6 +154,7 @@
             // 
             this.labelDistance.AutoSize = true;
             this.labelDistance.Location = new System.Drawing.Point(9, 68);
+            this.labelDistance.MaximumSize = new System.Drawing.Size(205, 0);
             this.labelDistance.Name = "labelDistance";
             this.labelDistance.Size = new System.Drawing.Size(49, 13);
             this.labelDistance.TabIndex = 11;
@@ -163,10 +164,12 @@
             // 
             this.labelJobPickupTime.AutoSize = true;
             this.labelJobPickupTime.Location = new System.Drawing.Point(9, 15);
+            this.labelJobPickupTime.MaximumSize = new System.Drawing.Size(205, 0);
+            this.labelJobPickupTime.MinimumSize = new System.Drawing.Size(170, 0);
             this.labelJobPickupTime.Name = "labelJobPickupTime";
-            this.labelJobPickupTime.Size = new System.Drawing.Size(86, 13);
+            this.labelJobPickupTime.Size = new System.Drawing.Size(170, 13);
             this.labelJobPickupTime.TabIndex = 0;
-            this.labelJobPickupTime.Text = "Job Pickup Time";
+            this.labelJobPickupTime.Text = "Cargo relevance time";
             // 
             // comboBoxSettingDistanceMesSelect
             // 
@@ -199,13 +202,14 @@
             this.comboBoxSettingCurrencySelectETS2.FormattingEnabled = true;
             this.comboBoxSettingCurrencySelectETS2.Location = new System.Drawing.Point(214, 92);
             this.comboBoxSettingCurrencySelectETS2.Name = "comboBoxSettingCurrencySelectETS2";
-            this.comboBoxSettingCurrencySelectETS2.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxSettingCurrencySelectETS2.Size = new System.Drawing.Size(70, 21);
             this.comboBoxSettingCurrencySelectETS2.TabIndex = 9;
             // 
             // labelLoopEvery
             // 
             this.labelLoopEvery.AutoSize = true;
             this.labelLoopEvery.Location = new System.Drawing.Point(9, 41);
+            this.labelLoopEvery.MaximumSize = new System.Drawing.Size(205, 0);
             this.labelLoopEvery.Name = "labelLoopEvery";
             this.labelLoopEvery.Size = new System.Drawing.Size(61, 13);
             this.labelLoopEvery.TabIndex = 0;
@@ -215,6 +219,7 @@
             // 
             this.labelCurrency.AutoSize = true;
             this.labelCurrency.Location = new System.Drawing.Point(9, 95);
+            this.labelCurrency.MaximumSize = new System.Drawing.Size(205, 0);
             this.labelCurrency.Name = "labelCurrency";
             this.labelCurrency.Size = new System.Drawing.Size(49, 13);
             this.labelCurrency.TabIndex = 8;

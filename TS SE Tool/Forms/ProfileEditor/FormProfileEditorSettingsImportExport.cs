@@ -38,6 +38,7 @@ namespace TS_SE_Tool
         public FormProfileEditorSettingsImportExport(string _mode)
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.MainIco;
             FormMode = _mode;
         }
 

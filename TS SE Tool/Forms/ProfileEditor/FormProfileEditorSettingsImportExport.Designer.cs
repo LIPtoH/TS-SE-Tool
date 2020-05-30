@@ -184,7 +184,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormProfileEditorSettingsImportExport";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormProfileEditorSettingsImportExport";
+            this.Text = "Import \\ Export Settings";
             this.Load += new System.EventHandler(this.FormProfileEditorSettingsImportExport_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

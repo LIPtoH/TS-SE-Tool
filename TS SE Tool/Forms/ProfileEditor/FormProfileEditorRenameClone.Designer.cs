@@ -194,7 +194,7 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "FormProfileEditorRenameClone";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormProfileEditorRenameClone";
+            this.Text = "Rename Clone Profiles";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanelControls.ResumeLayout(false);

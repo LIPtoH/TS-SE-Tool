@@ -37,6 +37,7 @@ namespace TS_SE_Tool
         public FormProfileEditor()
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.MainIco;
             PrepareForm();
         }
 

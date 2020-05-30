@@ -32,7 +32,8 @@ namespace TS_SE_Tool
         public FormProgramSettings()
         {
             InitializeComponent();
-            this.Icon = Properties.Resources.MainIco;
+
+            this.Icon = Utilities.TS_Graphics.IconFromImage(MainForm.ProgUIImgsDict["ProgramSettings"]);
 
             this.SuspendLayout();
 
@@ -43,8 +44,7 @@ namespace TS_SE_Tool
                     this.Text = translatedString;
             }
             catch
-            {
-            }
+            { }
 
             MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
 

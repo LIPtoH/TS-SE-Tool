@@ -35,7 +35,9 @@ namespace TS_SE_Tool
         public FormSettings()
         {
             InitializeComponent();
-            this.Icon = Properties.Resources.MainIco;
+
+            this.Icon = Utilities.TS_Graphics.IconFromImage(MainForm.ProgUIImgsDict["Settings"]);
+            
 
             this.SuspendLayout();
 

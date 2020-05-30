@@ -27,12 +27,15 @@ namespace TS_SE_Tool
 {
     partial class FormAboutBox : Form
     {
+        FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+
         public FormAboutBox()
         {
             InitializeComponent();
-            this.Icon = Properties.Resources.MainIco;
 
-            var MainForm = Application.OpenForms.OfType<FormMain>().Single();
+            this.Icon = Utilities.TS_Graphics.IconFromImage(MainForm.ProgUIImgsDict["Info"]);
+
+            //var MainForm = Application.OpenForms.OfType<FormMain>().Single();
             MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
             //MainForm.ClearDatabase();
 

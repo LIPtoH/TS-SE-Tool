@@ -50,6 +50,7 @@ namespace TS_SE_Tool
         public FormProfileEditorRenameClone(string _mode)
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.MainIco;
 
             FormMode = _mode;
             //Translate();

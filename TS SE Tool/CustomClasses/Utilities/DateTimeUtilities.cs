@@ -17,7 +17,7 @@ using System;
 
 namespace TS_SE_Tool.Utilities
 {
-    public class DateTimeUtilities
+    internal class DateTimeUtilities
     {
         private static DateTime EpochTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 

@@ -216,7 +216,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormProfileEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormProfileEditor";
+            this.Text = "Profile Manager";
             this.Load += new System.EventHandler(this.FormProfileEditor_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanelProfileName.ResumeLayout(false);
