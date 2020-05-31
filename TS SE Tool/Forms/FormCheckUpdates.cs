@@ -35,18 +35,30 @@ namespace TS_SE_Tool
     public partial class FormCheckUpdates : Form
     {
         bool NVavailible = false, CheckComplete = false;
-        string[] NewVersion = { "", "" };
+        internal string[] NewVersion = { "", "" };
+        string FormMode = "";
 
-        public FormCheckUpdates()
+        public FormCheckUpdates(string _formMode)
         {
             InitializeComponent();
             this.Size = new Size(300, 130);
+            FormMode = _formMode;
         }
 
         private void FormCheckUpdates_Load(object sender, EventArgs e)
         {
-            CheckLatestVersion();
             buttonDownload.Text = "Download && Update";
+            if (FormMode == "check")
+                CheckLatestVersion();
+            else if(FormMode == "download")
+            {
+                labelStatus.Text = labelStatus.Text = String.Format("New version {0} available!\r\nClick on Download to update.", NewVersion[0]);
+
+                buttonDownload.Visible = true;
+                buttonDownload.Click += new EventHandler(this.buttonDownload_Click);
+
+                this.Size = new Size(300, 180);
+            }
         }
         //Buttons
         private void buttonOk_Click(object sender, EventArgs e)
@@ -96,6 +108,8 @@ namespace TS_SE_Tool
             else
             {
                 MessageBox.Show("Unable to download new version. Try later or download new version manually.", "Download failed");
+                this.Close();
+                this.DialogResult = DialogResult.Abort;
             }
         }
 
@@ -134,6 +148,7 @@ namespace TS_SE_Tool
             buttonOK.Enabled = true;
         }
         //Events
+        //Check
         private async void CheckLatestVersion()
         {
             labelStatus.Text = "Checking for updates";
@@ -143,7 +158,7 @@ namespace TS_SE_Tool
             {
                 bool betterVersion = false;
                 string[] numArr = NewVersion[0].Split(new char[] { '.' });
-                string[] currArr = AssemblyVersion.Split(new char[] { '.' });
+                string[] currArr = Utilities.AssemblyData.AssemblyVersion.Split(new char[] { '.' });
 
                 for (byte i = 0; i < numArr.Length; i++)
                 {
@@ -157,30 +172,23 @@ namespace TS_SE_Tool
                 if (betterVersion)
                 {
                     labelStatus.Text = String.Format("New version {0} available!", NewVersion[0]);
-                    labelStatus.ForeColor = Color.LimeGreen;
-                    labelStatus.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-
-                    buttonDownload.Visible = true;
-                    buttonDownload.Click += new EventHandler(this.buttonDownload_Click);
-
-                    this.Size = new Size( 300, 225 );
-
-                    buttonOK.Text = "Cancel";
                 }
                 else
                 {
                     labelStatus.Text = String.Format("You are using latest version!");
-                    labelStatus.ForeColor = Color.LimeGreen;
-                    labelStatus.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
 
-                    buttonDownload.Visible = true;
-                    buttonDownload.Click += new EventHandler(this.buttonDownload_Click);
                     buttonDownload.Text = "Download && Repair";
-
-                    this.Size = new Size(300, 225);
-
-                    buttonOK.Text = "Cancel";
                 }
+
+                labelStatus.ForeColor = Color.LimeGreen;
+                labelStatus.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                buttonDownload.Visible = true;
+                buttonDownload.Click += new EventHandler(this.buttonDownload_Click);
+
+                this.Size = new Size(300, 225);
+
+                buttonOK.Text = "Cancel";
             }
             else
             {
@@ -210,12 +218,48 @@ namespace TS_SE_Tool
             }
         }
 
+        public string GetLatestVersionData(string url)
+        {
+            string result = null;
+
+            using (WebClient client = new WebClient())
+            {
+                try
+                {
+                    result = client.DownloadString(url);
+                }
+                catch { }
+
+                client.Dispose();
+            }
+            return result;
+        }
+        //
+        private bool checkFileHash(string _filepath, string _hashtocompare)
+        {
+            bool SameHash = false;
+
+            using (var hash = SHA512.Create())
+            {
+                using (var stream = File.OpenRead(_filepath))
+                {
+                    var fileHash = hash.ComputeHash(stream);
+                    string newHash = BitConverter.ToString(fileHash).Replace("-", "").ToUpperInvariant();
+
+                    if (_hashtocompare == newHash)
+                        SameHash = true;
+
+                    return SameHash;
+                }
+            }
+        }
+        //Download
         private void startDownload() //async 
         {
             labelStatus.ForeColor = this.ForeColor;
             labelStatus.Text = "Downloading...";
 
-            Task t = Task.Run( () => {
+            Task t = Task.Run(() => {
                 var url = "https://liptoh.now.im/TS-SET-Download";
                 var filename = Directory.GetCurrentDirectory() + @"\updater\ts.set.newversion.zip";
 
@@ -242,96 +286,15 @@ namespace TS_SE_Tool
                 double bytesIn = double.Parse(e.BytesReceived.ToString());
                 double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
                 double percentage = bytesIn / totalBytes * 100;
-                //label2.Text = "Downloaded " + e.BytesReceived + " of " + e.TotalBytesToReceive;
                 progressBarDownload.Value = int.Parse(Math.Truncate(percentage).ToString());
             });
         }
 
         void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            /*
-            this.BeginInvoke((MethodInvoker)delegate {
-                label2.Text = "Completed";
-            });
-            */
             buttonOK.Enabled = true;
             labelStatus.Text = "Downloaded!";
         }
-
-        private bool checkFileHash(string _filepath, string _hashtocompare)
-        {
-            bool SameHash = false;
-
-            using (var hash = SHA512.Create())
-            {
-                using (var stream = File.OpenRead(_filepath))
-                {
-                    var fileHash = hash.ComputeHash(stream);
-                    string newHash = BitConverter.ToString(fileHash).Replace("-", "").ToUpperInvariant();
-
-                    if (_hashtocompare == newHash)
-                        SameHash = true;
-
-                    return SameHash;
-                }
-            }
-        }
-
-        //Extra
-        public string AssemblyVersion
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
-
-        public string AssemblyProduct
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyProductAttribute)attributes[0]).Product;
-            }
-        }
-
-        public string GetFilename(string url)
-        {
-            string result = null;
-
-            using (WebClient client = new WebClient())
-            {
-                try
-                {
-                    client.OpenRead(url);
-
-                    string header_contentDisposition = client.ResponseHeaders["content-disposition"];
-                    result = new ContentDisposition(header_contentDisposition).FileName;
-                }
-                catch { }
-            }
-
-            return result;
-        }
-
-        public string GetLatestVersionData(string url)
-        {
-            string result = null;
-
-            using (WebClient client = new WebClient())
-            {
-                try
-                {
-                    result = client.DownloadString(url);
-                }
-                catch { }
-                client.Dispose();
-            }
-            return result;
-        }
+        //
     }
 }

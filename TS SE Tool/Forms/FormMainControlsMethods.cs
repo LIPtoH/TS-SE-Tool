@@ -169,7 +169,7 @@ namespace TS_SE_Tool
 
         private void latestStableToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormCheckUpdates FormWindow = new FormCheckUpdates();
+            FormCheckUpdates FormWindow = new FormCheckUpdates("check");
             FormWindow.ShowDialog();
         }
         //Menu controls End

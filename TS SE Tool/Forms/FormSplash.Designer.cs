@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.linkLabelGitHub = new System.Windows.Forms.LinkLabel();
             this.labelTSSE = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.labelDownloadDescription = new System.Windows.Forms.Label();
@@ -54,7 +55,7 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.buttonOK, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -62,19 +63,19 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 81.25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 290);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 330);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // button1
+            // buttonOK
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(10, 245);
-            this.button1.Margin = new System.Windows.Forms.Padding(10);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(240, 35);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonOK.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonOK.Location = new System.Drawing.Point(10, 278);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(10);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(240, 42);
+            this.buttonOK.TabIndex = 0;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel2
             // 
@@ -84,14 +85,15 @@
             this.tableLayoutPanel2.Controls.Add(this.labelVersion, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.labelDownloadDescription, 0, 4);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 5);
-            this.tableLayoutPanel2.Controls.Add(this.labelHowtoDescription, 0, 6);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 7);
+            this.tableLayoutPanel2.Controls.Add(this.labelHowtoDescription, 0, 7);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 8);
             this.tableLayoutPanel2.Controls.Add(this.linkLabelNewVersion, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.linkLabelGitHub, 0, 6);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 9;
+            this.tableLayoutPanel2.RowCount = 10;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -101,9 +103,22 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(260, 235);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(260, 268);
             this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // linkLabelGitHub
+            // 
+            this.linkLabelGitHub.AutoSize = true;
+            this.linkLabelGitHub.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkLabelGitHub.Location = new System.Drawing.Point(3, 160);
+            this.linkLabelGitHub.Name = "linkLabelGitHub";
+            this.linkLabelGitHub.Size = new System.Drawing.Size(254, 30);
+            this.linkLabelGitHub.TabIndex = 10;
+            this.linkLabelGitHub.TabStop = true;
+            this.linkLabelGitHub.Text = "GitHub";
+            this.linkLabelGitHub.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabelGitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGitHub_LinkClicked);
             // 
             // labelTSSE
             // 
@@ -196,7 +211,7 @@
             // 
             this.labelHowtoDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelHowtoDescription.AutoSize = true;
-            this.labelHowtoDescription.Location = new System.Drawing.Point(3, 168);
+            this.labelHowtoDescription.Location = new System.Drawing.Point(3, 198);
             this.labelHowtoDescription.Name = "labelHowtoDescription";
             this.labelHowtoDescription.Size = new System.Drawing.Size(254, 13);
             this.labelHowtoDescription.TabIndex = 6;
@@ -213,7 +228,7 @@
             this.tableLayoutPanel3.Controls.Add(this.linkLabelHelpYouTube, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.labelor2, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 193);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 223);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -270,7 +285,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(260, 290);
+            this.ClientSize = new System.Drawing.Size(260, 330);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -294,7 +309,7 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label labelTSSE;
         private System.Windows.Forms.Label labelVersion;
@@ -309,5 +324,6 @@
         private System.Windows.Forms.Label labelor2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.LinkLabel linkLabelNewVersion;
+        private System.Windows.Forms.LinkLabel linkLabelGitHub;
     }
 }

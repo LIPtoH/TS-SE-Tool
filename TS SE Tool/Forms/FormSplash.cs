@@ -46,13 +46,13 @@ namespace TS_SE_Tool
 
             MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
 
-            labelTSSE.Text = AssemblyProduct;
+            labelTSSE.Text = Utilities.AssemblyData.AssemblyProduct;
 
             string translatedString = MainForm.ResourceManagerMain.GetString(labelVersion.Name, Thread.CurrentThread.CurrentUICulture);
             if (translatedString != null)
-                labelVersion.Text = String.Format(translatedString, AssemblyVersion);
+                labelVersion.Text = String.Format(translatedString, Utilities.AssemblyData.AssemblyVersion);
             else
-                labelVersion.Text = String.Format("{0} (alpha)", AssemblyVersion);
+                labelVersion.Text = String.Format("{0} (alpha)", Utilities.AssemblyData.AssemblyVersion);
         }
 
         private void FormSplash_Load(object sender, EventArgs e)
@@ -76,91 +76,53 @@ namespace TS_SE_Tool
             catch
             {
                 MessageBox.Show("Please update manually in order to fix it.", "Installation corrupted", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                button1.Click -= new EventHandler(this.button1_Click);
-                button1.Text = "Close application";
-                button1.Click += new EventHandler(this.button1_ClickCloseApp);
+                buttonOK.Click -= new EventHandler(this.button1_Click);
+                buttonOK.Text = "Close application";
+                buttonOK.Click += new EventHandler(this.button1_ClickCloseApp);
             }
         }
 
         //Actions
+        private void linkLabelNewVersion_Click(object sender, EventArgs e)
+        {
+            buttonOK.Enabled = false;
+
+            FormCheckUpdates FormWindow = new FormCheckUpdates("download");
+            FormWindow.NewVersion = NewVersion;
+            DialogResult t = FormWindow.ShowDialog();
+
+            buttonOK.Enabled = true;
+            if(t == DialogResult.OK)
+            {
+                linkLabelNewVersion.Text = String.Format("You are using latest version!\r\n(Repair)");
+                linkLabelNewVersion.DisabledLinkColor = this.ForeColor;
+            }
+            else if (t == DialogResult.Abort)
+            {
+                linkLabelNewVersion.Text = String.Format("Something gone wrong. Please use links below for manual update.");
+                linkLabelNewVersion.DisabledLinkColor = Color.Red;
+            }
+
+            linkLabelNewVersion.LinkBehavior = LinkBehavior.NeverUnderline;
+            linkLabelNewVersion.Links[0].Enabled = false;
+        }
+        //Links
         private void linkFirst_Click(object sender, EventArgs e)
         {
             string url = "https://forum.scssoft.com/viewtopic.php?f=34&t=266092";
-            System.Diagnostics.Process.Start(url);
+            Process.Start(url);
         }
 
         private void linkSecond_Click(object sender, EventArgs e)
         {
             string url = "https://forum.truckersmp.com/index.php?/topic/79561-ts-saveeditor-tool";
-            System.Diagnostics.Process.Start(url);
+            Process.Start(url);
         }
 
-        private void linkLabelNewVersion_Click(object sender, EventArgs e)
+        private void linkLabelGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            button1.Enabled = false;
-
-            bool properFileDownloaded = false;
-            byte trysCount = 0;
-
-            linkLabelNewVersion.Text = String.Format("You are using latest version!\r\n(Repair)");
-            linkLabelNewVersion.LinkBehavior = LinkBehavior.NeverUnderline;
-            linkLabelNewVersion.Links[0].Enabled = false;
-            linkLabelNewVersion.DisabledLinkColor = this.ForeColor;
-            do
-            {
-                trysCount++;
-                if (trysCount == 6)
-                    break;
-
-                startDownload();
-
-                linkLabelNewVersion.Text = "Checking file...";
-                properFileDownloaded = checkFileHash(Directory.GetCurrentDirectory() + @"\updater\ts.set.newversion.zip", NewVersion[1]);
-
-                if (!properFileDownloaded)
-                    linkLabelNewVersion.Text = "Hash not matching!";
-
-                Thread.Sleep(1000);
-            } while (!properFileDownloaded);
-
-            linkLabelNewVersion.Text = "Ready for update.";
-
-            if (properFileDownloaded)
-            {
-                //Close Start updater and TSSET
-                linkLabelNewVersion.Text = "Starting Updater";
-                button1.Text = "OK";
-                //copy updater
-                if (File.Exists(Directory.GetCurrentDirectory() + @"\updater\updater.exe"))
-                {
-                    File.Copy(Directory.GetCurrentDirectory() + @"\updater\updater.exe", Directory.GetCurrentDirectory() + @"\updater.exe", true);
-                }
-                else
-                {
-                    MessageBox.Show("Unable to find Updater.exe. Please update manually. New version located in Updater folder.", "File not exist");
-                    linkLabelNewVersion.Text = "Updater.exe doesn't exist";
-                    return;
-                }
-
-                if (File.Exists(Directory.GetCurrentDirectory() + @"\updater.exe"))
-                {
-                    Process.Start(Directory.GetCurrentDirectory() + @"\updater.exe", "true " + NewVersion[1] + " " + Process.GetCurrentProcess().Id.ToString());
-                    linkLabelNewVersion.Text = "You can now finish your work.\r\nUpdate will start on exit.";
-
-                    Application.Exit();
-                }
-                else
-                {
-                    MessageBox.Show("Unable to find Updater.exe. Please update manually. New version located in Updater folder.", "File not exist");
-                    linkLabelNewVersion.Text = "Updater.exe doesn't exist";
-                }
-
-                button1.Enabled = true;
-            }
-            else
-            {
-                MessageBox.Show("Unable to download new version. Try later or download new version manually.", "Download failed");
-            }
+            string url = "https://github.com/LIPtoH/TS-SE-Tool/releases/latest";
+            Process.Start(url);
         }
 
         private void linkLabelHelpLocalPDF_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -177,9 +139,9 @@ namespace TS_SE_Tool
         private void linkLabelHelpYouTube_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             string url = "https://liptoh.now.im/TS-SET-Tutorial";
-            System.Diagnostics.Process.Start(url);
+            Process.Start(url);
         }
-
+        //Main button
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -190,47 +152,7 @@ namespace TS_SE_Tool
             Application.Exit();
         }
 
-        //Extra
-        public string AssemblyVersion
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
-
-        public string AssemblyProduct
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyProductAttribute)attributes[0]).Product;
-            }
-        }
-
-        public string GetFilename(string url)
-        {
-            string result = null;
-
-            using (WebClient client = new WebClient())
-            {
-                try
-                {
-                    client.OpenRead(url);
-
-                    string header_contentDisposition = client.ResponseHeaders["content-disposition"];
-                    result = new ContentDisposition(header_contentDisposition).FileName;
-                }
-                catch { }
-            }
-
-            return result;
-        }
-        
+        //Extra        
         private async void CheckLatestVersion()
         {
             if (CheckForUpdates)
@@ -240,14 +162,14 @@ namespace TS_SE_Tool
                 linkLabelNewVersion.DisabledLinkColor = this.ForeColor;
 
                 linkLabelNewVersion.Text = "Checking ...";
-                button1.Text = "Checking for updates";
+                buttonOK.Text = "Checking for updates";
                 await Task.Run(() => Check());
 
                 if (CheckComplete && NVavailible)
                 {
                     bool betterVersion = false;
                     string[] numArr = NewVersion[0].Split(new char[] { '.' });
-                    string[] currArr = AssemblyVersion.Split(new char[] { '.' });
+                    string[] currArr = Utilities.AssemblyData.AssemblyVersion.Split(new char[] { '.' });
 
                     for (byte i = 0; i < numArr.Length; i++)
                     {
@@ -258,21 +180,19 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    linkLabelNewVersion.LinkBehavior = LinkBehavior.AlwaysUnderline;
-                    linkLabelNewVersion.LinkColor = Color.LimeGreen;
-                    linkLabelNewVersion.Links[0].Enabled = true;
-
                     if (betterVersion)
                     {
                         linkLabelNewVersion.Text = String.Format("New version {0} available!\r\n(Download)", NewVersion[0]);
-                        //linkLabelNewVersion.LinkColor = Color.LimeGreen;
-                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
                     }
                     else
                     {
                         linkLabelNewVersion.Text = String.Format("You are using latest version!\r\n(Repair)");
-                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
                     }
+
+                    linkLabelNewVersion.LinkBehavior = LinkBehavior.AlwaysUnderline;
+                    linkLabelNewVersion.Links[0].Enabled = true;
+                    linkLabelNewVersion.LinkColor = Color.LimeGreen;
+                    linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
 
                     linkLabelNewVersion.Click += new EventHandler(linkLabelNewVersion_Click);
                 }
@@ -289,8 +209,8 @@ namespace TS_SE_Tool
             else
                 tableLayoutPanel2.RowStyles[3] = new RowStyle(SizeType.Absolute, 0F);
 
-            button1.Click += new EventHandler(this.button1_Click);
-            button1.Text = "OK";
+            buttonOK.Click += new EventHandler(this.button1_Click);
+            buttonOK.Text = "OK";
         }
 
         private void Check()
@@ -325,57 +245,6 @@ namespace TS_SE_Tool
                 client.Dispose();
             }
             return result;
-        }
-
-        private bool checkFileHash(string _filepath, string _hashtocompare)
-        {
-            bool SameHash = false;
-
-            using (var hash = SHA512.Create())
-            {
-                using (var stream = File.OpenRead(_filepath))
-                {
-                    var fileHash = hash.ComputeHash(stream);
-                    string newHash = BitConverter.ToString(fileHash).Replace("-", "").ToUpperInvariant();
-
-                    if (_hashtocompare == newHash)
-                        SameHash = true;
-
-                    return SameHash;
-                }
-            }
-        }
-
-        private void startDownload() //async 
-        {
-            //linkLabelNewVersion.ForeColor = this.ForeColor;
-            linkLabelNewVersion.Text = "Downloading...";
-
-            Task t = Task.Run(() => {
-                var url = "https://liptoh.now.im/TS-SET-Download";
-                var filename = Directory.GetCurrentDirectory() + @"\updater\ts.set.newversion.zip";
-
-                try
-                {
-                    using (WebClient webClient = new WebClient())
-                    {
-                       // webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                        webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                        webClient.DownloadFile(new Uri(url), filename); //DownloadFileTaskAsync
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            });
-            t.Wait();
-        }
-        
-        void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            button1.Enabled = true;
-            linkLabelNewVersion.Text = "Downloaded!";
         }
     }
 }
