@@ -36,7 +36,7 @@ namespace TS_SE_Tool
             this.Icon = Utilities.TS_Graphics.IconFromImage(MainForm.ProgUIImgsDict["Info"]);
 
             //var MainForm = Application.OpenForms.OfType<FormMain>().Single();
-            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
             //MainForm.ClearDatabase();
 
             Text = String.Format("About {0}", AssemblyTitle);

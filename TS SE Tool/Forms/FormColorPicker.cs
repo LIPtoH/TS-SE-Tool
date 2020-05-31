@@ -62,7 +62,7 @@ namespace OpenPainter.ColorPicker
             {
             }
 
-            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
             //CorrectControlsPositions();
             this.ResumeLayout();
 

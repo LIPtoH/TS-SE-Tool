@@ -545,26 +545,37 @@ namespace TS_SE_Tool
         }
 
         //Help methods for searching controls
-        internal void HelpTranslateFormMethod (Control parent, PlainTXTResourceManager _rm, CultureInfo _ci)
+        internal void HelpTranslateFormMethod(Control parent, ToolTip _formTooltip, CultureInfo _ci)
         {
             char[] charsToTrim = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
-            foreach (Control c in parent.Controls)
+            foreach (Control cntrl in parent.Controls)
             {
                 try
                 {
-                    string translatedString = _rm.GetString(c.Name.TrimEnd(charsToTrim), _ci);
+                    string translatedString = ResourceManagerMain.GetString(cntrl.Name.TrimEnd(charsToTrim), _ci);
                     if (translatedString != null)
-                        c.Text = translatedString;
+                        cntrl.Text = translatedString;
 
-                    string TolltipString = _rm.GetString("tooltip" + c.Name.TrimEnd(charsToTrim), _ci);
-                    if (TolltipString != null)
-                        toolTipMain.SetToolTip(c, TolltipString);
+                    if (_formTooltip != null)
+                    {
+                        string TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name.TrimEnd(charsToTrim), _ci);
+                        if (TolltipString != null)
+                        {
+                            TolltipString = TolltipString.Replace("\\r\\n", Environment.NewLine);
+                            _formTooltip.SetToolTip(cntrl, TolltipString);
+                        }
+                    }
                 }
                 catch
-                {   
-                }
-                HelpTranslateFormMethod(c, _rm, _ci);
+                { }
+
+                HelpTranslateFormMethod(cntrl, _formTooltip, _ci);
             }
+        }
+
+        internal void HelpTranslateFormMethod(Control parent, CultureInfo _ci)
+        {
+            HelpTranslateFormMethod(parent, null, _ci);            
         }
 
         private void HelpTranslateMenuStripMethod(MenuStrip parent, PlainTXTResourceManager _rm, CultureInfo _ci)

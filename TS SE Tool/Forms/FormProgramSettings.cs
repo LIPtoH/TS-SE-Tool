@@ -46,7 +46,7 @@ namespace TS_SE_Tool
             catch
             { }
 
-            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
 
             this.ResumeLayout();
 

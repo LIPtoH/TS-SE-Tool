@@ -52,7 +52,7 @@ namespace TS_SE_Tool
             {
             }
 
-            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
 
             CorrectControlsPositions();
 

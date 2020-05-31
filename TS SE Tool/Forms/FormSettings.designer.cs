@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonSave = new System.Windows.Forms.Button();
@@ -52,6 +53,7 @@
             this.labelDayShort = new System.Windows.Forms.Label();
             this.numericUpDownSettingPickTimeD = new System.Windows.Forms.NumericUpDown();
             this.labelHourShort = new System.Windows.Forms.Label();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingPickTimeH)).BeginInit();
@@ -316,6 +318,12 @@
             this.labelHourShort.TabIndex = 5;
             this.labelHourShort.Text = "h";
             // 
+            // toolTip
+            // 
+            this.toolTip.AutoPopDelay = 15000;
+            this.toolTip.InitialDelay = 500;
+            this.toolTip.ReshowDelay = 100;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,5 +374,6 @@
         private System.Windows.Forms.Label labelCurrencyATS;
         private System.Windows.Forms.ComboBox comboBoxSettingCurrencySelectATS;
         private System.Windows.Forms.Label labelCurrencyETS2;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

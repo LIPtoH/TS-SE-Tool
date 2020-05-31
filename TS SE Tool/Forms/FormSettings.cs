@@ -36,8 +36,7 @@ namespace TS_SE_Tool
         {
             InitializeComponent();
 
-            this.Icon = Utilities.TS_Graphics.IconFromImage(MainForm.ProgUIImgsDict["Settings"]);
-            
+            this.Icon = Utilities.TS_Graphics.IconFromImage(MainForm.ProgUIImgsDict["Settings"]);            
 
             this.SuspendLayout();
 
@@ -50,7 +49,7 @@ namespace TS_SE_Tool
             catch
             { }
 
-            MainForm.HelpTranslateFormMethod(this, MainForm.ResourceManagerMain, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this, toolTip, Thread.CurrentThread.CurrentUICulture);
 
             CorrectControlsPositions();
             this.ResumeLayout();
