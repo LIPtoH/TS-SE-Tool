@@ -1268,6 +1268,7 @@ namespace TS_SE_Tool
 
         private void CheckSaveInfoData()
         {
+            int SavefileVersion = 0;
             string[] chunkOfline;
             List<string> SavefileDependencies = new List<string>();
 
@@ -1302,6 +1303,36 @@ namespace TS_SE_Tool
 
                     SavefileDependencies.Add(depcode);
                     continue;
+                }
+            }
+
+            if (SavefileVersion > 0)
+            {
+                if (SavefileVersion > SupportedSavefileVersionETS2[1] || SavefileVersion < SupportedSavefileVersionETS2[0])
+                {
+                    var DR = MessageBox.Show("Savefile version " + SavefileVersion + " do not supported.\nYou can proceed, but it can damage savefile after saving.\nPlease use manual saves instead of autosaves in this case!\nDo you want to try and load THIS savefile?" +
+                        "\n(You can decrypt save file and manually edit it at any time)", "Unsupported savefile version", MessageBoxButtons.YesNo);
+
+                    if (DR == DialogResult.No)
+                    {
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
+
+                        ToggleMainControlsAccess(true);
+
+                        buttonMainWriteSave.Enabled = false;
+                        //buttonMainWriteSave.Visible = false;
+
+                        return;
+                    }
+                }
+            }
+            else if (SavefileVersion == 0)
+            {
+                DialogResult result = MessageBox.Show("Savefile version was not recognised.\nDo you want to continue?", "Version not recognised", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                {
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
+                    return;
                 }
             }
 

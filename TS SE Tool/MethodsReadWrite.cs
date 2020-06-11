@@ -879,36 +879,7 @@ namespace TS_SE_Tool
                 return;
             }
 
-            if (SavefileVersion > 0 && SavefileVersion > SupportedSavefileVersionETS2[0] && SavefileVersion > SupportedSavefileVersionETS2[1])
-            {
-                MessageBox.Show("Savefile version don't supported.\nYou cann't edit file with version " + SavefileVersion + ", but you can try to decode it.", "Wrong version");
-                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
-
-                radioButtonMainGameSwitchETS.Enabled = true;
-                radioButtonMainGameSwitchATS.Enabled = true;
-
-                checkBoxProfilesAndSavesProfileBackups.Enabled = true;
-                buttonProfilesAndSavesRefreshAll.Enabled = true;
-                comboBoxPrevProfiles.Enabled = true;
-                comboBoxProfiles.Enabled = true;
-                comboBoxSaves.Enabled = true;
-
-                buttonMainDecryptSave.Enabled = true;
-                buttonMainLoadSave.Enabled = true;
-                buttonMainWriteSave.Enabled = false;
-                buttonMainWriteSave.Visible = false;
-
-                return;
-            }
-            else if (SavefileVersion == 0)
-            {
-                DialogResult result = MessageBox.Show("Savefile version was not recognised.\nDo you want to continue?", "Version not recognised", MessageBoxButtons.YesNo);
-                if (result == DialogResult.No)
-                {
-                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
-                    return;
-                }
-            }
+            
 
             if (!File.Exists(SiiSavePath))
             {

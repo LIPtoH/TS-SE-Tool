@@ -37,7 +37,7 @@ namespace TS_SE_Tool
     {
         #region  Accesslevels
 
-        private int SavefileVersion; //+
+        //private int SavefileVersion; //+
         internal int[] SupportedSavefileVersionETS2; //Program
         internal string SupportedGameVersionETS2;//Program
         //internal int SupportedSavefileVersionATS;

@@ -251,6 +251,7 @@ namespace TS_SE_Tool
 
             checkBoxProfilesAndSavesProfileBackups.Enabled = _state;
             buttonProfilesAndSavesRefreshAll.Enabled = _state;
+            buttonProfilesAndSavesEditProfile.Enabled = _state;
 
             comboBoxPrevProfiles.Enabled = _state;
             comboBoxProfiles.Enabled = _state;
