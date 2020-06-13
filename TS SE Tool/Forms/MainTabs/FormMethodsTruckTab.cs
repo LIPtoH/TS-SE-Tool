@@ -116,11 +116,11 @@ namespace TS_SE_Tool
             int topbutoffset = comboBoxUserTruckCompanyTrucks.Location.X + comboBoxUserTruckCompanyTrucks.Width + pOffset;
 
             Button buttonInfo = new Button();
-            tableLayoutPanel8.Controls.Add(buttonInfo, 0, 1);
+            tableLayoutPanelUserTruckControls.Controls.Add(buttonInfo, 3, 0);
             buttonInfo.FlatStyle = FlatStyle.Flat;
             buttonInfo.Size = new Size(CutomizeImg.Width, CutomizeImg.Height);
             buttonInfo.Name = "buttonTruckInfo";
-            buttonInfo.BackgroundImage = ConvertBitmapToGrayscale(CutomizeImg);
+            buttonInfo.BackgroundImage = CutomizeImg;//ConvertBitmapToGrayscale(CutomizeImg);
             buttonInfo.BackgroundImageLayout = ImageLayout.Zoom;
             buttonInfo.Text = "";
             buttonInfo.FlatAppearance.BorderSize = 0;
@@ -128,7 +128,7 @@ namespace TS_SE_Tool
             buttonInfo.Dock = DockStyle.Fill;
 
             Button buttonR = new Button();
-            tableLayoutPanel8.Controls.Add(buttonR, 3, 1);
+            tableLayoutPanelUserTruckControls.Controls.Add(buttonR, 1, 0);
             buttonR.FlatStyle = FlatStyle.Flat;
             buttonR.Size = new Size(RepairImg.Height, RepairImg.Height);
             buttonR.Name = "buttonTruckRepair";
@@ -140,7 +140,7 @@ namespace TS_SE_Tool
             buttonR.Dock = DockStyle.Fill;
 
             Button buttonF = new Button();
-            tableLayoutPanel8.Controls.Add(buttonF, 4, 1);
+            tableLayoutPanelUserTruckControls.Controls.Add(buttonF, 2, 0);
             buttonF.FlatStyle = FlatStyle.Flat;
             buttonF.Size = new Size(RepairImg.Height, RepairImg.Height);
             buttonF.Name = "buttonTruckReFuel";
@@ -191,11 +191,30 @@ namespace TS_SE_Tool
                     combDT.Rows.Add(UserTruck.Key, TruckName);
                 }
             }
-            //combDT.DefaultView.Sort = "UserTruckName ASC";
+
+            bool noTrucks = false;
+
+            if (combDT.Rows.Count == 0)
+            {
+                combDT.Rows.Add("null", "-- NONE --"); //none
+                noTrucks = true;
+            }
+
             comboBoxUserTruckCompanyTrucks.ValueMember = "UserTruckNameless";
             comboBoxUserTruckCompanyTrucks.DisplayMember = "UserTruckName";
             comboBoxUserTruckCompanyTrucks.DataSource = combDT;
-            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataV.UserCompanyAssignedTruck;
+
+            if (!noTrucks)
+            {
+                //combDT.DefaultView.Sort = "UserTruckName ASC";
+                comboBoxUserTruckCompanyTrucks.Enabled = true;
+                comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataV.UserCompanyAssignedTruck;
+            }
+            else
+            {
+                comboBoxUserTruckCompanyTrucks.Enabled = false;
+                comboBoxUserTruckCompanyTrucks.SelectedValue = "null";
+            }
         }
 
         private void UpdateTruckPanelProgressBars()
@@ -376,12 +395,82 @@ namespace TS_SE_Tool
         {
             ComboBox cmbbx = sender as ComboBox;
 
-            if (cmbbx.SelectedIndex != -1)
+            if (cmbbx.SelectedValue.ToString() != "null") //cmbbx.SelectedIndex != -1 && 
             {
                 UpdateTruckPanelProgressBars();
+                ToggleTruckPartsCondition(true);
+
+                buttonUserTruckSelectCurrent.Enabled = true;
+                tableLayoutPanelUserTruckControls.Enabled = true;
+
+                groupBoxUserTruckTruckDetails.Enabled = true;
+                groupBoxUserTruckShareTruckSettings.Enabled = true;
+            }
+            else
+            {
+                ToggleTruckPartsCondition(false);
+
+                buttonUserTruckSelectCurrent.Enabled = false;
+                tableLayoutPanelUserTruckControls.Enabled = false;
+
+                groupBoxUserTruckTruckDetails.Enabled = false;
+                groupBoxUserTruckShareTruckSettings.Enabled = false;
             }
         }
 
+        private void groupBoxUserTruckTruckDetails_EnabledChanged(object sender, EventArgs e)
+        {
+            ToggleVisualTruckDetails(groupBoxUserTruckTruckDetails.Enabled);
+        }
+
+        private void tableLayoutPanelUserTruckControls_EnabledChanged(object sender, EventArgs e)
+        {
+            ToggleVisualTruckControls(tableLayoutPanelUserTruckControls.Enabled);
+        }
+
+        private void ToggleVisualTruckDetails(bool _state)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Control[] tmp = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckElRepair" + i.ToString(), true);
+                if (_state)
+                    tmp[0].BackgroundImage = RepairImg;
+                else
+                    tmp[0].BackgroundImage = ConvertBitmapToGrayscale(RepairImg);
+            }
+        }
+
+        private void ToggleVisualTruckControls(bool _state)
+        {
+            Control TMP;
+
+            string[] buttons = { "buttonTruckReFuel", "buttonTruckRepair", "buttonTruckInfo" };
+            Image[] images = { RefuelImg, RepairImg, CutomizeImg };
+
+            for (int i = 0; i < buttons.Count(); i++)
+            {
+                try
+                {
+                    TMP = tabControlMain.TabPages["tabPageTruck"].Controls.Find(buttons[i], true)[0];
+                }
+                catch
+                {
+                    break;
+                }
+                
+                if (_state && TMP.Enabled)
+                    TMP.BackgroundImage = images[i];
+                else
+                    TMP.BackgroundImage = ConvertBitmapToGrayscale(images[i]);
+            }
+        }
+
+        private void ToggleTruckPartsCondition(bool _state)
+        {
+            labelUserTruckLicensePlate.Visible = _state;
+            labelLicensePlate.Visible = _state;
+        }
+        //Buttons
         public void buttonTruckReFuel_Click(object sender, EventArgs e)
         {
             int i = 0;

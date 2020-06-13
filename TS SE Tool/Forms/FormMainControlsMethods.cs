@@ -184,7 +184,7 @@ namespace TS_SE_Tool
             {
                 tp.Enabled = _state;
             }
-
+            /*
             if (comboBoxUserTruckCompanyTrucks.Items.Count == 0)
             {
                 tabControlMain.TabPages["tabPageTruck"].Enabled = false;
@@ -194,7 +194,7 @@ namespace TS_SE_Tool
             {
                 tabControlMain.TabPages["tabPageTrailer"].Enabled = false;
             }
-
+            */
             //Visual - Images
 
             //Profile
@@ -208,9 +208,11 @@ namespace TS_SE_Tool
                     tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
             }
 
+            /*
             Control[] tmp2;
 
             //Truck
+            
             tmp2 = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckReFuel", true);
             tmp2[0].BackgroundImage = RefuelImg;
             if (!_state)
@@ -220,7 +222,7 @@ namespace TS_SE_Tool
                 tmp2[0].BackgroundImage = RepairImg;
                 if (!_state)
                     tmp2[0].BackgroundImage = ConvertBitmapToGrayscale(tmp2[0].BackgroundImage);
-
+            
             for (int i = 0; i < 5; i++)
             {
                 Control[] tmp = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckElRepair" + i.ToString(), true);
@@ -228,7 +230,7 @@ namespace TS_SE_Tool
                 if (!_state)
                     tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
             }
-
+            
             //Trailer
             tmp2 = tabControlMain.TabPages["tabPageTrailer"].Controls.Find("buttonTrailerRepair", true);
             tmp2[0].BackgroundImage = RepairImg;
@@ -242,6 +244,7 @@ namespace TS_SE_Tool
                 if (!_state)
                     tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
             }
+            */
         }
 
         private void ToggleMainControlsAccess(bool _state)

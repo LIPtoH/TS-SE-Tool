@@ -1009,11 +1009,12 @@ namespace TS_SE_Tool
         {
             toolStripProgressBarMain.Value = 0;
             //ClearFormControls(false);
-            PopulateFormControlsk();
 
             ToggleMainControlsAccess(true);
             buttonMainDecryptSave.Enabled = false;
             ToggleControlsAccess(true);
+
+            PopulateFormControlsk();
 
             LogWriter("Successfully completed work with " + SavefilePath + " save file");
         }

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace TS_SE_Tool
@@ -95,8 +96,7 @@ namespace TS_SE_Tool
             //tableLayoutPanel13
 
             Button buttonR = new Button();
-            //tabPageTrailer.Controls.Add(buttonR);
-            tableLayoutPanelUserTruckTrailer.Controls.Add(buttonR, 3, 1);
+            tableLayoutPanelUserTrailerControls.Controls.Add(buttonR, 1, 0);
             buttonR.Location = new Point(topbutoffset, tOffset);
             buttonR.FlatStyle = FlatStyle.Flat;
             buttonR.Size = new Size(RepairImg.Height, RepairImg.Height);
@@ -109,9 +109,7 @@ namespace TS_SE_Tool
             buttonR.Dock = DockStyle.Fill;
 
             Button buttonInfo = new Button();
-            //tabPageTrailer.Controls.Add(buttonInfo);
-            tableLayoutPanelUserTruckTrailer.Controls.Add(buttonInfo, 0, 1);
-            //buttonInfo.Location = new Point(labelUserTrailerTrailer.Location.X + (comboBoxUserTrailerCompanyTrailers.Location.X - labelUserTrailerTrailer.Location.X - CutomizeImg.Width - pOffset) / 2, buttonUserTruckSelectCurrent.Location.Y + pOffset);
+            tableLayoutPanelUserTrailerControls.Controls.Add(buttonInfo, 3, 0);
             buttonInfo.FlatStyle = FlatStyle.Flat;
             buttonInfo.Size = new Size(CutomizeImg.Width, CutomizeImg.Height);
             buttonInfo.Name = "buttonTrailerInfo";
@@ -337,14 +335,12 @@ namespace TS_SE_Tool
 
         private void FillUserCompanyTrailerList()
         {
-
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("UserTrailerkNameless", typeof(string));
             combDT.Columns.Add(dc);
 
             dc = new DataColumn("UserTrailerName", typeof(string));
             combDT.Columns.Add(dc);
-
 
             combDT.Rows.Add("null", "-- NONE --"); //none
 
@@ -362,19 +358,6 @@ namespace TS_SE_Tool
                     trailername += UserTrailer.Key;
 
                     string trailerdef = UserTrailerDictionary[UserTrailer.Key].Parts.Find(x => x.PartType == "trailerdef").PartNameless;
-
-                    /*
-                    try
-                    {
-                        string source_name = UserTrailerDefDictionary[trailerdef].Find(x => x.StartsWith(" source_name:")).Split(':')[1];
-
-                        if (!source_name.Contains("null"))
-                        {
-                            trailername += source_name.Split(new char[] { '"' })[1].Trim(new char[] { ' ' }) + " | ";
-                        }
-                    }
-                    catch { }
-                    */
 
                     trailername += " [ ";
 
@@ -397,8 +380,8 @@ namespace TS_SE_Tool
                                     string tmp = CurTrailerDef.Find(x => x.StartsWith(" " + Property + ":")).Split(':')[1].Trim(new char[] { ' ' });
 
                                     if (wasfound)
-                                        trailername += " ";
-                                    trailername += String.Format(trailerDefExtra[iCounter], tmp);
+                                        trailername += " | ";
+                                    trailername += String.Format(trailerDefExtra[iCounter], System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tmp));
 
                                     wasfound = true;
                                 }
@@ -422,19 +405,22 @@ namespace TS_SE_Tool
                 }
             }
 
-            if (combDT.Rows.Count > 0)
+            if (combDT.Rows.Count > 1)
             {
                 //combDT.DefaultView.Sort = "UserTrailerName ASC";
                 comboBoxUserTrailerCompanyTrailers.Enabled = true;
-                comboBoxUserTrailerCompanyTrailers.ValueMember = "UserTrailerkNameless";
-                comboBoxUserTrailerCompanyTrailers.DisplayMember = "UserTrailerName";
-                comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
-                comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataV.UserCompanyAssignedTrailer;
             }
             else
             {
                 comboBoxUserTrailerCompanyTrailers.Enabled = false;
             }
+
+            comboBoxUserTrailerCompanyTrailers.ValueMember = "UserTrailerkNameless";
+            comboBoxUserTrailerCompanyTrailers.DisplayMember = "UserTrailerName";
+            comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
+
+
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataV.UserCompanyAssignedTrailer;
         }
 
         private void comboBoxCompanyTrailers_SelectedIndexChanged(object sender, EventArgs e)
@@ -444,19 +430,99 @@ namespace TS_SE_Tool
             if (cmbbx.SelectedIndex != -1 && cmbbx.SelectedValue.ToString() != "null")
             {
                 UpdateTrailerPanelProgressBars();
-                tableLayoutPanelUserTruckTrailer.Controls.Find("buttonTrailerRepair", false)[0].Enabled = true;
+                ToggleTrailerPartsCondition(true);
+
+                buttonUserTrailerSelectCurrent.Enabled = true;
+                tableLayoutPanelUserTrailerControls.Enabled = true;
+
                 groupBoxUserTrailerTrailerDetails.Enabled = true;
                 groupBoxUserTrailerShareTrailerSettings.Enabled = true;
 
             }
             else
             {
-                tableLayoutPanelUserTruckTrailer.Controls.Find("buttonTrailerRepair", false)[0].Enabled = false;
+                ToggleTrailerPartsCondition(false);
+
+                if (!comboBoxUserTrailerCompanyTrailers.Enabled)
+                    buttonUserTrailerSelectCurrent.Enabled = false;
+
+                tableLayoutPanelUserTrailerControls.Enabled = false;
+
                 groupBoxUserTrailerTrailerDetails.Enabled = false;
                 groupBoxUserTrailerShareTrailerSettings.Enabled = false;
             }
         }
+        
+        private void groupBoxUserTrailerTrailerDetails_EnabledChanged(object sender, EventArgs e)
+        {
+            ToggleVisualTrailerDetails(groupBoxUserTrailerTrailerDetails.Enabled);
+        }
 
+        private void tableLayoutPanelUserTrailerControls_EnabledChanged(object sender, EventArgs e)
+        {
+            ToggleVisualTrailerControls(tableLayoutPanelUserTrailerControls.Enabled);
+        }
+
+        private void ToggleVisualTrailerDetails(bool _state)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Control[] tmp = tabControlMain.TabPages["tabPageTrailer"].Controls.Find("buttonTrailerElRepair" + i.ToString(), true);
+                if (_state)
+                    tmp[0].BackgroundImage = RepairImg;
+                else
+                    tmp[0].BackgroundImage = ConvertBitmapToGrayscale(RepairImg);
+            }
+        }
+
+        private void ToggleVisualTrailerControls(bool _state)
+        {
+            Control TMP;
+
+            string[] buttons = { "buttonTrailerRepair", "buttonTrailerInfo" };
+            Image[] images = { RepairImg, CutomizeImg };
+
+            for (int i = 0; i < buttons.Count(); i++)
+            {
+                try
+                {
+                    TMP = tabControlMain.TabPages["tabPageTrailer"].Controls.Find(buttons[i], true)[0];
+                }
+                catch
+                {
+                    break;
+                }
+
+                if (_state && TMP.Enabled)
+                    TMP.BackgroundImage = images[i];
+                else
+                    TMP.BackgroundImage = ConvertBitmapToGrayscale(images[i]);
+            }
+        }
+
+        private void ToggleTrailerPartsCondition(bool _state)
+        {
+            if (!_state)
+                for (int i = 0; i < 4; i++)
+                {
+                    Panel pnl = null;
+                    string pnlname = "progressbarTrailerPart" + i.ToString();
+                    if (groupBoxUserTrailerTrailerDetails.Controls.ContainsKey(pnlname))
+                    {
+                        pnl = groupBoxUserTrailerTrailerDetails.Controls[pnlname] as Panel;
+                    }
+
+                    if (pnl != null)
+                    {
+                        //pnl.Visible = _state;
+                        pnl.BackgroundImage = null;
+                    }
+                }
+
+            labelUserTrailerLicensePlate.Visible = _state;
+            labelLicensePlateTr.Visible = _state;
+        }
+        //Buttons
         private void buttonUserTrailerSelectCurrent_Click(object sender, EventArgs e)
         {
             comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataV.UserCompanyAssignedTrailer;

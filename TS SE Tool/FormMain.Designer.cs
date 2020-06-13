@@ -100,8 +100,9 @@
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxUserTruckTruck = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonUserTruckSelectCurrent = new System.Windows.Forms.Button();
+            this.tableLayoutPanelUserTruckControls = new System.Windows.Forms.TableLayoutPanel();
             this.buttonUserTruckSwitchCurrent = new System.Windows.Forms.Button();
+            this.buttonUserTruckSelectCurrent = new System.Windows.Forms.Button();
             this.comboBoxUserTruckCompanyTrucks = new System.Windows.Forms.ComboBox();
             this.groupBoxUserTruckShareTruckSettings = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
@@ -125,9 +126,10 @@
             this.buttonShareTrailerWholeTrailerCopy = new System.Windows.Forms.Button();
             this.buttonShareTrailerTrailerDetailsCopy = new System.Windows.Forms.Button();
             this.groupBoxUserTruckTrailer = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanelUserTruckTrailer = new System.Windows.Forms.TableLayoutPanel();
-            this.comboBoxUserTrailerCompanyTrailers = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelUserTrailerControls = new System.Windows.Forms.TableLayoutPanel();
             this.buttonUserTrailerSwitchCurrent = new System.Windows.Forms.Button();
+            this.comboBoxUserTrailerCompanyTrailers = new System.Windows.Forms.ComboBox();
             this.buttonUserTrailerSelectCurrent = new System.Windows.Forms.Button();
             this.groupBoxUserTrailerTrailerDetails = new System.Windows.Forms.GroupBox();
             this.labelLicensePlateTr = new System.Windows.Forms.Label();
@@ -227,6 +229,7 @@
             this.tableLayoutPanel9.SuspendLayout();
             this.groupBoxUserTruckTruck.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
+            this.tableLayoutPanelUserTruckControls.SuspendLayout();
             this.groupBoxUserTruckShareTruckSettings.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.groupBoxUserTruckTruckDetails.SuspendLayout();
@@ -235,7 +238,8 @@
             this.groupBoxUserTrailerShareTrailerSettings.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             this.groupBoxUserTruckTrailer.SuspendLayout();
-            this.tableLayoutPanelUserTruckTrailer.SuspendLayout();
+            this.tableLayoutPanel13.SuspendLayout();
+            this.tableLayoutPanelUserTrailerControls.SuspendLayout();
             this.groupBoxUserTrailerTrailerDetails.SuspendLayout();
             this.tabPageFreightMarket.SuspendLayout();
             this.tabPageCargoMarket.SuspendLayout();
@@ -1031,57 +1035,70 @@
             // 
             // tableLayoutPanel8
             // 
-            this.tableLayoutPanel8.ColumnCount = 5;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
+            this.tableLayoutPanel8.ColumnCount = 2;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel8.Controls.Add(this.buttonUserTruckSelectCurrent, 1, 1);
-            this.tableLayoutPanel8.Controls.Add(this.buttonUserTruckSwitchCurrent, 2, 1);
+            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanelUserTruckControls, 1, 1);
+            this.tableLayoutPanel8.Controls.Add(this.buttonUserTruckSelectCurrent, 0, 1);
             this.tableLayoutPanel8.Controls.Add(this.comboBoxUserTruckCompanyTrucks, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 2;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel8.RowCount = 1;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(552, 79);
-            this.tableLayoutPanel8.TabIndex = 28;
+            this.tableLayoutPanel8.TabIndex = 0;
             // 
-            // buttonUserTruckSelectCurrent
+            // tableLayoutPanelUserTruckControls
             // 
-            this.buttonUserTruckSelectCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserTruckSelectCurrent.Location = new System.Drawing.Point(63, 33);
-            this.buttonUserTruckSelectCurrent.Name = "buttonUserTruckSelectCurrent";
-            this.buttonUserTruckSelectCurrent.Size = new System.Drawing.Size(127, 43);
-            this.buttonUserTruckSelectCurrent.TabIndex = 26;
-            this.buttonUserTruckSelectCurrent.Text = "Select Current Truck";
-            this.buttonUserTruckSelectCurrent.UseVisualStyleBackColor = true;
-            this.buttonUserTruckSelectCurrent.Click += new System.EventHandler(this.buttonUserTruckSelectCurrent_Click);
+            this.tableLayoutPanelUserTruckControls.ColumnCount = 4;
+            this.tableLayoutPanelUserTruckControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelUserTruckControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanelUserTruckControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanelUserTruckControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanelUserTruckControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelUserTruckControls.Controls.Add(this.buttonUserTruckSwitchCurrent, 0, 0);
+            this.tableLayoutPanelUserTruckControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelUserTruckControls.Location = new System.Drawing.Point(153, 30);
+            this.tableLayoutPanelUserTruckControls.Name = "tableLayoutPanelUserTruckControls";
+            this.tableLayoutPanelUserTruckControls.RowCount = 1;
+            this.tableLayoutPanelUserTruckControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelUserTruckControls.Size = new System.Drawing.Size(396, 46);
+            this.tableLayoutPanelUserTruckControls.TabIndex = 31;
+            this.tableLayoutPanelUserTruckControls.EnabledChanged += new System.EventHandler(this.tableLayoutPanelUserTruckControls_EnabledChanged);
             // 
             // buttonUserTruckSwitchCurrent
             // 
             this.buttonUserTruckSwitchCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonUserTruckSwitchCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonUserTruckSwitchCurrent.Location = new System.Drawing.Point(196, 33);
+            this.buttonUserTruckSwitchCurrent.Location = new System.Drawing.Point(3, 3);
             this.buttonUserTruckSwitchCurrent.Name = "buttonUserTruckSwitchCurrent";
-            this.buttonUserTruckSwitchCurrent.Size = new System.Drawing.Size(233, 43);
+            this.buttonUserTruckSwitchCurrent.Size = new System.Drawing.Size(228, 40);
             this.buttonUserTruckSwitchCurrent.TabIndex = 23;
             this.buttonUserTruckSwitchCurrent.Text = "Set as Current Truck";
             this.buttonUserTruckSwitchCurrent.UseVisualStyleBackColor = true;
-            this.buttonUserTruckSwitchCurrent.Click += new System.EventHandler(this.buttonUserTruckSwitchCurrent_Click);
+            // 
+            // buttonUserTruckSelectCurrent
+            // 
+            this.buttonUserTruckSelectCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserTruckSelectCurrent.Location = new System.Drawing.Point(3, 30);
+            this.buttonUserTruckSelectCurrent.Name = "buttonUserTruckSelectCurrent";
+            this.buttonUserTruckSelectCurrent.Size = new System.Drawing.Size(144, 46);
+            this.buttonUserTruckSelectCurrent.TabIndex = 27;
+            this.buttonUserTruckSelectCurrent.Text = "Select Current Truck";
+            this.buttonUserTruckSelectCurrent.UseVisualStyleBackColor = true;
+            this.buttonUserTruckSelectCurrent.Click += new System.EventHandler(this.buttonUserTruckSelectCurrent_Click);
             // 
             // comboBoxUserTruckCompanyTrucks
             // 
-            this.tableLayoutPanel8.SetColumnSpan(this.comboBoxUserTruckCompanyTrucks, 5);
-            this.comboBoxUserTruckCompanyTrucks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.SetColumnSpan(this.comboBoxUserTruckCompanyTrucks, 2);
             this.comboBoxUserTruckCompanyTrucks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxUserTruckCompanyTrucks.FormattingEnabled = true;
             this.comboBoxUserTruckCompanyTrucks.Location = new System.Drawing.Point(3, 3);
             this.comboBoxUserTruckCompanyTrucks.Name = "comboBoxUserTruckCompanyTrucks";
             this.comboBoxUserTruckCompanyTrucks.Size = new System.Drawing.Size(546, 21);
-            this.comboBoxUserTruckCompanyTrucks.TabIndex = 22;
+            this.comboBoxUserTruckCompanyTrucks.TabIndex = 30;
             this.comboBoxUserTruckCompanyTrucks.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanyTrucks_SelectedIndexChanged);
             // 
             // groupBoxUserTruckShareTruckSettings
@@ -1193,6 +1210,7 @@
             this.groupBoxUserTruckTruckDetails.TabIndex = 25;
             this.groupBoxUserTruckTruckDetails.TabStop = false;
             this.groupBoxUserTruckTruckDetails.Text = "Details";
+            this.groupBoxUserTruckTruckDetails.EnabledChanged += new System.EventHandler(this.groupBoxUserTruckTruckDetails_EnabledChanged);
             // 
             // labelLicensePlate
             // 
@@ -1339,7 +1357,7 @@
             // 
             // groupBoxUserTruckTrailer
             // 
-            this.groupBoxUserTruckTrailer.Controls.Add(this.tableLayoutPanelUserTruckTrailer);
+            this.groupBoxUserTruckTrailer.Controls.Add(this.tableLayoutPanel13);
             this.groupBoxUserTruckTrailer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxUserTruckTrailer.Location = new System.Drawing.Point(3, 3);
             this.groupBoxUserTruckTrailer.Name = "groupBoxUserTruckTrailer";
@@ -1348,29 +1366,56 @@
             this.groupBoxUserTruckTrailer.TabStop = false;
             this.groupBoxUserTruckTrailer.Text = "Trailer";
             // 
-            // tableLayoutPanelUserTruckTrailer
+            // tableLayoutPanel13
             // 
-            this.tableLayoutPanelUserTruckTrailer.ColumnCount = 5;
-            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
-            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanelUserTruckTrailer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanelUserTruckTrailer.Controls.Add(this.comboBoxUserTrailerCompanyTrailers, 0, 0);
-            this.tableLayoutPanelUserTruckTrailer.Controls.Add(this.buttonUserTrailerSwitchCurrent, 2, 1);
-            this.tableLayoutPanelUserTruckTrailer.Controls.Add(this.buttonUserTrailerSelectCurrent, 1, 1);
-            this.tableLayoutPanelUserTruckTrailer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelUserTruckTrailer.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanelUserTruckTrailer.Name = "tableLayoutPanelUserTruckTrailer";
-            this.tableLayoutPanelUserTruckTrailer.RowCount = 2;
-            this.tableLayoutPanelUserTruckTrailer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanelUserTruckTrailer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelUserTruckTrailer.Size = new System.Drawing.Size(552, 79);
-            this.tableLayoutPanelUserTruckTrailer.TabIndex = 0;
+            this.tableLayoutPanel13.ColumnCount = 2;
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanelUserTrailerControls, 1, 1);
+            this.tableLayoutPanel13.Controls.Add(this.comboBoxUserTrailerCompanyTrailers, 0, 0);
+            this.tableLayoutPanel13.Controls.Add(this.buttonUserTrailerSelectCurrent, 0, 1);
+            this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel13.Name = "tableLayoutPanel13";
+            this.tableLayoutPanel13.RowCount = 2;
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(552, 79);
+            this.tableLayoutPanel13.TabIndex = 0;
+            // 
+            // tableLayoutPanelUserTrailerControls
+            // 
+            this.tableLayoutPanelUserTrailerControls.ColumnCount = 4;
+            this.tableLayoutPanelUserTrailerControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelUserTrailerControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanelUserTrailerControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanelUserTrailerControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanelUserTrailerControls.Controls.Add(this.buttonUserTrailerSwitchCurrent, 0, 0);
+            this.tableLayoutPanelUserTrailerControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelUserTrailerControls.Location = new System.Drawing.Point(153, 30);
+            this.tableLayoutPanelUserTrailerControls.Name = "tableLayoutPanelUserTrailerControls";
+            this.tableLayoutPanelUserTrailerControls.RowCount = 1;
+            this.tableLayoutPanelUserTrailerControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelUserTrailerControls.Size = new System.Drawing.Size(396, 46);
+            this.tableLayoutPanelUserTrailerControls.TabIndex = 0;
+            this.tableLayoutPanelUserTrailerControls.EnabledChanged += new System.EventHandler(this.tableLayoutPanelUserTrailerControls_EnabledChanged);
+            // 
+            // buttonUserTrailerSwitchCurrent
+            // 
+            this.buttonUserTrailerSwitchCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserTrailerSwitchCurrent.Enabled = false;
+            this.buttonUserTrailerSwitchCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonUserTrailerSwitchCurrent.Location = new System.Drawing.Point(3, 3);
+            this.buttonUserTrailerSwitchCurrent.Name = "buttonUserTrailerSwitchCurrent";
+            this.buttonUserTrailerSwitchCurrent.Size = new System.Drawing.Size(228, 40);
+            this.buttonUserTrailerSwitchCurrent.TabIndex = 29;
+            this.buttonUserTrailerSwitchCurrent.Text = "Set as Current Trailer";
+            this.buttonUserTrailerSwitchCurrent.UseVisualStyleBackColor = true;
+            this.buttonUserTrailerSwitchCurrent.Click += new System.EventHandler(this.buttonUserTrailerSwitchCurrent_Click);
             // 
             // comboBoxUserTrailerCompanyTrailers
             // 
-            this.tableLayoutPanelUserTruckTrailer.SetColumnSpan(this.comboBoxUserTrailerCompanyTrailers, 5);
+            this.tableLayoutPanel13.SetColumnSpan(this.comboBoxUserTrailerCompanyTrailers, 2);
             this.comboBoxUserTrailerCompanyTrailers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxUserTrailerCompanyTrailers.FormattingEnabled = true;
             this.comboBoxUserTrailerCompanyTrailers.Location = new System.Drawing.Point(3, 3);
@@ -1379,25 +1424,12 @@
             this.comboBoxUserTrailerCompanyTrailers.TabIndex = 28;
             this.comboBoxUserTrailerCompanyTrailers.SelectedIndexChanged += new System.EventHandler(this.comboBoxCompanyTrailers_SelectedIndexChanged);
             // 
-            // buttonUserTrailerSwitchCurrent
-            // 
-            this.buttonUserTrailerSwitchCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserTrailerSwitchCurrent.Enabled = false;
-            this.buttonUserTrailerSwitchCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonUserTrailerSwitchCurrent.Location = new System.Drawing.Point(196, 33);
-            this.buttonUserTrailerSwitchCurrent.Name = "buttonUserTrailerSwitchCurrent";
-            this.buttonUserTrailerSwitchCurrent.Size = new System.Drawing.Size(233, 43);
-            this.buttonUserTrailerSwitchCurrent.TabIndex = 29;
-            this.buttonUserTrailerSwitchCurrent.Text = "Set as Current Trailer";
-            this.buttonUserTrailerSwitchCurrent.UseVisualStyleBackColor = true;
-            this.buttonUserTrailerSwitchCurrent.Click += new System.EventHandler(this.buttonUserTrailerSwitchCurrent_Click);
-            // 
             // buttonUserTrailerSelectCurrent
             // 
             this.buttonUserTrailerSelectCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserTrailerSelectCurrent.Location = new System.Drawing.Point(63, 33);
+            this.buttonUserTrailerSelectCurrent.Location = new System.Drawing.Point(3, 30);
             this.buttonUserTrailerSelectCurrent.Name = "buttonUserTrailerSelectCurrent";
-            this.buttonUserTrailerSelectCurrent.Size = new System.Drawing.Size(127, 43);
+            this.buttonUserTrailerSelectCurrent.Size = new System.Drawing.Size(144, 46);
             this.buttonUserTrailerSelectCurrent.TabIndex = 31;
             this.buttonUserTrailerSelectCurrent.Text = "Select Current Trailer";
             this.buttonUserTrailerSelectCurrent.UseVisualStyleBackColor = true;
@@ -1413,6 +1445,7 @@
             this.groupBoxUserTrailerTrailerDetails.TabIndex = 30;
             this.groupBoxUserTrailerTrailerDetails.TabStop = false;
             this.groupBoxUserTrailerTrailerDetails.Text = "Details";
+            this.groupBoxUserTrailerTrailerDetails.EnabledChanged += new System.EventHandler(this.groupBoxUserTrailerTrailerDetails_EnabledChanged);
             // 
             // labelLicensePlateTr
             // 
@@ -2360,6 +2393,7 @@
             this.tableLayoutPanel9.ResumeLayout(false);
             this.groupBoxUserTruckTruck.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanelUserTruckControls.ResumeLayout(false);
             this.groupBoxUserTruckShareTruckSettings.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.groupBoxUserTruckTruckDetails.ResumeLayout(false);
@@ -2369,7 +2403,8 @@
             this.groupBoxUserTrailerShareTrailerSettings.ResumeLayout(false);
             this.tableLayoutPanel14.ResumeLayout(false);
             this.groupBoxUserTruckTrailer.ResumeLayout(false);
-            this.tableLayoutPanelUserTruckTrailer.ResumeLayout(false);
+            this.tableLayoutPanel13.ResumeLayout(false);
+            this.tableLayoutPanelUserTrailerControls.ResumeLayout(false);
             this.groupBoxUserTrailerTrailerDetails.ResumeLayout(false);
             this.groupBoxUserTrailerTrailerDetails.PerformLayout();
             this.tabPageFreightMarket.ResumeLayout(false);
@@ -2466,10 +2501,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.Label labelExperienceNxtLvlThreshhold;
-        private System.Windows.Forms.ComboBox comboBoxUserTruckCompanyTrucks;
-        private System.Windows.Forms.Button buttonUserTruckSwitchCurrent;
         private System.Windows.Forms.GroupBox groupBoxUserTruckTruckDetails;
-        private System.Windows.Forms.Button buttonUserTruckSelectCurrent;
         private System.Windows.Forms.Panel panelPlayerLevel;
         private System.Windows.Forms.ListBox listBoxFreightMarketAddedJobs;
         private System.Windows.Forms.Label labelUserCompanyMoneyAccount;
@@ -2537,7 +2569,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.GroupBox groupBoxUserTruckTruck;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
         private System.Windows.Forms.GroupBox groupBoxUserTrailerShareTrailerSettings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
@@ -2548,7 +2579,7 @@
         private System.Windows.Forms.Button buttonShareTrailerWholeTrailerCopy;
         private System.Windows.Forms.Button buttonShareTrailerTrailerDetailsCopy;
         private System.Windows.Forms.GroupBox groupBoxUserTruckTrailer;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelUserTruckTrailer;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelUserTrailerControls;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
@@ -2576,6 +2607,12 @@
         private System.Windows.Forms.Label labelCompanyNameSize;
         private System.Windows.Forms.Button buttonProfilesAndSavesEditProfile;
         internal System.Windows.Forms.ComboBox comboBoxProfiles;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.ComboBox comboBoxUserTruckCompanyTrucks;
+        private System.Windows.Forms.Button buttonUserTruckSelectCurrent;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelUserTruckControls;
+        private System.Windows.Forms.Button buttonUserTruckSwitchCurrent;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
     }
 }
 
