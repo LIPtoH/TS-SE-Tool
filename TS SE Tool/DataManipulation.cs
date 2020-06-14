@@ -1310,8 +1310,9 @@ namespace TS_SE_Tool
             {
                 if (SavefileVersion > SupportedSavefileVersionETS2[1] || SavefileVersion < SupportedSavefileVersionETS2[0])
                 {
-                    var DR = MessageBox.Show("Savefile version " + SavefileVersion + " do not supported.\nYou can proceed, but it can damage savefile after saving.\nPlease use manual saves instead of autosaves in this case!\nDo you want to try and load THIS savefile?" +
-                        "\n(You can decrypt save file and manually edit it at any time)", "Unsupported savefile version", MessageBoxButtons.YesNo);
+                    var DR = MessageBox.Show("Savefile version " + SavefileVersion + " do not supported.\nYou can proceed, but it can DAMAGE savefile AFTER SAVING." +
+                        "\nPlease use MANUAL SAVES instead of autosaves in this case!" +
+                        "\n\nDo you want to try and LOAD THIS savefile?\n(You can decrypt save file and manually edit it at any time)", "Unsupported savefile version", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (DR == DialogResult.No)
                     {

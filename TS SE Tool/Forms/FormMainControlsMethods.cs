@@ -184,18 +184,6 @@ namespace TS_SE_Tool
             {
                 tp.Enabled = _state;
             }
-            /*
-            if (comboBoxUserTruckCompanyTrucks.Items.Count == 0)
-            {
-                tabControlMain.TabPages["tabPageTruck"].Enabled = false;
-            }
-
-            if (comboBoxUserTrailerCompanyTrailers.Items.Count == 0)
-            {
-                tabControlMain.TabPages["tabPageTrailer"].Enabled = false;
-            }
-            */
-            //Visual - Images
 
             //Profile
             int pSkillsNameHeight = 64, pSkillsNameWidth = 64;
@@ -207,44 +195,6 @@ namespace TS_SE_Tool
                 if (!_state)
                     tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
             }
-
-            /*
-            Control[] tmp2;
-
-            //Truck
-            
-            tmp2 = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckReFuel", true);
-            tmp2[0].BackgroundImage = RefuelImg;
-            if (!_state)
-                tmp2[0].BackgroundImage = ConvertBitmapToGrayscale(tmp2[0].BackgroundImage);
-
-            tmp2 = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckRepair", true);
-                tmp2[0].BackgroundImage = RepairImg;
-                if (!_state)
-                    tmp2[0].BackgroundImage = ConvertBitmapToGrayscale(tmp2[0].BackgroundImage);
-            
-            for (int i = 0; i < 5; i++)
-            {
-                Control[] tmp = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckElRepair" + i.ToString(), true);
-                tmp[0].BackgroundImage = RepairImg;
-                if (!_state)
-                    tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
-            }
-            
-            //Trailer
-            tmp2 = tabControlMain.TabPages["tabPageTrailer"].Controls.Find("buttonTrailerRepair", true);
-            tmp2[0].BackgroundImage = RepairImg;
-            if (!_state)
-                tmp2[0].BackgroundImage = ConvertBitmapToGrayscale(tmp2[0].BackgroundImage);
-
-            for (int i = 0; i < 4; i++)
-            {
-                Control[] tmp = tabControlMain.TabPages["tabPageTrailer"].Controls.Find("buttonTrailerElRepair" + i.ToString(), true);
-                tmp[0].BackgroundImage = RepairImg;
-                if (!_state)
-                    tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
-            }
-            */
         }
 
         private void ToggleMainControlsAccess(bool _state)
