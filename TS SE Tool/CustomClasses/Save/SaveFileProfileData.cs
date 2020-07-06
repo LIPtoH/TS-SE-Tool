@@ -332,7 +332,7 @@ namespace TS_SE_Tool
                     for (int x = 0; x < ActiveMods.Capacity; x++)
                     {
                         line++;
-                        chunkOfline = _FileLines[line].Split(new char[] { ' ' });
+                        chunkOfline = _FileLines[line].Split(new char[] { ' ' }, 3);
                         ActiveMods.Add(chunkOfline[2]);
                     }
                     continue;
