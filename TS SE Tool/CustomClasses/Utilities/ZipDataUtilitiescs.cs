@@ -57,8 +57,15 @@ namespace TS_SE_Tool.Utilities
 
             bytes = new byte[pairs.Length];
 
-            for (int j = 0; j < pairs.Length; j++)
-                bytes[j] = Convert.ToByte(pairs[j], 16);
+            try
+            {
+                for (int j = 0; j < pairs.Length; j++)
+                    bytes[j] = Convert.ToByte(pairs[j], 16);
+            }
+            catch
+            {
+                return null;
+            }
 
             if (bytes == null)
                 return null;

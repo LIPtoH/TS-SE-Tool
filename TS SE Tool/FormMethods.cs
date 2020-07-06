@@ -491,12 +491,16 @@ namespace TS_SE_Tool
                 temp.Checked = false;
 
             //User Colors
+            tableLayoutPanelUserColors.RowStyles[1].Height = 0;
+            /*
             UserColorsList.Clear();
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < UserColorsList.Count; i++)
                 UserColorsList.Add(Color.FromArgb(0, 0, 0, 0));
 
             UpdateUserColorsButtons();
             UserColorsList.Clear();
+            */
+            DeleteUserColorsButtons();
 
             //Company
             pictureBoxCompanyLogo.Image = null;

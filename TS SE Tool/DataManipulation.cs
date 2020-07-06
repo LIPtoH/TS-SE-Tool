@@ -51,6 +51,9 @@ namespace TS_SE_Tool
 
             for (int line = 0; line < tempSavefileInMemory.Length; line++)
             {
+
+                string curLine = tempSavefileInMemory[line];
+
                 try
                 {
                     if ((int)Math.Floor((decimal)(line / workerprogressmult)) > workerprogress)
@@ -239,33 +242,40 @@ namespace TS_SE_Tool
                         }
 
                         //User Colors
-                        if (tempSavefileInMemory[line].StartsWith(" user_colors["))
-                        {
-                            string userColorStr = tempSavefileInMemory[line].Split(new string[] { ": " }, 0)[1];
-                            Color userColor;
+                        if (tempSavefileInMemory[line].StartsWith(" user_colors:"))
+                        {   
+                            UInt16 ColorCount = Convert.ToUInt16(tempSavefileInMemory[line].Split(new string[] { ": " }, 0)[1]);
 
-                            if (userColorStr != "0")
+                            for (short i = 0; i < ColorCount; i++)
                             {
-                                if (userColorStr == "nil")
+                                line++;
+                                string userColorStr = tempSavefileInMemory[line].Split(new string[] { ": " }, 0)[1];
+                                Color userColor;
+
+                                if (userColorStr != "0")
                                 {
-                                    userColorStr = "4294967295";
+                                    if (userColorStr == "nil")
+                                    {
+                                        userColorStr = "4294967295";
+                                    }
+
+                                    userColorStr = Utilities.NumericUtilities.IntegerToHexString(Convert.ToUInt32(userColorStr));
+                                    userColorStr = userColorStr.Substring(2);
+
+                                    int _B = int.Parse(userColorStr.Substring(0, 2), NumberStyles.HexNumber);
+                                    int _G = int.Parse(userColorStr.Substring(2, 2), NumberStyles.HexNumber);
+                                    int _R = int.Parse(userColorStr.Substring(4, 2), NumberStyles.HexNumber);
+
+                                    userColor = Color.FromArgb(255, _R, _G, _B);
+                                    UserColorsList.Add(userColor);
                                 }
-
-                                userColorStr = Utilities.NumericUtilities.IntegerToHexString(Convert.ToUInt32(userColorStr));
-                                userColorStr = userColorStr.Substring(2);
-
-                                int _B = int.Parse(userColorStr.Substring(0, 2), NumberStyles.HexNumber);
-                                int _G = int.Parse(userColorStr.Substring(2, 2), NumberStyles.HexNumber);
-                                int _R = int.Parse(userColorStr.Substring(4, 2), NumberStyles.HexNumber);
-
-                                userColor = Color.FromArgb(255, _R, _G, _B);
-                                UserColorsList.Add(userColor);
+                                else
+                                {
+                                    userColor = Color.FromArgb(0, 0, 0, 0);
+                                    UserColorsList.Add(userColor);
+                                }
                             }
-                            else
-                            {
-                                userColor = Color.FromArgb(0, 0, 0, 0);
-                                UserColorsList.Add(userColor);
-                            }
+
                             continue;
                         }
 
