@@ -131,6 +131,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
     <Compile Include="CustomClasses\Utilities\AssemblyData.cs" />
     <Compile Include="CustomClasses\Utilities\DateTimeUtilities.cs" />
     <Compile Include="CustomClasses\Utilities\Graphics.cs" />

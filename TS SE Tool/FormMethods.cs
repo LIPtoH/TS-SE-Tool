@@ -337,8 +337,10 @@ namespace TS_SE_Tool
                 Globals.CurrencyName = ProgSettingsV.CurrencyMesATS;
             }
 
-            PlayerDataV = new PlayerData();
-            SFProfileData = new SaveFileProfileData();
+            PlayerDataData = new PlayerData();
+
+            MainSaveFileProfileData = new SaveFileProfileData();
+            MainSaveFileInfoData = new SaveFileInfoData();
 
             UserCompanyAssignedTruckPlacementEdited = false;
 
@@ -378,7 +380,7 @@ namespace TS_SE_Tool
             CompaniesListDiff = new List<string>();
 
             DBDependencies = new List<string>();
-            SFDependencies = new List<string>();
+            //SFDependencies = new List<string>();
 
             ExternalCompanies = new List<ExtCompany>();
 

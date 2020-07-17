@@ -192,7 +192,7 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" experience_points"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataV.ExperiencePoints = uint.Parse(chunkOfline[2]);
+                            PlayerDataData.ExperiencePoints = uint.Parse(chunkOfline[2]);
                             continue;
                         }
 
@@ -203,38 +203,38 @@ namespace TS_SE_Tool
 
                             char[] ADR = Convert.ToString(byte.Parse(LineArray[2]), 2).PadLeft(6, '0').ToCharArray();
                             Array.Reverse(ADR);
-                            PlayerDataV.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
+                            PlayerDataData.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
                             //PlayerProfileData.PlayerSkills[0] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" long_dist:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataV.PlayerSkills[1] = byte.Parse(LineArray[2]);
+                            PlayerDataData.PlayerSkills[1] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" heavy:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataV.PlayerSkills[2] = byte.Parse(LineArray[2]);
+                            PlayerDataData.PlayerSkills[2] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" fragile:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataV.PlayerSkills[3] = byte.Parse(LineArray[2]);
+                            PlayerDataData.PlayerSkills[3] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" urgent:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataV.PlayerSkills[4] = byte.Parse(LineArray[2]);
+                            PlayerDataData.PlayerSkills[4] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" mechanical:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataV.PlayerSkills[5] = byte.Parse(LineArray[2]);
+                            PlayerDataData.PlayerSkills[5] = byte.Parse(LineArray[2]);
                             continue;
                         }
 
@@ -363,7 +363,7 @@ namespace TS_SE_Tool
                     if (tempSavefileInMemory[line].StartsWith(" money_account:"))
                     {
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        PlayerDataV.AccountMoney = uint.Parse(chunkOfline[2]);
+                        PlayerDataData.AccountMoney = uint.Parse(chunkOfline[2]);
                         continue;
                     }
 
@@ -385,21 +385,21 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" hq_city:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataV.HQcity = chunkOfline[2];
+                            PlayerDataData.HQcity = chunkOfline[2];
                             continue;
                         }
 
                         if (tempSavefileInMemory[line].StartsWith(" assigned_truck:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataV.UserCompanyAssignedTruck = chunkOfline[2];
+                            PlayerDataData.UserCompanyAssignedTruck = chunkOfline[2];
                             continue;
                         }
 
                         if (tempSavefileInMemory[line].StartsWith(" truck_placement:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            PlayerDataV.UserCompanyAssignedTruckPlacement = chunkOfline[1].TrimStart(' ');
+                            PlayerDataData.UserCompanyAssignedTruckPlacement = chunkOfline[1].TrimStart(' ');
                             continue;
                         }
 
@@ -426,7 +426,7 @@ namespace TS_SE_Tool
                             UserDriverDictionary.Add(temp, new UserCompanyDriverData());
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
                             if (int.Parse(chunkOfline[1]) == 0)
-                                PlayerDataV.UserDriver = temp;
+                                PlayerDataData.UserDriver = temp;
                             continue;
                         }
 
@@ -451,7 +451,7 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" assigned_trailer:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataV.UserCompanyAssignedTrailer = chunkOfline[2];
+                            PlayerDataData.UserCompanyAssignedTrailer = chunkOfline[2];
                             continue;
                         }
 
@@ -474,7 +474,7 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" current_job:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            PlayerDataV.CurrentJob = chunkOfline[1].TrimStart(' ');
+                            PlayerDataData.CurrentJob = chunkOfline[1].TrimStart(' ');
                             continue;
                         }
                     }
@@ -1268,49 +1268,13 @@ namespace TS_SE_Tool
 
         private void CheckSaveInfoData()
         {
-            int SavefileVersion = 0;
-            string[] chunkOfline;
-            List<string> SavefileDependencies = new List<string>();
+            MainSaveFileInfoData.Prepare(tempInfoFileInMemory);            
 
-            for (int line = 0; line < tempInfoFileInMemory.Length; line++)
+            if (MainSaveFileInfoData.Version > 0)
             {
-                if (tempInfoFileInMemory[line].StartsWith(" version:"))
+                if (MainSaveFileInfoData.Version > SupportedSavefileVersionETS2[1] || MainSaveFileInfoData.Version < SupportedSavefileVersionETS2[0])
                 {
-                    chunkOfline = tempInfoFileInMemory[line].Split(new char[] { ' ' });
-                    SavefileVersion = int.Parse(chunkOfline[2]);
-                    continue;
-                }
-                
-                if (tempInfoFileInMemory[line].StartsWith(" dependencies["))
-                {
-                    chunkOfline = tempInfoFileInMemory[line].Split(new char[] { '"' });
-                    SFDependencies.Add(chunkOfline[1]);
-
-                    string[] depstring = chunkOfline[1].Split(new char[] { '|' });
-
-                    string type = depstring[0];
-                    string depcode = "";
-                    if (type == "dlc" || type == "rdlc")
-                    {
-                        depcode = depstring[1].Split(new char[] { '_' }, 2)[1];
-                        depcode = "dlc_" + depcode;
-                    }
-                    if (type == "mod")
-                    {
-                        depcode = depstring[1];
-                        depcode = "mod_" + depcode;
-                    }
-
-                    SavefileDependencies.Add(depcode);
-                    continue;
-                }
-            }
-
-            if (SavefileVersion > 0)
-            {
-                if (SavefileVersion > SupportedSavefileVersionETS2[1] || SavefileVersion < SupportedSavefileVersionETS2[0])
-                {
-                    var DR = MessageBox.Show("Savefile version " + SavefileVersion + " do not supported.\nYou can proceed, but it can DAMAGE savefile AFTER SAVING." +
+                    var DR = MessageBox.Show("Savefile version " + MainSaveFileInfoData.Version + " do not supported.\nYou can proceed, but it can DAMAGE savefile AFTER SAVING." +
                         "\nPlease use MANUAL SAVES instead of autosaves in this case!" +
                         "\n\nDo you want to try and LOAD THIS savefile?\n(You can decrypt save file and manually edit it at any time)", "Unsupported savefile version", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -1327,7 +1291,7 @@ namespace TS_SE_Tool
                     }
                 }
             }
-            else if (SavefileVersion == 0)
+            else if (MainSaveFileInfoData.Version == 0)
             {
                 DialogResult result = MessageBox.Show("Savefile version was not recognised.\nDo you want to continue?", "Version not recognised", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
@@ -1337,27 +1301,29 @@ namespace TS_SE_Tool
                 }
             }
 
-            string sql = "UPDATE [DatabaseDetails] SET SaveVersion = " + SavefileVersion + " WHERE ID_DBline = 1;";
+            string sql = "UPDATE [DatabaseDetails] SET SaveVersion = " + MainSaveFileInfoData.Version + " WHERE ID_DBline = 1;";
             UpdateDatabase(sql);
 
             GetDataFromDatabase("Dependencies");
 
             //Check dependencies
-            if (DBDependencies.Capacity == 0)
+            if (DBDependencies.Count == 0)
             {
                 InsertDataIntoDatabase("Dependencies");
                 InfoDepContinue = true;
             }
             else
             {
-                List<string> dbdep = DBDependencies.Except(SFDependencies).ToList();
-                List<string> sfdep = SFDependencies.Except(DBDependencies).ToList();
+                List<string> tmpSFdep = MainSaveFileInfoData.Dependencies.Select(x => x.Raw).ToList();
 
-                if (dbdep.Capacity > 0 || sfdep.Capacity > 0)
+                List<string> dbdep = DBDependencies.Except(tmpSFdep).ToList();
+                List<string> sfdep = tmpSFdep.Except(DBDependencies).ToList();
+
+                if (dbdep.Count > 0 || sfdep.Count > 0)
                 {
                     string dbdepstr = "", sfdepstr = "";
 
-                    if(dbdep.Capacity > 0)
+                    if(dbdep.Count > 0)
                     {
                         dbdepstr += "\r\nDependencies only in Database (" + dbdep.Count.ToString() +  "):\r\n";
                         int i = 0;
@@ -1368,7 +1334,7 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    if(sfdep.Capacity > 0)
+                    if(sfdep.Count > 0)
                     {
                         sfdepstr += "\r\nDependencies only in Save file (" + sfdep.Count.ToString() + "):\r\n";
                         int i = 0;
@@ -1406,13 +1372,13 @@ namespace TS_SE_Tool
 
             LoadCachedExternalCargoData("def");
 
-            if (SavefileDependencies.Count > 0)
-                foreach(string tDepend in SavefileDependencies)
+            if (MainSaveFileInfoData.Dependencies.Count > 0)
+                foreach(Dependency tDepend in MainSaveFileInfoData.Dependencies)
                 {
-                    LoadCachedExternalCargoData(tDepend);
+                    LoadCachedExternalCargoData(tDepend.DepLoadID);
                 }
 
-            if (SavefileVersion == 0)
+            if (MainSaveFileInfoData.Version == 0)
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_save_version_not_detected");
         }
 
@@ -1562,7 +1528,7 @@ namespace TS_SE_Tool
 
             if (extraTrailers.Count > 0)
             {
-                GaragesList[GaragesList.FindIndex(x => x.GarageName == PlayerDataV.HQcity)].Trailers.AddRange(extraTrailers);
+                GaragesList[GaragesList.FindIndex(x => x.GarageName == PlayerDataData.HQcity)].Trailers.AddRange(extraTrailers);
                 extraTrailers.Clear();
             }
 
@@ -1579,9 +1545,9 @@ namespace TS_SE_Tool
 
             if (extraDrivers.Count() > 0)
             {
-                if (extraDrivers.Contains(PlayerDataV.UserDriver))
+                if (extraDrivers.Contains(PlayerDataData.UserDriver))
                 {
-                    Garages tmpG = new Garages(PlayerDataV.HQcity);
+                    Garages tmpG = new Garages(PlayerDataData.HQcity);
 
                     int hqIdx = GaragesList.IndexOf(tmpG);
                     int sIdx = 0;
@@ -1617,7 +1583,7 @@ namespace TS_SE_Tool
                     extraDrivers.Add(GaragesList[hqIdx].Drivers[DrvIdx]);
                     extraVehicles.Add(GaragesList[hqIdx].Vehicles[DrvIdx]);
 
-                    int tmpIdx = extraDrivers.IndexOf(PlayerDataV.UserDriver);
+                    int tmpIdx = extraDrivers.IndexOf(PlayerDataData.UserDriver);
 
                     GaragesList[hqIdx].Drivers[DrvIdx] = extraDrivers[tmpIdx];
                     GaragesList[hqIdx].Vehicles[DrvIdx] = extraVehicles[tmpIdx];
@@ -2163,9 +2129,9 @@ namespace TS_SE_Tool
             {
                 case "Dependencies":
                     {
-                        if (SFDependencies != null && SFDependencies.Count() > 0)
+                        if (MainSaveFileInfoData.Dependencies != null && MainSaveFileInfoData.Dependencies.Count() > 0)
                         {
-                            List<string> temp = DBDependencies.Except(SFDependencies).ToList();
+                            List<string> temp = DBDependencies.Except(MainSaveFileInfoData.Dependencies.Select(x => x.Raw).ToList()).ToList();
 
                             string SQLCommandCMD = "";
                             bool first = true;
@@ -2204,7 +2170,7 @@ namespace TS_SE_Tool
 
                             first = true;
 
-                            temp = SFDependencies.Except(DBDependencies).ToList();
+                            temp = MainSaveFileInfoData.Dependencies.Select(x => x.Raw).ToList().Except(DBDependencies).ToList();
 
                             foreach (string tempitem in temp)
                             {

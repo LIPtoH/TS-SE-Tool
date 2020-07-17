@@ -208,7 +208,7 @@ namespace TS_SE_Tool
             {
                 //combDT.DefaultView.Sort = "UserTruckName ASC";
                 comboBoxUserTruckCompanyTrucks.Enabled = true;
-                comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataV.UserCompanyAssignedTruck;
+                comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataData.UserCompanyAssignedTruck;
             }
             else
             {
@@ -542,12 +542,12 @@ namespace TS_SE_Tool
 
         private void buttonUserTruckSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataV.UserCompanyAssignedTruck;
+            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataData.UserCompanyAssignedTruck;
         }
 
         private void buttonUserTruckSwitchCurrent_Click(object sender, EventArgs e)
         {
-            PlayerDataV.UserCompanyAssignedTruck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
+            PlayerDataData.UserCompanyAssignedTruck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
         }
 
         //Share buttons

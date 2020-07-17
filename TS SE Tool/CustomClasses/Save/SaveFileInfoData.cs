@@ -26,12 +26,12 @@ namespace TS_SE_Tool
     public class SaveFileInfoData
     {
         private string SaveContainerNameless { get; set; } = "";
-        public string Name { get; set; } = "\"\"";
-        public uint Time { get; set; } = 0;
+        public string Name { get; set; } = "\"\"";  //Save name
+        public uint Time { get; set; } = 0;         //IngameTime
         public uint FileTime { get; set; } = 0;
         public short Version { get; set; } = 1;
 
-        public List<string> Dependencies { get; set; }
+        internal List<Dependency> Dependencies { get; set; }
 
         public string GetDataText()
         {
@@ -45,9 +45,9 @@ namespace TS_SE_Tool
             OutputText += " dependencies: " + Dependencies.Count.ToString() + "\r\n";
 
             byte DepCount = 0;
-            foreach(string tDep in Dependencies)
+            foreach(Dependency tDep in Dependencies)
             {
-                OutputText += " dependencies[" + DepCount + "]: \"" + tDep + "\"\r\n";
+                OutputText += " dependencies[" + DepCount + "]: \"" + tDep.Raw + "\"\r\n";
                 DepCount++;
             }
 
@@ -105,7 +105,8 @@ namespace TS_SE_Tool
                 if (_FileLines[line].StartsWith(" dependencies:"))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    Dependencies = new List<string>();
+
+                    Dependencies = new List<Dependency>();
                     Dependencies.Capacity = short.Parse(chunkOfline[2]);
                     continue;
                 }
@@ -113,7 +114,8 @@ namespace TS_SE_Tool
                 if (_FileLines[line].StartsWith(" dependencies["))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { '"' });
-                    Dependencies.Add(chunkOfline[1]);
+
+                    Dependencies.Add(new Dependency(chunkOfline[1]));
                     continue;
                 }
 

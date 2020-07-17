@@ -373,16 +373,21 @@ namespace TS_SE_Tool
                                 uint tDT = Utilities.DateTimeUtilities.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
 
                                 SaveFileInfoData infoData = new SaveFileInfoData();
+                                infoData.Prepare(infoSii);
                                 infoData.Name = entry.Value[0]; //Save name
-                                infoData.FileTime = tDT;        //Time
+                                infoData.FileTime = tDT;        //File time
 
                                 //Write info file
-                                MainForm.WriteInfoFile(infoSii, fp + "\\info.sii", infoData);
+                                //MainForm.WriteInfoFile(infoSii, fp + "\\info.sii", infoData);
+                                using (StreamWriter writer = new StreamWriter(fp + "\\info.sii", false))
+                                {
+                                    infoData.WriteToStream(writer);
+                                }
 
                                 //Create thumbnail files
                                 //mat
                                 Encoding utf8WithoutBom = new UTF8Encoding(false);
-                                using (StreamWriter writer = new StreamWriter(fp + "\\preview.mat", true, utf8WithoutBom))
+                                using (StreamWriter writer = new StreamWriter(fp + "\\preview.mat", false, utf8WithoutBom))
                                 {
                                     writer.WriteLine(preview_mat);
                                 }

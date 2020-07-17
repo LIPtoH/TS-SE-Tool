@@ -26,7 +26,7 @@ namespace TS_SE_Tool
         {
             string tempString = "GPS_TruckPosition\r\n";
 
-            tempString += PlayerDataV.UserCompanyAssignedTruckPlacement;
+            tempString += PlayerDataData.UserCompanyAssignedTruckPlacement;
             string asd = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempString)).Replace("-", "");
             Clipboard.SetText(asd);
             MessageBox.Show("Truck GPS position has been copied.");
@@ -48,7 +48,7 @@ namespace TS_SE_Tool
                         tempstr.Add(Lines[i]);
                     }
 
-                    PlayerDataV.UserCompanyAssignedTruckPlacement = tempstr[0];
+                    PlayerDataData.UserCompanyAssignedTruckPlacement = tempstr[0];
                     //PlayerProfileData.UserCompanyAssignedTrailerPlacement = "(0, 0, 0) (1; 0, 0, 0)";
 
                     MessageBox.Show("Truck GPS position has been inserted.");

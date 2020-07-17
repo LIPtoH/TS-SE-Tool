@@ -32,7 +32,7 @@ namespace TS_SE_Tool
         //User Company tab
         private void FillFormCompanyControls()
         {
-            textBoxUserCompanyCompanyName.Text = SFProfileData.CompanyName;
+            textBoxUserCompanyCompanyName.Text = MainSaveFileProfileData.CompanyName;
             //textBoxUserCompanyCompanyName.ReadOnly = false;
             FillAccountMoneyTB();
             FillHQcities();
@@ -45,7 +45,7 @@ namespace TS_SE_Tool
 
             MemoryStream ms = new MemoryStream();
 
-            Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + SFProfileData.Logo + ".dds");
+            Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds");
             if (temp != null)
             {
                 temp.Clone(new Rectangle(0, 0, 94, 94), temp.PixelFormat).Save(ms, ImageFormat.Png);
@@ -62,7 +62,7 @@ namespace TS_SE_Tool
 
         public void FillAccountMoneyTB()
         {
-            UInt64 valueBefore = (uint)Math.Floor(PlayerDataV.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
+            UInt64 valueBefore = (uint)Math.Floor(PlayerDataData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
 
             string newtext = "";
             if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
@@ -98,7 +98,7 @@ namespace TS_SE_Tool
             comboBoxUserCompanyHQcity.DisplayMember = "CityName";
             comboBoxUserCompanyHQcity.BeginUpdate();
             comboBoxUserCompanyHQcity.DataSource = combDT;
-            comboBoxUserCompanyHQcity.SelectedValue = PlayerDataV.HQcity;
+            comboBoxUserCompanyHQcity.SelectedValue = PlayerDataData.HQcity;
             comboBoxUserCompanyHQcity.EndUpdate();
             comboBoxUserCompanyHQcity.SelectedIndexChanged += comboBoxUserCompanyHQcity_SelectedIndexChanged;
         }
@@ -106,7 +106,7 @@ namespace TS_SE_Tool
         private void comboBoxUserCompanyHQcity_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxUserCompanyHQcity.SelectedValue != null)
-                PlayerDataV.HQcity = comboBoxUserCompanyHQcity.SelectedValue.ToString();
+                PlayerDataData.HQcity = comboBoxUserCompanyHQcity.SelectedValue.ToString();
         }
 
         private void textBoxUserCompanyCompanyName_TextChanged(object sender, EventArgs e)
@@ -183,7 +183,7 @@ namespace TS_SE_Tool
 
                 textBoxAccountMoney.SelectionStart = testV + cSpace2 - cSpace1;
 
-                PlayerDataV.AccountMoney = (uint)Math.Round(valueBefore / CurrencyDictConversion[Globals.CurrencyName]);
+                PlayerDataData.AccountMoney = (uint)Math.Round(valueBefore / CurrencyDictConversion[Globals.CurrencyName]);
             }
         }
 
@@ -389,7 +389,7 @@ namespace TS_SE_Tool
             // Draw the background.
             e.DrawBackground();
             Image grgicon;
-            if (grg.GarageName != PlayerDataV.HQcity)
+            if (grg.GarageName != PlayerDataData.HQcity)
                 grgicon = GaragesImg[grg.GarageStatus];
             else
                 grgicon = GaragesHQImg[grg.GarageStatus];
@@ -561,7 +561,7 @@ namespace TS_SE_Tool
 
             foreach (Garages garage in tmp)
             {
-                if (garage.GarageName == PlayerDataV.HQcity)
+                if (garage.GarageName == PlayerDataData.HQcity)
                     garage.GarageStatus = 6;
                 else
                     garage.GarageStatus = 0;

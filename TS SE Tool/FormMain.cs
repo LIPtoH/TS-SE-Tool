@@ -105,7 +105,7 @@ namespace TS_SE_Tool
         private List<string> CountriesList;//Program
 
         private List<string> DBDependencies;//Program DB
-        private List<string> SFDependencies;//Program Info
+        //private List<string> SFDependencies;//Program Info
 
         public List<Garages> GaragesList; //+
         public List<string> extraVehicles;//process result
@@ -126,8 +126,9 @@ namespace TS_SE_Tool
 
         private DateTime LastModifiedTimestamp; //+
 
-        public PlayerData PlayerDataV; //+
-        public SaveFileProfileData SFProfileData;
+        public PlayerData PlayerDataData; //+
+        public SaveFileProfileData MainSaveFileProfileData;
+        internal SaveFileInfoData MainSaveFileInfoData;
 
         internal ProgSettings ProgSettingsV;//Program
 

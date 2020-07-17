@@ -710,7 +710,7 @@ namespace TS_SE_Tool
                 LoadProfileDataFile();
 
                 //Add tooltip to Avatar
-                toolTipMain.SetToolTip(pictureBoxProfileAvatar, SFProfileData.GetProfileSummary(PlayerLevelNames));
+                toolTipMain.SetToolTip(pictureBoxProfileAvatar, MainSaveFileProfileData.GetProfileSummary(PlayerLevelNames));
             }
             catch
             { }

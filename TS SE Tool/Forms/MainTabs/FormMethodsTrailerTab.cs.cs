@@ -420,7 +420,7 @@ namespace TS_SE_Tool
             comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
 
 
-            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataV.UserCompanyAssignedTrailer;
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataData.UserCompanyAssignedTrailer;
         }
 
         private void comboBoxCompanyTrailers_SelectedIndexChanged(object sender, EventArgs e)
@@ -525,12 +525,12 @@ namespace TS_SE_Tool
         //Buttons
         private void buttonUserTrailerSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataV.UserCompanyAssignedTrailer;
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataData.UserCompanyAssignedTrailer;
         }
 
         private void buttonUserTrailerSwitchCurrent_Click(object sender, EventArgs e)
         {
-            PlayerDataV.UserCompanyAssignedTrailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+            PlayerDataData.UserCompanyAssignedTrailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
         }
 
         //end User Trailer tab
