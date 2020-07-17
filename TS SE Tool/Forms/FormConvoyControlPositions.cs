@@ -378,7 +378,6 @@ namespace TS_SE_Tool
                                 infoData.FileTime = tDT;        //File time
 
                                 //Write info file
-                                //MainForm.WriteInfoFile(infoSii, fp + "\\info.sii", infoData);
                                 using (StreamWriter writer = new StreamWriter(fp + "\\info.sii", false))
                                 {
                                     infoData.WriteToStream(writer);
@@ -987,6 +986,11 @@ namespace TS_SE_Tool
 
             // Get the ListBox and the item.
             ListBox lst = sender as ListBox;
+
+            DataRowView SaveDR = (DataRowView)lst.Items[e.Index];
+            if (SaveDR.Row.RowState == DataRowState.Detached)
+                return;
+
             string txt = "";
 
             // Draw the background.
@@ -1006,8 +1010,6 @@ namespace TS_SE_Tool
             float height = (e.Bounds.Height - ItemMargin * 2) / 2;
 
             RectangleF layout_rect = new RectangleF(x, y, width, height);
-
-            DataRowView SaveDR = (DataRowView)lst.Items[e.Index];
 
             //Original name
             txt = SaveDR["saveName"].ToString();// + "\r\n" ;

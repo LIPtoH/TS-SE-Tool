@@ -2070,49 +2070,7 @@ namespace TS_SE_Tool
                 _inputWriter.WriteLine("");
             }
         }
-
-        public void WriteInfoFile(string[] _infoFile, string _filePath, SaveFileInfoData _infoData)
-        {
-            using (StreamWriter writer = new StreamWriter(_filePath, true))
-            {
-                string InMemLine = "";
-
-                for (int line = 0; line < _infoFile.Length; line++)
-                {
-                    InMemLine = _infoFile[line];
-
-                    if (InMemLine.StartsWith(" name:"))
-                    {
-                        if(_infoData.Name != null)
-                        {
-                            string t = _infoData.Name;
-
-                            if (_infoData.Name.Contains(" ") || _infoData.Name.Length == 0)
-                                t = "\"" + t + "\"";
-
-                            InMemLine = " name: " + t;
-                        }
-
-                        goto EndWrite;
-                    }
-
-                    if (InMemLine.StartsWith(" file_time:"))
-                    {
-                        if (_infoData.FileTime != 0)
-                        {
-                            InMemLine = " file_time: " + _infoData.FileTime.ToString();
-                        }
-
-                        goto EndWrite;
-                    }
-
-                    EndWrite:
-                    if(line > 0)
-                        writer.WriteLine();
-                    writer.Write(InMemLine);
-                }
-            }
-        }
+        
         //Database
         public void ExportDB()
         {
