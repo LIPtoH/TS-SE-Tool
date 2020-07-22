@@ -31,10 +31,10 @@
             this.groupBoxProfileUserColors = new System.Windows.Forms.GroupBox();
             this.panelProfileUserColors = new System.Windows.Forms.Panel();
             this.groupBoxImportedColors = new System.Windows.Forms.GroupBox();
+            this.panelImportedColors = new System.Windows.Forms.Panel();
             this.buttonImport = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
             this.buttonReplaceColors = new System.Windows.Forms.Button();
-            this.panelImportedColors = new System.Windows.Forms.Panel();
             this.groupBoxProfileUserColors.SuspendLayout();
             this.groupBoxImportedColors.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +67,14 @@
             this.groupBoxImportedColors.TabStop = false;
             this.groupBoxImportedColors.Text = "Imported colors";
             // 
+            // panelImportedColors
+            // 
+            this.panelImportedColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelImportedColors.Location = new System.Drawing.Point(3, 16);
+            this.panelImportedColors.Name = "panelImportedColors";
+            this.panelImportedColors.Size = new System.Drawing.Size(466, 81);
+            this.panelImportedColors.TabIndex = 0;
+            // 
             // buttonImport
             // 
             this.buttonImport.Location = new System.Drawing.Point(188, 118);
@@ -97,14 +105,6 @@
             this.buttonReplaceColors.UseVisualStyleBackColor = true;
             this.buttonReplaceColors.Click += new System.EventHandler(this.buttonReplaceColors_Click);
             // 
-            // panelImportedColors
-            // 
-            this.panelImportedColors.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelImportedColors.Location = new System.Drawing.Point(3, 16);
-            this.panelImportedColors.Name = "panelImportedColors";
-            this.panelImportedColors.Size = new System.Drawing.Size(466, 81);
-            this.panelImportedColors.TabIndex = 0;
-            // 
             // FormShareUserColors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -119,6 +119,7 @@
             this.MaximumSize = new System.Drawing.Size(512, 320);
             this.MinimizeBox = false;
             this.Name = "FormShareUserColors";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Share User Colors";
             this.groupBoxProfileUserColors.ResumeLayout(false);

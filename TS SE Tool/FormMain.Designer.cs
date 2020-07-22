@@ -72,6 +72,7 @@
             this.tableLayoutPanelUserColors = new System.Windows.Forms.TableLayoutPanel();
             this.buttonUserColorsShareColors = new System.Windows.Forms.Button();
             this.panelProfileUserColors = new System.Windows.Forms.Panel();
+            this.buttonAddUserColor = new System.Windows.Forms.Button();
             this.tabPageCompany = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -213,7 +214,6 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonAddUserColor = new System.Windows.Forms.Button();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -653,7 +653,7 @@
             this.tableLayoutPanelUserColors.Name = "tableLayoutPanelUserColors";
             this.tableLayoutPanelUserColors.RowCount = 3;
             this.tableLayoutPanelUserColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelUserColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelUserColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanelUserColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanelUserColors.Size = new System.Drawing.Size(124, 507);
             this.tableLayoutPanelUserColors.TabIndex = 1;
@@ -674,8 +674,20 @@
             this.panelProfileUserColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelProfileUserColors.Location = new System.Drawing.Point(3, 3);
             this.panelProfileUserColors.Name = "panelProfileUserColors";
-            this.panelProfileUserColors.Size = new System.Drawing.Size(118, 411);
+            this.panelProfileUserColors.Size = new System.Drawing.Size(118, 401);
             this.panelProfileUserColors.TabIndex = 1;
+            // 
+            // buttonAddUserColor
+            // 
+            this.buttonAddUserColor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAddUserColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAddUserColor.Location = new System.Drawing.Point(3, 410);
+            this.buttonAddUserColor.Name = "buttonAddUserColor";
+            this.buttonAddUserColor.Size = new System.Drawing.Size(118, 44);
+            this.buttonAddUserColor.TabIndex = 2;
+            this.buttonAddUserColor.Text = "+ slot";
+            this.buttonAddUserColor.UseVisualStyleBackColor = true;
+            this.buttonAddUserColor.Click += new System.EventHandler(this.buttonAddUserColor_Click);
             // 
             // tabPageCompany
             // 
@@ -2384,17 +2396,6 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
-            // 
-            // buttonAddUserColor
-            // 
-            this.buttonAddUserColor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAddUserColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonAddUserColor.Location = new System.Drawing.Point(3, 420);
-            this.buttonAddUserColor.Name = "buttonAddUserColor";
-            this.buttonAddUserColor.Size = new System.Drawing.Size(118, 34);
-            this.buttonAddUserColor.TabIndex = 2;
-            this.buttonAddUserColor.Text = "+";
-            this.buttonAddUserColor.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 

@@ -136,6 +136,9 @@ namespace TS_SE_Tool
                 }
             }
 
+            panelProfileUserColors.VerticalScroll.Value = 0;
+            panelProfileUserColors.AutoScrollPosition = new Point(0, 0);
+
             CreateUserColorsButtons();
 
             UpdateUserColorsButtons();
@@ -177,6 +180,10 @@ namespace TS_SE_Tool
                         Button rb = new Button();
                         rb.Name = "buttonUC" + btnNumber.ToString();
                         rb.Text = null;
+
+                        int x = padding + j * width + spacing * j;
+                        int y = (spacing + height) * (i);
+
                         rb.Location = new Point(padding + j * width + spacing * j, (spacing + height) * i);
                         rb.Size = new Size(width, height);
                         rb.FlatStyle = FlatStyle.Flat;
@@ -189,9 +196,12 @@ namespace TS_SE_Tool
                     }
                 }
 
-                tableLayoutPanelUserColors.RowStyles[1].Height = 40;
+                tableLayoutPanelUserColors.RowStyles[1].Height = 50;
+
                 if (ucc >= 40)
                     buttonAddUserColor.Enabled = false;
+                else
+                    buttonAddUserColor.Enabled = true;
 
                 panelProfileUserColors.VerticalScroll.Maximum = 1500; //Virtual height
                 panelProfileUserColors.MouseWheel += new MouseEventHandler(this.panelProfileUserColors_MouseWheel);
@@ -262,33 +272,54 @@ namespace TS_SE_Tool
 
             if (SaveVersion >= 49)
             {
-                int padding = 6, width = 23;
+                int padding = 3, width = 24, height = 24, spacing = 4;
+
+                panelProfileUserColors.VerticalScroll.Maximum = (height + spacing) * UserColorsList.Count / 4;
 
                 for (int i = 0; i < UserColorsList.Count; i++)
                 {
-                        Button btn = null;
-                        string btnname = "buttonUC" + i.ToString();
+                    Button btn = null;
+                    string btnname = "buttonUC" + i.ToString();
 
-                        if (panelProfileUserColors.Controls.ContainsKey(btnname))
+                    if (panelProfileUserColors.Controls.ContainsKey(btnname))
+                    {
+                        btn = panelProfileUserColors.Controls[btnname] as Button;
+
+                        btn.Enabled = true;
+
+                        if (UserColorsList[i].A == 0)
                         {
-                            btn = panelProfileUserColors.Controls[btnname] as Button;
+                            btn.Text = "X";
+                            btn.BackColor = Color.FromName("Control");
                         }
                         else
                         {
+                            btn.Text = "";
+                            btn.BackColor = UserColorsList[i];
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            btn = new Button();
                             btn.Name = "buttonUC" + i.ToString();
                             btn.Text = null;
-                            btn.Location = new Point(6 + (padding + width) * (i / 4), 19);
-                            btn.Size = new Size(width, 23);
+
+                            int x = padding + j * width + spacing * j;
+                            int y = (spacing + height) * (i / 4);
+
+                            btn.Location = new Point(x, y);
+                            btn.Size = new Size(width, height);
                             btn.FlatStyle = FlatStyle.Flat;
                             btn.Enabled = false;
+
                             btn.Click += new EventHandler(SelectColor);
 
                             panelProfileUserColors.Controls.Add(btn);
-                        }
 
-                        if (btn != null)
-                        {
                             btn.Enabled = true;
+
                             if (UserColorsList[i].A == 0)
                             {
                                 btn.Text = "X";
@@ -299,8 +330,11 @@ namespace TS_SE_Tool
                                 btn.Text = "";
                                 btn.BackColor = UserColorsList[i];
                             }
+                            i++;
                         }
-                }
+                        i--;
+                    }
+                }                
             }
             else
             {
@@ -377,6 +411,7 @@ namespace TS_SE_Tool
         {
             Button obj = sender as Button;
             Color BC = obj.BackColor;
+
             if (obj.Text != "")
                 BC = Color.White;
 
@@ -385,7 +420,7 @@ namespace TS_SE_Tool
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
-                int index = int.Parse(obj.Name.Substring(8, 1));
+                int index = int.Parse(obj.Name.Substring(8));
 
                 UserColorsList[index] = frm.PrimaryColor;
 
@@ -400,6 +435,13 @@ namespace TS_SE_Tool
                     obj.BackColor = Color.FromName("Control");
                 }
             }
+
+            RemoveUserColorUnused4slot();
+        }
+
+        private void buttonAddUserColor_Click(object sender, EventArgs e)
+        {
+            AddUserColor4slot();
         }
 
         internal void AddUserColor4slot()
@@ -411,7 +453,20 @@ namespace TS_SE_Tool
                 UserColorsList.Add(userColor);
             }
 
+            //Scroll panel to the top to properly add buttons
+            panelProfileUserColors.AutoScrollPosition = new Point(0, 0);
+
             UpdateUserColorsButtons();
+
+
+            //Return to top position
+            int location = panelProfileUserColors.VerticalScroll.Maximum - panelProfileUserColors.Height;
+
+            if (location > 0)
+            {
+                panelProfileUserColors.AutoScrollPosition = new Point(0, location);
+                panelProfileUserColors.VerticalScroll.Value = location;
+            }
         }
 
         internal void RemoveUserColorUnused4slot()
@@ -419,52 +474,74 @@ namespace TS_SE_Tool
             int counter = UserColorsList.Count - 1;
             int slotCount = UserColorsList.Count / 4;
 
-            do
+            try
             {
-                try
+                for (int iCol = 0; iCol < slotCount; iCol++)
                 {
-                    for (int iCol = 0; iCol < slotCount; iCol++)
-                    {
-                        bool delete = false;
+                    bool delete = false;
 
-                        for (int i = 0; i < 4; i++)
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (UserColorsList[counter - i].A == 0)
                         {
-                            if (UserColorsList[counter - i].A == 0)
+                            delete = true;
+                        }
+                        else
+                        {
+                            delete = false;
+                            break;
+                        }
+                    }
+
+                    counter = counter - 4;
+
+                    if (delete)
+                    {
+                        for (int i = 4; i > 0; i--)
+                        {
+                            int btnNumber = counter + i;
+
+                            Control[] tempArray = panelProfileUserColors.Controls.Find("buttonUC" + btnNumber.ToString(), false);
+
+                            if (tempArray.Length > 0)
                             {
-                                delete = true;
+                                panelProfileUserColors.Controls.Remove(tempArray[0]);
+                                UserColorsList.RemoveAt(btnNumber);
                             }
                             else
                             {
-                                delete = false;
-                            }
-                        }
-
-                        if (delete)
-                        {
-                            for (int i = 0; i < 4; i++)
-                            {
-                                Control[] tempArray = panelProfileUserColors.Controls.Find("buttonUC" + (counter), false);
-
-                                if (tempArray.Length > 0)
-                                {
-                                    panelProfileUserColors.Controls.Remove(tempArray[0]);
-                                    UserColorsList.RemoveAt(counter);
-                                    counter--;
-                                }
-                                else
-                                {
-                                    break;
-                                }
+                                break;
                             }
                         }
                     }
-                }
-                catch
-                {
-                    break;
+                    else
+                    {
+                        break;
+                    }
                 }
 
-            } while (true);
+                if (UserColorsList.Count / 4 >= 40)
+                    buttonAddUserColor.Enabled = false;
+                else
+                    buttonAddUserColor.Enabled = true;
+
+            }
+            catch
+            { }
+
+            //Scroll panel to the top to properly add buttons
+            panelProfileUserColors.AutoScrollPosition = new Point(0, 0);
+
+            UpdateUserColorsButtons();
+
+            //Return to top position
+            int location = panelProfileUserColors.VerticalScroll.Maximum - panelProfileUserColors.Height;
+
+            if (location > 0)
+            {
+                panelProfileUserColors.AutoScrollPosition = new Point(0, location);
+                panelProfileUserColors.VerticalScroll.Value = location;
+            }
         }
 
         //Profile buttons

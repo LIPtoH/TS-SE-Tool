@@ -37,7 +37,7 @@ namespace TS_SE_Tool
         CheckBox[] ImportColorsCB = new CheckBox[0];
         List<Color> ImportedColors = new List<Color>();
 
-        short SaveVersion = 48;
+        short SaveVersion = 49;
 
         public FormShareUserColors()
         {
@@ -71,7 +71,7 @@ namespace TS_SE_Tool
             buttonReplaceColors.Enabled = false;
             groupBoxImportedColors.Visible = false;
 
-            this.Size = new Size(this.Size.Width, 209);
+            ChangeFormSize(false);
         }
 
         //Create controls
@@ -106,7 +106,7 @@ namespace TS_SE_Tool
                         colorB.Name = "buttonUC" + btnNumber.ToString();
                         colorB.Text = null;
 
-                        int x = offsetL + padding * i + width * multX + i * (width * 2 + padding);
+                        int x = offsetL + width * multX + i * (width * 2 + padding);
                         int y = offsetT + width * (j / 2);
 
                         colorB.Location = new Point(x, y);
@@ -129,7 +129,7 @@ namespace TS_SE_Tool
                     colorCB.Checked = false;
                     colorCB.Text = "";
                     colorCB.AutoSize = true;
-                    colorCB.Location = new Point(offsetL + (width * 2 - colorCB.Width) / 2 + (padding + width ) * 2 * i, offsetT + padding + width * 2);
+                    colorCB.Location = new Point(offsetL + (width * 2 - colorCB.Width) / 2 + (width * 2 + padding) * i, offsetT + padding + width * 2);
                     colorCB.Enabled = false;
 
                     UserColorsCB[i] = colorCB;
@@ -288,13 +288,8 @@ namespace TS_SE_Tool
                 chkbox.Name = "checkboxIC" + i.ToString();
                 chkbox.Checked = true;
                 chkbox.Text = "";
-                chkbox.AutoSize = true;
-
-                //int xCB = offsetL + (width * 2 - chkbox.Width) / 2 + (padding + width ) * 2 * i;
-                //int yCB = offsetT + padding + width * 2;
-                //int xCB2 = offsetL + (width - chkbox.Width) / 2 + (padding + width) * (i);
-
-                chkbox.Location = new Point(offsetL + (width - chkbox.Width) / 2 + (padding*2 + width) * i, offsetT);
+                chkbox.AutoSize = true;                
+                chkbox.Location = new Point(offsetL + (width - chkbox.Width) / 2 + (padding + width) * i, offsetT);
 
                 ImportColorsCB[i] = chkbox;
 
@@ -313,8 +308,8 @@ namespace TS_SE_Tool
 
                         bttn.Name = "buttonIC" + btnNumber.ToString();
 
-                        int x = offsetL + padding * i + widthB * multX + i * (widthB * 2 + padding);
-                        int y = offsetT + widthB * (j / 2) + chkbox.Height;
+                        int x = offsetL + widthB * multX + i * (widthB * 2 + padding);
+                        int y = offsetT + widthB * (j / 2) + chkbox.Height + padding;
 
                         bttn.Location = new Point(x, y);
                         bttn.Size = new Size(widthB, widthB);
@@ -338,7 +333,7 @@ namespace TS_SE_Tool
                     panelImportedColors.Controls.Add(bttn);
 
                     bttn.Name = "buttonIC" + i.ToString();
-                    bttn.Location = new Point(offsetL + (padding *2+ width) * (i), offsetT + padding + chkbox.Height);
+                    bttn.Location = new Point(offsetL + (padding + width) * i, offsetT + padding + chkbox.Height);
                     bttn.Size = new Size(width, width);
                     bttn.FlatStyle = FlatStyle.Flat;
                     bttn.Enabled = false;
@@ -443,7 +438,8 @@ namespace TS_SE_Tool
                     }
 
                     //Show imopted colors section
-                    this.Size = new Size(this.Size.Width, 323);
+                    ChangeFormSize(true);                    
+
                     groupBoxImportedColors.Visible = true;
                     buttonReplaceColors.Enabled = true;
 
@@ -468,41 +464,103 @@ namespace TS_SE_Tool
 
         private void buttonReplaceColors_Click(object sender, EventArgs e)
         {
-            List<Button> tempBList = new List<Button>();
-
-            int i = 0, j = 0;
-            foreach (CheckBox temp in ImportColorsCB)
+            if (SaveVersion >= 49)
             {
-                if (temp.Checked)
-                {
-                    tempBList.Add(ImportColorsB[i]);
-                    temp.Checked = false;
-                }
-                i++;
-            }
+                List<Button> tempBList = new List<Button>();
+                int i = 0, j = 0;
 
-            if (tempBList.Count > 0)
-            {
-                i = 0;
-                foreach (CheckBox temp in UserColorsCB)
+                foreach (CheckBox temp in ImportColorsCB)
                 {
                     if (temp.Checked)
                     {
-                        if (j < tempBList.Count)
+                        temp.Checked = false;
+                        for(int k = 0; k < 4; k++)
                         {
-                            MainForm.UserColorsList[i] = tempBList[j].BackColor;
-                            j++;
+                            tempBList.Add(ImportColorsB[i]);
+                            i++;
                         }
+                    }
+                    else
+                        i = i + 4;
+                }
+
+                if (tempBList.Count > 0)
+                {
+                    i = 0;
+                    foreach (CheckBox temp in UserColorsCB)
+                    {
+                        if (temp.Checked)
+                        {
+                            if (j < tempBList.Count)
+                            {
+                                for (int k = 0; k < 4; k++)
+                                {
+                                    MainForm.UserColorsList[i] = tempBList[j].BackColor;
+
+                                    i++;
+                                    j++;
+                                }
+                            }
+                            temp.Checked = false;
+                        }
+                        else
+                            i = i + 4;
+                    }
+                }
+            }
+            else
+            {
+                List<Button> tempBList = new List<Button>();
+
+                int i = 0, j = 0;
+                foreach (CheckBox temp in ImportColorsCB)
+                {
+                    if (temp.Checked)
+                    {
+                        tempBList.Add(ImportColorsB[i]);
                         temp.Checked = false;
                     }
                     i++;
                 }
 
-                UpdateUserColorsButtons();
-
-                buttonExport.Enabled = true;
+                if (tempBList.Count > 0)
+                {
+                    i = 0;
+                    foreach (CheckBox temp in UserColorsCB)
+                    {
+                        if (temp.Checked)
+                        {
+                            if (j < tempBList.Count)
+                            {
+                                MainForm.UserColorsList[i] = tempBList[j].BackColor;
+                                j++;
+                            }
+                            temp.Checked = false;
+                        }
+                        i++;
+                    }
+                }
             }
+
+            UpdateUserColorsButtons();
+
+            buttonExport.Enabled = true;
         }
 
+        //Change form size
+        private void ChangeFormSize(bool _big)
+        {
+            if (_big)
+            {
+                this.MaximumSize = new Size(this.Size.Width, 323);
+            }
+            else
+            {
+                this.MaximumSize = new Size(this.Size.Width, 209);
+            }
+
+            this.Size = new Size(this.Size.Width, this.Size.Height);
+            this.MinimumSize = this.MaximumSize;
+        }
     }
 }
