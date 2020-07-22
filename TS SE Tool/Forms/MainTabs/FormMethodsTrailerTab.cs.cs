@@ -111,9 +111,9 @@ namespace TS_SE_Tool
             Button buttonInfo = new Button();
             tableLayoutPanelUserTrailerControls.Controls.Add(buttonInfo, 3, 0);
             buttonInfo.FlatStyle = FlatStyle.Flat;
-            buttonInfo.Size = new Size(CutomizeImg.Width, CutomizeImg.Height);
+            buttonInfo.Size = new Size(CustomizeImg.Width, CustomizeImg.Height);
             buttonInfo.Name = "buttonTrailerInfo";
-            buttonInfo.BackgroundImage = ConvertBitmapToGrayscale(CutomizeImg);
+            buttonInfo.BackgroundImage = ConvertBitmapToGrayscale(CustomizeImg);
             buttonInfo.BackgroundImageLayout = ImageLayout.Zoom;
             buttonInfo.Text = "";
             buttonInfo.FlatAppearance.BorderSize = 0;
@@ -480,7 +480,7 @@ namespace TS_SE_Tool
             Control TMP;
 
             string[] buttons = { "buttonTrailerRepair", "buttonTrailerInfo" };
-            Image[] images = { RepairImg, CutomizeImg };
+            Image[] images = { RepairImg, CustomizeImg };
 
             for (int i = 0; i < buttons.Count(); i++)
             {
@@ -503,6 +503,7 @@ namespace TS_SE_Tool
         private void ToggleTrailerPartsCondition(bool _state)
         {
             if (!_state)
+            {
                 for (int i = 0; i < 4; i++)
                 {
                     Panel pnl = null;
@@ -514,13 +515,12 @@ namespace TS_SE_Tool
 
                     if (pnl != null)
                     {
-                        //pnl.Visible = _state;
                         pnl.BackgroundImage = null;
                     }
                 }
 
-            labelUserTrailerLicensePlate.Visible = _state;
-            labelLicensePlateTr.Visible = _state;
+                labelLicensePlateTr.Text = "";
+            }
         }
         //Buttons
         private void buttonUserTrailerSelectCurrent_Click(object sender, EventArgs e)

@@ -118,9 +118,9 @@ namespace TS_SE_Tool
             Button buttonInfo = new Button();
             tableLayoutPanelUserTruckControls.Controls.Add(buttonInfo, 3, 0);
             buttonInfo.FlatStyle = FlatStyle.Flat;
-            buttonInfo.Size = new Size(CutomizeImg.Width, CutomizeImg.Height);
+            buttonInfo.Size = new Size(CustomizeImg.Width, CustomizeImg.Height);
             buttonInfo.Name = "buttonTruckInfo";
-            buttonInfo.BackgroundImage = CutomizeImg;//ConvertBitmapToGrayscale(CutomizeImg);
+            buttonInfo.BackgroundImage = CustomizeImg;
             buttonInfo.BackgroundImageLayout = ImageLayout.Zoom;
             buttonInfo.Text = "";
             buttonInfo.FlatAppearance.BorderSize = 0;
@@ -395,7 +395,7 @@ namespace TS_SE_Tool
         {
             ComboBox cmbbx = sender as ComboBox;
 
-            if (cmbbx.SelectedValue.ToString() != "null") //cmbbx.SelectedIndex != -1 && 
+            if (cmbbx.SelectedValue != null && cmbbx.SelectedValue.ToString() != "null") //cmbbx.SelectedIndex != -1 && 
             {
                 UpdateTruckPanelProgressBars();
                 ToggleTruckPartsCondition(true);
@@ -445,7 +445,7 @@ namespace TS_SE_Tool
             Control TMP;
 
             string[] buttons = { "buttonTruckReFuel", "buttonTruckRepair", "buttonTruckInfo" };
-            Image[] images = { RefuelImg, RepairImg, CutomizeImg };
+            Image[] images = { RefuelImg, RepairImg, CustomizeImg };
 
             for (int i = 0; i < buttons.Count(); i++)
             {
@@ -467,8 +467,50 @@ namespace TS_SE_Tool
 
         private void ToggleTruckPartsCondition(bool _state)
         {
-            labelUserTruckLicensePlate.Visible = _state;
-            labelLicensePlate.Visible = _state;
+            if (!_state)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Label lbl = null;
+                    string lblname = "labelTruckPartDataName" + i.ToString();
+
+                    if (groupBoxUserTruckTruckDetails.Controls.ContainsKey(lblname))
+                    {
+                        lbl = groupBoxUserTruckTruckDetails.Controls[lblname] as Label;
+                    }
+
+                    if (lbl != null)
+                    {
+                        lbl.Text = "";
+                    }
+
+                    Panel pnl = null;
+                    string pnlname = "progressbarTruckPart" + i.ToString();
+
+                    if (groupBoxUserTruckTruckDetails.Controls.ContainsKey(pnlname))
+                    {
+                        pnl = groupBoxUserTruckTruckDetails.Controls[pnlname] as Panel;
+                    }
+
+                    if (pnl != null)
+                    {
+                        pnl.BackgroundImage = null;
+                    }
+                }
+
+                Panel pnlF = null;
+                if (groupBoxUserTruckTruckDetails.Controls.ContainsKey("progressbarTruckFuel"))
+                {
+                    pnlF = groupBoxUserTruckTruckDetails.Controls["progressbarTruckFuel"] as Panel;
+                }
+
+                if (pnlF != null)
+                {
+                    pnlF.BackgroundImage = null;
+                }                
+
+                labelLicensePlate.Text = "";
+            }
         }
         //Buttons
         public void buttonTruckReFuel_Click(object sender, EventArgs e)

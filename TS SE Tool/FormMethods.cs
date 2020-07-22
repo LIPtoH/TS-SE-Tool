@@ -492,15 +492,7 @@ namespace TS_SE_Tool
                 temp.Checked = false;
 
             //User Colors
-            tableLayoutPanelUserColors.RowStyles[1].Height = 0;
-            /*
-            UserColorsList.Clear();
-            for (int i = 0; i < UserColorsList.Count; i++)
-                UserColorsList.Add(Color.FromArgb(0, 0, 0, 0));
-
-            UpdateUserColorsButtons();
-            UserColorsList.Clear();
-            */
+            tableLayoutPanelUserColors.RowStyles[1].Height = 0; //Hide add slot
             DeleteUserColorsButtons();
 
             //Company
@@ -512,9 +504,12 @@ namespace TS_SE_Tool
 
             listBoxVisitedCities.Items.Clear();
             listBoxGarages.Items.Clear();
+
             //Truck
+            comboBoxUserTruckCompanyTrucks.DataSource = null;
 
             //Trailer
+            comboBoxUserTrailerCompanyTrailers.DataSource = null;
 
             //FreightMarket
             comboBoxFreightMarketCountries.DataSource = null;

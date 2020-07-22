@@ -165,10 +165,8 @@ namespace TS_SE_Tool
         {
             int padding = 3, width = 24, height = 24, spacing = 4;
             int usableSpace = groupBoxProfileUserColors.Bounds.Width;
-            
-            short SaveVersion = 49;
-            
-            if (SaveVersion >= 49)
+                        
+            if (MainSaveFileInfoData.Version >= 49)
             {
                 int ucc = UserColorsList.Count / 4;
                 int btnNumber = 0;
@@ -212,8 +210,8 @@ namespace TS_SE_Tool
                     Button rb = new Button();
                     rb.Name = "buttonUC" + i.ToString();
                     rb.Text = null;
-                    rb.Location = new Point((usableSpace - width) / 2, 32 + (padding + height) * i);
-                    rb.Size = new Size(width, height);
+                    rb.Location = new Point((usableSpace - width * 3) / 2, 8 + (padding * 2 + height * 2) * i);
+                    rb.Size = new Size(width * 3, height * 2);
                     rb.FlatStyle = FlatStyle.Flat;
                     rb.Enabled = false;
 
@@ -268,9 +266,7 @@ namespace TS_SE_Tool
 
         private void UpdateUserColorsButtons()
         {
-            short SaveVersion = 49;
-
-            if (SaveVersion >= 49)
+            if (MainSaveFileInfoData.Version >= 49)
             {
                 int padding = 3, width = 24, height = 24, spacing = 4;
 
@@ -436,7 +432,8 @@ namespace TS_SE_Tool
                 }
             }
 
-            RemoveUserColorUnused4slot();
+            if (MainSaveFileInfoData.Version >= 49)
+                RemoveUserColorUnused4slot();
         }
 
         private void buttonAddUserColor_Click(object sender, EventArgs e)

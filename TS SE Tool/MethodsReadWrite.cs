@@ -383,7 +383,7 @@ namespace TS_SE_Tool
 
             ms = new MemoryStream();
             ImageFromDDS(@"img\customize_p.dds").Save(ms, ImageFormat.Png);
-            CutomizeImg = Image.FromStream(ms);
+            CustomizeImg = Image.FromStream(ms);
             ms.Dispose();
 
             imgpaths = new string[] { @"img\" + GameType + @"\adr_1.dds", @"img\" + GameType + @"\adr_2.dds", @"img\" + GameType + @"\adr_3.dds", @"img\" + GameType + @"\adr_4.dds", @"img\" + GameType + @"\adr_6.dds", @"img\" + GameType + @"\adr_8.dds" };

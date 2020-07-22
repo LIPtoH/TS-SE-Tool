@@ -160,7 +160,7 @@ namespace TS_SE_Tool
         private DataTable DistancesTable; //Program
 
         private Bitmap ProgressBarGradient; //Program
-        private Image RepairImg, RefuelImg, CutomizeImg, PlayerCompanyLogo; //Program
+        private Image RepairImg, RefuelImg, CustomizeImg, PlayerCompanyLogo; //Program
 
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg; //Program

@@ -37,7 +37,7 @@ namespace TS_SE_Tool
         CheckBox[] ImportColorsCB = new CheckBox[0];
         List<Color> ImportedColors = new List<Color>();
 
-        short SaveVersion = 49;
+        short SaveVersion = 0;
 
         public FormShareUserColors()
         {
@@ -53,6 +53,7 @@ namespace TS_SE_Tool
             catch
             { }
 
+            SaveVersion = MainForm.MainSaveFileInfoData.Version;
             MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
 
             int colorcount = MainForm.UserColorsList.Count;
