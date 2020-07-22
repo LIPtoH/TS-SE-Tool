@@ -69,7 +69,10 @@
             this.buttonPlayerLevelMinimum = new System.Windows.Forms.Button();
             this.groupBoxProfileSkill = new System.Windows.Forms.GroupBox();
             this.groupBoxProfileUserColors = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanelUserColors = new System.Windows.Forms.TableLayoutPanel();
             this.buttonUserColorsShareColors = new System.Windows.Forms.Button();
+            this.panelProfileUserColors = new System.Windows.Forms.Panel();
+            this.buttonAddUserColor = new System.Windows.Forms.Button();
             this.tabPageCompany = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -217,6 +220,7 @@
             this.groupBoxProfilePlayerLevel.SuspendLayout();
             this.panelPlayerLevel.SuspendLayout();
             this.groupBoxProfileUserColors.SuspendLayout();
+            this.tableLayoutPanelUserColors.SuspendLayout();
             this.tabPageCompany.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -628,23 +632,62 @@
             // 
             // groupBoxProfileUserColors
             // 
-            this.groupBoxProfileUserColors.Controls.Add(this.buttonUserColorsShareColors);
+            this.groupBoxProfileUserColors.Controls.Add(this.tableLayoutPanelUserColors);
             this.groupBoxProfileUserColors.Location = new System.Drawing.Point(432, 6);
             this.groupBoxProfileUserColors.Name = "groupBoxProfileUserColors";
+            this.groupBoxProfileUserColors.Padding = new System.Windows.Forms.Padding(0);
             this.groupBoxProfileUserColors.Size = new System.Drawing.Size(124, 520);
             this.groupBoxProfileUserColors.TabIndex = 7;
             this.groupBoxProfileUserColors.TabStop = false;
             this.groupBoxProfileUserColors.Text = "User colors";
             // 
+            // tableLayoutPanelUserColors
+            // 
+            this.tableLayoutPanelUserColors.ColumnCount = 1;
+            this.tableLayoutPanelUserColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelUserColors.Controls.Add(this.buttonUserColorsShareColors, 0, 2);
+            this.tableLayoutPanelUserColors.Controls.Add(this.panelProfileUserColors, 0, 0);
+            this.tableLayoutPanelUserColors.Controls.Add(this.buttonAddUserColor, 0, 1);
+            this.tableLayoutPanelUserColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelUserColors.Location = new System.Drawing.Point(0, 13);
+            this.tableLayoutPanelUserColors.Name = "tableLayoutPanelUserColors";
+            this.tableLayoutPanelUserColors.RowCount = 3;
+            this.tableLayoutPanelUserColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelUserColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanelUserColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanelUserColors.Size = new System.Drawing.Size(124, 507);
+            this.tableLayoutPanelUserColors.TabIndex = 1;
+            // 
             // buttonUserColorsShareColors
             // 
-            this.buttonUserColorsShareColors.Location = new System.Drawing.Point(6, 463);
+            this.buttonUserColorsShareColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserColorsShareColors.Location = new System.Drawing.Point(3, 460);
             this.buttonUserColorsShareColors.Name = "buttonUserColorsShareColors";
-            this.buttonUserColorsShareColors.Size = new System.Drawing.Size(112, 51);
+            this.buttonUserColorsShareColors.Size = new System.Drawing.Size(118, 44);
             this.buttonUserColorsShareColors.TabIndex = 0;
             this.buttonUserColorsShareColors.Text = "Share colors";
             this.buttonUserColorsShareColors.UseVisualStyleBackColor = true;
             this.buttonUserColorsShareColors.Click += new System.EventHandler(this.buttonProfileShareColors_Click);
+            // 
+            // panelProfileUserColors
+            // 
+            this.panelProfileUserColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelProfileUserColors.Location = new System.Drawing.Point(3, 3);
+            this.panelProfileUserColors.Name = "panelProfileUserColors";
+            this.panelProfileUserColors.Size = new System.Drawing.Size(118, 401);
+            this.panelProfileUserColors.TabIndex = 1;
+            // 
+            // buttonAddUserColor
+            // 
+            this.buttonAddUserColor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAddUserColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAddUserColor.Location = new System.Drawing.Point(3, 410);
+            this.buttonAddUserColor.Name = "buttonAddUserColor";
+            this.buttonAddUserColor.Size = new System.Drawing.Size(118, 44);
+            this.buttonAddUserColor.TabIndex = 2;
+            this.buttonAddUserColor.Text = "+ slot";
+            this.buttonAddUserColor.UseVisualStyleBackColor = true;
+            this.buttonAddUserColor.Click += new System.EventHandler(this.buttonAddUserColor_Click);
             // 
             // tabPageCompany
             // 
@@ -2378,6 +2421,7 @@
             this.panelPlayerLevel.ResumeLayout(false);
             this.panelPlayerLevel.PerformLayout();
             this.groupBoxProfileUserColors.ResumeLayout(false);
+            this.tableLayoutPanelUserColors.ResumeLayout(false);
             this.tabPageCompany.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
@@ -2613,6 +2657,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelUserTruckControls;
         private System.Windows.Forms.Button buttonUserTruckSwitchCurrent;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelUserColors;
+        private System.Windows.Forms.Panel panelProfileUserColors;
+        private System.Windows.Forms.Button buttonAddUserColor;
     }
 }
 
