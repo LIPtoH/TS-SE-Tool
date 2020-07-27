@@ -1461,6 +1461,32 @@ namespace TS_SE_Tool
             return "<!>Error<!>";
         }
 
+        //Remove broken color sets
+        private void PrepareUserColors()
+        {
+            if (MainSaveFileInfoData.Version < 49)
+                return;
+
+            int setcount = UserColorsList.Count() / 4;
+
+            //iterate through sets
+            for (int i = 0; i < setcount; i++)
+            {
+                if (UserColorsList[4 * i].A == 0)
+                {
+                    //clear color set
+                    for (int j = 1; j < 4; j++)
+                    {
+                        UserColorsList[4 * i + j] = Color.FromArgb(0, 0, 0, 0);
+                    }
+                    continue;
+                }
+            }
+
+            RemoveUserColorUnused4slot();
+        }
+
+        //
         private void PrepareVisitedCities()
         {
             foreach (City city in CitiesList)

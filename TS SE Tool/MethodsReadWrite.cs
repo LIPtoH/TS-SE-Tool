@@ -1092,6 +1092,7 @@ namespace TS_SE_Tool
                 PrepareGarages();
                 PrepareDriversTrucks();
                 PrepareVisitedCities();
+                PrepareUserColors();
                 PrintAddedJobs();
 
                 File.WriteAllText(SiiSavePath, tempSavefileInMemory[0] + "\r\n");
@@ -1169,29 +1170,36 @@ namespace TS_SE_Tool
                             }
 
                             //User Colors
-                            if (SaveInMemLine.StartsWith(" user_colors["))
+                            if (SaveInMemLine.StartsWith(" user_colors:"))
                             {
-                                string userColor;
-                                int userColorID = int.Parse(SaveInMemLine.Split(new char[] { '[', ']' })[1]);
+                                writer.WriteLine(" user_colors: " + UserColorsList.Count);
 
-                                if (UserColorsList[userColorID] == Color.FromArgb(0, 0, 0, 0))
-                                {
-                                    userColor = "0";
-                                }
-                                else if (UserColorsList[userColorID] == Color.FromArgb(255, 255, 255, 255))
-                                {
-                                    userColor = "nil";
-                                }
-                                else
-                                {
-                                    Byte[] bytes = new Byte[] { UserColorsList[userColorID].R, UserColorsList[userColorID].G, UserColorsList[userColorID].B, 255 };
-                                    uint temp = BitConverter.ToUInt32(bytes, 0);
+                                UInt16 ColorCount = Convert.ToUInt16(SaveInMemLine.Split(new string[] { ": " }, 0)[1]);
+                                line = line + ColorCount;
 
-                                    userColor = temp.ToString();
-                                }
+                                string userColor; ushort colorcounter = 0;
 
-                                writer.WriteLine(" user_colors[" + userColorID.ToString() + "]: " + userColor);
-                                //line++;
+                                foreach (Color usercolor in UserColorsList)
+                                {
+                                    if (usercolor == Color.FromArgb(0, 0, 0, 0))
+                                    {
+                                        userColor = "0";
+                                    }
+                                    else if (usercolor == Color.FromArgb(255, 255, 255, 255))
+                                    {
+                                        userColor = "nil";
+                                    }
+                                    else
+                                    {
+                                        Byte[] bytes = new Byte[] { usercolor.R, usercolor.G, usercolor.B, 255 };
+                                        uint temp = BitConverter.ToUInt32(bytes, 0);
+
+                                        userColor = temp.ToString();
+                                    }
+
+                                    writer.WriteLine(" user_colors[" + colorcounter + "]: " + userColor);
+                                    colorcounter++;
+                                }
                                 continue;
                             }
 
