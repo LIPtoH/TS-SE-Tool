@@ -92,19 +92,6 @@ namespace TS_SE_Tool
 
                 this.ResumeLayout();
 
-                for (int i = 0; i < 6; i++)
-                {
-                    string translatedString = ResourceManagerMain.GetString("labelProfileSkillName" + i.ToString(), ci);
-
-                    foreach (Control c in groupBoxProfileSkill.Controls)
-                    {
-                        if (c.Name == "profileSkillsPanel" + i.ToString())
-                        {
-                            toolTipMain.SetToolTip(c, translatedString);
-                        }
-                    }
-                }
-
                 LngFileLoader("countries_translate.txt", CountriesLngDict, ProgSettingsV.Language);
                 LngFileLoader("cities_translate.txt", CitiesLngDict, ProgSettingsV.Language);
                 LngFileLoader("companies_translate.txt", CompaniesLngDict, ProgSettingsV.Language);
@@ -190,10 +177,13 @@ namespace TS_SE_Tool
             for (int i = 0; i < 6; i++)
             {
                 Control[] tmp = this.Controls.Find("profileSkillsPanel" + i.ToString(), true);
-                Bitmap bgimg = new Bitmap(SkillImgS[i], pSkillsNameHeight, pSkillsNameWidth);
-                tmp[0].BackgroundImage = bgimg;
-                if (!_state)
-                    tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
+                if(tmp[0] != null)
+                {
+                    Bitmap bgimg = new Bitmap(SkillImgS[i], pSkillsNameHeight, pSkillsNameWidth);
+                    tmp[0].BackgroundImage = bgimg;
+                    if (!_state)
+                        tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
+                }
             }
         }
 

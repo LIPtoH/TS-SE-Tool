@@ -25,9 +25,7 @@ namespace TS_SE_Tool
         private void CreateProfilePanelControls()
         {
             int pSkillsNameHeight = 64, pSkillsNameWidth = 64, pSkillsNameOffset = 5, pSkillsNamelOffset = 12;
-
-            string[] toolskillimgtooltip = new string[] { "ADR", "Long Distance", "High Value Cargo", "Fragile Cargo", "Just-In-Time Delivery", "Ecodriving" };
-
+            
             for (int i = 0; i < 6; i++)
             {
                 Panel Ppanel = new Panel();
@@ -38,21 +36,19 @@ namespace TS_SE_Tool
                 Ppanel.BorderStyle = BorderStyle.None;
                 Ppanel.Size = new Size(pSkillsNameWidth, pSkillsNameHeight);
                 Ppanel.Name = "profileSkillsPanel" + i.ToString();
-                toolTipMain.SetToolTip(Ppanel, toolskillimgtooltip[i]);
 
                 Bitmap bgimg = new Bitmap(SkillImgS[i], pSkillsNameHeight, pSkillsNameWidth);
                 Ppanel.BackgroundImage = bgimg;
 
                 Label slabel = new Label();
                 groupBoxProfileSkill.Controls.Add(slabel);
-                slabel.Name = "labelProfileSkill" + i.ToString() + "Name";
+                slabel.Name = "labelProfileSkill" + i.ToString();
                 slabel.Location = new Point(pSkillsNamelOffset * 2 + pSkillsNameWidth, 17 + (pSkillsNameHeight + pSkillsNameOffset) * i);
-                slabel.Text = toolskillimgtooltip[i];
                 slabel.AutoSize = true;
             }
 
             int bADRHeight = 48, bADRWidth = 48, pOffset = 6, lOffset = pSkillsNameWidth + pSkillsNamelOffset * 2;
-
+            
             for (int i = 0; i < 6; i++)
             {
                 CheckBox Ppanel = new CheckBox();
@@ -68,7 +64,6 @@ namespace TS_SE_Tool
                 Ppanel.Checked = false;
                 Ppanel.Padding = new Padding(0, 0, 1, 2);
                 Ppanel.BackgroundImageLayout = ImageLayout.Stretch;
-
 
                 Ppanel.BackgroundImage = SkillImgSBG[0];
                 Ppanel.Image = ADRImgSGrey[i];
@@ -104,6 +99,8 @@ namespace TS_SE_Tool
                     Ppanel.BackgroundImage = SkillImgSBG[0];
                     Ppanel.FlatAppearance.BorderSize = 0;
 
+                    toolTipMain.SetToolTip(Ppanel, (j + 1) + " level");
+
                     Ppanel.MouseEnter += new EventHandler(Skillbutton_MouseEnter);
                     Ppanel.MouseLeave += new EventHandler(Skillbutton_MouseLeave);
                     Ppanel.Click += new EventHandler(Skillbutton_Click);
@@ -112,8 +109,6 @@ namespace TS_SE_Tool
                     SkillButtonArray[i, j] = Ppanel;
                 }
             }
-
-            //CreateUserColorsButtons();
         }
 
         private void FillFormProfileControls()

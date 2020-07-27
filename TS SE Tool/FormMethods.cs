@@ -552,17 +552,32 @@ namespace TS_SE_Tool
             {
                 try
                 {
-                    string translatedString = ResourceManagerMain.GetString(cntrl.Name.TrimEnd(charsToTrim), _ci);
+                    string translatedString = ResourceManagerMain.GetString(cntrl.Name, _ci);
                     if (translatedString != null)
                         cntrl.Text = translatedString;
+                    else
+                    {
+                        translatedString = ResourceManagerMain.GetString(cntrl.Name.TrimEnd(charsToTrim), _ci);
+                        if (translatedString != null)
+                            cntrl.Text = translatedString;
+                    }
 
                     if (_formTooltip != null)
                     {
-                        string TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name.TrimEnd(charsToTrim), _ci);
+                        string TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name, _ci);
                         if (TolltipString != null)
                         {
                             TolltipString = TolltipString.Replace("\\r\\n", Environment.NewLine);
                             _formTooltip.SetToolTip(cntrl, TolltipString);
+                        }
+                        else
+                        {
+                            TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name.TrimEnd(charsToTrim), _ci);
+                            if (TolltipString != null)
+                            {
+                                TolltipString = TolltipString.Replace("\\r\\n", Environment.NewLine);
+                                _formTooltip.SetToolTip(cntrl, TolltipString);
+                            }
                         }
                     }
                 }
@@ -683,14 +698,18 @@ namespace TS_SE_Tool
                 //Shift Unsorted
                 try
                 {
-                    sourceRow = sortedDT.Select("Country = '+unsorted'")[0];
-                    rowi = sortedDT.Rows.IndexOf(sourceRow);
+                    DataRow[] tmpRows = sortedDT.Select("Country = '+unsorted'");
+                    if (tmpRows.Count() > 0)
+                    {
+                        sourceRow = tmpRows[0];
+                        rowi = sortedDT.Rows.IndexOf(sourceRow);
 
-                    row = sortedDT.NewRow();
-                    row.ItemArray = sourceRow.ItemArray;
+                        row = sortedDT.NewRow();
+                        row.ItemArray = sourceRow.ItemArray;
 
-                    sortedDT.Rows.RemoveAt(rowi);
-                    sortedDT.Rows.InsertAt(row, 1);
+                        sortedDT.Rows.RemoveAt(rowi);
+                        sortedDT.Rows.InsertAt(row, 1);
+                    }
                 }
                 catch { }
 
