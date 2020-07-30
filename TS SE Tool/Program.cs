@@ -42,6 +42,8 @@ namespace TS_SE_Tool
             // Add the event handler for handling non-UI thread exceptions to the event
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
+            GetDotNetVersion.Get45PlusFromRegistry();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormMain());

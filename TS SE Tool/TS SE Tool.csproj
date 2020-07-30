@@ -139,6 +139,7 @@
     <Compile Include="CustomClasses\Utilities\NumericUtilities.cs" />
     <Compile Include="CustomClasses\Utilities\TextUtilities.cs" />
     <Compile Include="CustomClasses\Utilities\ZipDataUtilitiescs.cs" />
+    <Compile Include="dotNetCheck.cs" />
     <Compile Include="Forms\ProfileEditor\FormProfileEditor.cs">
       <SubType>Form</SubType>
     </Compile>

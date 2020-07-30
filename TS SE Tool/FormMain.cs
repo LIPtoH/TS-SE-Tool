@@ -187,51 +187,68 @@ namespace TS_SE_Tool
 
         public FormMain()
         {
+            LogWriter("Initializing form...");
             InitializeComponent();
-
+            LogWriter("Form initialized.");
             //Non program task
+            LogWriter("Caching game data...");
             CacheGameData();
+            LogWriter("Caching finished.");
 
             //Program
             UpdateStatusBarMessage.OnNewStatusMessage += UpdateStatusBarMessage_OnNewStatusMessage;
             this.Icon = Properties.Resources.MainIco;
 
             SetDefaultValues(true);
+            LogWriter("Loading config...");
             LoadConfig();
+            LogWriter("Config loaded.");
 
+            LogWriter("Loading resources...");
             LoadExtCountries();
             LoadExtImages();
+            LogWriter("Resources loaded.");
             AddImagesToControls();
 
             //Create page controls
+            LogWriter("Creating form elements...");
             CreateProfilePanelControls();
             CreateProgressBarBitmap();
             CreateTruckPanelControls();
             CreateTrailerPanelControls();
+            LogWriter("Done.");
 
             //Clear elements
+            LogWriter("Prepare form...");
             ClearFormControls(true);
 
             ToggleControlsAccess(false);
-            
+            LogWriter("Done.");
+
             //Language
+            LogWriter("Loading translation...");
             GetTranslationFiles();
             ChangeLanguage();
+            LogWriter("Done.");
 
             DetectGame();
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
+            LogWriter("Opening form...");
             try
             {
                 if (Properties.Settings.Default.ShowSplashOnStartup || Properties.Settings.Default.CheckUpdatesOnStartup)
                 {
+                    LogWriter("Done.");
                     FormSplash WindowSplash = new FormSplash();
                     WindowSplash.ShowDialog();
                 }
             }
-            catch {
+            catch
+            {
+                LogWriter("Done. Settings error.");
                 FormSplash WindowSplash = new FormSplash();
                 WindowSplash.ShowDialog();
             }

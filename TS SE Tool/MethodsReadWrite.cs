@@ -707,7 +707,7 @@ namespace TS_SE_Tool
             {
                 using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\log.log", true))
                 {
-                    writer.WriteLine(DateTime.Now + ": " + _error);
+                    writer.WriteLine(DateTime.Now + " " + _error);
                 }
             }
             catch
