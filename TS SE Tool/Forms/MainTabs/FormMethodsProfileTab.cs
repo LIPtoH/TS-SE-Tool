@@ -98,9 +98,7 @@ namespace TS_SE_Tool
 
                     Ppanel.BackgroundImage = SkillImgSBG[0];
                     Ppanel.FlatAppearance.BorderSize = 0;
-
-                    toolTipMain.SetToolTip(Ppanel, (j + 1) + " level");
-
+                    
                     Ppanel.MouseEnter += new EventHandler(Skillbutton_MouseEnter);
                     Ppanel.MouseLeave += new EventHandler(Skillbutton_MouseLeave);
                     Ppanel.Click += new EventHandler(Skillbutton_Click);

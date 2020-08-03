@@ -553,32 +553,29 @@ namespace TS_SE_Tool
                 try
                 {
                     string translatedString = ResourceManagerMain.GetString(cntrl.Name, _ci);
+
+                    if (translatedString == null)
+                        translatedString = ResourceManagerMain.GetString(cntrl.Name.TrimEnd(charsToTrim), _ci);                    
+
                     if (translatedString != null)
                         cntrl.Text = translatedString;
-                    else
-                    {
-                        translatedString = ResourceManagerMain.GetString(cntrl.Name.TrimEnd(charsToTrim), _ci);
-                        if (translatedString != null)
-                            cntrl.Text = translatedString;
-                    }
 
                     if (_formTooltip != null)
                     {
                         string TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name, _ci);
+
+                        if (TolltipString == null)                        
+                            TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name.TrimEnd(charsToTrim), _ci);                        
+
                         if (TolltipString != null)
                         {
                             TolltipString = TolltipString.Replace("\\r\\n", Environment.NewLine);
-                            _formTooltip.SetToolTip(cntrl, TolltipString);
-                        }
-                        else
-                        {
-                            TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name.TrimEnd(charsToTrim), _ci);
-                            if (TolltipString != null)
-                            {
-                                TolltipString = TolltipString.Replace("\\r\\n", Environment.NewLine);
-                                _formTooltip.SetToolTip(cntrl, TolltipString);
-                            }
-                        }
+
+                            if (int.TryParse(cntrl.Name.Substring(cntrl.Name.Length - 1), out int number))
+                                number++;
+
+                            _formTooltip.SetToolTip(cntrl, String.Format(TolltipString, number));
+                        }   
                     }
                 }
                 catch
