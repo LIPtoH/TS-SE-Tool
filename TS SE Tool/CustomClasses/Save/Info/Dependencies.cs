@@ -44,14 +44,19 @@ namespace TS_SE_Tool
             if (RawDepType == "dlc" || RawDepType == "rdlc")
             {
                 DepType = "dlc";
+                DepLoadID = DepType + '_' + DepParts[1].Split(new char[] { '_' }, 2)[1];
             }
             else if (RawDepType == "mod")
             {
                 DepType = "mod";
+
+                if (DepParts[1].StartsWith("mod_"))                
+                    DepLoadID = DepType + '_' + DepParts[1].Split(new char[] { '_' }, 2)[1];                
+                else                
+                    DepLoadID = "mod_" + DepParts[1].Replace(' ', '_');                
             }
 
             RawDepID = DepParts[1];
-            DepLoadID = DepType + '_' + DepParts[1].Split(new char[] { '_' }, 2)[1];
             DepName = DepParts[2];
         }
     }

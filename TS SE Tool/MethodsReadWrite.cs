@@ -876,11 +876,13 @@ namespace TS_SE_Tool
 
             if (!InfoDepContinue)
             {
+                ToggleMainControlsAccess(true);
                 return;
             }
 
-            
+            //End Save Info
 
+            //Save file
             if (!File.Exists(SiiSavePath))
             {
                 LogWriter("File does not exist in " + SavefilePath);

@@ -113,9 +113,12 @@ namespace TS_SE_Tool
 
                 if (_FileLines[line].StartsWith(" dependencies["))
                 {
-                    chunkOfline = _FileLines[line].Split(new char[] { '"' });
+                    chunkOfline = _FileLines[line].Split(new char[] { ':' }, 2);
 
-                    Dependencies.Add(new Dependency(chunkOfline[1]));
+                    string tmpDep = chunkOfline[1].Trim(new char[] { ' ' });
+                    tmpDep = tmpDep.Substring(1, tmpDep.Length - 2);
+
+                    Dependencies.Add(new Dependency(tmpDep));
                     continue;
                 }
 
