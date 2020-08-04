@@ -45,8 +45,8 @@
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.ColumnCount = 2;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.22642F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.77358F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.49057F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.50944F));
             this.tableLayoutPanel.Controls.Add(this.labelProductName, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.labelVersion, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.labelCopyright, 0, 4);
@@ -153,7 +153,8 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 157);
+            this.label2.Location = new System.Drawing.Point(9, 157);
+            this.label2.Margin = new System.Windows.Forms.Padding(9, 0, 3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 13);
             this.label2.TabIndex = 26;
@@ -162,7 +163,8 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 134);
+            this.label1.Location = new System.Drawing.Point(9, 134);
+            this.label1.Margin = new System.Windows.Forms.Padding(9, 0, 3, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 13);
             this.label1.TabIndex = 25;
@@ -171,7 +173,7 @@
             // labelETS2version
             // 
             this.labelETS2version.AutoSize = true;
-            this.labelETS2version.Location = new System.Drawing.Point(46, 134);
+            this.labelETS2version.Location = new System.Drawing.Point(52, 134);
             this.labelETS2version.Name = "labelETS2version";
             this.labelETS2version.Size = new System.Drawing.Size(35, 13);
             this.labelETS2version.TabIndex = 27;
@@ -180,7 +182,7 @@
             // labelATSversion
             // 
             this.labelATSversion.AutoSize = true;
-            this.labelATSversion.Location = new System.Drawing.Point(46, 157);
+            this.labelATSversion.Location = new System.Drawing.Point(52, 157);
             this.labelATSversion.Name = "labelATSversion";
             this.labelATSversion.Size = new System.Drawing.Size(35, 13);
             this.labelATSversion.TabIndex = 28;
