@@ -2187,13 +2187,20 @@ namespace TS_SE_Tool
                                         first = false;
                                     }
 
-                                    int apoIndex = tempitem.IndexOf("'");
-                                    string sqlstr = "";
+                                    string sqlstr = tempitem;
+                                    int apoIndex = 0;
 
-                                    if (apoIndex > -1)
-                                        sqlstr = tempitem.Insert(apoIndex, "'");
-                                    else
-                                        sqlstr = tempitem;
+                                    while (true)
+                                    {
+                                        apoIndex = sqlstr.IndexOf("'", apoIndex);
+
+                                        if (apoIndex > -1)
+                                            sqlstr = sqlstr.Insert(apoIndex, "'");
+                                        else
+                                            break;
+
+                                        apoIndex = apoIndex + 2;
+                                    }
 
                                     SQLCommandCMD += "'" + sqlstr + "'";
                                 }
@@ -2218,14 +2225,21 @@ namespace TS_SE_Tool
                                 {
                                     first = false;
                                 }
-                                
-                                int apoIndex = tempitem.IndexOf("'");
-                                string sqlstr = "";
 
-                                if (apoIndex > -1)
-                                    sqlstr = tempitem.Insert(apoIndex, "'");
-                                else
-                                    sqlstr = tempitem;
+                                string sqlstr = tempitem;
+                                int apoIndex = 0;
+
+                                while (true)
+                                {
+                                    apoIndex = sqlstr.IndexOf("'", apoIndex);
+
+                                    if (apoIndex > -1)
+                                        sqlstr = sqlstr.Insert(apoIndex, "'");
+                                    else
+                                        break;
+
+                                    apoIndex = apoIndex + 2;
+                                }
 
                                 SQLCommandCMD += "SELECT '" + sqlstr + "'";
                             }
