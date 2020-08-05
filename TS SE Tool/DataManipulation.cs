@@ -1355,7 +1355,7 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    DialogResult r = MessageBox.Show("Save file and Database has different Dependencies due to installed\\deleted mods\\dlc's.\r\n" +
+                    DialogResult r = JR.Utils.GUI.Forms.FlexibleMessageBox.Show(this, "Save file and Database has different Dependencies due to installed\\deleted mods\\dlc's.\r\n" +
                         "This may result in wrong path and cargo data.\r\n" +
                         "Do you want to proceed and Update Dependencies?\r\n" + dbdepstr + "\r\n" + sfdepstr, "Dependencies conflict", MessageBoxButtons.YesNo);
 
