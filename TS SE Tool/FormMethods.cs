@@ -634,9 +634,14 @@ namespace TS_SE_Tool
         private void CorrectControlsPositions()
         {
             //Truck
-            Label labelPlate = (Label)tabControlMain.TabPages[2].Controls.Find("labelUserTruckLicensePlate", true).FirstOrDefault();
+            Label labelPlate = (Label)tabControlMain.TabPages["tabPageTruck"].Controls.Find("labelUserTruckLicensePlate", true).FirstOrDefault();
             if (labelPlate != null)
                 tableLayoutPanelTruckLP.ColumnStyles[0] = new ColumnStyle(SizeType.Absolute, labelPlate.PreferredSize.Width);
+
+            //Trailer
+            labelPlate = (Label)tabControlMain.TabPages["tabPageTrailer"].Controls.Find("labelUserTrailerLicensePlate", true).FirstOrDefault();
+            if (labelPlate != null)
+                tableLayoutPanelTrailerLP.ColumnStyles[0] = new ColumnStyle(SizeType.Absolute, labelPlate.PreferredSize.Width);
 
             //Freight Market
             labelFreightMarketDistanceNumbers.Location = new Point( labelFreightMarketDistance.Location.X + labelFreightMarketDistance.Width + 6, labelFreightMarketDistanceNumbers.Location.Y);

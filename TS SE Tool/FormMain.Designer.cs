@@ -136,8 +136,6 @@
             this.comboBoxUserTrailerCompanyTrailers = new System.Windows.Forms.ComboBox();
             this.buttonUserTrailerSelectCurrent = new System.Windows.Forms.Button();
             this.groupBoxUserTrailerTrailerDetails = new System.Windows.Forms.GroupBox();
-            this.labelLicensePlateTr = new System.Windows.Forms.Label();
-            this.labelUserTrailerLicensePlate = new System.Windows.Forms.Label();
             this.tabPageFreightMarket = new System.Windows.Forms.TabPage();
             this.buttonFreightMarketCancelJobEdit = new System.Windows.Forms.Button();
             this.comboBoxFreightMarketTrailerVariant = new System.Windows.Forms.ComboBox();
@@ -215,6 +213,8 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelTrailerDetails = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelTrailerLP = new System.Windows.Forms.TableLayoutPanel();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -259,6 +259,7 @@
             this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
+            this.tableLayoutPanelTrailerDetails.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripMain
@@ -1263,7 +1264,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1301,7 +1302,7 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(456, 1);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(455, 1);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
@@ -1519,32 +1520,15 @@
             // 
             // groupBoxUserTrailerTrailerDetails
             // 
-            this.groupBoxUserTrailerTrailerDetails.Controls.Add(this.labelLicensePlateTr);
-            this.groupBoxUserTrailerTrailerDetails.Controls.Add(this.labelUserTrailerLicensePlate);
+            this.groupBoxUserTrailerTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerDetails);
+            this.groupBoxUserTrailerTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxUserTrailerTrailerDetails.Location = new System.Drawing.Point(3, 107);
             this.groupBoxUserTrailerTrailerDetails.Name = "groupBoxUserTrailerTrailerDetails";
-            this.groupBoxUserTrailerTrailerDetails.Size = new System.Drawing.Size(558, 250);
+            this.groupBoxUserTrailerTrailerDetails.Size = new System.Drawing.Size(558, 311);
             this.groupBoxUserTrailerTrailerDetails.TabIndex = 30;
             this.groupBoxUserTrailerTrailerDetails.TabStop = false;
             this.groupBoxUserTrailerTrailerDetails.Text = "Details";
             this.groupBoxUserTrailerTrailerDetails.EnabledChanged += new System.EventHandler(this.groupBoxUserTrailerTrailerDetails_EnabledChanged);
-            // 
-            // labelLicensePlateTr
-            // 
-            this.labelLicensePlateTr.Location = new System.Drawing.Point(103, 222);
-            this.labelLicensePlateTr.Name = "labelLicensePlateTr";
-            this.labelLicensePlateTr.Size = new System.Drawing.Size(300, 13);
-            this.labelLicensePlateTr.TabIndex = 16;
-            this.labelLicensePlateTr.Text = "0 000 00";
-            // 
-            // labelUserTrailerLicensePlate
-            // 
-            this.labelUserTrailerLicensePlate.AutoSize = true;
-            this.labelUserTrailerLicensePlate.Location = new System.Drawing.Point(17, 222);
-            this.labelUserTrailerLicensePlate.Name = "labelUserTrailerLicensePlate";
-            this.labelUserTrailerLicensePlate.Size = new System.Drawing.Size(70, 13);
-            this.labelUserTrailerLicensePlate.TabIndex = 15;
-            this.labelUserTrailerLicensePlate.Text = "License plate";
             // 
             // tabPageFreightMarket
             // 
@@ -2436,6 +2420,45 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
             // 
+            // tableLayoutPanelTrailerDetails
+            // 
+            this.tableLayoutPanelTrailerDetails.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanelTrailerDetails.ColumnCount = 4;
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
+            this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanelTrailerDetails.Name = "tableLayoutPanelTrailerDetails";
+            this.tableLayoutPanelTrailerDetails.RowCount = 6;
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.00001F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelTrailerDetails.Size = new System.Drawing.Size(552, 292);
+            this.tableLayoutPanelTrailerDetails.TabIndex = 16;
+            // 
+            // tableLayoutPanelTrailerLP
+            // 
+            this.tableLayoutPanelTrailerLP.AutoSize = true;
+            this.tableLayoutPanelTrailerLP.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanelTrailerLP.ColumnCount = 2;
+            this.tableLayoutPanelTrailerDetails.SetColumnSpan(this.tableLayoutPanelTrailerLP, 4);
+            this.tableLayoutPanelTrailerLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanelTrailerLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTrailerLP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTrailerLP.Location = new System.Drawing.Point(1, 261);
+            this.tableLayoutPanelTrailerLP.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutPanelTrailerLP.Name = "tableLayoutPanelTrailerLP";
+            this.tableLayoutPanelTrailerLP.RowCount = 1;
+            this.tableLayoutPanelTrailerLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTrailerLP.Size = new System.Drawing.Size(550, 30);
+            this.tableLayoutPanelTrailerLP.TabIndex = 0;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2490,7 +2513,6 @@
             this.tableLayoutPanel13.ResumeLayout(false);
             this.tableLayoutPanelUserTrailerControls.ResumeLayout(false);
             this.groupBoxUserTrailerTrailerDetails.ResumeLayout(false);
-            this.groupBoxUserTrailerTrailerDetails.PerformLayout();
             this.tabPageFreightMarket.ResumeLayout(false);
             this.tabPageFreightMarket.PerformLayout();
             this.tabPageCargoMarket.ResumeLayout(false);
@@ -2508,6 +2530,8 @@
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
+            this.tableLayoutPanelTrailerDetails.ResumeLayout(false);
+            this.tableLayoutPanelTrailerDetails.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2631,8 +2655,6 @@
         private System.Windows.Forms.Button buttonCargoMarketRandomizeCargoCity;
         private System.Windows.Forms.Button buttonCargoMarketResetCargoCompany;
         private System.Windows.Forms.Button buttonCargoMarketResetCargoCity;
-        private System.Windows.Forms.Label labelLicensePlateTr;
-        private System.Windows.Forms.Label labelUserTrailerLicensePlate;
         private System.Windows.Forms.Label labelFreightMarketDistanceNumbers;
         private System.Windows.Forms.Label labelPlayerExperience;
         private System.Windows.Forms.Label labelCMTrailerType;
@@ -2701,6 +2723,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTruckDetails;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTruckLP;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTruckFuel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTrailerDetails;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTrailerLP;
     }
 }
 
