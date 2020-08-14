@@ -634,10 +634,9 @@ namespace TS_SE_Tool
         private void CorrectControlsPositions()
         {
             //Truck
-            Panel pbTruckFuel = (Panel)tabControlMain.TabPages[2].Controls.Find("progressbarTruckFuel",true)[0];
-            Label Flabel = (Label)tabControlMain.TabPages[2].Controls.Find("labelTruckDetailsFuel", true)[0];
-
-            Flabel.Location = new Point(pbTruckFuel.Location.X + (pbTruckFuel.Width - Flabel.Width) / 2, pbTruckFuel.Location.Y + pbTruckFuel.Height + 10);
+            Label labelPlate = (Label)tabControlMain.TabPages[2].Controls.Find("labelUserTruckLicensePlate", true).FirstOrDefault();
+            if (labelPlate != null)
+                tableLayoutPanelTruckLP.ColumnStyles[0] = new ColumnStyle(SizeType.Absolute, labelPlate.PreferredSize.Width);
 
             //Freight Market
             labelFreightMarketDistanceNumbers.Location = new Point( labelFreightMarketDistance.Location.X + labelFreightMarketDistance.Width + 6, labelFreightMarketDistanceNumbers.Location.Y);

@@ -28,89 +28,11 @@ namespace TS_SE_Tool
         //User Trucks tab
         private void CreateTruckPanelControls()
         {
-            CreateTruckPanelButtons();
-            CreateTruckPanelProgressBars();
+            CreateTruckPanelMainButtons();
+            CreateTruckPanelPartsControls();
         }
 
-        private void CreateTruckPanelProgressBars()
-        {
-            int pHeight = RepairImg.Height, pOffset = 5, lOffset = 60, pSizeW = 300;
-            int pSkillsNameHeight = 32, pSkillsNameWidth = 32, pSkillsNameOffset = 5, pSkillsNamelOffset = 12;
-
-            string[] toolskillimgtooltip = new string[] { "Engine", "Transmission", "Chassis", "Cabin", "Wheels" };
-            Label slabel, labelpartName;
-            Panel Ppanel;
-
-            for (int i = 0; i < 5; i++)
-            {
-                slabel = new Label();
-                groupBoxUserTruckTruckDetails.Controls.Add(slabel);
-                slabel.Name = "labelTruckPartName" + toolskillimgtooltip[i];
-                slabel.Location = new Point(pSkillsNamelOffset, 23 + (pSkillsNameHeight + pSkillsNameOffset * 3) * i);
-                slabel.Text = toolskillimgtooltip[i];
-                slabel.AutoSize = true;
-
-                labelpartName = new Label();
-                groupBoxUserTruckTruckDetails.Controls.Add(labelpartName);
-                labelpartName.Name = "labelTruckPartDataName" + i;
-                labelpartName.Location = new Point(lOffset + pSizeW / 2, 23 + (pSkillsNameHeight + pSkillsNameOffset * 3) * i);
-                labelpartName.Text = "";
-                labelpartName.AutoSize = true;
-
-                Panel imgpanel = new Panel();
-                groupBoxUserTruckTruckDetails.Controls.Add(imgpanel);
-
-                imgpanel.Parent = groupBoxUserTruckTruckDetails;
-                imgpanel.Location = new Point(pSkillsNamelOffset, 23 + 14 + (pSkillsNameHeight + pSkillsNameOffset * 3) * i);
-                imgpanel.BorderStyle = BorderStyle.None;
-                imgpanel.Size = new Size(pSkillsNameWidth, pSkillsNameHeight);
-                imgpanel.Name = "TruckPartImg" + i.ToString();
-
-                Bitmap bgimg = new Bitmap(TruckPartsImg[i], pSkillsNameHeight, pSkillsNameWidth);
-                imgpanel.BackgroundImage = bgimg;
-
-                //Panel 
-                Ppanel = new Panel();
-                groupBoxUserTruckTruckDetails.Controls.Add(Ppanel);
-
-                Ppanel.Parent = groupBoxUserTruckTruckDetails;
-                Ppanel.Location = new Point(lOffset, imgpanel.Location.Y + pOffset);
-                Ppanel.BorderStyle = BorderStyle.FixedSingle;
-                Ppanel.Size = new Size(pSizeW, 24);
-                Ppanel.Name = "progressbarTruckPart" + i.ToString();
-
-                Button button = new Button();
-                groupBoxUserTruckTruckDetails.Controls.Add(button);
-
-                button.Parent = groupBoxUserTruckTruckDetails;
-                button.Location = new Point(Ppanel.Location.X + Ppanel.Width + pOffset, imgpanel.Location.Y);
-                button.FlatStyle = FlatStyle.Flat;
-                button.Size = new Size(RepairImg.Height, RepairImg.Height);
-                button.Name = "buttonTruckElRepair" + i.ToString();
-                button.BackgroundImage = RepairImg;
-                button.BackgroundImageLayout = ImageLayout.Zoom;
-                button.Text = "";
-                button.FlatAppearance.BorderSize = 0;
-                button.Click += new EventHandler(buttonElRepair_Click);
-            }
-
-            Panel Ppanelf = new Panel();
-            groupBoxUserTruckTruckDetails.Controls.Add(Ppanelf);
-            Ppanelf.Parent = groupBoxUserTruckTruckDetails;
-            Ppanelf.Location = new Point(lOffset + pSizeW + pOffset * 2 + RepairImg.Width, 23 + 14);
-            Ppanelf.BorderStyle = BorderStyle.FixedSingle;
-            Ppanelf.Size = new Size(50, 220);
-            Ppanelf.Name = "progressbarTruckFuel";
-
-            slabel = new Label();
-            groupBoxUserTruckTruckDetails.Controls.Add(slabel);
-            slabel.Name = "labelTruckDetailsFuel";
-            slabel.Text = "Fuel";
-            slabel.AutoSize = true;
-            slabel.Location = new Point(Ppanelf.Location.X + (Ppanelf.Width - slabel.Width) / 2, Ppanelf.Location.Y + Ppanelf.Height + 10);
-        }
-
-        private void CreateTruckPanelButtons()
+        private void CreateTruckPanelMainButtons()
         {
             int pHeight = RepairImg.Height, pOffset = 5, tOffset = comboBoxUserTruckCompanyTrucks.Location.Y;
             int topbutoffset = comboBoxUserTruckCompanyTrucks.Location.X + comboBoxUserTruckCompanyTrucks.Width + pOffset;
@@ -151,6 +73,128 @@ namespace TS_SE_Tool
             buttonF.Click += new EventHandler(buttonTruckReFuel_Click);
             buttonF.Dock = DockStyle.Fill;
 
+        }
+
+        private void CreateTruckPanelPartsControls()
+        {
+            int pSkillsNameHeight = 32, pSkillsNameWidth = 32;
+
+            string[] toolskillimgtooltip = new string[] { "Engine", "Transmission", "Chassis", "Cabin", "Wheels" };
+            Label partLabel, partnameLabel;
+            Panel pbPanel;
+
+            for (int i = 0; i < 5; i++)
+            {
+                //Create table layout
+                TableLayoutPanel tbllPanel = new TableLayoutPanel();
+                tableLayoutPanelTruckDetails.Controls.Add(tbllPanel, 0, i);
+                tbllPanel.Dock = DockStyle.Fill;
+                tbllPanel.Margin = new Padding(0);
+                //
+                tbllPanel.Name = "tableLayoutPanelTruckDetails" + toolskillimgtooltip[i];
+
+                tbllPanel.ColumnCount = 3;
+                tbllPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 40F));
+                tbllPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+                tbllPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 40F));
+                tbllPanel.RowCount = 2;
+                tbllPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 18F));
+                tbllPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+                //
+
+                FlowLayoutPanel flowPanel = new FlowLayoutPanel();
+                flowPanel.FlowDirection = FlowDirection.LeftToRight;
+                flowPanel.Margin = new Padding(0);
+                tbllPanel.SetColumnSpan(flowPanel, 2);
+                tbllPanel.Controls.Add(flowPanel, 0, 0);
+
+                //Part type
+                partLabel = new Label();
+                partLabel.Name = "labelTruckPartName" + toolskillimgtooltip[i];
+                partLabel.Text = toolskillimgtooltip[i];
+                partLabel.AutoSize = true;
+                partLabel.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
+                partLabel.MinimumSize = new Size(36, partLabel.Height);
+
+                flowPanel.Controls.Add(partLabel);
+
+                //Part name
+                partnameLabel = new Label();
+                partnameLabel.Name = "labelTruckPartDataName" + i;
+                partnameLabel.Text = "";
+                partnameLabel.AutoSize = true;
+                partnameLabel.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
+
+                flowPanel.Controls.Add(partnameLabel);
+
+                //Part type image
+                Panel imgpanel = new Panel();
+                imgpanel.BorderStyle = BorderStyle.None;
+                imgpanel.Size = new Size(pSkillsNameWidth, pSkillsNameHeight);
+                imgpanel.Margin = new Padding(1);
+                imgpanel.Name = "TruckPartImg" + i.ToString();
+
+                Bitmap bgimg = new Bitmap(TruckPartsImg[i], pSkillsNameHeight, pSkillsNameWidth);
+                imgpanel.BackgroundImage = bgimg;
+                tbllPanel.Controls.Add(imgpanel, 0, 1);
+
+                //Progress bar panel 
+                pbPanel = new Panel();
+                pbPanel.BorderStyle = BorderStyle.FixedSingle;
+                pbPanel.Name = "progressbarTruckPart" + i.ToString();
+                pbPanel.Dock = DockStyle.Fill;
+                tbllPanel.Controls.Add(pbPanel, 1, 1);
+
+                //Repair button
+                Button button = new Button();
+                button.FlatStyle = FlatStyle.Flat;
+                button.Dock = DockStyle.Fill;
+                button.Margin = new Padding(1);
+
+                button.Name = "buttonTruckElRepair" + i.ToString();
+                button.BackgroundImage = RepairImg;
+                button.BackgroundImageLayout = ImageLayout.Zoom;
+                button.Text = "";
+                button.FlatAppearance.BorderSize = 0;
+                button.Click += new EventHandler(buttonElRepair_Click);
+
+                tbllPanel.Controls.Add(button, 2, 1);
+            }
+
+            //Fuel panel
+            Panel Ppanelf = new Panel();
+            Ppanelf.BorderStyle = BorderStyle.FixedSingle;
+            Ppanelf.Dock = DockStyle.Fill;
+            Ppanelf.Name = "progressbarTruckFuel";
+
+            //label - Fuel
+            Label labelF = new Label();
+            labelF.Name = "labelTruckDetailsFuel";
+            labelF.Text = "Fuel";
+            labelF.AutoSize = true;
+            labelF.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            labelF.TextAlign = ContentAlignment.MiddleCenter;
+
+            tableLayoutPanelTruckFuel.Controls.Add(Ppanelf, 0, 1);
+            tableLayoutPanelTruckFuel.Controls.Add(labelF, 0, 0);
+
+            //License plate
+            Label labelPlate = new Label();
+            labelPlate.Name = "labelUserTruckLicensePlate";
+            labelPlate.Text = "License plate";
+            labelPlate.Margin = new Padding(0);
+            labelPlate.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            labelPlate.TextAlign = ContentAlignment.MiddleCenter;
+
+            Label lcPlate = new Label();
+            lcPlate.Name = "labelLicensePlate";
+            lcPlate.Text = "A 000 AA";
+            lcPlate.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
+            lcPlate.Dock = DockStyle.Fill;
+            lcPlate.TextAlign = ContentAlignment.MiddleLeft;
+
+            tableLayoutPanelTruckLP.Controls.Add(labelPlate, 0, 0);
+            tableLayoutPanelTruckLP.Controls.Add(lcPlate, 1, 0);
         }
 
         private void FillUserCompanyTrucksList()
@@ -223,22 +267,13 @@ namespace TS_SE_Tool
 
             for (int i = 0; i < 5; i++)
             {
-                Panel pnl = null;
-                Label labelPart = null;
-
                 string pnlname = "progressbarTruckPart" + i.ToString(), labelPartName = "labelTruckPartDataName" + i.ToString();
 
-                if (groupBoxUserTruckTruckDetails.Controls.ContainsKey(pnlname))
-                {
-                    pnl = groupBoxUserTruckTruckDetails.Controls[pnlname] as Panel;
-                }
+                Panel pbPanel = groupBoxUserTruckTruckDetails.Controls.Find(pnlname, true).FirstOrDefault() as Panel;
 
-                if (groupBoxUserTruckTruckDetails.Controls.ContainsKey(labelPartName))
-                {
-                    labelPart = groupBoxUserTruckTruckDetails.Controls[labelPartName] as Label;
-                }
+                Label pnLabel = groupBoxUserTruckTruckDetails.Controls.Find(labelPartName, true).FirstOrDefault() as Label;
 
-                if (pnl != null)
+                if (pbPanel != null)
                 {
                     List<string> TruckDataPart = null;
 
@@ -263,19 +298,17 @@ namespace TS_SE_Tool
                     string wear = "0";
                     if (TruckDataPart != null)
                     {
-                        if (labelPart != null)
+                        if (pnLabel != null)
                         {
-                            labelPart.Text = TruckDataPart.Find(xl => xl.StartsWith(" data_path:")).Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                            pnLabel.Text = TruckDataPart.Find(xl => xl.StartsWith(" data_path:")).Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
                         }
 
                         wear = TruckDataPart.Find(xl => xl.StartsWith(" wear:")).Split(new char[] { ' ' })[2];
                     }
                     else
                     {
-                        labelPart.Text = "!! Part not found !!";
+                        pnLabel.Text = "!! Part not found !!";
                     }
-
-                    labelPart.Location = new Point(pnl.Location.X + (pnl.Width - labelPart.Width) / 2, labelPart.Location.Y);
 
                     decimal _wear = 0;
 
@@ -287,12 +320,12 @@ namespace TS_SE_Tool
 
                     SolidBrush ppen = new SolidBrush(GetProgressbarColor(_wear));
 
-                    int x = 0, y = 0, pnlwidth = (int)(pnl.Width * (1 - _wear));
+                    int x = 0, y = 0, pnlwidth = (int)(pbPanel.Width * (1 - _wear));
 
-                    Bitmap progress = new Bitmap(pnl.Width, pnl.Height);
+                    Bitmap progress = new Bitmap(pbPanel.Width, pbPanel.Height);
 
                     Graphics g = Graphics.FromImage(progress);
-                    g.FillRectangle(ppen, x, y, pnlwidth, pnl.Height);
+                    g.FillRectangle(ppen, x, y, pnlwidth, pbPanel.Height);
 
                     int fontSize = 12;
                     StringFormat sf = new StringFormat();
@@ -305,22 +338,18 @@ namespace TS_SE_Tool
                         FontFamily.GenericSansSerif,                    // or any other font family
                         (int)FontStyle.Bold,                            // font style (bold, italic, etc.)
                         g.DpiY * fontSize / 72,                         // em size
-                        new Rectangle(0, 0, pnl.Width, pnl.Height),     // location where to draw text
+                        new Rectangle(0, 0, pbPanel.Width, pbPanel.Height),     // location where to draw text
                         sf);                                            // set options here (e.g. center alignment)
                     g.SmoothingMode = SmoothingMode.AntiAlias;
                     g.FillPath(Brushes.Black, p);
                     g.DrawPath(Pens.Black, p);
 
-                    pnl.BackgroundImage = progress;
+                    pbPanel.BackgroundImage = progress;
                 }
             }
 
-            Panel pnlfuel = null;
             string pnlnamefuel = "progressbarTruckFuel";
-            if (groupBoxUserTruckTruckDetails.Controls.ContainsKey(pnlnamefuel))
-            {
-                pnlfuel = groupBoxUserTruckTruckDetails.Controls[pnlnamefuel] as Panel;
-            }
+            Panel pnlfuel = groupBoxUserTruckTruckDetails.Controls.Find(pnlnamefuel, true).FirstOrDefault() as Panel;
 
             if (pnlfuel != null)
             {
@@ -361,8 +390,8 @@ namespace TS_SE_Tool
                 pnlfuel.BackgroundImage = progress;
             }
 
-            string lctxt = "";
-            labelLicensePlate.Text = "";
+            //License plate
+            string lctxt = "";            
             int stindex = 0, endindex = 0;
 
             string LicensePlate = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "truckdata").PartData.Find(xl => xl.StartsWith(" license_plate:")).Split(new char[] { '"' })[1];
@@ -384,10 +413,17 @@ namespace TS_SE_Tool
                     lctxt += LicensePlate.Substring(stindex, endindex - stindex);
                 }
             }
-            if (lctxt.Split(new char[] { '|' }).Length > 1)
-                labelLicensePlate.Text = lctxt.Split(new char[] { '|' })[0] + " Country " + lctxt.Split(new char[] { '|' })[1];
-            else
-                labelLicensePlate.Text = lctxt.Split(new char[] { '|' })[0];
+
+            //Find label control
+
+            Label lpText = groupBoxUserTruckTruckDetails.Controls.Find("labelLicensePlate", true).FirstOrDefault() as Label;
+            if(lpText != null)
+            {
+                if (lctxt.Split(new char[] { '|' }).Length > 1)
+                    lpText.Text = lctxt.Split(new char[] { '|' })[0] + " Country " + lctxt.Split(new char[] { '|' })[1];
+                else
+                    lpText.Text = lctxt.Split(new char[] { '|' })[0];
+            }
         }
 
         //Events
@@ -469,47 +505,34 @@ namespace TS_SE_Tool
         {
             if (!_state)
             {
+                string lblname, pnlname;
+
                 for (int i = 0; i < 5; i++)
                 {
-                    Label lbl = null;
-                    string lblname = "labelTruckPartDataName" + i.ToString();
+                    lblname = "labelTruckPartDataName" + i.ToString();
+                    Label pnLabel = groupBoxUserTruckTruckDetails.Controls.Find(lblname, true).FirstOrDefault() as Label;
 
-                    if (groupBoxUserTruckTruckDetails.Controls.ContainsKey(lblname))
-                    {
-                        lbl = groupBoxUserTruckTruckDetails.Controls[lblname] as Label;
-                    }
+                    if (pnLabel != null)
+                        pnLabel.Text = "";
 
-                    if (lbl != null)
-                    {
-                        lbl.Text = "";
-                    }
+                    pnlname = "progressbarTruckPart" + i.ToString();
+                    Panel pbPanel = groupBoxUserTruckTruckDetails.Controls.Find(pnlname, true).FirstOrDefault() as Panel;
 
-                    Panel pnl = null;
-                    string pnlname = "progressbarTruckPart" + i.ToString();
-
-                    if (groupBoxUserTruckTruckDetails.Controls.ContainsKey(pnlname))
-                    {
-                        pnl = groupBoxUserTruckTruckDetails.Controls[pnlname] as Panel;
-                    }
-
-                    if (pnl != null)
-                    {
-                        pnl.BackgroundImage = null;
-                    }
+                    if (pbPanel != null)                    
+                        pbPanel.BackgroundImage = null;                    
                 }
 
-                Panel pnlF = null;
-                if (groupBoxUserTruckTruckDetails.Controls.ContainsKey("progressbarTruckFuel"))
-                {
-                    pnlF = groupBoxUserTruckTruckDetails.Controls["progressbarTruckFuel"] as Panel;
-                }
+                string pnlFname =  "progressbarTruckFuel";
+                Panel pnlF = groupBoxUserTruckTruckDetails.Controls.Find(pnlFname, true).FirstOrDefault() as Panel;
 
-                if (pnlF != null)
-                {
+                if (pnlF != null)                
                     pnlF.BackgroundImage = null;
-                }                
 
-                labelLicensePlate.Text = "";
+                string lblLCname = "labelLicensePlate";
+                Label lblLC = groupBoxUserTruckTruckDetails.Controls.Find(lblLCname, true).FirstOrDefault() as Label;
+
+                if (lblLC != null)
+                    lblLC.Text = "A 000 AA";
             }
         }
         //Buttons

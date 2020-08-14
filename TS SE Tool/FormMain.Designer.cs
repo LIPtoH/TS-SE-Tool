@@ -116,8 +116,9 @@
             this.buttonShareTruckWholeTruckCopy = new System.Windows.Forms.Button();
             this.buttonShareTruckTruckDetailsCopy = new System.Windows.Forms.Button();
             this.groupBoxUserTruckTruckDetails = new System.Windows.Forms.GroupBox();
-            this.labelLicensePlate = new System.Windows.Forms.Label();
-            this.labelUserTruckLicensePlate = new System.Windows.Forms.Label();
+            this.tableLayoutPanelTruckDetails = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelTruckLP = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelTruckFuel = new System.Windows.Forms.TableLayoutPanel();
             this.tabPageTrailer = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxUserTrailerShareTrailerSettings = new System.Windows.Forms.GroupBox();
@@ -237,6 +238,7 @@
             this.groupBoxUserTruckShareTruckSettings.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.groupBoxUserTruckTruckDetails.SuspendLayout();
+            this.tableLayoutPanelTruckDetails.SuspendLayout();
             this.tabPageTrailer.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.groupBoxUserTrailerShareTrailerSettings.SuspendLayout();
@@ -1244,8 +1246,7 @@
             // 
             // groupBoxUserTruckTruckDetails
             // 
-            this.groupBoxUserTruckTruckDetails.Controls.Add(this.labelLicensePlate);
-            this.groupBoxUserTruckTruckDetails.Controls.Add(this.labelUserTruckLicensePlate);
+            this.groupBoxUserTruckTruckDetails.Controls.Add(this.tableLayoutPanelTruckDetails);
             this.groupBoxUserTruckTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxUserTruckTruckDetails.Location = new System.Drawing.Point(3, 107);
             this.groupBoxUserTruckTruckDetails.Name = "groupBoxUserTruckTruckDetails";
@@ -1255,22 +1256,60 @@
             this.groupBoxUserTruckTruckDetails.Text = "Details";
             this.groupBoxUserTruckTruckDetails.EnabledChanged += new System.EventHandler(this.groupBoxUserTruckTruckDetails_EnabledChanged);
             // 
-            // labelLicensePlate
+            // tableLayoutPanelTruckDetails
             // 
-            this.labelLicensePlate.Location = new System.Drawing.Point(103, 268);
-            this.labelLicensePlate.Name = "labelLicensePlate";
-            this.labelLicensePlate.Size = new System.Drawing.Size(200, 13);
-            this.labelLicensePlate.TabIndex = 14;
-            this.labelLicensePlate.Text = "0 000 00";
+            this.tableLayoutPanelTruckDetails.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanelTruckDetails.ColumnCount = 4;
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
+            this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
+            this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTruckDetails.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanelTruckDetails.Name = "tableLayoutPanelTruckDetails";
+            this.tableLayoutPanelTruckDetails.RowCount = 6;
+            this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.00001F));
+            this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelTruckDetails.Size = new System.Drawing.Size(552, 292);
+            this.tableLayoutPanelTruckDetails.TabIndex = 15;
             // 
-            // labelUserTruckLicensePlate
+            // tableLayoutPanelTruckLP
             // 
-            this.labelUserTruckLicensePlate.AutoSize = true;
-            this.labelUserTruckLicensePlate.Location = new System.Drawing.Point(17, 268);
-            this.labelUserTruckLicensePlate.Name = "labelUserTruckLicensePlate";
-            this.labelUserTruckLicensePlate.Size = new System.Drawing.Size(70, 13);
-            this.labelUserTruckLicensePlate.TabIndex = 13;
-            this.labelUserTruckLicensePlate.Text = "License plate";
+            this.tableLayoutPanelTruckLP.AutoSize = true;
+            this.tableLayoutPanelTruckLP.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanelTruckLP.ColumnCount = 2;
+            this.tableLayoutPanelTruckDetails.SetColumnSpan(this.tableLayoutPanelTruckLP, 4);
+            this.tableLayoutPanelTruckLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanelTruckLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTruckLP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTruckLP.Location = new System.Drawing.Point(1, 261);
+            this.tableLayoutPanelTruckLP.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutPanelTruckLP.Name = "tableLayoutPanelTruckLP";
+            this.tableLayoutPanelTruckLP.RowCount = 1;
+            this.tableLayoutPanelTruckLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTruckLP.Size = new System.Drawing.Size(550, 30);
+            this.tableLayoutPanelTruckLP.TabIndex = 0;
+            // 
+            // tableLayoutPanelTruckFuel
+            // 
+            this.tableLayoutPanelTruckFuel.ColumnCount = 1;
+            this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(456, 1);
+            this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
+            this.tableLayoutPanelTruckFuel.RowCount = 2;
+            this.tableLayoutPanelTruckDetails.SetRowSpan(this.tableLayoutPanelTruckFuel, 5);
+            this.tableLayoutPanelTruckFuel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+            this.tableLayoutPanelTruckFuel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTruckFuel.Size = new System.Drawing.Size(74, 258);
+            this.tableLayoutPanelTruckFuel.TabIndex = 1;
             // 
             // tabPageTrailer
             // 
@@ -2441,7 +2480,8 @@
             this.groupBoxUserTruckShareTruckSettings.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.groupBoxUserTruckTruckDetails.ResumeLayout(false);
-            this.groupBoxUserTruckTruckDetails.PerformLayout();
+            this.tableLayoutPanelTruckDetails.ResumeLayout(false);
+            this.tableLayoutPanelTruckDetails.PerformLayout();
             this.tabPageTrailer.ResumeLayout(false);
             this.tableLayoutPanel12.ResumeLayout(false);
             this.groupBoxUserTrailerShareTrailerSettings.ResumeLayout(false);
@@ -2573,8 +2613,6 @@
         private System.Windows.Forms.Button buttonConvoyToolsGPSCurrentPositionCopy;
         private System.Windows.Forms.Button buttonConvoyToolsGPSStoredGPSPathPaste;
         private System.Windows.Forms.Button buttonConvoyToolsGPSStoredGPSPathCopy;
-        private System.Windows.Forms.Label labelLicensePlate;
-        private System.Windows.Forms.Label labelUserTruckLicensePlate;
         private System.Windows.Forms.Button buttonShareTruckWholeTruckPaste;
         private System.Windows.Forms.Button buttonShareTruckTruckDetailsPaste;
         private System.Windows.Forms.GroupBox groupBoxMainProfilesAndSaves;
@@ -2660,6 +2698,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelUserColors;
         private System.Windows.Forms.Panel panelProfileUserColors;
         private System.Windows.Forms.Button buttonAddUserColor;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTruckDetails;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTruckLP;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTruckFuel;
     }
 }
 
