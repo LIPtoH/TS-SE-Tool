@@ -295,7 +295,8 @@ namespace S16.Drawing
                         format = PixelFormat.LUMINANCE;
                     }
                 }
-                else
+
+                if ((header.pixelformat.flags & DDPF_RGB) == DDPF_RGB)
                 {
                     if ((header.pixelformat.flags & DDPF_ALPHAPIXELS) == DDPF_ALPHAPIXELS)
                     {
@@ -305,6 +306,11 @@ namespace S16.Drawing
                     {
                         format = PixelFormat.RGB;
                     }
+                }
+
+                if ((header.pixelformat.flags & DDPF_ALPHA) == DDPF_ALPHA)
+                {
+                        format = PixelFormat.A8;                    
                 }
 
                 blocksize = (header.width * header.height * header.depth * (header.pixelformat.rgbbitcount >> 3));
@@ -324,6 +330,9 @@ namespace S16.Drawing
                 case PixelFormat.RGBA:
                 case PixelFormat.RGB:
                     return rgbbitcount / 8;
+
+                case PixelFormat.A8:
+                    return 4;
 
                 case PixelFormat.THREEDC:
                 case PixelFormat.RXGB:
@@ -632,6 +641,10 @@ namespace S16.Drawing
 
                 case PixelFormat.RGB:
                     rawData = this.DecompressRGB(header, data, pixelFormat);
+                    break;
+
+                case PixelFormat.A8:
+                    rawData = this.DecompressA8(header, data, pixelFormat);
                     break;
 
                 case PixelFormat.LUMINANCE:
@@ -1114,6 +1127,38 @@ namespace S16.Drawing
                     rawData[offset + 2] = (byte)(((pxc >> bShift1) * bMul) >> bShift2);
                     pxc = px & header.pixelformat.alphabitmask;
                     rawData[offset + 3] = (byte)(((pxc >> aShift1) * aMul) >> aShift2);
+                    offset += 4;
+                }
+            }
+            return rawData;
+        }
+        
+        private unsafe byte[] DecompressA8(DDSStruct header, byte[] data, PixelFormat pixelFormat)
+        {
+            // allocate bitmap
+            int width = (int)header.width;
+            int height = (int)header.height;
+            int depth = (int)header.depth;
+
+            int bpp = (int)(this.PixelFormatToBpp(pixelFormat, header.pixelformat.rgbbitcount));
+            int sizeofplane = (int)(width * height * bpp);
+
+            byte[] rawData = new byte[depth * sizeofplane];
+            int offset = 0;
+            int pixnum = width * height * depth;
+
+            fixed (byte* bytePtr = data)
+            {
+                byte* temp = bytePtr;
+
+                while (pixnum-- > 0)
+                {
+                    byte px = *temp;
+                    temp += 1;
+                    //rawData[offset + 0] = 0x00; //R
+                    //rawData[offset + 1] = 0x00; //G
+                    //rawData[offset + 2] = 0x00; //B
+                    rawData[offset + 3] = px;   //A
                     offset += 4;
                 }
             }
@@ -1884,6 +1929,7 @@ namespace S16.Drawing
 
         #region pixelformat values
         private const int DDPF_ALPHAPIXELS = 0x00000001;
+        private const int DDPF_ALPHA = 0x00000002;
         private const int DDPF_FOURCC = 0x00000004;
         private const int DDPF_RGB = 0x00000040;
         private const int DDPF_LUMINANCE = 0x00020000;
@@ -1975,6 +2021,10 @@ namespace S16.Drawing
             R32F,
             G32R32F,
             A32B32G32R32F,
+            /// <summary>
+            /// 8-bit image, with 8-bit black to transparent.
+            /// </summary>
+            A8,
             /// <summary>
             /// Unknown pixel format.
             /// </summary>

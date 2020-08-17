@@ -136,6 +136,8 @@
             this.comboBoxUserTrailerCompanyTrailers = new System.Windows.Forms.ComboBox();
             this.buttonUserTrailerSelectCurrent = new System.Windows.Forms.Button();
             this.groupBoxUserTrailerTrailerDetails = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanelTrailerDetails = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelTrailerLP = new System.Windows.Forms.TableLayoutPanel();
             this.tabPageFreightMarket = new System.Windows.Forms.TabPage();
             this.buttonFreightMarketCancelJobEdit = new System.Windows.Forms.Button();
             this.comboBoxFreightMarketTrailerVariant = new System.Windows.Forms.ComboBox();
@@ -213,8 +215,6 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanelTrailerDetails = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanelTrailerLP = new System.Windows.Forms.TableLayoutPanel();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -247,6 +247,7 @@
             this.tableLayoutPanel13.SuspendLayout();
             this.tableLayoutPanelUserTrailerControls.SuspendLayout();
             this.groupBoxUserTrailerTrailerDetails.SuspendLayout();
+            this.tableLayoutPanelTrailerDetails.SuspendLayout();
             this.tabPageFreightMarket.SuspendLayout();
             this.tabPageCargoMarket.SuspendLayout();
             this.tabPageConvoyTools.SuspendLayout();
@@ -259,7 +260,6 @@
             this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
-            this.tableLayoutPanelTrailerDetails.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripMain
@@ -1264,7 +1264,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1276,7 +1276,7 @@
             this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelTruckDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanelTruckDetails.Size = new System.Drawing.Size(552, 292);
             this.tableLayoutPanelTruckDetails.TabIndex = 15;
             // 
@@ -1284,17 +1284,18 @@
             // 
             this.tableLayoutPanelTruckLP.AutoSize = true;
             this.tableLayoutPanelTruckLP.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanelTruckLP.ColumnCount = 2;
+            this.tableLayoutPanelTruckLP.ColumnCount = 3;
             this.tableLayoutPanelTruckDetails.SetColumnSpan(this.tableLayoutPanelTruckLP, 4);
             this.tableLayoutPanelTruckLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanelTruckLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTruckLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.tableLayoutPanelTruckLP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckLP.Location = new System.Drawing.Point(1, 261);
+            this.tableLayoutPanelTruckLP.Location = new System.Drawing.Point(1, 257);
             this.tableLayoutPanelTruckLP.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanelTruckLP.Name = "tableLayoutPanelTruckLP";
             this.tableLayoutPanelTruckLP.RowCount = 1;
             this.tableLayoutPanelTruckLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTruckLP.Size = new System.Drawing.Size(550, 30);
+            this.tableLayoutPanelTruckLP.Size = new System.Drawing.Size(550, 34);
             this.tableLayoutPanelTruckLP.TabIndex = 0;
             // 
             // tableLayoutPanelTruckFuel
@@ -1302,14 +1303,14 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(455, 1);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(453, 1);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
             this.tableLayoutPanelTruckDetails.SetRowSpan(this.tableLayoutPanelTruckFuel, 5);
             this.tableLayoutPanelTruckFuel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
             this.tableLayoutPanelTruckFuel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTruckFuel.Size = new System.Drawing.Size(74, 258);
+            this.tableLayoutPanelTruckFuel.Size = new System.Drawing.Size(74, 254);
             this.tableLayoutPanelTruckFuel.TabIndex = 1;
             // 
             // tabPageTrailer
@@ -1529,6 +1530,45 @@
             this.groupBoxUserTrailerTrailerDetails.TabStop = false;
             this.groupBoxUserTrailerTrailerDetails.Text = "Details";
             this.groupBoxUserTrailerTrailerDetails.EnabledChanged += new System.EventHandler(this.groupBoxUserTrailerTrailerDetails_EnabledChanged);
+            // 
+            // tableLayoutPanelTrailerDetails
+            // 
+            this.tableLayoutPanelTrailerDetails.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanelTrailerDetails.ColumnCount = 4;
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
+            this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanelTrailerDetails.Name = "tableLayoutPanelTrailerDetails";
+            this.tableLayoutPanelTrailerDetails.RowCount = 6;
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.00001F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelTrailerDetails.Size = new System.Drawing.Size(552, 292);
+            this.tableLayoutPanelTrailerDetails.TabIndex = 16;
+            // 
+            // tableLayoutPanelTrailerLP
+            // 
+            this.tableLayoutPanelTrailerLP.AutoSize = true;
+            this.tableLayoutPanelTrailerLP.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanelTrailerLP.ColumnCount = 2;
+            this.tableLayoutPanelTrailerDetails.SetColumnSpan(this.tableLayoutPanelTrailerLP, 4);
+            this.tableLayoutPanelTrailerLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanelTrailerLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTrailerLP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTrailerLP.Location = new System.Drawing.Point(1, 261);
+            this.tableLayoutPanelTrailerLP.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutPanelTrailerLP.Name = "tableLayoutPanelTrailerLP";
+            this.tableLayoutPanelTrailerLP.RowCount = 1;
+            this.tableLayoutPanelTrailerLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTrailerLP.Size = new System.Drawing.Size(550, 30);
+            this.tableLayoutPanelTrailerLP.TabIndex = 0;
             // 
             // tabPageFreightMarket
             // 
@@ -2420,45 +2460,6 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
             // 
-            // tableLayoutPanelTrailerDetails
-            // 
-            this.tableLayoutPanelTrailerDetails.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanelTrailerDetails.ColumnCount = 4;
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
-            this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
-            this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanelTrailerDetails.Name = "tableLayoutPanelTrailerDetails";
-            this.tableLayoutPanelTrailerDetails.RowCount = 6;
-            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.00001F));
-            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanelTrailerDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanelTrailerDetails.Size = new System.Drawing.Size(552, 292);
-            this.tableLayoutPanelTrailerDetails.TabIndex = 16;
-            // 
-            // tableLayoutPanelTrailerLP
-            // 
-            this.tableLayoutPanelTrailerLP.AutoSize = true;
-            this.tableLayoutPanelTrailerLP.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanelTrailerLP.ColumnCount = 2;
-            this.tableLayoutPanelTrailerDetails.SetColumnSpan(this.tableLayoutPanelTrailerLP, 4);
-            this.tableLayoutPanelTrailerLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanelTrailerLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTrailerLP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTrailerLP.Location = new System.Drawing.Point(1, 261);
-            this.tableLayoutPanelTrailerLP.Margin = new System.Windows.Forms.Padding(1);
-            this.tableLayoutPanelTrailerLP.Name = "tableLayoutPanelTrailerLP";
-            this.tableLayoutPanelTrailerLP.RowCount = 1;
-            this.tableLayoutPanelTrailerLP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTrailerLP.Size = new System.Drawing.Size(550, 30);
-            this.tableLayoutPanelTrailerLP.TabIndex = 0;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2513,6 +2514,8 @@
             this.tableLayoutPanel13.ResumeLayout(false);
             this.tableLayoutPanelUserTrailerControls.ResumeLayout(false);
             this.groupBoxUserTrailerTrailerDetails.ResumeLayout(false);
+            this.tableLayoutPanelTrailerDetails.ResumeLayout(false);
+            this.tableLayoutPanelTrailerDetails.PerformLayout();
             this.tabPageFreightMarket.ResumeLayout(false);
             this.tabPageFreightMarket.PerformLayout();
             this.tabPageCargoMarket.ResumeLayout(false);
@@ -2530,8 +2533,6 @@
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
-            this.tableLayoutPanelTrailerDetails.ResumeLayout(false);
-            this.tableLayoutPanelTrailerDetails.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

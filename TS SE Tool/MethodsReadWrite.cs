@@ -439,6 +439,29 @@ namespace TS_SE_Tool
             GameIconeImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
         }
 
+        public Image[] ExtImgLoader(string[] _filenamesarray)
+        {
+            Image[] tempImgarray = new Image[_filenamesarray.Length];
+
+            for (int i = 0; i < _filenamesarray.Length; i++)
+            {
+                try
+                {
+                    MemoryStream ms = new MemoryStream();
+                    Bitmap temp = ImageFromDDS(_filenamesarray[i]);
+                    temp.Save(ms, ImageFormat.Png);
+                    tempImgarray[i] = Image.FromStream(ms);
+                    ms.Dispose();
+                }
+                catch
+                {
+                    tempImgarray[i] = new Bitmap(1, 1);
+                }
+            }
+
+            return tempImgarray;
+        }
+
         public Image[] ExtImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y )
         {
             Image[] tempImgarray = new Image[_filenamesarray.Length];

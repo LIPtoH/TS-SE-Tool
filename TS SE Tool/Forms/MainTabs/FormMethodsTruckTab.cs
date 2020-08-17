@@ -195,6 +195,15 @@ namespace TS_SE_Tool
 
             tableLayoutPanelTruckLP.Controls.Add(labelPlate, 0, 0);
             tableLayoutPanelTruckLP.Controls.Add(lcPlate, 1, 0);
+
+            //
+            Panel LPpanel = new Panel();
+            LPpanel.Dock = DockStyle.Fill;
+            LPpanel.Margin = new Padding(0);
+            LPpanel.Name = "TruckLicensePlateIMG";
+            LPpanel.BackgroundImageLayout = ImageLayout.None;
+
+            tableLayoutPanelTruckLP.Controls.Add(LPpanel, 2, 0);
         }
 
         private void FillUserCompanyTrucksList()
@@ -395,7 +404,7 @@ namespace TS_SE_Tool
             int stindex = 0, endindex = 0;
 
             string LicensePlate = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "truckdata").PartData.Find(xl => xl.StartsWith(" license_plate:")).Split(new char[] { '"' })[1];
-
+            
             for (int i = 0; i < LicensePlate.Length; i++)
             {
                 if (LicensePlate[i] == '<')
@@ -415,7 +424,6 @@ namespace TS_SE_Tool
             }
 
             //Find label control
-
             Label lpText = groupBoxUserTruckTruckDetails.Controls.Find("labelLicensePlate", true).FirstOrDefault() as Label;
             if(lpText != null)
             {
@@ -423,6 +431,17 @@ namespace TS_SE_Tool
                     lpText.Text = lctxt.Split(new char[] { '|' })[0] + " Country " + lctxt.Split(new char[] { '|' })[1];
                 else
                     lpText.Text = lctxt.Split(new char[] { '|' })[0];
+            }            
+            
+            //
+            Panel lpPanel = groupBoxUserTruckTruckDetails.Controls.Find("TruckLicensePlateIMG", true).FirstOrDefault() as Panel;
+
+            if (lpPanel != null)
+            {
+                Image tmp = Utilities.TS_Graphics.LicensePlateRender(LicensePlate.Split(new char[] { '|' })[0], LicensePlate.Split(new char[] { '|' })[1].Trim(new char[] { '_', ' ' }));
+
+                Bitmap bgimg = new Bitmap(tmp, 128, 32);
+                lpPanel.BackgroundImage = bgimg;
             }
         }
 
