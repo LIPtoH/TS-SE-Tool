@@ -183,6 +183,9 @@ namespace TS_SE_Tool
 
         public Dictionary<string, List<string>> CurrencyDictFormatATS = new Dictionary<string, List<string>>();
         public Dictionary<string, double> CurrencyDictConversionATS = new Dictionary<string, double>();
+
+        internal Dictionary<string, Dictionary<UInt16, SCS.SCSFontLetter>> GlobalFontMap;
+        internal Dictionary<string, byte> LicensePlateWidth;
         #endregion
 
         public FormMain()

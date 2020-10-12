@@ -260,13 +260,12 @@ namespace TS_SE_Tool
                                     }
 
                                     userColorStr = Utilities.NumericUtilities.IntegerToHexString(Convert.ToUInt32(userColorStr));
-                                    userColorStr = userColorStr.Substring(2);
 
-                                    int _B = int.Parse(userColorStr.Substring(0, 2), NumberStyles.HexNumber);
-                                    int _G = int.Parse(userColorStr.Substring(2, 2), NumberStyles.HexNumber);
-                                    int _R = int.Parse(userColorStr.Substring(4, 2), NumberStyles.HexNumber);
+                                    int[] hexColorParts = Utilities.NumericUtilities.SplitNConvertSSCHexColor(userColorStr, 2).ToArray();
 
-                                    userColor = Color.FromArgb(255, _R, _G, _B);
+                                    int tmpAlpha = hexColorParts[0], tmpRed = hexColorParts[3], tmpGreen = hexColorParts[2], tmpBlue = hexColorParts[1];
+                                    userColor = Color.FromArgb(tmpAlpha, tmpRed, tmpGreen, tmpBlue);
+
                                     UserColorsList.Add(userColor);
                                 }
                                 else
@@ -794,7 +793,7 @@ namespace TS_SE_Tool
                                                     {
                                                         UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("body"));
                                                     }
-                                                    else if (truckpart.Contains("chassis"))
+                                                    else if (truckpart.Contains("chassis") || truckpart.Contains("/def/vehicle/trailer/"))
                                                     {
                                                         UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("chassis"));
                                                     }

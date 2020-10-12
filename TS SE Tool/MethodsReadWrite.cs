@@ -448,14 +448,20 @@ namespace TS_SE_Tool
                 try
                 {
                     MemoryStream ms = new MemoryStream();
-                    Bitmap temp = ImageFromDDS(_filenamesarray[i]);
-                    temp.Save(ms, ImageFormat.Png);
-                    tempImgarray[i] = Image.FromStream(ms);
-                    ms.Dispose();
+
+                    if (File.Exists(_filenamesarray[i]))
+                    {
+                        Bitmap temp = ImageFromDDS(_filenamesarray[i]);
+                        temp.Save(ms, ImageFormat.Png);
+                        tempImgarray[i] = Image.FromStream(ms);
+                        ms.Dispose();
+                    }
+                    else
+                        tempImgarray[i] = null;
                 }
                 catch
                 {
-                    tempImgarray[i] = new Bitmap(1, 1);
+                    tempImgarray[i] = null;
                 }
             }
 

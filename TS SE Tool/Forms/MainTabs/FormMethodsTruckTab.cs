@@ -59,6 +59,7 @@ namespace TS_SE_Tool
             buttonR.Text = "";
             buttonR.FlatAppearance.BorderSize = 0;
             buttonR.Click += new EventHandler(buttonTruckRepair_Click);
+            buttonR.EnabledChanged += new EventHandler(buttonElRepair_EnabledChanged);
             buttonR.Dock = DockStyle.Fill;
 
             Button buttonF = new Button();
@@ -71,8 +72,8 @@ namespace TS_SE_Tool
             buttonF.Text = "";
             buttonF.FlatAppearance.BorderSize = 0;
             buttonF.Click += new EventHandler(buttonTruckReFuel_Click);
+            buttonF.EnabledChanged += new EventHandler(buttonRefuel_EnabledChanged);
             buttonF.Dock = DockStyle.Fill;
-
         }
 
         private void CreateTruckPanelPartsControls()
@@ -157,6 +158,7 @@ namespace TS_SE_Tool
                 button.Text = "";
                 button.FlatAppearance.BorderSize = 0;
                 button.Click += new EventHandler(buttonElRepair_Click);
+                button.EnabledChanged += new EventHandler(buttonElRepair_EnabledChanged);
 
                 tbllPanel.Controls.Add(button, 2, 1);
             }
@@ -201,7 +203,7 @@ namespace TS_SE_Tool
             LPpanel.Dock = DockStyle.Fill;
             LPpanel.Margin = new Padding(0);
             LPpanel.Name = "TruckLicensePlateIMG";
-            LPpanel.BackgroundImageLayout = ImageLayout.None;
+            LPpanel.BackgroundImageLayout = ImageLayout.Center;
 
             tableLayoutPanelTruckLP.Controls.Add(LPpanel, 2, 0);
         }
@@ -212,49 +214,73 @@ namespace TS_SE_Tool
             DataColumn dc = new DataColumn("UserTruckNameless", typeof(string));
             combDT.Columns.Add(dc);
 
-            dc = new DataColumn("UserTruckName", typeof(string));
+            //dc = new DataColumn("UserTruckName", typeof(string));
+            //combDT.Columns.Add(dc);
+            //
+
+            dc = new DataColumn("TruckType", typeof(string));
             combDT.Columns.Add(dc);
+
+            dc = new DataColumn("TruckName", typeof(string));
+            combDT.Columns.Add(dc);
+
+            dc = new DataColumn("GarageName", typeof(string));
+            combDT.Columns.Add(dc);
+
+            DataColumn dcDisplay = new DataColumn("DisplayMember");
+            dcDisplay.Expression = string.Format("IIF(UserTruckNameless <> ''," +
+                                                        "'[' + {0} +'] ' + IIF(GarageName <> '', {1} +' || ','',) + {2}," +
+                                                        "'-- NONE --')", 
+                                                "TruckType", "GarageName", "TruckName");
+            combDT.Columns.Add(dcDisplay);
+            //
 
             foreach (KeyValuePair<string, UserCompanyTruckData> UserTruck in UserTruckDictionary)
             {
                 string truckname = "";
+
                 try
                 {
                     string templine = UserTruck.Value.Parts.Find(x => x.PartType == "truckbrandname").PartData.Find(xline => xline.StartsWith(" data_path:"));
                     truckname = templine.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
                 }
                 catch { }
-                TruckBrandsLngDict.TryGetValue(truckname, out string trucknamevalue);
 
-                string TruckName = "";
+                TruckBrandsLngDict.TryGetValue(truckname, out string trucknamevalue);
+                //
+                string tmpTruckType = "", tmpTruckName = "", tmpGarageName = "";
 
                 if (UserTruckDictionary[UserTruck.Key].Users)
-                    TruckName = "[U] ";
-                else
-                    TruckName = "[Q] ";
+                {
+                    tmpTruckType = "U";
 
+                    tmpGarageName = GaragesList.Find(x => x.Vehicles.Contains(UserTruck.Key)).GarageNameTranslated;
+                }
+                else
+                    tmpTruckType = "Q";
+                //
                 if (trucknamevalue != null && trucknamevalue != "")
                 {
-                    TruckName += trucknamevalue;
-                    combDT.Rows.Add(UserTruck.Key, TruckName);
+                    tmpTruckName = trucknamevalue;
                 }
                 else
                 {
-                    TruckName += truckname;
-                    combDT.Rows.Add(UserTruck.Key, TruckName);
+                    tmpTruckName = truckname;
                 }
+                //
+                combDT.Rows.Add(UserTruck.Key, tmpTruckType, tmpTruckName, tmpGarageName);
             }
 
             bool noTrucks = false;
-
+            
             if (combDT.Rows.Count == 0)
             {
-                combDT.Rows.Add("null", "-- NONE --"); //none
+                combDT.Rows.Add("null");//, "-- NONE --"); //none
                 noTrucks = true;
             }
-
+            
             comboBoxUserTruckCompanyTrucks.ValueMember = "UserTruckNameless";
-            comboBoxUserTruckCompanyTrucks.DisplayMember = "UserTruckName";
+            comboBoxUserTruckCompanyTrucks.DisplayMember = "DisplayMember";
             comboBoxUserTruckCompanyTrucks.DataSource = combDT;
 
             if (!noTrucks)
@@ -274,6 +300,8 @@ namespace TS_SE_Tool
         {
             UserTruckDictionary.TryGetValue(comboBoxUserTruckCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTruck);
 
+            bool repairEnabled = false;
+
             for (int i = 0; i < 5; i++)
             {
                 string pnlname = "progressbarTruckPart" + i.ToString(), labelPartName = "labelTruckPartDataName" + i.ToString();
@@ -282,29 +310,41 @@ namespace TS_SE_Tool
 
                 Label pnLabel = groupBoxUserTruckTruckDetails.Controls.Find(labelPartName, true).FirstOrDefault() as Label;
 
+                Button repairButton = groupBoxUserTruckTruckDetails.Controls.Find("buttonTruckElRepair" + i, true).FirstOrDefault() as Button;
+
                 if (pbPanel != null)
                 {
                     List<string> TruckDataPart = null;
 
-                    switch (i)
+                    try
                     {
-                        case 0:
-                            TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "engine").PartData;
-                            break;
-                        case 1:
-                            TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "transmission").PartData;
-                            break;
-                        case 2:
-                            TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "chassis").PartData;
-                            break;
-                        case 3:
-                            TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "cabin").PartData;
-                            break;
-                        case 4:
-                            TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "tire").PartData;
-                            break;
+                        switch (i)
+                        {
+                            case 0:
+                                TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "engine").PartData;
+                                break;
+                            case 1:
+                                TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "transmission").PartData;
+                                break;
+                            case 2:
+                                TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "chassis").PartData;
+                                break;
+                            case 3:
+                                TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "cabin").PartData;
+                                break;
+                            case 4:
+                                TruckDataPart = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "tire").PartData;
+                                break;
+                        }
                     }
+                    catch
+                    {
+                        repairButton.Enabled = false;
+                        continue;
+                    }
+
                     string wear = "0";
+
                     if (TruckDataPart != null)
                     {
                         if (pnLabel != null)
@@ -322,10 +362,19 @@ namespace TS_SE_Tool
                     decimal _wear = 0;
 
                     if (wear != "0" && wear != "1")
+                    {
                         _wear = Utilities.NumericUtilities.HexFloatToDecimalFloat(wear);
-                    else
-                    if (wear == "1")
+                        repairButton.Enabled = true;
+                        repairEnabled = true;
+                    }
+                    else if (wear == "1")
+                    {
                         _wear = 1;
+                        repairButton.Enabled = true;
+                        repairEnabled = true;
+                    }
+                    else
+                        repairButton.Enabled = false;
 
                     SolidBrush ppen = new SolidBrush(GetProgressbarColor(_wear));
 
@@ -357,8 +406,13 @@ namespace TS_SE_Tool
                 }
             }
 
+            Button repairTruck = tableLayoutPanelUserTruckControls.Controls.Find("buttonTruckRepair", true).FirstOrDefault() as Button;
+            repairTruck.Enabled = repairEnabled;
+
             string pnlnamefuel = "progressbarTruckFuel";
             Panel pnlfuel = groupBoxUserTruckTruckDetails.Controls.Find(pnlnamefuel, true).FirstOrDefault() as Panel;
+
+            Button refuelTruck = tableLayoutPanelUserTruckControls.Controls.Find("buttonTruckReFuel", true).FirstOrDefault() as Button;
 
             if (pnlfuel != null)
             {
@@ -366,10 +420,17 @@ namespace TS_SE_Tool
                 decimal _fuel = 0;
 
                 if (fuel != "0" && fuel != "1")
+                {
+                    refuelTruck.Enabled = true;
                     _fuel = Utilities.NumericUtilities.HexFloatToDecimalFloat(fuel);
-                else
-                if (fuel == "1")
+                }
+                else if (fuel == "1")
+                {
+                    refuelTruck.Enabled = false;
                     _fuel = 1;
+                }
+                else
+                    refuelTruck.Enabled = true;
 
                 SolidBrush ppen = new SolidBrush(GetProgressbarColor(1 - _fuel));
                 int pnlheight = (int)(pnlfuel.Height * (_fuel)), x = 0, y = pnlfuel.Height - pnlheight;
@@ -400,48 +461,22 @@ namespace TS_SE_Tool
             }
 
             //License plate
-            string lctxt = "";            
-            int stindex = 0, endindex = 0;
-
             string LicensePlate = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "truckdata").PartData.Find(xl => xl.StartsWith(" license_plate:")).Split(new char[] { '"' })[1];
-            
-            for (int i = 0; i < LicensePlate.Length; i++)
-            {
-                if (LicensePlate[i] == '<')
-                {
-                    endindex = i;
-                    lctxt += LicensePlate.Substring(stindex, endindex - stindex);
-                }
-                else if (LicensePlate[i] == '>')
-                {
-                    stindex = i + 1;
-                }
-                else if (i == LicensePlate.Length - 1)
-                {
-                    endindex = i + 1;
-                    lctxt += LicensePlate.Substring(stindex, endindex - stindex);
-                }
-            }
+
+            SCS.SCSLicensePlate thisLP = new SCS.SCSLicensePlate(LicensePlate, SCS.SCSLicensePlate.LPtype.Truck);
 
             //Find label control
             Label lpText = groupBoxUserTruckTruckDetails.Controls.Find("labelLicensePlate", true).FirstOrDefault() as Label;
-            if(lpText != null)
+            if (lpText != null)
             {
-                if (lctxt.Split(new char[] { '|' }).Length > 1)
-                    lpText.Text = lctxt.Split(new char[] { '|' })[0] + " Country " + lctxt.Split(new char[] { '|' })[1];
-                else
-                    lpText.Text = lctxt.Split(new char[] { '|' })[0];
-            }            
-            
+                lpText.Text = thisLP.LicensePlateTXT + " | " + Utilities.TextUtilities.CapitalizeWord(thisLP.SourceLPCountry);
+            }
+
             //
             Panel lpPanel = groupBoxUserTruckTruckDetails.Controls.Find("TruckLicensePlateIMG", true).FirstOrDefault() as Panel;
-
             if (lpPanel != null)
             {
-                Image tmp = Utilities.TS_Graphics.LicensePlateRender(LicensePlate.Split(new char[] { '|' })[0], LicensePlate.Split(new char[] { '|' })[1].Trim(new char[] { '_', ' ' }));
-
-                Bitmap bgimg = new Bitmap(tmp, 128, 32);
-                lpPanel.BackgroundImage = bgimg;
+                lpPanel.BackgroundImage = Utilities.TS_Graphics.ResizeImage(thisLP.LicensePlateIMG, LicensePlateWidth[GameType], 32); //ETS - 128x32 or ATS - 128x64 | 64x32
             }
         }
 
@@ -552,6 +587,12 @@ namespace TS_SE_Tool
 
                 if (lblLC != null)
                     lblLC.Text = "A 000 AA";
+
+                pnlname = "TruckLicensePlateIMG";
+                Panel LPPanel = groupBoxUserTruckTruckDetails.Controls.Find(pnlname, true).FirstOrDefault() as Panel;
+
+                if (LPPanel != null)
+                    LPPanel.BackgroundImage = null;
             }
         }
         //Buttons
@@ -624,6 +665,26 @@ namespace TS_SE_Tool
             UpdateTruckPanelProgressBars();
         }
 
+        public void buttonElRepair_EnabledChanged(object sender, EventArgs e)
+        {
+            Button tmp = sender as Button;
+
+            if (tmp.Enabled)
+                tmp.BackgroundImage = RepairImg;
+            else
+                tmp.BackgroundImage = ConvertBitmapToGrayscale(RepairImg);
+        }
+
+        public void buttonRefuel_EnabledChanged(object sender, EventArgs e)
+        {
+            Button tmp = sender as Button;
+
+            if (tmp.Enabled)
+                tmp.BackgroundImage = RefuelImg;
+            else
+                tmp.BackgroundImage = ConvertBitmapToGrayscale(RefuelImg);
+        }
+
         private void buttonUserTruckSelectCurrent_Click(object sender, EventArgs e)
         {
             comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataData.UserCompanyAssignedTruck;
@@ -646,8 +707,8 @@ namespace TS_SE_Tool
                 tempPaint += temp + "\r\n";
             }
 
-            string asd = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempPaint)).Replace("-", "");
-            Clipboard.SetText(asd);
+            string tmpString = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempPaint)).Replace("-", "");
+            Clipboard.SetText(tmpString);
             MessageBox.Show("Paint data has been copied.");
         }
 

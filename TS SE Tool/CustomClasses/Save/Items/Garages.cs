@@ -51,57 +51,7 @@ namespace TS_SE_Tool
         public List<string> Trailers { get; set; } = new List<string>();
 
         public bool IgnoreStatus { get; set; } = true;
-
-        /*
-        public override string ToString() {
-            string output = "", status = "", statusStr = "";
-
-            if (GarageStatus == 0)
-            {
-                statusStr = "Not owned";
-                status = MainForm.ResourceManagerMain.GetString(statusStr, Thread.CurrentThread.CurrentUICulture);
-            }
-            else if (GarageStatus == 2)
-            {
-                statusStr = "Small";
-                status = MainForm.ResourceManagerMain.GetString(statusStr, Thread.CurrentThread.CurrentUICulture);
-            }
-            else if (GarageStatus == 3)
-            {
-                statusStr = "Large";
-                status = MainForm.ResourceManagerMain.GetString(statusStr, Thread.CurrentThread.CurrentUICulture);
-            }
-            else if (GarageStatus == 6)
-            {
-                statusStr = "Tiny";
-                status = MainForm.ResourceManagerMain.GetString(statusStr, Thread.CurrentThread.CurrentUICulture);
-            }
-
-            string trueStatus = "";
-            if (status != null && status != "")
-                trueStatus = status;
-            else
-            {
-                trueStatus = statusStr;
-            }
-
-            string trueGarageName = "";
-
-            FormMain.CitiesLngDict.TryGetValue(GarageName, out string value);
-
-            if (value != null && value != "")
-                trueGarageName = value;
-            else
-            {
-                trueGarageName = GarageName + " -n";
-            }
-
-            output = trueGarageName + "\n" + trueStatus;
-
-            return output;
-        }
-        */
-
+        
         public string GetStatusString()
         {
             string output = "", status = "", statusStr = "";

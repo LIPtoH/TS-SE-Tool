@@ -15,6 +15,7 @@
 */
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace TS_SE_Tool.Utilities
 {
@@ -45,5 +46,9 @@ namespace TS_SE_Tool.Utilities
             return Convert.ToString(_integer, 2);
         }
 
+        public static IEnumerable<int> SplitNConvertSSCHexColor(string _inputStr, int chunkSize)
+        {
+            return Enumerable.Range(0, _inputStr.Length / chunkSize).Select(i => Convert.ToInt32(_inputStr.Substring(i * chunkSize, chunkSize), 16));
+        }
     }
 }

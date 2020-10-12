@@ -93,5 +93,16 @@ namespace TS_SE_Tool.Utilities
         {
             return BitConverter.ToString(_ba).Replace("-", "");
         }
+
+        internal static string CapitalizeWord(string _input)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(_input))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToUpper(_input[0]) + _input.Substring(1).ToLower();
+        }
     }
 }

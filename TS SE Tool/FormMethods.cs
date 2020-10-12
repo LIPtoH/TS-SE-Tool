@@ -141,6 +141,8 @@ namespace TS_SE_Tool
                 GameType = "ETS2";
                 //Globals.CurrentGame = dictionaryProfiles[GameType];
 
+                LicensePlateWidth = new Dictionary<string, byte> { { "ETS2", 128 }, { "ATS", 64 } };
+
                 CompaniesLngDict = new Dictionary<string, string>();
                 CitiesLngDict = new Dictionary<string, string>();
                 CountriesLngDict = new Dictionary<string, string>();
@@ -415,7 +417,9 @@ namespace TS_SE_Tool
             DistancesTable.Clear();
 
             components = null;
-        }
+
+           GlobalFontMap = new Dictionary<string, Dictionary<UInt16, SCS.SCSFontLetter>>();
+    }
 
         private void AddImagesToControls()
         {
@@ -652,7 +656,76 @@ namespace TS_SE_Tool
             int savedindex = 0, j = 0;
             string savedvalue = "", ntFormat = " -nt";
             DataTable temptable = new DataTable();
-            
+
+            //Truck tab
+            temptable = comboBoxUserTruckCompanyTrucks.DataSource as DataTable;
+            if (temptable != null)
+            {
+                savedindex = comboBoxUserTruckCompanyTrucks.SelectedIndex;
+
+                if (savedindex != -1)
+                    savedvalue = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
+
+                comboBoxUserTruckCompanyTrucks.SelectedIndexChanged -= comboBoxCompanyTrucks_SelectedIndexChanged;
+
+                foreach (DataRow temp in temptable.Rows)
+                {
+                    string source = temp[0].ToString();
+
+                    string value = GaragesList.Find(x => x.Vehicles.Contains(source)).GarageNameTranslated;
+
+                    if (value != null && value != "")
+                    {
+                        temp["GarageName"] = value;
+                    }
+                    else
+                    {
+                        temp["GarageName"] = "-unknown-";
+                    }
+                }
+
+                if (savedindex != -1)
+                    comboBoxUserTruckCompanyTrucks.SelectedValue = savedvalue;
+
+                comboBoxUserTruckCompanyTrucks.SelectedIndexChanged += comboBoxCompanyTrucks_SelectedIndexChanged;
+            }
+
+            //Trailer tab
+            temptable = comboBoxUserTrailerCompanyTrailers.DataSource as DataTable;
+            if (temptable != null)
+            {
+                savedindex = comboBoxUserTrailerCompanyTrailers.SelectedIndex;
+
+                if (savedindex != -1)
+                    savedvalue = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+
+                comboBoxUserTrailerCompanyTrailers.SelectedIndexChanged -= comboBoxCompanyTrucks_SelectedIndexChanged;
+
+                foreach (DataRow temp in temptable.Rows)
+                {
+                    string source = temp[0].ToString();
+                    if (source == "null")
+                        continue;
+
+                    string value = GaragesList.Find(x => x.Trailers.Contains(source)).GarageNameTranslated;
+
+                    if (value != null && value != "")
+                    {
+                        temp["GarageName"] = value;
+                    }
+                    else
+                    {
+                        temp["GarageName"] = "-unknown-";
+                    }
+                }
+
+                if (savedindex != -1)
+                    comboBoxUserTrailerCompanyTrailers.SelectedValue = savedvalue;
+
+                comboBoxUserTrailerCompanyTrailers.SelectedIndexChanged += comboBoxCompanyTrucks_SelectedIndexChanged;
+            }
+
+
             //Countries ComboBoxes
             temptable = comboBoxFreightMarketCountries.DataSource as DataTable;
             if (temptable != null)
