@@ -666,7 +666,7 @@ namespace TS_SE_Tool
                 if (savedindex != -1)
                     savedvalue = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
 
-                comboBoxUserTruckCompanyTrucks.SelectedIndexChanged -= comboBoxCompanyTrucks_SelectedIndexChanged;
+                //comboBoxUserTruckCompanyTrucks.SelectedIndexChanged -= comboBoxCompanyTrucks_SelectedIndexChanged;
 
                 foreach (DataRow temp in temptable.Rows)
                 {
@@ -687,7 +687,7 @@ namespace TS_SE_Tool
                 if (savedindex != -1)
                     comboBoxUserTruckCompanyTrucks.SelectedValue = savedvalue;
 
-                comboBoxUserTruckCompanyTrucks.SelectedIndexChanged += comboBoxCompanyTrucks_SelectedIndexChanged;
+                //comboBoxUserTruckCompanyTrucks.SelectedIndexChanged += comboBoxCompanyTrucks_SelectedIndexChanged;
             }
 
             //Trailer tab
@@ -699,7 +699,7 @@ namespace TS_SE_Tool
                 if (savedindex != -1)
                     savedvalue = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
 
-                comboBoxUserTrailerCompanyTrailers.SelectedIndexChanged -= comboBoxCompanyTrucks_SelectedIndexChanged;
+                //comboBoxUserTrailerCompanyTrailers.SelectedIndexChanged -= comboBoxCompanyTrailers_SelectedIndexChanged;
 
                 foreach (DataRow temp in temptable.Rows)
                 {
@@ -722,7 +722,7 @@ namespace TS_SE_Tool
                 if (savedindex != -1)
                     comboBoxUserTrailerCompanyTrailers.SelectedValue = savedvalue;
 
-                comboBoxUserTrailerCompanyTrailers.SelectedIndexChanged += comboBoxCompanyTrucks_SelectedIndexChanged;
+                //comboBoxUserTrailerCompanyTrailers.SelectedIndexChanged += comboBoxCompanyTrailers_SelectedIndexChanged;
             }
 
 

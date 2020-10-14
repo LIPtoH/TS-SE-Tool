@@ -20,6 +20,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace TS_SE_Tool
 {
@@ -177,250 +178,11 @@ namespace TS_SE_Tool
             tableLayoutPanelTrailerLP.Controls.Add(LPpanel, 2, 0);
         }
 
-        public void buttonTrailerRepair_Click(object sender, EventArgs e)
-        {
-            string[] PartList = { "trailerdata", "body", "chassis", "tire" };
-            string trailerNameless = "";
-
-            trailerNameless = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
-
-            StartTrailerParts:
-
-            foreach (string tempPart in PartList)
-            {
-                foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[trailerNameless].Parts.FindAll(x => x.PartType == tempPart))
-                {
-                    string partNameless = temp.PartNameless;
-
-                    int i = 0;
-
-                    foreach (string temp2 in temp.PartData)
-                    {
-                        if (temp2.StartsWith(" wear:"))
-                        {
-                            UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
-                            break;
-                        }
-                        else
-                        if (temp2.StartsWith(" cargo_damage:"))
-                        {
-                            UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
-                            break;
-                        }
-                        i++;
-                    }
-                }
-            }
-
-            UserCompanyTruckDataPart slavetrailer = UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "slavetrailer");
-
-            if (slavetrailer != null)
-            {
-                trailerNameless = slavetrailer.PartNameless;
-                goto StartTrailerParts;
-            }
-
-            UpdateTrailerPanelProgressBars();
-        }
-
-        public void buttonTrailerElRepair_Click(object sender, EventArgs e)
-        {
-            Button curbtn = sender as Button;
-            int bi = Convert.ToByte(curbtn.Name.Substring(21));
-
-            string[] PartList = { "trailerdata", "body", "chassis", "tire" };
-            string trailerNameless = "";
-
-            trailerNameless = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
-
-            StartTrailerParts:
-
-            foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[trailerNameless].Parts.FindAll(x => x.PartType == PartList[bi]))
-            {
-                string partNameless = temp.PartNameless;
-
-                int i = 0;
-
-                foreach (string temp2 in temp.PartData)
-                {
-                    if (temp2.StartsWith(" wear:"))
-                    {
-                        UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
-                        break;
-                    }
-                    else
-                    if (temp2.StartsWith(" cargo_damage:"))
-                    {
-                        UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
-                        break;
-                    }
-                    i++;
-                }
-            }
-
-            UserCompanyTruckDataPart slavetrailer = UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "slavetrailer");
-
-            if (slavetrailer != null)
-            {
-                trailerNameless = slavetrailer.PartNameless;
-                goto StartTrailerParts;
-            }
-
-            UpdateTrailerPanelProgressBars();
-        }
-
-        public void buttonTrailerElRepair_EnabledChanged(object sender, EventArgs e)
-        {
-            Button tmp = sender as Button;
-
-            if (tmp.Enabled)
-                tmp.BackgroundImage = RepairImg;
-            else
-                tmp.BackgroundImage = ConvertBitmapToGrayscale(RepairImg);
-        }
-
-        private void UpdateTrailerPanelProgressBars()
-        {
-            UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTrailer);
-
-            bool repairEnabled = false;
-
-            if (SelectedUserCompanyTrailer == null)
-                return;
-
-            for (int i = 0; i < 4; i++)
-            {
-                string pnlname = "progressbarTrailerPart" + i.ToString(), labelPartName = "labelTrailerPartDataName" + i.ToString();
-
-                Panel pbPanel = groupBoxUserTrailerTrailerDetails.Controls.Find(pnlname, true).FirstOrDefault() as Panel;
-
-                Label pnLabel = groupBoxUserTrailerTrailerDetails.Controls.Find(labelPartName, true).FirstOrDefault() as Label;
-
-                Button repairButton = groupBoxUserTrailerTrailerDetails.Controls.Find("buttonTrailerElRepair" + i, true).FirstOrDefault() as Button;
-
-                if (pbPanel != null)
-                {
-                    List<string> DataPart = null;
-
-                    try
-                    {
-                        switch (i)
-                        {
-                            case 0:
-                                DataPart = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "trailerdata").PartData;
-                                break;
-                            case 1:
-                                DataPart = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "body").PartData;
-                                break;
-                            case 2:
-                                DataPart = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "chassis").PartData;
-                                break;
-                            case 3:
-                                DataPart = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "tire").PartData;
-                                break;
-                        }
-                    }
-                    catch
-                    {
-                        repairButton.Enabled = false;
-                        continue;
-                    }
-
-                    string wear = "0";
-
-                    if (DataPart != null)
-                    {
-                        if (i !=0 && pnLabel != null)
-                        {
-                            pnLabel.Text = DataPart.Find(xl => xl.StartsWith(" data_path:")).Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
-                        }
-
-                        wear = DataPart.Find(xl => xl.StartsWith(" wear:") || xl.StartsWith(" cargo_damage:")).Split(new char[] { ' ' })[2];
-                    }
-                    else
-                    {
-                        pnLabel.Text = "!! Part not found !!";
-                    }
-
-                    decimal _wear = 0;
-
-                    if (wear != "0" && wear != "1")
-                    {
-                        _wear = Utilities.NumericUtilities.HexFloatToDecimalFloat(wear);
-                        repairButton.Enabled = true;
-                        repairEnabled = true;
-                    }
-                    else if (wear == "1")
-                    {
-                        _wear = 1;
-                        repairButton.Enabled = true;
-                        repairEnabled = true;
-                    }
-                    else
-                        repairButton.Enabled = false;
-
-                    SolidBrush ppen = new SolidBrush(GetProgressbarColor(_wear));
-
-                    int x = 0, y = 0, pnlwidth = (int)(pbPanel.Width * (1 - _wear));
-
-                    Bitmap progress = new Bitmap(pbPanel.Width, pbPanel.Height);
-
-                    Graphics g = Graphics.FromImage(progress);
-                    g.FillRectangle(ppen, x, y, pnlwidth, pbPanel.Height);
-
-                    int fontSize = 12;
-                    StringFormat sf = new StringFormat();
-                    sf.LineAlignment = StringAlignment.Center;
-                    sf.Alignment = StringAlignment.Center;
-
-                    GraphicsPath p = new GraphicsPath();
-                    p.AddString(
-                        ((int)((1 - _wear) * 100)).ToString() + " %",   // text to draw
-                        FontFamily.GenericSansSerif,                    // or any other font family
-                        (int)FontStyle.Bold,                            // font style (bold, italic, etc.)
-                        g.DpiY * fontSize / 72,                         // em size
-                        new Rectangle(0, 0, pbPanel.Width, pbPanel.Height),     // location where to draw text
-                        sf);                                            // set options here (e.g. center alignment)
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                    g.FillPath(Brushes.Black, p);
-                    g.DrawPath(Pens.Black, p);
-
-                    pbPanel.BackgroundImage = progress;
-                }
-            }
-
-            Button repairTruck = tableLayoutPanelUserTrailerControls.Controls.Find("buttonTrailerRepair", true).FirstOrDefault() as Button;
-            repairTruck.Enabled = repairEnabled;
-
-            //License plate
-            string LicensePlate = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "trailerdata").PartData.Find(xl => xl.StartsWith(" license_plate:")).Split(new char[] { '"' })[1];
-
-            SCS.SCSLicensePlate thisLP = new SCS.SCSLicensePlate(LicensePlate, SCS.SCSLicensePlate.LPtype.Truck);
-
-            //Find label control
-            Label lpText = groupBoxUserTrailerTrailerDetails.Controls.Find("labelLicensePlateTrailer", true).FirstOrDefault() as Label;
-            if (lpText != null)
-            {
-                lpText.Text = thisLP.LicensePlateTXT + " " + Utilities.TextUtilities.CapitalizeWord(thisLP.SourceLPCountry);
-            }
-
-            //
-            Panel lpPanel = groupBoxUserTrailerTrailerDetails.Controls.Find("TrailerLicensePlateIMG", true).FirstOrDefault() as Panel;
-            if (lpPanel != null)
-            {
-                lpPanel.BackgroundImage = Utilities.TS_Graphics.ResizeImage(thisLP.LicensePlateIMG, LicensePlateWidth[GameType], 32); //ETS - 128x32 or ATS - 128x64 | 64x32
-            }
-        }
-
         private void FillUserCompanyTrailerList()
         {
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("UserTrailerNameless", typeof(string));
             combDT.Columns.Add(dc);
-
-            //dc = new DataColumn("UserTrailerName", typeof(string));
-            //combDT.Columns.Add(dc);
-            //
 
             dc = new DataColumn("TrailerType", typeof(string));
             combDT.Columns.Add(dc);
@@ -439,7 +201,7 @@ namespace TS_SE_Tool
             combDT.Columns.Add(dcDisplay);
             //
 
-            combDT.Rows.Add("null");//, "-- NONE --"); //none
+            combDT.Rows.Add("null");
 
             foreach (KeyValuePair<string, UserCompanyTruckData> UserTrailer in UserTrailerDictionary)
             {
@@ -475,7 +237,7 @@ namespace TS_SE_Tool
                             {
                                 try
                                 {
-                                    string tmp = CurTrailerDef.Find(x => x.StartsWith(" " + Property + ":")).Split(':')[1].Trim(new char[] { ' ' }).Replace('_',' ');
+                                    string tmp = CurTrailerDef.Find(x => x.StartsWith(" " + Property + ":")).Split(':')[1].Trim(new char[] { ' ' }).Replace('_', ' ');
 
                                     if (wasfound)
                                         trailername += " | ";
@@ -521,14 +283,223 @@ namespace TS_SE_Tool
 
             comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataData.UserCompanyAssignedTrailer;
         }
+        //
+        private void UpdateTrailerPanelDetails()
+        {
+            for (byte i = 0; i < 4; i++)
+                UpdateTrailerPanelProgressBar(i);
 
+            CheckTrailerRepair();
+
+            //UpdateTrailerPanelCargo();
+            UpdateTrailerPanelLicensePlate();
+        }
+
+        private void UpdateTrailerPanelProgressBar(byte _number)
+        {
+            UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTrailer);
+
+            if (SelectedUserCompanyTrailer == null)
+                return;
+
+            string pnlname = "progressbarTrailerPart" + _number.ToString(), labelPartName = "labelTrailerPartDataName" + _number.ToString();
+
+            //Progres bar
+            Panel pbPanel = groupBoxUserTrailerTrailerDetails.Controls.Find(pnlname, true).FirstOrDefault() as Panel;
+
+            //Part name
+            Label pnLabel = groupBoxUserTrailerTrailerDetails.Controls.Find(labelPartName, true).FirstOrDefault() as Label;
+
+            //Repair button
+            Button repairButton = groupBoxUserTrailerTrailerDetails.Controls.Find("buttonTrailerElRepair" + _number, true).FirstOrDefault() as Button;
+
+            if (pbPanel != null)
+            {
+                List<UserCompanyTruckDataPart> DataPart = null;
+
+                try
+                {
+                    switch (_number)
+                    {
+                        case 0:
+                            {
+                                DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "trailerdata");
+                                string tmp = DataPart[0].PartData.Find(xl => xl.StartsWith(" cargo_mass:")).Split(new char[] { ' ' })[2];
+
+                                if (tmp == "0")
+                                {
+                                    repairButton.Enabled = false;
+                                    pbPanel.BackgroundImage = null;
+                                }
+
+                                break;
+                            }
+                        case 1:
+                            DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "body");
+                            break;
+                        case 2:
+                            DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "chassis");
+                            break;
+                        case 3:
+                            DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "tire");
+                            break;
+                    }
+                }
+                catch
+                {
+                    repairButton.Enabled = false;
+                    return;
+                }
+
+                decimal _wear = 0;
+                byte partCount = 0;
+
+                if (DataPart != null && DataPart.Count > 0)
+                {
+                    if (_number != 0 && pnLabel != null)
+                    {
+                        pnLabel.Text = DataPart[0].PartData.Find(xl => xl.StartsWith(" data_path:")).Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                    }
+
+                    foreach (UserCompanyTruckDataPart tmpPartData in DataPart)
+                    {
+                        try
+                        {
+                            string tmpWear = tmpPartData.PartData.Find(xl => xl.StartsWith(" wear:") || xl.StartsWith(" cargo_damage:")).Split(new char[] { ' ' })[2];
+                            decimal _tmpWear = 0;
+
+                            if (tmpWear != "0" && tmpWear != "1")
+                            {
+                                _tmpWear = Utilities.NumericUtilities.HexFloatToDecimalFloat(tmpWear);
+                            }
+                            else if (tmpWear == "1")
+                            {
+                                _tmpWear = 1;
+                            }
+
+                            _wear += _tmpWear;
+                            partCount++;
+                        }
+                        catch
+                        { }
+                    }
+                }
+                else
+                {
+                    pnLabel.Text = "!! Part not found !!";
+                }
+
+                _wear = _wear / partCount;
+
+                if (_wear == 0)
+                    repairButton.Enabled = false;
+                else
+                    repairButton.Enabled = true;
+
+                //
+                SolidBrush ppen = new SolidBrush(GetProgressbarColor(_wear));
+
+                int x = 0, y = 0, pnlwidth = (int)(pbPanel.Width * (1 - _wear));
+
+                Bitmap progress = new Bitmap(pbPanel.Width, pbPanel.Height);
+
+                Graphics g = Graphics.FromImage(progress);
+                g.FillRectangle(ppen, x, y, pnlwidth, pbPanel.Height);
+
+                int fontSize = 12;
+                StringFormat sf = new StringFormat();
+                sf.LineAlignment = StringAlignment.Center;
+                sf.Alignment = StringAlignment.Center;
+
+                GraphicsPath p = new GraphicsPath();
+                p.AddString(
+                    ((int)((1 - _wear) * 100)).ToString() + " %",   // text to draw
+                    FontFamily.GenericSansSerif,                    // or any other font family
+                    (int)FontStyle.Bold,                            // font style (bold, italic, etc.)
+                    g.DpiY * fontSize / 72,                         // em size
+                    new Rectangle(0, 0, pbPanel.Width, pbPanel.Height),     // location where to draw text
+                    sf);                                            // set options here (e.g. center alignment)
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.FillPath(Brushes.Black, p);
+                g.DrawPath(Pens.Black, p);
+
+                pbPanel.BackgroundImage = progress;
+            }
+        }
+
+        private void CheckTrailerRepair()
+        {
+            bool repairEnabled = false;
+            Button repairTrailer = tableLayoutPanelUserTrailerControls.Controls.Find("buttonTrailerRepair", true).FirstOrDefault() as Button;
+
+            for (byte i = 0; i < 4; i++)
+            {
+                try
+                {
+                    Button tmp = groupBoxUserTrailerTrailerDetails.Controls.Find("buttonTrailerElRepair" + i, true).FirstOrDefault() as Button;
+                    if (tmp.Enabled)
+                    {
+                        repairEnabled = true;
+                        break;
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            repairTrailer.Enabled = repairEnabled;
+        }
+
+        private void UpdateTrailerPanelCargo()
+        {
+
+        }
+
+        private void UpdateTrailerPanelLicensePlate()
+        {
+            UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTrailer);
+            
+            string LicensePlate = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "trailerdata").PartData.Find(xl => xl.StartsWith(" license_plate:")).Split(new char[] { '"' })[1];
+
+            SCS.SCSLicensePlate thisLP = new SCS.SCSLicensePlate(LicensePlate, SCS.SCSLicensePlate.LPtype.Truck);
+
+            //Find label control
+            Label lpText = groupBoxUserTrailerTrailerDetails.Controls.Find("labelLicensePlateTrailer", true).FirstOrDefault() as Label;
+            if (lpText != null)
+            {
+                lpText.Text = thisLP.LicensePlateTXT + " | ";
+
+                string value = null;
+                CountriesLngDict.TryGetValue(thisLP.SourceLPCountry, out value);
+
+                if (value != null && value != "")
+                {
+                    lpText.Text += value;
+                }
+                else
+                {
+                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(thisLP.SourceLPCountry);
+                    lpText.Text += CapName;
+                }
+            }
+
+            //
+            Panel lpPanel = groupBoxUserTrailerTrailerDetails.Controls.Find("TrailerLicensePlateIMG", true).FirstOrDefault() as Panel;
+            if (lpPanel != null)
+            {
+                lpPanel.BackgroundImage = Utilities.TS_Graphics.ResizeImage(thisLP.LicensePlateIMG, LicensePlateWidth[GameType], 32); //ETS - 128x32 or ATS - 128x64 | 64x32
+            }
+        }
+
+        //Events
         private void comboBoxCompanyTrailers_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cmbbx = sender as ComboBox;
 
             if (cmbbx.SelectedIndex != -1 && cmbbx.SelectedValue.ToString() != "null")
             {
-                UpdateTrailerPanelProgressBars();
                 ToggleTrailerPartsCondition(true);
 
                 buttonUserTrailerSelectCurrent.Enabled = true;
@@ -537,6 +508,7 @@ namespace TS_SE_Tool
                 groupBoxUserTrailerTrailerDetails.Enabled = true;
                 groupBoxUserTrailerShareTrailerSettings.Enabled = true;
 
+                UpdateTrailerPanelDetails();
             }
             else
             {
@@ -645,6 +617,56 @@ namespace TS_SE_Tool
             }
         }
         //Buttons
+        //Main
+        public void buttonTrailerRepair_Click(object sender, EventArgs e)
+        {
+            string[] PartList = { "trailerdata", "body", "chassis", "tire" };
+            string trailerNameless = "";
+
+            trailerNameless = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+
+            StartTrailerParts:
+
+            foreach (string tempPart in PartList)
+            {
+                foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[trailerNameless].Parts.FindAll(x => x.PartType == tempPart))
+                {
+                    string partNameless = temp.PartNameless;
+
+                    int i = 0;
+
+                    foreach (string temp2 in temp.PartData)
+                    {
+                        if (temp2.StartsWith(" wear:"))
+                        {
+                            UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
+                            break;
+                        }
+                        else
+                        if (temp2.StartsWith(" cargo_damage:"))
+                        {
+                            UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
+                            break;
+                        }
+                        i++;
+                    }
+                }
+            }
+
+            UserCompanyTruckDataPart slavetrailer = UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "slavetrailer");
+
+            if (slavetrailer != null)
+            {
+                trailerNameless = slavetrailer.PartNameless;
+                goto StartTrailerParts;
+            }
+
+            for (byte i = 0; i < 5; i++)
+                UpdateTrailerPanelProgressBar(i);
+
+            CheckTrailerRepair();
+        }
+        //
         private void buttonUserTrailerSelectCurrent_Click(object sender, EventArgs e)
         {
             comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataData.UserCompanyAssignedTrailer;
@@ -654,7 +676,65 @@ namespace TS_SE_Tool
         {
             PlayerDataData.UserCompanyAssignedTrailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
         }
-        
+        //Details
+        public void buttonTrailerElRepair_Click(object sender, EventArgs e)
+        {
+            Button curbtn = sender as Button;
+            byte bi = Convert.ToByte(curbtn.Name.Substring(21));
+
+            string[] PartList = { "trailerdata", "body", "chassis", "tire" };
+            string trailerNameless = "";
+
+            trailerNameless = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+
+            StartTrailerParts:
+
+            foreach (UserCompanyTruckDataPart temp in UserTrailerDictionary[trailerNameless].Parts.FindAll(x => x.PartType == PartList[bi]))
+            {
+                string partNameless = temp.PartNameless;
+
+                int i = 0;
+
+                foreach (string temp2 in temp.PartData)
+                {
+                    if (temp2.StartsWith(" wear:"))
+                    {
+                        UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
+                        break;
+                    }
+                    else
+                    if (temp2.StartsWith(" cargo_damage:"))
+                    {
+                        UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "trailerdata").PartData[i] = " cargo_damage: 0";
+                        break;
+                    }
+                    i++;
+                }
+            }
+
+            UserCompanyTruckDataPart slavetrailer = UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "slavetrailer");
+
+            if (slavetrailer != null)
+            {
+                trailerNameless = slavetrailer.PartNameless;
+                goto StartTrailerParts;
+            }
+
+            UpdateTrailerPanelProgressBar(bi);
+
+            CheckTrailerRepair();
+        }
+
+        public void buttonTrailerElRepair_EnabledChanged(object sender, EventArgs e)
+        {
+            Button tmp = sender as Button;
+
+            if (tmp.Enabled)
+                tmp.BackgroundImage = RepairImg;
+            else
+                tmp.BackgroundImage = ConvertBitmapToGrayscale(RepairImg);
+        }
+
         //end User Trailer tab
     }
 }
