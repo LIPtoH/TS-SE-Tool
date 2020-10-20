@@ -434,13 +434,19 @@ namespace TS_SE_Tool
             catch
             { }
 
+            if(!SteamFolderEx)
+                LogWriter(SteamError);
+            //
+
             MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + dictionaryProfiles[GameType];// Globals.CurrentGame;
 
             if (!Directory.Exists(MyDocumentsPath))
             {
-                MyDocError = "Folder in \"My documents\" for this game does not exist.";
+                MyDocError = "Folder in \"My documents\" for this game - " + GameType + " does not exist.";
                 MyDocFolderEx = false;
+                LogWriter(MyDocError);
             }
+            //
 
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("ProfileID", typeof(string));
@@ -506,30 +512,35 @@ namespace TS_SE_Tool
                     }
                 }
 
-            int index = 0;
+            int cpIndex = 0;
             if (ProgSettingsV.CustomPaths.Keys.Contains(GameType))
                 foreach (string CustPath in ProgSettingsV.CustomPaths[GameType])
                 {
-                    index++;
+                    cpIndex++;
                     if (Directory.Exists(CustPath))
                     {
                         if (Directory.Exists(CustPath + @"\profiles"))
                         {
-                            combDT.Rows.Add(CustPath + @"\profiles", "[C] Custom path " + index.ToString());
+                            combDT.Rows.Add(CustPath + @"\profiles", "[C] Custom path " + cpIndex.ToString());
                             tempList.Add(CustPath + @"\profiles");
                         }
                         else
                         {
-                            combDT.Rows.Add(CustPath, "[C] Custom path " + index.ToString());
+                            combDT.Rows.Add(CustPath, "[C] Custom path " + cpIndex.ToString());
                             tempList.Add(CustPath);
                         }
                     }
                 }
 
-            if(!MyDocFolderEx && !SteamFolderEx && index == 0)
-                MessageBox.Show("Standart Save folders does not exist for this game.\r\n" + MyDocError + "\r\n" + SteamError +
-                    "\r\nCheck game installation, start game and update list or add Custom paths.");
+            if(!MyDocFolderEx && !SteamFolderEx)
+            {
+                LogWriter("Standart Save folders does not exist for this game - " + GameType + ". " + MyDocError + " " + SteamError +
+                    " Check installation. Start game first (Steam).");
 
+                if (cpIndex == 0)
+                    MessageBox.Show("Standart Save folders does not exist for this game - " + GameType + ".\r\n" + MyDocError + "\r\n" + SteamError +
+                        "\r\nCheck installation, start game and update list or add Custom paths.");
+            }
 
             Globals.ProfilesPaths = tempList.ToArray();
             comboBoxPrevProfiles.ValueMember = "ProfileID";

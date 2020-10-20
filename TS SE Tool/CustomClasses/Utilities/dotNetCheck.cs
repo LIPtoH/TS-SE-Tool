@@ -14,56 +14,111 @@
    limitations under the License.
 */
 using System;
+using System.Windows.Forms;
 using Microsoft.Win32;
 
 namespace TS_SE_Tool
 {
-    public class GetDotNetVersion
+    public class DetectEnviroment
     {
         internal static void Get45PlusFromRegistry()
         {
-            const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
-
-            using (var ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(subkey))
+            try
             {
-                if (ndpKey != null && ndpKey.GetValue("Release") != null)
+                const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
+
+                using (var ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(subkey))
                 {
-                    FormMain.LogWriter($"Installed .NET Framework {CheckFor45PlusVersion((int)ndpKey.GetValue("Release"))} version");
-                    //Console.WriteLine($".NET Framework Version: {CheckFor45PlusVersion((int)ndpKey.GetValue("Release"))}");
+                    if (ndpKey != null && ndpKey.GetValue("Release") != null)
+                    {
+                        FormMain.LogWriter($"Installed .NET Framework {CheckFor45PlusVersion((int)ndpKey.GetValue("Release"))} version");
+                        //Console.WriteLine($".NET Framework Version: {CheckFor45PlusVersion((int)ndpKey.GetValue("Release"))}");
+                    }
+                    else
+                    {
+                        FormMain.LogWriter(".NET Framework Version 4.5 or later is not detected.");
+                        //Console.WriteLine(".NET Framework Version 4.5 or later is not detected.");
+                    }
                 }
-                else
+
+                // Checking the version using >= enables forward compatibility.
+                string CheckFor45PlusVersion(int releaseKey)
                 {
-                    FormMain.LogWriter(".NET Framework Version 4.5 or later is not detected.");
-                    //Console.WriteLine(".NET Framework Version 4.5 or later is not detected.");
+                    if (releaseKey >= 528040)
+                        return "4.8 or later";
+                    if (releaseKey >= 461808)
+                        return "4.7.2";
+                    if (releaseKey >= 461308)
+                        return "4.7.1";
+                    if (releaseKey >= 460798)
+                        return "4.7";
+                    if (releaseKey >= 394802)
+                        return "4.6.2";
+                    if (releaseKey >= 394254)
+                        return "4.6.1";
+                    if (releaseKey >= 393295)
+                        return "4.6";
+                    if (releaseKey >= 379893)
+                        return "4.5.2";
+                    if (releaseKey >= 378675)
+                        return "4.5.1";
+                    if (releaseKey >= 378389)
+                        return "4.5";
+                    // This code should never execute. A non-null release key should mean
+                    // that 4.5 or later is installed.
+                    return "No 4.5 or later version detected";
                 }
             }
-
-            // Checking the version using >= enables forward compatibility.
-            string CheckFor45PlusVersion(int releaseKey)
+            catch
             {
-                if (releaseKey >= 528040)
-                    return "4.8 or later";
-                if (releaseKey >= 461808)
-                    return "4.7.2";
-                if (releaseKey >= 461308)
-                    return "4.7.1";
-                if (releaseKey >= 460798)
-                    return "4.7";
-                if (releaseKey >= 394802)
-                    return "4.6.2";
-                if (releaseKey >= 394254)
-                    return "4.6.1";
-                if (releaseKey >= 393295)
-                    return "4.6";
-                if (releaseKey >= 379893)
-                    return "4.5.2";
-                if (releaseKey >= 378675)
-                    return "4.5.1";
-                if (releaseKey >= 378389)
-                    return "4.5";
-                // This code should never execute. A non-null release key should mean
-                // that 4.5 or later is installed.
-                return "No 4.5 or later version detected";
+                FormMain.LogWriter(".NET Framework Version detection FAILED");
+            }
+        }
+
+        internal static void DetectOS()
+        {
+            try
+            {
+                string RunningOS = "", Details = "";
+
+                PlatformID pID = Environment.OSVersion.Platform;
+
+                switch (pID)
+                {
+                    case PlatformID.Win32NT:
+                        {
+                            RunningOS = "Windows";
+                            Details = "TESTED";
+
+                            if (Registry.LocalMachine.OpenSubKey("Software\\Wine") != null)
+                            {
+                                RunningOS = "Windows with Wine";
+                                Details = "NOT TESTED";
+                            }
+                            break;
+                        }
+                    case PlatformID.Unix:
+                        {
+                            RunningOS = "Unix";
+                            Details = "NOT TESTED";
+                            break;
+                        }
+                    case PlatformID.MacOSX:
+                        {
+                            RunningOS = "MacOSX";
+                            Details = "NOT TESTED";
+                            break;
+                        }
+                    default:
+                        FormMain.LogWriter("OS detection FAILED");
+                        break;
+                }
+
+                FormMain.LogWriter("Enviroment - " + RunningOS + " (" + Details + ")");
+            }
+            catch
+            {
+                FormMain.LogWriter("OS detection FAILED");
             }
         }
     }
