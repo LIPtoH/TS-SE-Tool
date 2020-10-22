@@ -39,6 +39,7 @@
             this.checkBoxFullCloning = new System.Windows.Forms.CheckBox();
             this.checkBoxMutiCloning = new System.Windows.Forms.CheckBox();
             this.checkBoxCreateBackup = new System.Windows.Forms.CheckBox();
+            this.labelCharCountLimit = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanelControls.SuspendLayout();
@@ -60,7 +61,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(338, 30);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(428, 30);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // buttonAccept
@@ -68,7 +69,7 @@
             this.buttonAccept.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonAccept.Location = new System.Drawing.Point(3, 3);
             this.buttonAccept.Name = "buttonAccept";
-            this.buttonAccept.Size = new System.Drawing.Size(163, 24);
+            this.buttonAccept.Size = new System.Drawing.Size(208, 24);
             this.buttonAccept.TabIndex = 0;
             this.buttonAccept.Text = "Accept";
             this.buttonAccept.UseVisualStyleBackColor = true;
@@ -77,9 +78,9 @@
             // buttonCancel
             // 
             this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonCancel.Location = new System.Drawing.Point(172, 3);
+            this.buttonCancel.Location = new System.Drawing.Point(217, 3);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(163, 24);
+            this.buttonCancel.Size = new System.Drawing.Size(208, 24);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -98,24 +99,26 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 78.85714F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.14286F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(344, 211);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(434, 211);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // tableLayoutPanelControls
             // 
-            this.tableLayoutPanelControls.ColumnCount = 2;
+            this.tableLayoutPanelControls.ColumnCount = 3;
             this.tableLayoutPanelControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 138F));
             this.tableLayoutPanelControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.tableLayoutPanelControls.Controls.Add(this.labelNewName, 0, 0);
             this.tableLayoutPanelControls.Controls.Add(this.textBoxNewName, 1, 0);
             this.tableLayoutPanelControls.Controls.Add(this.groupBoxOptions, 0, 1);
+            this.tableLayoutPanelControls.Controls.Add(this.labelCharCountLimit, 2, 0);
             this.tableLayoutPanelControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelControls.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelControls.Name = "tableLayoutPanelControls";
             this.tableLayoutPanelControls.RowCount = 2;
             this.tableLayoutPanelControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanelControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelControls.Size = new System.Drawing.Size(338, 132);
+            this.tableLayoutPanelControls.Size = new System.Drawing.Size(428, 132);
             this.tableLayoutPanelControls.TabIndex = 1;
             // 
             // labelNewName
@@ -131,14 +134,17 @@
             // 
             // textBoxNewName
             // 
+            this.textBoxNewName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxNewName.Location = new System.Drawing.Point(141, 3);
             this.textBoxNewName.Name = "textBoxNewName";
-            this.textBoxNewName.Size = new System.Drawing.Size(160, 20);
+            this.textBoxNewName.Size = new System.Drawing.Size(220, 20);
             this.textBoxNewName.TabIndex = 1;
             this.textBoxNewName.WordWrap = false;
             this.textBoxNewName.TextChanged += new System.EventHandler(this.textBoxNewName_TextChanged);
             this.textBoxNewName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxNewName_KeyDown);
             this.textBoxNewName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNewName_KeyPress);
+            this.textBoxNewName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxNewName_KeyUp);
             // 
             // groupBoxOptions
             // 
@@ -186,13 +192,27 @@
             this.checkBoxCreateBackup.Text = "Make backup .zip file";
             this.checkBoxCreateBackup.UseVisualStyleBackColor = true;
             // 
+            // labelCharCountLimit
+            // 
+            this.labelCharCountLimit.AutoSize = true;
+            this.labelCharCountLimit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelCharCountLimit.Location = new System.Drawing.Point(367, 0);
+            this.labelCharCountLimit.Name = "labelCharCountLimit";
+            this.labelCharCountLimit.Size = new System.Drawing.Size(58, 29);
+            this.labelCharCountLimit.TabIndex = 3;
+            this.labelCharCountLimit.Text = "[0/0]";
+            this.labelCharCountLimit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormProfileEditorRenameClone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 211);
+            this.ClientSize = new System.Drawing.Size(434, 211);
             this.Controls.Add(this.tableLayoutPanel2);
+            this.MaximumSize = new System.Drawing.Size(600, 250);
+            this.MinimumSize = new System.Drawing.Size(450, 250);
             this.Name = "FormProfileEditorRenameClone";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rename Clone Profiles";
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -218,5 +238,6 @@
         private System.Windows.Forms.CheckBox checkBoxCreateBackup;
         private System.Windows.Forms.CheckBox checkBoxMutiCloning;
         private System.Windows.Forms.CheckBox checkBoxFullCloning;
+        private System.Windows.Forms.Label labelCharCountLimit;
     }
 }

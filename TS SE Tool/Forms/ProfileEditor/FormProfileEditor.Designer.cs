@@ -214,6 +214,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(310, 361);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MaximumSize = new System.Drawing.Size(326, 400);
+            this.MinimumSize = new System.Drawing.Size(326, 400);
             this.Name = "FormProfileEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Profile Manager";
