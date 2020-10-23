@@ -114,7 +114,7 @@ namespace TS_SE_Tool
         {
             if (textBoxNewName.Text.Length == 0) return;
 
-            if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Back || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Home || e.KeyCode == Keys.End || e.KeyCode == Keys.Delete)
+            if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Back || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down || e.KeyCode == Keys.Home || e.KeyCode == Keys.End || e.KeyCode == Keys.PageDown || e.KeyCode == Keys.PageUp || e.KeyCode == Keys.Delete)
             {
                 e.Handled = false;
                 aboveLimitLength = false;
@@ -161,6 +161,30 @@ namespace TS_SE_Tool
 
         private void textBoxNewName_TextChanged(object sender, EventArgs e)
         {
+            //Trim on paste
+            if (textBoxNewName.Multiline)
+            {
+                int linecount = textBoxNewName.Lines.Length;
+
+                var tmpLines = textBoxNewName.Lines;
+
+                for (int i = 0; i < linecount; i++)
+                {
+                    if(textBoxNewName.Lines[i].Length > NameLengthLimit)
+                    {
+                        tmpLines[i] = textBoxNewName.Lines[i].Substring(0, NameLengthLimit);
+                    }
+
+                    textBoxNewName.Lines = tmpLines;
+                }
+            }
+            else
+            {
+                if (textBoxNewName.Text.Length > NameLengthLimit)
+                    textBoxNewName.Text = textBoxNewName.Text.Substring(0, NameLengthLimit);
+            }
+
+            //
             calculateTextBoxNewNameSize();
 
             indicateCharLimit();
@@ -492,7 +516,7 @@ namespace TS_SE_Tool
                 labelCharCountLimit.ForeColor = Color.Red;
                 labelCharCountLimit.Font = new Font(labelCharCountLimit.Font, FontStyle.Bold);
             }
-            else if (txtLength == NameLengthLimit)
+            else if (txtLength >= NameLengthLimit)
             {
                 labelCharCountLimit.ForeColor = Color.Red;
                 labelCharCountLimit.Font = new Font(labelCharCountLimit.Font, FontStyle.Bold);
