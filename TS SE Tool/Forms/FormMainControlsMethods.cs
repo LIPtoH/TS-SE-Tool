@@ -408,9 +408,21 @@ namespace TS_SE_Tool
                         }
                         else
                         {
-                            DateTime lastHigh = DateTime.Now;
+                            //DateTime lastHigh = DateTime.Now;
 
-                            string CurrentUserDir = Directory.GetDirectories(SteamCloudPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray()[0];//null;
+                            string[] CurrentUserDirs = Directory.GetDirectories(SteamCloudPath).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();
+                            string CurrentUserDir = "";
+
+                            foreach (string tmpDir in CurrentUserDirs)
+                            {
+                                string tmp = Path.GetFileName(tmpDir);
+
+                                if (tmp.All(Char.IsDigit))
+                                {
+                                    CurrentUserDir = tmpDir;
+                                    break;
+                                }
+                            }
 
                             string GameID = "";
                             if (GameType == "ETS2")
@@ -420,7 +432,7 @@ namespace TS_SE_Tool
 
                             if (!Directory.Exists(CurrentUserDir + GameID))
                             {
-                                SteamError = "Game folder for this game in Steam folder does not exist.";
+                                SteamError = "Game folder for this game - " + GameType + " in Steam folder does not exist.";
                             }
                             else
                             {

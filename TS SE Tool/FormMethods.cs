@@ -466,12 +466,10 @@ namespace TS_SE_Tool
                 //Searching for ETS2
                 Process[] ets2proc = Process.GetProcessesByName("eurotrucks2");
 
-                //Searching for ETS2
+                //Searching for ATS
                 Process[] atsproc = Process.GetProcessesByName("amtrucks");
 
-                if (ets2proc.Count() > 0)
-                    radioButtonMainGameSwitchETS.Checked = true;
-                else if (atsproc.Count() > 0)
+                if (atsproc.Count() > 0)
                     radioButtonMainGameSwitchATS.Checked = true;
                 else
                     radioButtonMainGameSwitchETS.Checked = true;
