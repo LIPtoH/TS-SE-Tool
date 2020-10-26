@@ -383,15 +383,17 @@ namespace TS_SE_Tool
                         catch
                         { }
                     }
+                    _wear = _wear / partCount;
                 }
                 else
                 {
+                    _wear = -1;
                     pnLabel.Text = "!! Part not found !!";
                 }
 
-                _wear = _wear / partCount;
+               
 
-                if (_wear == 0)
+                if (_wear <= 0)
                     repairButton.Enabled = false;
                 else
                     repairButton.Enabled = true;
@@ -399,30 +401,32 @@ namespace TS_SE_Tool
                 //
                 SolidBrush ppen = new SolidBrush(GetProgressbarColor(_wear));
 
-                int x = 0, y = 0, pnlwidth = (int)(pbPanel.Width * (1 - _wear));
+                int x = 0, y = 0, pnlwidth = (_wear >=0)?((int)(pbPanel.Width * (1 - _wear))) : (0);
 
                 Bitmap progress = new Bitmap(pbPanel.Width, pbPanel.Height);
 
                 Graphics g = Graphics.FromImage(progress);
                 g.FillRectangle(ppen, x, y, pnlwidth, pbPanel.Height);
+                if (_wear >= 0)
+                {
+                    int fontSize = 12;
+                    StringFormat sf = new StringFormat();
+                    sf.LineAlignment = StringAlignment.Center;
+                    sf.Alignment = StringAlignment.Center;
 
-                int fontSize = 12;
-                StringFormat sf = new StringFormat();
-                sf.LineAlignment = StringAlignment.Center;
-                sf.Alignment = StringAlignment.Center;
-
-                GraphicsPath p = new GraphicsPath();
-                p.AddString(
-                    ((int)((1 - _wear) * 100)).ToString() + " %",   // text to draw
-                    FontFamily.GenericSansSerif,                    // or any other font family
-                    (int)FontStyle.Bold,                            // font style (bold, italic, etc.)
-                    g.DpiY * fontSize / 72,                         // em size
-                    new Rectangle(0, 0, pbPanel.Width, pbPanel.Height),     // location where to draw text
-                    sf);                                            // set options here (e.g. center alignment)
+                    GraphicsPath p = new GraphicsPath();
+                    p.AddString(
+                        ((int)((1 - _wear) * 100)).ToString() + " %",   // text to draw
+                        FontFamily.GenericSansSerif,                    // or any other font family
+                        (int)FontStyle.Bold,                            // font style (bold, italic, etc.)
+                        g.DpiY * fontSize / 72,                         // em size
+                        new Rectangle(0, 0, pbPanel.Width, pbPanel.Height),     // location where to draw text
+                        sf);
+                                                 // set options here (e.g. center alignment)
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.FillPath(Brushes.Black, p);
                 g.DrawPath(Pens.Black, p);
-
+                }
                 pbPanel.BackgroundImage = progress;
             }
         }
