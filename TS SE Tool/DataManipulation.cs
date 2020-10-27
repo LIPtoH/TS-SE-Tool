@@ -1411,7 +1411,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempFile = NewDecodeFile(tempSiiInfoPath);
+                        tempFile = NewDecodeFile(tempSiiInfoPath, false);
 
                         if (FileDecoded)
                         {

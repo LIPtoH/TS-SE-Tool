@@ -989,7 +989,7 @@ namespace TS_SE_Tool
                     int decodeAttempt = 0;
                     while (decodeAttempt < 5)
                     {
-                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath);
+                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath, false);
 
                         if (FileDecoded)
                         {

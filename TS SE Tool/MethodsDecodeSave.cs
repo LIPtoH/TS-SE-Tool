@@ -25,15 +25,20 @@ namespace TS_SE_Tool
     {
         public unsafe string[] NewDecodeFile(string _savefile_path)
         {
+            return NewDecodeFile(_savefile_path, true);
+        }
+
+        public unsafe string[] NewDecodeFile(string _savefile_path, bool _verbose)
+        {
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_loading_save_file");
-            LogWriter("Loading file into memory");
+            if(_verbose)
+                LogWriter("Loading file into memory: " + _savefile_path);
 
             //string FileData = "";
             byte[] FileDataB = new byte[10];
 
             try
             {
-                //FileDate = 
                 FileDataB = File.ReadAllBytes(_savefile_path);
             }
             catch
@@ -66,7 +71,8 @@ namespace TS_SE_Tool
                     // "SIIDEC_RESULT_FORMAT_ENCRYPTED";
                     {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
-                        LogWriter("Decoding file");
+                        if (_verbose)
+                            LogWriter("Decoding file: " + _savefile_path);
 
                         int result = -1;
                         uint newbuff = 0;
@@ -102,7 +108,8 @@ namespace TS_SE_Tool
                     // "SIIDEC_RESULT_FORMAT_3NK";
                     {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
-                        LogWriter("Decoding file");
+                        if (_verbose)
+                            LogWriter("Decoding file: " + _savefile_path);
 
                         int result = -1;
                         uint newbuff = 0;

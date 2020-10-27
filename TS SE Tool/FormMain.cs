@@ -244,10 +244,10 @@ namespace TS_SE_Tool
             {
                 if (Properties.Settings.Default.ShowSplashOnStartup || Properties.Settings.Default.CheckUpdatesOnStartup)
                 {
-                    LogWriter("Done.");
                     FormSplash WindowSplash = new FormSplash();
                     WindowSplash.ShowDialog();
                 }
+                LogWriter("Done.");
             }
             catch
             {
