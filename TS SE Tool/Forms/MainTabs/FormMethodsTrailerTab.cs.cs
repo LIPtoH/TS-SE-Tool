@@ -193,11 +193,13 @@ namespace TS_SE_Tool
             dc = new DataColumn("GarageName", typeof(string));
             combDT.Columns.Add(dc);
 
+            dc = new DataColumn("DriverName", typeof(string));
+            combDT.Columns.Add(dc);
+
             DataColumn dcDisplay = new DataColumn("DisplayMember");
-            dcDisplay.Expression = string.Format("IIF(UserTrailerNameless <> 'null'," +
-                                                        "'[' + {0} +'] ' + IIF(TrailerName <> '', {1} +' || ','',) + {2}," +
+            dcDisplay.Expression = string.Format("IIF(UserTrailerNameless <> 'null', '[' + {0} +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + IIF(DriverName <> 'null', ' || In use - ' + {3},'')," +
                                                         "'-- NONE --')",
-                                                "TrailerType", "GarageName", "TrailerName");
+                                                "TrailerType", "GarageName", "TrailerName", "DriverName");
             combDT.Columns.Add(dcDisplay);
             //
 
@@ -209,7 +211,8 @@ namespace TS_SE_Tool
                 {
                     string trailername = "";
                     //
-                    string tmpTrailerType = "", tmpTrailerkName = "", tmpGarageName = "";
+                    string tmpTrailerType = "", tmpTrailerkName = "", tmpGarageName = "", tmpDriverName = "";
+
                     if (UserTrailerDictionary[UserTrailer.Key].Users)
                     {
                         tmpTrailerType = "U";
@@ -262,8 +265,24 @@ namespace TS_SE_Tool
                         tmpTrailerkName = trailerdef;
                     }
 
+                    tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTrailer == UserTrailer.Key)?.SingleOrDefault().Key ?? "null";
 
-                    combDT.Rows.Add(UserTrailer.Key, tmpTrailerType, tmpTrailerkName, tmpGarageName); //(UserTrailer.Key, trailername);
+                    if (tmpDriverName != "null")
+                        if (PlayerDataData.UserDriver == tmpDriverName)
+                        {
+                            tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
+                        }
+                        else
+                        {
+                            DriverNames.TryGetValue(tmpDriverName, out string _resultvalue);
+
+                            if (_resultvalue != null && _resultvalue != "")
+                            {
+                                tmpDriverName = _resultvalue.TrimStart(new char[] { '+' });
+                            }
+                        }
+
+                    combDT.Rows.Add(UserTrailer.Key, tmpTrailerType, tmpTrailerkName, tmpGarageName, tmpDriverName); //(UserTrailer.Key, trailername);
                 }
             }
 
@@ -324,14 +343,6 @@ namespace TS_SE_Tool
                         case 0:
                             {
                                 DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "trailerdata");
-                                string tmp = DataPart[0].PartData.Find(xl => xl.StartsWith(" cargo_mass:")).Split(new char[] { ' ' })[2];
-
-                                if (tmp == "0")
-                                {
-                                    repairButton.Enabled = false;
-                                    pbPanel.BackgroundImage = null;
-                                }
-
                                 break;
                             }
                         case 1:
@@ -356,10 +367,42 @@ namespace TS_SE_Tool
 
                 if (DataPart != null && DataPart.Count > 0)
                 {
-                    if (_number != 0 && pnLabel != null)
-                    {
-                        pnLabel.Text = DataPart[0].PartData.Find(xl => xl.StartsWith(" data_path:")).Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
-                    }
+                    if (pnLabel != null)
+                        if (_number != 0)
+                        {
+                            pnLabel.Text = DataPart[0].PartData.Find(xl => xl.StartsWith(" data_path:")).Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                        }
+                        else
+                        {
+                            var tmp = UserDriverDictionary.Select(tx => tx.Value)
+                                    .Where(tX => tX.AssignedTrailer == comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()).ToList();
+
+                            if (tmp != null && tmp.Count > 0)
+                            {
+                                string tmpCargo = tmp[0].DriverJob.Cargo;
+
+                                if (CargoLngDict.TryGetValue(tmpCargo, out string value))
+                                {
+                                    if (value != null && value != "")
+                                    {
+                                        pnLabel.Text = value;
+                                    }
+                                    else
+                                    {
+                                        string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(value);
+
+                                        pnLabel.Text = CapName;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                repairButton.Enabled = false;
+                                pbPanel.BackgroundImage = null;
+                                pnLabel.Text = "";
+                                return;
+                            }
+                        }
 
                     foreach (UserCompanyTruckDataPart tmpPartData in DataPart)
                     {
@@ -386,7 +429,9 @@ namespace TS_SE_Tool
                 }
                 else
                 {
-                    pnLabel.Text = "!! Part not found !!";
+                    pnLabel.Text = "none";
+                    repairButton.Enabled = false;
+                    return;
                 }
 
                 _wear = _wear / partCount;

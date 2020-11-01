@@ -13,29 +13,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TS_SE_Tool
 {
-    public class UserCompanyDriverData
+    public class PlayerJob
     {
-        public UserCompanyDriverData()
-        {
-
-        }
-
-        //public string DriverName { get; set; } = null;
-        public int DriverReadiness { get; set; } = 0;
-        public bool DriverQuitWarned { get; set; } = false;
-        //
-        public string AssignedTruck { get; set; }
-        public string AssignedTrailer { get; set; }
-        //
-        public PlayerJob DriverJob { get; set; } = new PlayerJob();
-
+        public string JobInfoName { get; set; } = "";
+        public string Cargo { get; set; } = "";
     }
 }

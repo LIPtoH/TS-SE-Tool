@@ -228,11 +228,13 @@ namespace TS_SE_Tool
             dc = new DataColumn("GarageName", typeof(string));
             combDT.Columns.Add(dc);
 
+            dc = new DataColumn("DriverName", typeof(string));
+            combDT.Columns.Add(dc);
+
             DataColumn dcDisplay = new DataColumn("DisplayMember");
-            dcDisplay.Expression = string.Format("IIF(UserTruckNameless <> ''," +
-                                                        "'[' + {0} +'] ' + IIF(GarageName <> '', {1} +' || ','',) + {2}," +
-                                                        "'-- NONE --')", 
-                                                "TruckType", "GarageName", "TruckName");
+            dcDisplay.Expression = string.Format("IIF(UserTruckNameless <> '', '[' + {0} +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + IIF(DriverName <> 'null', ' || In use - ' + {3},'')," +
+                                                        "'-- NONE --')",
+                                                "TruckType", "GarageName", "TruckName", "DriverName");
             combDT.Columns.Add(dcDisplay);
             //
 
@@ -249,7 +251,7 @@ namespace TS_SE_Tool
 
                 TruckBrandsLngDict.TryGetValue(truckname, out string trucknamevalue);
                 //
-                string tmpTruckType = "", tmpTruckName = "", tmpGarageName = "";
+                string tmpTruckType = "", tmpTruckName = "", tmpGarageName = "", tmpDriverName = "";
 
                 if (UserTruckDictionary[UserTruck.Key].Users)
                 {
@@ -268,8 +270,34 @@ namespace TS_SE_Tool
                 {
                     tmpTruckName = truckname;
                 }
-                //
-                combDT.Rows.Add(UserTruck.Key, tmpTruckType, tmpTruckName, tmpGarageName);
+
+                Garages tmpGrg = GaragesList.Where(tX => tX.Vehicles.Contains(UserTruck.Key))?.SingleOrDefault() ?? null;
+
+                if (tmpGrg != null)
+                {
+                    tmpDriverName = tmpGrg.Drivers[tmpGrg.Vehicles.IndexOf(UserTruck.Key)];
+                }
+                else
+                {
+                    tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTruck == UserTruck.Key)?.SingleOrDefault().Key ?? "null";
+                }
+                
+                if (tmpDriverName != null && tmpDriverName != "null")
+                    if (PlayerDataData.UserDriver == tmpDriverName)
+                    {
+                        tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
+                    }
+                    else
+                    {
+                        DriverNames.TryGetValue(tmpDriverName, out string _resultvalue);
+
+                        if (_resultvalue != null && _resultvalue != "")
+                        {
+                            tmpDriverName = _resultvalue.TrimStart(new char[] { '+' });
+                        }
+                    }
+                
+                combDT.Rows.Add(UserTruck.Key, tmpTruckType, tmpTruckName, tmpGarageName, tmpDriverName);
             }
 
             bool noTrucks = false;

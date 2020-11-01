@@ -705,7 +705,7 @@ namespace TS_SE_Tool
                     if (source == "null")
                         continue;
 
-                    string value = GaragesList.Find(x => x.Trailers.Contains(source)).GarageNameTranslated;
+                    string value = GaragesList.Find(x => x.Trailers.Contains(source))?.GarageNameTranslated ?? "";
 
                     if (value != null && value != "")
                     {
@@ -713,7 +713,7 @@ namespace TS_SE_Tool
                     }
                     else
                     {
-                        temp["GarageName"] = "-unknown-";
+                        temp["GarageName"] = "";
                     }
                 }
 

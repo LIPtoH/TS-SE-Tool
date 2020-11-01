@@ -1269,7 +1269,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1308,7 +1308,7 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(451, 0);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(450, 0);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
@@ -1547,7 +1547,7 @@
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
             this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
@@ -2479,6 +2479,7 @@
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.menuStripMain);
             this.MainMenuStrip = this.menuStripMain;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(850, 660);
             this.MinimumSize = new System.Drawing.Size(850, 660);
             this.Name = "FormMain";

@@ -133,6 +133,7 @@
   <ItemGroup>
     <Compile Include="CustomClasses\ExternalData\ScsFont.cs" />
     <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
+    <Compile Include="CustomClasses\Save\Items\PlayerJob.cs" />
     <Compile Include="CustomClasses\SCSFontLetter.cs" />
     <Compile Include="CustomClasses\SCSLicensePlate.cs" />
     <Compile Include="CustomClasses\Utilities\AssemblyData.cs" />

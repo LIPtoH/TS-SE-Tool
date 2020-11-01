@@ -30,7 +30,8 @@ namespace TS_SE_Tool
         public string UserCompanyAssignedTruckPlacement { get; set; } = "";
         public string UserCompanyAssignedTrailer { get; set; } = "";
         public List<string> UserCompanyAssignedSlaveTrailerPlacements = new List<string>();
-        public string CurrentJob { get; set; } = "";
+        //public string CurrentJob { get; set; } = "";
+        public PlayerJob CurrentJob { get; set; }
         public string UserDriver { get; set; } = "";
 
         public void UpdatePlayerSkills(byte _ADR, byte _LongDistances, byte _HeavyCargo, byte _FragileCargo, byte _UrgentJobs, byte _MechanicalSkill)

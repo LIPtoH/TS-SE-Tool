@@ -122,7 +122,7 @@ namespace TS_SE_Tool
                                 if (res == "null")
                                     res = null;
                             }
-                            catch { }                            
+                            catch { }
 
                             if (tempSavefileInMemory[line].StartsWith(" vehicles["))
                                 tempGarage.Vehicles.Add(res);
@@ -131,7 +131,7 @@ namespace TS_SE_Tool
                             else if (tempSavefileInMemory[line].StartsWith(" trailers["))
                                 tempGarage.Trailers.Add(res);
                             else if (tempSavefileInMemory[line].StartsWith(" status:"))
-                                tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);                            
+                                tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
 
                             line++;
                         }
@@ -243,7 +243,7 @@ namespace TS_SE_Tool
 
                         //User Colors
                         if (tempSavefileInMemory[line].StartsWith(" user_colors:"))
-                        {   
+                        {
                             UInt16 ColorCount = Convert.ToUInt16(tempSavefileInMemory[line].Split(new string[] { ": " }, 0)[1]);
 
                             for (short i = 0; i < ColorCount; i++)
@@ -386,6 +386,11 @@ namespace TS_SE_Tool
                     if (PlayerSection && tempSavefileInMemory[line].StartsWith("}"))
                     {
                         PlayerSection = false;
+
+                        //
+                        UserDriverDictionary.ElementAt(0).Value.AssignedTruck = PlayerDataData.UserCompanyAssignedTruck;
+                        UserDriverDictionary.ElementAt(0).Value.AssignedTrailer = PlayerDataData.UserCompanyAssignedTrailer;
+
                         continue;
                     }
                     if (PlayerSection)
@@ -483,9 +488,81 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" current_job:"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            PlayerDataData.CurrentJob = chunkOfline[1].TrimStart(' ');
+
+                            if (chunkOfline[1].Trim(' ') != "null")
+                                PlayerDataData.CurrentJob = new PlayerJob();
+                            //PlayerDataData.CurrentJob = chunkOfline[1].TrimStart(' ');
                             continue;
                         }
+                    }
+
+                    if (tempSavefileInMemory[line].StartsWith("driver_ai :"))
+                    {
+                        string driverName = tempSavefileInMemory[line].Split(new char[] { ':', '{' })[1].Trim(new char[] { ' ' });
+
+                        if (UserDriverDictionary.ContainsKey(driverName))
+                        {
+                            do
+                            {
+                                line++;
+
+                                if (tempSavefileInMemory[line].StartsWith(" assigned_trailer:"))
+                                {
+                                    chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
+
+                                    string tmpTrailer = chunkOfline[1].Trim(' ');
+
+                                    if (tmpTrailer != "null")
+                                    {
+                                        UserDriverDictionary[driverName].AssignedTrailer = chunkOfline[1].Trim(' ');
+                                    }
+
+                                    continue;
+                                }
+
+                                if (tempSavefileInMemory[line].StartsWith(" driver_job:"))
+                                {
+                                    chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
+
+                                    UserDriverDictionary[driverName].DriverJob.JobInfoName = chunkOfline[1].Trim(' ');
+
+                                    continue;
+                                }
+
+                            } while (!tempSavefileInMemory[line].StartsWith("}"));
+                        }
+                        continue;
+                    }
+
+                    if (tempSavefileInMemory[line].StartsWith("job_info :"))
+                    {
+                        string jobinfoNameless = tempSavefileInMemory[line].Split(new char[] { ':', '{' })[1].Trim(new char[] { ' ' });
+
+                        var tmp = UserDriverDictionary.Select(tx => tx.Value)
+                                    .Where(tX => tX.DriverJob.JobInfoName == jobinfoNameless).ToList();
+
+                        if (tmp != null && tmp.Count > 0)
+                        {
+                            do
+                            {
+                                line++;
+
+                                if (tempSavefileInMemory[line].StartsWith(" cargo:"))
+                                {
+                                    chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
+
+                                    string tmpCargo = chunkOfline[1].Trim(' ');
+
+                                    if (tmpCargo != "null")
+                                    {
+                                        tmp[0].DriverJob.Cargo = tmpCargo.Split(new char[] { '.' })[1].Trim(' ');
+                                    }
+
+                                    continue;
+                                }
+                            } while (!tempSavefileInMemory[line].StartsWith("}"));
+                        }
+                        continue;
                     }
 
                     //Populate GPS
@@ -551,6 +628,19 @@ namespace TS_SE_Tool
                         do
                         {
                             line++;
+
+                            //cargo: cargo.pork_meat
+                            if (tempSavefileInMemory[line].StartsWith(" cargo:"))
+                            {
+                                chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
+
+                                PlayerDataData.CurrentJob.Cargo = chunkOfline[1].Trim(' ').Split(new char[] { '.' })[1];
+
+                                UserDriverDictionary.ElementAt(0).Value.DriverJob = PlayerDataData.CurrentJob;
+
+                                continue;
+                            }
+
                             if (tempSavefileInMemory[line].Contains("_nameless") && tempSavefileInMemory[line].StartsWith(" company_truck:"))
                             {
                                 chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
@@ -577,13 +667,12 @@ namespace TS_SE_Tool
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
                         string vehiclenameless = chunkOfline[2];
 
-                        if (UserTruckDictionary.ContainsKey(vehiclenameless))//UserTruckList.ContainsKey(vehiclenameless))
+                        if (UserTruckDictionary.ContainsKey(vehiclenameless))
                         {
                             UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("truckdata"));
                             line++;
 
                             int accessoriescount = 0;
-                            //string[] accessoriespool = null;
 
                             while (!tempSavefileInMemory[line].StartsWith("}"))
                             {
