@@ -43,6 +43,7 @@ namespace TS_SE_Tool
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
             FormMain.LogWriter("--- START ---");
+            FormMain.LogWriter(Utilities.AssemblyData.AssemblyProduct + " - " + Utilities.AssemblyData.AssemblyVersion);
             DetectEnviroment.DetectOS();
             DetectEnviroment.Get45PlusFromRegistry();
 
