@@ -1959,7 +1959,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(562, 202);
             this.label1.TabIndex = 20;
-            this.label1.Text = "Work In Progres";
+            this.label1.Text = "Work In Progress";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelCMTrailerType
@@ -2101,7 +2101,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(552, 155);
             this.label5.TabIndex = 8;
-            this.label5.Text = "Work In Progres";
+            this.label5.Text = "Work In Progress";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel1
