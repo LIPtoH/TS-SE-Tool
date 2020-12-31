@@ -230,6 +230,15 @@ namespace TS_SE_Tool
             }
         }
 
+        private void buttonSupport_Click(object sender, EventArgs e)
+        {
+            string url = "https://www.paypal.me/LIPtoHCode";
+
+            DialogResult result = MessageBox.Show("This will open a web-page.\nDo you want to continue?", "Support developer", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+            if (result == DialogResult.Yes)
+                System.Diagnostics.Process.Start(url);
+        }
+
         public string GetLatestVersionData(string url)
         {
             string result = null;
