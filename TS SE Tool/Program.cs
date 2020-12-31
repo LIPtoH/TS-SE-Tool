@@ -60,7 +60,13 @@ namespace TS_SE_Tool
             DialogResult result = DialogResult.Cancel;
             try
             {
-                result = ShowThreadExceptionDialog("Windows Forms Error", t.Exception);
+                Exception ex = t.Exception;
+
+                string errorMsg = "An application error occurred. Please contact the Developer. Information can be found in \" Errorlog \" file.";
+
+                FormMain.ErrorLogWriter(ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);
+
+                result = MessageBox.Show(errorMsg, "Windows Forms Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Stop);
             }
             catch
             {
@@ -87,20 +93,13 @@ namespace TS_SE_Tool
         {
             try
             {
-                
                 Exception ex = (Exception)e.ExceptionObject;
-                string errorMsg = "An application error occurred. Please contact the Developer with the following information:\n\n";
-                
-                // Since we can't prevent the app from terminating, log this to the event log.
-                if (!EventLog.SourceExists("ThreadException"))
-                {
-                    EventLog.CreateEventSource("ThreadException", "Application");
-                }
 
-                // Create an EventLog instance and assign its source.
-                EventLog myLog = new EventLog();
-                myLog.Source = "ThreadException";
-                myLog.WriteEntry(errorMsg + ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);                
+                string errorMsg = "An application error occurred. Please contact the Developer. Information can be found in \" Errorlog \" file.";
+
+                MessageBox.Show(errorMsg, "Non-UI Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                FormMain.ErrorLogWriter(ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);
             }
             catch (Exception exc)
             {
@@ -114,15 +113,6 @@ namespace TS_SE_Tool
                     Application.Exit();
                 }
             }
-        }
-
-        // Creates the error message and displays it.
-        private static DialogResult ShowThreadExceptionDialog(string title, Exception e)
-        {
-            string errorMsg = "An application error occurred. Please contact the Developer with the following information:\n\n"
-                + e.Message + "\n\nStack Trace:\n" + e.StackTrace;
-
-            return MessageBox.Show(errorMsg, title, MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Stop);
         }
     }
 }

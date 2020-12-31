@@ -740,8 +740,20 @@ namespace TS_SE_Tool
                 }
             }
             catch
+            { }
+        }
+
+        public static void ErrorLogWriter(string _error)
+        {
+            try
             {
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\errorlog.log", true))
+                {
+                    writer.WriteLine(DateTime.Now + "\r\n" + _error + "\r\n");
+                }
             }
+            catch
+            { }
         }
 
         private byte[] LoadFileToMemory(string _filePath)
