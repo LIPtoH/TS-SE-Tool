@@ -29,6 +29,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace TS_SE_Tool
 {
@@ -2174,11 +2175,11 @@ namespace TS_SE_Tool
                 string[] langfolders = Directory.GetDirectories(Directory.GetCurrentDirectory() + @"\lang","??-??", SearchOption.TopDirectoryOnly);
                 string langTag;
 
-                string langNameShort;
-                string countryShort;
-
                 string flagpath;
-                foreach (string folder in langfolders)//foreach (string lang in langfiles)
+
+                ArrayList tempTS_AList = new ArrayList();
+
+                foreach (string folder in langfolders)
                 {
                     string lngfile = folder + @"\lngfile.txt";
 
@@ -2186,19 +2187,24 @@ namespace TS_SE_Tool
                     {
                         langTag = File.ReadAllLines(lngfile, Encoding.UTF8)[0].Split(new char[] { '[', ']' })[1];
 
-                        langNameShort = langTag.Split('-')[0];
-                        countryShort = langTag.Split('-')[1];
+                        //check
+                        Regex rgx = new Regex(@"^[a-zA-Z]{2}-[a-zA-Z]{2}$");
+
+                        if (!rgx.IsMatch(langTag))
+                            continue;
+                        //
 
                         CultureInfo ci = new CultureInfo(langTag, false);
 
                         char[] a = ci.NativeName.ToCharArray();
                         a[0] = char.ToUpper(a[0]);
+
                         string CorrectedNativeName = new string(a);
 
                         ToolStripItem TSitem = new ToolStripMenuItem();
-                        TSitem.Name = langNameShort + "_" + countryShort + "_ToolStripMenuItemTranslation";
-                        TSitem.Text = CorrectedNativeName;
 
+                        TSitem.Name = langTag.Replace('-', '_') + "_ToolStripMenuItemTranslation";
+                        TSitem.Text = CorrectedNativeName;
                         TSitem.Click += new EventHandler(toolstripChangeLanguage);
 
                         flagpath = folder + @"\flag.png";
@@ -2209,38 +2215,34 @@ namespace TS_SE_Tool
                             TSitem.ImageScaling = ToolStripItemImageScaling.None;
                         }
 
-                        toolStripMenuItemLanguage.DropDownItems.Add(TSitem);
-
-                        byte[] bytes = Encoding.UTF8.GetBytes(flagpath);
+                        tempTS_AList.Add(TSitem);
                     }
-                }                
+                }
+
+                IComparer myComparer = new TSSETtoolstripLanguage();
+                tempTS_AList.Sort(myComparer);
+
+                foreach (ToolStripItem TSitem in tempTS_AList)
+                {
+                    toolStripMenuItemLanguage.DropDownItems.Add(TSitem);
+                }
             }
             else
             {
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\lang");
             }
 
-            ArrayList oAList = new ArrayList(toolStripMenuItemLanguage.DropDownItems);
-            IComparer myComparer = new TSSETtoolstripLanguage();
-            oAList.Sort(myComparer);
-
-            toolStripMenuItemLanguage.DropDownItems.Clear();
-
-            //Button make blank folder for Culture
+            //Button to Make blank folder for current Culture
             ToolStripItem TSitemBlank = new ToolStripMenuItem();
+
             TSitemBlank.Name = "toolStripMenuItemTranslationCreateBlankFolder";
             TSitemBlank.Text = "Make Blank translation for system language (" + CultureInfo.InstalledUICulture.NativeName + ")";
-
             TSitemBlank.Click += new EventHandler(makeToolStripMenuItem_Click);
 
-            toolStripMenuItemLanguage.DropDownItems.Add(TSitemBlank);
-            //Separator
-            toolStripMenuItemLanguage.DropDownItems.Add( new ToolStripSeparator());
+            toolStripMenuItemLanguage.DropDownItems.Insert(0, TSitemBlank);
 
-            foreach (ToolStripItem oItem in oAList)
-            {
-                toolStripMenuItemLanguage.DropDownItems.Add(oItem);
-            }
+            //Separator
+            toolStripMenuItemLanguage.DropDownItems.Insert(1, new ToolStripSeparator());
         }
 
         public class TSSETtoolstripLanguage : IComparer
