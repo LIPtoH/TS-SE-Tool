@@ -207,6 +207,7 @@ namespace TS_SE_Tool
         }
 
         //Main part controls
+        
         //Game select
         public void ToggleGame_Click(object sender, EventArgs e)
         {
@@ -247,6 +248,7 @@ namespace TS_SE_Tool
             FormAddCustomFolder FormWindow = new FormAddCustomFolder();
             FormWindow.ShowDialog();
         }
+        
         //Profile list
         private void buttonRefreshAll_Click(object sender, EventArgs e)
         {
@@ -271,6 +273,7 @@ namespace TS_SE_Tool
                 FillAllProfilesPaths();
             }
         }
+        
         //Buttons
         private void buttonDecryptSave_Click(object sender, EventArgs e)
         {

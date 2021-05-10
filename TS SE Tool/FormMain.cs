@@ -201,6 +201,7 @@ namespace TS_SE_Tool
             //Program
             UpdateStatusBarMessage.OnNewStatusMessage += UpdateStatusBarMessage_OnNewStatusMessage;
             this.Icon = Properties.Resources.MainIco;
+            this.Text += " [ " + Utilities.AssemblyData.AssemblyVersion + " ]";
 
             SetDefaultValues(true);
             LogWriter("Loading config...");
