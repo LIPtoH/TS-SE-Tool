@@ -2259,10 +2259,10 @@ namespace TS_SE_Tool
                     {
                         if (MainSaveFileInfoData.Dependencies != null && MainSaveFileInfoData.Dependencies.Count() > 0)
                         {
-                            List<string> temp = DBDependencies.Except(MainSaveFileInfoData.Dependencies.Select(x => x.Raw).ToList()).ToList();
-
                             string SQLCommandCMD = "";
                             bool first = true;
+
+                            List<string> temp = DBDependencies.Except(MainSaveFileInfoData.Dependencies.Select(x => x.Raw).ToList()).ToList();
 
                             if (temp != null && temp.Count() > 0)
                             {
@@ -2301,41 +2301,43 @@ namespace TS_SE_Tool
                                 UpdateDatabase(SQLCommandCMD);
                             }
 
-                            SQLCommandCMD = "INSERT INTO [Dependencies] (Dependency) ";
-
-                            first = true;
-
                             temp = MainSaveFileInfoData.Dependencies.Select(x => x.Raw).ToList().Except(DBDependencies).ToList();
 
-                            foreach (string tempitem in temp)
+                            if (temp != null && temp.Count() > 0)
                             {
-                                if (!first)
-                                {
-                                    SQLCommandCMD += " UNION ALL ";
-                                }
-                                else
-                                {
-                                    first = false;
-                                }
+                                SQLCommandCMD = "INSERT INTO [Dependencies] (Dependency) ";
+                                first = true;
 
-                                string sqlstr = tempitem;
-                                int apoIndex = 0;
-
-                                while (true)
+                                foreach (string tempitem in temp)
                                 {
-                                    apoIndex = sqlstr.IndexOf("'", apoIndex);
-
-                                    if (apoIndex > -1)
-                                        sqlstr = sqlstr.Insert(apoIndex, "'");
+                                    if (!first)
+                                    {
+                                        SQLCommandCMD += " UNION ALL ";
+                                    }
                                     else
-                                        break;
+                                    {
+                                        first = false;
+                                    }
 
-                                    apoIndex = apoIndex + 2;
+                                    string sqlstr = tempitem;
+                                    int apoIndex = 0;
+
+                                    while (true)
+                                    {
+                                        apoIndex = sqlstr.IndexOf("'", apoIndex);
+
+                                        if (apoIndex > -1)
+                                            sqlstr = sqlstr.Insert(apoIndex, "'");
+                                        else
+                                            break;
+
+                                        apoIndex = apoIndex + 2;
+                                    }
+
+                                    SQLCommandCMD += "SELECT '" + sqlstr + "'";
                                 }
-
-                                SQLCommandCMD += "SELECT '" + sqlstr + "'";
+                                UpdateDatabase(SQLCommandCMD);
                             }
-                            UpdateDatabase(SQLCommandCMD);
                         }
 
                         break;

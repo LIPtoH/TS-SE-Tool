@@ -265,7 +265,7 @@ namespace TS_SE_Tool
                         catch
                         { }
 
-                        if (tmp[0] != "" || tmp[1] != "")
+                        if (tmp[0] != "")
                             _destDict.Add(tmp[0], tmp[1]);
                     }
                         
@@ -534,6 +534,7 @@ namespace TS_SE_Tool
                 return bitmap;
         }
 
+        //Save new language strings
         private void SaveCompaniesLng()
         {
             CompaniesList = CompaniesList.Distinct().OrderBy(x => x).ToList();
@@ -548,26 +549,7 @@ namespace TS_SE_Tool
                 }
             }
 
-            newEntries = newEntries.Distinct().ToList();
-            
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\companies_translate.txt", true))
-                {
-                    if (newEntries.Count > 0)
-                    {
-                        writer.WriteLine();
-                        foreach (string str in newEntries)
-                        {
-                            writer.WriteLine(str + ";");
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                LogWriter("companies_translate.txt file is missing");
-            }
+            SaveLngFilesWriter(newEntries, "companies_translate");
         }
 
         private void SaveCitiesLng()
@@ -584,26 +566,7 @@ namespace TS_SE_Tool
                 }
             }
 
-            newEntries = newEntries.Distinct().ToList();
-
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\cities_translate.txt", true))
-                {
-                    if (newEntries.Count > 0)
-                    {
-                        writer.WriteLine();
-                        foreach (string str in newEntries)
-                        {
-                            writer.WriteLine(str + ";");
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                LogWriter("cities_translate.txt file is missing");
-            }
+            SaveLngFilesWriter(newEntries, "cities_translate");
         }
 
         private void SaveCargoLng()
@@ -620,27 +583,33 @@ namespace TS_SE_Tool
                 }
             }
 
-            newEntries = newEntries.Distinct().ToList();
+            SaveLngFilesWriter(newEntries, "cargo_translate");
+        }
 
-            try
+        private void SaveLngFilesWriter(List<string> newEntries, string outputFile)
+        {
+            if (newEntries.Count > 0)
             {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\cargo_translate.txt", true))
+                newEntries = newEntries.Distinct().ToList();
+
+                try
                 {
-                    if (newEntries.Count > 0)
+                    using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\lang\Default\" + outputFile + ".txt", true))
                     {
-                        writer.WriteLine();
                         foreach (string str in newEntries)
                         {
-                            writer.WriteLine(str + ";");
+                            writer.WriteLine();
+                            writer.Write(str + ";");
                         }
                     }
                 }
-            }
-            catch
-            {
-                LogWriter("cargo_translate.txt file is missing");
+                catch
+                {
+                    LogWriter(outputFile + ".txt file is missing");
+                }
             }
         }
+        //
 
         private void ExportFormControlstoLanguageFile()
         {
