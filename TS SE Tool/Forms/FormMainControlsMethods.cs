@@ -131,27 +131,23 @@ namespace TS_SE_Tool
 
         private void youTubeVideoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string url = "https://liptoh.now.im/TS-SET-Tutorial";
-            Process.Start(url);
+            Process.Start(Utilities.Web_Utilities.External.linkYoutubeTutorial);
         }
 
         //Downloads
         private void checkGitHubRelesesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string url = "https://github.com/LIPtoH/TS-SE-Tool/releases";
-            Process.Start(url);
+            Process.Start(Utilities.Web_Utilities.External.linGithubReleases);
         }
 
         private void checkTMPForumToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string url = "https://forum.truckersmp.com/index.php?/topic/79561-ts-saveeditor-tool";
-            Process.Start(url);
+            Process.Start(Utilities.Web_Utilities.External.linTMPforum);
         }
 
         private void checkSCSForumToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string url = "https://forum.scssoft.com/viewtopic.php?f=34&t=266092";
-            Process.Start(url);
+            Process.Start(Utilities.Web_Utilities.External.linkSCSforum);
         }
 
         private void latestStableToolStripMenuItem_Click(object sender, EventArgs e)

@@ -289,6 +289,7 @@
     <Compile Include="RMcode\PlainTXTResourceManager.cs" />
     <Compile Include="RMcode\PlainTXTResourceReader.cs" />
     <Compile Include="RMcode\PlainTXTResourceSet.cs" />
+    <Compile Include="CustomClasses\Utilities\Web_Utilities.cs" />
     <EmbeddedResource Include="Forms\ProfileEditor\FormProfileEditor.resx">
       <DependentUpon>FormProfileEditor.cs</DependentUpon>
     </EmbeddedResource>

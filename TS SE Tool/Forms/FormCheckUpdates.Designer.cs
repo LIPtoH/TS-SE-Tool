@@ -83,6 +83,7 @@
             // buttonDownload
             // 
             this.buttonDownload.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonDownload.Margin = new System.Windows.Forms.Padding(22, 0, 22, 0);
             this.buttonDownload.Location = new System.Drawing.Point(3, 63);
             this.buttonDownload.Name = "buttonDownload";
             this.buttonDownload.Size = new System.Drawing.Size(294, 34);

@@ -151,11 +151,11 @@ namespace TS_SE_Tool
 
         #endregion
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonSupportDeveloper_Click(object sender, EventArgs e)
         {
-            string url = "https://www.paypal.me/LIPtoHCode";
+            string url = Utilities.Web_Utilities.External.linkHelpDeveloper;
             
-            DialogResult result = MessageBox.Show("This will open a web-page.\nDo you want to continue?", "Support developer", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,MessageBoxDefaultButton.Button2);
+            DialogResult result = MessageBox.Show("This will open " + url + " web-page.\nDo you want to continue?", "Support developer", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,MessageBoxDefaultButton.Button2);
             if (result == DialogResult.Yes)
                 System.Diagnostics.Process.Start(url);
         }

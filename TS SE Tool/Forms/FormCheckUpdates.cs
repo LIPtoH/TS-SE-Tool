@@ -29,14 +29,14 @@ using System.Net;
 using System.Net.Mime;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
     public partial class FormCheckUpdates : Form
     {
-        bool NVavailible = false, CheckComplete = false;
         internal string[] NewVersion = { "", "" };
-        string FormMode = "";
+        string FormMode = "check";
 
         public FormCheckUpdates(string _formMode)
         {
@@ -48,8 +48,10 @@ namespace TS_SE_Tool
         private void FormCheckUpdates_Load(object sender, EventArgs e)
         {
             buttonDownload.Text = "Download && Update";
+
             if (FormMode == "check")
                 CheckLatestVersion();
+
             else if(FormMode == "download")
             {
                 labelStatus.Text = labelStatus.Text = String.Format("New version {0} available!\r\nClick on Download to update.", NewVersion[0]);
@@ -68,6 +70,8 @@ namespace TS_SE_Tool
 
         private void buttonDownload_Click(object sender, EventArgs e)
         {
+            this.Size = new Size(300, 225);
+
             buttonDownload.Enabled = false;
             buttonOK.Enabled = false;
 
@@ -152,88 +156,107 @@ namespace TS_SE_Tool
         private async void CheckLatestVersion()
         {
             labelStatus.Text = "Checking for updates";
-            await Task.Run(() => Check());
 
-            if (CheckComplete && NVavailible)
+            NewVersion = await Task.Run(() => Web_Utilities.External.CheckNewVersionAvailability(labelStatus));
+
+            if (NewVersion != null && NewVersion[0] != "" && NewVersion[1] != "")
             {
-                bool betterVersion = false;
-                string[] numArr = NewVersion[0].Split(new char[] { '.' });
-                string[] currArr = Utilities.AssemblyData.AssemblyVersion.Split(new char[] { '.' });
+                bool? betterVersion = false;
 
-                for (byte i = 0; i < numArr.Length; i++)
+                string[] newArr = NewVersion[0].Split(new char[] { '.' });
+                string[] currArr = AssemblyData.AssemblyVersion.Split(new char[] { '.' });
+
+                for (byte i = 0; i < newArr.Length; i++)
                 {
-                    if (byte.Parse(numArr[i]) > byte.Parse(currArr[i]))
+                    if (byte.Parse(newArr[i]) > byte.Parse(currArr[i]))
                     {
                         betterVersion = true;
                         break;
                     }
+                    else if (byte.Parse(newArr[i]) < byte.Parse(currArr[i]))
+                    {
+                        betterVersion = null;
+                    }
                 }
 
-                if (betterVersion)
+                if (betterVersion is bool checkBool)
                 {
-                    labelStatus.Text = String.Format("New version {0} available!", NewVersion[0]);
+                    this.Size = new Size(300, 170);
+
+                    buttonDownload.Visible = true;
+                    buttonDownload.Click += new EventHandler(this.buttonDownload_Click);
+                    buttonOK.Text = "Cancel";
+
+
+                    if (checkBool)
+                    {
+                        labelStatus.Text = String.Format("New version {0} available!", NewVersion[0]);
+
+                        SetStatusLabelvisual(visualStatus.good);
+                    }
+                    else
+                    {
+                        labelStatus.Text = String.Format("You are using latest version!");
+
+                        SetStatusLabelvisual(visualStatus.neutral);
+
+                        buttonDownload.Text = "Download && Repair";
+                    }
                 }
                 else
                 {
-                    labelStatus.Text = String.Format("You are using latest version!");
+                    labelStatus.Text = String.Format("Hello developer =)");
 
-                    buttonDownload.Text = "Download && Repair";
+                    SetStatusLabelvisual(visualStatus.neutral);
                 }
-
-                labelStatus.ForeColor = Color.LimeGreen;
-                labelStatus.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-
-                buttonDownload.Visible = true;
-                buttonDownload.Click += new EventHandler(this.buttonDownload_Click);
-
-                this.Size = new Size(300, 225);
-
-                buttonOK.Text = "Cancel";
             }
             else
             {
                 labelStatus.Text = String.Format("Cannot check for updates!");
-                labelStatus.ForeColor = Color.Crimson;
-                labelStatus.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                SetStatusLabelvisual(visualStatus.bad);
             }
 
             buttonOK.Click += new EventHandler(this.buttonOk_Click);
             buttonOK.Enabled = true;
         }
 
-        private void Check()
+        internal enum visualStatus : SByte
         {
-            string newversionData = GetLatestVersionData("https://liptoh.now.im/TS-SET-CheckVersion");
+            neutral = 0,
+            good = 1,
+            bad = -1
+        }
 
-            if (newversionData != null)
+        private void SetStatusLabelvisual(visualStatus _status)
+        {
+            switch (_status)
             {
-                CheckComplete = true;
-                NewVersion = newversionData.Split(new char[] { '\t' });
+                case visualStatus.neutral:
+                    {
+                        labelStatus.ForeColor = this.ForeColor;
+                        labelStatus.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
 
-                if (NewVersion[0] != null && NewVersion[0].Contains("TS.SE.Tool"))
-                {
-                    NVavailible = true;
-                    NewVersion[0] = NewVersion[0].Replace("TS.SE.Tool.", "").Replace(".zip", "");
-                }
+                        break;
+                    }
+
+                case visualStatus.good:
+                    {
+                        labelStatus.ForeColor = Color.LimeGreen;
+                        labelStatus.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                        break;
+                    }
+                case visualStatus.bad:
+                    {
+                        labelStatus.ForeColor = Color.Crimson;
+                        labelStatus.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                        break;
+                    }
             }
         }
 
-        public string GetLatestVersionData(string url)
-        {
-            string result = null;
-
-            using (WebClient client = new WebClient())
-            {
-                try
-                {
-                    result = client.DownloadString(url);
-                }
-                catch { }
-
-                client.Dispose();
-            }
-            return result;
-        }
         //
         private bool checkFileHash(string _filepath, string _hashtocompare)
         {
@@ -253,6 +276,7 @@ namespace TS_SE_Tool
                 }
             }
         }
+
         //Download
         private void startDownload() //async 
         {
@@ -260,7 +284,7 @@ namespace TS_SE_Tool
             labelStatus.Text = "Downloading...";
 
             Task t = Task.Run(() => {
-                var url = "https://liptoh.now.im/TS-SET-Download";
+                var url = Web_Utilities.External.linkDownloadVersion;
                 var filename = Directory.GetCurrentDirectory() + @"\updater\ts.set.newversion.zip";
 
                 try

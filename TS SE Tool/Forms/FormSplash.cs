@@ -29,13 +29,13 @@ using System.Net;
 using System.Net.Mime;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
     public partial class FormSplash : Form
     {
         string[] NewVersion = { "", "" };
-        bool NVavailible = false, CheckComplete = false;
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
         bool CheckForUpdates = true;
@@ -76,9 +76,9 @@ namespace TS_SE_Tool
             catch
             {
                 MessageBox.Show("Please update manually in order to fix it.", "Installation corrupted", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                buttonOK.Click -= new EventHandler(this.button1_Click);
+                buttonOK.Click -= new EventHandler(this.buttonOK_Click);
                 buttonOK.Text = "Close application";
-                buttonOK.Click += new EventHandler(this.button1_ClickCloseApp);
+                buttonOK.Click += new EventHandler(this.buttonOK_ClickCloseApp);
             }
         }
 
@@ -109,47 +109,51 @@ namespace TS_SE_Tool
         //Links
         private void linkFirst_Click(object sender, EventArgs e)
         {
-            string url = "https://forum.scssoft.com/viewtopic.php?f=34&t=266092";
-            Process.Start(url);
+            Process.Start(Utilities.Web_Utilities.External.linkSCSforum);
         }
 
         private void linkSecond_Click(object sender, EventArgs e)
         {
-            string url = "https://forum.truckersmp.com/index.php?/topic/79561-ts-saveeditor-tool";
-            Process.Start(url);
+            Process.Start(Utilities.Web_Utilities.External.linTMPforum);
         }
 
         private void linkLabelGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string url = "https://github.com/LIPtoH/TS-SE-Tool/releases/latest";
-            Process.Start(url);
+            Process.Start(Utilities.Web_Utilities.External.linGithubReleasesLatest);
         }
 
         private void linkLabelHelpLocalPDF_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             string file = "HowTo.pdf";
-            if(File.Exists(file))
+
+            if (File.Exists(file))
                 Process.Start(file);
             else
-            {
                 MessageBox.Show("Missing manual. Try to repair via update", "HowTo.pdf not found");
-            }
         }
 
         private void linkLabelHelpYouTube_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string url = "https://liptoh.now.im/TS-SET-Tutorial";
-            Process.Start(url);
+            Process.Start(Utilities.Web_Utilities.External.linkYoutubeTutorial);
         }
         //Main button
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonOK_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void button1_ClickCloseApp(object sender, EventArgs e)
+        private void buttonOK_ClickCloseApp(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void buttonSupport_Click(object sender, EventArgs e)
+        {
+            string url = Utilities.Web_Utilities.External.linkHelpDeveloper;
+
+            DialogResult result = MessageBox.Show("This will open " + url + " web-page.\nDo you want to continue?", "Support developer", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+            if (result == DialogResult.Yes)
+                System.Diagnostics.Process.Start(url);
         }
 
         //Extra        
@@ -161,100 +165,132 @@ namespace TS_SE_Tool
                 linkLabelNewVersion.Links[0].Enabled = false;
                 linkLabelNewVersion.DisabledLinkColor = this.ForeColor;
 
-                linkLabelNewVersion.Text = "Checking ...";
+                linkLabelNewVersion.Text = "Checking ";
+
                 buttonOK.Text = "Checking for updates";
-                await Task.Run(() => Check());
 
-                if (CheckComplete && NVavailible)
+                NewVersion = await Task.Run(() => Web_Utilities.External.CheckNewVersionAvailability(linkLabelNewVersion));
+
+                if (NewVersion != null && NewVersion[0] != "" && NewVersion[1] != "")
                 {
-                    bool betterVersion = false;
-                    string[] numArr = NewVersion[0].Split(new char[] { '.' });
-                    string[] currArr = Utilities.AssemblyData.AssemblyVersion.Split(new char[] { '.' });
+                    bool? betterVersion = false;
 
-                    for (byte i = 0; i < numArr.Length; i++)
+                    string[] newArr = NewVersion[0].Split(new char[] { '.' });
+                    string[] currArr = AssemblyData.AssemblyVersion.Split(new char[] { '.' });
+
+                    for (byte i = 0; i < newArr.Length; i++)
                     {
-                        if (byte.Parse(numArr[i]) > byte.Parse(currArr[i]))
+                        if (byte.Parse(newArr[i]) > byte.Parse(currArr[i]))
                         {
                             betterVersion = true;
                             break;
                         }
+                        else if (byte.Parse(newArr[i]) < byte.Parse(currArr[i]))
+                        {
+                            betterVersion = null;
+                        }
                     }
 
-                    if (betterVersion)
+                    if (betterVersion is bool checkBool)
                     {
-                        linkLabelNewVersion.Text = String.Format("New version {0} available!\r\n(Download)", NewVersion[0]);
+                        if (checkBool)
+                        {
+                            linkLabelNewVersion.Text = String.Format("New version {0} available!\r\n(Download)", NewVersion[0]);
+
+                            SetLinkLabelNewVersionvisual(visualStatus.good);
+                        }
+                        else
+                        {
+                            linkLabelNewVersion.Text = String.Format("You are using latest version!\r\n(Repair)");
+
+                            SetLinkLabelNewVersionvisual(visualStatus.neutralLinked);
+                        }
+
+                        linkLabelNewVersion.Click += new EventHandler(linkLabelNewVersion_Click);
                     }
                     else
                     {
-                        linkLabelNewVersion.Text = String.Format("You are using latest version!\r\n(Repair)");
+                        linkLabelNewVersion.Text = String.Format("Hello developer =)");
+
+                        SetLinkLabelNewVersionvisual(visualStatus.neutral);
                     }
-
-                    linkLabelNewVersion.LinkBehavior = LinkBehavior.AlwaysUnderline;
-                    linkLabelNewVersion.Links[0].Enabled = true;
-                    linkLabelNewVersion.LinkColor = Color.LimeGreen;
-                    linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-
-                    linkLabelNewVersion.Click += new EventHandler(linkLabelNewVersion_Click);
                 }
                 else
                 {
                     tableLayoutPanel2.RowStyles[3] = new RowStyle(SizeType.Absolute, 30F);
+
                     linkLabelNewVersion.Text = String.Format("Cannot check for updates!", NewVersion[0]);
-                    linkLabelNewVersion.LinkBehavior = LinkBehavior.NeverUnderline;
-                    linkLabelNewVersion.Links[0].Enabled = false;
-                    linkLabelNewVersion.DisabledLinkColor = Color.Crimson;
-                    linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                    SetLinkLabelNewVersionvisual(visualStatus.bad);
                 }
             }
             else
                 tableLayoutPanel2.RowStyles[3] = new RowStyle(SizeType.Absolute, 0F);
 
-            buttonOK.Click += new EventHandler(this.button1_Click);
+            buttonOK.Click += new EventHandler(this.buttonOK_Click);
             buttonOK.Text = "OK";
         }
 
-        private void Check()
+        //
+        internal enum visualStatus : SByte
         {
-            string newversionData = GetLatestVersionData("https://liptoh.now.im/TS-SET-CheckVersion");
+            neutral = 0,
+            good = 1,
+            neutralLinked = 2,
+            bad = -1
+        }
 
-            if (newversionData != null)
+        private void SetLinkLabelNewVersionvisual(visualStatus _status)
+        {
+            switch (_status)
             {
-                CheckComplete = true;
-                NewVersion = newversionData.Split(new char[] { '\t' });
+                case visualStatus.neutral:
+                    {
+                        linkLabelNewVersion.Links[0].Enabled = false;
 
-                if (NewVersion[0] != null && NewVersion[0].Contains("TS.SE.Tool"))
-                {
-                    NVavailible = true;
-                    NewVersion[0] = NewVersion[0].Replace("TS.SE.Tool.", "").Replace(".zip", "");
-                }
+                        linkLabelNewVersion.LinkBehavior = LinkBehavior.NeverUnderline;
+                        linkLabelNewVersion.LinkColor = this.ForeColor;
+                        linkLabelNewVersion.DisabledLinkColor = this.ForeColor;
+                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                        break;
+                    }
+
+                case visualStatus.neutralLinked:
+                    {
+                        linkLabelNewVersion.Links[0].Enabled = true;
+
+                        linkLabelNewVersion.LinkBehavior = LinkBehavior.AlwaysUnderline;
+                        linkLabelNewVersion.LinkColor = this.ForeColor;
+                        linkLabelNewVersion.DisabledLinkColor = this.ForeColor;
+                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                        break;
+                    }
+
+                case visualStatus.good:
+                    {
+                        linkLabelNewVersion.Links[0].Enabled = true;
+
+                        linkLabelNewVersion.LinkBehavior = LinkBehavior.AlwaysUnderline;
+                        linkLabelNewVersion.LinkColor = Color.LimeGreen;
+                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                        break;
+                    }
+                case visualStatus.bad:
+                    {
+                        linkLabelNewVersion.Links[0].Enabled = false;
+
+                        linkLabelNewVersion.LinkBehavior = LinkBehavior.NeverUnderline;
+                        linkLabelNewVersion.DisabledLinkColor = Color.Crimson;
+                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+
+                        break;
+                    }
             }
         }
 
-        private void buttonSupport_Click(object sender, EventArgs e)
-        {
-            string url = "https://www.paypal.me/LIPtoHCode";
-
-            DialogResult result = MessageBox.Show("This will open a web-page.\nDo you want to continue?", "Support developer", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-            if (result == DialogResult.Yes)
-                System.Diagnostics.Process.Start(url);
-        }
-
-        public string GetLatestVersionData(string url)
-        {
-            string result = null;
-
-            using (WebClient client = new WebClient())
-            {
-                try
-                {
-                    result = client.DownloadString(url);
-                }                  
-                catch { }
-
-                client.Dispose();
-            }
-            return result;
-        }
     }
 }
 
