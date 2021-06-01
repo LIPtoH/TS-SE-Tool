@@ -156,14 +156,12 @@ namespace TS_SE_Tool
                 System.Diagnostics.Process.Start(url);
         }
 
-        //Extra        
+        //Extra
         private async void CheckLatestVersion()
         {
             if (CheckForUpdates)
             {
-                linkLabelNewVersion.LinkBehavior = LinkBehavior.NeverUnderline;
-                linkLabelNewVersion.Links[0].Enabled = false;
-                linkLabelNewVersion.DisabledLinkColor = this.ForeColor;
+                SetLinkLabelNewVersionvisual(visualStatus.neutral);
 
                 linkLabelNewVersion.Text = "Checking ";
 
@@ -251,7 +249,7 @@ namespace TS_SE_Tool
                         linkLabelNewVersion.LinkBehavior = LinkBehavior.NeverUnderline;
                         linkLabelNewVersion.LinkColor = this.ForeColor;
                         linkLabelNewVersion.DisabledLinkColor = this.ForeColor;
-                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+                        linkLabelNewVersion.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
 
                         break;
                     }

@@ -62,7 +62,7 @@ namespace TS_SE_Tool
             {
                 Exception ex = t.Exception;
 
-                string errorMsg = "An application error occurred. Please contact the Developer. Information can be found in \" Errorlog \" file.";
+                string errorMsg = "An application error occurred. Please contact the Developer at " + Utilities.Web_Utilities.External.linkMailDeveloper + " . Information can be found in \" Errorlog \" file.";
 
                 FormMain.ErrorLogWriter(ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);
 
@@ -95,7 +95,7 @@ namespace TS_SE_Tool
             {
                 Exception ex = (Exception)e.ExceptionObject;
 
-                string errorMsg = "An application error occurred. Please contact the Developer. Information can be found in \" Errorlog \" file.";
+                string errorMsg = "An application error occurred. Please contact the Developer at " + Utilities.Web_Utilities.External.linkMailDeveloper + " . Information can be found in \" Errorlog \" file.";
 
                 MessageBox.Show(errorMsg, "Non-UI Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 

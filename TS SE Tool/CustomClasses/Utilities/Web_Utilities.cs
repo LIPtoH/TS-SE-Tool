@@ -18,6 +18,7 @@ namespace TS_SE_Tool.Utilities
         internal string linkYoutubeTutorial = "https://liptoh.now.im/TS-SET-Tutorial";
 
         internal string linkHelpDeveloper = "https://www.paypal.me/LIPtoHCode";
+        internal string linkMailDeveloper = "liptoh.codebase@gmail.com";
 
         internal string linkSCSforum = "https://forum.scssoft.com/viewtopic.php?f=34&t=266092";
         internal string linTMPforum = "https://forum.truckersmp.com/index.php?/topic/79561-ts-saveeditor-tool";
@@ -26,9 +27,9 @@ namespace TS_SE_Tool.Utilities
         internal string linGithubReleases = "https://github.com/LIPtoH/TS-SE-Tool/releases";
         internal string linGithubReleasesLatest = "https://github.com/LIPtoH/TS-SE-Tool/releases/latest";
 
-        internal static System.Timers.Timer aTimer;
-        internal static byte atimerCounter = 0;
-        internal static string aTimerControlText = "";
+        private static System.Timers.Timer aTimer;
+        private static byte atimerCounter = 0;
+        private static string aTimerControlText = "";
 
         //Check for new version
         internal string[] CheckNewVersionAvailability(Control _control)
