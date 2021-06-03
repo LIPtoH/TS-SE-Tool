@@ -33,123 +33,58 @@ namespace TS_SE_Tool
         {
             InitializeComponent();
 
+            SetFormVisual();
+            PopulateFormControls();
+            TranslateForm();
+        }
+
+        private void SetFormVisual()
+        {
             this.Icon = Utilities.TS_Graphics.IconFromImage(MainForm.ProgUIImgsDict["Info"]);
+        }
 
-            //var MainForm = Application.OpenForms.OfType<FormMain>().Single();
-            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
-            //MainForm.ClearDatabase();
-
-            Text = String.Format("About {0}", AssemblyTitle);
-            labelProductName.Text = AssemblyProduct;
-            labelVersion.Text = String.Format("Version {0} (alpha)", AssemblyVersion);
-            labelCopyright.Text = AssemblyCopyright;
-            textBoxDescription.Text = "This program created by\r\nLIPtoH <liptoh.codebase@gmail.com>\r\nhttps://github.com/LIPtoH/TS-SE-Tool\r\n\r\n" +
-                "Tools and projects used in this project:\r\n\r\n" +
-                "SII Decrypt\r\nhttps://github.com/ncs-sniper/SII_Decrypt\r\n\r\n" +
-                "PsColorPicker\r\nhttps://github.com/exectails/PsColorPicker\r\n\r\n" +
-                "SharpZipLib\r\nhttps://github.com/icsharpcode/SharpZipLib\r\n\r\n" +
-                "SqlCeBulkCopy\r\nhttps://github.com/ErikEJ/SqlCeBulkCopy\r\n\r\n" +
-                "DDSImageParser.cs\r\nhttps://gist.github.com/soeminnminn/e9c4c99867743a717f5b\r\n\r\n" +
-                "TGASharpLib\r\nhttps://github.com/ALEXGREENALEX/TGASharpLib\r\n\r\n" +
-                "FlexibleMessageBox\r\nhttp://www.codeproject.com/Articles/601900/FlexibleMessageBox";
+        private void PopulateFormControls()
+        {
+            labelProductName.Text = Utilities.AssemblyData.AssemblyProduct;
+            labelCopyright.Text = Utilities.AssemblyData.AssemblyCopyright;
 
             labelETS2version.Text = String.Join(" - ", MainForm.SupportedSavefileVersionETS2.Select(p => p.ToString()).ToArray()) + " (" + MainForm.SupportedGameVersionETS2 + ")";
             labelATSversion.Text = String.Join(" - ", MainForm.SupportedSavefileVersionETS2.Select(p => p.ToString()).ToArray()) + " (" + MainForm.SupportedGameVersionATS + ")";
 
-            try
-            {
-                string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
-                if (translatedString != null)
-                    this.Text = String.Format(translatedString, AssemblyTitle);
-                else
-                    this.Text = String.Format("About {0}", AssemblyTitle);
-            }
-            catch
-            {
-            }
+            //
+            string[][] referencies = { 
+                new string[] { "SII Decrypt", "https://github.com/ncs-sniper/SII_Decrypt" },
+                new string[] {"PsColorPicker", "https://github.com/exectails/PsColorPicker"},
+                new string[] {"SharpZipLib", "https://github.com/icsharpcode/SharpZipLib"},
+                new string[] {"SqlCeBulkCopy", "https://github.com/ErikEJ/SqlCeBulkCopy"},
+                new string[] {"DDSImageParser.cs", "https://gist.github.com/soeminnminn/e9c4c99867743a717f5b"},
+                new string[] {"TGASharpLib", "https://github.com/ALEXGREENALEX/TGASharpLib"},
+                new string[] {"FlexibleMessageBox", "http://www.codeproject.com/Articles/601900/FlexibleMessageBox"},
+            };
 
-            try
-            {
-                string translatedString = MainForm.ResourceManagerMain.GetString(labelVersion.Name, Thread.CurrentThread.CurrentUICulture);
-                if (translatedString != null)
-                    labelVersion.Text = String.Format(translatedString, AssemblyVersion);
-                else
-                    labelVersion.Text = String.Format("Version {0} (alpha)", AssemblyVersion);
+            string referenciesText = "";
 
-            }
-            catch
+            foreach (string[] tmp in referencies)
             {
+                referenciesText += tmp[0] + "\r\n" + tmp[1] + "\r\n\r\n";
             }
+            //
+            textBoxDescription.Text = "";
+            textBoxDescription.Text += "This program created by\r\nLIPtoH <" + Utilities.Web_Utilities.External.linkMailDeveloper +
+                                        ">\r\n" + Utilities.Web_Utilities.External.linGithub + "\r\n\r\n";
+            textBoxDescription.Text += "Tools and projects used in this project:\r\n\r\n";
 
+            textBoxDescription.Text += referenciesText;
+            //
         }
 
-        #region Assembly Attribute Accessors
-
-        public string AssemblyTitle
+        private void TranslateForm()
         {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0)
-                {
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
-                    {
-                        return titleAttribute.Title;
-                    }
-                }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
-            }
-        }
+            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
 
-        public string AssemblyVersion
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
+            MainForm.HelpTranslateControlExt(this, Utilities.AssemblyData.AssemblyTitle, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateControlExt(labelVersion, Utilities.AssemblyData.AssemblyVersion, Thread.CurrentThread.CurrentUICulture);
         }
-
-        public string AssemblyDescription
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
-            }
-        }
-
-        public string AssemblyProduct
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyProductAttribute)attributes[0]).Product;
-            }
-        }
-
-        public string AssemblyCopyright
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
-            }
-        }
-
-        #endregion
 
         private void buttonSupportDeveloper_Click(object sender, EventArgs e)
         {

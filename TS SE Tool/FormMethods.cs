@@ -550,6 +550,7 @@ namespace TS_SE_Tool
         internal void HelpTranslateFormMethod(Control parent, ToolTip _formTooltip, CultureInfo _ci)
         {
             char[] charsToTrim = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+
             foreach (Control cntrl in parent.Controls)
             {
                 try
@@ -557,10 +558,12 @@ namespace TS_SE_Tool
                     string translatedString = ResourceManagerMain.GetString(cntrl.Name, _ci);
 
                     if (translatedString == null)
-                        translatedString = ResourceManagerMain.GetString(cntrl.Name.TrimEnd(charsToTrim), _ci);                    
+                        translatedString = ResourceManagerMain.GetString(cntrl.Name.TrimEnd(charsToTrim), _ci);
 
                     if (translatedString != null)
+                    {
                         cntrl.Text = translatedString;
+                    }
 
                     if (_formTooltip != null)
                     {
@@ -590,6 +593,24 @@ namespace TS_SE_Tool
         internal void HelpTranslateFormMethod(Control parent, CultureInfo _ci)
         {
             HelpTranslateFormMethod(parent, null, _ci);            
+        }
+
+        internal void HelpTranslateControlExt(Control thisControl, object parameter, CultureInfo _ci)
+        {
+            try
+            {
+                string translatedString = ResourceManagerMain.GetString(thisControl.Name, _ci);
+
+                if (translatedString == null)
+                    translatedString = ResourceManagerMain.GetString(thisControl.Name, _ci);
+
+                if (translatedString != null)
+                {
+                    thisControl.Text = String.Format(translatedString, parameter);
+                }
+            }
+            catch
+            { }
         }
 
         private void HelpTranslateMenuStripMethod(MenuStrip parent, PlainTXTResourceManager _rm, CultureInfo _ci)
