@@ -209,7 +209,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(434, 211);
             this.Controls.Add(this.tableLayoutPanel2);
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(600, 250);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(450, 250);
             this.Name = "FormProfileEditorRenameClone";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

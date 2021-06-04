@@ -547,9 +547,11 @@ namespace TS_SE_Tool
         }
 
         //Help methods for searching controls
-        internal void HelpTranslateFormMethod(Control parent, ToolTip _formTooltip, CultureInfo _ci)
+        private char[] charsToTrimTranslation = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+
+        internal void HelpTranslateFormMethod(Control parent, ToolTip _formTooltip)
         {
-            char[] charsToTrim = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+            CultureInfo _ci = Thread.CurrentThread.CurrentUICulture;
 
             foreach (Control cntrl in parent.Controls)
             {
@@ -558,9 +560,9 @@ namespace TS_SE_Tool
                     string translatedString = ResourceManagerMain.GetString(cntrl.Name, _ci);
 
                     if (translatedString == null)
-                        translatedString = ResourceManagerMain.GetString(cntrl.Name.TrimEnd(charsToTrim), _ci);
+                        translatedString = ResourceManagerMain.GetString(cntrl.Name.TrimEnd(charsToTrimTranslation), _ci);
 
-                    if (translatedString != null)
+                    if (translatedString != null && translatedString != "")
                     {
                         cntrl.Text = translatedString;
                     }
@@ -570,7 +572,7 @@ namespace TS_SE_Tool
                         string TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name, _ci);
 
                         if (TolltipString == null)                        
-                            TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name.TrimEnd(charsToTrim), _ci);                        
+                            TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name.TrimEnd(charsToTrimTranslation), _ci);                        
 
                         if (TolltipString != null)
                         {
@@ -586,25 +588,52 @@ namespace TS_SE_Tool
                 catch
                 { }
 
-                HelpTranslateFormMethod(cntrl, _formTooltip, _ci);
+                HelpTranslateFormMethod(cntrl, _formTooltip);
             }
         }
 
-        internal void HelpTranslateFormMethod(Control parent, CultureInfo _ci)
+        internal void HelpTranslateFormMethod(Control parent)
         {
-            HelpTranslateFormMethod(parent, null, _ci);            
+            HelpTranslateFormMethod(parent, null);            
         }
 
-        internal void HelpTranslateControlExt(Control thisControl, object parameter, CultureInfo _ci)
+        internal void HelpTranslateControl(Control thisControl)
         {
+            HelpTranslateControlDiffName(thisControl, thisControl.Name);
+        }
+
+        internal void HelpTranslateControlDiffName(Control thisControl, string _newName)
+        {
+            CultureInfo _ci = Thread.CurrentThread.CurrentUICulture;
+
+            try
+            {
+                string translatedString = ResourceManagerMain.GetString(_newName, _ci);
+
+                if (translatedString == null)
+                    translatedString = ResourceManagerMain.GetString(_newName.TrimEnd(charsToTrimTranslation), _ci);
+
+                if (translatedString != null && translatedString != "")
+                {
+                    thisControl.Text = translatedString;
+                }
+            }
+            catch
+            { }
+        }
+
+        internal void HelpTranslateControlExt(Control thisControl, object parameter)
+        {
+            CultureInfo _ci = Thread.CurrentThread.CurrentUICulture;
+
             try
             {
                 string translatedString = ResourceManagerMain.GetString(thisControl.Name, _ci);
 
                 if (translatedString == null)
-                    translatedString = ResourceManagerMain.GetString(thisControl.Name, _ci);
+                    translatedString = ResourceManagerMain.GetString(thisControl.Name.TrimEnd(charsToTrimTranslation), _ci);
 
-                if (translatedString != null)
+                if (translatedString != null && translatedString != "")
                 {
                     thisControl.Text = String.Format(translatedString, parameter);
                 }
@@ -613,20 +642,22 @@ namespace TS_SE_Tool
             { }
         }
 
-        private void HelpTranslateMenuStripMethod(MenuStrip parent, PlainTXTResourceManager _rm, CultureInfo _ci)
+        private void HelpTranslateMenuStripMethod(MenuStrip parent)
         {
-            foreach (ToolStripMenuItem c in parent.Items)
+            CultureInfo _ci = Thread.CurrentThread.CurrentUICulture;
+
+            foreach (ToolStripMenuItem tmpTSMI in parent.Items)
             {
                 try
                 {
-                    string translatedString = _rm.GetString(c.Name, _ci);
+                    string translatedString = ResourceManagerMain.GetString(tmpTSMI.Name, _ci);
                     if (translatedString != null)
-                        c.Text = translatedString;
+                        tmpTSMI.Text = translatedString;
                 }
                 catch
-                {
-                }
-                HelpTranslateMenuStripDDMethod(c, _rm, _ci);
+                { }
+
+                HelpTranslateMenuStripDDMethod(tmpTSMI, ResourceManagerMain, _ci);
             }
         }
 
@@ -649,14 +680,11 @@ namespace TS_SE_Tool
                 }
             }
             catch
-            {
-            }
-
+            { }
         }
 
         private string[] HelpTranslateDialog(string _dialogName)
         {
-            char[] charsToTrim = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
             string dialogCaption = "", dialogText = "";
 
             try
@@ -664,7 +692,7 @@ namespace TS_SE_Tool
                 string translatedString = ResourceManagerMain.GetString("dialogCaption" + _dialogName, Thread.CurrentThread.CurrentUICulture);
 
                 if (translatedString == null)
-                    translatedString = ResourceManagerMain.GetString("dialogCaption" + _dialogName.TrimEnd(charsToTrim), Thread.CurrentThread.CurrentUICulture);
+                    translatedString = ResourceManagerMain.GetString("dialogCaption" + _dialogName.TrimEnd(charsToTrimTranslation), Thread.CurrentThread.CurrentUICulture);
 
                 if (translatedString != null)
                     dialogCaption = translatedString;
@@ -672,7 +700,7 @@ namespace TS_SE_Tool
                 translatedString = ResourceManagerMain.GetString("dialogText" + _dialogName, Thread.CurrentThread.CurrentUICulture);
 
                 if (translatedString == null)
-                    translatedString = ResourceManagerMain.GetString("dialogText" + _dialogName.TrimEnd(charsToTrim), Thread.CurrentThread.CurrentUICulture);
+                    translatedString = ResourceManagerMain.GetString("dialogText" + _dialogName.TrimEnd(charsToTrimTranslation), Thread.CurrentThread.CurrentUICulture);
 
                 if (translatedString != null)
                     dialogText = translatedString;

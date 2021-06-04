@@ -24,12 +24,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Compression;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
     public partial class FormProfileEditor : Form
     {
         public new FormMain ParentForm;
+        FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
         private string WorkingProfilePath = "";
         private string WorkingProfileName = "";
@@ -38,7 +40,12 @@ namespace TS_SE_Tool
         {
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
+
+
             PrepareForm();
+            TranslateForm();
+
+            CorrectControlsPositions();
         }
 
         private void PrepareForm()
@@ -54,6 +61,20 @@ namespace TS_SE_Tool
             WorkingProfilePath = ParentForm.comboBoxProfiles.SelectedValue.ToString();
             WorkingProfileName = Utilities.TextUtilities.FromHexToString(WorkingProfilePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last());
             labelProfileNameValue.Text = WorkingProfileName;
+        }
+
+
+        private void CorrectControlsPositions()
+        {
+            int newWidth = labelProfileName.PreferredWidth;
+            tableLayoutPanelProfileName.ColumnStyles[0] = new ColumnStyle(SizeType.Absolute, newWidth + 6);
+        }
+
+        private void TranslateForm()
+        {
+            MainForm.HelpTranslateFormMethod(this);
+
+            MainForm.HelpTranslateControl(this);
         }
 
         //Rename
@@ -105,6 +126,7 @@ namespace TS_SE_Tool
             }
         }
 
+        //Settings
         private void buttonExportSettings_Click(object sender, EventArgs e)
         {
             using (var dForm = new FormProfileEditorSettingsImportExport("export"))

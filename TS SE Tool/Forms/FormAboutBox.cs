@@ -80,10 +80,10 @@ namespace TS_SE_Tool
 
         private void TranslateForm()
         {
-            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this);
 
-            MainForm.HelpTranslateControlExt(this, Utilities.AssemblyData.AssemblyTitle, Thread.CurrentThread.CurrentUICulture);
-            MainForm.HelpTranslateControlExt(labelVersion, Utilities.AssemblyData.AssemblyVersion, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateControlExt(this, Utilities.AssemblyData.AssemblyTitle);
+            MainForm.HelpTranslateControlExt(labelVersion, Utilities.AssemblyData.AssemblyVersion);
         }
 
         private void buttonSupportDeveloper_Click(object sender, EventArgs e)

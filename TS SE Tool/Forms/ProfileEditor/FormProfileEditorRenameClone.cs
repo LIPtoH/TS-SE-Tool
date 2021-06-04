@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Compression;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
@@ -37,6 +38,8 @@ namespace TS_SE_Tool
         private string FormMode;
 
         public new FormMain ParentForm;
+        FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+
         public string InitialName = "";
         public string InitialPath = "";
         private byte NameLengthLimit = 30;
@@ -59,14 +62,48 @@ namespace TS_SE_Tool
 
         private void SetupForm()
         {
-            //
+            PrepareForm();
+            TranslateForm();
+
+            CorrectControlsPositions();
+
+            indicateCharLimit();
+        }
+
+        //
+        private void TranslateForm()
+        {
+            MainForm.HelpTranslateFormMethod(this);
+
+            string controlsNewNames = "";
+
             switch (FormMode)
             {
                 case "rename":
                     {
-                        this.Text = "Renaming";
+                        controlsNewNames = "Renaming";
 
-                        labelNewName.Text = "New profile name:";
+                        break;
+                    }
+                case "clone":
+                    {
+                        controlsNewNames = "Cloning";
+
+                        break;
+                    }
+            }
+
+            MainForm.HelpTranslateControlDiffName(this, this.Name + controlsNewNames);
+            MainForm.HelpTranslateControlDiffName(labelNewName, labelNewName.Name + controlsNewNames);
+        }
+
+        //
+        private void PrepareForm()
+        {
+            switch (FormMode)
+            {
+                case "rename":
+                    {
                         textBoxNewName.MaxLength = NameLengthLimit;
 
                         checkBoxMutiCloning.Visible = false;
@@ -76,9 +113,6 @@ namespace TS_SE_Tool
                     }
                 case "clone":
                     {
-                        this.Text = "Cloning";
-
-                        labelNewName.Text = "Name for cloned profile(s):";
                         checkBoxCreateBackup.Visible = false;
 
                         checkBoxFullCloning.Location = checkBoxMutiCloning.Location;
@@ -87,10 +121,14 @@ namespace TS_SE_Tool
                         break;
                     }
             }
+        }
 
+        //
+        private void CorrectControlsPositions()
+        {
             //Group box and label width
             tableLayoutPanelControls.ColumnStyles[0].Width = 6 + ((labelNewName.PreferredWidth > groupBoxOptions.PreferredSize.Width) ? labelNewName.PreferredWidth : groupBoxOptions.PreferredSize.Width);
-            
+
             //Name textbox width
             int tcolwidth = tableLayoutPanelControls.GetColumnWidths()[1];
             //
@@ -105,8 +143,6 @@ namespace TS_SE_Tool
             textBoxNewNameWidthMin = textBoxNewName.Width;
 
             FormWidthMin = this.Width;
-
-            indicateCharLimit();
         }
 
         //Name textbox events

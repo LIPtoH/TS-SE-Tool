@@ -60,8 +60,7 @@ namespace TS_SE_Tool
                 reader.Close();
             }
             catch  // ignore
-            {
-            }
+            { }
             //LNG
             try
             {
@@ -76,7 +75,7 @@ namespace TS_SE_Tool
                     {
                         linechunk = line.Split(new char[] { ';' }, 2);
 
-                        if (dict.ContainsKey(linechunk[0]))
+                        if (dict.ContainsKey(linechunk[0]) && linechunk[1] != "")
                             dict[linechunk[0]] = linechunk[1];
                     }
                 }
@@ -84,8 +83,7 @@ namespace TS_SE_Tool
                 reader.Close();
             }
             catch  // ignore
-            {
-            }
+            { }
 
             return dict.GetEnumerator();
         }

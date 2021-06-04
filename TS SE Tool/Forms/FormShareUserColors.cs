@@ -44,17 +44,11 @@ namespace TS_SE_Tool
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
 
-            try
-            {
-                string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
-                if (translatedString != null)
-                    this.Text = translatedString;
-            }
-            catch
-            { }
+            MainForm.HelpTranslateControl(this);
+
+            MainForm.HelpTranslateFormMethod(this);
 
             SaveVersion = MainForm.MainSaveFileInfoData.Version;
-            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
 
             int colorcount = MainForm.UserColorsList.Count;
 

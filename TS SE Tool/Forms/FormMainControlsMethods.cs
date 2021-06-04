@@ -87,8 +87,8 @@ namespace TS_SE_Tool
             {
                 this.SuspendLayout();
 
-                HelpTranslateFormMethod(this, toolTipMain, ci);
-                HelpTranslateMenuStripMethod(menuStripMain, ResourceManagerMain, ci);
+                HelpTranslateFormMethod(this, toolTipMain);
+                HelpTranslateMenuStripMethod(menuStripMain);
 
                 this.ResumeLayout();
 

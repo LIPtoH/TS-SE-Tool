@@ -42,17 +42,9 @@ namespace TS_SE_Tool
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
 
-            try
-            {
-                string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
-                if (translatedString != null)
-                    this.Text = translatedString;
-            }
-            catch
-            {
-            }
+            MainForm.HelpTranslateControl(this);
 
-            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this);
 
             ChangeCustomPathListVisibility();
             CustomPathsArr = new Dictionary<string, List<string>>();//(MainForm.ProgSettingsV.CustomPaths);

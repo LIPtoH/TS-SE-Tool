@@ -44,7 +44,7 @@ namespace TS_SE_Tool
         {
             InitializeComponent();
 
-            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this);
 
             labelTSSE.Text = Utilities.AssemblyData.AssemblyProduct;
 

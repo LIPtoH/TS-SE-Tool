@@ -68,8 +68,6 @@
             this.tableLayoutPanelProfileName.ColumnCount = 2;
             this.tableLayoutPanelProfileName.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84F));
             this.tableLayoutPanelProfileName.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelProfileName.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelProfileName.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelProfileName.Controls.Add(this.labelProfileName, 0, 0);
             this.tableLayoutPanelProfileName.Controls.Add(this.labelProfileNameValue, 1, 0);
             this.tableLayoutPanelProfileName.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -214,7 +212,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(310, 361);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(326, 400);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(326, 400);
             this.Name = "FormProfileEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

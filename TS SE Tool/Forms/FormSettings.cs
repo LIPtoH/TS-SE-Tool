@@ -49,7 +49,7 @@ namespace TS_SE_Tool
             catch
             { }
 
-            MainForm.HelpTranslateFormMethod(this, toolTip, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this, toolTip);
 
             CorrectControlsPositions();
             this.ResumeLayout();

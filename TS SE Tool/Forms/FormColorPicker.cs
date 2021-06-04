@@ -52,17 +52,9 @@ namespace OpenPainter.ColorPicker
 
             this.SuspendLayout();
 
-            try
-            {
-                string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
-                if (translatedString != null)
-                    this.Text = translatedString;
-            }
-            catch
-            {
-            }
+            MainForm.HelpTranslateControl(this);
 
-            MainForm.HelpTranslateFormMethod(this, null, Thread.CurrentThread.CurrentUICulture);
+            MainForm.HelpTranslateFormMethod(this);
             //CorrectControlsPositions();
             this.ResumeLayout();
 
