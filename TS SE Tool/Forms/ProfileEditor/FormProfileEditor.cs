@@ -129,7 +129,7 @@ namespace TS_SE_Tool
         //Settings
         private void buttonExportSettings_Click(object sender, EventArgs e)
         {
-            using (var dForm = new FormProfileEditorSettingsImportExport("export"))
+            using (var dForm = new FormProfileEditorSettingsImportExport(FormProfileEditorSettingsImportExport.Form4Mode.Export))
             {
                 dForm.ParentForm = ParentForm;
                 DialogResult result = dForm.ShowDialog();
@@ -145,7 +145,7 @@ namespace TS_SE_Tool
 
         private void buttonImportSettings_Click(object sender, EventArgs e)
         {
-            using (var dForm = new FormProfileEditorSettingsImportExport("import"))
+            using (var dForm = new FormProfileEditorSettingsImportExport(FormProfileEditorSettingsImportExport.Form4Mode.Import))
             {
                 dForm.ParentForm = ParentForm;
                 DialogResult result = dForm.ShowDialog();

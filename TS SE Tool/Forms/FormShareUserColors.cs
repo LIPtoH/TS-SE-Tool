@@ -381,7 +381,7 @@ namespace TS_SE_Tool
             if (!ready)
                 return;
 
-            string asd = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempData)).Replace("-", "");
+            string asd = BitConverter.ToString(Utilities.ZipDataUtilities.zipText(tempData)).Replace("-", "");
             Clipboard.SetText(asd);
             MessageBox.Show("Color data has been copied.");
         }
@@ -407,7 +407,7 @@ namespace TS_SE_Tool
             //Start import
             try
             {
-                string inputData = Utilities.ZipDataUtilitiescs.unzipText(Clipboard.GetText()); //Get data and unzip
+                string inputData = Utilities.ZipDataUtilities.unzipText(Clipboard.GetText()); //Get data and unzip
 
                 if (inputData == null)
                     return;

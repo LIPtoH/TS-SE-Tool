@@ -710,7 +710,7 @@ namespace TS_SE_Tool
                     toolStripProgressBar.Value = CustomInc;
                 }
 
-                string Converted = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempData)).Replace("-", "");
+                string Converted = BitConverter.ToString(Utilities.ZipDataUtilities.zipText(tempData)).Replace("-", "");
                 Clipboard.SetText(Converted);
                 toolStripProgressBar.Value = 0;
                 MessageBox.Show("Positions has been copied.");
@@ -735,7 +735,7 @@ namespace TS_SE_Tool
 
                 try
                 {
-                    string inputData = Utilities.ZipDataUtilitiescs.unzipText(Clipboard.GetText());
+                    string inputData = Utilities.ZipDataUtilities.unzipText(Clipboard.GetText());
                     string[] Lines = inputData.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
                     if (Lines[0] == "CCpositions")

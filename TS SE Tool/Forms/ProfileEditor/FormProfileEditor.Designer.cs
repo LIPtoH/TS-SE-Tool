@@ -40,6 +40,7 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.labelSettings = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanelProfileName.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -105,21 +106,22 @@
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.buttonRenameProfile, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonCloneProfile, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonExportSettings, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.buttonImportSettings, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.buttonExportSettings, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.buttonImportSettings, 0, 4);
+            this.tableLayoutPanel3.Controls.Add(this.labelSettings, 0, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 43);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 5;
+            this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(304, 275);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
@@ -148,24 +150,22 @@
             // buttonExportSettings
             // 
             this.buttonExportSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonExportSettings.Enabled = false;
-            this.buttonExportSettings.Location = new System.Drawing.Point(3, 63);
+            this.buttonExportSettings.Location = new System.Drawing.Point(3, 93);
             this.buttonExportSettings.Name = "buttonExportSettings";
             this.buttonExportSettings.Size = new System.Drawing.Size(298, 24);
             this.buttonExportSettings.TabIndex = 3;
-            this.buttonExportSettings.Text = "Export settings";
+            this.buttonExportSettings.Text = "Export";
             this.buttonExportSettings.UseVisualStyleBackColor = true;
             this.buttonExportSettings.Click += new System.EventHandler(this.buttonExportSettings_Click);
             // 
             // buttonImportSettings
             // 
             this.buttonImportSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonImportSettings.Enabled = false;
-            this.buttonImportSettings.Location = new System.Drawing.Point(3, 93);
+            this.buttonImportSettings.Location = new System.Drawing.Point(3, 123);
             this.buttonImportSettings.Name = "buttonImportSettings";
             this.buttonImportSettings.Size = new System.Drawing.Size(298, 24);
             this.buttonImportSettings.TabIndex = 4;
-            this.buttonImportSettings.Text = "Import settings";
+            this.buttonImportSettings.Text = "Import";
             this.buttonImportSettings.UseVisualStyleBackColor = true;
             this.buttonImportSettings.Click += new System.EventHandler(this.buttonImportSettings_Click);
             // 
@@ -206,6 +206,17 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // labelSettings
+            // 
+            this.labelSettings.AutoSize = true;
+            this.labelSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelSettings.Location = new System.Drawing.Point(3, 60);
+            this.labelSettings.Name = "labelSettings";
+            this.labelSettings.Size = new System.Drawing.Size(298, 30);
+            this.labelSettings.TabIndex = 5;
+            this.labelSettings.Text = "Settings";
+            this.labelSettings.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormProfileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -224,6 +235,7 @@
             this.tableLayoutPanelProfileName.ResumeLayout(false);
             this.tableLayoutPanelProfileName.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -243,5 +255,6 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelProfileName;
         private System.Windows.Forms.Label labelProfileNameValue;
+        private System.Windows.Forms.Label labelSettings;
     }
 }

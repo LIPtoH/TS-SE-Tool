@@ -14,12 +14,15 @@
    limitations under the License.
 */
 using System;
+using System.Windows.Forms;
+using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using ICSharpCode.SharpZipLib.GZip;
 
 namespace TS_SE_Tool.Utilities
 {
-    public class ZipDataUtilitiescs
+    public class ZipDataUtilities
     {
         internal static byte[] zipText(string _text)
         {
@@ -78,6 +81,51 @@ namespace TS_SE_Tool.Utilities
 
                         return text;
                     }
+        }
+
+        internal static void makeZipArchive(string _zipFilePath, List<string> _filesToZip)
+        {
+            using (MemoryStream zipMS = new MemoryStream())
+            {
+                using (ZipArchive zipArchive = new ZipArchive(zipMS, ZipArchiveMode.Create, true))
+                {
+                    //loop through files to add
+                    foreach (string file in _filesToZip)
+                    {
+                        //read the file bytes
+                        byte[] fileToZipBytes = File.ReadAllBytes(file);
+
+                        //create the entry - this is the zipped filename
+                        ZipArchiveEntry zipFileEntry = zipArchive.CreateEntry(Path.GetFileName(file));
+
+                        //add the file contents
+                        using (Stream zipEntryStream = zipFileEntry.Open())
+                        using (BinaryWriter zipFileBinary = new BinaryWriter(zipEntryStream))
+                        {
+                            zipFileBinary.Write(fileToZipBytes);
+                        }
+                    }
+                }
+
+                using (FileStream finalZipFileStream = new FileStream(_zipFilePath, FileMode.Create))
+                {
+                    zipMS.Seek(0, SeekOrigin.Begin);
+                    zipMS.CopyTo(finalZipFileStream);
+                }
+            }
+        }
+
+        internal static void extractListZipArchive(string _zipFilePath, string _extractPath, List<string> _filesToExtract)
+        {
+            using (ZipArchive archive = ZipFile.OpenRead(_zipFilePath))
+            {
+                foreach(string _tmpFile in _filesToExtract)
+                {
+                    ZipArchiveEntry entry = archive.GetEntry(_tmpFile);
+
+                    entry.ExtractToFile(_extractPath + "\\" + _tmpFile);
+                }
+            }
         }
     }
 }

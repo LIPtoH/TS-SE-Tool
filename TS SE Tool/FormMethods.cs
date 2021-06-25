@@ -622,6 +622,26 @@ namespace TS_SE_Tool
             { }
         }
 
+        internal void HelpTranslateControlDiffName(Control thisControl, string _newName, object parameter)
+        {
+            CultureInfo _ci = Thread.CurrentThread.CurrentUICulture;
+
+            try
+            {
+                string translatedString = ResourceManagerMain.GetString(_newName, _ci);
+
+                if (translatedString == null)
+                    translatedString = ResourceManagerMain.GetString(_newName.TrimEnd(charsToTrimTranslation), _ci);
+
+                if (translatedString != null && translatedString != "")
+                {
+                    thisControl.Text = String.Format(translatedString, parameter);
+                }
+            }
+            catch
+            { }
+        }
+
         internal void HelpTranslateControlExt(Control thisControl, object parameter)
         {
             CultureInfo _ci = Thread.CurrentThread.CurrentUICulture;

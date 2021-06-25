@@ -27,7 +27,7 @@ namespace TS_SE_Tool
             string tempString = "GPS_TruckPosition\r\n";
 
             tempString += PlayerDataData.UserCompanyAssignedTruckPlacement;
-            string asd = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempString)).Replace("-", "");
+            string asd = BitConverter.ToString(Utilities.ZipDataUtilities.zipText(tempString)).Replace("-", "");
             Clipboard.SetText(asd);
             MessageBox.Show("Truck GPS position has been copied.");
         }
@@ -37,7 +37,7 @@ namespace TS_SE_Tool
             //UserCompanyAssignedTruckPlacement
             try
             {
-                string inputData = Utilities.ZipDataUtilitiescs.unzipText(Clipboard.GetText());
+                string inputData = Utilities.ZipDataUtilities.unzipText(Clipboard.GetText());
                 string[] Lines = inputData.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
                 if (Lines[0] == "GPS_TruckPosition")
@@ -109,7 +109,7 @@ namespace TS_SE_Tool
             }
 
             //MessageBox.Show(tempPaint);
-            string asd = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempData)).Replace("-", "");
+            string asd = BitConverter.ToString(Utilities.ZipDataUtilities.zipText(tempData)).Replace("-", "");
             Clipboard.SetText(asd);
             MessageBox.Show("GPS Path data has been copied.");
         }
@@ -118,7 +118,7 @@ namespace TS_SE_Tool
         {
             try
             {
-                string inputData = Utilities.ZipDataUtilitiescs.unzipText(Clipboard.GetText());
+                string inputData = Utilities.ZipDataUtilities.unzipText(Clipboard.GetText());
                 string[] Lines = inputData.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
                 if (Lines[0] == "GPS_Path")

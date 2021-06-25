@@ -812,7 +812,7 @@ namespace TS_SE_Tool
                 tempPaint += temp + "\r\n";
             }
 
-            string tmpString = BitConverter.ToString(Utilities.ZipDataUtilitiescs.zipText(tempPaint)).Replace("-", "");
+            string tmpString = BitConverter.ToString(Utilities.ZipDataUtilities.zipText(tempPaint)).Replace("-", "");
             Clipboard.SetText(tmpString);
             MessageBox.Show("Paint data has been copied.");
         }
@@ -821,7 +821,7 @@ namespace TS_SE_Tool
         {
             try
             {
-                string inputData = Utilities.ZipDataUtilitiescs.unzipText(Clipboard.GetText());
+                string inputData = Utilities.ZipDataUtilities.unzipText(Clipboard.GetText());
                 string[] Lines = inputData.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
                 if (Lines[0] == "TruckPaint")
