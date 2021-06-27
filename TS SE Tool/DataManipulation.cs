@@ -1972,26 +1972,48 @@ namespace TS_SE_Tool
                     DBVersion = reader["DBVersion"].ToString();
                 }
 
-                string sql = "";
+                string sql = "", DBVersionNew = "";
 
-                if (DBVersion == "0.1.6")
+                switch (DBVersion)
                 {
-                    goto label016;
+                    case "0.1.6":
+                        {
+                            goto label016;
+                        }
+                    case "0.2.0":
+                        {
+                            goto label020;
+                            //break;
+                        }
+                    case "0.2.6":
+                        {
+                            break;
+                        }
                 }
-                else
-                if (DBVersion == "0.2.0")
-                    return;
 
-
-                label016://0.1.6
+                //0.1.6
+                label016:
                 sql = "ALTER TABLE [Dependencies] ALTER COLUMN Dependency NVARCHAR(256) NOT NULL;";
                 UpdateDatabase(sql);
 
-
-                string DBVersionNew = "0.2.0";
-                sql = "UPDATE [DatabaseDetails] SET DBVersion = '" + DBVersionNew + "' " +
-                        "WHERE ID_DBline = 1;";
+                DBVersionNew = "0.2.0";
+                //
+                
+                //0.2.0
+                label020:
+                sql = "ALTER TABLE [DatabaseDetails] ALTER COLUMN ProfileName NVARCHAR(128) NOT NULL;";
                 UpdateDatabase(sql);
+
+                sql = "INSERT INTO [DatabaseDetails] (DBVersion, GameName, SaveVersion, ProfileName) VALUES ('0.2.6','" + GameType + "', 0, '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "');";
+                UpdateDatabase(sql);
+
+                DBVersionNew = "0.2.6";
+                //
+                
+                //Set new version
+                sql = "UPDATE [DatabaseDetails] SET DBVersion = '" + DBVersionNew + "' " + "WHERE ID_DBline = 1;";
+                UpdateDatabase(sql);
+
             }
         }
         //Create DB structure
@@ -2006,10 +2028,12 @@ namespace TS_SE_Tool
 
             SqlCeCommand cmd;
 
-            string sql = "";
+            string sql = "", DBVersion = "";
 
-            sql += "CREATE TABLE DatabaseDetails (ID_DBline INT IDENTITY(1,1) PRIMARY KEY, DBVersion NVARCHAR(8) NOT NULL, GameName NVARCHAR(8) NOT NULL, SaveVersion INT NOT NULL, ProfileName NVARCHAR(64) NOT NULL);";
-            sql += "INSERT INTO [DatabaseDetails] (DBVersion, GameName, SaveVersion, ProfileName) VALUES ('0.2.0','" + GameType +  "', 0, '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "');";
+            DBVersion = "0.2.6";
+
+            sql += "CREATE TABLE DatabaseDetails (ID_DBline INT IDENTITY(1,1) PRIMARY KEY, DBVersion NVARCHAR(8) NOT NULL, GameName NVARCHAR(8) NOT NULL, SaveVersion INT NOT NULL, ProfileName NVARCHAR(128) NOT NULL);";
+            sql += "INSERT INTO [DatabaseDetails] (DBVersion, GameName, SaveVersion, ProfileName) VALUES ('"+ DBVersion + "','" + GameType +  "', 0, '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "');";
 
             sql += "CREATE TABLE Dependencies (ID_dep INT IDENTITY(1,1) PRIMARY KEY, Dependency NVARCHAR(256) NOT NULL);";
 
@@ -2058,6 +2082,7 @@ namespace TS_SE_Tool
 
             sql += "CREATE TABLE tempDistancesTable (ID_Distance INT IDENTITY(1,1) PRIMARY KEY, SourceCityID INT NOT NULL, SourceCompanyID INT NOT NULL, " +
                 "DestinationCityID INT NOT NULL, DestinationCompanyID INT NOT NULL, Distance INT NOT NULL, FerryTime INT NOT NULL, FerryPrice INT NOT NULL);";
+
             string[] linesArray = sql.Split(';');
 
             foreach (string sqlline in linesArray)
