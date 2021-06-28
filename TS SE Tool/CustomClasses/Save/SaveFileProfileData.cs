@@ -402,18 +402,14 @@ namespace TS_SE_Tool
 
                     if (chunkOfline[2].StartsWith("\"") && chunkOfline[2].EndsWith("\""))
                     {
-                        string compNameH = chunkOfline[2].Substring(1, chunkOfline[2].Length - 2);
+                        string tmp = chunkOfline[2].Remove(chunkOfline[2].Length - 1, 1).Remove(0, 1);
 
-                        if (compNameH.Contains("\\x"))                        
-                            result = Utilities.TextUtilities.FromHexToString(string.Join("", compNameH.Split(new string[] { "\\x" }, StringSplitOptions.RemoveEmptyEntries)));
-                        
-                        if (result == null)
-                            result = System.Text.RegularExpressions.Regex.Unescape(compNameH);
+                        result = Utilities.TextUtilities.FromUtfHexToString(tmp);
                     }
 
-                    ProfileName = (result == null) ? chunkOfline[2] : result;
+                    ProfileName = (result == "") ? chunkOfline[2] : result;
 
-                    continue;
+                    continue;                    
                 }
 
                 if (_FileLines[line].StartsWith(" creation_time:"))

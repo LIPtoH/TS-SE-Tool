@@ -65,7 +65,7 @@ namespace TS_SE_Tool.Utilities
                             i--;
                         }
                     }
-                    else                    
+                    else
                         result += _input[i];                    
                 }
 
