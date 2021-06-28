@@ -35,6 +35,7 @@ namespace TS_SE_Tool
 
         private string WorkingProfilePath = "";
         private string WorkingProfileName = "";
+        private string ProfileType = "";
 
         public FormProfileEditor()
         {
@@ -60,6 +61,10 @@ namespace TS_SE_Tool
             //Profile name
             WorkingProfilePath = ParentForm.comboBoxProfiles.SelectedValue.ToString();
             WorkingProfileName = Utilities.TextUtilities.FromHexToString(WorkingProfilePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last());
+
+            //Profile type
+            ProfileType = ((DataTable)ParentForm.comboBoxPrevProfiles.DataSource).Rows[ParentForm.comboBoxPrevProfiles.SelectedIndex].ItemArray[2].ToString();
+
             labelProfileNameValue.Text = WorkingProfileName;
         }
 
@@ -127,11 +132,14 @@ namespace TS_SE_Tool
         }
 
         //Settings
+        //Export
         private void buttonExportSettings_Click(object sender, EventArgs e)
         {
             using (var dForm = new FormProfileEditorSettingsImportExport(FormProfileEditorSettingsImportExport.Form4Mode.Export))
             {
                 dForm.ParentForm = ParentForm;
+                dForm.ProfileType = ProfileType;
+
                 DialogResult result = dForm.ShowDialog();
 
                 if (result == DialogResult.OK)
@@ -142,12 +150,14 @@ namespace TS_SE_Tool
                 }
             }
         }
-
+        //Import
         private void buttonImportSettings_Click(object sender, EventArgs e)
         {
             using (var dForm = new FormProfileEditorSettingsImportExport(FormProfileEditorSettingsImportExport.Form4Mode.Import))
             {
                 dForm.ParentForm = ParentForm;
+                dForm.ProfileType = ProfileType;
+
                 DialogResult result = dForm.ShowDialog();
 
                 if (result == DialogResult.OK)

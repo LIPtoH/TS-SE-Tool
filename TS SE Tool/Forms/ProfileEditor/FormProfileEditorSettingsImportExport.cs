@@ -29,11 +29,15 @@ namespace TS_SE_Tool
 {
     public partial class FormProfileEditorSettingsImportExport : Form
     {
-        public new FormMain ParentForm;
+        internal new FormMain ParentForm;
+        internal string ProfileType;
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
         private string InitialName = "";
         private string InitialPath = "";
+
+        private string MyDocumentsSteamFolderPath = "";
+        private string MyDocumentsSteamProfilePath = "";
 
         private string zipFilePath = "";
         private List<string> zipFiles = new List<string>();
@@ -69,6 +73,8 @@ namespace TS_SE_Tool
             InitialPath = ParentForm.comboBoxProfiles.SelectedValue.ToString();
             InitialName = Utilities.TextUtilities.FromHexToString(InitialPath.Split(new string[] { "\\" }, StringSplitOptions.None).Last());
 
+            MyDocumentsSteamFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ParentForm.dictionaryProfiles[ParentForm.GameType] + @"\steam_profiles\";
+
             LoadProfiles();
 
             buttonApply.Enabled = false;
@@ -101,7 +107,7 @@ namespace TS_SE_Tool
 
         private void SetupForm()
         {
-            listBoxSettingsExtra.Visible = true;
+            tableLayoutPanelUseFile.ColumnStyles[0].Width = 0;
 
             switch (FormMode)
             {
@@ -209,13 +215,21 @@ namespace TS_SE_Tool
         {
             List<string> folderFiles = Directory.GetFiles(_path).ToList();
 
+            if (ProfileType == "steam")
+            {
+                MyDocumentsSteamProfilePath = MyDocumentsSteamFolderPath + Path.GetFileName(_path);
+
+                if (Directory.Exists(MyDocumentsSteamProfilePath))
+                {
+                    folderFiles.AddRange(Directory.GetFiles(MyDocumentsSteamProfilePath));
+                }
+            }
+
             checkConfigFilesExist(folderFiles);
         }
 
         private void checkConfigsExistZip(string _fileName)
         {
-            //List<string> zipFiles = new List<string>();
-
             try
             {
                 Stream zipReadingStream = File.OpenRead(_fileName);
@@ -422,7 +436,6 @@ namespace TS_SE_Tool
             //Visuals
             listBoxProfileList.ClearSelected();
 
-            //listBoxSettingsExtra.Items.Clear();
             listBoxSettingsExtra.DataSource = null;
 
             prepareVisualsSettings(false);
@@ -441,7 +454,8 @@ namespace TS_SE_Tool
             checkBoxChooseFileOption.Text = Path.GetFileName(zipFilePath);
             toolTipThis.SetToolTip(checkBoxChooseFileOption, zipFilePath);
             //
-            checkBoxChooseFileOption.Checked = true; //.Select();
+            checkBoxChooseFileOption.Checked = true;
+            checkBoxChooseFileOption.Select();
         }
 
         //Main buttons
@@ -468,12 +482,29 @@ namespace TS_SE_Tool
                         string tmpPath = ((DataRowView)tmp).Row.ItemArray[0].ToString();
                         tmpFileList.Add(zipFiles.Find(x => x == tmpPath));
                     }
-                //
+
+                //skip if selected 0 items
+                if (tmpFileList.Count() == 0)
+                    return;                    
+
                 try
                 {
-                    //Extract zip
-                    Utilities.ZipDataUtilities.extractListZipArchive(zipFilePath, InitialPath, tmpFileList);
+                    string tmpInitialPath = InitialPath;
 
+                    if (ProfileType == "steam")
+                    {
+                        tmpInitialPath = MyDocumentsSteamFolderPath + Path.GetFileName(InitialPath);
+                    }
+
+                    //Extract zip
+                    Utilities.ZipDataUtilities.extractListZipArchive(zipFilePath, tmpInitialPath, tmpFileList);
+
+                    
+                    if (ProfileType == "steam" && checkBoxConfig.Checked)
+                    {
+                        File.Move(tmpInitialPath + @"\config.cfg", InitialPath + @"\config.cfg");
+                    }
+                    
                     //Message
                     MessageBox.Show("Files was imported.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -486,15 +517,21 @@ namespace TS_SE_Tool
             {
                 //Folder
                 string tmpSourcePath = ((DataRowView)listBoxProfileList.SelectedItem).Row.ItemArray[0].ToString();
+                string tmpInitialPath = tmpSourcePath;
 
                 if (checkBoxConfig.Checked)
-                    tmpFileList.Add(tmpSourcePath + "\\config.cfg");
+                    tmpFileList.Add(tmpInitialPath + "\\config.cfg");
+
+                if (ProfileType == "steam")
+                {
+                    tmpInitialPath = MyDocumentsSteamProfilePath;
+                }
 
                 if (checkBoxConfigLocal.Checked)
-                    tmpFileList.Add(tmpSourcePath + "\\config_local.cfg");
+                    tmpFileList.Add(tmpInitialPath + "\\config_local.cfg");
 
                 if (checkBoxControls.Checked)
-                    tmpFileList.Add(tmpSourcePath + "\\controls.sii");
+                    tmpFileList.Add(tmpInitialPath + "\\controls.sii");
 
                 if (checkBoxShifterLayouts.Checked)
                     foreach (object tmp in listBoxSettingsExtra.SelectedItems)
@@ -503,13 +540,33 @@ namespace TS_SE_Tool
                         tmpFileList.Add(tmpPath);
                     }
 
+                //skip if selected 0 items
+                if (tmpFileList.Count() == 0)
+                    return;
+
                 try
                 {
                     //Copy
-                    foreach (string file in tmpFileList)
+                    if (ProfileType == "steam")
                     {
-                        File.Copy(file, InitialPath + "\\" + Path.GetFileName(file));
+                        foreach (string file in tmpFileList)
+                        {
+                            if (Path.GetFileName(file) == "config.cfg")
+                            {
+                                File.Copy(file, InitialPath + "\\" + Path.GetFileName(file));
+                            }
+                            else
+                            {
+                                string tmpPath = MyDocumentsSteamFolderPath + Path.GetFileName(InitialPath) + "\\";
+                                File.Copy(file, tmpPath + Path.GetFileName(file));
+                            }
+                        }
                     }
+                    else
+                        foreach (string file in tmpFileList)
+                        {
+                            File.Copy(file, InitialPath + "\\" + Path.GetFileName(file));
+                        }
 
                     //Message
                     MessageBox.Show("Files was exported.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -526,68 +583,76 @@ namespace TS_SE_Tool
         {
             //prepare file list
             List<string> tmpFileList = new List<string>();
+            string tmpInitialPath = InitialPath;
 
             if (checkBoxConfig.Checked)
-                tmpFileList.Add(InitialPath + "\\config.cfg");
+                tmpFileList.Add(tmpInitialPath + "\\config.cfg");
+
+            if (ProfileType == "steam")
+            {
+                tmpInitialPath = MyDocumentsSteamProfilePath;
+            }
 
             if (checkBoxConfigLocal.Checked)
-                tmpFileList.Add(InitialPath + "\\config_local.cfg");
+                tmpFileList.Add(tmpInitialPath + "\\config_local.cfg");
 
             if (checkBoxControls.Checked)
-                tmpFileList.Add(InitialPath + "\\controls.sii");
+                tmpFileList.Add(tmpInitialPath + "\\controls.sii");
 
             if (checkBoxShifterLayouts.Checked)
                 foreach (object tmp in listBoxSettingsExtra.SelectedItems)
                 {
+                    string tmpPathLayouts = ((DataRowView)tmp).Row.ItemArray[0].ToString();
+                    tmpFileList.Add(tmpPathLayouts);
+                }
+
+            //skip if selected 0 items
+            if (tmpFileList.Count() == 0)
+                return;
+
+            if (listBoxProfileList.SelectedIndex == -1 && checkBoxChooseFileOption.Checked) //ZIP
+            {
+                try
+                {
+                    Utilities.ZipDataUtilities.makeZipArchive(zipFilePath, tmpFileList);
+
+                    DialogResult dr = MessageBox.Show("ZIP Archive Created.\r\nOpen destination folder?", "Success", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                    if (dr == DialogResult.Yes)
+                        System.Diagnostics.Process.Start(Directory.GetParent(zipFilePath).FullName);
+                }
+                catch { }
+            }
+            else if (listBoxProfileList.SelectedIndex != -1 && !checkBoxChooseFileOption.Checked) //Profiles
+            {
+                List<string> exportPath = new List<string>();
+
+                //Paths
+                foreach (object tmp in listBoxProfileList.SelectedItems)
+                {
                     string tmpPath = ((DataRowView)tmp).Row.ItemArray[0].ToString();
-                    tmpFileList.Add(tmpPath);
+                    exportPath.Add(tmpPath);
                 }
-            //
-            if (tmpFileList.Count() > 0)
-                if (listBoxProfileList.SelectedIndex == -1 && checkBoxChooseFileOption.Checked)
+
+                //Copy
+                try
                 {
-                    //ZIP
-                    try
-                    {
-                        Utilities.ZipDataUtilities.makeZipArchive(zipFilePath, tmpFileList);
+                    foreach (string path in exportPath)
+                        foreach (string file in tmpFileList)
+                        {
+                            File.Copy(file, path + "\\" + Path.GetFileName(file));
+                        }
 
-                        DialogResult dr = MessageBox.Show("ZIP Archive Created.\r\nOpen destination folder?", "Success", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-
-                        if (dr == DialogResult.Yes)
-                            System.Diagnostics.Process.Start(Directory.GetParent(zipFilePath).FullName);
-                    }
-                    catch { }
+                    //Message
+                    MessageBox.Show("Files was exported.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else if (listBoxProfileList.SelectedIndex != -1 && !checkBoxChooseFileOption.Checked)
-                {
-                    //Profiles
-                    List<string> exportPath = new List<string>();
-
-                    //Paths
-                    foreach (object tmp in listBoxProfileList.SelectedItems)
-                    {
-                        string tmpPath = ((DataRowView)tmp).Row.ItemArray[0].ToString();
-                        exportPath.Add(tmpPath);
-                    }
-
-                    //Copy
-                    try
-                    {
-                        foreach (string path in exportPath)
-                            foreach (string file in tmpFileList)
-                            {
-                                File.Copy(file, path + "\\" + Path.GetFileName(file));
-                            }
-
-                        //Message
-                        MessageBox.Show("Files was exported.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch { }
-                }
+                catch { }
+            }
 
             //unselect
             listBoxProfileList.SelectedIndex = -1;
             checkBoxChooseFileOption.Checked = false;
+
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

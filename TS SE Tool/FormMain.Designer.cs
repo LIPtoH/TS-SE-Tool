@@ -2595,7 +2595,7 @@
         private System.Windows.Forms.GroupBox groupBoxProfileUserColors;
         private System.Windows.Forms.CheckBox checkBoxFreightMarketRandomDest;
         private System.Windows.Forms.TabPage tabPageConvoyTools;
-        private System.Windows.Forms.ComboBox comboBoxPrevProfiles;
+        internal System.Windows.Forms.ComboBox comboBoxPrevProfiles;
         private System.Windows.Forms.CheckBox checkBoxProfilesAndSavesProfileBackups;
         private System.Windows.Forms.TabPage tabPageCompany;
         private System.Windows.Forms.Label labelUserCompanyCompanyName;

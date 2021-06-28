@@ -466,6 +466,9 @@ namespace TS_SE_Tool
             dc = new DataColumn("ProfileName", typeof(string));
             combDT.Columns.Add(dc);
 
+            dc = new DataColumn("ProfileType", typeof(string));
+            combDT.Columns.Add(dc);
+
             List<string> tempList = new List<string>();
 
             if (MyDocFolderEx || SteamFolderEx)
@@ -478,7 +481,7 @@ namespace TS_SE_Tool
                             {
                                 if (Directory.Exists(folder) && Directory.GetDirectories(folder).Count() > 0)
                                 {
-                                    combDT.Rows.Add(folder, "[L] " + Path.GetFileName(folder));
+                                    combDT.Rows.Add(folder, "[L] " + Path.GetFileName(folder), "local");
                                     tempList.Add(folder);
                                 }
                             }
@@ -492,7 +495,7 @@ namespace TS_SE_Tool
                             {
                                 if (Directory.Exists(folder) && Directory.GetDirectories(folder).Count() > 0)
                                 {
-                                    combDT.Rows.Add(folder, "[S] " + Path.GetFileName(folder));
+                                    combDT.Rows.Add(folder, "[S] " + Path.GetFileName(folder), "steam");
                                     tempList.Add(folder);
                                 }
                             }
@@ -507,7 +510,7 @@ namespace TS_SE_Tool
 
                         if (Directory.Exists(folder) && Directory.GetDirectories(folder).Count() > 0)
                         {
-                            combDT.Rows.Add(folder, "[L] profiles");
+                            combDT.Rows.Add(folder, "[L] profiles", "local");
                             tempList.Add(folder);
                         }
                     }
@@ -517,7 +520,7 @@ namespace TS_SE_Tool
 
                         if (Directory.Exists(folder) && Directory.GetDirectories(folder).Count() > 0)
                         {
-                            combDT.Rows.Add(folder, "[S] profiles");
+                            combDT.Rows.Add(folder, "[S] profiles", "steam");
                             tempList.Add(folder);
                         }
                     }
@@ -532,12 +535,12 @@ namespace TS_SE_Tool
                     {
                         if (Directory.Exists(CustPath + @"\profiles"))
                         {
-                            combDT.Rows.Add(CustPath + @"\profiles", "[C] Custom path " + cpIndex.ToString());
+                            combDT.Rows.Add(CustPath + @"\profiles", "[C] Custom path " + cpIndex.ToString(), "custom");
                             tempList.Add(CustPath + @"\profiles");
                         }
                         else
                         {
-                            combDT.Rows.Add(CustPath, "[C] Custom path " + cpIndex.ToString());
+                            combDT.Rows.Add(CustPath, "[C] Custom path " + cpIndex.ToString(), "custom");
                             tempList.Add(CustPath);
                         }
                     }
@@ -624,7 +627,7 @@ namespace TS_SE_Tool
                 return;
             }
 
-            string Profile = "";
+            string ProfileName = "";
             string SelectedFolder = "";
             SelectedFolder = comboBoxPrevProfiles.SelectedValue.ToString();
 
@@ -648,17 +651,17 @@ namespace TS_SE_Tool
 
                 dc = new DataColumn("ProfileName", typeof(string));
                 combDT.Columns.Add(dc);
-
                 List<string> NewProfileHex = new List<string>();
 
                 if (!includedFiles.Contains("game.sii"))
                 {
                     foreach (string profile in Globals.ProfilesHex)
                     {
-                        Profile = Utilities.TextUtilities.FromHexToString(Path.GetFileName(profile));
-                        if (Profile != null && Directory.Exists(profile + @"\save"))
+                        ProfileName = Utilities.TextUtilities.FromHexToString(Path.GetFileName(profile));
+
+                        if (ProfileName != null && Directory.Exists(profile + @"\save"))
                         {
-                            combDT.Rows.Add(profile, Profile);
+                            combDT.Rows.Add(profile, ProfileName);
                             NewProfileHex.Add(profile);
                         }
                     }
@@ -666,7 +669,7 @@ namespace TS_SE_Tool
                 else
                 {
                     NewProfileHex.Add(SelectedFolder);
-                    combDT.Rows.Add(SelectedFolder, "[C] Custom profile");
+                    combDT.Rows.Add(SelectedFolder, "[C] Custom profile", "custom");
                 }
 
                 Globals.ProfilesHex = NewProfileHex;

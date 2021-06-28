@@ -140,7 +140,7 @@ namespace TS_SE_Tool
 
         public PlainTXTResourceManager ResourceManagerMain;
 
-        private Dictionary<string, string> dictionaryProfiles;
+        internal Dictionary<string, string> dictionaryProfiles;
         public Dictionary<string, string> CompaniesLngDict, CargoLngDict, TruckBrandsLngDict, CountriesLngDict, UrgencyLngDict, DriverNames;
 
         public static Dictionary<string, string> CitiesLngDict;//, CustomStringsDict;
