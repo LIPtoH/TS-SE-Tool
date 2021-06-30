@@ -172,22 +172,7 @@ namespace TS_SE_Tool
                 if (NewVersion != null && NewVersion[0] != "" && NewVersion[1] != "")
                 {
                     bool? betterVersion = false;
-
-                    string[] newArr = NewVersion[0].Split(new char[] { '.' });
-                    string[] currArr = AssemblyData.AssemblyVersion.Split(new char[] { '.' });
-
-                    for (byte i = 0; i < newArr.Length; i++)
-                    {
-                        if (byte.Parse(newArr[i]) > byte.Parse(currArr[i]))
-                        {
-                            betterVersion = true;
-                            break;
-                        }
-                        else if (byte.Parse(newArr[i]) < byte.Parse(currArr[i]))
-                        {
-                            betterVersion = null;
-                        }
-                    }
+                    betterVersion = Web_Utilities.External.CheckNewVersionStatus(NewVersion);
 
                     if (betterVersion is bool checkBool)
                     {

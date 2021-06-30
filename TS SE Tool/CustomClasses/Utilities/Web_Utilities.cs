@@ -5,7 +5,18 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 using System.Timers;
+
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Reflection;
+using System.IO;
+using System.Threading;
+using System.Net.Mime;
+using System.Security.Cryptography;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Utilities
 {
@@ -59,6 +70,30 @@ namespace TS_SE_Tool.Utilities
 
                 return null;
             }
+        }
+
+        internal bool? CheckNewVersionStatus(string[] _NewVersion)
+        {
+            bool? betterVersion = false;
+
+            string[] newArr = _NewVersion[0].Split(new char[] { '.' });
+            string[] currArr = AssemblyData.AssemblyVersion.Split(new char[] { '.' });
+
+            for (byte i = 0; i < newArr.Length; i++)
+            {
+                if (byte.Parse(newArr[i]) > byte.Parse(currArr[i]))
+                {
+                    betterVersion = true;
+                    break;
+                }
+                else if (byte.Parse(newArr[i]) < byte.Parse(currArr[i]))
+                {
+                    betterVersion = null;
+                    break;
+                }
+            }
+
+            return betterVersion;
         }
 
         private string GetLatestVersionData(string url)
