@@ -1109,14 +1109,14 @@ namespace TS_SE_Tool
 
                 string resultString = rm.GetString(_key, ci);
 
-                if(resultString != null)
+                if (resultString != null)
                     return resultString;
                 else
-                    return _key;
+                    return _key.Split(new char[] { '_' }, 2)[1];
             }
             catch
             {
-                return _key;
+                return _key.Split(new char[] { '_' }, 2)[1];
             }
         }
 

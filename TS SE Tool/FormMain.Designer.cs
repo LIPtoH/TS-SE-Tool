@@ -424,7 +424,6 @@
             this.comboBoxProfiles.Size = new System.Drawing.Size(197, 21);
             this.comboBoxProfiles.TabIndex = 1;
             this.comboBoxProfiles.DropDown += new System.EventHandler(this.comboBoxProfiles_DropDown);
-            this.comboBoxProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfiles_SelectedIndexChanged);
             // 
             // buttonProfilesAndSavesRefreshAll
             // 
@@ -447,7 +446,6 @@
             this.comboBoxSaves.Size = new System.Drawing.Size(197, 21);
             this.comboBoxSaves.TabIndex = 3;
             this.comboBoxSaves.DropDown += new System.EventHandler(this.comboBoxSaves_DropDown);
-            this.comboBoxSaves.SelectedIndexChanged += new System.EventHandler(this.comboBoxSaves_SelectedIndexChanged);
             // 
             // buttonMainDecryptSave
             // 

@@ -234,8 +234,6 @@ namespace TS_SE_Tool
             GetTranslationFiles();
             ChangeLanguage();
             LogWriter("Done.");
-
-            DetectGame();
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
@@ -256,6 +254,8 @@ namespace TS_SE_Tool
                 FormSplash WindowSplash = new FormSplash();
                 WindowSplash.ShowDialog();
             }
+
+            DetectGame();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -304,7 +304,7 @@ namespace TS_SE_Tool
         public static string SelectedProfile;
         public static string SelectedProfilePath;
         //----
-        public static string[] SavesHex;
+        public static string[] SavesHex = new string[0];
         //
         public static string SelectedSave;
         public static string SelectedSavePath;

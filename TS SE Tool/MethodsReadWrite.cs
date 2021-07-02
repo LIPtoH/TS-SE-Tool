@@ -984,7 +984,7 @@ namespace TS_SE_Tool
                     if (decodeAttempt == 5)
                     {
                         LogWriter("Could not decrypt after 5 attempts");
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
+                        //UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                     }
                 }
                 catch
@@ -995,7 +995,7 @@ namespace TS_SE_Tool
                 if ((tempProfileFileInMemory == null) || (tempProfileFileInMemory[0] != "SiiNunit"))
                 {
                     LogWriter("Wrongly decoded Profile file or wrong file format");
-                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
+                    //UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
                     tempProfileFileInMemory = null;
 
@@ -1005,7 +1005,7 @@ namespace TS_SE_Tool
                 }
                 else if (tempProfileFileInMemory != null)
                 {
-                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
+                    //UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
                     MainSaveFileProfileData.Prepare(tempProfileFileInMemory);
                 }
             }

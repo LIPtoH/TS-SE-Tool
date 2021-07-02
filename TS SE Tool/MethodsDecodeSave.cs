@@ -30,7 +30,8 @@ namespace TS_SE_Tool
 
         public unsafe string[] NewDecodeFile(string _savefile_path, bool _verbose)
         {
-            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_loading_save_file");
+            if (_verbose)
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_loading_save_file");
             if(_verbose)
                 LogWriter("Loading file into memory: " + _savefile_path);
 
@@ -70,7 +71,8 @@ namespace TS_SE_Tool
                 case 2:
                     // "SIIDEC_RESULT_FORMAT_ENCRYPTED";
                     {
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
+                        if (_verbose)
+                            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
                         if (_verbose)
                             LogWriter("Decoding file: " + _savefile_path);
 
@@ -92,8 +94,9 @@ namespace TS_SE_Tool
                                 fixed (byte* ptr2 = newFileData)
                                     result = SIIDecryptAndDecodeMemory(ptr, buff, ptr2, newbuffP);
                             }
+                            if (_verbose)
+                                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
 
-                            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
                             FileDecoded = true;
                             string BigS = Encoding.UTF8.GetString(newFileData);
                             return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
@@ -107,7 +110,8 @@ namespace TS_SE_Tool
                 case 4:
                     // "SIIDEC_RESULT_FORMAT_3NK";
                     {
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
+                        if (_verbose)
+                            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
                         if (_verbose)
                             LogWriter("Decoding file: " + _savefile_path);
 
@@ -129,8 +133,9 @@ namespace TS_SE_Tool
                                 fixed (byte* ptr2 = newFileData)
                                     result = SIIDecodeMemory(ptr, buff, ptr2, newbuffP);
                             }
+                            if (_verbose)
+                                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
 
-                            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
                             FileDecoded = true;
                             string BigS = Encoding.UTF8.GetString(newFileData);
                             return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
