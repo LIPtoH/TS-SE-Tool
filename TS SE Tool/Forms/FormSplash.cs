@@ -202,7 +202,7 @@ namespace TS_SE_Tool
                 {
                     tableLayoutPanel2.RowStyles[3] = new RowStyle(SizeType.Absolute, 30F);
 
-                    linkLabelNewVersion.Text = String.Format("Cannot check for updates!", NewVersion[0]);
+                    linkLabelNewVersion.Text = String.Format("Cannot check for updates!");
 
                     SetLinkLabelNewVersionvisual(visualStatus.bad);
                 }
@@ -210,7 +210,7 @@ namespace TS_SE_Tool
             else
                 tableLayoutPanel2.RowStyles[3] = new RowStyle(SizeType.Absolute, 0F);
 
-            buttonOK.Click += new EventHandler(this.buttonOK_Click);
+            buttonOK.Click += new EventHandler(buttonOK_Click);
             buttonOK.Text = "OK";
         }
 
