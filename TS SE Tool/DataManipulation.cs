@@ -1967,10 +1967,13 @@ namespace TS_SE_Tool
                 string commandText = "SELECT DBVersion FROM [DatabaseDetails];";
                 reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
                 string DBVersion = "";
+
                 while (reader.Read())
                 {
                     DBVersion = reader["DBVersion"].ToString();
                 }
+
+                DBconnection.Close();
 
                 string sql = "", DBVersionNew = "";
 
@@ -1983,9 +1986,12 @@ namespace TS_SE_Tool
                     case "0.2.0":
                         {
                             goto label020;
-                            //break;
                         }
                     case "0.2.6":
+                        {
+                            goto label026;
+                        }
+                    case "0.2.6.2":
                         {
                             break;
                         }
@@ -1993,27 +1999,31 @@ namespace TS_SE_Tool
 
                 //0.1.6
                 label016:
+
                 sql = "ALTER TABLE [Dependencies] ALTER COLUMN Dependency NVARCHAR(256) NOT NULL;";
                 UpdateDatabase(sql);
-
-                DBVersionNew = "0.2.0";
                 //
-                
+
                 //0.2.0
                 label020:
+
                 sql = "ALTER TABLE [DatabaseDetails] ALTER COLUMN ProfileName NVARCHAR(128) NOT NULL;";
                 UpdateDatabase(sql);
 
-                sql = "INSERT INTO [DatabaseDetails] (DBVersion, GameName, SaveVersion, ProfileName) VALUES ('0.2.6','" + GameType + "', 0, '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "');";
+                sql = "UPDATE [DatabaseDetails] SET ProfileName = '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "' " + "WHERE ID_DBline = 1;";
                 UpdateDatabase(sql);
-
-                DBVersionNew = "0.2.6";
                 //
-                
+
+                //0.2.6
+                label026:
+
+                UpdateDatabase("DELETE FROM DatabaseDetails WHERE ID_DBline > 1;");
+                //
+
                 //Set new version
+                DBVersionNew = "0.2.6.2";
                 sql = "UPDATE [DatabaseDetails] SET DBVersion = '" + DBVersionNew + "' " + "WHERE ID_DBline = 1;";
                 UpdateDatabase(sql);
-
             }
         }
         //Create DB structure
