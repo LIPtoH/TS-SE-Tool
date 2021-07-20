@@ -447,7 +447,9 @@ namespace TS_SE_Tool
             OutputText += " cached_experience: " + CachedExperiencePoints.ToString() + "\r\n";
             OutputText += " cached_distance: " + CachedDistance.ToString() + "\r\n";
 
-            if (Version == 4)
+            bool verCheck4 = (new sbyte[] { 4 }).Any(x => x == Version);
+
+            if (verCheck4)
             {
                 OutputText += " version: " + Version.ToString() + "\r\n";
                 OutputText += " online_user_name: " + (!string.IsNullOrEmpty(OnlineUserName) ? OnlineUserName : "\"\"") + "\r\n";
@@ -493,7 +495,9 @@ namespace TS_SE_Tool
                 OutputText += " cached_discovery[" + i.ToString() + "]: " + CachedDiscovery[i].ToString() + "\r\n";
             }
 
-            if (Version == 5)
+            bool verCheck5 = (new sbyte[] { 5, 6 }).Any(x => x == Version);
+
+            if (verCheck5 || !verCheck4)
             {
                 OutputText += " version: " + Version.ToString() + "\r\n";
                 OutputText += " online_user_name: " + (!string.IsNullOrEmpty(OnlineUserName) ? OnlineUserName : "\"\"") + "\r\n"; 

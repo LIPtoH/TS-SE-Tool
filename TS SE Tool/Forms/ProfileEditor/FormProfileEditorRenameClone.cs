@@ -315,7 +315,12 @@ namespace TS_SE_Tool
 
                                 //Make backup
                                 if (checkBoxCreateBackup.Checked)
+                                {
+                                    if (File.Exists(InitialPath + ".zip"))
+                                        File.Delete(InitialPath + ".zip");
+
                                     ZipFile.CreateFromDirectory(InitialPath, InitialPath + ".zip");
+                                }
                                 progress = 8;
 
                                 //Delete old folder
