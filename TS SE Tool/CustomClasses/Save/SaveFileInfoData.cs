@@ -29,7 +29,15 @@ namespace TS_SE_Tool
         public string Name { get; set; } = "\"\"";  //Save name
         public uint Time { get; set; } = 0;         //IngameTime
         public uint FileTime { get; set; } = 0;
-        public short Version { get; set; } = 1;
+        public ushort Version { get; set; } = 0;
+
+        private byte InfoVersion { get; set; } = 0;
+        private uint InfoPlayersExperience { get; set; } = 0;
+        private ushort InfoUnlockedRecruitments { get; set; } = 0;
+        private ushort InfoUnlockedDealers { get; set; } = 0;
+        private ushort InfoVisitedCities { get; set; } = 0;
+        private uint InfoMoneyAccount { get; set; } = 0;
+        private string infoExploredRatio { get; set; } = "\"\"";//private decimal infoExploredRatio { get; set; } = 0.0M;
 
         internal List<Dependency> Dependencies { get; set; }
 
@@ -42,6 +50,12 @@ namespace TS_SE_Tool
             OutputText += " time: " + Time.ToString() + "\r\n";
             OutputText += " file_time: " + FileTime.ToString() + "\r\n";
             OutputText += " version: " + Version.ToString() + "\r\n";
+
+            if(InfoVersion > 0)
+            {
+                OutputText += " info_version: " + InfoVersion.ToString() + "\r\n";
+            }                
+
             OutputText += " dependencies: " + Dependencies.Count.ToString() + "\r\n";
 
             byte DepCount = 0;
@@ -49,6 +63,16 @@ namespace TS_SE_Tool
             {
                 OutputText += " dependencies[" + DepCount + "]: \"" + tDep.Raw + "\"\r\n";
                 DepCount++;
+            }
+
+            if (InfoVersion > 0)
+            {
+                OutputText += " info_players_experience: " + InfoPlayersExperience.ToString() + "\r\n";
+                OutputText += " info_unlocked_recruitments: " + InfoUnlockedRecruitments.ToString() + "\r\n";
+                OutputText += " info_unlocked_dealers: " + InfoUnlockedDealers.ToString() + "\r\n";
+                OutputText += " info_visited_cities: " + InfoVisitedCities.ToString() + "\r\n";
+                OutputText += " info_money_account: " + InfoMoneyAccount.ToString() + "\r\n";
+                OutputText += " info_explored_ratio: " + infoExploredRatio.ToString() + "\r\n";
             }
 
             OutputText += "}\r\n\r\n}";
@@ -98,7 +122,7 @@ namespace TS_SE_Tool
                 if (_FileLines[line].StartsWith(" version:"))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    Version = short.Parse(chunkOfline[2]);
+                    Version = ushort.Parse(chunkOfline[2]);
                     continue;
                 }
 
@@ -121,6 +145,57 @@ namespace TS_SE_Tool
                     Dependencies.Add(new Dependency(tmpDep));
                     continue;
                 }
+
+                //Info data
+                if (_FileLines[line].StartsWith(" info_version:"))
+                {
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
+                    InfoVersion = byte.Parse(chunkOfline[2]);
+                    continue;
+                }
+
+                if (_FileLines[line].StartsWith(" info_players_experience:"))
+                {
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
+                    InfoPlayersExperience = uint.Parse(chunkOfline[2]);
+                    continue;
+                }
+
+                if (_FileLines[line].StartsWith(" info_unlocked_recruitments:"))
+                {
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
+                    InfoUnlockedRecruitments = ushort.Parse(chunkOfline[2]);
+                    continue;
+                }
+
+                if (_FileLines[line].StartsWith(" info_unlocked_dealers:"))
+                {
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
+                    InfoUnlockedDealers = ushort.Parse(chunkOfline[2]);
+                    continue;
+                }
+
+                if (_FileLines[line].StartsWith(" info_visited_cities:"))
+                {
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
+                    InfoVisitedCities = ushort.Parse(chunkOfline[2]);
+                    continue;
+                }
+
+                if (_FileLines[line].StartsWith(" info_money_account:"))
+                {
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
+                    InfoMoneyAccount = uint.Parse(chunkOfline[2]);
+                    continue;
+                }
+
+                if (_FileLines[line].StartsWith(" info_explored_ratio:"))
+                {
+                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
+                    infoExploredRatio = chunkOfline[2];//Utilities.NumericUtilities.HexFloatToDecimalFloat(chunkOfline[2]);
+                    continue;
+                }
+                //
 
                 if (_FileLines[line].StartsWith("}"))
                 {

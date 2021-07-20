@@ -37,7 +37,7 @@ namespace TS_SE_Tool
         CheckBox[] ImportColorsCB = new CheckBox[0];
         List<Color> ImportedColors = new List<Color>();
 
-        short SaveVersion = 0;
+        ushort SaveVersion = 0;
 
         public FormShareUserColors()
         {
