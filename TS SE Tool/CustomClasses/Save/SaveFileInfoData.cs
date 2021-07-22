@@ -37,7 +37,7 @@ namespace TS_SE_Tool
         private ushort InfoUnlockedDealers { get; set; } = 0;
         private ushort InfoVisitedCities { get; set; } = 0;
         private uint InfoMoneyAccount { get; set; } = 0;
-        private string infoExploredRatio { get; set; } = "\"\"";//private decimal infoExploredRatio { get; set; } = 0.0M;
+        private decimal InfoExploredRatio { get; set; } = 0.0M;
 
         internal List<Dependency> Dependencies { get; set; }
 
@@ -51,7 +51,7 @@ namespace TS_SE_Tool
             OutputText += " file_time: " + FileTime.ToString() + "\r\n";
             OutputText += " version: " + Version.ToString() + "\r\n";
 
-            if(InfoVersion > 0)
+            if (InfoVersion > 0)
             {
                 OutputText += " info_version: " + InfoVersion.ToString() + "\r\n";
             }                
@@ -72,7 +72,7 @@ namespace TS_SE_Tool
                 OutputText += " info_unlocked_dealers: " + InfoUnlockedDealers.ToString() + "\r\n";
                 OutputText += " info_visited_cities: " + InfoVisitedCities.ToString() + "\r\n";
                 OutputText += " info_money_account: " + InfoMoneyAccount.ToString() + "\r\n";
-                OutputText += " info_explored_ratio: " + infoExploredRatio.ToString() + "\r\n";
+                OutputText += " info_explored_ratio: " + Utilities.NumericUtilities.DecimalFloatToHexFloat(InfoExploredRatio) + "\r\n";
             }
 
             OutputText += "}\r\n\r\n}";
@@ -192,7 +192,7 @@ namespace TS_SE_Tool
                 if (_FileLines[line].StartsWith(" info_explored_ratio:"))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    infoExploredRatio = chunkOfline[2];//Utilities.NumericUtilities.HexFloatToDecimalFloat(chunkOfline[2]);
+                    InfoExploredRatio = Utilities.NumericUtilities.HexFloatToDecimalFloat(chunkOfline[2]);
                     continue;
                 }
                 //
