@@ -180,6 +180,9 @@ namespace TS_SE_Tool
 
         private void FillUserCompanyTrailerList()
         {
+            if (UserTrailerDictionary == null)
+                return;
+
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("UserTrailerNameless", typeof(string));
             combDT.Columns.Add(dc);
@@ -197,32 +200,40 @@ namespace TS_SE_Tool
             combDT.Columns.Add(dc);
 
             DataColumn dcDisplay = new DataColumn("DisplayMember");
-            dcDisplay.Expression = string.Format("IIF(UserTrailerNameless <> 'null', '[' + {0} +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + IIF(DriverName <> 'null', ' || In use - ' + {3},'')," +
+            dcDisplay.Expression = string.Format("IIF(UserTrailerNameless <> 'null'," +
+                                                        " '[' + {0} +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + IIF(DriverName <> 'null', ' || In use - ' + {3},'')," +
                                                         "'-- NONE --')",
                                                 "TrailerType", "GarageName", "TrailerName", "DriverName");
             combDT.Columns.Add(dcDisplay);
             //
 
-            combDT.Rows.Add("null");
+            combDT.Rows.Add("null"); // -- NONE --
+            //
 
             foreach (KeyValuePair<string, UserCompanyTruckData> UserTrailer in UserTrailerDictionary)
             {
+                if (UserTrailer.Value == null)
+                    continue;
+
                 if (UserTrailer.Value.Main)
                 {
-                    string trailername = "";
-                    //
+                    string trailername = "", trailerNameless = "";
                     string tmpTrailerType = "", tmpTrailerkName = "", tmpGarageName = "", tmpDriverName = "";
 
-                    if (UserTrailerDictionary[UserTrailer.Key].Users)
+                    trailerNameless = UserTrailer.Key;
+                    //
+
+                    if (UserTrailerDictionary[trailerNameless].Users)
                     {
                         tmpTrailerType = "U";
 
-                        tmpGarageName = GaragesList.Find(x => x.Trailers.Contains(UserTrailer.Key)).GarageNameTranslated;
+                        tmpGarageName = GaragesList.Find(x => x.Trailers.Contains(trailerNameless)).GarageNameTranslated;
                     }
                     else
                         tmpTrailerType = "Q";
                     //
-                    string trailerdef = UserTrailerDictionary[UserTrailer.Key].Parts.Find(x => x.PartType == "trailerdef").PartNameless;
+
+                    string trailerdef = UserTrailerDictionary[trailerNameless].Parts.Find(x => x.PartType == "trailerdef").PartNameless;
 
                     if (UserTrailerDefDictionary.Count > 0)
                     {
@@ -264,9 +275,10 @@ namespace TS_SE_Tool
                     {
                         tmpTrailerkName = trailerdef;
                     }
+                    //
 
-                    tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTrailer == UserTrailer.Key)?.SingleOrDefault().Key ?? "null";
-
+                    tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTrailer == trailerNameless)?.SingleOrDefault().Key ?? "null";
+                    
                     if (tmpDriverName != "null")
                         if (PlayerDataData.UserDriver == tmpDriverName)
                         {
@@ -281,8 +293,9 @@ namespace TS_SE_Tool
                                 tmpDriverName = _resultvalue.TrimStart(new char[] { '+' });
                             }
                         }
+                    //
 
-                    combDT.Rows.Add(UserTrailer.Key, tmpTrailerType, tmpTrailerkName, tmpGarageName, tmpDriverName); //(UserTrailer.Key, trailername);
+                    combDT.Rows.Add(trailerNameless, tmpTrailerType, tmpTrailerkName, tmpGarageName, tmpDriverName);
                 }
             }
 
@@ -298,7 +311,6 @@ namespace TS_SE_Tool
             comboBoxUserTrailerCompanyTrailers.ValueMember = "UserTrailerNameless";
             comboBoxUserTrailerCompanyTrailers.DisplayMember = "DisplayMember";
             comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
-
 
             comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataData.UserCompanyAssignedTrailer;
         }

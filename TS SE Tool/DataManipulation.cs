@@ -428,7 +428,9 @@ namespace TS_SE_Tool
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
                             string tKey = UserTruckDictionary.Keys.ElementAt(int.Parse(chunkOfline[1]));
+
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+
                             UserTruckDictionary[tKey].TruckProfitLogs = chunkOfline[2];
                             continue;
                         }
@@ -704,6 +706,7 @@ namespace TS_SE_Tool
                                 {
                                     string accessorynameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
                                     bool paintadded = false;
+
                                     if (tempSavefileInMemory[line].StartsWith("vehicle_paint_job_accessory :"))
                                     {
                                         UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("paintjob"));
@@ -717,45 +720,59 @@ namespace TS_SE_Tool
                                     {
                                         tempPartData.Add(tempSavefileInMemory[line]);
 
+                                        //--
                                         if (!paintadded)
                                             if (tempSavefileInMemory[line].StartsWith(" data_path:"))
                                             {
                                                 chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
                                                 string truckpart = chunkOfline[2].Split(new char[] { '"' })[1];
 
-                                                if (truckpart.Contains("data.sii"))
-                                                    UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("truckbrandname"));
-                                                else if (truckpart.Contains("/chassis/"))
+                                                string partType = "";
+
+                                                switch (truckpart)
                                                 {
-                                                    UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("chassis"));
+                                                    case var s when s.Contains("/data.sii"):
+                                                        partType = "truckbrandname";
+                                                        break;
+
+                                                    case var s when s.Contains("/chassis/"):
+                                                        partType = "chassis";
+                                                        break;
+
+                                                    case var s when s.Contains("/cabin/"):
+                                                        partType = "cabin";
+                                                        break;
+
+                                                    case var s when s.Contains("/engine/"):
+                                                        partType = "engine";
+                                                        break;
+
+                                                    case var s when s.Contains("/transmission/"):
+                                                        partType = "transmission";
+                                                        break;
+
+                                                    case var s when s.Contains("/f_tire/") || s.Contains("/r_tire/") || s.Contains("/f_wheel/") || s.Contains("/r_wheel/"):
+                                                        partType = "tire";
+                                                        break;
+
+                                                    default:
+                                                        partType = "generalpart";
+                                                        break;
                                                 }
-                                                else if (truckpart.Contains("/cabin/"))
-                                                {
-                                                    UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("cabin"));
-                                                }
-                                                else if (truckpart.Contains("/engine/"))
-                                                {
-                                                    UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("engine"));
-                                                }
-                                                else if (truckpart.Contains("/transmission/"))
-                                                {
-                                                    UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("transmission"));
-                                                }
-                                                else if (truckpart.Contains("/f_tire/") || truckpart.Contains("/r_tire/") || truckpart.Contains("/f_wheel/") || truckpart.Contains("/r_wheel/"))
-                                                {
-                                                    UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("tire"));
-                                                }
-                                                else
-                                                    UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("generalpart"));
+
+                                                UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart(partType));
                                             }
+                                        //--
+
                                         line++;
                                     }
 
-                                    if (paintadded)
-                                        paintadded = false;
                                     UserTruckDictionary[vehiclenameless].Parts.Last().PartNameless = accessorynameless;
                                     UserTruckDictionary[vehiclenameless].Parts.Last().PartData = tempPartData;
                                     accessoriescount--;
+
+                                    if (paintadded)
+                                        paintadded = false;
                                 }
                                 line++;
                             }
@@ -763,7 +780,7 @@ namespace TS_SE_Tool
                         continue;
                     }
 
-                    //find vehicles Trailer
+                    //Find vehicles Trailer
                     int[] traileraccessoriescount = new int[1];
                     string[] trailernamelessArray = new string[1];
                     int slavetrailerscount = 0;
@@ -779,60 +796,63 @@ namespace TS_SE_Tool
                             UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("trailerdata"));
                             line++;
 
+                            string workLine = "";
+
                             while (!tempSavefileInMemory[line].StartsWith("}"))
                             {
-                                if (tempSavefileInMemory[line].StartsWith(" trailer_definition:"))
-                                {
-                                    string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-                                    UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("trailerdef", nameless));
-                                }
-                                else
-                                if (tempSavefileInMemory[line].StartsWith(" cargo_mass:"))
-                                {
-                                    UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(tempSavefileInMemory[line]);
-                                }
-                                else
-                                if (tempSavefileInMemory[line].StartsWith(" cargo_damage:"))
-                                {
-                                    UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(tempSavefileInMemory[line]);
-                                }
-                                else
-                                if (tempSavefileInMemory[line].StartsWith(" license_plate:"))
-                                {
-                                    UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(tempSavefileInMemory[line]);
-                                }
-                                else
-                                if (tempSavefileInMemory[line].StartsWith(" slave_trailer:"))
-                                {
-                                    if (tempSavefileInMemory[line].Contains("_nameless"))
-                                    {
-                                        slavetrailerscount++;
-                                        Array.Resize(ref traileraccessoriescount, slavetrailerscount);
-                                        Array.Resize(ref trailernamelessArray, slavetrailerscount);
+                                workLine = tempSavefileInMemory[line];
 
-                                        string trailernameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                                        trailernamelessArray[slavetrailerscount - 1] = vehiclenameless;
-
-                                        UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("slavetrailer", trailernameless));
-
-                                        UserTrailerDictionary.Add(trailernameless, new UserCompanyTruckData());
-                                        UserTrailerDictionary.Last().Value.Main = false;
-                                    }
-                                    else
-                                    {
-                                        slavetrailerscount++;
-                                        Array.Resize(ref traileraccessoriescount, slavetrailerscount);
-                                        Array.Resize(ref trailernamelessArray, slavetrailerscount);
-
-                                        trailernamelessArray[slavetrailerscount - 1] = vehiclenameless;
-                                    }
-                                }
-                                else
-                                if (tempSavefileInMemory[line].StartsWith(" accessories:"))
+                                switch (workLine)
                                 {
-                                    traileraccessoriescount[slavetrailerscount - 1] = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
-                                    line++;
+                                    case var s when s.StartsWith(" trailer_definition:"):
+
+                                        string nameless = workLine.Split(new char[] { ' ' })[2];
+                                        UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("trailerdef", nameless));
+                                        break;
+
+                                    case var s when s.StartsWith(" cargo_mass:"):
+                                        UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(workLine);
+                                        break;
+
+                                    case var s when s.StartsWith(" cargo_damage:"):
+                                        UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(workLine);
+                                        break;
+
+                                    case var s when s.StartsWith(" license_plate:"):
+                                        UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(workLine);
+                                        break;
+
+                                    case var s when s.StartsWith(" slave_trailer:"):
+
+                                        if (workLine.Contains("_nameless"))
+                                        {
+                                            slavetrailerscount++;
+                                            Array.Resize(ref traileraccessoriescount, slavetrailerscount);
+                                            Array.Resize(ref trailernamelessArray, slavetrailerscount);
+
+                                            string trailernameless = workLine.Split(new char[] { ' ' })[2];
+
+                                            trailernamelessArray[slavetrailerscount - 1] = vehiclenameless;
+
+                                            UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("slavetrailer", trailernameless));
+
+                                            UserTrailerDictionary.Add(trailernameless, new UserCompanyTruckData());
+                                            UserTrailerDictionary.Last().Value.Main = false;
+                                        }
+                                        else
+                                        {
+                                            slavetrailerscount++;
+                                            Array.Resize(ref traileraccessoriescount, slavetrailerscount);
+                                            Array.Resize(ref trailernamelessArray, slavetrailerscount);
+
+                                            trailernamelessArray[slavetrailerscount - 1] = vehiclenameless;
+                                        }
+
+                                        break;
+
+                                    case var s when s.StartsWith(" accessories:"):
+                                        traileraccessoriescount[slavetrailerscount - 1] = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
                                 }
 
                                 line++;
@@ -855,8 +875,9 @@ namespace TS_SE_Tool
                                 {
                                     if (tempSavefileInMemory[line].StartsWith("vehicle_"))
                                     {
-                                        string accessorynameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
                                         bool paintadded = false;
+                                        string accessorynameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+                                        
                                         if (tempSavefileInMemory[line].StartsWith("vehicle_paint_job_accessory :"))
                                         {
                                             UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("paintjob"));
@@ -870,38 +891,51 @@ namespace TS_SE_Tool
                                         {
                                             tempPartData.Add(tempSavefileInMemory[line]);
 
+                                            //--
                                             if (!paintadded)
                                                 if (tempSavefileInMemory[line].StartsWith(" data_path:"))
                                                 {
                                                     chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
                                                     string truckpart = chunkOfline[2].Split(new char[] { '"' })[1];
 
-                                                    if (truckpart.Contains("data.sii"))
-                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("trailerchassistype"));
-                                                    else if (truckpart.Contains("/body/"))
+                                                    string partType = "";
+
+                                                    switch (truckpart)
                                                     {
-                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("body"));
+                                                        case var s when s.Contains("/data.sii"):
+                                                            partType = "trailerchassistype";
+                                                            break;
+
+                                                        case var s when s.Contains("/body/"):
+                                                            partType = "body";
+                                                            break;
+
+                                                        case var s when s.Contains("chassis") || s.Contains("/def/vehicle/trailer/"):
+                                                            partType = "chassis";
+                                                            break;
+
+                                                        case var s when s.Contains("/f_tire/") || s.Contains("/r_tire/") || s.Contains("/f_wheel/") || s.Contains("/r_wheel/") || s.Contains("/t_wheel/"):
+                                                            partType = "tire";
+                                                            break;
+
+                                                        default:
+                                                            partType = "generalpart";
+                                                            break;
                                                     }
-                                                    else if (truckpart.Contains("chassis") || truckpart.Contains("/def/vehicle/trailer/"))
-                                                    {
-                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("chassis"));
-                                                    }
-                                                    else if (truckpart.Contains("/r_tire/") || truckpart.Contains("/t_wheel/"))
-                                                    {
-                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("tire"));
-                                                    }
-                                                    else
-                                                        UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart("generalpart"));
+
+                                                    UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart(partType));                                                    
                                                 }
+                                            //--
+
                                             line++;
                                         }
-
-                                        if (paintadded)
-                                            paintadded = false;
 
                                         UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Last().PartNameless = accessorynameless;
                                         UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Last().PartData = tempPartData;
                                         traileraccessoriescount[trailerindex]--;
+
+                                        if (paintadded)
+                                            paintadded = false;
                                     }
 
                                     line++;
