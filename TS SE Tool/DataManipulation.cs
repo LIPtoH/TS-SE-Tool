@@ -69,18 +69,20 @@ namespace TS_SE_Tool
 
                     if (tempSavefileInMemory[line].Contains("_nameless"))
                     {
-                        string asd = tempSavefileInMemory[line].Substring(tempSavefileInMemory[line].IndexOf("_nameless"));
-                        int dsa = asd.IndexOf(" ");
                         string nameless;
-                        if (dsa == -1)
-                            nameless = asd.Substring(10);
+
+                        string tmpNameless = tempSavefileInMemory[line].Substring(tempSavefileInMemory[line].IndexOf("_nameless"));
+                        int endIndex = tmpNameless.IndexOf(" ");
+
+                        if (endIndex == -1)
+                            nameless = tmpNameless.Substring(10);
                         else
-                            nameless = asd.Substring(10, dsa - 10);
+                            nameless = tmpNameless.Substring(10, endIndex - 10);
+
                         namelessList.Add(nameless);
-                        //EconomySection = true;
                     }
 
-                    if (tempSavefileInMemory[line].StartsWith("economy : _nameless"))
+                    if (tempSavefileInMemory[line].StartsWith("economy : "))
                     {
                         EconomySection = true;
                         continue;
@@ -643,19 +645,25 @@ namespace TS_SE_Tool
                                 continue;
                             }
 
-                            if (tempSavefileInMemory[line].Contains("_nameless") && tempSavefileInMemory[line].StartsWith(" company_truck:"))
+                            if (tempSavefileInMemory[line].StartsWith(" company_truck:"))
                             {
                                 chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                                UserTruckDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
-                                UserTruckDictionary[chunkOfline[2]].Users = false;
+                                if (chunkOfline[2] != "null")
+                                {
+                                    UserTruckDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
+                                    UserTruckDictionary[chunkOfline[2]].Users = false;
+                                }
                                 continue;
                             }
 
-                            if (tempSavefileInMemory[line].Contains("_nameless") && tempSavefileInMemory[line].StartsWith(" company_trailer:"))
+                            if (tempSavefileInMemory[line].StartsWith(" company_trailer:"))
                             {
                                 chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                                UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
-                                UserTrailerDictionary[chunkOfline[2]].Users = false;
+                                if (chunkOfline[2] != "null")
+                                {
+                                    UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
+                                    UserTrailerDictionary[chunkOfline[2]].Users = false;
+                                }
                                 continue;
                             }
                         } while (!tempSavefileInMemory[line].StartsWith("}"));
@@ -824,7 +832,7 @@ namespace TS_SE_Tool
 
                                     case var s when s.StartsWith(" slave_trailer:"):
 
-                                        if (workLine.Contains("_nameless"))
+                                        if (workLine.Split(new char[] { ':' })[1].Trim(new char[] { ' ' }) != "null")
                                         {
                                             slavetrailerscount++;
                                             Array.Resize(ref traileraccessoriescount, slavetrailerscount);
