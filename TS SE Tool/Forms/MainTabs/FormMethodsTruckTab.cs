@@ -625,11 +625,17 @@ namespace TS_SE_Tool
         {
             for (int i = 0; i < 5; i++)
             {
-                Control[] tmp = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckElRepair" + i.ToString(), true);
+                Control tmpButtonRepair = tabControlMain.TabPages["tabPageTruck"].Controls.Find("buttonTruckElRepair" + i.ToString(), true).FirstOrDefault();
+
+                if (tmpButtonRepair == null)
+                    continue;
+
+                tmpButtonRepair.Enabled = _state;
+                
                 if (_state)
-                    tmp[0].BackgroundImage = RepairImg;
+                    tmpButtonRepair.BackgroundImage = RepairImg;
                 else
-                    tmp[0].BackgroundImage = ConvertBitmapToGrayscale(RepairImg);
+                    tmpButtonRepair.BackgroundImage = ConvertBitmapToGrayscale(RepairImg);                
             }
         }
 
