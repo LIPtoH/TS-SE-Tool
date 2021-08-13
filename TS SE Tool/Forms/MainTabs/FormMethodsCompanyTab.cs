@@ -62,7 +62,7 @@ namespace TS_SE_Tool
 
         public void FillAccountMoneyTB()
         {
-            UInt64 valueBefore = (uint)Math.Floor(PlayerDataData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
+            Int64 valueBefore = (long)Math.Floor(PlayerDataData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
 
             string newtext = "";
             if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
@@ -163,9 +163,9 @@ namespace TS_SE_Tool
                 int testV = textBoxAccountMoney.SelectionStart;
 
                 string onlyDigits = new string(textBoxAccountMoney.Text.Where(c => char.IsDigit(c)).ToArray());
-                if (!UInt64.TryParse(onlyDigits, NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out ulong valueBefore))
+                if (!Int64.TryParse(onlyDigits, NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out long valueBefore))
                 {
-                    valueBefore = UInt64.MaxValue;
+                    valueBefore = Int64.MaxValue;
                 }
                 //[sign1] - [sign2] 1.234,- [sign3]
                 if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
@@ -183,14 +183,14 @@ namespace TS_SE_Tool
 
                 textBoxAccountMoney.SelectionStart = testV + cSpace2 - cSpace1;
 
-                PlayerDataData.AccountMoney = (uint)Math.Round(valueBefore / CurrencyDictConversion[Globals.CurrencyName]);
+                PlayerDataData.AccountMoney = (long)Math.Round(valueBefore / CurrencyDictConversion[Globals.CurrencyName]);
             }
         }
 
         private void textBoxMoneyAccount_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBox textBoxAccountMoney = sender as TextBox;
-            UInt64 valueBefore = 0;
+            Int64 valueBefore = 0;
             string onlyDigits = new string(textBoxAccountMoney.Text.Where(c => char.IsDigit(c)).ToArray());
 
             int testV = textBoxAccountMoney.SelectionStart;
@@ -204,14 +204,14 @@ namespace TS_SE_Tool
                         return;
                     }
 
-                    if (UInt64.TryParse(onlyDigits, NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out valueBefore))
+                    if (Int64.TryParse(onlyDigits, NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out valueBefore))
                     {
                         textBoxAccountMoney.Text = valueBefore.ToString();
                         e.Handled = true;
                     }
                     else
                     {
-                        valueBefore = UInt64.MaxValue;
+                        valueBefore =Int64.MaxValue;
                         textBoxAccountMoney.Text = valueBefore.ToString();
                         e.Handled = true;
                     }

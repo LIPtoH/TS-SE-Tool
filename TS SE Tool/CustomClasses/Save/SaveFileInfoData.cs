@@ -36,7 +36,7 @@ namespace TS_SE_Tool
         private ushort InfoUnlockedRecruitments { get; set; } = 0;
         private ushort InfoUnlockedDealers { get; set; } = 0;
         private ushort InfoVisitedCities { get; set; } = 0;
-        private uint InfoMoneyAccount { get; set; } = 0;
+        private long InfoMoneyAccount { get; set; } = 0;
         private decimal InfoExploredRatio { get; set; } = 0.0M;
 
         internal List<Dependency> Dependencies { get; set; }
@@ -185,7 +185,7 @@ namespace TS_SE_Tool
                 if (_FileLines[line].StartsWith(" info_money_account:"))
                 {
                     chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    InfoMoneyAccount = uint.Parse(chunkOfline[2]);
+                    InfoMoneyAccount = long.Parse(chunkOfline[2]);
                     continue;
                 }
 

@@ -374,7 +374,7 @@ namespace TS_SE_Tool
                     if (tempSavefileInMemory[line].StartsWith(" money_account:"))
                     {
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        PlayerDataData.AccountMoney = uint.Parse(chunkOfline[2]);
+                        PlayerDataData.AccountMoney = long.Parse(chunkOfline[2]);
                         continue;
                     }
 
