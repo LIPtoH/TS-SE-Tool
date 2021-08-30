@@ -407,14 +407,7 @@ namespace TS_SE_Tool
                             string tmpWear = tmpPartData.PartData.Find(xl => xl.StartsWith(" wear:")).Split(new char[] { ' ' })[2];
                             decimal _tmpWear = 0;
 
-                            if (tmpWear != "0" && tmpWear != "1")
-                            {
-                                _tmpWear = Utilities.NumericUtilities.HexFloatToDecimalFloat(tmpWear);
-                            }
-                            else if (tmpWear == "1")
-                            {
-                                _tmpWear = 1;
-                            }
+                            _tmpWear = Utilities.NumericUtilities.HexFloatToDecimalFloat(tmpWear);
 
                             _wear += _tmpWear;
                             partCount++;
@@ -430,8 +423,8 @@ namespace TS_SE_Tool
 
                 _wear = _wear / partCount;
 
-                if (_wear == 0)                
-                    repairButton.Enabled = false;                
+                if (_wear == 0)
+                    repairButton.Enabled = false;
                 else
                     repairButton.Enabled = true;
 
@@ -505,18 +498,13 @@ namespace TS_SE_Tool
                 string fuel = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "truckdata").PartData.Find(xl => xl.StartsWith(" fuel_relative:")).Split(new char[] { ' ' })[2];//SelectedUserCompanyTruck.Fuel;
                 decimal _fuel = 0;
 
-                if (fuel != "0" && fuel != "1")
-                {
-                    refuelTruck.Enabled = true;
-                    _fuel = Utilities.NumericUtilities.HexFloatToDecimalFloat(fuel);
-                }
-                else if (fuel == "1")
-                {
+                _fuel = Utilities.NumericUtilities.HexFloatToDecimalFloat(fuel);
+
+                if (_fuel == 1)
                     refuelTruck.Enabled = false;
-                    _fuel = 1;
-                }
                 else
                     refuelTruck.Enabled = true;
+
 
                 SolidBrush ppen = new SolidBrush(GetProgressbarColor(1 - _fuel));
                 int pnlheight = (int)(pnlfuel.Height * (_fuel)), x = 0, y = pnlfuel.Height - pnlheight;

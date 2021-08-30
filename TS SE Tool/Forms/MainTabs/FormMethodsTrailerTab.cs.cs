@@ -423,14 +423,7 @@ namespace TS_SE_Tool
                             string tmpWear = tmpPartData.PartData.Find(xl => xl.StartsWith(" wear:") || xl.StartsWith(" cargo_damage:")).Split(new char[] { ' ' })[2];
                             decimal _tmpWear = 0;
 
-                            if (tmpWear != "0" && tmpWear != "1")
-                            {
-                                _tmpWear = Utilities.NumericUtilities.HexFloatToDecimalFloat(tmpWear);
-                            }
-                            else if (tmpWear == "1")
-                            {
-                                _tmpWear = 1;
-                            }
+                            _tmpWear = Utilities.NumericUtilities.HexFloatToDecimalFloat(tmpWear);
 
                             _wear += _tmpWear;
                             partCount++;
