@@ -719,6 +719,7 @@ namespace TS_SE_Tool
             {
                 using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\errorlog.log", true))
                 {
+                    writer.WriteLine(Utilities.AssemblyData.AssemblyProduct + " - " + Utilities.AssemblyData.AssemblyVersion);
                     writer.WriteLine(DateTime.Now + "\r\n" + _error + "\r\n");
                 }
             }
