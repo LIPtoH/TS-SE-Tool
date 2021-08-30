@@ -934,8 +934,8 @@
             this.tableLayoutPanel3.Controls.Add(this.labelUserCompanyHQcity, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.textBoxUserCompanyCompanyName, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.comboBoxUserCompanyHQcity, 2, 2);
-            this.tableLayoutPanel3.Controls.Add(this.textBoxUserCompanyMoneyAccount, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.labelCompanyNameSize, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.textBoxUserCompanyMoneyAccount, 2, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -963,33 +963,39 @@
             // 
             // labelUserCompanyCompanyName
             // 
-            this.labelUserCompanyCompanyName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelUserCompanyCompanyName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.labelUserCompanyCompanyName.AutoSize = true;
-            this.labelUserCompanyCompanyName.Location = new System.Drawing.Point(115, 10);
+            this.labelUserCompanyCompanyName.Location = new System.Drawing.Point(115, 0);
             this.labelUserCompanyCompanyName.Name = "labelUserCompanyCompanyName";
-            this.labelUserCompanyCompanyName.Size = new System.Drawing.Size(80, 13);
+            this.labelUserCompanyCompanyName.Size = new System.Drawing.Size(80, 33);
             this.labelUserCompanyCompanyName.TabIndex = 15;
             this.labelUserCompanyCompanyName.Text = "Company name";
+            this.labelUserCompanyCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelUserCompanyMoneyAccount
             // 
-            this.labelUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelUserCompanyMoneyAccount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.labelUserCompanyMoneyAccount.AutoSize = true;
-            this.labelUserCompanyMoneyAccount.Location = new System.Drawing.Point(115, 43);
+            this.labelUserCompanyMoneyAccount.Location = new System.Drawing.Point(115, 33);
             this.labelUserCompanyMoneyAccount.Name = "labelUserCompanyMoneyAccount";
-            this.labelUserCompanyMoneyAccount.Size = new System.Drawing.Size(81, 13);
+            this.labelUserCompanyMoneyAccount.Size = new System.Drawing.Size(81, 33);
             this.labelUserCompanyMoneyAccount.TabIndex = 22;
             this.labelUserCompanyMoneyAccount.Text = "Account money";
+            this.labelUserCompanyMoneyAccount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelUserCompanyHQcity
             // 
-            this.labelUserCompanyHQcity.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelUserCompanyHQcity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.labelUserCompanyHQcity.AutoSize = true;
-            this.labelUserCompanyHQcity.Location = new System.Drawing.Point(115, 76);
+            this.labelUserCompanyHQcity.Location = new System.Drawing.Point(115, 66);
             this.labelUserCompanyHQcity.Name = "labelUserCompanyHQcity";
-            this.labelUserCompanyHQcity.Size = new System.Drawing.Size(42, 13);
+            this.labelUserCompanyHQcity.Size = new System.Drawing.Size(42, 34);
             this.labelUserCompanyHQcity.TabIndex = 4;
             this.labelUserCompanyHQcity.Text = "HQ city";
+            this.labelUserCompanyHQcity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxUserCompanyCompanyName
             // 
@@ -1021,8 +1027,9 @@
             this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
             this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(255, 20);
             this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
-            this.textBoxUserCompanyMoneyAccount.TextChanged += new System.EventHandler(this.textBoxMoneyAccount_TextChanged);
-            this.textBoxUserCompanyMoneyAccount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxMoneyAccount_KeyPress);
+            this.textBoxUserCompanyMoneyAccount.Enter += new System.EventHandler(this.textBoxUserCompanyMoneyAccount_Enter);
+            this.textBoxUserCompanyMoneyAccount.Leave += new System.EventHandler(this.textBoxUserCompanyMoneyAccount_Leave);
+            this.textBoxUserCompanyMoneyAccount.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxUserCompanyMoneyAccount_Validating);
             // 
             // labelCompanyNameSize
             // 
@@ -1267,7 +1274,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1306,14 +1313,14 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(450, 0);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(449, 0);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
             this.tableLayoutPanelTruckDetails.SetRowSpan(this.tableLayoutPanelTruckFuel, 5);
             this.tableLayoutPanelTruckFuel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
             this.tableLayoutPanelTruckFuel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTruckFuel.Size = new System.Drawing.Size(74, 265);
+            this.tableLayoutPanelTruckFuel.Size = new System.Drawing.Size(73, 265);
             this.tableLayoutPanelTruckFuel.TabIndex = 1;
             // 
             // tabPageTrailer
@@ -1545,7 +1552,7 @@
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
             this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);

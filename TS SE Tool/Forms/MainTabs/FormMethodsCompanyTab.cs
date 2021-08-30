@@ -62,17 +62,14 @@ namespace TS_SE_Tool
 
         public void FillAccountMoneyTB()
         {
+            //
             Int64 valueBefore = (long)Math.Floor(PlayerDataData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
 
-            string newtext = "";
-            if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
-                newtext += CurrencyDictFormat[Globals.CurrencyName][0] + "-";
+            textBoxUserCompanyMoneyAccount.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
 
-            newtext += CurrencyDictFormat[Globals.CurrencyName][1] + String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore) + ",-" + CurrencyDictFormat[Globals.CurrencyName][2];
-
-            textBoxUserCompanyMoneyAccount.TextChanged -= textBoxMoneyAccount_TextChanged;
-            textBoxUserCompanyMoneyAccount.Text = newtext;
-            textBoxUserCompanyMoneyAccount.TextChanged += textBoxMoneyAccount_TextChanged;
+            //
+            this.ActiveControl = textBoxUserCompanyMoneyAccount;
+            this.ActiveControl = null;
         }
 
         private void FillHQcities()
@@ -151,6 +148,71 @@ namespace TS_SE_Tool
                     e.Cancel = true;
                 }
         }
+        
+        private void textBoxUserCompanyMoneyAccount_Enter(object sender, EventArgs e)
+        {
+            Int64 valueBefore = (long)Math.Floor(PlayerDataData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
+
+            textBoxUserCompanyMoneyAccount.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
+
+            //
+            textBoxUserCompanyMoneyAccount.KeyPress += textBoxMoneyAccount_KeyPress;
+            textBoxUserCompanyMoneyAccount.TextChanged += textBoxMoneyAccount_TextChanged;
+        }
+
+        private void textBoxUserCompanyMoneyAccount_Validating(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void textBoxUserCompanyMoneyAccount_Leave(object sender, EventArgs e)
+        {
+            //
+            textBoxUserCompanyMoneyAccount.KeyPress -= textBoxMoneyAccount_KeyPress;
+            textBoxUserCompanyMoneyAccount.TextChanged -= textBoxMoneyAccount_TextChanged;
+            
+            //
+            if (!Int64.TryParse(textBoxUserCompanyMoneyAccount.Text, NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign, CultureInfo.CurrentCulture, out long newValue))
+                return;
+
+            PlayerDataData.AccountMoney = (long)Math.Round(newValue / CurrencyDictConversion[Globals.CurrencyName]);
+
+            //[sign1] - [sign2] 1.234,- [sign3]
+            string newtext = "";
+            if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
+                newtext += CurrencyDictFormat[Globals.CurrencyName][0] + "-";
+
+            newtext += CurrencyDictFormat[Globals.CurrencyName][1] + String.Format(CultureInfo.CurrentCulture, "{0:N0}", newValue) + ",-" + CurrencyDictFormat[Globals.CurrencyName][2];
+            //
+
+            textBoxUserCompanyMoneyAccount.Text = newtext;
+        }
+
+        private void textBoxMoneyAccount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textBoxAccountMoney = sender as TextBox;
+
+            string onlyDigits = textBoxAccountMoney.Text;
+
+            if (!string.IsNullOrEmpty(textBoxAccountMoney.Text))
+            {
+                if (!Char.IsDigit(e.KeyChar))
+                {
+                    if (e.KeyChar == (char)Keys.Enter)
+                    {
+                        this.ActiveControl = null;
+                        return;
+                    }
+
+                    if (e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Delete || e.KeyChar == (char)'-')
+                    {
+                        return;
+                    }
+
+                    e.Handled = true;
+                }
+            }
+        }
 
         private void textBoxMoneyAccount_TextChanged(object sender, EventArgs e)
         {
@@ -160,65 +222,38 @@ namespace TS_SE_Tool
 
             if (!string.IsNullOrEmpty(textBoxAccountMoney.Text))
             {
-                int testV = textBoxAccountMoney.SelectionStart;
+                int selectionStart = textBoxAccountMoney.SelectionStart;
 
-                string onlyDigits = new string(textBoxAccountMoney.Text.Where(c => char.IsDigit(c)).ToArray());
-                if (!Int64.TryParse(onlyDigits, NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out long valueBefore))
+                string onlyDigits = textBoxAccountMoney.Text;
+
+                if (!Int64.TryParse(onlyDigits, NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign, CultureInfo.CurrentCulture, out long valueBefore))
                 {
-                    valueBefore = Int64.MaxValue;
+                    valueBefore = 0;
                 }
-                //[sign1] - [sign2] 1.234,- [sign3]
-                if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
-                    newtext += CurrencyDictFormat[Globals.CurrencyName][0] + "-";
 
-                newtext += CurrencyDictFormat[Globals.CurrencyName][1] + String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore) + ",-" + CurrencyDictFormat[Globals.CurrencyName][2];
+                newtext = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
 
-                int cSpace1 = textBoxAccountMoney.Text.Substring(0, testV).Count(Char.IsWhiteSpace);
+                int cSpace1 = textBoxAccountMoney.Text.Substring(0, selectionStart).Count(Char.IsWhiteSpace);
 
-                textBoxAccountMoney.TextChanged -= textBoxMoneyAccount_TextChanged;
+                //
+                textBoxUserCompanyMoneyAccount.TextChanged -= textBoxMoneyAccount_TextChanged;
                 textBoxAccountMoney.Text = newtext;
-                textBoxAccountMoney.TextChanged += textBoxMoneyAccount_TextChanged;
+                textBoxUserCompanyMoneyAccount.TextChanged += textBoxMoneyAccount_TextChanged;
 
-                int cSpace2 = textBoxAccountMoney.Text.Substring(0, testV).Count(Char.IsWhiteSpace);
+                //
+                if (selectionStart > textBoxAccountMoney.Text.Length)
+                    selectionStart = textBoxAccountMoney.Text.Length;
 
-                textBoxAccountMoney.SelectionStart = testV + cSpace2 - cSpace1;
+                int cSpace2 = textBoxAccountMoney.Text.Substring(0, selectionStart).Count(Char.IsWhiteSpace);
 
-                PlayerDataData.AccountMoney = (long)Math.Round(valueBefore / CurrencyDictConversion[Globals.CurrencyName]);
+                textBoxAccountMoney.SelectionStart = selectionStart + cSpace2 - cSpace1;
             }
-        }
-
-        private void textBoxMoneyAccount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            TextBox textBoxAccountMoney = sender as TextBox;
-            Int64 valueBefore = 0;
-            string onlyDigits = new string(textBoxAccountMoney.Text.Where(c => char.IsDigit(c)).ToArray());
-
-            int testV = textBoxAccountMoney.SelectionStart;
-
-            if (!string.IsNullOrEmpty(textBoxAccountMoney.Text))
+            else
             {
-                if (!Char.IsDigit(e.KeyChar))
-                {
-                    if (e.KeyChar == (char)Keys.Back)
-                    {
-                        return;
-                    }
-
-                    if (Int64.TryParse(onlyDigits, NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out valueBefore))
-                    {
-                        textBoxAccountMoney.Text = valueBefore.ToString();
-                        e.Handled = true;
-                    }
-                    else
-                    {
-                        valueBefore =Int64.MaxValue;
-                        textBoxAccountMoney.Text = valueBefore.ToString();
-                        e.Handled = true;
-                    }
-                }
+                textBoxAccountMoney.Text = "0";
             }
         }
-        
+
         //Visited cities
         //Fill
         public void FillVisitedCities(int _vindex)
