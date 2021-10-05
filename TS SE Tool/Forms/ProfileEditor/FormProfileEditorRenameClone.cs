@@ -299,7 +299,7 @@ namespace TS_SE_Tool
                                 progress = 4;
 
                                 SaveFileProfileData ProfileData = new SaveFileProfileData();
-                                ProfileData.Prepare(profileFile);
+                                ProfileData.ProcessData(profileFile);
                                 progress = 5;
 
                                 //New name
@@ -457,7 +457,7 @@ namespace TS_SE_Tool
                                 progress = 6;
 
                                 SaveFileProfileData ProfileData = new SaveFileProfileData();
-                                ProfileData.Prepare(profileFile);
+                                ProfileData.ProcessData(profileFile);
                                 progress = 7;
 
                                 //New name

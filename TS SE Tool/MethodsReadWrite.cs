@@ -825,7 +825,8 @@ namespace TS_SE_Tool
                 }
                 else if (tempProfileFileInMemory != null)
                 {
-                    MainSaveFileProfileData.Prepare(tempProfileFileInMemory);
+                    MainSaveFileProfileData = new SaveFileProfileData();
+                    MainSaveFileProfileData.ProcessData(tempProfileFileInMemory);
                 }
             }
 
@@ -1007,7 +1008,8 @@ namespace TS_SE_Tool
                 else if (tempProfileFileInMemory != null)
                 {
                     //UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
-                    MainSaveFileProfileData.Prepare(tempProfileFileInMemory);
+                    MainSaveFileProfileData = new SaveFileProfileData();
+                    MainSaveFileProfileData.ProcessData(tempProfileFileInMemory);
                 }
             }
 
