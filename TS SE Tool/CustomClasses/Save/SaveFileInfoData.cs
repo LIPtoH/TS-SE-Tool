@@ -25,59 +25,242 @@ namespace TS_SE_Tool
 {
     public class SaveFileInfoData
     {
-        private string SaveContainerNameless { get; set; } = "";
-        public string Name { get; set; } = "\"\"";  //Save name
-        public uint Time { get; set; } = 0;         //IngameTime
-        public uint FileTime { get; set; } = 0;
-        public ushort Version { get; set; } = 0;
+        private string      SaveContainerNameless       { get; set; } = "";
 
-        private byte InfoVersion { get; set; } = 0;
-        private uint InfoPlayersExperience { get; set; } = 0;
-        private ushort InfoUnlockedRecruitments { get; set; } = 0;
-        private ushort InfoUnlockedDealers { get; set; } = 0;
-        private ushort InfoVisitedCities { get; set; } = 0;
-        private long InfoMoneyAccount { get; set; } = 0;
-        private decimal InfoExploredRatio { get; set; } = 0.0M;
+        //Data
+        public string       Name                        { get; set; } = "\"\"";     //Save name
+        public uint         Time                        { get; set; } = 0;          //IngameTime
+        public uint         FileTime                    { get; set; } = 0;
+        public ushort       Version                     { get; set; } = 0;
 
+        //Info 
+        private byte        InfoVersion                 { get; set; } = 0;
+        private uint        InfoPlayersExperience       { get; set; } = 0;
+        private ushort      InfoUnlockedRecruitments    { get; set; } = 0;
+        private ushort      InfoUnlockedDealers         { get; set; } = 0;
+        private ushort      InfoVisitedCities           { get; set; } = 0;
+        private long        InfoMoneyAccount            { get; set; } = 0;
+        private decimal     InfoExploredRatio           { get; set; } = 0.0M;
+
+        //
         internal List<Dependency> Dependencies { get; set; }
+
+        //====
+        Dictionary<string, string> unsortedDataDictionary = new Dictionary<string, string>();
+
+        //Methods
+
+        public void ProcessData(string[] _fileLines)
+        {
+            string[] lineParts;
+            string currentLine = "";
+            string tagLine = "", dataLine = "";
+
+            byte exitLoopMarker = 2;
+
+            for (int lineNumber = 0; lineNumber < _fileLines.Length; lineNumber++)
+            {
+                currentLine = _fileLines[lineNumber].Trim();
+
+                if (currentLine.Contains(':'))
+                {
+                    string[] splittedLine = currentLine.Split(new char[] { ':' }, 2);
+
+                    tagLine = splittedLine[0].Trim();
+                    dataLine = splittedLine[1].Trim();
+                }
+                else
+                {
+                    tagLine = currentLine.Trim();
+                    dataLine = "";
+                }
+
+                switch (tagLine)
+                {
+                    case "SiiNunit":
+                    case "":
+                        {
+                            break;
+                        }
+
+                    case "{":
+                        {
+                            break;
+                        }
+                    case "}":
+                        {
+                            --exitLoopMarker;
+
+                            if (exitLoopMarker <= 0)
+                                goto endOfProcessData;
+
+                            break;
+                        }
+
+
+                    case "save_container":
+                        {
+                            SaveContainerNameless = dataLine.Split(new char[] { '{' })[0].Trim();
+                            break;
+                        }
+
+                    case "name":
+                        {
+                            string processingResult = "";
+
+                            if (dataLine.StartsWith("\"") && dataLine.EndsWith("\""))
+                            {
+                                string innerData = dataLine.Remove(dataLine.Length - 1, 1).Remove(0, 1);
+
+                                processingResult = Utilities.TextUtilities.FromUtfHexToString(innerData);
+                            }
+
+                            Name = (processingResult == "") ? dataLine : processingResult;
+
+                            break;
+                        }
+
+                    case "time":
+                        {
+                            Time = uint.Parse(dataLine);
+                            break;
+                        }
+
+                    case "file_time":
+                        {
+                            FileTime = uint.Parse(dataLine);
+                            break;
+                        }
+
+                    case "version":
+                        {
+                            Version = ushort.Parse(dataLine);                            
+                            break;
+                        }
+
+                    case "dependencies":
+                        {
+                            Dependencies = new List<Dependency>(int.Parse(dataLine));
+
+                            for (int x = 0; x < Dependencies.Capacity; x++)
+                            {
+                                lineNumber++;
+                                lineParts = _fileLines[lineNumber].Split(new char[] { ':' }, 2);
+
+                                string tmpDep = lineParts[1].Trim();
+                                tmpDep = tmpDep.Substring(1, tmpDep.Length - 2);
+
+                                Dependencies.Add(new Dependency(tmpDep));
+                            }
+
+                            break;
+                        }
+
+                    case "info_version":
+                        {
+                            InfoVersion = byte.Parse(dataLine);
+                            break;
+                        }
+
+                    case "info_players_experience":
+                        {
+                            InfoPlayersExperience = uint.Parse(dataLine);
+                            break;
+                        }
+
+                    case "info_unlocked_recruitments":
+                        {
+                            InfoUnlockedRecruitments = ushort.Parse(dataLine);
+                            break;
+                        }
+
+                    case "info_unlocked_dealers":
+                        {
+                            InfoUnlockedDealers = ushort.Parse(dataLine);
+                            break;
+                        }
+
+                    case "info_visited_cities":
+                        {
+                            InfoVisitedCities = ushort.Parse(dataLine);
+                            break;
+                        }
+
+                    case "info_money_account":
+                        {
+                            InfoMoneyAccount = long.Parse(dataLine);
+                            break;
+                        }
+
+                    case "info_explored_ratio":
+                        {
+                            InfoExploredRatio = Utilities.NumericUtilities.HexFloatToDecimalFloat(dataLine);
+                            break;
+                        }
+
+                    default:
+                        {
+                            unsortedDataDictionary.Add(tagLine, dataLine);
+                            break;
+                        }
+                }
+
+            }
+
+            endOfProcessData:;
+        }
 
         public string GetDataText()
         {
-            string OutputText = "SiiNunit\r\n{\r\n";
+            bool InfoExist55 = false;
+            if (Version >= 55 && this.InfoVersion > 0)
+                InfoExist55 = true;
 
-            OutputText += "save_container : " + SaveContainerNameless + " {\r\n";
-            OutputText += " name: " + Name + "\r\n";
-            OutputText += " time: " + Time.ToString() + "\r\n";
-            OutputText += " file_time: " + FileTime.ToString() + "\r\n";
-            OutputText += " version: " + Version.ToString() + "\r\n";
+            StringBuilder sbResult = new StringBuilder();
 
-            if (InfoVersion > 0)
+            sbResult.AppendLine("SiiNunit");
+            sbResult.AppendLine("{");
+
+            sbResult.AppendLine("save_container : " + SaveContainerNameless + " {");
+            sbResult.AppendLine(" name: " + Name);
+            sbResult.AppendLine(" time: " + Time.ToString());
+            sbResult.AppendLine(" file_time: " + FileTime.ToString());
+            sbResult.AppendLine(" version: " + Version.ToString());
+
+            if (InfoExist55)
+                sbResult.AppendLine(" info_version: " + this.InfoVersion.ToString());
+
+            sbResult.AppendLine(" dependencies: " + Dependencies.Count.ToString());
+                for (int i = 0; i < Dependencies.Capacity; i++)
+                {
+                    sbResult.AppendLine(" dependencies[" + i.ToString() + "]: \"" + Dependencies[i].Raw + "\"");
+                }
+
+            if (InfoExist55)
             {
-                OutputText += " info_version: " + InfoVersion.ToString() + "\r\n";
-            }                
-
-            OutputText += " dependencies: " + Dependencies.Count.ToString() + "\r\n";
-
-            byte DepCount = 0;
-            foreach(Dependency tDep in Dependencies)
-            {
-                OutputText += " dependencies[" + DepCount + "]: \"" + tDep.Raw + "\"\r\n";
-                DepCount++;
+                sbResult.AppendLine(" info_players_experience: " + InfoPlayersExperience.ToString());
+                sbResult.AppendLine(" info_unlocked_recruitments: " + InfoUnlockedRecruitments.ToString());
+                sbResult.AppendLine(" info_unlocked_dealers: " + InfoUnlockedDealers.ToString());
+                sbResult.AppendLine(" info_visited_cities: " + InfoVisitedCities.ToString());
+                sbResult.AppendLine(" info_money_account: " + InfoMoneyAccount.ToString());
+                sbResult.AppendLine(" info_explored_ratio: " + Utilities.NumericUtilities.DecimalFloatToHexFloat(InfoExploredRatio));
             }
 
-            if (InfoVersion > 0)
+            //Add lines with unsorted data
+            if (unsortedDataDictionary.Count > 0)
             {
-                OutputText += " info_players_experience: " + InfoPlayersExperience.ToString() + "\r\n";
-                OutputText += " info_unlocked_recruitments: " + InfoUnlockedRecruitments.ToString() + "\r\n";
-                OutputText += " info_unlocked_dealers: " + InfoUnlockedDealers.ToString() + "\r\n";
-                OutputText += " info_visited_cities: " + InfoVisitedCities.ToString() + "\r\n";
-                OutputText += " info_money_account: " + InfoMoneyAccount.ToString() + "\r\n";
-                OutputText += " info_explored_ratio: " + Utilities.NumericUtilities.DecimalFloatToHexFloat(InfoExploredRatio) + "\r\n";
+                foreach (KeyValuePair<string, string> record in unsortedDataDictionary)
+                {
+                    sbResult.AppendLine(" " + record.Key + ": " + record.Value);
+                }
             }
+            //===
 
-            OutputText += "}\r\n\r\n}";
+            sbResult.AppendLine("}");
+            sbResult.AppendLine();
+            sbResult.Append("}");
 
-            return OutputText;
+            return sbResult.ToString();
         }
 
         public void WriteToStream (StreamWriter _streamWriter)
@@ -85,123 +268,5 @@ namespace TS_SE_Tool
             _streamWriter.Write(GetDataText());
         }
 
-        public void Prepare(string[] _FileLines)
-        {
-            string[] chunkOfline;
-
-            for (int line = 0; line < _FileLines.Length; line++)
-            {
-                if (_FileLines[line].StartsWith("save_container :"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    SaveContainerNameless = chunkOfline[2];
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" name:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    Name = chunkOfline[2];
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" time:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    Time = uint.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" file_time:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    FileTime = uint.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" version:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    Version = ushort.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" dependencies:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-
-                    Dependencies = new List<Dependency>();
-                    Dependencies.Capacity = short.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" dependencies["))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ':' }, 2);
-
-                    string tmpDep = chunkOfline[1].Trim(new char[] { ' ' });
-                    tmpDep = tmpDep.Substring(1, tmpDep.Length - 2);
-
-                    Dependencies.Add(new Dependency(tmpDep));
-                    continue;
-                }
-
-                //Info data
-                if (_FileLines[line].StartsWith(" info_version:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    InfoVersion = byte.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" info_players_experience:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    InfoPlayersExperience = uint.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" info_unlocked_recruitments:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    InfoUnlockedRecruitments = ushort.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" info_unlocked_dealers:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    InfoUnlockedDealers = ushort.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" info_visited_cities:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    InfoVisitedCities = ushort.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" info_money_account:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    InfoMoneyAccount = long.Parse(chunkOfline[2]);
-                    continue;
-                }
-
-                if (_FileLines[line].StartsWith(" info_explored_ratio:"))
-                {
-                    chunkOfline = _FileLines[line].Split(new char[] { ' ' });
-                    InfoExploredRatio = Utilities.NumericUtilities.HexFloatToDecimalFloat(chunkOfline[2]);
-                    continue;
-                }
-                //
-
-                if (_FileLines[line].StartsWith("}"))
-                {
-                    break;
-                }
-            }
-        }
     }
 }

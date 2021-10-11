@@ -1408,7 +1408,7 @@ namespace TS_SE_Tool
 
         private void CheckSaveInfoData()
         {
-            MainSaveFileInfoData.Prepare(tempInfoFileInMemory);            
+            MainSaveFileInfoData.ProcessData(tempInfoFileInMemory);            
 
             if (MainSaveFileInfoData.Version > 0)
             {

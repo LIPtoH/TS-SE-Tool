@@ -373,7 +373,7 @@ namespace TS_SE_Tool
                                 uint tDT = Utilities.DateTimeUtilities.DateTimeToUnixTimeStamp(DateTime.UtcNow.ToLocalTime());
 
                                 SaveFileInfoData infoData = new SaveFileInfoData();
-                                infoData.Prepare(infoSii);
+                                infoData.ProcessData(infoSii);
                                 infoData.Name = entry.Value[0]; //Save name
                                 infoData.FileTime = tDT;        //File time
 
