@@ -65,11 +65,10 @@ namespace TS_SE_Tool
                 buttonSelectCustomThumbnail.Visible = false;
                 labelThumbnailDescription.Visible = false;
 
-                //radioButtonMove.Checked = true;
                 radioButtonMove.Visible = false;
                 radioButtonSelect.Visible = false;
-                listBox2.MouseDown += listBox2_MouseDown;
-                listBox2.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
+                listBoxRightNewSaves.MouseDown += listBox2_MouseDown;
+                listBoxRightNewSaves.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
             }
             else
             {
@@ -81,14 +80,13 @@ namespace TS_SE_Tool
                 buttonSave.Text = "Save";
                 radioButtonNamesNone.Visible = false;
 
-                listBox2.SelectionMode = SelectionMode.One;
-                listBox1.SelectionMode = SelectionMode.None;
+                listBoxRightNewSaves.SelectionMode = SelectionMode.One;
+                listBoxLeftExistingSaves.SelectionMode = SelectionMode.None;
 
                 buttonSave.Enabled = false;
                 buttonMoveSaves.Enabled = false;
                 buttonSelectCustomThumbnail.Enabled = false;
 
-                //radioButtonMove.Checked = true;
                 radioButtonMove.Enabled = false;
                 radioButtonSelect.Enabled = false;
             }
@@ -148,10 +146,10 @@ namespace TS_SE_Tool
                     NotANumber = false;
                 }
 
-                listBox1.DataSource = combDT;
+                listBoxLeftExistingSaves.DataSource = combDT;
 
-                listBox1.ValueMember = "savePath";
-                listBox1.DisplayMember = "saveName";
+                listBoxLeftExistingSaves.ValueMember = "savePath";
+                listBoxLeftExistingSaves.DisplayMember = "saveName";
             }
 
             toolStripStatusMessages.Text = "";
@@ -173,12 +171,12 @@ namespace TS_SE_Tool
                 textBoxCustomName.Enabled = false;
             }
 
-            listBox2.Refresh();
+            listBoxRightNewSaves.Refresh();
         }
 
         private void textBoxCustomName_TextChanged(object sender, EventArgs e)
         {
-            listBox2.Refresh();
+            listBoxRightNewSaves.Refresh();
         }
 
         private void checkBoxCustomThumbnail_CheckedChanged(object sender, EventArgs e)
@@ -261,17 +259,17 @@ namespace TS_SE_Tool
         //Buttons
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectionMode == SelectionMode.None || listBox1.SelectedIndex == -1)
+            if (listBoxLeftExistingSaves.SelectionMode == SelectionMode.None || listBoxLeftExistingSaves.SelectedIndex == -1)
             {
-                listBox1.SelectionMode = SelectionMode.One;
+                listBoxLeftExistingSaves.SelectionMode = SelectionMode.One;
                 MessageBox.Show("Please select Base save file for New saves.");
 
-                listBox1.SelectedValue = Globals.SelectedSavePath;
+                listBoxLeftExistingSaves.SelectedValue = Globals.SelectedSavePath;
             }
             else
             {
                 //Check if selected existing and valid save files 0,1 not 2,4
-                DataRowView sI = (DataRowView)listBox1.SelectedItem;
+                DataRowView sI = (DataRowView)listBoxLeftExistingSaves.SelectedItem;
 
                 BaseSave = (string)sI.Row["savePath"];
 
@@ -474,7 +472,6 @@ namespace TS_SE_Tool
                 else
                 {
                     MessageBox.Show("Not a valid save file for base file.\nPlease select existing save file not marked for deleting.");
-                    //return;
                 }
             }
         }
@@ -494,40 +491,34 @@ namespace TS_SE_Tool
                 dc = new DataColumn("NewName", typeof(string));
                 combDT.Columns.Add(dc);
 
-                if (listBox2.DataSource != null)
-                    combDT = (DataTable) listBox2.DataSource;
+                if (listBoxRightNewSaves.DataSource != null)
+                    combDT = (DataTable) listBoxRightNewSaves.DataSource;
 
-                int countSelected = listBox1.SelectedItems.Count;
+                int countSelected = listBoxLeftExistingSaves.SelectedItems.Count;
 
                 for(int i = 0; i < countSelected; i++)
                 {                    
-                    combDT.Rows.Add(((DataRowView)listBox1.SelectedItems[i]).Row.ItemArray[0], ((DataRowView)listBox1.SelectedItems[i]).Row.ItemArray[1], "");
+                    combDT.Rows.Add(((DataRowView)listBoxLeftExistingSaves.SelectedItems[i]).Row.ItemArray[0], ((DataRowView)listBoxLeftExistingSaves.SelectedItems[i]).Row.ItemArray[1], "");
                 }
 
-                listBox2.DataSource = combDT;
-                listBox2.ValueMember = "savePath";
-                listBox2.DisplayMember = "saveName";
-                //listBox2.SelectedIndex = -1;
+                listBoxRightNewSaves.DataSource = combDT;
+                listBoxRightNewSaves.ValueMember = "savePath";
+                listBoxRightNewSaves.DisplayMember = "saveName";
 
-                listBox1.ClearSelected();
+                listBoxLeftExistingSaves.ClearSelected();
 
                 buttonExportImport.Enabled = true;
             }
             else
             {
 
-                if (listBox2.SelectedItems.Count == 0 || listBox2.SelectionMode == SelectionMode.One)
+                if (listBoxRightNewSaves.SelectedItems.Count == 0 || listBoxRightNewSaves.SelectionMode == SelectionMode.One)
                 {
                     radioButtonSelect.Checked = true;
-                    //listBox2.SelectionMode = SelectionMode.MultiSimple;
-                    //listBox2.MouseDown -= listBox2_MouseDown;
-                    //listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
 
                     //Select all
-                    for (int i = 0; i < listBox2.Items.Count; i++)
-                        listBox2.SetSelected(i, true);
-
-                    //listBox2.SelectedIndex = 0;
+                    for (int i = 0; i < listBoxRightNewSaves.Items.Count; i++)
+                        listBoxRightNewSaves.SetSelected(i, true);
                 }
                 else
                 {
@@ -537,7 +528,7 @@ namespace TS_SE_Tool
                     bool ExistingFlag = false;
 
                     //Existing saves
-                    foreach (DataRowView Dr in listBox1.Items)
+                    foreach (DataRowView Dr in listBoxLeftExistingSaves.Items)
                     {
                         if ((byte)Dr.Row.ItemArray[2] == 1)
                             ExistingSave.Add(Dr.Row.ItemArray[0].ToString(),Dr.Row.ItemArray[1].ToString());
@@ -546,12 +537,12 @@ namespace TS_SE_Tool
                     //Check if importing save file woth unique names
                     List<string> ImportSaveNames = new List<string>();
 
-                    foreach (DataRowView Dr in listBox2.SelectedItems)
+                    foreach (DataRowView Dr in listBoxRightNewSaves.SelectedItems)
                     {                        
                         string SN = Dr.Row.ItemArray[2].ToString(); //Name
                         ImportSaveNames.Add(SN);
                     }
-                    object s = listBox2.SelectedIndices;
+                    object s = listBoxRightNewSaves.SelectedIndices;
                     int importSavesBe = ImportSaveNames.Count;
                     int importSavesAf = ImportSaveNames.Distinct().Count();
 
@@ -571,10 +562,10 @@ namespace TS_SE_Tool
 
                     //Importing saves
                     int _ti = 0;
-                    foreach (DataRowView Dr in listBox2.SelectedItems)
+                    foreach (DataRowView Dr in listBoxRightNewSaves.SelectedItems)
                     {
                         string SN = Dr.Row.ItemArray[2].ToString(); //Name
-                        string ON = Dr.Row.ItemArray[1].ToString();//Original Name
+                        string ON = Dr.Row.ItemArray[1].ToString(); //Original Name
                         string TP = Dr.Row.ItemArray[0].ToString(); //Position
 
                         string[] _t = { SN, TP, ON };
@@ -610,7 +601,7 @@ namespace TS_SE_Tool
                     }
 
                     //Move to existing saves
-                    DataTable combDT = ((DataTable)listBox1.DataSource).Copy();
+                    DataTable combDT = ((DataTable)listBoxLeftExistingSaves.DataSource).Copy();
 
                     foreach (DataRow temp in combDT.Rows)
                     {
@@ -626,11 +617,11 @@ namespace TS_SE_Tool
                         combDT.Rows.Add(tNS.Value[1], tNS.Value[0], 2, tNS.Value[2]);
                     }
 
-                    listBox1.DataSource = combDT;
+                    listBoxLeftExistingSaves.DataSource = combDT;
 
-                    listBox2.ClearSelected();
-                    listBox1.TopIndex = 0;
-                    listBox2.Enabled = false;
+                    listBoxRightNewSaves.ClearSelected();
+                    listBoxLeftExistingSaves.TopIndex = 0;
+                    listBoxRightNewSaves.Enabled = false;
 
                     buttonExportImport.Enabled = false;
                     buttonMoveSaves.Enabled = false;
@@ -662,8 +653,8 @@ namespace TS_SE_Tool
 
                 string tempData = "CCpositions";
 
-                if (listBox2.DataSource != null)
-                    combDT = (DataTable)listBox2.DataSource;
+                if (listBoxRightNewSaves.DataSource != null)
+                    combDT = (DataTable)listBoxRightNewSaves.DataSource;
 
                 int CustomInc = 0; //Save number
 
@@ -698,7 +689,7 @@ namespace TS_SE_Tool
                         SaveName = temp[1].ToString();
                     else if (radioButtonNamesCustom.Checked)
                     {
-                        SaveName = temp["NewName"].ToString(); //textBoxCustomName.Text + CustomInc.ToString();
+                        SaveName = temp["NewName"].ToString();
                         //CustomInc++;
                     }
                     else if (radioButtonNamesNone.Checked)
@@ -717,10 +708,6 @@ namespace TS_SE_Tool
             }
             else
             {
-                //listBox2.MouseDown += listBox2_MouseDown;
-                //listBox2.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
-                //listBox2.SelectionMode = SelectionMode.One;
-
                 DataColumn dc = new DataColumn("truckPosition", typeof(string));
                 combDT.Columns.Add(dc);
 
@@ -730,34 +717,43 @@ namespace TS_SE_Tool
                 dc = new DataColumn("NewName", typeof(string));
                 combDT.Columns.Add(dc);
 
-                if (listBox2.DataSource != null)
-                    combDT = (DataTable)listBox2.DataSource;
+                if (listBoxRightNewSaves.DataSource != null)
+                    combDT = (DataTable)listBoxRightNewSaves.DataSource;
 
                 try
                 {
-                    string inputData = Utilities.ZipDataUtilities.unzipText(Clipboard.GetText());
-                    string[] Lines = inputData.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    string clipboarText = Clipboard.GetText();
+                    if (clipboarText.Length == 0)
+                        return;
 
-                    if (Lines[0] == "CCpositions")
+                    string inputData = Utilities.ZipDataUtilities.unzipText(clipboarText);
+                    if (inputData.Length == 0)
+                        return;
+
+                    string[] dataLines = inputData.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    if (dataLines.Count() == 0)
+                        return;
+
+                    if (dataLines[0] == "CCpositions")
                     {
                         string Name = "";
-                        for (int i = 1; i < Lines.Length; i++)
+                        for (int i = 1; i < dataLines.Length; i++)
                         {
-                            if (Lines[i].StartsWith("Name"))
+                            if (dataLines[i].StartsWith("Name"))
                             {
-                                Name = Lines[i].Split(new char[] { ':' }, 2)[1];
+                                Name = dataLines[i].Split(new char[] { ':' }, 2)[1];
                             }
-                            else if (Lines[i].StartsWith("Position"))
+                            else if (dataLines[i].StartsWith("Position"))
                             {
-                                combDT.Rows.Add(Lines[i].Split(new char[] { ':' }, 2)[1], Name);
+                                combDT.Rows.Add(dataLines[i].Split(new char[] { ':' }, 2)[1], Name);
                             }
                         }
 
 
-                        listBox2.DataSource = combDT;
-                        listBox2.ValueMember = "truckPosition";
-                        listBox2.DisplayMember = "saveName";
-                        listBox2.SelectedIndex = 0;
+                        listBoxRightNewSaves.DataSource = combDT;
+                        listBoxRightNewSaves.ValueMember = "truckPosition";
+                        listBoxRightNewSaves.DisplayMember = "saveName";
+                        listBoxRightNewSaves.SelectedIndex = 0;
 
                         radioButtonMove.Checked = true;
                         buttonMoveSaves.Enabled = true;
@@ -769,7 +765,7 @@ namespace TS_SE_Tool
                         MessageBox.Show("Position data has been inserted.");
                     }
                     else
-                        MessageBox.Show("Wrong data. Expected Position data but\r\n" + Lines[0] + "\r\nwas found.");
+                        MessageBox.Show("Wrong data. Expected Position data but\r\n" + dataLines[0] + "\r\nwas found.");
                 }
                 catch
                 {
@@ -784,31 +780,29 @@ namespace TS_SE_Tool
 
             if (_t.Name == "radioButtonMove" && _t.Checked)
             {
-                listBox2.SelectionMode = SelectionMode.One;
-                listBox2.MouseDown += listBox2_MouseDown;
-                listBox2.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
+                listBoxRightNewSaves.SelectionMode = SelectionMode.One;
+                listBoxRightNewSaves.MouseDown += listBox2_MouseDown;
+                listBoxRightNewSaves.SelectedIndexChanged -= listBox2_SelectedIndexChanged;
 
                 buttonMoveSaves.Text = "Prepare";
-                //buttonMoveSaves.Enabled = false;
             }
             else if (_t.Name == "radioButtonSelect" && _t.Checked)
             {
-                listBox2.SelectionMode = SelectionMode.MultiSimple;
-                listBox2.MouseDown -= listBox2_MouseDown;
-                listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
+                listBoxRightNewSaves.SelectionMode = SelectionMode.MultiSimple;
+                listBoxRightNewSaves.MouseDown -= listBox2_MouseDown;
+                listBoxRightNewSaves.SelectedIndexChanged += listBox2_SelectedIndexChanged;
 
                 buttonMoveSaves.Text = "< < <";
-                //buttonMoveSaves.Enabled = true;
             }
         }
         
         //Drag N Drop on second listbox
         private void listBox2_MouseDown(object sender, MouseEventArgs e)
         {
-            if (listBox2.SelectedItem == null) return;
+            if (listBoxRightNewSaves.SelectedItem == null) return;
 
             //listBox2.Items
-            listBox2.DoDragDrop(listBox2.SelectedItem, DragDropEffects.Move);
+            listBoxRightNewSaves.DoDragDrop(listBoxRightNewSaves.SelectedItem, DragDropEffects.Move);
         }
 
         private void listBox2_DragOver(object sender, DragEventArgs e)
@@ -818,13 +812,13 @@ namespace TS_SE_Tool
 
         private void listBox2_DragDrop(object sender, DragEventArgs e)
         {
-            object tSI = listBox2.SelectedItem; //ListBox.SelectedObjectCollection
-            Point point = listBox2.PointToClient(new Point(e.X, e.Y));
-            int index = listBox2.IndexFromPoint(point);
+            object tSI = listBoxRightNewSaves.SelectedItem;
+            Point point = listBoxRightNewSaves.PointToClient(new Point(e.X, e.Y));
+            int index = listBoxRightNewSaves.IndexFromPoint(point);
             if (index < 0)
-                index = listBox2.Items.Count - 1;
+                index = listBoxRightNewSaves.Items.Count - 1;
 
-            int oldindex = listBox2.Items.IndexOf(e.Data.GetData(typeof(DataRowView)));
+            int oldindex = listBoxRightNewSaves.Items.IndexOf(e.Data.GetData(typeof(DataRowView)));
 
             if (index == oldindex)
                 return;
@@ -839,10 +833,10 @@ namespace TS_SE_Tool
                 object[] test = oldrow.ItemArray;
 
                 //Remove
-                ((DataTable)listBox2.DataSource).Rows.Remove(oldrow);
+                ((DataTable)listBoxRightNewSaves.DataSource).Rows.Remove(oldrow);
 
                 //Create new datasource
-                DataTable combDT = ((DataTable)listBox2.DataSource).Copy();
+                DataTable combDT = ((DataTable)listBoxRightNewSaves.DataSource).Copy();
 
                 //Add row
                 DataRow newrow = combDT.NewRow();
@@ -850,10 +844,9 @@ namespace TS_SE_Tool
 
                 combDT.Rows.InsertAt(newrow, index);
 
-                listBox2.DataSource = combDT;
-                listBox2.ClearSelected();
-                listBox2.SelectedIndex = index;
-                //listBox2.SelectedItem = tSI;
+                listBoxRightNewSaves.DataSource = combDT;
+                listBoxRightNewSaves.ClearSelected();
+                listBoxRightNewSaves.SelectedIndex = index;
             }
             catch(Exception ex)
             {
@@ -901,7 +894,7 @@ namespace TS_SE_Tool
         private void listBox1_MeasureItem(object sender, MeasureItemEventArgs e)
         {
             e.ItemHeight = (int)(ItemHeight);
-            Rectangle t = listBox1.GetItemRectangle(e.Index);
+            Rectangle t = listBoxLeftExistingSaves.GetItemRectangle(e.Index);
         }
 
         private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
@@ -922,17 +915,15 @@ namespace TS_SE_Tool
                 br = SystemBrushes.HighlightText;
             else
             {
-                //test
                 e.Graphics.FillRectangle(Brushes.White, e.Bounds);
                 br = new SolidBrush(ForeColor);
-                //br = new SolidBrush(e.ForeColor);
             }
 
             //Draw area
             float x = e.Bounds.Left + ItemMargin;
             float y = e.Bounds.Top + ItemMargin;
             float width = e.Bounds.Width - ItemMargin * 2;
-            float height = Font.Height;// (e.Bounds.Height - ItemMargin * 2) / 2;
+            float height = Font.Height;
 
             RectangleF layout_rect = new RectangleF(x, y, width, height);
 
@@ -952,9 +943,7 @@ namespace TS_SE_Tool
                 NameFS = FontStyle.Bold | FontStyle.Strikeout;
             }
 
-            Font NameFnt = new Font(Font, NameFS);
-            //Size size = TextRenderer.MeasureText(txt, NameFnt);
-            ///.ItemHeight = (int)(ItemHeight / 2 + 2 * ItemMargin);            
+            Font NameFnt = new Font(Font, NameFS);          
 
             // Draw the text.
             e.Graphics.DrawString(txt, NameFnt, br, layout_rect);
@@ -976,7 +965,7 @@ namespace TS_SE_Tool
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            listBox2.Refresh();
+            listBoxRightNewSaves.Refresh();
         }
 
         private void listBox2_DrawItem(object sender, DrawItemEventArgs e)
@@ -1012,7 +1001,7 @@ namespace TS_SE_Tool
             RectangleF layout_rect = new RectangleF(x, y, width, height);
 
             //Original name
-            txt = SaveDR["saveName"].ToString();// + "\r\n" ;
+            txt = SaveDR["saveName"].ToString();
 
             Font OriginalNameFnt = new Font(Font, FontStyle.Regular);
             // Draw the text.
@@ -1020,7 +1009,7 @@ namespace TS_SE_Tool
 
             //New name
             string SaveName = "";
-            int decimalLength = listBox2.Items.Count.ToString("D").Length;
+            int decimalLength = listBoxRightNewSaves.Items.Count.ToString("D").Length;
 
             if (radioButtonNamesOriginal.Checked)
                 SaveName = SaveDR[1].ToString();
@@ -1030,15 +1019,15 @@ namespace TS_SE_Tool
                     SaveName = textBoxCustomName.Text + (e.Index + 1).ToString("D" + decimalLength.ToString());
                 else
                 {
-                    if (listBox2.SelectionMode == SelectionMode.One)
+                    if (listBoxRightNewSaves.SelectionMode == SelectionMode.One)
                     {
                         SaveName = textBoxCustomName.Text + (e.Index + 1).ToString("D" + decimalLength.ToString());
                     }
-                    else if(listBox2.SelectionMode == SelectionMode.MultiSimple)
-                        if (listBox2.SelectedIndices.Contains(e.Index))
+                    else if(listBoxRightNewSaves.SelectionMode == SelectionMode.MultiSimple)
+                        if (listBoxRightNewSaves.SelectedIndices.Contains(e.Index))
                         {
-                            decimalLength = listBox2.SelectedIndices.Count.ToString("D").Length;
-                            int indexInd = listBox2.SelectedIndices.IndexOf(e.Index);
+                            decimalLength = listBoxRightNewSaves.SelectedIndices.Count.ToString("D").Length;
+                            int indexInd = listBoxRightNewSaves.SelectedIndices.IndexOf(e.Index);
                             SaveName = textBoxCustomName.Text + (indexInd + 1).ToString("D" + decimalLength.ToString());
                         }
                         else
@@ -1050,8 +1039,6 @@ namespace TS_SE_Tool
                 SaveName = "";
 
             SaveDR["NewName"] = SaveName;
-            //listBox2.DataBindings
-            //lst.Items[e.Index]
 
             txt = SaveName;
 

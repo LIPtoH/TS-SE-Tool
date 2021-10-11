@@ -30,8 +30,8 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.listBoxLeftExistingSaves = new System.Windows.Forms.ListBox();
+            this.listBoxRightNewSaves = new System.Windows.Forms.ListBox();
             this.labelExistingSaves = new System.Windows.Forms.Label();
             this.buttonExportImport = new System.Windows.Forms.Button();
             this.buttonMoveSaves = new System.Windows.Forms.Button();
@@ -67,8 +67,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.Controls.Add(this.buttonSave, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.listBox1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.listBox2, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.listBoxLeftExistingSaves, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.listBoxRightNewSaves, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.labelExistingSaves, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonExportImport, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.buttonMoveSaves, 1, 2);
@@ -97,33 +97,33 @@
             // 
             // listBox1
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(3, 33);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBox1.Size = new System.Drawing.Size(194, 273);
-            this.listBox1.TabIndex = 0;
-            this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
-            this.listBox1.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBox1_MeasureItem);
+            this.listBoxLeftExistingSaves.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxLeftExistingSaves.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.listBoxLeftExistingSaves.FormattingEnabled = true;
+            this.listBoxLeftExistingSaves.Location = new System.Drawing.Point(3, 33);
+            this.listBoxLeftExistingSaves.Name = "listBox1";
+            this.listBoxLeftExistingSaves.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.listBoxLeftExistingSaves.Size = new System.Drawing.Size(194, 273);
+            this.listBoxLeftExistingSaves.TabIndex = 0;
+            this.listBoxLeftExistingSaves.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
+            this.listBoxLeftExistingSaves.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBox1_MeasureItem);
             // 
             // listBox2
             // 
-            this.listBox2.AllowDrop = true;
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(403, 33);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(194, 273);
-            this.listBox2.TabIndex = 2;
-            this.listBox2.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox2_DrawItem);
-            this.listBox2.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBox2_MeasureItem);
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
-            this.listBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox2_DragDrop);
-            this.listBox2.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox2_DragOver);
-            this.listBox2.DragLeave += new System.EventHandler(this.listBox2_DragLeave);
+            this.listBoxRightNewSaves.AllowDrop = true;
+            this.listBoxRightNewSaves.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxRightNewSaves.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.listBoxRightNewSaves.FormattingEnabled = true;
+            this.listBoxRightNewSaves.Location = new System.Drawing.Point(403, 33);
+            this.listBoxRightNewSaves.Name = "listBox2";
+            this.listBoxRightNewSaves.Size = new System.Drawing.Size(194, 273);
+            this.listBoxRightNewSaves.TabIndex = 2;
+            this.listBoxRightNewSaves.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox2_DrawItem);
+            this.listBoxRightNewSaves.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBox2_MeasureItem);
+            this.listBoxRightNewSaves.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
+            this.listBoxRightNewSaves.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox2_DragDrop);
+            this.listBoxRightNewSaves.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox2_DragOver);
+            this.listBoxRightNewSaves.DragLeave += new System.EventHandler(this.listBox2_DragLeave);
             // 
             // labelExistingSaves
             // 
@@ -384,10 +384,10 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBoxLeftExistingSaves;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox listBoxRightNewSaves;
         private System.Windows.Forms.Label labelExistingSaves;
         private System.Windows.Forms.Label labelExportImport;
         private System.Windows.Forms.Button buttonExportImport;
