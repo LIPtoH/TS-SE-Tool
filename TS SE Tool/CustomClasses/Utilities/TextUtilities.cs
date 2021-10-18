@@ -89,9 +89,58 @@ namespace TS_SE_Tool.Utilities
             }
         }
 
+        public static string FromStringToOutputString(string _input)
+        {
+            try
+            {
+                if (_input == "" || _input == null)
+                    return "\"\""; //Empty
+
+                byte[] testByteArrayInput = Encoding.UTF8.GetBytes(_input.ToCharArray());
+
+                if (_input.Length != testByteArrayInput.Length)
+                {                    
+                    return "\"" + StringToByteArrayStringFull(_input) + "\""; //UTF letters
+                }
+                else
+                {
+                    if (CheckStringAlphaNumeric(_input))
+                        return _input;                  //Simple AlphaNumeric string 
+                    else
+                        return "\"" + _input + "\"";    //Punctuation
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public static string ByteArrayToString(byte[] _ba)
         {
             return BitConverter.ToString(_ba).Replace("-", "");
+        }
+
+        public static string StringToByteArrayStringFull(string _input)
+        {
+            string output = "";
+
+            foreach(char x in _input)
+            {
+                byte[] testBytes = Encoding.UTF8.GetBytes(new char[] { x });
+
+                if (testBytes.Length == 1)
+                {
+                    output += x;
+                }
+                else
+                {
+                    foreach (byte xByte in testBytes)                    
+                        output += "\\x" + xByte.ToString("x");                    
+                }
+            }
+
+            return output;
         }
 
         internal static string CapitalizeWord(string _input)
@@ -103,6 +152,17 @@ namespace TS_SE_Tool.Utilities
             }
             // Return char and concat substring.
             return char.ToUpper(_input[0]) + _input.Substring(1).ToLower();
+        }
+
+        public static bool CheckStringAlphaNumeric(string _input)
+        {
+            foreach (char xChar in _input)
+            {
+                if(!char.IsLetterOrDigit(xChar))
+                    return false;
+            }
+
+            return true;
         }
     }
 }

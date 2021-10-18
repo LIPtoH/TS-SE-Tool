@@ -20,6 +20,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -28,7 +29,19 @@ namespace TS_SE_Tool
         private string      SaveContainerNameless       { get; set; } = "";
 
         //Data
-        public string       Name                        { get; set; } = "\"\"";     //Save name
+        private string      _Name                       { get; set; } = "";     //Save name
+        public string       Name
+        {
+            get
+            {
+                return TextUtilities.FromStringToOutputString(_Name);
+            }
+            set
+            {
+                _Name = value;
+            }
+        }
+
         public uint         Time                        { get; set; } = 0;          //IngameTime
         public uint         FileTime                    { get; set; } = 0;
         public ushort       Version                     { get; set; } = 0;
@@ -112,7 +125,7 @@ namespace TS_SE_Tool
                             {
                                 string innerData = dataLine.Remove(dataLine.Length - 1, 1).Remove(0, 1);
 
-                                processingResult = Utilities.TextUtilities.FromUtfHexToString(innerData);
+                                processingResult = TextUtilities.FromUtfHexToString(innerData);
                             }
 
                             Name = (processingResult == "") ? dataLine : processingResult;
@@ -194,7 +207,7 @@ namespace TS_SE_Tool
 
                     case "info_explored_ratio":
                         {
-                            InfoExploredRatio = Utilities.NumericUtilities.HexFloatToDecimalFloat(dataLine);
+                            InfoExploredRatio = NumericUtilities.HexFloatToDecimalFloat(dataLine);
                             break;
                         }
 
@@ -243,7 +256,7 @@ namespace TS_SE_Tool
                 sbResult.AppendLine(" info_unlocked_dealers: " + InfoUnlockedDealers.ToString());
                 sbResult.AppendLine(" info_visited_cities: " + InfoVisitedCities.ToString());
                 sbResult.AppendLine(" info_money_account: " + InfoMoneyAccount.ToString());
-                sbResult.AppendLine(" info_explored_ratio: " + Utilities.NumericUtilities.DecimalFloatToHexFloat(InfoExploredRatio));
+                sbResult.AppendLine(" info_explored_ratio: " + NumericUtilities.DecimalFloatToHexFloat(InfoExploredRatio));
             }
 
             //Add lines with unsorted data

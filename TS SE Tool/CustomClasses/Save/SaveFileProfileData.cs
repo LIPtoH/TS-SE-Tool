@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -34,7 +35,19 @@ namespace TS_SE_Tool
         internal string Brand                   { get; set; } = "";
 
         public string   Logo                    { get; set; } = "";
-        public string   CompanyName             { get; set; } = "";
+
+        private string  _CompanyName            { get; set; } = "";
+        public string   CompanyName
+        {
+            get
+            {
+                return TextUtilities.FromStringToOutputString(_CompanyName);
+            }
+            set
+            {
+                _CompanyName = value;
+            }
+        }
 
         //---
         internal string  MapPath                 { get; set; } = "";
@@ -251,7 +264,18 @@ namespace TS_SE_Tool
         internal string OnlineUserName  { get; set; } = "";
         internal string OnlinePassword  { get; set; } = "";
 
-        public string   ProfileName     { get; set; } = "";
+        private string   _ProfileName     { get; set; } = "";
+        public string   ProfileName
+        {
+            get
+            {
+                return TextUtilities.FromStringToOutputString(_ProfileName);
+            }
+            set
+            {
+                _ProfileName = value;
+            }
+        }
 
         public uint     CreationTime    { get; set; } = 0;
         public uint     SaveTime        { get; set; } = 0;
@@ -269,6 +293,7 @@ namespace TS_SE_Tool
             set { this.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).SetValue(this, value, null); }
         }
 
+        //Methods
         //
         public int[] getPlayerLvl()
         {
@@ -586,7 +611,7 @@ namespace TS_SE_Tool
             sbResult.AppendLine(" brand: " + Brand);
             sbResult.AppendLine(" map_path: " + MapPath);
             sbResult.AppendLine(" logo: " + Logo);
-            sbResult.AppendLine(" company_name: " + (!checkStringContainsUnescape(CompanyName) ? CompanyName : "\"" + CompanyName + "\""));
+            sbResult.AppendLine(" company_name: " + CompanyName);
             sbResult.AppendLine(" male: " + GenederMale.ToString().ToLower());
             sbResult.AppendLine(" cached_experience: " + CachedExperiencePoints.ToString());
             sbResult.AppendLine(" cached_distance: " + CachedDistance.ToString());
@@ -630,7 +655,7 @@ namespace TS_SE_Tool
             if (verCheck5 || !verCheck4)            
                 sbResult.AppendLine(VerOnline());
 
-            sbResult.AppendLine(" profile_name: " + (!checkStringContainsUnescape(ProfileName) ? ProfileName : "\"" + ProfileName + "\""));
+            sbResult.AppendLine(" profile_name: " + ProfileName);
             sbResult.AppendLine(" creation_time: " + CreationTime.ToString());
             sbResult.AppendLine(" save_time: " + SaveTime.ToString());
 
