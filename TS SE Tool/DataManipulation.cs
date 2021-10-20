@@ -2012,7 +2012,9 @@ namespace TS_SE_Tool
 
             string sql = "", DBVersion = "";
 
+            //
             DBVersion = "0.2.6.6";
+
             string[] splitDBver = DBVersion.Split(new char[] { '.' });
 
             sql += "CREATE TABLE DatabaseDetails (ID_DBline INT IDENTITY(1,1) PRIMARY KEY, GameName NVARCHAR(8) NOT NULL, SaveVersion INT NOT NULL, ProfileName NVARCHAR(128) NOT NULL, " +
@@ -2075,13 +2077,17 @@ namespace TS_SE_Tool
         //Update DB version
         private void UpdateDatabaseVersion()
         {
+            string DBVersion = "", commandText = "";
+            string DBVersionNew = "", sql = "";
+
+            //
+            DBVersionNew = "0.2.6.6";
+
             //Get DB version
             SqlCeDataReader reader = null;
 
             if (DBconnection.State == ConnectionState.Closed)
                 DBconnection.Open();
-
-            string DBVersion = "", commandText = "";
 
             try
             {
@@ -2107,8 +2113,6 @@ namespace TS_SE_Tool
 
             DBconnection.Close();
             //
-
-            string sql = "", DBVersionNew = "";
 
             switch (DBVersion)
             {
@@ -2183,9 +2187,6 @@ namespace TS_SE_Tool
             //
 
             //Set new version
-            DBVersionNew = "0.2.6.6";
-
-            //
             string[] splitDBver = DBVersionNew.Split(new char[] { '.' });
 
             sql = "UPDATE [DatabaseDetails] SET V1 = '" + splitDBver[0] + "', V2 = '" + splitDBver[1] + "', V3 = '" + splitDBver[2] + "', V4 = '" + splitDBver[3] + "' WHERE ID_DBline = 1;";
