@@ -24,38 +24,50 @@ namespace TS_SE_Tool.Utilities
 {
     class IO_Utilities
     {
-        internal static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        internal static void DirectoryCopy(string _sourceDirName, string _destDirName, bool _copySubDirs)
+        {
+            DirectoryCopy(_sourceDirName, _destDirName, _copySubDirs, null);
+        }
+
+        internal static void DirectoryCopy(string _sourceDirName, string _destDirName, bool _copySubDirs, string[] _fileList)
         {
             // Get the subdirectories for the specified directory.
-            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+            DirectoryInfo dirInfo = new DirectoryInfo(_sourceDirName);
 
-            if (!dir.Exists)
+            if (!dirInfo.Exists)
             {
-                throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + sourceDirName);
+                throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + _sourceDirName);
             }
-
-            DirectoryInfo[] dirs = dir.GetDirectories();
             // If the destination directory doesn't exist, create it.
-            if (!Directory.Exists(destDirName))
+            if (!Directory.Exists(_destDirName))
             {
-                Directory.CreateDirectory(destDirName);
+                Directory.CreateDirectory(_destDirName);
             }
 
             // Get the files in the directory and copy them to the new location.
-            FileInfo[] files = dir.GetFiles();
+            FileInfo[] files = dirInfo.GetFiles();
+            string tempPath = "";
+
             foreach (FileInfo file in files)
             {
-                string temppath = Path.Combine(destDirName, file.Name);
-                file.CopyTo(temppath, false);
+                if ( _fileList != null )
+                    if ( !_fileList.Contains(file.Name) )
+                        continue;
+
+                tempPath = Path.Combine(_destDirName, file.Name);
+
+                file.CopyTo(tempPath, false);
             }
 
             // If copying subdirectories, copy them and their contents to new location.
-            if (copySubDirs)
+            if (_copySubDirs)
             {
-                foreach (DirectoryInfo subdir in dirs)
+                DirectoryInfo[] dirInfoArray = dirInfo.GetDirectories();
+
+                foreach (DirectoryInfo subdir in dirInfoArray)
                 {
-                    string temppath = Path.Combine(destDirName, subdir.Name);
-                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+                    tempPath = Path.Combine(_destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, tempPath, _copySubDirs, _fileList);
                 }
             }
         }

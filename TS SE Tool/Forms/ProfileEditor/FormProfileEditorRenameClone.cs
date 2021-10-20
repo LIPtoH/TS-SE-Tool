@@ -421,15 +421,42 @@ namespace TS_SE_Tool
 
                                 //Copy profile files .cfg .sii .png
                                 //Get the files in the initial directory and copy them to the new location.
-                                var files = Directory.EnumerateFiles(InitialPath, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".cfg") || s.EndsWith(".sii") || s.EndsWith(".png")).ToArray();
+                                List<string> fileList = new List<string>();
+                                string[] tmpFilelist;
+
+                                //Avatar
+                                fileList.AddRange(Directory.EnumerateFiles(InitialPath, "avatar.png", SearchOption.TopDirectoryOnly).ToList());
+
+                                //Profile
+                                fileList.AddRange(Directory.EnumerateFiles(InitialPath, "profile.sii", SearchOption.TopDirectoryOnly).ToList());
+
+                                //Controls
+                                fileList.AddRange(Directory.EnumerateFiles(InitialPath, "controls.sii", SearchOption.TopDirectoryOnly).ToList());                                
+
+                                //CFG
+                                tmpFilelist = Directory.EnumerateFiles(InitialPath, "*.cfg", SearchOption.TopDirectoryOnly).ToArray();
+                                foreach (string file in tmpFilelist)
+                                {
+                                    if (Path.GetFileName(file).Equals("config.cfg") || Path.GetFileName(file).Equals("config_local.cfg"))
+                                        fileList.Add(file);
+                                }
+
+                                //SII gearbox layout
+                                tmpFilelist = Directory.EnumerateFiles(InitialPath, "*.sii", SearchOption.TopDirectoryOnly).ToArray();
+
+                                foreach (string file in tmpFilelist)
+                                {
+                                    if (Path.GetFileName(file).StartsWith("gearbox_layout_"))
+                                        fileList.Add(file);
+                                }
 
                                 //Iterate files
-                                foreach (string file in files)
+                                foreach (string file in fileList)
                                 {
                                     string temppath = Path.Combine(NewFolderPath, Path.GetFileName(file)); //new file path with name
 
-                                    FileInfo tFI = new FileInfo(file); //fileinfo
-                                    tFI.CopyTo(temppath, false); //Copy
+                                    FileInfo tFI = new FileInfo(file);  //fileinfo
+                                    tFI.CopyTo(temppath, false);        //Copy
                                 }
 
                                 progress = 3;
@@ -441,13 +468,15 @@ namespace TS_SE_Tool
                                 progress = 4;
 
                                 //Copy saves
+                                string[] validFileNames = new string[] { "game.sii", "info.sii", "preview.tga", "preview.mat", "preview.tobj" };
+
                                 if (checkBoxFullCloning.Checked)
                                 {
-                                    Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\save", NewSaveFolder, true);
+                                    Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\save", NewSaveFolder, true, validFileNames);
                                 }
                                 else
                                 {
-                                    Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\save\\autosave", NewSaveFolder + "\\autosave", false);
+                                    Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\save\\autosave", NewSaveFolder + "\\autosave", false, validFileNames);
                                 }
 
                                 progress = 5;
