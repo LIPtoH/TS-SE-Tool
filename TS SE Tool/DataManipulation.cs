@@ -1986,6 +1986,7 @@ namespace TS_SE_Tool
 
             if (!File.Exists(fileName))
             {
+                //Create
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "message_database_missing_creating_db");
 
                 connectionString = string.Format("DataSource ='{0}';", fileName);
@@ -2000,92 +2001,24 @@ namespace TS_SE_Tool
             }
             else
             {
-                //Edit DB
-                SqlCeDataReader reader = null;
-
-                if (DBconnection.State == ConnectionState.Closed)
-                    DBconnection.Open();
-
-                string commandText = "SELECT DBVersion FROM [DatabaseDetails];";
-                reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
-                string DBVersion = "";
-
-                while (reader.Read())
-                {
-                    DBVersion = reader["DBVersion"].ToString();
-                }
-
-                DBconnection.Close();
-
-                string sql = "", DBVersionNew = "";
-
-                switch (DBVersion)
-                {
-                    case "0.1.6":
-                        {
-                            goto label016;
-                        }
-                    case "0.2.0":
-                        {
-                            goto label020;
-                        }
-                    case "0.2.6":
-                        {
-                            goto label026;
-                        }
-                    case "0.2.6.2":
-                        {
-                            break;
-                        }
-                }
-
-                //0.1.6
-                label016:
-
-                sql = "ALTER TABLE [Dependencies] ALTER COLUMN Dependency NVARCHAR(256) NOT NULL;";
-                UpdateDatabase(sql);
-                //
-
-                //0.2.0
-                label020:
-
-                sql = "ALTER TABLE [DatabaseDetails] ALTER COLUMN ProfileName NVARCHAR(128) NOT NULL;";
-                UpdateDatabase(sql);
-
-                sql = "UPDATE [DatabaseDetails] SET ProfileName = '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "' " + "WHERE ID_DBline = 1;";
-                UpdateDatabase(sql);
-                //
-
-                //0.2.6
-                label026:
-
-                UpdateDatabase("DELETE FROM DatabaseDetails WHERE ID_DBline > 1;");
-                //
-
-                //Set new version
-                DBVersionNew = "0.2.6.2";
-                sql = "UPDATE [DatabaseDetails] SET DBVersion = '" + DBVersionNew + "' " + "WHERE ID_DBline = 1;";
-                UpdateDatabase(sql);
+                //Update
+                UpdateDatabaseVersion();
             }
         }
         //Create DB structure
         private void CreateDatabaseStructure()
         {
-            if (DBconnection.State == ConnectionState.Closed)
-            {
-                DBconnection.Open();
-            }
-
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "message_database_missing_creating_db_structure");
-
-            SqlCeCommand cmd;
 
             string sql = "", DBVersion = "";
 
-            DBVersion = "0.2.6";
+            DBVersion = "0.2.6.6";
+            string[] splitDBver = DBVersion.Split(new char[] { '.' });
 
-            sql += "CREATE TABLE DatabaseDetails (ID_DBline INT IDENTITY(1,1) PRIMARY KEY, DBVersion NVARCHAR(8) NOT NULL, GameName NVARCHAR(8) NOT NULL, SaveVersion INT NOT NULL, ProfileName NVARCHAR(128) NOT NULL);";
-            sql += "INSERT INTO [DatabaseDetails] (DBVersion, GameName, SaveVersion, ProfileName) VALUES ('"+ DBVersion + "','" + GameType +  "', 0, '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "');";
+            sql += "CREATE TABLE DatabaseDetails (ID_DBline INT IDENTITY(1,1) PRIMARY KEY, GameName NVARCHAR(8) NOT NULL, SaveVersion INT NOT NULL, ProfileName NVARCHAR(128) NOT NULL, " +
+                "V1 numeric(4,0) NOT NULL, V2 numeric(4,0) NOT NULL, V3 numeric(4,0) NOT NULL, V4 numeric(4,0) NOT NULL, ReadableName NVARCHAR(30) NOT NULL);";
+            sql += "INSERT INTO [DatabaseDetails] (GameName, SaveVersion, ProfileName, V1, V2, V3, V4, ReadableName) VALUES ('" + GameType + "', 0, '" + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + "','" +
+                splitDBver[0] + "','" + splitDBver[1] + "','" + splitDBver[2] + "','" + splitDBver[3] + "','" + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile) + "');";
 
             sql += "CREATE TABLE Dependencies (ID_dep INT IDENTITY(1,1) PRIMARY KEY, Dependency NVARCHAR(256) NOT NULL);";
 
@@ -2134,35 +2067,135 @@ namespace TS_SE_Tool
 
             sql += "CREATE TABLE tempDistancesTable (ID_Distance INT IDENTITY(1,1) PRIMARY KEY, SourceCityID INT NOT NULL, SourceCompanyID INT NOT NULL, " +
                 "DestinationCityID INT NOT NULL, DestinationCompanyID INT NOT NULL, Distance INT NOT NULL, FerryTime INT NOT NULL, FerryPrice INT NOT NULL);";
+        
 
-            string[] linesArray = sql.Split(';');
+            UpdateDatabase( sql.Split(';') );
+        }
 
-            foreach (string sqlline in linesArray)
+        //Update DB version
+        private void UpdateDatabaseVersion()
+        {
+            //Get DB version
+            SqlCeDataReader reader = null;
+
+            if (DBconnection.State == ConnectionState.Closed)
+                DBconnection.Open();
+
+            string DBVersion = "", commandText = "";
+
+            try
             {
-                if (sqlline != "")
-                {
-                    cmd = new SqlCeCommand(sqlline, DBconnection);
+                commandText = "SELECT DBVersion FROM [DatabaseDetails];";
+                reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_database_created");
-                    }
-                    catch (SqlCeException sqlexception)
-                    {
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
-                        MessageBox.Show(sqlexception.Message, "SQL Exception. Create DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (Exception ex)
-                    {
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
-                        MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                while (reader.Read())
+                    DBVersion = reader["DBVersion"].ToString();
+
             }
+            catch { }
+
+            if (DBVersion == "")
+                try
+                {
+                    commandText = "SELECT V1, V2, V3, V4 FROM [DatabaseDetails];";
+                    reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
+
+                    while (reader.Read())
+                        DBVersion = reader["V1"].ToString() + "." + reader["V2"].ToString() + "." + reader["V3"].ToString() + "." + reader["V4"].ToString();
+                }
+                catch { }
 
             DBconnection.Close();
+            //
+
+            string sql = "", DBVersionNew = "";
+
+            switch (DBVersion)
+            {
+                case "0.1.6":
+                    {
+                        goto label016;
+                    }
+                case "0.2.0":
+                    {
+                        goto label020;
+                    }
+                case "0.2.6":
+                    {
+                        goto label026;
+                    }
+                case "0.2.6.2":
+                    {
+                        goto label0266;
+                    }
+                case "0.2.6.6":
+                    {
+                        goto labelskip;
+                    }
+                default:
+                    {
+                        return;
+                    }
+            }
+
+            //0.1.6
+            label016:
+
+            sql = "ALTER TABLE [Dependencies] ALTER COLUMN Dependency NVARCHAR(256) NOT NULL;";
+            UpdateDatabase(sql);
+            //
+
+            //0.2.0
+            label020:
+
+            sql = "ALTER TABLE [DatabaseDetails] ALTER COLUMN ProfileName NVARCHAR(128) NOT NULL;";
+            UpdateDatabase(sql);
+
+            sql = "UPDATE [DatabaseDetails] SET ProfileName = '" + Globals.SelectedProfile + "' " + "WHERE ID_DBline = 1;";
+            UpdateDatabase(sql);
+            //
+
+            //0.2.6
+            label026:
+
+            UpdateDatabase("DELETE FROM DatabaseDetails WHERE ID_DBline > 1;");
+            //
+
+            //0.2.6.6
+            label0266:
+
+            sql = "ALTER TABLE DatabaseDetails DROP COLUMN DBVersion;";
+            UpdateDatabase(sql);
+
+            sql = "ALTER TABLE DatabaseDetails ADD V1 numeric(4,0) NULL, V2 numeric(4,0) NULL, V3 numeric(4,0) NULL, V4 numeric(4,0) NULL, ReadableName NVARCHAR(30) NULL;";
+            UpdateDatabase(sql);
+
+            sql = "UPDATE [DatabaseDetails] SET V1 = '0', V2 = '0', V3 = '0', V4 = '0', ReadableName = '" + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile) + "' WHERE ID_DBline = 1;";
+            UpdateDatabase(sql);
+
+            sql = "ALTER TABLE [DatabaseDetails] ALTER COLUMN [V1] numeric(4,0) NOT NULL;";
+            sql += "ALTER TABLE [DatabaseDetails] ALTER COLUMN [V2] numeric(4,0) NOT NULL;";
+            sql += "ALTER TABLE [DatabaseDetails] ALTER COLUMN [V3] numeric(4,0) NOT NULL;";
+            sql += "ALTER TABLE [DatabaseDetails] ALTER COLUMN [V4] numeric(4,0) NOT NULL;";
+            sql += "ALTER TABLE [DatabaseDetails] ALTER COLUMN [ReadableName] NVARCHAR(30) NOT NULL;";
+
+            UpdateDatabase(sql.Split(';'));
+            //
+
+            //Set new version
+            DBVersionNew = "0.2.6.6";
+
+            //
+            string[] splitDBver = DBVersionNew.Split(new char[] { '.' });
+
+            sql = "UPDATE [DatabaseDetails] SET V1 = '" + splitDBver[0] + "', V2 = '" + splitDBver[1] + "', V3 = '" + splitDBver[2] + "', V4 = '" + splitDBver[3] + "' WHERE ID_DBline = 1;";
+            UpdateDatabase(sql);
+
+            //END
+            labelskip:;
+
         }
+
         //Help function for DB update
         private void UpdateDatabase(string _sql_string)
         {
@@ -2188,6 +2221,40 @@ namespace TS_SE_Tool
             {
                 DBconnection.Close();
             }
+        }
+
+        private void UpdateDatabase(string[] _sql_strings)
+        {
+            if (DBconnection.State == ConnectionState.Closed)
+                DBconnection.Open();
+
+            SqlCeCommand cmd;
+
+            foreach (string sqlline in _sql_strings)
+            {
+                if (sqlline != "")
+                {
+                    cmd = new SqlCeCommand(sqlline, DBconnection);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_database_created");
+                    }
+                    catch (SqlCeException sqlexception)
+                    {
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
+                        MessageBox.Show(sqlexception.Message, "SQL Exception. Create DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
+                        MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+
+            DBconnection.Close();
         }
         //Clear DB
         internal void ClearDatabase()
