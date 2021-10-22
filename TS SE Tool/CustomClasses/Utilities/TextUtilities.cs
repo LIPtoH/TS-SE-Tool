@@ -94,21 +94,14 @@ namespace TS_SE_Tool.Utilities
             try
             {
                 if (_input == "" || _input == null)
-                    return "\"\""; //Empty
+                    return "\"\"";          //Empty
 
-                byte[] testByteArrayInput = Encoding.UTF8.GetBytes(_input.ToCharArray());
+                string byteArrayString = StringToByteArrayStringFull(_input);
 
-                if (_input.Length != testByteArrayInput.Length)
-                {                    
-                    return "\"" + StringToByteArrayStringFull(_input) + "\""; //UTF letters
-                }
+                if (CheckStringAlphaNumeric(byteArrayString))
+                    return _input;                          //Simple AlphaNumeric string 
                 else
-                {
-                    if (CheckStringAlphaNumeric(_input))
-                        return _input;                  //Simple AlphaNumeric string 
-                    else
-                        return "\"" + _input + "\"";    //Punctuation
-                }
+                    return "\"" + byteArrayString + "\"";   //Else
             }
             catch
             {
@@ -158,7 +151,7 @@ namespace TS_SE_Tool.Utilities
         {
             foreach (char xChar in _input)
             {
-                if(!char.IsLetterOrDigit(xChar))
+                if(!char.IsLetterOrDigit(xChar) && !(xChar == '_'))
                     return false;
             }
 
