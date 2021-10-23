@@ -29,16 +29,16 @@ namespace TS_SE_Tool
         private string      SaveContainerNameless       { get; set; } = "";
 
         //Data
-        private string      _Name                       { get; set; } = "";     //Save name
-        public string       Name
+        internal string     Name                       { get; set; } = "";     //Save name
+        internal string     _Name
         {
             get
             {
-                return TextUtilities.FromStringToOutputString(_Name);
+                return TextUtilities.FromStringToOutputString(Name);
             }
             set
             {
-                _Name = value;
+                Name = TextUtilities.CheckAndClearStringFromQuotes(value);
             }
         }
 
@@ -119,17 +119,7 @@ namespace TS_SE_Tool
 
                     case "name":
                         {
-                            string processingResult = "";
-
-                            if (dataLine.StartsWith("\"") && dataLine.EndsWith("\""))
-                            {
-                                string innerData = dataLine.Remove(dataLine.Length - 1, 1).Remove(0, 1);
-
-                                processingResult = TextUtilities.FromUtfHexToString(innerData);
-                            }
-
-                            Name = (processingResult == "") ? dataLine : processingResult;
-
+                            _Name = dataLine;
                             break;
                         }
 
@@ -235,7 +225,7 @@ namespace TS_SE_Tool
             sbResult.AppendLine("{");
 
             sbResult.AppendLine("save_container : " + SaveContainerNameless + " {");
-            sbResult.AppendLine(" name: " + Name);
+            sbResult.AppendLine(" name: " + _Name);
             sbResult.AppendLine(" time: " + Time.ToString());
             sbResult.AppendLine(" file_time: " + FileTime.ToString());
             sbResult.AppendLine(" version: " + Version.ToString());
