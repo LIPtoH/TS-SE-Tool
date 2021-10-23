@@ -157,5 +157,30 @@ namespace TS_SE_Tool.Utilities
 
             return true;
         }
+
+        private bool checkStringContainsUnescape(string _input)
+        {
+            if (_input.Contains(' ') || _input != System.Text.RegularExpressions.Regex.Unescape(_input))
+                return true;
+            else
+                return false;
+        }
+
+        internal static string CheckAndClearStringFromQuotes(string _input)
+        {
+            string processingResult = "";
+
+            if (_input.StartsWith("\"") && _input.EndsWith("\""))
+            {
+                string innerData = _input.Substring(1, _input.Length - 2);//.Remove(_input.Length - 1, 1).Remove(0, 1);
+
+                if (innerData == "")
+                    return "";
+
+                processingResult = TextUtilities.FromUtfHexToString(innerData);
+            }            
+
+            return (processingResult == "") ? _input : processingResult;
+        }
     }
 }

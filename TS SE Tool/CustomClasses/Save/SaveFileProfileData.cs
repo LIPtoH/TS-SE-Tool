@@ -27,30 +27,30 @@ namespace TS_SE_Tool
 {
     public class SaveFileProfileData
     {
-        internal string  UserProfileNameless     { get; set; } = "";
+        internal string  UserProfileNameless    { get; set; } = "";
 
         //---
-        public bool     GenederMale             { get; set; } = false;
-        internal ushort Face                    { get; set; } = 0;
-        internal string Brand                   { get; set; } = "";
+        public bool     GenederMale         { get; set; } = false;
+        internal ushort Face                { get; set; } = 0;
+        internal string Brand               { get; set; } = "";
 
-        public string   Logo                    { get; set; } = "";
+        public string   Logo                { get; set; } = "";
 
-        private string  _CompanyName            { get; set; } = "";
-        public string   CompanyName
+        internal string CompanyName         { get; set; } = "";
+        internal string _CompanyName
         {
             get
             {
-                return TextUtilities.FromStringToOutputString(_CompanyName);
+                return TextUtilities.FromStringToOutputString(CompanyName);
             }
             set
             {
-                _CompanyName = value;
+                CompanyName = TextUtilities.CheckAndClearStringFromQuotes(value);
             }
         }
 
         //---
-        internal string  MapPath                 { get; set; } = "";
+        internal string MapPath             { get; set; } = "";
 
         //---
         public uint     CachedExperiencePoints  { get; set; } = 0;
@@ -198,10 +198,10 @@ namespace TS_SE_Tool
 
         private string user_data_12
         {
-            get { return ((ud12_OwnedTruckList.Count > 0) ? "\"" + String.Join(", ", ud12_OwnedTruckList) + "\"" : "\"\""); }
+            get { return ((ud12_OwnedTruckList.Count > 0) ? "\"" + String.Join(",", ud12_OwnedTruckList) + "\"" : "\"\""); }
             set
             {
-                ud12_OwnedTruckList = value.Trim(charsToTrim).Split(new char[] { ',' }).ToList();
+                ud12_OwnedTruckList = value.Trim(charsToTrim).Replace(" ", "").Split(new char[] { ',' }).ToList();
             }
         }
 
@@ -250,30 +250,53 @@ namespace TS_SE_Tool
 
         #endregion
 
-        internal uint    Customization { get; set; } = 0;        //in bit flag format
+        internal uint   Customization   { get; set; } = 0;      //in bit flag format
 
-        internal List<string>    ActiveMods;                     //Count
+        internal List<string>   ActiveMods;                     //Count
 
-        internal List<ushort>    CachedStats;                    //cached_stats
+        internal List<ushort>   CachedStats;                    //cached_stats
 
-        internal List<ushort>    CachedDiscovery;                //cached_discovery
+        internal List<ushort>   CachedDiscovery;                //cached_discovery
 
         //End
-        internal byte   Version         { get; set; } = 0;              //profile data format version
+        internal byte   Version         { get; set; } = 0;      //profile data format version
 
         internal string OnlineUserName  { get; set; } = "";
-        internal string OnlinePassword  { get; set; } = "";
-
-        private string   _ProfileName     { get; set; } = "";
-        public string   ProfileName
+        internal string _OnlineUserName
         {
             get
             {
-                return TextUtilities.FromStringToOutputString(_ProfileName);
+                return TextUtilities.FromStringToOutputString(OnlineUserName);
             }
             set
             {
-                _ProfileName = value;
+                OnlineUserName = TextUtilities.CheckAndClearStringFromQuotes(value);
+            }
+        }
+
+        internal string OnlinePassword  { get; set; } = "";
+        internal string _OnlinePassword
+        {
+            get
+            {
+                return TextUtilities.FromStringToOutputString(OnlinePassword);
+            }
+            set
+            {
+                OnlinePassword = TextUtilities.CheckAndClearStringFromQuotes(value);
+            }
+        }
+
+        internal string ProfileName     { get; set; } = "";
+        internal string _ProfileName
+        {
+            get
+            {
+                return TextUtilities.FromStringToOutputString(ProfileName);
+            }
+            set
+            {
+                ProfileName = TextUtilities.CheckAndClearStringFromQuotes(value);
             }
         }
 
@@ -440,16 +463,7 @@ namespace TS_SE_Tool
 
                     case "company_name":
                         {
-                            string processingResult = "";
-
-                            if (dataLine.StartsWith("\"") && dataLine.EndsWith("\""))
-                            {
-                                string innerData = dataLine.Remove(dataLine.Length - 1, 1).Remove(0, 1);
-                                processingResult = Utilities.TextUtilities.FromUtfHexToString(innerData);
-                            }
-
-                            CompanyName = (processingResult == "") ? dataLine : processingResult;
-
+                            _CompanyName = dataLine;
                             break;
                         }
 
@@ -549,30 +563,19 @@ namespace TS_SE_Tool
                         
                     case "online_user_name":
                         {
-
-                            OnlineUserName = dataLine.Trim(charsToTrim);
+                            _OnlineUserName = dataLine;
                             break;
                         }
 
                     case "online_password":
                         {
-                            OnlinePassword = dataLine.Trim(charsToTrim);
+                            _OnlinePassword = dataLine;
                             break;
                         }
 
                     case "profile_name":
                         {
-                            string processingResult = "";
-
-                            if (dataLine.StartsWith("\"") && dataLine.EndsWith("\""))
-                            {
-                                string innerData = dataLine.Remove(dataLine.Length - 1, 1).Remove(0, 1);
-
-                                processingResult = Utilities.TextUtilities.FromUtfHexToString(innerData);
-                            }
-
-                            ProfileName = (processingResult == "") ? dataLine : processingResult;
-
+                            _ProfileName = dataLine;
                             break;
                         }
 
@@ -611,7 +614,7 @@ namespace TS_SE_Tool
             sbResult.AppendLine(" brand: " + Brand);
             sbResult.AppendLine(" map_path: " + MapPath);
             sbResult.AppendLine(" logo: " + Logo);
-            sbResult.AppendLine(" company_name: " + CompanyName);
+            sbResult.AppendLine(" company_name: " + _CompanyName);
             sbResult.AppendLine(" male: " + GenederMale.ToString().ToLower());
             sbResult.AppendLine(" cached_experience: " + CachedExperiencePoints.ToString());
             sbResult.AppendLine(" cached_distance: " + CachedDistance.ToString());
@@ -655,7 +658,7 @@ namespace TS_SE_Tool
             if (verCheck5 || !verCheck4)            
                 sbResult.AppendLine(VerOnline());
 
-            sbResult.AppendLine(" profile_name: " + ProfileName);
+            sbResult.AppendLine(" profile_name: " + _ProfileName);
             sbResult.AppendLine(" creation_time: " + CreationTime.ToString());
             sbResult.AppendLine(" save_time: " + SaveTime.ToString());
 
@@ -680,19 +683,11 @@ namespace TS_SE_Tool
                 StringBuilder sbVerOnline = new StringBuilder();
 
                 sbVerOnline.AppendLine(" version: " + Version.ToString());
-                sbVerOnline.AppendLine(" online_user_name: " + (!string.IsNullOrEmpty(OnlineUserName) ? OnlineUserName : "\"\""));
-                sbVerOnline.Append(" online_password: " + (!string.IsNullOrEmpty(OnlinePassword) ? OnlinePassword : "\"\""));
+                sbVerOnline.AppendLine(" online_user_name: " + _OnlineUserName);
+                sbVerOnline.Append(" online_password: " + _OnlinePassword);
 
                 return sbVerOnline.ToString();
             }
-        }
-
-        private bool checkStringContainsUnescape(string _input)
-        {
-            if (_input.Contains(' ') || _input != System.Text.RegularExpressions.Regex.Unescape(_input))
-                return true;
-            else
-                return false;
         }
 
         public void WriteToStream(StreamWriter _streamWriter)
