@@ -24,9 +24,9 @@ namespace TS_SE_Tool.Utilities
     {
         public static Web_Utilities External = new Web_Utilities();
 
-        internal string linkCheckVersion = "https://liptoh.now.im/TS-SET-CheckVersion";
-        internal string linkDownloadVersion = "https://liptoh.now.im/TS-SET-Download";
-        internal string linkYoutubeTutorial = "https://liptoh.now.im/TS-SET-Tutorial";
+        internal string linkCheckVersion    = "https://rebrand.ly/TS-SET-CheckVersion";
+        internal string linkDownloadVersion = "https://rebrand.ly/TS-SET-Download";
+        internal string linkYoutubeTutorial = "https://rebrand.ly/TS-SET-Tutorial";
 
         internal string linkHelpDeveloper = "https://www.paypal.me/LIPtoHCode";
         internal string linkMailDeveloper = "liptoh.codebase@gmail.com";
@@ -72,6 +72,25 @@ namespace TS_SE_Tool.Utilities
             }
         }
 
+        private string GetLatestVersionData(string url)
+        {
+            string result = null;
+
+            using (WebClientWithTO client = new WebClientWithTO())
+            {
+                try
+                {
+                    client.Timeout = 5;
+                    result = client.DownloadString(url);
+                }
+                catch { }
+
+                client.Dispose();
+            }
+
+            return result;
+        }
+
         internal bool? CheckNewVersionStatus(string[] _NewVersion)
         {
             bool? betterVersion = false;
@@ -94,25 +113,6 @@ namespace TS_SE_Tool.Utilities
             }
 
             return betterVersion;
-        }
-
-        private string GetLatestVersionData(string url)
-        {
-            string result = null;
-
-            using (WebClientWithTO client = new WebClientWithTO())
-            {
-                try
-                {
-                    client.Timeout = 5;
-                    result = client.DownloadString(url);
-                }
-                catch { }
-
-                client.Dispose();
-            }
-
-            return result;
         }
         //
         private static void SetTimer(Control _control)
