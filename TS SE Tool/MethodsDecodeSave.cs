@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text;
 using System.Runtime.InteropServices;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -33,7 +34,7 @@ namespace TS_SE_Tool
             if (_verbose)
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_loading_save_file");
             if(_verbose)
-                LogWriter("Loading file into memory: " + _savefile_path);
+                IO_Utilities.LogWriter("Loading file into memory: " + _savefile_path);
 
             //string FileData = "";
             byte[] FileDataB = new byte[10];
@@ -44,7 +45,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter("Could not find file in: " + _savefile_path);
+                IO_Utilities.LogWriter("Could not find file in: " + _savefile_path);
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
 
                 FileDecoded = false;
@@ -74,7 +75,7 @@ namespace TS_SE_Tool
                         if (_verbose)
                             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
                         if (_verbose)
-                            LogWriter("Decoding file: " + _savefile_path);
+                            IO_Utilities.LogWriter("Decoding file: " + _savefile_path);
 
                         int result = -1;
                         uint newbuff = 0;
@@ -113,7 +114,7 @@ namespace TS_SE_Tool
                         if (_verbose)
                             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
                         if (_verbose)
-                            LogWriter("Decoding file: " + _savefile_path);
+                            IO_Utilities.LogWriter("Decoding file: " + _savefile_path);
 
                         int result = -1;
                         uint newbuff = 0;

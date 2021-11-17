@@ -15,6 +15,7 @@
 */
 using System.IO;
 using System.Collections.Generic;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -41,14 +42,14 @@ namespace TS_SE_Tool
                 }
                 AddCountry(_cityName, "");
 
-                FormMain.LogWriter("Added to cities dictionary: " + _cityName);
+                IO_Utilities.LogWriter("Added to cities dictionary: " + _cityName);
 
                 NewCityAdded = true;
                 return "";
             }
             catch
             {
-                FormMain.LogWriter(_cityName);
+                IO_Utilities.LogWriter(_cityName);
                 return "";
             }
         }

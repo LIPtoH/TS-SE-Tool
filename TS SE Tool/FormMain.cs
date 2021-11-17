@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Deployment.Application;
 using System.Threading;
-
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -192,56 +192,56 @@ namespace TS_SE_Tool
 
         public FormMain()
         {
-            LogWriter("Initializing form...");
+            IO_Utilities.LogWriter("Initializing form...");
             InitializeComponent();
-            LogWriter("Form initialized.");
+            IO_Utilities.LogWriter("Form initialized.");
             //Non program task
-            LogWriter("Caching game data...");
+            IO_Utilities.LogWriter("Caching game data...");
             CacheGameData();
-            LogWriter("Caching finished.");
+            IO_Utilities.LogWriter("Caching finished.");
 
             //Program
             UpdateStatusBarMessage.OnNewStatusMessage += UpdateStatusBarMessage_OnNewStatusMessage;
             this.Icon = Properties.Resources.MainIco;
-            this.Text += " [ " + Utilities.AssemblyData.AssemblyVersion + " ]";
+            this.Text += " [ " + AssemblyData.AssemblyVersion + " ]";
 
             SetDefaultValues(true);
-            LogWriter("Loading config...");
+            IO_Utilities.LogWriter("Loading config...");
             ProgSettingsV.LoadConfigFromFile();
             ApplySettings();
-            LogWriter("Config loaded.");
+            IO_Utilities.LogWriter("Config loaded.");
 
-            LogWriter("Loading resources...");
+            IO_Utilities.LogWriter("Loading resources...");
             LoadExtCountries();
             LoadExtImages();
-            LogWriter("Resources loaded.");
+            IO_Utilities.LogWriter("Resources loaded.");
             AddImagesToControls();
 
             //Create page controls
-            LogWriter("Creating form elements...");
+            IO_Utilities.LogWriter("Creating form elements...");
             CreateProfilePanelControls();
             CreateProgressBarBitmap();
             CreateTruckPanelControls();
             CreateTrailerPanelControls();
-            LogWriter("Done.");
+            IO_Utilities.LogWriter("Done.");
 
             //Clear elements
-            LogWriter("Prepare form...");
+            IO_Utilities.LogWriter("Prepare form...");
             ClearFormControls(true);
 
             ToggleControlsAccess(false);
-            LogWriter("Done.");
+            IO_Utilities.LogWriter("Done.");
 
             //Language
-            LogWriter("Loading translation...");
+            IO_Utilities.LogWriter("Loading translation...");
             GetTranslationFiles();
             ChangeLanguage();
-            LogWriter("Done.");
+            IO_Utilities.LogWriter("Done.");
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            LogWriter("Opening form...");
+            IO_Utilities.LogWriter("Opening form...");
             try
             {
                 if (Properties.Settings.Default.ShowSplashOnStartup || Properties.Settings.Default.CheckUpdatesOnStartup)
@@ -249,11 +249,11 @@ namespace TS_SE_Tool
                     FormSplash WindowSplash = new FormSplash();
                     WindowSplash.ShowDialog();
                 }
-                LogWriter("Done.");
+                IO_Utilities.LogWriter("Done.");
             }
             catch
             {
-                LogWriter("Done. Settings error.");
+                IO_Utilities.LogWriter("Done. Settings error.");
                 FormSplash WindowSplash = new FormSplash();
                 WindowSplash.ShowDialog();
             }

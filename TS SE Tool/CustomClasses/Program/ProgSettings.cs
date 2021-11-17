@@ -167,6 +167,7 @@ namespace TS_SE_Tool
             }
             catch
             {
+                IO_Utilities.LogWriter("Config.cfg file not found or have wrong format. Restoring default");
                 WriteConfigToFile();
             }
         }
@@ -206,6 +207,7 @@ namespace TS_SE_Tool
             }
             catch
             {
+                IO_Utilities.LogWriter("Could not write to " + Directory.GetCurrentDirectory());
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_write_to_file", Directory.GetCurrentDirectory() + @"\config.cfg");
             }
         }

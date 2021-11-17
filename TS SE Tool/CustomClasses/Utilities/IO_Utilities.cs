@@ -71,5 +71,32 @@ namespace TS_SE_Tool.Utilities
                 }
             }
         }
+
+        internal static void LogWriter(string _error)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\log.log", true))
+                {
+                    writer.WriteLine(DateTime.Now + " " + _error);
+                }
+            }
+            catch
+            { }
+        }
+
+        internal static void ErrorLogWriter(string _error)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\errorlog.log", true))
+                {
+                    writer.WriteLine(AssemblyData.AssemblyProduct + " - " + AssemblyData.AssemblyVersion);
+                    writer.WriteLine(DateTime.Now + "\r\n" + _error + "\r\n");
+                }
+            }
+            catch
+            { }
+        }
     }
 }

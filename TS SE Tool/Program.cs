@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
-
+using TS_SE_Tool.Utilities;
 using System.Configuration;
 
 namespace TS_SE_Tool
@@ -42,15 +42,15 @@ namespace TS_SE_Tool
             // Add the event handler for handling non-UI thread exceptions to the event
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-            FormMain.LogWriter("--- START ---");
-            FormMain.LogWriter(Utilities.AssemblyData.AssemblyProduct + " - " + Utilities.AssemblyData.AssemblyVersion);
+            IO_Utilities.LogWriter("--- START ---");
+            IO_Utilities.LogWriter(AssemblyData.AssemblyProduct + " - " + AssemblyData.AssemblyVersion);
             DetectEnviroment.DetectOS();
             DetectEnviroment.Get45PlusFromRegistry();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormMain());
-            FormMain.LogWriter("--- END ---");
+            IO_Utilities.LogWriter("--- END ---");
         }
 
         // Handle the UI exceptions by showing a dialog box, and asking the user whether
@@ -64,7 +64,7 @@ namespace TS_SE_Tool
 
                 string errorMsg = "An application error occurred. Please contact the Developer at " + Utilities.Web_Utilities.External.linkMailDeveloper + " . Information can be found in \" Errorlog \" file.";
 
-                FormMain.ErrorLogWriter(ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);
+                IO_Utilities.ErrorLogWriter(ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);
 
                 result = MessageBox.Show(errorMsg, "Windows Forms Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Stop);
             }
@@ -99,7 +99,7 @@ namespace TS_SE_Tool
 
                 MessageBox.Show(errorMsg, "Non-UI Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-                FormMain.ErrorLogWriter(ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);
+                IO_Utilities.ErrorLogWriter(ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);
             }
             catch (Exception exc)
             {

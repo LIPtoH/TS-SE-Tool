@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -52,7 +53,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter("CityToCountry.csv file is missing in lang directory");
+                IO_Utilities.LogWriter("CityToCountry.csv file is missing in lang directory");
             }
 
             try
@@ -70,7 +71,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter("CountryProperties.csv file is missing in lang directory");
+                IO_Utilities.LogWriter("CountryProperties.csv file is missing in lang directory");
             }
         }
 
@@ -96,7 +97,7 @@ namespace TS_SE_Tool
 
                 File.WriteAllLines(Directory.GetCurrentDirectory() + @"\heavy_cargoes.csv", strArray);
 
-                LogWriter("Default heavy_cargoes.csv created");
+                IO_Utilities.LogWriter("Default heavy_cargoes.csv created");
 
                 for (int i = 0; i < strArray.Length; i++)
                 {
@@ -133,7 +134,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter(_sourcefile + " file is missing");
+                IO_Utilities.LogWriter(_sourcefile + " file is missing");
             }
 
             string language = "";
@@ -172,7 +173,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter(_sourcefile + " file is missing");
+                IO_Utilities.LogWriter(_sourcefile + " file is missing");
             }
         }
 
@@ -195,7 +196,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter("truck_brands.txt file is missing");
+                IO_Utilities.LogWriter("truck_brands.txt file is missing");
             }
         }
 
@@ -215,7 +216,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter("truck_brands.txt file is missing");
+                IO_Utilities.LogWriter("truck_brands.txt file is missing");
             }
         }
 
@@ -465,7 +466,7 @@ namespace TS_SE_Tool
                 }
                 catch
                 {
-                    LogWriter(outputFile + ".txt file is missing");
+                    IO_Utilities.LogWriter(outputFile + ".txt file is missing");
                 }
             }
         }
@@ -556,37 +557,10 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter("base_lngfile file is missing");
+                IO_Utilities.LogWriter("base_lngfile file is missing");
             }
         }
-
-        public static void LogWriter(string _error)
-        {
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\log.log", true))
-                {
-                    writer.WriteLine(DateTime.Now + " " + _error);
-                }
-            }
-            catch
-            { }
-        }
-
-        public static void ErrorLogWriter(string _error)
-        {
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\errorlog.log", true))
-                {
-                    writer.WriteLine(Utilities.AssemblyData.AssemblyProduct + " - " + Utilities.AssemblyData.AssemblyVersion);
-                    writer.WriteLine(DateTime.Now + "\r\n" + _error + "\r\n");
-                }
-            }
-            catch
-            { }
-        }
-
+        
         private byte[] LoadFileToMemory(string _filePath)
         {
             byte[] _buffer;
@@ -596,7 +570,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter("Could not find file in: " + _filePath);
+                IO_Utilities.LogWriter("Could not find file in: " + _filePath);
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
 
                 FileDecoded = false;
@@ -618,7 +592,7 @@ namespace TS_SE_Tool
             Globals.SelectedSavePath = SavefilePath;
             Globals.SelectedSave = Globals.SavesHex[comboBoxSaves.SelectedIndex].Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
-            LogWriter("Working on " + SavefilePath + " save file");
+            IO_Utilities.LogWriter("Working on " + SavefilePath + " save file");
 
             string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
 
@@ -640,7 +614,7 @@ namespace TS_SE_Tool
             //Profile Info
             if (!File.Exists(SiiProfilePath))
             {
-                LogWriter("File does not exist in " + SiiProfilePath);
+                IO_Utilities.LogWriter("File does not exist in " + SiiProfilePath);
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
@@ -664,17 +638,17 @@ namespace TS_SE_Tool
                     if (decodeAttempt == 5)
                     {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
-                        LogWriter("Could not decrypt after 5 attempts");
+                        IO_Utilities.LogWriter("Could not decrypt after 5 attempts");
                     }
                 }
                 catch
                 {
-                    LogWriter("Could not read: " + SiiProfilePath);
+                    IO_Utilities.LogWriter("Could not read: " + SiiProfilePath);
                 }
 
                 if ((tempProfileFileInMemory == null) || (tempProfileFileInMemory[0] != "SiiNunit"))
                 {
-                    LogWriter("Wrongly decoded Profile file or wrong file format");
+                    IO_Utilities.LogWriter("Wrongly decoded Profile file or wrong file format");
                     UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
                     tempProfileFileInMemory = null;
@@ -696,7 +670,7 @@ namespace TS_SE_Tool
             //Save info
             if (!File.Exists(SiiInfoPath))
             {
-                LogWriter("File does not exist in " + SiiInfoPath);
+                IO_Utilities.LogWriter("File does not exist in " + SiiInfoPath);
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
@@ -719,17 +693,17 @@ namespace TS_SE_Tool
                     if (decodeAttempt == 5)
                     {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
-                        LogWriter("Could not decrypt after 5 attempts");
+                        IO_Utilities.LogWriter("Could not decrypt after 5 attempts");
                     }
                 }
                 catch
                 {
-                    LogWriter("Could not read: " + SiiInfoPath);
+                    IO_Utilities.LogWriter("Could not read: " + SiiInfoPath);
                 }
 
                 if ((tempInfoFileInMemory == null) || (tempInfoFileInMemory[0] != "SiiNunit"))
                 {
-                    LogWriter("Wrongly decoded Info file or wrong file format");
+                    IO_Utilities.LogWriter("Wrongly decoded Info file or wrong file format");
                     UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
                     tempInfoFileInMemory = null;
@@ -758,7 +732,7 @@ namespace TS_SE_Tool
             //Save file
             if (!File.Exists(SiiSavePath))
             {
-                LogWriter("File does not exist in " + SavefilePath);
+                IO_Utilities.LogWriter("File does not exist in " + SavefilePath);
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
@@ -780,18 +754,18 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        LogWriter("Could not decrypt after 5 attempts");
+                        IO_Utilities.LogWriter("Could not decrypt after 5 attempts");
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                     }
                 }
                 catch
                 {
-                    LogWriter("Could not read: " + SiiSavePath);
+                    IO_Utilities.LogWriter("Could not read: " + SiiSavePath);
                 }
 
                 if ((tempSavefileInMemory == null) || (tempSavefileInMemory[0] != "SiiNunit"))
                 {
-                    LogWriter("Wrongly decoded Save file or wrong file format");
+                    IO_Utilities.LogWriter("Wrongly decoded Save file or wrong file format");
                     UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
                     tempSavefileInMemory = null;
@@ -822,7 +796,7 @@ namespace TS_SE_Tool
             //Profile Info
             if (!File.Exists(SiiProfilePath))
             {
-                LogWriter("File does not exist in " + SiiProfilePath);
+                IO_Utilities.LogWriter("File does not exist in " + SiiProfilePath);
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
@@ -845,18 +819,18 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        LogWriter("Could not decrypt after 5 attempts");
+                        IO_Utilities.LogWriter("Could not decrypt after 5 attempts");
                         //UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                     }
                 }
                 catch
                 {
-                    LogWriter("Could not read: " + SiiProfilePath);
+                    IO_Utilities.LogWriter("Could not read: " + SiiProfilePath);
                 }
 
                 if ((tempProfileFileInMemory == null) || (tempProfileFileInMemory[0] != "SiiNunit"))
                 {
-                    LogWriter("Wrongly decoded Profile file or wrong file format");
+                    IO_Utilities.LogWriter("Wrongly decoded Profile file or wrong file format");
                     //UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
                     tempProfileFileInMemory = null;
@@ -892,7 +866,7 @@ namespace TS_SE_Tool
 
             PopulateFormControlsk();
 
-            LogWriter("Successfully completed work with " + SavefilePath + " save file");
+            IO_Utilities.LogWriter("Successfully completed work with " + SavefilePath + " save file");
         }
 
         private void PrintAddedJobs()
@@ -942,7 +916,7 @@ namespace TS_SE_Tool
                     jobdata += "and it will cost " + tempJobData.Ferryprice;
                 }
 
-                LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName +
+                IO_Utilities.LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName +
                     "\r\n-----------" + jobdata + "\r\n-----------");
 
                 #endregion
@@ -960,7 +934,7 @@ namespace TS_SE_Tool
             if (File.GetLastWriteTime(SiiSavePath) > LastModifiedTimestamp)
             {
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_was_modified");
-                LogWriter("Save game was modified - reload file to prevent progress loss");
+                IO_Utilities.LogWriter("Save game was modified - reload file to prevent progress loss");
             }
             else
             {

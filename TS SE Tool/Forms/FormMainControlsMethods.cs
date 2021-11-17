@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using ICSharpCode.SharpZipLib.GZip;
 using Microsoft.Win32;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -79,7 +80,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                LogWriter("Wrong language setting format");
+                IO_Utilities.LogWriter("Wrong language setting format");
             }
 
             CultureInfo ci = Thread.CurrentThread.CurrentUICulture;
@@ -283,7 +284,7 @@ namespace TS_SE_Tool
 
             if (file != null)
             {
-                LogWriter("Backing up file to: " + SavefilePath + @"\game_backup.sii");
+                IO_Utilities.LogWriter("Backing up file to: " + SavefilePath + @"\game_backup.sii");
 
                 File.Copy(SiiSavePath, SavefilePath + @"\game_backup.sii", true);
 
@@ -339,7 +340,7 @@ namespace TS_SE_Tool
 
             string SiiSavePath = SavefilePath + @"\game.sii";
 
-            LogWriter("Backing up file to: " + SavefilePath + @"\game_backup.sii");
+            IO_Utilities.LogWriter("Backing up file to: " + SavefilePath + @"\game_backup.sii");
             //File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
             File.Copy(SiiSavePath, SavefilePath + @"\game_backup.sii", true);
 
@@ -445,7 +446,7 @@ namespace TS_SE_Tool
                 { }
 
                 if (!SteamFolderEx)
-                    LogWriter(SteamError);
+                    IO_Utilities.LogWriter(SteamError);
                 //
 
                 MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + dictionaryProfiles[GameType];
@@ -454,7 +455,7 @@ namespace TS_SE_Tool
                 {
                     MyDocError = "Folder in \"My documents\" for this game - " + GameType + " does not exist.";
                     MyDocFolderEx = false;
-                    LogWriter(MyDocError);
+                    IO_Utilities.LogWriter(MyDocError);
                 }
                 //
 
@@ -547,7 +548,7 @@ namespace TS_SE_Tool
 
                 if (!MyDocFolderEx && !SteamFolderEx)
                 {
-                    LogWriter("Standart Save folders does not exist for this game - " + GameType + ". " + MyDocError + " " + SteamError +
+                    IO_Utilities.LogWriter("Standart Save folders does not exist for this game - " + GameType + ". " + MyDocError + " " + SteamError +
                         " Check installation. Start game first (Steam).");
                 }
 
@@ -575,7 +576,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                ErrorLogWriter("Populating Root Profiles failed");
+                IO_Utilities.ErrorLogWriter("Populating Root Profiles failed");
             }
         }
 
@@ -739,7 +740,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                ErrorLogWriter("Populating Profiles list failed");
+                IO_Utilities.ErrorLogWriter("Populating Profiles list failed");
             }
         }
 
@@ -959,7 +960,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                ErrorLogWriter("Populating Saves list failed");
+                IO_Utilities.ErrorLogWriter("Populating Saves list failed");
             }
         }
 

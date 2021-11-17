@@ -16,6 +16,7 @@
 using System;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -31,12 +32,12 @@ namespace TS_SE_Tool
                 {
                     if (ndpKey != null && ndpKey.GetValue("Release") != null)
                     {
-                        FormMain.LogWriter($"Installed .NET Framework {CheckFor45PlusVersion((int)ndpKey.GetValue("Release"))} version");
+                        IO_Utilities.LogWriter($"Installed .NET Framework {CheckFor45PlusVersion((int)ndpKey.GetValue("Release"))} version");
                         //Console.WriteLine($".NET Framework Version: {CheckFor45PlusVersion((int)ndpKey.GetValue("Release"))}");
                     }
                     else
                     {
-                        FormMain.LogWriter(".NET Framework Version 4.5 or later is not detected.");
+                        IO_Utilities.LogWriter(".NET Framework Version 4.5 or later is not detected.");
                         //Console.WriteLine(".NET Framework Version 4.5 or later is not detected.");
                     }
                 }
@@ -71,7 +72,7 @@ namespace TS_SE_Tool
             }
             catch
             {
-                FormMain.LogWriter(".NET Framework Version detection FAILED");
+                IO_Utilities.LogWriter(".NET Framework Version detection FAILED");
             }
         }
 
@@ -110,15 +111,15 @@ namespace TS_SE_Tool
                             break;
                         }
                     default:
-                        FormMain.LogWriter("OS detection FAILED");
+                        IO_Utilities.LogWriter("OS detection FAILED");
                         break;
                 }
 
-                FormMain.LogWriter("Enviroment - " + RunningOS + " (" + Details + ")");
+                IO_Utilities.LogWriter("Enviroment - " + RunningOS + " (" + Details + ")");
             }
             catch
             {
-                FormMain.LogWriter("OS detection FAILED");
+                IO_Utilities.LogWriter("OS detection FAILED");
             }
         }
     }

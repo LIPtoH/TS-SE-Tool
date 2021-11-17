@@ -28,6 +28,7 @@ using ErikEJ.SqlCe;
 using System.ComponentModel;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -37,7 +38,7 @@ namespace TS_SE_Tool
         {
             string[] chunkOfline;
 
-            LogWriter("Prepare started");
+            IO_Utilities.LogWriter("Prepare started");
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_preparing_data");
 
             int economyEventQueueIndex = 0;
@@ -1403,7 +1404,7 @@ namespace TS_SE_Tool
             worker.ReportProgress(100);
             
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_operation_finished");
-            LogWriter("Prepare ended");
+            IO_Utilities.LogWriter("Prepare ended");
         }
 
         private void CheckSaveInfoData()
@@ -1535,7 +1536,7 @@ namespace TS_SE_Tool
 
             if (!File.Exists(tempSiiInfoPath))
             {
-                LogWriter("File does not exist in " + tempSiiInfoPath);
+                IO_Utilities.LogWriter("File does not exist in " + tempSiiInfoPath);
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
             }
             else
@@ -1558,18 +1559,18 @@ namespace TS_SE_Tool
 
                     if (decodeAttempt == 5)
                     {
-                        LogWriter("Could not decrypt after 5 attempts");
+                        IO_Utilities.LogWriter("Could not decrypt after 5 attempts");
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                     }
                 }
                 catch
                 {
-                    LogWriter("Could not read: " + tempSiiInfoPath);
+                    IO_Utilities.LogWriter("Could not read: " + tempSiiInfoPath);
                 }
 
                 if ((tempFile == null) || (tempFile[0] != "SiiNunit"))
                 {
-                    LogWriter("Wrongly decoded Info file or wrong file format");
+                    IO_Utilities.LogWriter("Wrongly decoded Info file or wrong file format");
                     UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
                 }
                 else if (tempFile != null)
@@ -1825,7 +1826,7 @@ namespace TS_SE_Tool
         {
             if (comboBoxFreightMarketSourceCity.SelectedIndex < 0 || comboBoxFreightMarketSourceCompany.SelectedIndex < 0 || comboBoxFreightMarketDestinationCity.SelectedIndex < 0 || comboBoxFreightMarketDestinationCompany.SelectedIndex < 0 || comboBoxFreightMarketCargoList.SelectedIndex < 0 || comboBoxFreightMarketUrgency.SelectedIndex < 0 || comboBoxFreightMarketTrailerDef.SelectedIndex < 0 || comboBoxFreightMarketTrailerVariant.SelectedIndex < 0)
             {
-                LogWriter("Missing selection of Source, Destination or Cargo settings");
+                IO_Utilities.LogWriter("Missing selection of Source, Destination or Cargo settings");
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_job_parameters_not_filled");
             }
             else
@@ -2283,17 +2284,17 @@ namespace TS_SE_Tool
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
                 MessageBox.Show(sqlexception.Message, "SQL Exception. Load all Distances", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                LogWriter("Getting Data went wrong");
+                IO_Utilities.LogWriter("Getting Data went wrong");
             }
             catch (Exception ex)
             {
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                 MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                LogWriter("Getting Data went wrong");
+                IO_Utilities.LogWriter("Getting Data went wrong");
             }
 
-            LogWriter("Loaded " + RouteList.CountItems() + " routes from DataBase");
+            IO_Utilities.LogWriter("Loaded " + RouteList.CountItems() + " routes from DataBase");
         }
         //Upload data to DB
         private void AddDistances_DataTableToDB_Bulk(DataTable reader)//(bool keepNulls, DataTable reader)
@@ -2363,7 +2364,7 @@ namespace TS_SE_Tool
                 rowsupdate++;
             }
 
-            LogWriter("Paths checked " + rowsupdate.ToString());
+            IO_Utilities.LogWriter("Paths checked " + rowsupdate.ToString());
             DBconnection.Close();
 
             UpdateDatabase("DELETE FROM [tempBulkDistancesTable]");
@@ -2962,11 +2963,11 @@ namespace TS_SE_Tool
                         }
                 }
 
-                LogWriter("Loaded " + totalrecord + " entries from " + _targetTable + " table.");
+                IO_Utilities.LogWriter("Loaded " + totalrecord + " entries from " + _targetTable + " table.");
             }
             catch
             {
-                LogWriter("Missing Database.sdf file");
+                IO_Utilities.LogWriter("Missing " + DBconnection.DataSource + " file");
             }
             finally
             {
