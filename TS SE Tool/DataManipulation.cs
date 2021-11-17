@@ -1963,14 +1963,7 @@ namespace TS_SE_Tool
                 //
 
                 //Total distance for Form label
-                int JobsTotalDistance = 0;
-
-                foreach (JobAdded tmpItem in listBoxFreightMarketAddedJobs.Items)
-                {
-                    JobsTotalDistance += tmpItem.Distance;
-                }
-
-                labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes;
+                RefreshFreightMarketDistance();
             }
         }
 
@@ -2257,21 +2250,7 @@ namespace TS_SE_Tool
 
             DBconnection.Close();
         }
-        //Clear DB
-        internal void ClearDatabase()
-        {
-            string[] deletearray = { "DistancesTable", "CompaniesCargoTable", "CompaniesInCitysTable", "TrucksTable", "CargoesTable", "TrailerVariantTable", "TrailerDefinitionTable", "CompaniesTable", "CitysTable"};
-
-            foreach (string droptable in deletearray)
-            {
-                UpdateDatabase("DELETE FROM " + droptable);
-            }
-
-            LogWriter("Database Cleared");
-
-            CreateDatabaseStructure();
-        }
-
+        
         //Load distances from database
         private void GetAllDistancesFromDB()
         {

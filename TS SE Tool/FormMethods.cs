@@ -286,6 +286,7 @@ namespace TS_SE_Tool
                 UrgencyArray = new int[] { 0, 1, 2 };
 
                 DistanceMultipliers = new Dictionary<string, double> { { "km", 1 }, { "mi", km_to_mileconvert } };
+                WeightMultipliers = new Dictionary<string, double> { { "kg", 1 }, { "lb", kg_to_lb } };
 
                 ADRImgS = new Image[6];
                 ADRImgSGrey = new Image[6];
@@ -411,7 +412,6 @@ namespace TS_SE_Tool
             namelessLast = "";
             LoopStartCity = "";
             LoopStartCompany = "";
-            ProgPrevVersion = "0.0.1.0";
 
             RouteList = new Routes();
             DistancesTable.Clear();
@@ -420,6 +420,22 @@ namespace TS_SE_Tool
 
            GlobalFontMap = new Dictionary<string, Dictionary<UInt16, SCS.SCSFontLetter>>();
     }
+
+        public void ApplySettings()
+        {
+            DistanceMultiplier = DistanceMultipliers[ProgSettingsV.DistanceMes];
+            WeightMultiplier = WeightMultipliers[ProgSettingsV.WeightMes];
+            checkBoxFreightMarketRandomDest.Checked = ProgSettingsV.ProposeRandom;
+        }
+
+        public void ApplySettingsUI()
+        {
+            //Company
+            FillAccountMoneyTB();
+            //Freight
+            RefreshFreightMarketDistance();
+            listBoxFreightMarketAddedJobs.Refresh();
+        }
 
         private void AddImagesToControls()
         {

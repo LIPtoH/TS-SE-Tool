@@ -46,19 +46,16 @@
             this.labelCurrency = new System.Windows.Forms.Label();
             this.numericUpDownSettingLoopCitys = new System.Windows.Forms.NumericUpDown();
             this.labelCity = new System.Windows.Forms.Label();
-            this.groupBoxDataBase = new System.Windows.Forms.GroupBox();
-            this.buttonDBClear = new System.Windows.Forms.Button();
-            this.buttonDBImport = new System.Windows.Forms.Button();
-            this.buttonDBExport = new System.Windows.Forms.Button();
             this.labelDayShort = new System.Windows.Forms.Label();
             this.numericUpDownSettingPickTimeD = new System.Windows.Forms.NumericUpDown();
             this.labelHourShort = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.labelWeight = new System.Windows.Forms.Label();
+            this.comboBoxWeightMesSelect = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingPickTimeH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingLoopCitys)).BeginInit();
-            this.groupBoxDataBase.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingPickTimeD)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,6 +101,8 @@
             // panel1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
+            this.panel1.Controls.Add(this.comboBoxWeightMesSelect);
+            this.panel1.Controls.Add(this.labelWeight);
             this.panel1.Controls.Add(this.labelCurrencyATS);
             this.panel1.Controls.Add(this.comboBoxSettingCurrencySelectATS);
             this.panel1.Controls.Add(this.labelCurrencyETS2);
@@ -116,7 +115,6 @@
             this.panel1.Controls.Add(this.labelCurrency);
             this.panel1.Controls.Add(this.numericUpDownSettingLoopCitys);
             this.panel1.Controls.Add(this.labelCity);
-            this.panel1.Controls.Add(this.groupBoxDataBase);
             this.panel1.Controls.Add(this.labelDayShort);
             this.panel1.Controls.Add(this.numericUpDownSettingPickTimeD);
             this.panel1.Controls.Add(this.labelHourShort);
@@ -129,7 +127,7 @@
             // labelCurrencyATS
             // 
             this.labelCurrencyATS.AutoSize = true;
-            this.labelCurrencyATS.Location = new System.Drawing.Point(171, 124);
+            this.labelCurrencyATS.Location = new System.Drawing.Point(171, 151);
             this.labelCurrencyATS.Name = "labelCurrencyATS";
             this.labelCurrencyATS.Size = new System.Drawing.Size(28, 13);
             this.labelCurrencyATS.TabIndex = 14;
@@ -138,7 +136,7 @@
             // comboBoxSettingCurrencySelectATS
             // 
             this.comboBoxSettingCurrencySelectATS.FormattingEnabled = true;
-            this.comboBoxSettingCurrencySelectATS.Location = new System.Drawing.Point(214, 121);
+            this.comboBoxSettingCurrencySelectATS.Location = new System.Drawing.Point(214, 148);
             this.comboBoxSettingCurrencySelectATS.Name = "comboBoxSettingCurrencySelectATS";
             this.comboBoxSettingCurrencySelectATS.Size = new System.Drawing.Size(70, 21);
             this.comboBoxSettingCurrencySelectATS.TabIndex = 13;
@@ -146,7 +144,7 @@
             // labelCurrencyETS2
             // 
             this.labelCurrencyETS2.AutoSize = true;
-            this.labelCurrencyETS2.Location = new System.Drawing.Point(171, 95);
+            this.labelCurrencyETS2.Location = new System.Drawing.Point(171, 122);
             this.labelCurrencyETS2.Name = "labelCurrencyETS2";
             this.labelCurrencyETS2.Size = new System.Drawing.Size(37, 13);
             this.labelCurrencyETS2.TabIndex = 12;
@@ -202,7 +200,7 @@
             // comboBoxSettingCurrencySelectETS2
             // 
             this.comboBoxSettingCurrencySelectETS2.FormattingEnabled = true;
-            this.comboBoxSettingCurrencySelectETS2.Location = new System.Drawing.Point(214, 92);
+            this.comboBoxSettingCurrencySelectETS2.Location = new System.Drawing.Point(214, 119);
             this.comboBoxSettingCurrencySelectETS2.Name = "comboBoxSettingCurrencySelectETS2";
             this.comboBoxSettingCurrencySelectETS2.Size = new System.Drawing.Size(70, 21);
             this.comboBoxSettingCurrencySelectETS2.TabIndex = 9;
@@ -220,7 +218,7 @@
             // labelCurrency
             // 
             this.labelCurrency.AutoSize = true;
-            this.labelCurrency.Location = new System.Drawing.Point(9, 95);
+            this.labelCurrency.Location = new System.Drawing.Point(9, 122);
             this.labelCurrency.MaximumSize = new System.Drawing.Size(205, 0);
             this.labelCurrency.Name = "labelCurrency";
             this.labelCurrency.Size = new System.Drawing.Size(49, 13);
@@ -243,49 +241,6 @@
             this.labelCity.Size = new System.Drawing.Size(23, 13);
             this.labelCity.TabIndex = 7;
             this.labelCity.Text = "city";
-            // 
-            // groupBoxDataBase
-            // 
-            this.groupBoxDataBase.Controls.Add(this.buttonDBClear);
-            this.groupBoxDataBase.Controls.Add(this.buttonDBImport);
-            this.groupBoxDataBase.Controls.Add(this.buttonDBExport);
-            this.groupBoxDataBase.Location = new System.Drawing.Point(9, 148);
-            this.groupBoxDataBase.Name = "groupBoxDataBase";
-            this.groupBoxDataBase.Size = new System.Drawing.Size(332, 54);
-            this.groupBoxDataBase.TabIndex = 3;
-            this.groupBoxDataBase.TabStop = false;
-            this.groupBoxDataBase.Text = "DataBase";
-            this.groupBoxDataBase.Visible = false;
-            // 
-            // buttonDBClear
-            // 
-            this.buttonDBClear.Enabled = false;
-            this.buttonDBClear.Location = new System.Drawing.Point(218, 19);
-            this.buttonDBClear.Name = "buttonDBClear";
-            this.buttonDBClear.Size = new System.Drawing.Size(100, 23);
-            this.buttonDBClear.TabIndex = 5;
-            this.buttonDBClear.Text = "Clear";
-            this.buttonDBClear.UseVisualStyleBackColor = true;
-            // 
-            // buttonDBImport
-            // 
-            this.buttonDBImport.Enabled = false;
-            this.buttonDBImport.Location = new System.Drawing.Point(112, 19);
-            this.buttonDBImport.Name = "buttonDBImport";
-            this.buttonDBImport.Size = new System.Drawing.Size(100, 23);
-            this.buttonDBImport.TabIndex = 4;
-            this.buttonDBImport.Text = "Import";
-            this.buttonDBImport.UseVisualStyleBackColor = true;
-            // 
-            // buttonDBExport
-            // 
-            this.buttonDBExport.Enabled = false;
-            this.buttonDBExport.Location = new System.Drawing.Point(6, 19);
-            this.buttonDBExport.Name = "buttonDBExport";
-            this.buttonDBExport.Size = new System.Drawing.Size(100, 23);
-            this.buttonDBExport.TabIndex = 3;
-            this.buttonDBExport.Text = "Export";
-            this.buttonDBExport.UseVisualStyleBackColor = true;
             // 
             // labelDayShort
             // 
@@ -324,6 +279,23 @@
             this.toolTip.InitialDelay = 500;
             this.toolTip.ReshowDelay = 100;
             // 
+            // labelWeight
+            // 
+            this.labelWeight.AutoSize = true;
+            this.labelWeight.Location = new System.Drawing.Point(9, 95);
+            this.labelWeight.Name = "labelWeight";
+            this.labelWeight.Size = new System.Drawing.Size(41, 13);
+            this.labelWeight.TabIndex = 15;
+            this.labelWeight.Text = "Weight";
+            // 
+            // comboBoxWeightMesSelect
+            // 
+            this.comboBoxWeightMesSelect.FormattingEnabled = true;
+            this.comboBoxWeightMesSelect.Location = new System.Drawing.Point(214, 92);
+            this.comboBoxWeightMesSelect.Name = "comboBoxWeightMesSelect";
+            this.comboBoxWeightMesSelect.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxWeightMesSelect.TabIndex = 16;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -343,7 +315,6 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingPickTimeH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingLoopCitys)).EndInit();
-            this.groupBoxDataBase.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingPickTimeD)).EndInit();
             this.ResumeLayout(false);
 
@@ -364,10 +335,6 @@
         private System.Windows.Forms.Label labelCurrency;
         private System.Windows.Forms.NumericUpDown numericUpDownSettingLoopCitys;
         private System.Windows.Forms.Label labelCity;
-        private System.Windows.Forms.GroupBox groupBoxDataBase;
-        private System.Windows.Forms.Button buttonDBClear;
-        private System.Windows.Forms.Button buttonDBImport;
-        private System.Windows.Forms.Button buttonDBExport;
         private System.Windows.Forms.Label labelDayShort;
         private System.Windows.Forms.NumericUpDown numericUpDownSettingPickTimeD;
         private System.Windows.Forms.Label labelHourShort;
@@ -375,5 +342,7 @@
         private System.Windows.Forms.ComboBox comboBoxSettingCurrencySelectATS;
         private System.Windows.Forms.Label labelCurrencyETS2;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.ComboBox comboBoxWeightMesSelect;
+        private System.Windows.Forms.Label labelWeight;
     }
 }

@@ -337,7 +337,7 @@ namespace TS_SE_Tool
                         txt = Job.Cargo;
 
                     if (CargoMass > 0)
-                        txt += " (" + CargoMass + " kg)";
+                        txt += " (" + Math.Floor(CargoMass * WeightMultiplier).ToString() + " " + ProgSettingsV.WeightMes + ")";
 
                     e.Graphics.DrawString(txt, this.Font, br, layout_rect);
 
@@ -362,7 +362,17 @@ namespace TS_SE_Tool
                         else
                             txt += (Job.Ferrytime / 60).ToString() + "h - ";
 
-                        txt += Job.Ferryprice.ToString() + " €)";
+                        //Currency
+                        string currencyText = "";
+                        long newValue = (long)Math.Floor(Job.Ferryprice * CurrencyDictConversion[Globals.CurrencyName]);
+
+                        if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
+                            currencyText += CurrencyDictFormat[Globals.CurrencyName][0] + "-";
+
+                        currencyText += CurrencyDictFormat[Globals.CurrencyName][1] + String.Format(CultureInfo.CurrentCulture, "{0:N0}", newValue) + ",-" + CurrencyDictFormat[Globals.CurrencyName][2];
+                        
+                        txt += currencyText + ")";
+                        ///
                     }
 
                     layout_rect = new RectangleF(x, y + 14, width, height);
@@ -1514,22 +1524,7 @@ namespace TS_SE_Tool
 
             listBoxFreightMarketAddedJobs.Items.Remove(listBoxFreightMarketAddedJobs.SelectedItem);
 
-            if (listBoxFreightMarketAddedJobs.Items.Count > 0)
-            {
-                int JobsTotalDistance = 0;
-
-                foreach (JobAdded tmpItem in listBoxFreightMarketAddedJobs.Items)
-                {
-                    JobsTotalDistance += tmpItem.Distance;
-                }
-
-                labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes;
-            }
-            else
-            {
-                labelFreightMarketDistanceNumbers.Text = " - ";
-                buttonFreightMarketClearJobList.Enabled = false;
-            }
+            RefreshFreightMarketDistance();
         }
 
         private void FM_JobList_Edit()
@@ -1558,6 +1553,27 @@ namespace TS_SE_Tool
             buttonFreightMarketAddJob.Click -= buttonAddJob_Click;
             buttonFreightMarketAddJob.Click += buttonEditJob_Click;
         }
+
+        private void RefreshFreightMarketDistance()
+        {
+            if (listBoxFreightMarketAddedJobs.Items.Count > 0)
+            {
+                int JobsTotalDistance = 0;
+
+                foreach (JobAdded tmpItem in listBoxFreightMarketAddedJobs.Items)
+                {
+                    JobsTotalDistance += tmpItem.Distance;
+                }
+
+                labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes;
+            }
+            else
+            {
+                labelFreightMarketDistanceNumbers.Text = " - ";
+                buttonFreightMarketClearJobList.Enabled = false;
+            }
+        }
+
         //end Freight market tab
     }
 }

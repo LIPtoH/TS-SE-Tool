@@ -45,7 +45,8 @@ namespace TS_SE_Tool
             FormSettings FormWindow = new FormSettings();
             FormWindow.ShowDialog();
 
-            textBoxUserCompanyMoneyAccount.Refresh();
+            ApplySettings();
+            ApplySettingsUI();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

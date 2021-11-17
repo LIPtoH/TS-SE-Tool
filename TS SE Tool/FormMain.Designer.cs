@@ -2598,7 +2598,7 @@
         private System.Windows.Forms.CheckBox checkBoxFreightMarketFilterDestination;
         private System.Windows.Forms.CheckBox checkBoxFreightMarketFilterSource;
         private System.Windows.Forms.GroupBox groupBoxProfileUserColors;
-        private System.Windows.Forms.CheckBox checkBoxFreightMarketRandomDest;
+        internal System.Windows.Forms.CheckBox checkBoxFreightMarketRandomDest;
         private System.Windows.Forms.TabPage tabPageConvoyTools;
         internal System.Windows.Forms.ComboBox comboBoxPrevProfiles;
         private System.Windows.Forms.CheckBox checkBoxProfilesAndSavesProfileBackups;

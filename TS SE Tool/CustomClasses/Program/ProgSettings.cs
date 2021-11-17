@@ -16,52 +16,199 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Globalization;
+using System.Threading;
+using System.Reflection;
+using System.Windows.Forms;
 using System.Text;
 using System.Threading.Tasks;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
     class ProgSettings
-    {     
-        /*
-        public ProgSettings(string _ProgramVersion, string _Language, bool _ProposeRandom, Int16 _JobPickupTime, byte _LoopEvery, double _TimeMultiplier, string _DistanceMes, string _CurrencyMes)
-        {
-            ProgramVersion = _ProgramVersion;
-            Language = _Language;
-            ProposeRandom = _ProposeRandom;
-            JobPickupTime = _JobPickupTime;
-            LoopEvery = _LoopEvery;
-            TimeMultiplier = _TimeMultiplier;
-            DistanceMes = _DistanceMes;
-            CurrencyMesETS2 = _CurrencyMes;
-            CustomPaths = new Dictionary<string, List<string>>();
-        }
-        */
+    {
         public ProgSettings()
-        {
+        { }
 
+        public string   ProgramVersion  { get; set; } = "0.1.0.0";
+
+        public string   ProgPrevVersion { get; set; } = "";
+
+        public string   Language        { get; set; } = "Default";
+
+        public bool     ProposeRandom   { get; set; } = false;
+
+        public Int16    JobPickupTime   { get; set; } = 72;
+
+        public byte     LoopEvery       { get; set; } = 0;
+
+        public double   TimeMultiplier  { get; set; } = 1.0;
+
+        public string   DistanceMes     { get; set; } = "km";
+
+        public string   WeightMes       { get; set; } = "kg";
+
+        public string   CurrencyMesETS2 { get; set; } = "EUR";
+
+        public string   CurrencyMesATS  { get; set; } = "USD";
+
+        public Dictionary<string, List<string>> CustomPaths { get; set; } = new Dictionary<string, List<string>>();
+
+        public void LoadConfigFromFile()
+        {
+            try
+            {
+                string GameType = "";
+
+                foreach (string line in File.ReadAllLines(Directory.GetCurrentDirectory() + @"\config.cfg"))
+                {
+                    string tag = line.Split(new char[] { '=' })[0], 
+                        data = line.Split(new char[] { '=' })[1];
+
+                    switch (tag)
+                    {
+                        case "ProgramVersion":
+                            {
+                                ProgPrevVersion = data;
+                                break;
+                            }
+
+                        case "Language":
+                            {
+                                Language = data;
+
+                                if (Language == "Default")
+                                    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+
+                                break;
+                            }
+                        case "JobPickupTime":
+                            {
+                                JobPickupTime = short.Parse(data);
+                                break;
+                            }
+                        case "LoopEvery":
+                            {
+                                LoopEvery = byte.Parse(data);
+                                break;
+                            }
+
+                        case "ProposeRandom":
+                            {
+                                ProposeRandom = bool.Parse(data);
+                                break;
+                            }
+                        case "TimeMultiplier":
+                            {
+                                TimeMultiplier = short.Parse(data);
+
+                                if (TimeMultiplier > 7.0)
+                                {
+                                    TimeMultiplier = 7.0;
+                                }
+                                else if (TimeMultiplier < 0.1)
+                                {
+                                    TimeMultiplier = 0.1;
+                                }
+
+                                break;
+                            }
+                        case "DistanceMes":
+                            {
+                                DistanceMes = data;
+                                break;
+                            }
+                        case "WeightMes":
+                            {
+                                WeightMes = data;
+                                break;
+                            }
+                        case "CurrencyMesETS2":
+                            {
+                                CurrencyMesETS2 = data;
+                                break;
+                            }
+                        case "CurrencyMesATS":
+                            {
+                                CurrencyMesATS = data;
+                                break;
+                            }
+                        case "CustomPathGame":
+                            {
+                                GameType = data;
+                                break;
+                            }
+                        case "CustomPath":
+                            {
+                                if (GameType == "" || GameType == null)
+                                    break;
+
+                                if (CustomPaths.ContainsKey(GameType))
+                                {
+                                    CustomPaths[GameType].Add(data);
+                                }
+                                else
+                                {
+                                    List<string> tmp = new List<string>();
+                                    tmp.Add(data);
+
+                                    CustomPaths.Add(GameType, tmp);
+                                }
+
+                                break;
+                            }
+                    }
+                }
+
+                CustomPaths = CustomPaths.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+
+            }
+            catch
+            {
+                WriteConfigToFile();
+            }
         }
 
-        //0.1, "Default", false, 72, 0, 1.0, "km", "EUR"
-        public string ProgramVersion { get; set; } = "0.0.1.0";
+        public void WriteConfigToFile()
+        {
+            string[] ExcludeList = new string[] { "CustomPaths", "ProgPrevVersion" };
 
-        public string Language { get; set; } = "Default";
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\config.cfg", false))
+                {
+                    PropertyInfo[] properties = this.GetType().GetProperties();
 
-        public bool ProposeRandom { get; set; } = false;
+                    foreach (PropertyInfo property in properties)
+                    {
+                        if(!ExcludeList.Contains(property.Name))                        
+                            writer.WriteLine(property.Name + "=" + property.GetValue(this).ToString());                        
+                    }
 
-        public Int16 JobPickupTime { get; set; } = 72;
+                    //Write Custom paths
+                    string GameType = "";
 
-        public byte LoopEvery { get; set; } = 0;
+                    foreach (KeyValuePair<string, List<string>> gameCustomPath in CustomPaths)
+                    {
+                        if (GameType != gameCustomPath.Key)
+                        {
+                            GameType = gameCustomPath.Key;
+                            writer.WriteLine("CustomPathGame=" + gameCustomPath.Key);
+                        }
+                        foreach (string customPath in gameCustomPath.Value)
+                        {
+                            writer.WriteLine("CustomPath=" + customPath);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_write_to_file", Directory.GetCurrentDirectory() + @"\config.cfg");
+            }
+        }
 
-        public double TimeMultiplier { get; set; } = 1.0;
-
-        public string DistanceMes { get; set; } = "km";
-
-        public string CurrencyMesETS2 { get; set; } = "EUR";
-
-        public string CurrencyMesATS { get; set; } = "USD";
-
-        //public List<string> CustomPaths { get; set; }
-        public Dictionary<string, List<string>> CustomPaths { get; set; } = new Dictionary<string, List<string>>();
     }
 }

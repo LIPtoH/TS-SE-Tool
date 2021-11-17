@@ -54,7 +54,6 @@ namespace TS_SE_Tool
             CorrectControlsPositions();
             this.ResumeLayout();
 
-            MainForm.LoadConfig();
             PopulateControls();
         }
 
@@ -63,16 +62,17 @@ namespace TS_SE_Tool
             //Longest setting string
             int longeststr = 0, margin = 6;
 
-            Control[] labellist = new Control[] { labelJobPickupTime, labelLoopEvery, labelDistance, labelCurrency, labelCurrency };
+            Control[] labellist = new Control[] { labelJobPickupTime, labelLoopEvery, labelDistance, labelWeight, labelCurrency };
 
             longeststr = CorrectControlsPositionsLoongest(labellist);
 
-            Control[][] Controllist = new Control[5][];
+            Control[][] Controllist = new Control[6][];
             Controllist[0] = new Control[] { numericUpDownSettingPickTimeD, labelDayShort, numericUpDownSettingPickTimeH, labelHourShort };
             Controllist[1] = new Control[] { numericUpDownSettingLoopCitys, labelCity };
             Controllist[2] = new Control[] { comboBoxSettingDistanceMesSelect };
-            Controllist[3] = new Control[] { labelCurrencyETS2 };
-            Controllist[4] = new Control[] { labelCurrencyATS };
+            Controllist[3] = new Control[] { comboBoxWeightMesSelect };
+            Controllist[4] = new Control[] { labelCurrencyETS2 };
+            Controllist[5] = new Control[] { labelCurrencyATS };
 
             CorrectControlsPositionsMover(Controllist, longeststr, margin);
 
@@ -118,10 +118,11 @@ namespace TS_SE_Tool
 
         private void PopulateControls()
         {
-            bool _sgw = false;
+            bool _fixSettings = false;
+            DataTable combDT;
 
             //Distances choice
-            DataTable combDT = new DataTable();
+            combDT = new DataTable();
             combDT.Columns.Add("ID");
             combDT.Columns.Add("DistDisplayName");
 
@@ -148,8 +149,41 @@ namespace TS_SE_Tool
 
             if (comboBoxSettingDistanceMesSelect.SelectedValue == null)
             {
-                _sgw = true;
+                _fixSettings = true;
                 comboBoxSettingDistanceMesSelect.SelectedIndex = 0;
+            }
+
+
+            //Weight choice
+            combDT = new DataTable();
+            combDT.Columns.Add("ID");
+            combDT.Columns.Add("DistDisplayName");
+
+            Dictionary<string, string> WeightMesNames = new Dictionary<string, string> { { "kg", "Kilograms" }, { "lb", "Pounds" } };
+
+            foreach (KeyValuePair<string, string> tempitem in WeightMesNames)
+            {
+                string value = MainForm.ResourceManagerMain.GetString(tempitem.Value, Thread.CurrentThread.CurrentUICulture);
+
+                if (value != null && value != "")
+                {
+                    combDT.Rows.Add(tempitem.Key, value);
+                }
+                else
+                {
+                    combDT.Rows.Add(tempitem.Key, tempitem.Value);
+                }
+            }
+
+            comboBoxWeightMesSelect.ValueMember = "ID";
+            comboBoxWeightMesSelect.DisplayMember = "DistDisplayName";
+            comboBoxWeightMesSelect.DataSource = combDT;
+            comboBoxWeightMesSelect.SelectedValue = MainForm.ProgSettingsV.WeightMes;
+
+            if (comboBoxWeightMesSelect.SelectedValue == null)
+            {
+                _fixSettings = true;
+                comboBoxWeightMesSelect.SelectedIndex = 0;
             }
 
 
@@ -180,9 +214,8 @@ namespace TS_SE_Tool
 
             if (comboBoxSettingCurrencySelectETS2.SelectedValue == null)
             {
-                _sgw = true;
+                _fixSettings = true;
                 comboBoxSettingCurrencySelectETS2.SelectedIndex = 0;
-                MainForm.ProgSettingsV.CurrencyMesETS2 = comboBoxSettingCurrencySelectETS2.SelectedValue.ToString();
             }
             //ATS
             combDT = new DataTable();
@@ -210,9 +243,8 @@ namespace TS_SE_Tool
 
             if (comboBoxSettingCurrencySelectATS.SelectedValue == null)
             {
-                _sgw = true;
+                _fixSettings = true;
                 comboBoxSettingCurrencySelectATS.SelectedIndex = 0;
-                MainForm.ProgSettingsV.CurrencyMesATS = comboBoxSettingCurrencySelectATS.SelectedValue.ToString();
             }
 
 
@@ -223,26 +255,11 @@ namespace TS_SE_Tool
             //Loop width
             numericUpDownSettingLoopCitys.Value = MainForm.ProgSettingsV.LoopEvery;
 
-            if (_sgw)
+            if (_fixSettings)
                 PrepareSettingsAndSave();
         }
         
         //Events
-        //DB
-        private void buttonSettingDBClear_Click(object sender, EventArgs e)
-        {
-            MainForm.ClearDatabase();
-        }
-
-        private void buttonSettingDBExport_Click(object sender, EventArgs e)
-        {
-            MainForm.ExportDB();
-        }
-
-        private void buttonSettingDBImport_Click(object sender, EventArgs e)
-        {
-            MainForm.ImportDB();
-        }
         
         //Pickup window
         private void numericUpDownSettingPickTimeD_ValueChanged(object sender, EventArgs e)
@@ -286,13 +303,13 @@ namespace TS_SE_Tool
 
         private void PrepareSettingsAndSave()
         {
-            MainForm.DistanceMultiplier = MainForm.DistanceMultipliers[comboBoxSettingDistanceMesSelect.SelectedValue.ToString()];
             MainForm.ProgSettingsV.DistanceMes = comboBoxSettingDistanceMesSelect.SelectedValue.ToString();
+            MainForm.ProgSettingsV.WeightMes = comboBoxWeightMesSelect.SelectedValue.ToString();
             MainForm.ProgSettingsV.CurrencyMesETS2 = comboBoxSettingCurrencySelectETS2.SelectedValue.ToString();
             MainForm.ProgSettingsV.CurrencyMesATS = comboBoxSettingCurrencySelectATS.SelectedValue.ToString();
             MainForm.ProgSettingsV.JobPickupTime = (short)(numericUpDownSettingPickTimeH.Value + numericUpDownSettingPickTimeD.Value * 24);
 
-            MainForm.WriteConfig();
+            MainForm.ProgSettingsV.WriteConfigToFile();
 
             if (MainForm.GameType == "ETS2")
             {
@@ -302,8 +319,6 @@ namespace TS_SE_Tool
             {
                 Globals.CurrencyName = MainForm.ProgSettingsV.CurrencyMesATS;
             }
-
-            MainForm.FillAccountMoneyTB();
         }
 
         private void buttonSettingCancel_Click(object sender, EventArgs e)

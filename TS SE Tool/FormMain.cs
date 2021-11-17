@@ -48,8 +48,6 @@ namespace TS_SE_Tool
 
         private int[] UrgencyArray;//Program
 
-        private string ProgPrevVersion;//Program
-
         public bool FileDecoded;  //+
 
         internal string GameType;//Program
@@ -156,6 +154,7 @@ namespace TS_SE_Tool
         private Dictionary<string, List<string>> GPSbehind, GPSahead, GPSAvoid, GPSbehindOnline, GPSaheadOnline; //+
 
         internal Dictionary<string, double> DistanceMultipliers; //Program
+        internal Dictionary<string, double> WeightMultipliers; //Program
 
         private DataTable DistancesTable; //Program
 
@@ -174,6 +173,9 @@ namespace TS_SE_Tool
 
         internal double DistanceMultiplier = 1; //Program
         private double km_to_mileconvert = 0.621371; //Program
+
+        internal double WeightMultiplier = 1; //Program
+        private double kg_to_lb = 2.20462262185; //Program
 
         public Dictionary<string, List<string>> CurrencyDictFormat;
         public Dictionary<string, double> CurrencyDictConversion;
@@ -205,7 +207,8 @@ namespace TS_SE_Tool
 
             SetDefaultValues(true);
             LogWriter("Loading config...");
-            LoadConfig();
+            ProgSettingsV.LoadConfigFromFile();
+            ApplySettings();
             LogWriter("Config loaded.");
 
             LogWriter("Loading resources...");
@@ -269,7 +272,7 @@ namespace TS_SE_Tool
 
             if (exitDR == DialogResult.Yes)
             {
-                WriteConfig();
+                ProgSettingsV.WriteConfigToFile();
             }
             else
             {
