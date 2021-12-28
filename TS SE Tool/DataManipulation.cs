@@ -2200,18 +2200,31 @@ namespace TS_SE_Tool
             if (DBconnection.State == ConnectionState.Closed)
                 DBconnection.Open();
 
+            bool oldDBversion = false;
+
             try
             {
-                commandText = "SELECT DBVersion FROM [DatabaseDetails];";
+                commandText = "SELECT column_name FROM Information_SCHEMA.columns WHERE Table_name = 'DatabaseDetails' AND COLUMN_NAME = 'DBVersion'";
                 reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
-
-                while (reader.Read())
-                    DBVersion = reader["DBVersion"].ToString();
-
+                oldDBversion = reader.HasRows;
             }
             catch { }
 
-            if (DBVersion == "")
+            if (oldDBversion)
+            {
+                try
+                {
+                    commandText = "SELECT DBVersion FROM [DatabaseDetails];";
+                    reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
+
+                    while (reader.Read())
+                        DBVersion = reader["DBVersion"].ToString();
+
+                }
+                catch { }
+            }
+            else
+            {
                 try
                 {
                     commandText = "SELECT V1, V2, V3, V4 FROM [DatabaseDetails];";
@@ -2221,6 +2234,7 @@ namespace TS_SE_Tool
                         DBVersion = reader["V1"].ToString() + "." + reader["V2"].ToString() + "." + reader["V3"].ToString() + "." + reader["V4"].ToString();
                 }
                 catch { }
+            }
 
             DBconnection.Close();
             //
