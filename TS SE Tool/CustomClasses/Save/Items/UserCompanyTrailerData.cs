@@ -22,20 +22,20 @@ using TS_SE_Tool.Save.Items;
 
 namespace TS_SE_Tool
 {
-    public class UserCompanyTruckData
+    public class UserCompanyTrailerData
     {
-        public UserCompanyTruckData()
+        public UserCompanyTrailerData()
         {
 
         }
 
         public List<UserCompanyTruckDataPart> Parts = new List<UserCompanyTruckDataPart>();
-        public string TruckType { get; set; } = "fromsave";
+        public string TrailerType { get; set; } = "fromsave";
         public bool Main { get; set; } = true;
         public bool Users { get; set; } = true;
 
-        internal Vehicle TruckMainData { get; set; } = new Vehicle();
+        internal Trailer TrailerMainData { get; set; } = new Trailer();
 
-        public string TruckProfitLogs { get; set; } = null;
+        public string ProfitLogs { get; set; } = null;
     }
 }

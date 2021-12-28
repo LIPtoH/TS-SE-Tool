@@ -366,7 +366,7 @@ namespace TS_SE_Tool
             UserTruckDictionary = new Dictionary<string, UserCompanyTruckData>();
             UserDriverDictionary = new Dictionary<string, UserCompanyDriverData>();
             DriverPool = new List<string>();
-            UserTrailerDictionary = new Dictionary<string, UserCompanyTruckData>();
+            UserTrailerDictionary = new Dictionary<string, UserCompanyTrailerData>();
             UserTrailerDefDictionary = new Dictionary<string, List<string>>();
 
             extraVehicles = new List<string>();
@@ -1215,7 +1215,7 @@ namespace TS_SE_Tool
             g.FillRectangle(br, new RectangleF(0, 0, ProgressBarGradient.Width, ProgressBarGradient.Height));
         }
 
-        private Color GetProgressbarColor(decimal _value)
+        private Color GetProgressbarColor(float _value)
         {
             if (_value < 0)
                 _value = 0;

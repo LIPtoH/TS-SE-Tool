@@ -133,8 +133,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomClasses\ExternalData\ScsFont.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\Vector_3f.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\Vector_4f.cs" />
     <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
     <Compile Include="CustomClasses\Save\Items\PlayerJob.cs" />
+    <Compile Include="CustomClasses\Save\Items\Trailer.cs" />
+    <Compile Include="CustomClasses\Save\Items\UserCompanyTrailerData.cs" />
+    <Compile Include="CustomClasses\Save\Items\Vehicle.cs" />
     <Compile Include="CustomClasses\SCSFontLetter.cs" />
     <Compile Include="CustomClasses\SCSLicensePlate.cs" />
     <Compile Include="CustomClasses\Utilities\AssemblyData.cs" />

@@ -53,7 +53,7 @@ namespace TS_SE_Tool
         private ushort      InfoUnlockedDealers         { get; set; } = 0;
         private ushort      InfoVisitedCities           { get; set; } = 0;
         private long        InfoMoneyAccount            { get; set; } = 0;
-        private decimal     InfoExploredRatio           { get; set; } = 0.0M;
+        private float       InfoExploredRatio           { get; set; } = 0.0F;
 
         //
         internal List<Dependency> Dependencies { get; set; }
@@ -197,7 +197,7 @@ namespace TS_SE_Tool
 
                     case "info_explored_ratio":
                         {
-                            InfoExploredRatio = NumericUtilities.HexFloatToDecimalFloat(dataLine);
+                            InfoExploredRatio = NumericUtilities.HexFloatToSingleFloat(dataLine);
                             break;
                         }
 
@@ -246,7 +246,7 @@ namespace TS_SE_Tool
                 sbResult.AppendLine(" info_unlocked_dealers: " + InfoUnlockedDealers.ToString());
                 sbResult.AppendLine(" info_visited_cities: " + InfoVisitedCities.ToString());
                 sbResult.AppendLine(" info_money_account: " + InfoMoneyAccount.ToString());
-                sbResult.AppendLine(" info_explored_ratio: " + NumericUtilities.DecimalFloatToHexFloat(InfoExploredRatio));
+                sbResult.AppendLine(" info_explored_ratio: " + NumericUtilities.SingleFloatToHexFloat(InfoExploredRatio));
             }
 
             //Add lines with unsorted data

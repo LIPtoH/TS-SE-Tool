@@ -1663,38 +1663,23 @@ namespace TS_SE_Tool
                                 //insidetruck = true;
                             }
 
-                            if(extraVehicles.Contains(trucknameless))
+                            if (extraVehicles.Contains(trucknameless))
                             {
                                 savingtruck = false;
                             }
                             else
-                                savingtruck = true;
-
-                            while (tempSavefileInMemory[line] != "}")
                             {
-                                if (tempSavefileInMemory[line].StartsWith(" accessories:"))
-                                {
-                                    truckaccCount = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
-                                }
-
-                                if (savingtruck)
-                                {
-                                    if (tempSavefileInMemory[line].StartsWith(" fuel_relative:"))
-                                    {
-                                        List<string> temp = UserTruckDictionary[trucknameless].Parts.Find(x => x.PartType == "truckdata").PartData;
-
-                                        writer.WriteLine(temp.Find(x => x.StartsWith(" fuel_relative:")));
-                                    }
-                                    else
-                                        writer.WriteLine(tempSavefileInMemory[line]);
-                                }
-
-                                line++;
+                                savingtruck = true;
+                                writer.Write(UserTruckDictionary[trucknameless].TruckMainData.PrintOut(0, trucknameless));
                             }
 
-                            if (savingtruck)
-                                writer.WriteLine(tempSavefileInMemory[line]);
-                            else
+                            truckaccCount = UserTruckDictionary[trucknameless].TruckMainData.accessories.Count;
+
+                            //Skip lines
+                            while (tempSavefileInMemory[line] != "}")                            
+                                line++;                            
+
+                            if (!savingtruck)
                                 line++;
 
                             continue;
@@ -1831,9 +1816,9 @@ namespace TS_SE_Tool
 
                         if (insidetrailer && SaveInMemLine.StartsWith(" cargo_damage:"))
                         {
-                            List<string> temp = UserTrailerDictionary[trailernameless[slavetrailerscount - 1]].Parts.Find(x => x.PartType == "trailerdata").PartData;
+                            string temp = NumericUtilities.SingleFloatToHexFloat(UserTrailerDictionary[trailernameless[slavetrailerscount - 1]].TrailerMainData.cargoDamage);
+                            writer.WriteLine(" cargo_damage: " + temp);
 
-                            writer.WriteLine(temp.Find(x => x.StartsWith(" cargo_damage:")));
                             continue;
                         }
 

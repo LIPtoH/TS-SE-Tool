@@ -210,7 +210,7 @@ namespace TS_SE_Tool
             combDT.Rows.Add("null"); // -- NONE --
             //
 
-            foreach (KeyValuePair<string, UserCompanyTruckData> UserTrailer in UserTrailerDictionary)
+            foreach (KeyValuePair<string, UserCompanyTrailerData> UserTrailer in UserTrailerDictionary)
             {
                 if (UserTrailer.Value == null)
                     continue;
@@ -328,7 +328,7 @@ namespace TS_SE_Tool
 
         private void UpdateTrailerPanelProgressBar(byte _number)
         {
-            UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTrailer);
+            UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTrailerData SelectedUserCompanyTrailer);
 
             if (SelectedUserCompanyTrailer == null)
                 return;
@@ -352,11 +352,9 @@ namespace TS_SE_Tool
                 {
                     switch (_number)
                     {
-                        case 0:
-                            {
-                                DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "trailerdata");
-                                break;
-                            }
+                        case 0:                            
+                            DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "trailerdata");
+                            break;                            
                         case 1:
                             DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "body");
                             break;
@@ -374,8 +372,7 @@ namespace TS_SE_Tool
                     return;
                 }
 
-                decimal _wear = 0;
-                byte partCount = 0;
+                float _wear = 0;
 
                 if (DataPart != null && DataPart.Count > 0)
                 {
@@ -420,13 +417,39 @@ namespace TS_SE_Tool
                     {
                         try
                         {
-                            string tmpWear = tmpPartData.PartData.Find(xl => xl.StartsWith(" wear:") || xl.StartsWith(" cargo_damage:")).Split(new char[] { ' ' })[2];
-                            decimal _tmpWear = 0;
+                            float _tmpWear = 0;
 
-                            _tmpWear = Utilities.NumericUtilities.HexFloatToDecimalFloat(tmpWear);
+                            string tmpWearString = tmpPartData.PartData.Find(xl => xl.StartsWith(" wear:") || xl.StartsWith(" cargo_damage:"));
 
-                            _wear += _tmpWear;
-                            partCount++;
+                            if (tmpWearString != null)
+                            {
+                                string tmpWear = tmpWearString.Split(new char[] { ' ' })[2];
+
+                                _tmpWear = Utilities.NumericUtilities.HexFloatToSingleFloat(tmpWear);
+                            }
+                            else
+                            {
+                                switch (_number)
+                                {
+                                    case 0: //cargo
+                                        _tmpWear = SelectedUserCompanyTrailer.TrailerMainData.cargoDamage;
+                                        break;
+                                    case 1: //body
+                                        _tmpWear = SelectedUserCompanyTrailer.TrailerMainData.trailerBodyWear;
+                                        break;
+                                    case 2: //chassis
+                                        _tmpWear = SelectedUserCompanyTrailer.TrailerMainData.chassisWear;
+                                        break;
+                                    case 3: //tire
+                                        if (SelectedUserCompanyTrailer.TrailerMainData.wheelsWear.Length > 0)
+                                            _tmpWear = SelectedUserCompanyTrailer.TrailerMainData.wheelsWear.Sum() / SelectedUserCompanyTrailer.TrailerMainData.wheelsWear.Length;
+                                        else
+                                            _tmpWear = 0;
+                                        break;
+                                }
+                            }
+
+                            _wear = _tmpWear;
                         }
                         catch
                         { }
@@ -438,8 +461,6 @@ namespace TS_SE_Tool
                     repairButton.Enabled = false;
                     return;
                 }
-
-                _wear = _wear / partCount;
 
                 if (_wear == 0)
                     repairButton.Enabled = false;
@@ -509,9 +530,9 @@ namespace TS_SE_Tool
 
         private void UpdateTrailerPanelLicensePlate()
         {
-            UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTrailer);
-            
-            string LicensePlate = SelectedUserCompanyTrailer.Parts.Find(xp => xp.PartType == "trailerdata").PartData.Find(xl => xl.StartsWith(" license_plate:")).Split(new char[] { '"' })[1];
+            UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTrailerData SelectedUserCompanyTrailer);
+
+            string LicensePlate = SelectedUserCompanyTrailer.TrailerMainData.licensePlate;
 
             SCS.SCSLicensePlate thisLP = new SCS.SCSLicensePlate(LicensePlate, SCS.SCSLicensePlate.LPtype.Truck);
 

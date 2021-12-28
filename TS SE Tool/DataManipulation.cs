@@ -29,6 +29,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using TS_SE_Tool.Utilities;
+using TS_SE_Tool.Save.Items;
 
 namespace TS_SE_Tool
 {
@@ -478,7 +479,7 @@ namespace TS_SE_Tool
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
 
-                            UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
+                            UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTrailerData());
                             continue;
                         }
 
@@ -662,7 +663,7 @@ namespace TS_SE_Tool
                                 chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
                                 if (chunkOfline[2] != "null")
                                 {
-                                    UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
+                                    UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTrailerData());
                                     UserTrailerDictionary[chunkOfline[2]].Users = false;
                                 }
                                 continue;
@@ -680,30 +681,139 @@ namespace TS_SE_Tool
 
                         if (UserTruckDictionary.ContainsKey(vehiclenameless))
                         {
-                            UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("truckdata"));
-                            line++;
+                            UserCompanyTruckData thisTruck = UserTruckDictionary[vehiclenameless];
 
+                            Save.Items.Vehicle thisTruckMD = thisTruck.TruckMainData;
                             int accessoriescount = 0;
+
+                            line++;
 
                             while (!tempSavefileInMemory[line].StartsWith("}"))
                             {
-                                if (tempSavefileInMemory[line].StartsWith(" fuel_relative:"))
-                                {
-                                    UserTruckDictionary[vehiclenameless].Parts.Find(x => x.PartType == "truckdata").PartData.Add(tempSavefileInMemory[line]);
-                                }
-                                else
+                                string workLine = tempSavefileInMemory[line];
 
-                                if (tempSavefileInMemory[line].StartsWith(" license_plate:"))
+                                switch (workLine)
                                 {
-                                    UserTruckDictionary[vehiclenameless].Parts.Find(x => x.PartType == "truckdata").PartData.Add(tempSavefileInMemory[line]);
-                                }
-                                else
+                                    case var s when s.StartsWith(" engine_wear:"):
+                                        thisTruckMD.engineWear = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
 
-                                if (tempSavefileInMemory[line].StartsWith(" accessories:"))
-                                {
-                                    accessoriescount = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
+                                    case var s when s.StartsWith(" transmission_wear:"):
+                                        thisTruckMD.transmissionWear = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
 
-                                    line++;
+                                    case var s when s.StartsWith(" cabin_wear:"):
+                                        thisTruckMD.cabinWear = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" chassis_wear:"):
+                                        thisTruckMD.chassisWear = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" wheels_wear:"):
+                                        thisTruckMD.wheelsWear = new float[int.Parse(workLine.Split(new char[] { ' ' })[2])];
+                                        break;
+
+                                    case var s when s.StartsWith(" wheels_wear["):
+                                        thisTruckMD.wheelsWear[int.Parse(workLine.Split(new char[] { '[', ']' })[1])] = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" accessories:"):
+                                        accessoriescount = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" accessories["):
+                                        thisTruckMD.accessories.Add(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" license_plate:"):
+                                        {
+                                            string tmp = workLine.Split(new char[] { ' ' }, 3)[2];
+
+                                            if (tmp.StartsWith("\"") && tmp.EndsWith("\""))
+                                                tmp = tmp.Substring(1, tmp.Length - 2);
+
+                                            thisTruckMD.licensePlate = tmp;
+                                        }
+                                        break;
+
+                                    case var s when s.StartsWith(" fuel_relative:"):
+                                        thisTruckMD.fuelRelative = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" odometer:"):
+                                        thisTruckMD.odometer = uint.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" odometer_float_part:"):
+                                        thisTruckMD.odometer_float_part = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" rheostat_factor:"):
+                                        thisTruckMD.rheostat_factor = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" user_mirror_rot["):
+                                        {
+                                            Save.DataFormat.Vector_4f t = new Save.DataFormat.Vector_4f();
+
+                                            t.ToVector(workLine.Split(new char[] { ' ' }, 3)[2]);
+                                            thisTruckMD.user_mirror_rot.Add(t);
+                                        }
+                                        break;
+
+                                    case var s when s.StartsWith(" user_head_offset:"):
+                                        {
+                                            Save.DataFormat.Vector_3f t = new Save.DataFormat.Vector_3f();
+                                            t.ToVector(workLine.Split(new char[] { ' ' }, 3)[2]);
+
+                                            thisTruckMD.user_head_offset = t;
+                                        }
+                                        break;
+
+                                    case var s when s.StartsWith(" user_fov:"):
+                                        thisTruckMD.user_fov = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" user_wheel_up_down:"):
+                                        thisTruckMD.user_wheel_up_down = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" user_wheel_front_back:"):
+                                        thisTruckMD.user_wheel_front_back = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" user_mouse_left_right_default:"):
+                                        thisTruckMD.user_mouse_left_right_default = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" user_mouse_up_down_default:"):
+                                        thisTruckMD.user_mouse_up_down_default = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" trip_fuel_l:"):
+                                        thisTruckMD.trip_fuel_l = uint.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" trip_fuel:"):
+                                        thisTruckMD.trip_fuel = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" trip_distance_km:"):
+                                        thisTruckMD.trip_distance_km = uint.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" trip_distance:"):
+                                        thisTruckMD.trip_distance = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" trip_time_min:"):
+                                        thisTruckMD.trip_time_min = uint.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
+
+                                    case var s when s.StartsWith(" trip_time:"):
+                                        thisTruckMD.trip_time = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
+                                        break;
                                 }
 
                                 line++;
@@ -718,7 +828,7 @@ namespace TS_SE_Tool
 
                                     if (tempSavefileInMemory[line].StartsWith("vehicle_paint_job_accessory :"))
                                     {
-                                        UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("paintjob"));
+                                        thisTruck.Parts.Add(new UserCompanyTruckDataPart("paintjob"));
                                         paintadded = true;
                                     }
                                     line++;
@@ -769,15 +879,15 @@ namespace TS_SE_Tool
                                                         break;
                                                 }
 
-                                                UserTruckDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart(partType));
+                                                thisTruck.Parts.Add(new UserCompanyTruckDataPart(partType));
                                             }
                                         //--
 
                                         line++;
                                     }
 
-                                    UserTruckDictionary[vehiclenameless].Parts.Last().PartNameless = accessorynameless;
-                                    UserTruckDictionary[vehiclenameless].Parts.Last().PartData = tempPartData;
+                                    thisTruck.Parts.Last().PartNameless = accessorynameless;
+                                    thisTruck.Parts.Last().PartData = tempPartData;
                                     accessoriescount--;
 
                                     if (paintadded)
@@ -802,7 +912,9 @@ namespace TS_SE_Tool
 
                         if (UserTrailerDictionary.ContainsKey(vehiclenameless))
                         {
-                            UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("trailerdata"));
+                            UserCompanyTrailerData thisTrailer = UserTrailerDictionary[vehiclenameless];
+
+                            Save.Items.Trailer thisTrailerMD = thisTrailer.TrailerMainData;
                             line++;
 
                             string workLine = "";
@@ -816,19 +928,24 @@ namespace TS_SE_Tool
                                     case var s when s.StartsWith(" trailer_definition:"):
 
                                         string nameless = workLine.Split(new char[] { ' ' })[2];
-                                        UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("trailerdef", nameless));
+                                        thisTrailer.Parts.Add(new UserCompanyTruckDataPart("trailerdef", nameless));
                                         break;
 
                                     case var s when s.StartsWith(" cargo_mass:"):
-                                        UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(workLine);
+                                        thisTrailerMD.cargoMass = uint.Parse(workLine.Split(new char[] { ' ' })[2]);
                                         break;
 
                                     case var s when s.StartsWith(" cargo_damage:"):
-                                        UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(workLine);
+                                        thisTrailerMD.cargoDamage = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
                                         break;
 
                                     case var s when s.StartsWith(" license_plate:"):
-                                        UserTrailerDictionary[vehiclenameless].Parts.Find(x => x.PartType == "trailerdata").PartData.Add(workLine);
+                                        string tmp = workLine.Split(new char[] { ' ' }, 3)[2];
+
+                                        if (tmp.StartsWith("\"") && tmp.EndsWith("\""))
+                                            tmp = tmp.Substring(1, tmp.Length - 2);
+
+                                        thisTrailerMD.licensePlate = tmp;
                                         break;
 
                                     case var s when s.StartsWith(" slave_trailer:"):
@@ -843,9 +960,9 @@ namespace TS_SE_Tool
 
                                             trailernamelessArray[slavetrailerscount - 1] = vehiclenameless;
 
-                                            UserTrailerDictionary[vehiclenameless].Parts.Add(new UserCompanyTruckDataPart("slavetrailer", trailernameless));
+                                            thisTrailer.Parts.Add(new UserCompanyTruckDataPart("slavetrailer", trailernameless));
 
-                                            UserTrailerDictionary.Add(trailernameless, new UserCompanyTruckData());
+                                            UserTrailerDictionary.Add(trailernameless, new UserCompanyTrailerData());
                                             UserTrailerDictionary.Last().Value.Main = false;
                                         }
                                         else
@@ -867,7 +984,7 @@ namespace TS_SE_Tool
                                 line++;
                             }
 
-                            if (UserTrailerDictionary[vehiclenameless].Parts.Exists(x => x.PartType == "slavetrailer"))
+                            if (thisTrailer.Parts.Exists(x => x.PartType == "slavetrailer"))
                             {
                                 while (!tempSavefileInMemory[line].StartsWith("trailer :"))
                                 {

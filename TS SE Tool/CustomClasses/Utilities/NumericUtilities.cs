@@ -21,11 +21,11 @@ namespace TS_SE_Tool.Utilities
 {
     public class NumericUtilities
     {
-        public static decimal HexFloatToDecimalFloat(string _hexFloat)
+        public static float HexFloatToSingleFloat(string _input)
         {
-            if (_hexFloat.Contains('&'))
+            if (_input.Contains('&'))
             {
-                string binarystring = String.Join(String.Empty, _hexFloat.Substring(1).Select(c => Convert.ToString(Convert.ToInt32(c.ToString(), 16), 2).PadLeft(4, '0')));
+                string binarystring = String.Join(String.Empty, _input.Substring(1).Select(c => Convert.ToString(Convert.ToInt32(c.ToString(), 16), 2).PadLeft(4, '0')));
 
                 short sign = Convert.ToInt16(binarystring.Substring(0, 1), 2);
                 byte exp = Convert.ToByte(binarystring.Substring(1, 8), 2);
@@ -33,91 +33,35 @@ namespace TS_SE_Tool.Utilities
 
                 string decstrign = sign.ToString() + " " + exp.ToString() + " " + mantis.ToString();
 
-                decimal decformat = (decimal)(Math.Pow(-1, sign) * Math.Pow(2, (exp - 127)) * (1 + (mantis / Math.Pow(2, 23))));
+                float decformat = (float)(Math.Pow(-1, sign) * Math.Pow(2, (exp - 127)) * (1 + (mantis / Math.Pow(2, 23))));
 
                 return decformat;
             }
             else
             {
-                return Convert.ToDecimal(_hexFloat);
+                return Convert.ToSingle(_input);
             }
         }
 
-        public static string DecimalFloatToHexFloat(decimal _decimalFloat)
+        public static string SingleFloatToHexFloat(float _input)
         {
-            if (_decimalFloat != 0 && _decimalFloat != 1)
+            if (_input != 0 && _input != 1)
             {
-                string _hexFloat = "&";
+                //Get bytes
+                byte[] tmpByteArray = BitConverter.GetBytes(_input);
+                
+                //Reverse order
+                Array.Reverse(tmpByteArray);
 
-                //Sign
-                short sign = 0; // 0 - positive 1 - negative
-
-                if (Math.Sign(_decimalFloat) == -1)
-                    sign = 1;
-                //
-
-                //Exponent
-                sbyte exp = 0;
-
-                decimal tmpDecimal = _decimalFloat, tmpDecimalCycle = 0;
-                int expPower = 0;
-
-                bool positive = true;
-
-                if (tmpDecimal >= 1)
-                    positive = true;
-                else
-                    positive = false;
-
-                while (true)
-                {
-                    tmpDecimalCycle = tmpDecimal / (decimal)Math.Pow(2, expPower);
-
-                    if (tmpDecimalCycle >= 1 && tmpDecimalCycle < 2)
-                        break;
-
-                    if (positive)
-                        ++expPower;
-                    else
-                        --expPower;
-                }
-
-                exp = (sbyte)(127 + expPower);
-                //
-
-                //Mantis
-                string strMantis = "";
-
-                decimal tmpMantis = tmpDecimalCycle - Math.Truncate(tmpDecimalCycle);
-                byte mantisBin = 0;
-
-                while (true)
-                {
-                    tmpMantis = tmpMantis * 2;
-
-                    mantisBin = Convert.ToByte(Math.Truncate(tmpMantis));
-
-                    strMantis += mantisBin;
-
-                    if (tmpMantis == 1 || strMantis.Length == 23)
-                        break;
-
-                    tmpMantis = tmpMantis - mantisBin;
-                }
-                //
-
-                //To binary
-                string binarystring = sign.ToString() + Convert.ToString(exp, 2).PadLeft(8, '0') + strMantis.PadLeft(23, '0');
-
-                //Convert
-                _hexFloat += Convert.ToInt32(binarystring, 2).ToString("x4");
-
+                //remove dashes and make it lower case
+                string hexFloat = BitConverter.ToString(tmpByteArray).Replace("-", "").ToLower();
+                
                 //Result
-                return _hexFloat;
+                return "&" + hexFloat;
             }
             else
             {
-                return _decimalFloat.ToString();
+                return _input.ToString();
             }
         }
 

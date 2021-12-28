@@ -390,8 +390,7 @@ namespace TS_SE_Tool
                     return;
                 }
 
-                decimal _wear = 0;
-                byte partCount = 0;
+                float _wear = 0;
 
                 if (TruckDataPart != null && TruckDataPart.Count > 0)
                 {
@@ -404,13 +403,42 @@ namespace TS_SE_Tool
                     {
                         try
                         {
-                            string tmpWear = tmpPartData.PartData.Find(xl => xl.StartsWith(" wear:")).Split(new char[] { ' ' })[2];
-                            decimal _tmpWear = 0;
+                            float _tmpWear = 0;
 
-                            _tmpWear = Utilities.NumericUtilities.HexFloatToDecimalFloat(tmpWear);
+                            string tmpWearString = tmpPartData.PartData.Find(xl => xl.StartsWith(" wear:"));
 
-                            _wear += _tmpWear;
-                            partCount++;
+                            if (tmpWearString != null)
+                            {
+                                string tmpWear = tmpWearString.Split(new char[] { ' ' })[2];
+
+                                _tmpWear = Utilities.NumericUtilities.HexFloatToSingleFloat(tmpWear);
+                            }
+                            else
+                            {
+                                switch (_number)
+                                {
+                                    case 0: //engine
+                                        _tmpWear = SelectedUserCompanyTruck.TruckMainData.engineWear;
+                                        break;
+                                    case 1: //transmission
+                                        _tmpWear = SelectedUserCompanyTruck.TruckMainData.transmissionWear;
+                                        break;
+                                    case 2: //chassis
+                                        _tmpWear = SelectedUserCompanyTruck.TruckMainData.chassisWear;
+                                        break;
+                                    case 3: //cabin
+                                        _tmpWear = SelectedUserCompanyTruck.TruckMainData.cabinWear;
+                                        break;
+                                    case 4: //tire
+                                        if (SelectedUserCompanyTruck.TruckMainData.wheelsWear.Length > 0)
+                                            _tmpWear = SelectedUserCompanyTruck.TruckMainData.wheelsWear.Sum() / SelectedUserCompanyTruck.TruckMainData.wheelsWear.Length;
+                                        else
+                                            _tmpWear = 0;
+                                        break;
+                                }                                    
+                            }
+
+                            _wear = _tmpWear;
                         }
                         catch
                         { }
@@ -420,8 +448,6 @@ namespace TS_SE_Tool
                 {
                     pnLabel.Text = "!! Part not found !!";
                 }
-
-                _wear = _wear / partCount;
 
                 if (_wear == 0)
                     repairButton.Enabled = false;
@@ -495,10 +521,7 @@ namespace TS_SE_Tool
 
             if (pnlfuel != null)
             {
-                string fuel = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "truckdata").PartData.Find(xl => xl.StartsWith(" fuel_relative:")).Split(new char[] { ' ' })[2];//SelectedUserCompanyTruck.Fuel;
-                decimal _fuel = 0;
-
-                _fuel = Utilities.NumericUtilities.HexFloatToDecimalFloat(fuel);
+                float _fuel = SelectedUserCompanyTruck.TruckMainData.fuelRelative;
 
                 if (_fuel == 1)
                     refuelTruck.Enabled = false;
@@ -538,7 +561,8 @@ namespace TS_SE_Tool
         private void UpdateTruckPanelLicensePlate()
         {
             UserTruckDictionary.TryGetValue(comboBoxUserTruckCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTruck);
-            string LicensePlate = SelectedUserCompanyTruck.Parts.Find(xp => xp.PartType == "truckdata").PartData.Find(xl => xl.StartsWith(" license_plate:")).Split(new char[] { '"' })[1];
+
+            string LicensePlate = SelectedUserCompanyTruck.TruckMainData.licensePlate;
 
             SCS.SCSLicensePlate thisLP = new SCS.SCSLicensePlate(LicensePlate, SCS.SCSLicensePlate.LPtype.Truck);
 
@@ -695,44 +719,28 @@ namespace TS_SE_Tool
         //Buttons
         public void buttonTruckReFuel_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            foreach (string temp in UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.Find(x => x.PartType == "truckdata").PartData)
-            {
-                if (temp.StartsWith(" fuel_relative:"))
-                {
-                    UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.Find(x => x.PartType == "truckdata").PartData[i] = " fuel_relative: 1";
-                    break;
-                }
-                i++;
-            }
+            UserTruckDictionary.TryGetValue(comboBoxUserTruckCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTruck);
+
+            if (SelectedUserCompanyTruck == null)
+                return;
+
+            SelectedUserCompanyTruck.TruckMainData.fuelRelative = 1;
 
             UpdateTruckPanelFuel();
-            //UpdateTruckPanelProgressBars();
         }
 
         public void buttonTruckRepair_Click(object sender, EventArgs e)
         {
-            string[] PartList = { "engine", "transmission", "chassis", "cabin", "tire" };
+            UserTruckDictionary.TryGetValue(comboBoxUserTruckCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTruck);
 
-            foreach (string tempPart in PartList)
-            {
-                foreach (UserCompanyTruckDataPart temp in UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.FindAll(x => x.PartType == tempPart))
-                {
-                    string partNameless = temp.PartNameless;
+            if (SelectedUserCompanyTruck == null)
+                return;
 
-                    int i = 0;
-
-                    foreach (string temp2 in temp.PartData)
-                    {
-                        if (temp2.StartsWith(" wear:"))
-                        {
-                            UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
-                            break;
-                        }
-                        i++;
-                    }
-                }
-            }
+            SelectedUserCompanyTruck.TruckMainData.engineWear = 0;
+            SelectedUserCompanyTruck.TruckMainData.transmissionWear = 0;
+            SelectedUserCompanyTruck.TruckMainData.chassisWear = 0;
+            SelectedUserCompanyTruck.TruckMainData.cabinWear = 0;
+            SelectedUserCompanyTruck.TruckMainData.wheelsWear = new float[0];
 
             for (byte i = 0; i < 5; i++)
                 UpdateTruckPanelProgressBar(i);
@@ -745,27 +753,31 @@ namespace TS_SE_Tool
             Button curbtn = sender as Button;
             byte bi = Convert.ToByte(curbtn.Name.Substring(19));
 
-            string[] PartList = { "engine", "transmission", "chassis", "cabin", "tire" };
+            UserTruckDictionary.TryGetValue(comboBoxUserTruckCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTruck);
 
-            foreach (UserCompanyTruckDataPart tempPart in UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.FindAll(x => x.PartType == PartList[bi]))
+            if (SelectedUserCompanyTruck == null)
+                return;
+
+            switch (bi)
             {
-                string partNameless = tempPart.PartNameless;
-
-                int i = 0;
-
-                foreach (string tempPartData in tempPart.PartData)
-                {
-                    if (tempPartData.StartsWith(" wear:"))
-                    {
-                        UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.Find(x => x.PartNameless == partNameless).PartData[i] = " wear: 0";
-                        break;
-                    }
-                    i++;
-                }
+                case 0:
+                    SelectedUserCompanyTruck.TruckMainData.engineWear = 0;
+                    break;
+                case 1:
+                    SelectedUserCompanyTruck.TruckMainData.transmissionWear = 0;
+                    break;
+                case 2:
+                    SelectedUserCompanyTruck.TruckMainData.chassisWear = 0;
+                    break;
+                case 3:
+                    SelectedUserCompanyTruck.TruckMainData.cabinWear = 0;
+                    break;
+                case 4:
+                    SelectedUserCompanyTruck.TruckMainData.wheelsWear = new float[0];
+                    break;
             }
 
             UpdateTruckPanelProgressBar(bi);
-
             CheckTruckRepair();
         }
         //

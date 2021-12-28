@@ -145,7 +145,7 @@ namespace TS_SE_Tool
         public Dictionary<string, UserCompanyTruckData> UserTruckDictionary; //+
         private List<string> DriverPool; //+
         public Dictionary<string, UserCompanyDriverData> UserDriverDictionary; //+
-        private Dictionary<string, UserCompanyTruckData> UserTrailerDictionary; //+
+        private Dictionary<string, UserCompanyTrailerData> UserTrailerDictionary; //+
         private Dictionary<string, List<string>> UserTrailerDefDictionary; //+
 
         private List<string> namelessList;//Program
