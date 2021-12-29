@@ -150,7 +150,7 @@
     <Compile Include="CustomClasses\Utilities\TextUtilities.cs" />
     <Compile Include="CustomClasses\Utilities\ZipDataUtilitiescs.cs" />
     <Compile Include="CustomClasses\Utilities\dotNetCheck.cs" />
-    <Compile Include="CustomClasses\Utilities\FlexibleMessageBox.cs" />
+    <Compile Include="CustomClasses\UtilitiesExternal\FlexibleMessageBox.cs" />
     <Compile Include="Forms\ProfileEditor\FormProfileEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,7 +192,7 @@
     <Compile Include="CustomClasses\Save\SaveFileProfileData.cs" />
     <Compile Include="CustomClasses\Save\SaveFileData.cs" />
     <Compile Include="CustomClasses\Save\SaveFileInfoData.cs" />
-    <Compile Include="CustomClasses\Utilities\TGASharpLib.cs" />
+    <Compile Include="CustomClasses\UtilitiesExternal\TGASharpLib.cs" />
     <Compile Include="CustomClasses\Save\Items\TrailerDefinition.cs" />
     <Compile Include="CustomClasses\Save\Items\City.cs" />
     <Compile Include="CustomClasses\ExternalData\ExtCargo.cs" />
@@ -201,7 +201,7 @@
     <Compile Include="CustomClasses\Save\Items\Company.cs" />
     <Compile Include="CustomClasses\Save\Items\CompanyTruck.cs" />
     <Compile Include="CustomClasses\ExternalData\CountryDictionary.cs" />
-    <Compile Include="CustomClasses\Utilities\DDSImageParser.cs" />
+    <Compile Include="CustomClasses\UtilitiesExternal\DDSImageParser.cs" />
     <Compile Include="CustomClasses\Save\Items\Garages.cs" />
     <Compile Include="CustomClasses\ExternalData\LevelNames.cs" />
     <Compile Include="CustomClasses\Save\Items\PlayerData.cs" />
