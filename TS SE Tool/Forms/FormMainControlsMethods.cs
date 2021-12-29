@@ -924,7 +924,6 @@ namespace TS_SE_Tool
 
                         buttonProfilesAndSavesOpenSaveFolder.Enabled = true;
                         buttonMainDecryptSave.Enabled = true;
-                        buttonMainLoadSave.Enabled = true;
 
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
                     }
@@ -967,7 +966,23 @@ namespace TS_SE_Tool
         private void comboBoxSaves_SelectedIndexChanged(object sender, EventArgs e)
         {
             buttonMainDecryptSave.Enabled = true;
-            buttonMainLoadSave.Enabled = true;
+
+            DataRowView drv = (DataRowView)comboBoxPrevProfiles.SelectedItem;
+
+            if (drv["ProfileType"].ToString() == "steam")
+            {
+                buttonMainLoadSave.Enabled = false;
+                buttonMainLoadSave.Text = "Disable Steam Cloud";
+
+                buttonMainLoadSave.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            }
+            else
+            {
+                buttonMainLoadSave.Enabled = true;
+                buttonMainLoadSave.Text = "Load";
+
+                buttonMainLoadSave.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            }                
         }
 
         private void comboBoxSaves_DropDown(object sender, EventArgs e)
