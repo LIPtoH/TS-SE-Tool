@@ -1074,7 +1074,7 @@ namespace TS_SE_Tool
                                     count++;
                                 }
                                 //avoid
-                                
+
                                 writer.WriteLine(" stored_gps_avoid_waypoints: " + GPSAvoid.Count);
 
                                 count = 0;
@@ -1082,7 +1082,7 @@ namespace TS_SE_Tool
                                 {
                                     writer.WriteLine(" stored_gps_avoid_waypoints[" + count + "]: _nameless." + temp.Key);
                                     count++;
-                                }                                
+                                }
 
                                 while (!tempSavefileInMemory[line].StartsWith(" stored_start_tollgate_pos:"))
                                 {
@@ -1258,7 +1258,7 @@ namespace TS_SE_Tool
                                 }
                                 continue;
                             }
-                            
+
                             if (SaveInMemLine.StartsWith(" trucks:"))
                             {
                                 int before = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
@@ -1266,10 +1266,10 @@ namespace TS_SE_Tool
 
                                 Dictionary<string, UserCompanyTruckData> newUserTruckDictionary = new Dictionary<string, UserCompanyTruckData>();
 
-                                foreach (KeyValuePair<string,UserCompanyTruckData> tmpT in UserTruckDictionary )
+                                foreach (KeyValuePair<string, UserCompanyTruckData> tmpT in UserTruckDictionary)
                                 {
                                     if (tmpT.Value.Users == true && !extraVehicles.Contains(tmpT.Key))
-                                        newUserTruckDictionary.Add(tmpT.Key,tmpT.Value);
+                                        newUserTruckDictionary.Add(tmpT.Key, tmpT.Value);
                                 }
 
                                 int after = newUserTruckDictionary.Count;
@@ -1478,9 +1478,9 @@ namespace TS_SE_Tool
                         //GPS
                         if (!GPSinserted && (SaveInMemLine.StartsWith("gps_waypoint_storage :") || SaveInMemLine.StartsWith("map_action :")))
                         {
-                            if(!GPSinserted)
+                            if (!GPSinserted)
                             {
-                                if(!police_ctrl)
+                                if (!police_ctrl)
                                 {
                                     //GPSbehindOnline
                                     if (GPSbehindOnline.Count > 0)
@@ -1495,7 +1495,7 @@ namespace TS_SE_Tool
                                     }
                                 }
 
-                                if(police_ctrl && !map_action)
+                                if (police_ctrl && !map_action)
                                 {
                                     //GPSbehind
                                     if (GPSbehind.Count > 0)
@@ -1515,7 +1515,7 @@ namespace TS_SE_Tool
                                     }
                                 }
                             }
-                            
+
                             while (true)
                             {
                                 if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage :"))
@@ -1583,7 +1583,7 @@ namespace TS_SE_Tool
                             visitedcitycompany = VisitedCities.Find(x => x.Name == cityname).Visited;
 
                             if (AddedJobsDictionary.ContainsKey(AddedJobsCompanyCity))
-                            { 
+                            {
                                 editedcompany = true;
                                 JobIndex = 0;
                                 AddedJobsNumberInCompany = AddedJobsDictionary[AddedJobsCompanyCity].Count();
@@ -1624,10 +1624,10 @@ namespace TS_SE_Tool
                         if (editedcompany && SaveInMemLine.StartsWith("job_offer_data : "))
                         {
                             writer.WriteLine(SaveInMemLine);
-                            
+
                             JobAdded tempJobData = AddedJobsDictionary[AddedJobsCompanyCity][JobIndex];
-                            
-                                string companyJobData = string.Concat(new object[] {
+
+                            string companyJobData = string.Concat(new object[] {
                                 " target: \"", tempJobData.DestinationCompany, ".", tempJobData.DestinationCity, "\"",
                                 "\r\n expiration_time: ", tempJobData.ExpirationTime.ToString(),
                                 "\r\n urgency: ", tempJobData.Urgency.ToString(),
@@ -1639,10 +1639,10 @@ namespace TS_SE_Tool
                                 "\r\n trailer_variant: ", tempJobData.TrailerVariant,
                                 "\r\n trailer_definition: ", tempJobData.TrailerDefinition,
                                 "\r\n units_count: ", tempJobData.UnitsCount.ToString()
-                                });                            
+                                });
 
                             writer.WriteLine(companyJobData);
-                            
+
                             line += 11;
 
                             JobIndex++;
@@ -1676,8 +1676,8 @@ namespace TS_SE_Tool
                             truckaccCount = UserTruckDictionary[trucknameless].TruckMainData.accessories.Count;
 
                             //Skip lines
-                            while (tempSavefileInMemory[line] != "}")                            
-                                line++;                            
+                            while (tempSavefileInMemory[line] != "}")
+                                line++;
 
                             if (!savingtruck)
                                 line++;
@@ -1727,7 +1727,7 @@ namespace TS_SE_Tool
                         {
                             string nameless = SaveInMemLine.Split(new char[] { ' ' })[2];
 
-                            foreach(KeyValuePair<string, UserCompanyTruckData> tmp in UserTruckDictionary)
+                            foreach (KeyValuePair<string, UserCompanyTruckData> tmp in UserTruckDictionary)
                             {
                                 if (tmp.Value.TruckProfitLogs == nameless)
                                     trucknameless = tmp.Key;
@@ -1774,14 +1774,14 @@ namespace TS_SE_Tool
                             }
                             while (tempSavefileInMemory[line] != "}");
 
-                            
+
                             if (savingtruck)
                             {
                                 writer.WriteLine(tempSavefileInMemory[line]);
                             }
                             else
                                 line++;
-                            
+
                             truckaccCount--;
 
                             if (truckaccCount == 0)
@@ -1882,7 +1882,10 @@ namespace TS_SE_Tool
                         //End trailer write
 
                         EndWrite:
-                        writer.WriteLine(SaveInMemLine);
+                        if (line != tempSavefileInMemory.Length - 1)
+                            writer.WriteLine(SaveInMemLine);
+                        else
+                            writer.Write(SaveInMemLine);
                     }
                 }
             }

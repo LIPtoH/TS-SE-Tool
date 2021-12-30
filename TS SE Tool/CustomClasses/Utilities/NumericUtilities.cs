@@ -24,18 +24,21 @@ namespace TS_SE_Tool.Utilities
         public static float HexFloatToSingleFloat(string _input)
         {
             if (_input.Contains('&'))
-            {
-                string binarystring = String.Join(String.Empty, _input.Substring(1).Select(c => Convert.ToString(Convert.ToInt32(c.ToString(), 16), 2).PadLeft(4, '0')));
+            {               
+                //Split
+                string[] stringByteArray = SplitStringIntoChunks(_input.Substring(1), 2).ToArray();
 
-                short sign = Convert.ToInt16(binarystring.Substring(0, 1), 2);
-                byte exp = Convert.ToByte(binarystring.Substring(1, 8), 2);
-                uint mantis = Convert.ToUInt32(binarystring.Substring(9, 23), 2);
+                //Reverse order
+                Array.Reverse(stringByteArray);
 
-                string decstrign = sign.ToString() + " " + exp.ToString() + " " + mantis.ToString();
+                //Get bytes
+                byte[] tmpByteArray = BitConverter.GetBytes( uint.Parse(string.Concat(stringByteArray),System.Globalization.NumberStyles.HexNumber) );
 
-                float decformat = (float)(Math.Pow(-1, sign) * Math.Pow(2, (exp - 127)) * (1 + (mantis / Math.Pow(2, 23))));
+                if (BitConverter.IsLittleEndian)                
+                    tmpByteArray = tmpByteArray.Reverse().ToArray();
 
-                return decformat;
+                //Result
+                return BitConverter.ToSingle(tmpByteArray, 0);
             }
             else
             {
@@ -43,9 +46,17 @@ namespace TS_SE_Tool.Utilities
             }
         }
 
+        static IEnumerable<string> SplitStringIntoChunks(string str, int chunkSize)
+        {
+            return Enumerable.Range(0, str.Length / chunkSize)
+                .Select(i => str.Substring(i * chunkSize, chunkSize));
+        }
+
         public static string SingleFloatToHexFloat(float _input)
         {
-            if (_input != 0 && _input != 1)
+            int intFloat = (int)_input;
+
+            if (intFloat - _input != 0)
             {
                 //Get bytes
                 byte[] tmpByteArray = BitConverter.GetBytes(_input);

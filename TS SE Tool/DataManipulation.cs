@@ -772,23 +772,23 @@ namespace TS_SE_Tool
                                         break;
 
                                     case var s when s.StartsWith(" user_fov:"):
-                                        thisTruckMD.user_fov = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        thisTruckMD.user_fov = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
                                         break;
 
                                     case var s when s.StartsWith(" user_wheel_up_down:"):
-                                        thisTruckMD.user_wheel_up_down = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        thisTruckMD.user_wheel_up_down = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
                                         break;
 
                                     case var s when s.StartsWith(" user_wheel_front_back:"):
-                                        thisTruckMD.user_wheel_front_back = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        thisTruckMD.user_wheel_front_back = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
                                         break;
 
                                     case var s when s.StartsWith(" user_mouse_left_right_default:"):
-                                        thisTruckMD.user_mouse_left_right_default = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        thisTruckMD.user_mouse_left_right_default = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
                                         break;
 
                                     case var s when s.StartsWith(" user_mouse_up_down_default:"):
-                                        thisTruckMD.user_mouse_up_down_default = int.Parse(workLine.Split(new char[] { ' ' })[2]);
+                                        thisTruckMD.user_mouse_up_down_default = NumericUtilities.HexFloatToSingleFloat(workLine.Split(new char[] { ' ' })[2]);
                                         break;
 
                                     case var s when s.StartsWith(" trip_fuel_l:"):

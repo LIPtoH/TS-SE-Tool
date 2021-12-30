@@ -32,12 +32,12 @@ namespace TS_SE_Tool.Save.Items
 
         internal Vector_3f          user_head_offset { get; set; } = new Vector_3f();
 
-        internal int    user_fov { get; set; } = 0;
+        internal float user_fov { get; set; } = 0;
 
-        internal int    user_wheel_up_down { get; set; } = 0;
-        internal int    user_wheel_front_back { get; set; } = 0;
-        internal int    user_mouse_left_right_default { get; set; } = 0;
-        internal int    user_mouse_up_down_default { get; set; } = 0;
+        internal float user_wheel_up_down { get; set; } = 0;
+        internal float user_wheel_front_back { get; set; } = 0;
+        internal float user_mouse_left_right_default { get; set; } = 0;
+        internal float user_mouse_up_down_default { get; set; } = 0;
 
         internal uint   trip_fuel_l { get; set; } = 0;
         internal float  trip_fuel { get; set; } = 0;
@@ -69,12 +69,12 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(" user_mirror_rot[" + i + "]: " + user_mirror_rot[i].ToString());
 
             returnSB.AppendLine(" user_head_offset: " + user_head_offset.ToString());
-            returnSB.AppendLine(" user_fov: " + user_fov);
+            returnSB.AppendLine(" user_fov: " + NumericUtilities.SingleFloatToHexFloat(user_fov));
 
-            returnSB.AppendLine(" user_wheel_up_down: " + user_wheel_up_down);
-            returnSB.AppendLine(" user_wheel_front_back: " + user_wheel_front_back);
-            returnSB.AppendLine(" user_mouse_left_right_default: " + user_mouse_left_right_default);
-            returnSB.AppendLine(" user_mouse_up_down_default: " + user_mouse_up_down_default);
+            returnSB.AppendLine(" user_wheel_up_down: " + NumericUtilities.SingleFloatToHexFloat(user_wheel_up_down));
+            returnSB.AppendLine(" user_wheel_front_back: " + NumericUtilities.SingleFloatToHexFloat(user_wheel_front_back));
+            returnSB.AppendLine(" user_mouse_left_right_default: " + NumericUtilities.SingleFloatToHexFloat(user_mouse_left_right_default));
+            returnSB.AppendLine(" user_mouse_up_down_default: " + NumericUtilities.SingleFloatToHexFloat(user_mouse_up_down_default));
 
             returnSB.AppendLine(" accessories: " + accessories.Count);
             for (int i = 0; i < accessories.Count; i++)
