@@ -1983,9 +1983,14 @@ namespace TS_SE_Tool
 
             try
             {
-                commandText = "SELECT column_name FROM Information_SCHEMA.columns WHERE Table_name = 'DatabaseDetails' AND COLUMN_NAME = 'DBVersion'";
+                commandText = "SELECT column_name FROM Information_SCHEMA.columns WHERE table_name = 'DatabaseDetails' AND column_name = 'DBVersion';";
                 reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
-                oldDBversion = reader.HasRows;
+
+                while (reader.Read())
+                {
+                    if (reader[0].ToString() == "DBVersion")
+                        oldDBversion = true;
+                }
             }
             catch { }
 
