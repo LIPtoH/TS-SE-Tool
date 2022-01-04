@@ -1309,7 +1309,7 @@ namespace TS_SE_Tool
 
             if (MainSaveFileInfoData.Version > 0)
             {
-                if (MainSaveFileInfoData.Version > SupportedSavefileVersionETS2[1] || MainSaveFileInfoData.Version < SupportedSavefileVersionETS2[0])
+                if (MainSaveFileInfoData.Version > SupportedSavefileVersionETS2[1])
                 {
                     string dialogCaption = "", dialogText = "";
                     string[] returnValues = HelpTranslateDialog("UnsupportedVersion");
@@ -1326,7 +1326,28 @@ namespace TS_SE_Tool
                         ToggleMainControlsAccess(true);
 
                         buttonMainWriteSave.Enabled = false;
-                        //buttonMainWriteSave.Visible = false;
+
+                        return;
+                    }
+                }
+
+                if (MainSaveFileInfoData.Version < SupportedSavefileVersionETS2[0])
+                {
+                    string dialogCaption = "", dialogText = "";
+                    string[] returnValues = HelpTranslateDialog("NoBackwardCompatibility");
+
+                    dialogText = Regex.Unescape(String.Format(returnValues[1], MainSaveFileInfoData.Version));
+
+                    var DR = MessageBox.Show(dialogText, returnValues[0],
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    if (DR == DialogResult.OK)
+                    {
+                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
+
+                        ToggleMainControlsAccess(true);
+
+                        buttonMainWriteSave.Enabled = false;
 
                         return;
                     }
