@@ -1794,92 +1794,16 @@ namespace TS_SE_Tool
                         //Find Trailer vehicle
                         if (SaveInMemLine.StartsWith("trailer :"))
                         {
-                            hasslavetrailer = false;
-                            //slavetrailerscount++;
-                            Array.Resize(ref traileraccessoriescount, slavetrailerscount);
-                            Array.Resize(ref trailernameless, slavetrailerscount);
+                            string nameless = SaveInMemLine.Split(new char[] { ' ' })[2];
 
-                            trailernameless[slavetrailerscount - 1] = SaveInMemLine.Split(new char[] { ' ' })[2];
+                            writer.Write(UserTrailerDictionary[nameless].TrailerMainData.PrintOut(0, nameless));
 
-                            if (UserTrailerDictionary.ContainsKey(trailernameless[slavetrailerscount - 1]))
-                            {
-                                editedtrailer = true;
-                                insidetrailer = true;
-                            }
-                            //continue;
-                        }
-
-                        if (insidetrailer && SaveInMemLine.StartsWith("}"))
-                        {
-                            insidetrailer = false;
-                        }
-
-                        if (insidetrailer && SaveInMemLine.StartsWith(" cargo_damage:"))
-                        {
-                            string temp = NumericUtilities.SingleFloatToHexFloat(UserTrailerDictionary[trailernameless[slavetrailerscount - 1]].TrailerMainData.cargoDamage);
-                            writer.WriteLine(" cargo_damage: " + temp);
-
-                            continue;
-                        }
-
-                        if (insidetrailer && SaveInMemLine.StartsWith(" slave_trailer:"))
-                        {
-                            if (tempSavefileInMemory[line].Contains("_nameless"))
-                            {
-                                slavetrailerscount++;
-                                Array.Resize(ref traileraccessoriescount, slavetrailerscount);
-                                Array.Resize(ref trailernameless, slavetrailerscount);
-                                trailernameless[slavetrailerscount - 1] = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-                                hasslavetrailer = true;
-                            }
-                            else
-                            {
-                                //slavetrailerscount++;
-                                //Array.Resize(ref traileraccessoriescount, slavetrailerscount);
-                                //Array.Resize(ref trailernameless, slavetrailerscount);
-                            }
-                        }
-
-                        if (insidetrailer && SaveInMemLine.StartsWith(" accessories:"))
-                        {
-                            if (hasslavetrailer)
-                                traileraccessoriescount[slavetrailerscount - 2] = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
-                            else
-                                traileraccessoriescount[slavetrailerscount - 1] = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
-                        }
-
-                        //edit vehicle accessory
-                        if (editedtrailer && SaveInMemLine.StartsWith("vehicle_"))
-                        {
-                            string partnameless = SaveInMemLine.Split(new char[] { ' ' })[2];
-                            writer.WriteLine(SaveInMemLine);
-                            line++;
-
-                            List<string> temp = UserTrailerDictionary[trailernameless[slavetrailerscount - 1]].Parts.Find(x => x.PartNameless == partnameless).PartData;
-
-                            foreach (string tempdataline in temp)
-                            {
-                                writer.WriteLine(tempdataline);
-                            }
-
+                            //Skip lines
                             while (tempSavefileInMemory[line] != "}")
-                            {
                                 line++;
-                            }
-
-                            traileraccessoriescount[slavetrailerscount - 1]--;
-
-                            if (slavetrailerscount > 1 && traileraccessoriescount[slavetrailerscount - 1] == 0)
-                                slavetrailerscount--;
-
-                            if (traileraccessoriescount[0] == 0)
-                                editedtrailer = false;
-
-                            writer.WriteLine(tempSavefileInMemory[line]);
 
                             continue;
                         }
-                        //End trailer write
 
                         EndWrite:
                         if (line != tempSavefileInMemory.Length - 1)

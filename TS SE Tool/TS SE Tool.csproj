@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomClasses\ExternalData\ScsFont.cs" />
+    <Compile Include="CustomClasses\Global\FloatList.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\Vector_3f.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\Vector_4f.cs" />
     <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
