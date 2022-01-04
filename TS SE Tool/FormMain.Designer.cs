@@ -1202,6 +1202,7 @@
             // buttonShareTruckTruckPaintCopy
             // 
             this.buttonShareTruckTruckPaintCopy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonShareTruckTruckPaintCopy.Enabled = false;
             this.buttonShareTruckTruckPaintCopy.Location = new System.Drawing.Point(3, 3);
             this.buttonShareTruckTruckPaintCopy.Name = "buttonShareTruckTruckPaintCopy";
             this.buttonShareTruckTruckPaintCopy.Size = new System.Drawing.Size(179, 38);
@@ -1224,6 +1225,7 @@
             // buttonShareTruckTruckPaintPaste
             // 
             this.buttonShareTruckTruckPaintPaste.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonShareTruckTruckPaintPaste.Enabled = false;
             this.buttonShareTruckTruckPaintPaste.Location = new System.Drawing.Point(3, 47);
             this.buttonShareTruckTruckPaintPaste.Name = "buttonShareTruckTruckPaintPaste";
             this.buttonShareTruckTruckPaintPaste.Size = new System.Drawing.Size(179, 39);

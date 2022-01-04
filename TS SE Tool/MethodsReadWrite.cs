@@ -1686,6 +1686,7 @@ namespace TS_SE_Tool
                         }
 
                         //Edit vehicle accessory
+                        /*
                         if (editedtruck && SaveInMemLine.StartsWith("vehicle_"))
                         {
                             if (savingtruck)
@@ -1721,6 +1722,8 @@ namespace TS_SE_Tool
 
                             continue;
                         }
+                        */
+
 
                         //Edit truck profit logs
                         if (SaveInMemLine.StartsWith("profit_log :"))

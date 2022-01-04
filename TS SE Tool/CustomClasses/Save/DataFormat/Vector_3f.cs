@@ -13,6 +13,18 @@ namespace TS_SE_Tool.Save.DataFormat
         float Y { get; set; } = 0;
         float Z { get; set; } = 0;
 
+        internal Vector_3f()
+        { }
+
+        internal Vector_3f(string _input)
+        {
+            string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 4, StringSplitOptions.RemoveEmptyEntries);
+
+            X = NumericUtilities.HexFloatToSingleFloat(parts[0].Trim());
+            Y = NumericUtilities.HexFloatToSingleFloat(parts[1].Trim());
+            Z = NumericUtilities.HexFloatToSingleFloat(parts[2].Trim());
+        }
+
         override public string ToString()
         {
             // (&bd85bf17, &bd5ecfd4, &bb69a963)
