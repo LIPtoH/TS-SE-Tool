@@ -63,7 +63,7 @@ namespace TS_SE_Tool
         public void FillAccountMoneyTB()
         {
             //
-            Int64 valueBefore = (long)Math.Floor(PlayerDataData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
+            Int64 valueBefore = (long)Math.Floor(EconomyPlayerData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
 
             textBoxUserCompanyMoneyAccount.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
 
@@ -95,7 +95,7 @@ namespace TS_SE_Tool
             comboBoxUserCompanyHQcity.DisplayMember = "CityName";
             comboBoxUserCompanyHQcity.BeginUpdate();
             comboBoxUserCompanyHQcity.DataSource = combDT;
-            comboBoxUserCompanyHQcity.SelectedValue = PlayerDataData.HQcity;
+            comboBoxUserCompanyHQcity.SelectedValue = Player.hq_city;
             comboBoxUserCompanyHQcity.EndUpdate();
             comboBoxUserCompanyHQcity.SelectedIndexChanged += comboBoxUserCompanyHQcity_SelectedIndexChanged;
         }
@@ -103,7 +103,7 @@ namespace TS_SE_Tool
         private void comboBoxUserCompanyHQcity_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxUserCompanyHQcity.SelectedValue != null)
-                PlayerDataData.HQcity = comboBoxUserCompanyHQcity.SelectedValue.ToString();
+                Player.hq_city = comboBoxUserCompanyHQcity.SelectedValue.ToString();
         }
 
         private void textBoxUserCompanyCompanyName_TextChanged(object sender, EventArgs e)
@@ -151,7 +151,7 @@ namespace TS_SE_Tool
         
         private void textBoxUserCompanyMoneyAccount_Enter(object sender, EventArgs e)
         {
-            Int64 valueBefore = (long)Math.Floor(PlayerDataData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
+            Int64 valueBefore = (long)Math.Floor(EconomyPlayerData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
 
             textBoxUserCompanyMoneyAccount.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
 
@@ -175,7 +175,7 @@ namespace TS_SE_Tool
             if (!Int64.TryParse(textBoxUserCompanyMoneyAccount.Text, NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign, CultureInfo.CurrentCulture, out long newValue))
                 return;
 
-            PlayerDataData.AccountMoney = (long)Math.Round(newValue / CurrencyDictConversion[Globals.CurrencyName]);
+            EconomyPlayerData.AccountMoney = (long)Math.Round(newValue / CurrencyDictConversion[Globals.CurrencyName]);
 
             //[sign1] - [sign2] 1.234,- [sign3]
             string newtext = "";
@@ -424,7 +424,7 @@ namespace TS_SE_Tool
             // Draw the background.
             e.DrawBackground();
             Image grgicon;
-            if (grg.GarageName != PlayerDataData.HQcity)
+            if (grg.GarageName != Player.hq_city)
                 grgicon = GaragesImg[grg.GarageStatus];
             else
                 grgicon = GaragesHQImg[grg.GarageStatus];
@@ -596,7 +596,7 @@ namespace TS_SE_Tool
 
             foreach (Garages garage in tmp)
             {
-                if (garage.GarageName == PlayerDataData.HQcity)
+                if (garage.GarageName == Player.hq_city)
                     garage.GarageStatus = 6;
                 else
                     garage.GarageStatus = 0;

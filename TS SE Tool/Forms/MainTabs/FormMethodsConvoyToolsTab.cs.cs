@@ -17,6 +17,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+using TS_SE_Tool.Save.DataFormat;
+
 namespace TS_SE_Tool
 {
     public partial class FormMain
@@ -26,7 +28,7 @@ namespace TS_SE_Tool
         {
             string tempString = "GPS_TruckPosition\r\n";
 
-            tempString += PlayerDataData.UserCompanyAssignedTruckPlacement;
+            tempString += Player.my_truck_placement;
             string asd = BitConverter.ToString(Utilities.ZipDataUtilities.zipText(tempString)).Replace("-", "");
             Clipboard.SetText(asd);
             MessageBox.Show("Truck GPS position has been copied.");
@@ -48,7 +50,7 @@ namespace TS_SE_Tool
                         tempstr.Add(Lines[i]);
                     }
 
-                    PlayerDataData.UserCompanyAssignedTruckPlacement = tempstr[0];
+                    Player.my_truck_placement = new Vector_3f_4f(tempstr[0]);
                     //PlayerProfileData.UserCompanyAssignedTrailerPlacement = "(0, 0, 0) (1; 0, 0, 0)";
 
                     MessageBox.Show("Truck GPS position has been inserted.");

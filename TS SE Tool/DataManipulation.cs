@@ -46,7 +46,7 @@ namespace TS_SE_Tool
             int EconomyEventline = 0;
 
             //scan through save file
-            bool EconomySection = false, PlayerSection = false;
+            bool EconomySection = false;
 
             int workerprogressmult = (int)Math.Floor((decimal)(tempSavefileInMemory.Length / 80)), workerprogress = 0;
 
@@ -199,7 +199,7 @@ namespace TS_SE_Tool
                         if (tempSavefileInMemory[line].StartsWith(" experience_points"))
                         {
                             chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataData.ExperiencePoints = uint.Parse(chunkOfline[2]);
+                            EconomyPlayerData.ExperiencePoints = uint.Parse(chunkOfline[2]);
                             continue;
                         }
 
@@ -210,38 +210,38 @@ namespace TS_SE_Tool
 
                             char[] ADR = Convert.ToString(byte.Parse(LineArray[2]), 2).PadLeft(6, '0').ToCharArray();
                             Array.Reverse(ADR);
-                            PlayerDataData.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
+                            EconomyPlayerData.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
                             //PlayerProfileData.PlayerSkills[0] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" long_dist:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataData.PlayerSkills[1] = byte.Parse(LineArray[2]);
+                            EconomyPlayerData.PlayerSkills[1] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" heavy:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataData.PlayerSkills[2] = byte.Parse(LineArray[2]);
+                            EconomyPlayerData.PlayerSkills[2] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" fragile:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataData.PlayerSkills[3] = byte.Parse(LineArray[2]);
+                            EconomyPlayerData.PlayerSkills[3] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" urgent:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataData.PlayerSkills[4] = byte.Parse(LineArray[2]);
+                            EconomyPlayerData.PlayerSkills[4] = byte.Parse(LineArray[2]);
                             continue;
                         }
                         if (tempSavefileInMemory[line].StartsWith(" mechanical:"))
                         {
                             string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataData.PlayerSkills[5] = byte.Parse(LineArray[2]);
+                            EconomyPlayerData.PlayerSkills[5] = byte.Parse(LineArray[2]);
                             continue;
                         }
 
@@ -376,130 +376,60 @@ namespace TS_SE_Tool
                     if (tempSavefileInMemory[line].StartsWith(" money_account:"))
                     {
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        PlayerDataData.AccountMoney = long.Parse(chunkOfline[2]);
+                        EconomyPlayerData.AccountMoney = long.Parse(chunkOfline[2]);
                         continue;
                     }
 
                     //Player section
                     if (tempSavefileInMemory[line].StartsWith("player :"))
                     {
-                        PlayerSection = true;
-                        continue;
-                    }
+                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                        string nameless = chunkOfline[2];
 
-                    if (PlayerSection && tempSavefileInMemory[line].StartsWith("}"))
-                    {
-                        PlayerSection = false;
+                        string workLine = "";
+                        List<string> Data = new List<string>();
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                        {
+                            workLine = tempSavefileInMemory[line];
+                            Data.Add(workLine);
+
+                            line++;
+                        }
+
+                        Player = new Player(Data.ToArray());
+
+                        //Populate data dictionaries
+                        //
+                        foreach(string trck in Player.trucks)
+                        {
+                            UserTruckDictionary.Add(trck, new UserCompanyTruckData());
+                        }
 
                         //
-                        UserDriverDictionary.ElementAt(0).Value.AssignedTruck = PlayerDataData.UserCompanyAssignedTruck;
-                        UserDriverDictionary.ElementAt(0).Value.AssignedTrailer = PlayerDataData.UserCompanyAssignedTrailer;
+                        foreach (string trlr in Player.trailers)
+                        {
+                            UserTrailerDictionary.Add(trlr, new UserCompanyTrailerData());
+                        }
+
+                        //
+                        foreach (string trlrDef in Player.trailer_defs)
+                        {
+                            UserTrailerDefDictionary.Add(trlrDef, new List<string>());
+                        }
+
+                        //
+                        foreach (string drvr in Player.drivers)
+                        {
+                            UserDriverDictionary.Add(drvr, new UserCompanyDriverData());
+                        }
+
+                        EconomyPlayerData.UserDriver = Player.drivers[0];
+
+                        UserDriverDictionary.ElementAt(0).Value.AssignedTruck = Player.assigned_truck;
+                        UserDriverDictionary.ElementAt(0).Value.AssignedTrailer = Player.assigned_trailer;
 
                         continue;
-                    }
-                    if (PlayerSection)
-                    {
-                        //Find HQ city
-                        if (tempSavefileInMemory[line].StartsWith(" hq_city:"))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataData.HQcity = chunkOfline[2];
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" assigned_truck:"))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataData.UserCompanyAssignedTruck = chunkOfline[2];
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" truck_placement:"))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            PlayerDataData.UserCompanyAssignedTruckPlacement = chunkOfline[1].TrimStart(' ');
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" trucks["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            UserTruckDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" truck_profit_logs["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
-                            string tKey = UserTruckDictionary.Keys.ElementAt(int.Parse(chunkOfline[1]));
-
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-
-                            UserTruckDictionary[tKey].TruckProfitLogs = chunkOfline[2];
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" drivers["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            string temp = chunkOfline[2];
-                            UserDriverDictionary.Add(temp, new UserCompanyDriverData());
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
-                            if (int.Parse(chunkOfline[1]) == 0)
-                                PlayerDataData.UserDriver = temp;
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" driver_readiness_timer["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
-                            string tKey = UserDriverDictionary.Keys.ElementAt(int.Parse(chunkOfline[1]));
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            UserDriverDictionary[tKey].DriverReadiness = int.Parse(chunkOfline[2]);
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" driver_quit_warned["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { '[', ']' });
-                            string tKey = UserDriverDictionary.Keys.ElementAt(int.Parse(chunkOfline[1]));
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            UserDriverDictionary[tKey].DriverQuitWarned = bool.Parse(chunkOfline[2]);
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" assigned_trailer:"))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            PlayerDataData.UserCompanyAssignedTrailer = chunkOfline[2];
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" trailers["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-
-                            UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTrailerData());
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" trailer_defs["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-
-                            UserTrailerDefDictionary.Add(chunkOfline[2], new List<string>());
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" current_job:"))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-
-                            if (chunkOfline[1].Trim(' ') != "null")
-                                PlayerDataData.CurrentJob = new PlayerJob();
-                            //PlayerDataData.CurrentJob = chunkOfline[1].TrimStart(' ');
-                            continue;
-                        }
                     }
 
                     if (tempSavefileInMemory[line].StartsWith("driver_ai :"))
@@ -640,9 +570,9 @@ namespace TS_SE_Tool
                             {
                                 chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
 
-                                PlayerDataData.CurrentJob.Cargo = chunkOfline[1].Trim(' ').Split(new char[] { '.' })[1];
+                                EconomyPlayerData.CurrentJob.Cargo = chunkOfline[1].Trim(' ').Split(new char[] { '.' })[1];
 
-                                UserDriverDictionary.ElementAt(0).Value.DriverJob = PlayerDataData.CurrentJob;
+                                UserDriverDictionary.ElementAt(0).Value.DriverJob = EconomyPlayerData.CurrentJob;
 
                                 continue;
                             }
@@ -1616,7 +1546,7 @@ namespace TS_SE_Tool
 
             if (extraTrailers.Count > 0)
             {
-                GaragesList[GaragesList.FindIndex(x => x.GarageName == PlayerDataData.HQcity)].Trailers.AddRange(extraTrailers);
+                GaragesList[GaragesList.FindIndex(x => x.GarageName == Player.hq_city)].Trailers.AddRange(extraTrailers);
                 extraTrailers.Clear();
             }
 
@@ -1633,9 +1563,9 @@ namespace TS_SE_Tool
 
             if (extraDrivers.Count() > 0)
             {
-                if (extraDrivers.Contains(PlayerDataData.UserDriver))
+                if (extraDrivers.Contains(EconomyPlayerData.UserDriver))
                 {
-                    Garages tmpG = new Garages(PlayerDataData.HQcity);
+                    Garages tmpG = new Garages(Player.hq_city);
 
                     int hqIdx = GaragesList.IndexOf(tmpG);
                     int sIdx = 0;
@@ -1671,7 +1601,7 @@ namespace TS_SE_Tool
                     extraDrivers.Add(GaragesList[hqIdx].Drivers[DrvIdx]);
                     extraVehicles.Add(GaragesList[hqIdx].Vehicles[DrvIdx]);
 
-                    int tmpIdx = extraDrivers.IndexOf(PlayerDataData.UserDriver);
+                    int tmpIdx = extraDrivers.IndexOf(EconomyPlayerData.UserDriver);
 
                     GaragesList[hqIdx].Drivers[DrvIdx] = extraDrivers[tmpIdx];
                     GaragesList[hqIdx].Vehicles[DrvIdx] = extraVehicles[tmpIdx];

@@ -294,7 +294,7 @@ namespace TS_SE_Tool
                 }
 
                 if (tmpDriverName != null && tmpDriverName != "null")
-                    if (PlayerDataData.UserDriver == tmpDriverName)
+                    if (EconomyPlayerData.UserDriver == tmpDriverName)
                     {
                         tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                     }
@@ -327,7 +327,7 @@ namespace TS_SE_Tool
             comboBoxUserTruckCompanyTrucks.Enabled = !noTrucks;
 
             if (!noTrucks)
-                comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataData.UserCompanyAssignedTruck;
+                comboBoxUserTruckCompanyTrucks.SelectedValue = Player.assigned_truck;
             else
                 comboBoxUserTruckCompanyTrucks.SelectedValue = "null";
         }
@@ -765,12 +765,12 @@ namespace TS_SE_Tool
         //
         private void buttonUserTruckSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTruckCompanyTrucks.SelectedValue = PlayerDataData.UserCompanyAssignedTruck;
+            comboBoxUserTruckCompanyTrucks.SelectedValue = Player.assigned_truck;
         }
 
         private void buttonUserTruckSwitchCurrent_Click(object sender, EventArgs e)
         {
-            PlayerDataData.UserCompanyAssignedTruck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
+            Player.assigned_truck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
         }
         //
         //Share buttons

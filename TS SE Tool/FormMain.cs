@@ -123,7 +123,9 @@ namespace TS_SE_Tool
 
         private DateTime LastModifiedTimestamp; //+
 
-        public PlayerData PlayerDataData; //+
+        internal Save.Items.Player Player;
+
+        public PlayerData EconomyPlayerData; //+
         public SaveFileProfileData MainSaveFileProfileData;
         internal SaveFileInfoData MainSaveFileInfoData;
 

@@ -339,7 +339,9 @@ namespace TS_SE_Tool
                 Globals.CurrencyName = ProgSettingsV.CurrencyMesATS;
             }
 
-            PlayerDataData = new PlayerData();
+            Player = new Save.Items.Player();
+
+            EconomyPlayerData = new PlayerData();
 
             MainSaveFileProfileData = new SaveFileProfileData();
             MainSaveFileInfoData = new SaveFileInfoData();

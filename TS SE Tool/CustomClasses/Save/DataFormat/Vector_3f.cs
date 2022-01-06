@@ -16,7 +16,23 @@ namespace TS_SE_Tool.Save.DataFormat
         internal Vector_3f()
         { }
 
+        internal Vector_3f(float _x, float _y, float _z)
+        {
+            X = _x;
+            Y = _y;
+            Z = _z;
+        }
+
         internal Vector_3f(string _input)
+        {
+            string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 4, StringSplitOptions.RemoveEmptyEntries);
+
+            X = NumericUtilities.HexFloatToSingleFloat(parts[0].Trim());
+            Y = NumericUtilities.HexFloatToSingleFloat(parts[1].Trim());
+            Z = NumericUtilities.HexFloatToSingleFloat(parts[2].Trim());
+        }
+
+        internal void ToVector(string _input)
         {
             string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 4, StringSplitOptions.RemoveEmptyEntries);
 
@@ -31,13 +47,5 @@ namespace TS_SE_Tool.Save.DataFormat
             return "(" + NumericUtilities.SingleFloatToHexFloat(X) + ", " + NumericUtilities.SingleFloatToHexFloat(Y) + ", " + NumericUtilities.SingleFloatToHexFloat(Z) + ")";
         }
 
-        public void ToVector(string _input)
-        {
-            string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 4, StringSplitOptions.RemoveEmptyEntries);
-
-            X = NumericUtilities.HexFloatToSingleFloat(parts[0].Trim());
-            Y = NumericUtilities.HexFloatToSingleFloat(parts[1].Trim());
-            Z = NumericUtilities.HexFloatToSingleFloat(parts[2].Trim());
-        }
     }
 }

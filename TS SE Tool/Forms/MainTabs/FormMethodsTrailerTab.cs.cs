@@ -281,7 +281,7 @@ namespace TS_SE_Tool
                     tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTrailer == trailerNameless)?.SingleOrDefault().Key ?? "null";
                     
                     if (tmpDriverName != "null")
-                        if (PlayerDataData.UserDriver == tmpDriverName)
+                        if (EconomyPlayerData.UserDriver == tmpDriverName)
                         {
                             tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                         }
@@ -313,7 +313,7 @@ namespace TS_SE_Tool
             comboBoxUserTrailerCompanyTrailers.DisplayMember = "DisplayMember";
             comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
 
-            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataData.UserCompanyAssignedTrailer;
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = Player.assigned_trailer;
         }
         //
         private void UpdateTrailerPanelDetails()
@@ -690,12 +690,12 @@ namespace TS_SE_Tool
         //
         private void buttonUserTrailerSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTrailerCompanyTrailers.SelectedValue = PlayerDataData.UserCompanyAssignedTrailer;
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = Player.assigned_trailer;
         }
 
         private void buttonUserTrailerSwitchCurrent_Click(object sender, EventArgs e)
         {
-            PlayerDataData.UserCompanyAssignedTrailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+            Player.assigned_trailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
         }
         //Details
         public void buttonTrailerElRepair_Click(object sender, EventArgs e)

@@ -950,14 +950,13 @@ namespace TS_SE_Tool
                 using (StreamWriter writer = new StreamWriter(SiiSavePath, true))
                 {
 
-                    bool EconomySection = false, PlayerSection = false, GPSinserted = false, police_ctrl = false, map_action = false;
-                    bool editedcompany = false, visitedcitycompany = false, insidecompany = false, editedtruck = false, savingtruck = true, 
-                        editedtrailer = false, insidetrailer = false, hasslavetrailer = false; //insidetruck = false, 
+                    bool EconomySection = false, GPSinserted = false, police_ctrl = false, map_action = false;
+                    bool editedcompany = false, visitedcitycompany = false, insidecompany = false, savingtruck = true;
+                        
                     int JobIndex = 0, truckaccCount = 0, AddedJobsNumberInCompany = 0;
-                    string trucknameless = "", cityname = "", companyname = "", AddedJobsCompanyCity = "";
+                    string nameless = "", cityname = "", companyname = "", AddedJobsCompanyCity = "";
                     string[] trailernameless = new string[1];
                     int[] traileraccessoriescount = new int[1];
-                    int slavetrailerscount = 1;
 
                     for (int line = 1; line < tempSavefileInMemory.Length; line++)
                     {
@@ -980,14 +979,14 @@ namespace TS_SE_Tool
                             //Experience points
                             if (SaveInMemLine.StartsWith(" experience_points"))
                             {
-                                writer.WriteLine(" experience_points: " + PlayerDataData.ExperiencePoints.ToString());
+                                writer.WriteLine(" experience_points: " + EconomyPlayerData.ExperiencePoints.ToString());
                                 continue;
                             }
 
                             //Skills
                             if (SaveInMemLine.StartsWith(" adr:"))
                             {
-                                char[] ADR = Convert.ToString(PlayerDataData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+                                char[] ADR = Convert.ToString(EconomyPlayerData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
                                 Array.Reverse(ADR);
 
                                 writer.WriteLine(" adr: " + Convert.ToByte(new string(ADR), 2));
@@ -995,27 +994,27 @@ namespace TS_SE_Tool
                             }
                             if (SaveInMemLine.StartsWith(" long_dist:"))
                             {
-                                writer.WriteLine(" long_dist: " + PlayerDataData.PlayerSkills[1].ToString());
+                                writer.WriteLine(" long_dist: " + EconomyPlayerData.PlayerSkills[1].ToString());
                                 continue;
                             }
                             if (SaveInMemLine.StartsWith(" heavy:"))
                             {
-                                writer.WriteLine(" heavy: " + PlayerDataData.PlayerSkills[2].ToString());
+                                writer.WriteLine(" heavy: " + EconomyPlayerData.PlayerSkills[2].ToString());
                                 continue;
                             }
                             if (SaveInMemLine.StartsWith(" fragile:"))
                             {
-                                writer.WriteLine(" fragile: " + PlayerDataData.PlayerSkills[3].ToString());
+                                writer.WriteLine(" fragile: " + EconomyPlayerData.PlayerSkills[3].ToString());
                                 continue;
                             }
                             if (SaveInMemLine.StartsWith(" urgent:"))
                             {
-                                writer.WriteLine(" urgent: " + PlayerDataData.PlayerSkills[4].ToString());
+                                writer.WriteLine(" urgent: " + EconomyPlayerData.PlayerSkills[4].ToString());
                                 continue;
                             }
                             if (SaveInMemLine.StartsWith(" mechanical:"))
                             {
-                                writer.WriteLine(" mechanical: " + PlayerDataData.PlayerSkills[5].ToString());
+                                writer.WriteLine(" mechanical: " + EconomyPlayerData.PlayerSkills[5].ToString());
                                 continue;
                             }
 
@@ -1161,214 +1160,22 @@ namespace TS_SE_Tool
                         //Account Money
                         if (tempSavefileInMemory[line].StartsWith(" money_account:"))
                         {
-                            writer.WriteLine(" money_account: " + PlayerDataData.AccountMoney.ToString());
+                            writer.WriteLine(" money_account: " + EconomyPlayerData.AccountMoney.ToString());
                             continue;
                         }
 
                         //Player section
                         if (tempSavefileInMemory[line].StartsWith("player :"))
                         {
-                            PlayerSection = true;
-                            goto EndWrite;
-                        }
+                            nameless = SaveInMemLine.Split(new char[] { ' ' })[2];
 
-                        if (PlayerSection && tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            PlayerSection = false;
-                            goto EndWrite;
-                        }
-                        if (PlayerSection)
-                        {
-                            //HQ city
-                            if (SaveInMemLine.StartsWith(" hq_city:"))
-                            {
-                                writer.WriteLine(" hq_city: " + PlayerDataData.HQcity);
-                                continue;
-                            }
+                            writer.WriteLine(Player.PrintOut(0, nameless));
 
-                            if (SaveInMemLine.StartsWith(" assigned_truck:"))
-                            {
-                                chunkOfline = SaveInMemLine.Split(new char[] { ' ' });
-
-                                if (PlayerDataData.UserCompanyAssignedTruck != chunkOfline[2])
-                                {
-                                    writer.WriteLine(" assigned_truck: " + PlayerDataData.UserCompanyAssignedTruck);
-                                    line++;
-                                    writer.WriteLine(" my_truck: " + PlayerDataData.UserCompanyAssignedTruck);
-                                    //Garage driver switch needed
-                                    int indexuser = 0, indextarget = 0, indexgarage = 0, indexgarageuser = 0, indexgaragetrg = 0;
-
-                                    foreach (Garages tempgarage in GaragesList)
-                                    {
-                                        int i = 0;
-                                        foreach (string tempvehicle in tempgarage.Vehicles)
-                                        {
-                                            if (tempvehicle == PlayerDataData.UserCompanyAssignedTruck)
-                                            {
-                                                indextarget = i;
-                                                indexgaragetrg = indexgarage;
-                                                break;
-                                            }
-                                            i++;
-                                        }
-
-                                        i = 0;
-                                        foreach (string tempdriver in tempgarage.Drivers)
-                                        {
-                                            if (tempdriver == PlayerDataData.UserDriver)
-                                            {
-                                                indexuser = i;
-                                                indexgarageuser = indexgarage;
-                                                break;
-                                            }
-                                            i++;
-                                        }
-
-                                        indexgarage++;
-                                    }
-                                    //Swap
-                                    string tempdr = GaragesList[indexgarageuser].Drivers[indexuser];
-                                    GaragesList[indexgarageuser].Drivers[indexuser] = GaragesList[indexgaragetrg].Drivers[indextarget];
-                                    GaragesList[indexgaragetrg].Drivers[indextarget] = tempdr;
-                                    //
-                                }
-                                else
-                                {
-                                    writer.WriteLine(SaveInMemLine);
-                                }
-
-                                continue;
-                            }
-
-                            if (SaveInMemLine.StartsWith(" truck_placement:") && UserCompanyAssignedTruckPlacementEdited)
-                            {
-                                writer.WriteLine(" truck_placement: " + PlayerDataData.UserCompanyAssignedTruckPlacement);
+                            //Skip lines
+                            while (tempSavefileInMemory[line] != "}")
                                 line++;
-                                writer.WriteLine(" trailer_placement: (0, 0, 0) (1; 0, 0, 0)");
-                                line++;
-                                int slave_trailers = int.Parse(tempSavefileInMemory[line].Split(new char[] { ' ' })[2]);
-                                writer.WriteLine(tempSavefileInMemory[line]);
-                                if (slave_trailers > 0)
-                                {
-                                    for (int i = 0; i < slave_trailers; i++)
-                                    {
-                                        writer.WriteLine(" slave_trailer_placements[" + i + "]: (0, 0, 0) (1; 0, 0, 0)");
-                                        line++;
-                                    }
-                                }
-                                continue;
-                            }
 
-                            if (SaveInMemLine.StartsWith(" trucks:"))
-                            {
-                                int before = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
-                                line += before;
-
-                                Dictionary<string, UserCompanyTruckData> newUserTruckDictionary = new Dictionary<string, UserCompanyTruckData>();
-
-                                foreach (KeyValuePair<string, UserCompanyTruckData> tmpT in UserTruckDictionary)
-                                {
-                                    if (tmpT.Value.Users == true && !extraVehicles.Contains(tmpT.Key))
-                                        newUserTruckDictionary.Add(tmpT.Key, tmpT.Value);
-                                }
-
-                                int after = newUserTruckDictionary.Count;
-
-                                writer.WriteLine(" trucks: " + after);
-
-                                int vcindex = 0;
-                                foreach (KeyValuePair<string, UserCompanyTruckData> tmpT in newUserTruckDictionary)
-                                {
-                                    writer.WriteLine(" trucks[" + vcindex + "]: " + tmpT.Key);
-                                    vcindex++;
-                                }
-
-                                continue;
-                            }
-
-                            if (SaveInMemLine.StartsWith(" truck_profit_logs:"))
-                            {
-                                int before = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
-                                line += before;
-
-                                Dictionary<string, UserCompanyTruckData> newUserTruckDictionary = new Dictionary<string, UserCompanyTruckData>();
-
-                                foreach (KeyValuePair<string, UserCompanyTruckData> tmpT in UserTruckDictionary)
-                                {
-                                    if (tmpT.Value.Users == true && !extraVehicles.Contains(tmpT.Key))
-                                        newUserTruckDictionary.Add(tmpT.Key, tmpT.Value);
-                                }
-
-                                int after = newUserTruckDictionary.Count;
-
-                                writer.WriteLine(" truck_profit_logs: " + after);
-
-                                int vcindex = 0;
-                                foreach (KeyValuePair<string, UserCompanyTruckData> tmpT in newUserTruckDictionary)
-                                {
-                                    writer.WriteLine(" truck_profit_logs[" + vcindex + "]: " + tmpT.Value.TruckProfitLogs);
-                                    vcindex++;
-                                }
-
-                                continue;
-                            }
-
-                            if (SaveInMemLine.StartsWith(" drivers:"))
-                            {
-                                int before = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
-                                line += before;
-
-                                int after = UserDriverDictionary.Count;
-
-                                writer.WriteLine(" drivers: " + after);
-
-                                int vcindex = 0;
-                                foreach (KeyValuePair<string, UserCompanyDriverData> tmpD in UserDriverDictionary)
-                                {
-                                    writer.WriteLine(" drivers[" + vcindex + "]: " + tmpD.Key);
-                                    vcindex++;
-                                }
-
-                                continue;
-                            }
-
-                            if (SaveInMemLine.StartsWith(" driver_readiness_timer:"))
-                            {
-                                int before = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
-                                line += before;
-
-                                int after = UserDriverDictionary.Count;
-
-                                writer.WriteLine(" driver_readiness_timer: " + after);
-
-                                int vcindex = 0;
-                                foreach (KeyValuePair<string, UserCompanyDriverData> tmpD in UserDriverDictionary)
-                                {
-                                    writer.WriteLine(" driver_readiness_timer[" + vcindex + "]: " + tmpD.Value.DriverReadiness);
-                                    vcindex++;
-                                }
-
-                                continue;
-                            }
-
-                            if (SaveInMemLine.StartsWith(" driver_quit_warned:"))
-                            {
-                                int before = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
-                                line += before;
-
-                                int after = UserDriverDictionary.Count;
-
-                                writer.WriteLine(" driver_quit_warned: " + after);
-
-                                int vcindex = 0;
-                                foreach (KeyValuePair<string, UserCompanyDriverData> tmpD in UserDriverDictionary)
-                                {
-                                    writer.WriteLine(" driver_quit_warned[" + vcindex + "]: " + tmpD.Value.DriverQuitWarned.ToString().ToLower());
-                                    vcindex++;
-                                }
-
-                                continue;
-                            }
+                            continue;
                         }
 
                         //Garages
@@ -1655,25 +1462,19 @@ namespace TS_SE_Tool
                         //Find Truck vehicle
                         if (SaveInMemLine.StartsWith("vehicle :"))
                         {
-                            trucknameless = SaveInMemLine.Split(new char[] { ' ' })[2];
+                            nameless = SaveInMemLine.Split(new char[] { ' ' })[2];
 
-                            if (UserTruckDictionary.ContainsKey(trucknameless))
-                            {
-                                editedtruck = true;
-                                //insidetruck = true;
-                            }
-
-                            if (extraVehicles.Contains(trucknameless))
+                            if (extraVehicles.Contains(nameless))
                             {
                                 savingtruck = false;
                             }
                             else
                             {
                                 savingtruck = true;
-                                writer.Write(UserTruckDictionary[trucknameless].TruckMainData.PrintOut(0, trucknameless));
+                                writer.Write(UserTruckDictionary[nameless].TruckMainData.PrintOut(0, nameless));
                             }
 
-                            truckaccCount = UserTruckDictionary[trucknameless].TruckMainData.accessories.Count;
+                            truckaccCount = UserTruckDictionary[nameless].TruckMainData.accessories.Count;
 
                             //Skip lines
                             while (tempSavefileInMemory[line] != "}")
@@ -1685,119 +1486,10 @@ namespace TS_SE_Tool
                             continue;
                         }
 
-                        //Edit vehicle accessory
-                        /*
-                        if (editedtruck && SaveInMemLine.StartsWith("vehicle_"))
-                        {
-                            if (savingtruck)
-                            {
-                                string partnameless = SaveInMemLine.Split(new char[] { ' ' })[2];
-                                writer.WriteLine(SaveInMemLine);
-                                line++;
-
-                                List<string> temp = UserTruckDictionary[trucknameless].Parts.Find(x => x.PartNameless == partnameless).PartData;
-
-                                foreach (string tempdataline in temp)
-                                {
-                                    writer.WriteLine(tempdataline);
-                                }
-                            }
-
-                            while (tempSavefileInMemory[line] != "}")
-                            {
-                                line++;
-                            }
-
-                            if (savingtruck)
-                            {
-                                writer.WriteLine(tempSavefileInMemory[line]);
-                            }
-                            else
-                                line++;
-
-                            truckaccCount--;
-
-                            if (truckaccCount == 0)
-                                editedtruck = false;
-
-                            continue;
-                        }
-                        */
-
-
-                        //Edit truck profit logs
-                        if (SaveInMemLine.StartsWith("profit_log :"))
-                        {
-                            string nameless = SaveInMemLine.Split(new char[] { ' ' })[2];
-
-                            foreach (KeyValuePair<string, UserCompanyTruckData> tmp in UserTruckDictionary)
-                            {
-                                if (tmp.Value.TruckProfitLogs == nameless)
-                                    trucknameless = tmp.Key;
-                            }
-
-                            if (extraVehicles.Contains(trucknameless))
-                            {
-                                savingtruck = false;
-                            }
-                            else
-                                savingtruck = true;
-
-                            while (tempSavefileInMemory[line] != "}")
-                            {
-                                if (tempSavefileInMemory[line].StartsWith(" stats_data:"))
-                                {
-                                    truckaccCount = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
-                                }
-
-                                if (savingtruck)
-                                {
-                                    writer.WriteLine(tempSavefileInMemory[line]);
-                                }
-
-                                line++;
-                            }
-
-                            if (savingtruck)
-                                writer.WriteLine(tempSavefileInMemory[line]);
-                            else
-                                line++;
-
-                            continue;
-                        }
-
-                        //Edit profit log entry
-                        if (SaveInMemLine.StartsWith("profit_log_entry :"))
-                        {
-                            do
-                            {
-                                if (savingtruck)
-                                    writer.WriteLine(tempSavefileInMemory[line]);
-                                line++;
-                            }
-                            while (tempSavefileInMemory[line] != "}");
-
-
-                            if (savingtruck)
-                            {
-                                writer.WriteLine(tempSavefileInMemory[line]);
-                            }
-                            else
-                                line++;
-
-                            truckaccCount--;
-
-                            if (truckaccCount == 0)
-                                editedtruck = false;
-
-                            continue;
-                        }
-
-
                         //Find Trailer vehicle
                         if (SaveInMemLine.StartsWith("trailer :"))
                         {
-                            string nameless = SaveInMemLine.Split(new char[] { ' ' })[2];
+                            nameless = SaveInMemLine.Split(new char[] { ' ' })[2];
 
                             writer.Write(UserTrailerDictionary[nameless].TrailerMainData.PrintOut(0, nameless));
 

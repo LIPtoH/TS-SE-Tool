@@ -113,7 +113,7 @@ namespace TS_SE_Tool
         {
             FormUpdatePlayerLevel();
 
-            char[] ADR = Convert.ToString(PlayerDataData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+            char[] ADR = Convert.ToString(EconomyPlayerData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
 
             for (int i = 0; i < ADR.Length; i++)
             {
@@ -123,7 +123,7 @@ namespace TS_SE_Tool
 
             for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < PlayerDataData.PlayerSkills[i + 1]; j++)
+                for (int j = 0; j < EconomyPlayerData.PlayerSkills[i + 1]; j++)
                 {
                     SkillButtonArray[i, j].Checked = true;
                 }
@@ -139,7 +139,7 @@ namespace TS_SE_Tool
 
         private void FormUpdatePlayerLevel()
         {
-            int playerlvl = PlayerDataData.getPlayerLvl()[0];
+            int playerlvl = EconomyPlayerData.getPlayerLvl()[0];
             labelPlayerLevelNumber.Text = playerlvl.ToString();
 
             for (int i = PlayerLevelNames.Count - 1; i >= 0; i--)
@@ -150,8 +150,8 @@ namespace TS_SE_Tool
                     break;
                 }
 
-            labelPlayerExperience.Text = PlayerDataData.ExperiencePoints.ToString();
-            labelExperienceNxtLvlThreshhold.Text = "/   " + PlayerDataData.getPlayerLvl()[1].ToString();
+            labelPlayerExperience.Text = EconomyPlayerData.ExperiencePoints.ToString();
+            labelExperienceNxtLvlThreshhold.Text = "/   " + EconomyPlayerData.getPlayerLvl()[1].ToString();
         }
 
         private void CreateUserColorsButtons()
@@ -537,42 +537,42 @@ namespace TS_SE_Tool
         //Profile buttons
         private void buttonPlayerLvlPlus01_Click(object sender, EventArgs e)
         {
-            PlayerDataData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
+            EconomyPlayerData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlPlus10_Click(object sender, EventArgs e)
         {
-            PlayerDataData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
+            EconomyPlayerData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMax_Click(object sender, EventArgs e)
         {
-            PlayerDataData.getPlayerExp(150);
+            EconomyPlayerData.getPlayerExp(150);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMinus01_Click(object sender, EventArgs e)
         {
-            PlayerDataData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
+            EconomyPlayerData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMinus10_Click(object sender, EventArgs e)
         {
-            PlayerDataData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
+            EconomyPlayerData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMin_Click(object sender, EventArgs e)
         {
-            PlayerDataData.getPlayerExp(0);
+            EconomyPlayerData.getPlayerExp(0);
 
             FormUpdatePlayerLevel();
         }
@@ -591,7 +591,7 @@ namespace TS_SE_Tool
                 {
                     SkillButtonArray[skillIndex, j].Checked = true;
                 }
-                PlayerDataData.PlayerSkills[++skillIndex] = ++buttonIndex;
+                EconomyPlayerData.PlayerSkills[++skillIndex] = ++buttonIndex;
             }
             else
             {
@@ -599,7 +599,7 @@ namespace TS_SE_Tool
                 {
                     SkillButtonArray[skillIndex, j].Checked = false;
                 }
-                PlayerDataData.PlayerSkills[++skillIndex] = buttonIndex;
+                EconomyPlayerData.PlayerSkills[++skillIndex] = buttonIndex;
             }
         }
 
@@ -672,18 +672,18 @@ namespace TS_SE_Tool
 
             if (thisbutton.Checked)
             {
-                char[] ADR = Convert.ToString(PlayerDataData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+                char[] ADR = Convert.ToString(EconomyPlayerData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
                 ADR[byte.Parse(thisbutton.Name.Substring(9, 1))] = '1';
 
-                PlayerDataData.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
+                EconomyPlayerData.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
                 thisbutton.BackgroundImage = SkillImgSBG[1];
             }
             else
             {
-                char[] ADR = Convert.ToString(PlayerDataData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+                char[] ADR = Convert.ToString(EconomyPlayerData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
                 ADR[byte.Parse(thisbutton.Name.Substring(9, 1))] = '0';
                 string temp = new string(ADR);
-                PlayerDataData.PlayerSkills[0] = Convert.ToByte(temp.PadLeft(8, '0'), 2);
+                EconomyPlayerData.PlayerSkills[0] = Convert.ToByte(temp.PadLeft(8, '0'), 2);
                 thisbutton.BackgroundImage = SkillImgSBG[1];
             }
         }
