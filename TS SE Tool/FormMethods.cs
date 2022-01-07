@@ -339,6 +339,8 @@ namespace TS_SE_Tool
                 Globals.CurrencyName = ProgSettingsV.CurrencyMesATS;
             }
 
+            Bank = new Save.Items.Bank();
+            BankLoans = new Dictionary<string, Save.Items.Bank_Loan>();
             Player = new Save.Items.Player();
 
             EconomyPlayerData = new PlayerData();

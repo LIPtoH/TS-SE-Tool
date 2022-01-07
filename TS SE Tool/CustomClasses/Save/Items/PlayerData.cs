@@ -22,8 +22,6 @@ namespace TS_SE_Tool
         //Economy
         public uint ExperiencePoints { get; set; } = 0;
         public byte[] PlayerSkills { get; set; } = new byte[] { 0, 0, 0, 0, 0, 0 };
-        //Bank
-        public long AccountMoney { get; set; } = 0;
         //Player
         public string HQcity { get; set; } = "";
         public string UserCompanyAssignedTruck { get; set; } = "";

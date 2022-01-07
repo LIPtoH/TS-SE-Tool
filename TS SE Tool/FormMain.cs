@@ -123,6 +123,9 @@ namespace TS_SE_Tool
 
         private DateTime LastModifiedTimestamp; //+
 
+        internal Save.Items.Bank Bank;
+        internal Dictionary<string, Save.Items.Bank_Loan> BankLoans;
+
         internal Save.Items.Player Player;
 
         public PlayerData EconomyPlayerData; //+

@@ -63,7 +63,7 @@ namespace TS_SE_Tool
         public void FillAccountMoneyTB()
         {
             //
-            Int64 valueBefore = (long)Math.Floor(EconomyPlayerData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
+            Int64 valueBefore = (long)Math.Floor(Bank.money_account * CurrencyDictConversion[Globals.CurrencyName]);
 
             textBoxUserCompanyMoneyAccount.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
 
@@ -151,7 +151,7 @@ namespace TS_SE_Tool
         
         private void textBoxUserCompanyMoneyAccount_Enter(object sender, EventArgs e)
         {
-            Int64 valueBefore = (long)Math.Floor(EconomyPlayerData.AccountMoney * CurrencyDictConversion[Globals.CurrencyName]);
+            Int64 valueBefore = (long)Math.Floor(Bank.money_account * CurrencyDictConversion[Globals.CurrencyName]);
 
             textBoxUserCompanyMoneyAccount.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
 
@@ -175,7 +175,7 @@ namespace TS_SE_Tool
             if (!Int64.TryParse(textBoxUserCompanyMoneyAccount.Text, NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign, CultureInfo.CurrentCulture, out long newValue))
                 return;
 
-            EconomyPlayerData.AccountMoney = (long)Math.Round(newValue / CurrencyDictConversion[Globals.CurrencyName]);
+            Bank.money_account = (long)Math.Round(newValue / CurrencyDictConversion[Globals.CurrencyName]);
 
             //[sign1] - [sign2] 1.234,- [sign3]
             string newtext = "";

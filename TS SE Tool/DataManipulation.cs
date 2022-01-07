@@ -372,12 +372,43 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    //Account Money
-                    if (tempSavefileInMemory[line].StartsWith(" money_account:"))
+                    //Bank
+                    if (tempSavefileInMemory[line].StartsWith("bank :"))
                     {
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        EconomyPlayerData.AccountMoney = long.Parse(chunkOfline[2]);
-                        continue;
+                        string nameless = chunkOfline[2];
+
+                        string workLine = "";
+                        List<string> Data = new List<string>();
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                        {
+                            workLine = tempSavefileInMemory[line];
+                            Data.Add(workLine);
+
+                            line++;
+                        }
+                        Bank = new Bank(Data.ToArray());
+                    }
+
+                    //Bank loans
+                    if (tempSavefileInMemory[line].StartsWith("bank_loan :"))
+                    {
+                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                        string nameless = chunkOfline[2];
+
+                        string workLine = "";
+                        List<string> Data = new List<string>();
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                        {
+                            workLine = tempSavefileInMemory[line];
+                            Data.Add(workLine);
+
+                            line++;
+                        }
+
+                        BankLoans.Add(nameless, new Bank_Loan(Data.ToArray()));
                     }
 
                     //Player section
