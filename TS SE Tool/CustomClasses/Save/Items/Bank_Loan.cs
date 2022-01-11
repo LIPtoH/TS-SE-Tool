@@ -18,18 +18,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal int time_stamp { get; set; } = 0;
 
-        internal float interest_rate { get; set; } = 0;
-        internal string _interest_rate
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(interest_rate);
-            }
-            set
-            {
-                interest_rate = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float interest_rate { get; set; } = 0;
 
         internal int duration { get; set; } = 0;
 
@@ -38,8 +27,6 @@ namespace TS_SE_Tool.Save.Items
 
         internal Bank_Loan(string[] _input)
         {
-
-            string[] lineParts;
             string tagLine = "", dataLine = "";
 
             foreach (string currentLine in _input)
@@ -84,7 +71,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "interest_rate":
                         {
-                            _interest_rate = dataLine;
+                            interest_rate = dataLine;
                             break;
                         }
 
@@ -108,7 +95,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" amount: " + amount);
             returnSB.AppendLine(" original_amount: " + original_amount);
             returnSB.AppendLine(" time_stamp: " + time_stamp);
-            returnSB.AppendLine(" interest_rate: " + _interest_rate);
+            returnSB.AppendLine(" interest_rate: " + interest_rate.ToString());
             returnSB.AppendLine(" duration: " + duration);
 
             returnSB.AppendLine("}");

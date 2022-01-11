@@ -23,6 +23,8 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
+using TS_SE_Tool.Global;
+
 namespace TS_SE_Tool
 {
     public partial class FormMain
@@ -671,7 +673,7 @@ namespace TS_SE_Tool
             selectedTrailerData.cargo_damage = 0;
             selectedTrailerData.trailer_body_wear = 0;
             selectedTrailerData.chassis_wear = 0;
-            selectedTrailerData.wheels_wear = new CustomClasses.Global.FloatList();
+            selectedTrailerData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
 
             slaveTrailerNameless = UserTrailerDictionary[trailerNameless].TrailerMainData.slave_trailer;
 
@@ -732,7 +734,7 @@ namespace TS_SE_Tool
                     break;
 
                 case 3:
-                    selectedTrailerData.wheels_wear = new CustomClasses.Global.FloatList();
+                    selectedTrailerData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
                     break;
             }
 

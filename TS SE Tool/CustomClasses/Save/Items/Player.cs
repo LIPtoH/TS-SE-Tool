@@ -30,18 +30,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal Vector_3f_4f my_trailer_placement { get; set; } = new Vector_3f_4f();
 
-        internal float my_slave_trailer_placements { get; set; } = 0;
-        internal string _my_slave_trailer_placements
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(my_slave_trailer_placements);
-            }
-            set
-            {
-                my_slave_trailer_placements = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float my_slave_trailer_placements { get; set; } = 0;
 
         internal bool my_trailer_attached { get; set; } = false;
 
@@ -57,18 +46,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal Vector_3f_4f trailer_placement { get; set; } = new Vector_3f_4f();
 
-        internal float slave_trailer_placements { get; set; } = 0;
-        internal string _slave_trailer_placements
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(slave_trailer_placements);
-            }
-            set
-            {
-                slave_trailer_placements = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float slave_trailer_placements { get; set; } = 0;
 
         internal bool schedule_transfer_to_hq { get; set; } = false;
 
@@ -88,18 +66,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal int free_roam_distance { get; set; } = 0;
 
-        internal float discovary_distance { get; set; } = 0;
-        internal string _discovary_distance
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(discovary_distance);
-            }
-            set
-            {
-                discovary_distance = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float discovary_distance { get; set; } = 0;
 
         internal List<string> dismissed_drivers { get; set; } = new List<string>();
 
@@ -118,7 +85,6 @@ namespace TS_SE_Tool.Save.Items
 
         internal Player(string[] _input)
         {
-            string[] lineParts;
             string tagLine = "", dataLine = "";
 
             foreach (string currentLine in _input)
@@ -217,7 +183,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "my_slave_trailer_placements":
                         {
-                            _my_slave_trailer_placements = dataLine;
+                            my_slave_trailer_placements = dataLine;
                             break;
                         }
 
@@ -265,7 +231,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "slave_trailer_placements":
                         {
-                            _slave_trailer_placements = dataLine;
+                            slave_trailer_placements = dataLine;
                             break;
                         }
 
@@ -325,7 +291,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "discovary_distance":
                         {
-                            _discovary_distance = dataLine;
+                            discovary_distance = dataLine;
                             break;
                         }
 
@@ -430,7 +396,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" my_truck_placement: " + my_truck_placement.ToString());
             returnSB.AppendLine(" my_truck_placement_valid: " + my_truck_placement_valid.ToString().ToLower());
             returnSB.AppendLine(" my_trailer_placement: " + my_trailer_placement.ToString());
-            returnSB.AppendLine(" my_slave_trailer_placements: " + _my_slave_trailer_placements);
+            returnSB.AppendLine(" my_slave_trailer_placements: " + my_slave_trailer_placements.ToString());
             returnSB.AppendLine(" my_trailer_attached: " + my_trailer_attached.ToString().ToLower());
             returnSB.AppendLine(" my_trailer_used: " + my_trailer_used.ToString().ToLower());
             returnSB.AppendLine(" assigned_trailer: " + assigned_trailer);
@@ -438,7 +404,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" assigned_trailer_connected: " + assigned_trailer_connected.ToString().ToLower());
             returnSB.AppendLine(" truck_placement: " + truck_placement.ToString());
             returnSB.AppendLine(" trailer_placement: " + trailer_placement.ToString());
-            returnSB.AppendLine(" slave_trailer_placements: " + _slave_trailer_placements);
+            returnSB.AppendLine(" slave_trailer_placements: " + slave_trailer_placements.ToString());
             returnSB.AppendLine(" schedule_transfer_to_hq: " + schedule_transfer_to_hq.ToString().ToLower());
             returnSB.AppendLine(" flags: " + flags.ToString());
             returnSB.AppendLine(" gas_pump_money_debt: " + gas_pump_money_debt.ToString());
@@ -448,7 +414,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" driving_time: " + driving_time.ToString());
             returnSB.AppendLine(" sleeping_count: " + sleeping_count.ToString());
             returnSB.AppendLine(" free_roam_distance: " + free_roam_distance.ToString());
-            returnSB.AppendLine(" discovary_distance: " + _discovary_distance);
+            returnSB.AppendLine(" discovary_distance: " + discovary_distance.ToString());
 
             returnSB.AppendLine(" dismissed_drivers: " + dismissed_drivers.Count);
             for (int i = 0; i < dismissed_drivers.Count; i++)

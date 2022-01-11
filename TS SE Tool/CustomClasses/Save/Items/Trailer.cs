@@ -4,65 +4,22 @@ using System.Linq;
 using System.Text;
 
 using TS_SE_Tool.Utilities;
+using TS_SE_Tool.Save.DataFormat;
 using TS_SE_Tool.CustomClasses.Global;
 
 namespace TS_SE_Tool.Save.Items
 {
     class Trailer
     {
-        internal float      cargo_mass          { get; set; } = 0;
-        internal string      _cargo_mass
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(cargo_mass);
-            }
-            set
-            {
-                cargo_mass = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float  cargo_mass          { get; set; } = 0;
 
-        internal float      cargo_damage        { get; set; } = 0;
-        internal string     _cargo_damage
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(cargo_damage);
-            }
-            set
-            {
-                cargo_damage = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float  cargo_damage        { get; set; } = 0;
 
-        internal float      trailer_body_wear   { get; set; } = 0;
-        internal string     _trailer_body_wear
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(trailer_body_wear);
-            }
-            set
-            {
-                trailer_body_wear = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float  trailer_body_wear   { get; set; } = 0;
 
-        internal float      chassis_wear        { get; set; } = 0;
-        internal string     _chassis_wear
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(chassis_wear);
-            }
-            set
-            {
-                chassis_wear = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float  chassis_wear        { get; set; } = 0;
 
-        internal FloatList    wheels_wear     { get; set; } = new FloatList(); //List<float>();
+        internal List<SCS_Float> wheels_wear { get; set; } = new List<SCS_Float>();
 
         internal List<string>   accessories     { get; set; } = new List<string>();
 
@@ -92,79 +49,24 @@ namespace TS_SE_Tool.Save.Items
 
         internal bool       oversize            { get; set; } = false;
 
-        internal float      virtual_rear_wheels_offset { get; set; } = 0;
-        internal string     _virtual_rear_wheels_offset
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(virtual_rear_wheels_offset);
-            }
-            set
-            {
-                virtual_rear_wheels_offset = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float  virtual_rear_wheels_offset { get; set; } = 0;
 
         internal uint       odometer            { get; set; } = 0;
 
-        internal float      odometer_float_part { get; set; } = 0;
-        internal string     _odometer_float_part
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(odometer_float_part);
-            }
-            set
-            {
-                odometer_float_part = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float  odometer_float_part { get; set; } = 0;
 
 
         internal uint       trip_fuel_l         { get; set; } = 0;
 
-        internal float      trip_fuel           { get; set; } = 0;
-        internal string     _trip_fuel
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(trip_fuel);
-            }
-            set
-            {
-                trip_fuel = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float  trip_fuel           { get; set; } = 0;
 
         internal uint       trip_distance_km    { get; set; } = 0;
 
-        internal float      trip_distance       { get; set; } = 0;
-        internal string     _trip_distance
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(trip_distance);
-            }
-            set
-            {
-                trip_distance = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float  trip_distance       { get; set; } = 0;
 
         internal uint       trip_time_min       { get; set; } = 0;
 
-        internal float      trip_time           { get; set; } = 0;
-        internal string     _trip_time
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(trip_time);
-            }
-            set
-            {
-                trip_time = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float  trip_time           { get; set; } = 0;
 
         internal Trailer()
         {
@@ -173,7 +75,6 @@ namespace TS_SE_Tool.Save.Items
 
         internal Trailer(string[] _input)
         {
-            string[] lineParts;
             string tagLine = "", dataLine = "";
 
             foreach (string currentLine in _input)
@@ -207,15 +108,15 @@ namespace TS_SE_Tool.Save.Items
                         break;
 
                     case "cargo_mass":
-                        _cargo_mass = dataLine;
+                        cargo_mass = dataLine;
                         break;
 
                     case "cargo_damage":
-                        _cargo_damage = dataLine;
+                        cargo_damage = dataLine;
                         break;
 
                     case "virtual_rear_wheels_offset":
-                        _virtual_rear_wheels_offset = dataLine;
+                        virtual_rear_wheels_offset = dataLine;
                         break;
 
                     case "slave_trailer":
@@ -227,7 +128,7 @@ namespace TS_SE_Tool.Save.Items
                         break;
 
                     case "trailer_body_wear":
-                        _trailer_body_wear = dataLine;
+                        trailer_body_wear = dataLine;
                         break;
 
                     case "accessories":
@@ -243,7 +144,7 @@ namespace TS_SE_Tool.Save.Items
                         break;
 
                     case "odometer_float_part":
-                        _odometer_float_part = dataLine;
+                        odometer_float_part = dataLine;
                         break;
 
                     case "trip_fuel_l":
@@ -251,7 +152,7 @@ namespace TS_SE_Tool.Save.Items
                         break;
 
                     case "trip_fuel":
-                        _trip_fuel = dataLine;
+                        trip_fuel = dataLine;
                         break;
 
                     case "trip_distance_km":
@@ -259,7 +160,7 @@ namespace TS_SE_Tool.Save.Items
                         break;
 
                     case "trip_distance":
-                        _trip_distance = dataLine;
+                        trip_distance = dataLine;
                         break;
 
                     case "trip_time_min":
@@ -267,7 +168,7 @@ namespace TS_SE_Tool.Save.Items
                         break;
 
                     case "trip_time":
-                        _trip_time = dataLine;
+                        trip_time = dataLine;
                         break;
 
                     case "license_plate":
@@ -275,7 +176,7 @@ namespace TS_SE_Tool.Save.Items
                         break;
 
                     case "chassis_wear":
-                        _chassis_wear = dataLine;
+                        chassis_wear = dataLine;
                         break;
 
                     case "wheels_wear":
@@ -302,37 +203,37 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" oversize: " + oversize.ToString().ToLower());
 
-            returnSB.AppendLine(" cargo_mass: " + _cargo_mass);
-            returnSB.AppendLine(" cargo_damage: " + _cargo_damage);
+            returnSB.AppendLine(" cargo_mass: " + cargo_mass.ToString());
+            returnSB.AppendLine(" cargo_damage: " + cargo_damage.ToString());
 
-            returnSB.AppendLine(" virtual_rear_wheels_offset: " + _virtual_rear_wheels_offset);
+            returnSB.AppendLine(" virtual_rear_wheels_offset: " + virtual_rear_wheels_offset.ToString());
 
             returnSB.AppendLine(" slave_trailer: " + slave_trailer);
             returnSB.AppendLine(" is_private: " + is_private.ToString().ToLower());
 
-            returnSB.AppendLine(" trailer_body_wear: " + _trailer_body_wear);
+            returnSB.AppendLine(" trailer_body_wear: " + trailer_body_wear.ToString());
 
             returnSB.AppendLine(" accessories: " + accessories.Count);
             for (int i = 0; i < accessories.Count; i++)
                 returnSB.AppendLine(" accessories[" + i + "]: " + accessories[i]);
 
             returnSB.AppendLine(" odometer: " + odometer);
-            returnSB.AppendLine(" odometer_float_part: " +_odometer_float_part);
+            returnSB.AppendLine(" odometer_float_part: " +odometer_float_part.ToString());
 
             returnSB.AppendLine(" trip_fuel_l: " + trip_fuel_l);
-            returnSB.AppendLine(" trip_fuel: " + _trip_fuel);
+            returnSB.AppendLine(" trip_fuel: " + trip_fuel.ToString());
             returnSB.AppendLine(" trip_distance_km: " + trip_distance_km);
-            returnSB.AppendLine(" trip_distance: " + _trip_distance);
+            returnSB.AppendLine(" trip_distance: " + trip_distance.ToString());
             returnSB.AppendLine(" trip_time_min: " + trip_time_min);
-            returnSB.AppendLine(" trip_time: " + _trip_time);
+            returnSB.AppendLine(" trip_time: " + trip_time.ToString());
 
             returnSB.AppendLine(" license_plate: " + _license_plate);
 
-            returnSB.AppendLine(" chassis_wear: " + _chassis_wear);
+            returnSB.AppendLine(" chassis_wear: " + chassis_wear.ToString());
 
             returnSB.AppendLine(" wheels_wear: " + wheels_wear.Count);
             for (int i = 0; i < wheels_wear.Count; i++)
-                returnSB.AppendLine(" wheels_wear[" + i + "]: " + wheels_wear[i]);
+                returnSB.AppendLine(" wheels_wear[" + i + "]: " + wheels_wear[i].ToString());
 
             returnSB.AppendLine("}");
 

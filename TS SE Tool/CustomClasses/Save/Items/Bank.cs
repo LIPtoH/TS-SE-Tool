@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using TS_SE_Tool.Utilities;
+using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -14,31 +15,9 @@ namespace TS_SE_Tool.Save.Items
 
         internal int coinsurance_fixed { get; set; } = 0;
 
-        internal float coinsurance_ratio { get; set; } = 0;
-        internal string _coinsurance_ratio
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(coinsurance_ratio);
-            }
-            set
-            {
-                coinsurance_ratio = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float coinsurance_ratio { get; set; } = 0;
 
-        internal float accident_severity { get; set; } = 0;
-        internal string _accident_severity
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(accident_severity);
-            }
-            set
-            {
-                accident_severity = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float accident_severity { get; set; } = 0;
 
         internal List<string> loans { get; set; } = new List<string>();
 
@@ -46,18 +25,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal int loan_limit { get; set; } = 0;
 
-        internal float payment_timer { get; set; } = 0;
-        internal string _payment_timer
-        {
-            get
-            {
-                return NumericUtilities.SingleFloatToHexFloat(payment_timer);
-            }
-            set
-            {
-                payment_timer = NumericUtilities.HexFloatToSingleFloat(value);
-            }
-        }
+        internal SCS_Float payment_timer { get; set; } = 0;
 
         internal bool overdraft { get; set; } = false;
 
@@ -74,7 +42,6 @@ namespace TS_SE_Tool.Save.Items
 
         internal Bank(string[] _input)
         {
-            string[] lineParts;
             string tagLine = "", dataLine = "";
 
             foreach (string currentLine in _input)
@@ -113,13 +80,13 @@ namespace TS_SE_Tool.Save.Items
 
                     case "coinsurance_ratio":
                         {
-                            _coinsurance_ratio = dataLine;
+                            coinsurance_ratio = dataLine;
                             break;
                         }
 
                     case "accident_severity":
                         {
-                            _accident_severity = dataLine;
+                            accident_severity = dataLine;
                             break;
                         }
 
@@ -149,7 +116,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "payment_timer":
                         {
-                            _payment_timer = dataLine;
+                            payment_timer = dataLine;
                             break;
                         }
 
@@ -195,8 +162,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("bank : " + _nameless + " {");
             returnSB.AppendLine(" money_account: " + money_account);
             returnSB.AppendLine(" coinsurance_fixed: " + coinsurance_fixed);
-            returnSB.AppendLine(" coinsurance_ratio: " + _coinsurance_ratio);
-            returnSB.AppendLine(" accident_severity: " + _accident_severity);
+            returnSB.AppendLine(" coinsurance_ratio: " + coinsurance_ratio.ToString());
+            returnSB.AppendLine(" accident_severity: " + accident_severity.ToString());
 
             returnSB.AppendLine(" loans: " + loans.Count);
             for (int i = 0; i < loans.Count; i++)
@@ -204,7 +171,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" app_enabled: " + app_enabled.ToString().ToLower());
             returnSB.AppendLine(" loan_limit: " + loan_limit);
-            returnSB.AppendLine(" payment_timer: " + _payment_timer);
+            returnSB.AppendLine(" payment_timer: " + payment_timer.ToString());
             returnSB.AppendLine(" overdraft: " + overdraft.ToString().ToLower());
             returnSB.AppendLine(" overdraft_timer: " + overdraft_timer.ToString());
             returnSB.AppendLine(" overdraft_warn_count: " + overdraft_warn_count.ToString());

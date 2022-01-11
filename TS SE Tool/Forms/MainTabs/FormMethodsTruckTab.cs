@@ -22,6 +22,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Globalization;
 
+using TS_SE_Tool.Global;
+
 namespace TS_SE_Tool
 {
     public partial class FormMain
@@ -702,7 +704,7 @@ namespace TS_SE_Tool
             SelectedUserCompanyTruck.TruckMainData.transmission_wear = 0;
             SelectedUserCompanyTruck.TruckMainData.chassis_wear = 0;
             SelectedUserCompanyTruck.TruckMainData.cabin_wear = 0;
-            SelectedUserCompanyTruck.TruckMainData.wheels_wear = new CustomClasses.Global.FloatList();
+            SelectedUserCompanyTruck.TruckMainData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
 
             for (byte i = 0; i < 5; i++)
                 UpdateTruckPanelProgressBar(i);
@@ -735,7 +737,7 @@ namespace TS_SE_Tool
                     SelectedUserCompanyTruck.TruckMainData.cabin_wear = 0;
                     break;
                 case 4:
-                    SelectedUserCompanyTruck.TruckMainData.wheels_wear = new CustomClasses.Global.FloatList();
+                    SelectedUserCompanyTruck.TruckMainData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
                     break;
             }
 

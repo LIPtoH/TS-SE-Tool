@@ -51,10 +51,8 @@ namespace TS_SE_Tool
                     }
 
                     Player.my_truck_placement = new Vector_3f_4f(tempstr[0]);
-                    //PlayerProfileData.UserCompanyAssignedTrailerPlacement = "(0, 0, 0) (1; 0, 0, 0)";
 
                     MessageBox.Show("Truck GPS position has been inserted.");
-                    UserCompanyAssignedTruckPlacementEdited = true;
                 }
                 else
                     MessageBox.Show("Wrong data. Expected Truck GPS data but\r\n" + Lines[0] + "\r\nwas found.");

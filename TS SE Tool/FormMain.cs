@@ -55,8 +55,6 @@ namespace TS_SE_Tool
         private string LoopStartCompany;//Program
         private string unCertainRouteLength;//Program
 
-        private bool UserCompanyAssignedTruckPlacementEdited;//Program
-
         private bool InfoDepContinue;//Program
 
         private string ProfileETS2;//Program

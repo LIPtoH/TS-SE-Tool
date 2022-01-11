@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomClasses\ExternalData\ScsFont.cs" />
+    <Compile Include="CustomClasses\Global\EnumerableExt.cs" />
     <Compile Include="CustomClasses\Global\FloatList.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\SCS_Color.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\SCS_Float.cs" />
@@ -146,9 +147,9 @@
     <Compile Include="CustomClasses\Save\Items\Bank_Loan.cs" />
     <Compile Include="CustomClasses\Save\Items\Economy.cs" />
     <Compile Include="CustomClasses\Save\Items\Player.cs" />
-    <Compile Include="CustomClasses\Save\Items\PlayerJob.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\PlayerJob.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer.cs" />
-    <Compile Include="CustomClasses\Save\Items\UserCompanyTrailerData.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyTrailerData.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle.cs" />
     <Compile Include="CustomClasses\SCSFontLetter.cs" />
     <Compile Include="CustomClasses\SCSLicensePlate.cs" />
@@ -197,28 +198,28 @@
     <Compile Include="Forms\FormAboutBox.Designer.cs">
       <DependentUpon>FormAboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomClasses\Save\Items\Cargo.cs" />
-    <Compile Include="CustomClasses\Save\Items\Country.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\Cargo.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\Country.cs" />
     <Compile Include="CustomClasses\Save\SaveFileProfileData.cs" />
     <Compile Include="CustomClasses\Save\SaveFileInfoData.cs" />
     <Compile Include="CustomClasses\UtilitiesExternal\TGASharpLib.cs" />
-    <Compile Include="CustomClasses\Save\Items\TrailerDefinition.cs" />
-    <Compile Include="CustomClasses\Save\Items\City.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\TrailerDefinition.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\City.cs" />
     <Compile Include="CustomClasses\ExternalData\ExtCargo.cs" />
     <Compile Include="CustomClasses\ExternalData\ExtCompany.cs" />
     <Compile Include="CustomClasses\JobAdded.cs" />
-    <Compile Include="CustomClasses\Save\Items\Company.cs" />
-    <Compile Include="CustomClasses\Save\Items\CompanyTruck.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\Company.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\CompanyTruck.cs" />
     <Compile Include="CustomClasses\ExternalData\CountryDictionary.cs" />
     <Compile Include="CustomClasses\UtilitiesExternal\DDSImageParser.cs" />
-    <Compile Include="CustomClasses\Save\Items\Garages.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\Garages.cs" />
     <Compile Include="CustomClasses\ExternalData\LevelNames.cs" />
     <Compile Include="CustomClasses\Program\ProgSettings.cs" />
     <Compile Include="CustomClasses\ExternalData\Routes.cs" />
-    <Compile Include="CustomClasses\Save\Items\UserCompanyDriverData.cs" />
-    <Compile Include="CustomClasses\Save\Items\UserCompanyTruckData.cs" />
-    <Compile Include="CustomClasses\Save\Items\UserCompanyTruckDataPart.cs" />
-    <Compile Include="CustomClasses\Save\Items\VisitedCity.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyDriverData.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyTruckData.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyTruckDataPart.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\VisitedCity.cs" />
     <Compile Include="DataManipulation.cs">
       <SubType>Form</SubType>
     </Compile>

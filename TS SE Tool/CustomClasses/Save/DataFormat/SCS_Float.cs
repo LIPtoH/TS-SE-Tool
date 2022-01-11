@@ -34,6 +34,7 @@ namespace TS_SE_Tool.Save.DataFormat
         public override string ToString()
         {
             return NumericUtilities.SingleFloatToHexFloat(Value);
-        }        
+        }
     }
+
 }
