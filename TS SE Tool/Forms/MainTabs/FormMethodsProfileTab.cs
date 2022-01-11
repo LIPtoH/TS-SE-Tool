@@ -113,7 +113,7 @@ namespace TS_SE_Tool
         {
             FormUpdatePlayerLevel();
 
-            char[] ADR = Convert.ToString(EconomyPlayerData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+            char[] ADR = Convert.ToString(Economy.adr, 2).PadLeft(6, '0').ToCharArray();
 
             for (int i = 0; i < ADR.Length; i++)
             {
@@ -123,7 +123,7 @@ namespace TS_SE_Tool
 
             for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < EconomyPlayerData.PlayerSkills[i + 1]; j++)
+                for (int j = 0; j < Economy.playerSkills[i + 1]; j++)
                 {
                     SkillButtonArray[i, j].Checked = true;
                 }
@@ -139,8 +139,8 @@ namespace TS_SE_Tool
 
         private void FormUpdatePlayerLevel()
         {
-            int playerlvl = EconomyPlayerData.getPlayerLvl()[0];
-            labelPlayerLevelNumber.Text = playerlvl.ToString();
+            int[] playerLvlPlus = Economy.getPlayerLvl();
+            int playerlvl = playerLvlPlus[0];
 
             for (int i = PlayerLevelNames.Count - 1; i >= 0; i--)
                 if (PlayerLevelNames[i].LevelLimit <= playerlvl)
@@ -150,8 +150,10 @@ namespace TS_SE_Tool
                     break;
                 }
 
-            labelPlayerExperience.Text = EconomyPlayerData.ExperiencePoints.ToString();
-            labelExperienceNxtLvlThreshhold.Text = "/   " + EconomyPlayerData.getPlayerLvl()[1].ToString();
+            labelPlayerLevelNumber.Text = playerlvl.ToString();
+
+            labelPlayerExperience.Text = Economy.experience_points.ToString();
+            labelExperienceNxtLvlThreshhold.Text = "/   " + playerLvlPlus[1].ToString();
         }
 
         private void CreateUserColorsButtons()
@@ -161,7 +163,7 @@ namespace TS_SE_Tool
                         
             if (MainSaveFileInfoData.Version >= 49)
             {
-                int ucc = UserColorsList.Count / 4;
+                int ucc = Economy.user_colors.Count / 4;
                 int btnNumber = 0;
 
                 for (int i = 0; i < ucc; i++)
@@ -198,7 +200,7 @@ namespace TS_SE_Tool
                 panelProfileUserColors.MouseWheel += new MouseEventHandler(this.panelProfileUserColors_MouseWheel);
             }
             else
-                for (int i = 0; i < UserColorsList.Count; i++)
+                for (int i = 0; i < Economy.user_colors.Count; i++)
                 {
                     Button rb = new Button();
                     rb.Name = "buttonUC" + i.ToString();
@@ -263,9 +265,9 @@ namespace TS_SE_Tool
             {
                 int padding = 3, width = 24, height = 24, spacing = 4;
 
-                panelProfileUserColors.VerticalScroll.Maximum = (height + spacing) * UserColorsList.Count / 4;
+                panelProfileUserColors.VerticalScroll.Maximum = (height + spacing) * Economy.user_colors.Count / 4;
 
-                for (int i = 0; i < UserColorsList.Count; i++)
+                for (int i = 0; i < Economy.user_colors.Count; i++)
                 {
                     Button btn = null;
                     string btnname = "buttonUC" + i.ToString();
@@ -276,7 +278,7 @@ namespace TS_SE_Tool
 
                         btn.Enabled = true;
 
-                        if (UserColorsList[i].A == 0)
+                        if (Economy.user_colors[i].color.A == 0)
                         {
                             btn.Text = "X";
                             btn.BackColor = Color.FromName("Control");
@@ -284,7 +286,7 @@ namespace TS_SE_Tool
                         else
                         {
                             btn.Text = "";
-                            btn.BackColor = UserColorsList[i];
+                            btn.BackColor = Economy.user_colors[i].color;
                         }
                     }
                     else
@@ -309,7 +311,7 @@ namespace TS_SE_Tool
 
                             btn.Enabled = true;
 
-                            if (UserColorsList[i].A == 0)
+                            if (Economy.user_colors[i].color.A == 0)
                             {
                                 btn.Text = "X";
                                 btn.BackColor = Color.FromName("Control");
@@ -317,7 +319,7 @@ namespace TS_SE_Tool
                             else
                             {
                                 btn.Text = "";
-                                btn.BackColor = UserColorsList[i];
+                                btn.BackColor = Economy.user_colors[i].color;
                             }
                             i++;
                         }
@@ -329,7 +331,7 @@ namespace TS_SE_Tool
             {
                 int padding = 6, width = 23;
 
-                for (int i = 0; i < UserColorsList.Count; i++)
+                for (int i = 0; i < Economy.user_colors.Count; i++)
                 {
                     Button btn = null;
                     string btnname = "buttonUC" + i.ToString();
@@ -354,7 +356,7 @@ namespace TS_SE_Tool
                     if (btn != null)
                     {
                         btn.Enabled = true;
-                        if (UserColorsList[i].A == 0)
+                        if (Economy.user_colors[i].color.A == 0)
                         {
                             btn.Text = "X";
                             btn.BackColor = Color.FromName("Control");
@@ -362,7 +364,7 @@ namespace TS_SE_Tool
                         else
                         {
                             btn.Text = "";
-                            btn.BackColor = UserColorsList[i];
+                            btn.BackColor = Economy.user_colors[i].color;
                         }
                     }
                 }
@@ -411,7 +413,7 @@ namespace TS_SE_Tool
             {
                 int index = int.Parse(obj.Name.Substring(8));
 
-                UserColorsList[index] = frm.PrimaryColor;
+                Economy.user_colors[index].color = frm.PrimaryColor;
 
                 if (frm.PrimaryColor.A != 0)
                 {
@@ -436,11 +438,9 @@ namespace TS_SE_Tool
 
         internal void AddUserColor4slot()
         {
-            Color userColor = Color.FromArgb(0, 0, 0, 0);
-
             for (int i = 0; i < 4; i++)
             {
-                UserColorsList.Add(userColor);
+                Economy.user_colors.Add(new Save.DataFormat.SCS_Color(0, 0, 0, 0));
             }
 
             //Scroll panel to the top to properly add buttons
@@ -461,8 +461,8 @@ namespace TS_SE_Tool
 
         internal void RemoveUserColorUnused4slot()
         {
-            int counter = UserColorsList.Count - 1;
-            int slotCount = UserColorsList.Count / 4;
+            int counter = Economy.user_colors.Count - 1;
+            int slotCount = Economy.user_colors.Count / 4;
 
             try
             {
@@ -472,7 +472,7 @@ namespace TS_SE_Tool
 
                     for (int i = 0; i < 4; i++)
                     {
-                        if (UserColorsList[counter - i].A == 0)
+                        if (Economy.user_colors[counter - i].color.A == 0)
                         {
                             delete = true;
                         }
@@ -496,7 +496,7 @@ namespace TS_SE_Tool
                             if (tempArray.Length > 0)
                             {
                                 panelProfileUserColors.Controls.Remove(tempArray[0]);
-                                UserColorsList.RemoveAt(btnNumber);
+                                Economy.user_colors.RemoveAt(btnNumber);
                             }
                             else
                             {
@@ -510,7 +510,7 @@ namespace TS_SE_Tool
                     }
                 }
 
-                if (UserColorsList.Count / 4 >= 40)
+                if (Economy.user_colors.Count / 4 >= 40)
                     buttonAddUserColor.Enabled = false;
                 else
                     buttonAddUserColor.Enabled = true;
@@ -537,42 +537,42 @@ namespace TS_SE_Tool
         //Profile buttons
         private void buttonPlayerLvlPlus01_Click(object sender, EventArgs e)
         {
-            EconomyPlayerData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
+            Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlPlus10_Click(object sender, EventArgs e)
         {
-            EconomyPlayerData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
+            Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMax_Click(object sender, EventArgs e)
         {
-            EconomyPlayerData.getPlayerExp(150);
+            Economy.setPlayerExp(150);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMinus01_Click(object sender, EventArgs e)
         {
-            EconomyPlayerData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
+            Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMinus10_Click(object sender, EventArgs e)
         {
-            EconomyPlayerData.getPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
+            Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMin_Click(object sender, EventArgs e)
         {
-            EconomyPlayerData.getPlayerExp(0);
+            Economy.setPlayerExp(0);
 
             FormUpdatePlayerLevel();
         }
@@ -585,21 +585,20 @@ namespace TS_SE_Tool
 
             int skillIndex = int.Parse(thisbutton.Name.Substring(11, 1));
             byte buttonIndex = byte.Parse(thisbutton.Name.Substring(12, 1));
+
             if (thisbutton.Checked)
             {
-                for (int j = 0; j < buttonIndex; j++)
-                {
+                for (int j = 0; j < buttonIndex; j++)                
                     SkillButtonArray[skillIndex, j].Checked = true;
-                }
-                EconomyPlayerData.PlayerSkills[++skillIndex] = ++buttonIndex;
+                
+                Economy.playerSkills[++skillIndex] = ++buttonIndex;
             }
             else
             {
-                for (int j = 5; j >= int.Parse(thisbutton.Name.Substring(12, 1)); j--)
-                {
+                for (int j = 5; j >= buttonIndex; j--)                
                     SkillButtonArray[skillIndex, j].Checked = false;
-                }
-                EconomyPlayerData.PlayerSkills[++skillIndex] = buttonIndex;
+                
+                Economy.playerSkills[++skillIndex] = buttonIndex;
             }
         }
 
@@ -607,45 +606,37 @@ namespace TS_SE_Tool
         {
             CheckBox thisbutton = sender as CheckBox;
 
-            if (thisbutton.Checked)
-            {
-                thisbutton.BackgroundImage = SkillImgSBG[3];
-            }
-            else
-            {
+            if (thisbutton.Checked)            
+                thisbutton.BackgroundImage = SkillImgSBG[3];            
+            else            
                 thisbutton.BackgroundImage = SkillImgSBG[0];
-            }
         }
 
         private void Skillbutton_MouseEnter(object sender, EventArgs e)
         {
             CheckBox thisbutton = sender as CheckBox;
 
-            int i = int.Parse(thisbutton.Name.Substring(11, 1));
+            int skillIndex = int.Parse(thisbutton.Name.Substring(11, 1));
+            byte buttonIndex = byte.Parse(thisbutton.Name.Substring(12, 1));
 
-            for (int j = 0; j <= int.Parse(thisbutton.Name.Substring(12, 1)); j++)
+            for (int j = 0; j <= buttonIndex; j++)
             {
-                if (!SkillButtonArray[i, j].Checked)
-                {
-                    SkillButtonArray[i, j].BackgroundImage = SkillImgSBG[1];
-                }
-
+                if (!SkillButtonArray[skillIndex, j].Checked)                
+                    SkillButtonArray[skillIndex, j].BackgroundImage = SkillImgSBG[1];
             }
 
-            for (int j = int.Parse(thisbutton.Name.Substring(12, 1)); j < 6; j++)
+            for (int j = buttonIndex; j < 6; j++)
             {
-                if (SkillButtonArray[i, j].Checked)
-                {
-                    SkillButtonArray[i, j].BackgroundImage = SkillImgSBG[0];
-                }
-
+                if (SkillButtonArray[skillIndex, j].Checked)                
+                    SkillButtonArray[skillIndex, j].BackgroundImage = SkillImgSBG[0];                
             }
-            //thisbutton.BackgroundImage = SkillImgSBG[1];
         }
 
         private void Skillbutton_MouseLeave(object sender, EventArgs e)
         {
             CheckBox thisbutton = sender as CheckBox;
+
+
             int i = int.Parse(thisbutton.Name.Substring(11, 1));
 
             for (int j = 0; j <= int.Parse(thisbutton.Name.Substring(12, 1)); j++)
@@ -670,37 +661,42 @@ namespace TS_SE_Tool
         {
             CheckBox thisbutton = sender as CheckBox;
 
+            byte adrIndex = byte.Parse(thisbutton.Name.Substring(9, 1));
+            char[] ADR = Convert.ToString(Economy.playerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+
             if (thisbutton.Checked)
             {
-                char[] ADR = Convert.ToString(EconomyPlayerData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
-                ADR[byte.Parse(thisbutton.Name.Substring(9, 1))] = '1';
+                ADR[adrIndex] = '1';
 
-                EconomyPlayerData.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
-                thisbutton.BackgroundImage = SkillImgSBG[1];
+                Economy.playerSkills[0] = Convert.ToByte(new string(ADR), 2);
             }
             else
             {
-                char[] ADR = Convert.ToString(EconomyPlayerData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
-                ADR[byte.Parse(thisbutton.Name.Substring(9, 1))] = '0';
+                ADR[adrIndex] = '0';
+
                 string temp = new string(ADR);
-                EconomyPlayerData.PlayerSkills[0] = Convert.ToByte(temp.PadLeft(8, '0'), 2);
-                thisbutton.BackgroundImage = SkillImgSBG[1];
+
+                Economy.playerSkills[0] = Convert.ToByte(temp.PadLeft(6, '0'), 2);
             }
+
+            thisbutton.BackgroundImage = SkillImgSBG[1];
         }
 
         private void ADRbutton_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox thisbutton = sender as CheckBox;
 
+            byte adrIndex = byte.Parse(thisbutton.Name.Substring(9, 1));
+
             if (thisbutton.Checked)
             {
                 thisbutton.BackgroundImage = SkillImgSBG[3];
-                thisbutton.Image = ADRImgS[int.Parse(thisbutton.Name.Substring(9))];
+                thisbutton.Image = ADRImgS[adrIndex];
             }
             else
             {
                 thisbutton.BackgroundImage = SkillImgSBG[0];
-                thisbutton.Image = ADRImgSGrey[int.Parse(thisbutton.Name.Substring(9))];
+                thisbutton.Image = ADRImgSGrey[adrIndex];
             }
         }
 
@@ -715,21 +711,24 @@ namespace TS_SE_Tool
         {
             CheckBox thisbutton = sender as CheckBox;
 
+            byte adrIndex = byte.Parse(thisbutton.Name.Substring(9, 1));
+
             if (thisbutton.Checked)
             {
                 thisbutton.BackgroundImage = SkillImgSBG[1];
-                thisbutton.Image = ADRImgS[int.Parse(thisbutton.Name.Substring(9))];
+                thisbutton.Image = ADRImgS[adrIndex];
             }
             else
             {
                 thisbutton.BackgroundImage = SkillImgSBG[1];
-                thisbutton.Image = ADRImgSGrey[int.Parse(thisbutton.Name.Substring(9))];
+                thisbutton.Image = ADRImgSGrey[adrIndex];
             }
         }
 
         private void ADRbutton_MouseLeave(object sender, EventArgs e)
         {
             CheckBox thisbutton = sender as CheckBox;
+
             if (thisbutton.Checked)
                 thisbutton.BackgroundImage = SkillImgSBG[3];
             else

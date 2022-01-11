@@ -58,9 +58,9 @@ namespace TS_SE_Tool
             comboBoxCargoMarketSourceCity.DisplayMember = "CityName";
             comboBoxCargoMarketSourceCity.DataSource = combDT;
 
-            DataRow foundRow = combDT.Rows.Find(new object[1] { LastVisitedCity });
-            if (combDT.Rows.Find(new object[1] { LastVisitedCity }) != null)
-                comboBoxCargoMarketSourceCity.SelectedValue = LastVisitedCity;
+            DataRow foundRow = combDT.Rows.Find(new object[1] { Economy.last_visited_city });
+            if (combDT.Rows.Find(new object[1] { Economy.last_visited_city }) != null)
+                comboBoxCargoMarketSourceCity.SelectedValue = Economy.last_visited_city;
         }
 
         private void comboBoxSourceCityCM_SelectedIndexChanged(object sender, EventArgs e)
@@ -163,8 +163,8 @@ namespace TS_SE_Tool
                 foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds)
                 {
                     string cargoforseed = "";
-                    listBoxCargoMarketSourceCargoSeeds.Items.Add("" + cargoseed.ToString().PadRight(12, ' ') + " | Time left " + ((cargoseed - InGameTime) / 60).ToString().PadLeft(2) + " h " +
-                        ((cargoseed - InGameTime) % 60).ToString().PadLeft(2) + " m " + cargoforseed);
+                    listBoxCargoMarketSourceCargoSeeds.Items.Add("" + cargoseed.ToString().PadRight(12, ' ') + " | Time left " + ((cargoseed - Economy.game_time) / 60).ToString().PadLeft(2) + " h " +
+                        ((cargoseed - Economy.game_time) % 60).ToString().PadLeft(2) + " m " + cargoforseed);
                 }
             }
             else
@@ -182,7 +182,7 @@ namespace TS_SE_Tool
 
             for (int i = 0; i < tempseeds.Length; i++)
             {
-                tempseeds[i] = InGameTime + RandomValue.Next(180, 1800);
+                tempseeds[i] = Economy.game_time + RandomValue.Next(180, 1800);
             }
 
             RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds = tempseeds;
@@ -211,7 +211,7 @@ namespace TS_SE_Tool
 
                 for (int i = 0; i < tempseeds.Length; i++)
                 {
-                    tempseeds[i] = InGameTime + RandomValue.Next(180, 1800);
+                    tempseeds[i] = Economy.game_time + RandomValue.Next(180, 1800);
                 }
 
                 company.CragoSeeds = tempseeds;

@@ -281,7 +281,7 @@ namespace TS_SE_Tool
                     tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTrailer == trailerNameless)?.SingleOrDefault().Key ?? "null";
                     
                     if (tmpDriverName != "null")
-                        if (EconomyPlayerData.UserDriver == tmpDriverName)
+                        if (Economy.driver_pool[0] == tmpDriverName)
                         {
                             tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                         }

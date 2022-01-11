@@ -139,7 +139,6 @@ namespace TS_SE_Tool
                 ProfileATS = @"\American Truck Simulator";
                 dictionaryProfiles = new Dictionary<string, string> { { "ETS2", ProfileETS2 }, { "ATS", ProfileATS } };
                 GameType = "ETS2";
-                //Globals.CurrentGame = dictionaryProfiles[GameType];
 
                 LicensePlateWidth = new Dictionary<string, byte> { { "ETS2", 128 }, { "ATS", 64 } };
 
@@ -148,7 +147,6 @@ namespace TS_SE_Tool
                 CountriesLngDict = new Dictionary<string, string>();
                 CargoLngDict = new Dictionary<string, string>();
                 UrgencyLngDict = new Dictionary<string, string>();
-                //CustomStringsDict = new Dictionary<string, string>();
                 TruckBrandsLngDict = new Dictionary<string, string>();
                 DriverNames = new Dictionary<string, string>();
                 
@@ -339,16 +337,13 @@ namespace TS_SE_Tool
                 Globals.CurrencyName = ProgSettingsV.CurrencyMesATS;
             }
 
+            Economy = new Save.Items.Economy();
             Bank = new Save.Items.Bank();
             BankLoans = new Dictionary<string, Save.Items.Bank_Loan>();
             Player = new Save.Items.Player();
 
-            EconomyPlayerData = new PlayerData();
-
             MainSaveFileProfileData = new SaveFileProfileData();
             MainSaveFileInfoData = new SaveFileInfoData();
-
-            UserCompanyAssignedTruckPlacementEdited = false;
 
             InfoDepContinue = false;
 
@@ -365,11 +360,10 @@ namespace TS_SE_Tool
             CompanyTruckListDB = new List<CompanyTruck>();
             CompanyTruckListDiff = new List<CompanyTruck>();
 
-            UserColorsList = new List<Color>();
             GaragesList = new List<Garages>();
             UserTruckDictionary = new Dictionary<string, UserCompanyTruckData>();
             UserDriverDictionary = new Dictionary<string, UserCompanyDriverData>();
-            DriverPool = new List<string>();
+            
             UserTrailerDictionary = new Dictionary<string, UserCompanyTrailerData>();
             UserTrailerDefDictionary = new Dictionary<string, List<string>>();
 
@@ -386,7 +380,6 @@ namespace TS_SE_Tool
             CompaniesListDiff = new List<string>();
 
             DBDependencies = new List<string>();
-            //SFDependencies = new List<string>();
 
             ExternalCompanies = new List<ExtCompany>();
 
@@ -396,8 +389,6 @@ namespace TS_SE_Tool
             EconomyEventUnitLinkStringList = new string[0];
 
             JobsAmountAdded = 0;
-            LastVisitedCity = "";
-            InGameTime = 0;
             RandomValue = new Random();
 
             LastModifiedTimestamp = new DateTime();

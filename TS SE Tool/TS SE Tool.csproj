@@ -134,12 +134,17 @@
   <ItemGroup>
     <Compile Include="CustomClasses\ExternalData\ScsFont.cs" />
     <Compile Include="CustomClasses\Global\FloatList.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\SCS_Color.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\SCS_Float.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\Vector_2f.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\Vector_3f.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\Vector_3f_4f.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\Vector_3i.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\Vector_4f.cs" />
     <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
     <Compile Include="CustomClasses\Save\Items\Bank.cs" />
     <Compile Include="CustomClasses\Save\Items\Bank_Loan.cs" />
+    <Compile Include="CustomClasses\Save\Items\Economy.cs" />
     <Compile Include="CustomClasses\Save\Items\Player.cs" />
     <Compile Include="CustomClasses\Save\Items\PlayerJob.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer.cs" />
@@ -195,7 +200,6 @@
     <Compile Include="CustomClasses\Save\Items\Cargo.cs" />
     <Compile Include="CustomClasses\Save\Items\Country.cs" />
     <Compile Include="CustomClasses\Save\SaveFileProfileData.cs" />
-    <Compile Include="CustomClasses\Save\SaveFileData.cs" />
     <Compile Include="CustomClasses\Save\SaveFileInfoData.cs" />
     <Compile Include="CustomClasses\UtilitiesExternal\TGASharpLib.cs" />
     <Compile Include="CustomClasses\Save\Items\TrailerDefinition.cs" />
@@ -209,7 +213,6 @@
     <Compile Include="CustomClasses\UtilitiesExternal\DDSImageParser.cs" />
     <Compile Include="CustomClasses\Save\Items\Garages.cs" />
     <Compile Include="CustomClasses\ExternalData\LevelNames.cs" />
-    <Compile Include="CustomClasses\Save\Items\PlayerData.cs" />
     <Compile Include="CustomClasses\Program\ProgSettings.cs" />
     <Compile Include="CustomClasses\ExternalData\Routes.cs" />
     <Compile Include="CustomClasses\Save\Items\UserCompanyDriverData.cs" />

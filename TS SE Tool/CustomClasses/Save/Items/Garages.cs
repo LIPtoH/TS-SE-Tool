@@ -25,7 +25,23 @@ namespace TS_SE_Tool
 {
     public class Garages
     {
+        public string GarageName { get; set; } = "";
+        public string GarageNameTranslated { get; set; } = "";
+
+        public int GarageStatus { get; set; } = 0;
+
+        public List<string> Vehicles { get; set; } = new List<string>();
+        public List<string> Drivers { get; set; } = new List<string>();
+        public List<string> Trailers { get; set; } = new List<string>();
+
+        public bool IgnoreStatus { get; set; } = true;
+
         private FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+
+        public Garages(string _GarageName)
+        {
+            GarageName = _GarageName;
+        }
 
         public Garages(string _GarageName, int _GarageStatus)
         {
@@ -33,25 +49,6 @@ namespace TS_SE_Tool
             GarageStatus = _GarageStatus;
         }
 
-        public Garages(string _GarageName)
-        {
-            GarageName = _GarageName;
-        }
-
-        public string GarageName { get; set; }
-
-        public string GarageNameTranslated { get; set; }
-
-        public int GarageStatus { get; set; } = 0;
-
-        public List<string> Vehicles { get; set; } = new List<string>();
-
-        public List<string> Drivers { get; set; } = new List<string>();
-
-        public List<string> Trailers { get; set; } = new List<string>();
-
-        public bool IgnoreStatus { get; set; } = true;
-        
         public string GetStatusString()
         {
             string output = "", status = "", statusStr = "";
@@ -77,10 +74,8 @@ namespace TS_SE_Tool
 
             if (status != null && status != "")
                 output = status;
-            else
-            {
-                output = statusStr;
-            }
+            else            
+                output = statusStr;            
 
             return output;
         }

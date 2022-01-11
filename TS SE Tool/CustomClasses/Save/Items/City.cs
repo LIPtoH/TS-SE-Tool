@@ -24,17 +24,30 @@ namespace TS_SE_Tool
     {
         private FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
-        public string Country { get; set; }
-        public string CityName;
-        public string CityNameTranslated;
+        public string CityName { get; set; } = "";
+        public string CityNameTranslated { get; set; } = "";
+
+        public string Country { get; set; } = "";
+
         public List<Company> Companies = new List<Company>();
+
         public bool Disabled = false;
         public bool Visited = false;
+
+        public City(string _cityName)
+        {
+            CityName = _cityName;
+        }
 
         public City(string _cityName, string _countryName)
         {
             CityName = _cityName;
             Country = _countryName;
+        }
+
+        public void AddCompany(string _companyName)
+        {
+            Companies.Add(new Company(_companyName, 0));
         }
 
         public void AddCompany(string _companyName, int _jobsoffer)

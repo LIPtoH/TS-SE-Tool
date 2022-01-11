@@ -46,7 +46,6 @@ namespace TS_SE_Tool
             int EconomyEventline = 0;
 
             //scan through save file
-            bool EconomySection = false;
 
             int workerprogressmult = (int)Math.Floor((decimal)(tempSavefileInMemory.Length / 80)), workerprogress = 0;
 
@@ -86,203 +85,35 @@ namespace TS_SE_Tool
 
                     if (tempSavefileInMemory[line].StartsWith("economy : "))
                     {
-                        EconomySection = true;
-                        continue;
-                    }
-
-                    if (EconomySection && tempSavefileInMemory[line].StartsWith("}"))
-                    {
-                        EconomySection = false;
-                        continue;
-                    }
-
-                    if (tempSavefileInMemory[line].StartsWith(" game_time: "))
-                    {
                         chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        InGameTime = int.Parse(chunkOfline[2]);
-                        continue;
-                    }
+                        string nameless = chunkOfline[2];
 
-                    //Find garages status
-                    if (tempSavefileInMemory[line].StartsWith("garage : garage."))
-                    {
-                        //bool garageinfoended = false;
+                        string workLine = "";
+                        List<string> Data = new List<string>();
 
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { '.', '{' });
-                        Garages tempGarage = GaragesList.Find(x => x.GarageName == chunkOfline[1].TrimEnd(new char[] { ' ' }));
-
-                        line++;
-
-                        while (true)//(!garageinfoended)
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
                         {
-                            if (tempSavefileInMemory[line].StartsWith("}"))
-                                break;
-
-                            string res = "";
-                            try
-                            {
-                                res = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                                if (res == "null")
-                                    res = null;
-                            }
-                            catch { }
-
-                            if (tempSavefileInMemory[line].StartsWith(" vehicles["))
-                                tempGarage.Vehicles.Add(res);
-                            else if (tempSavefileInMemory[line].StartsWith(" drivers["))
-                                tempGarage.Drivers.Add(res);
-                            else if (tempSavefileInMemory[line].StartsWith(" trailers["))
-                                tempGarage.Trailers.Add(res);
-                            else if (tempSavefileInMemory[line].StartsWith(" status:"))
-                                tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
+                            workLine = tempSavefileInMemory[line];
+                            Data.Add(workLine);
 
                             line++;
                         }
 
+                        Economy = new Economy(Data.ToArray());
+
+                        PrepareCitiesInitial();
+                        PrepareGaragesInitial();
+                        PrepareVisitedCitiesInitial();
+
                         continue;
                     }
 
-                    //Economy Section
-                    if (EconomySection)
+                    //Economy Section                    
+                    if (true)
                     {
-                        //search through companies.city list
-                        if (tempSavefileInMemory[line].StartsWith(" companies["))// && (tempSavefileInMemory[line] != "null"))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { '.' });
-
-                            if (chunkOfline[3] == null)
-                            {
-                                continue;
-                            }
-                            //Add City to List from companies list
-                            if (CitiesList.Where(x => x.CityName == chunkOfline[3]).Count() == 0)
-                            {
-                                CitiesList.Add(new City(chunkOfline[3], ""));
-                            }
-
-                            CompaniesList.Add(chunkOfline[2]); //add company to list
-
-                            //Add Company to City from companies list                            
-                            foreach (City tempcity in CitiesList.FindAll(x => x.CityName == chunkOfline[3]))
-                            {
-                                tempcity.AddCompany(chunkOfline[2], 0);
-                            }
-
-                            continue;
-                        }
-
-                        //Find garages
-                        if (tempSavefileInMemory[line].StartsWith(" garages["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            Garages tg = new Garages(chunkOfline[1].Split(new char[] { '.' })[1], 0);
-                            GaragesList.Add(tg);
-                            continue;
-                        }
-                        //Find visited cities
-                        if (tempSavefileInMemory[line].StartsWith(" visited_cities["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            VisitedCities.Add(new VisitedCity(chunkOfline[1].Replace(" ", string.Empty), 0, true));
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" visited_cities_count["))
-                        {
-                            int cityid = int.Parse(tempSavefileInMemory[line].Split(new char[] { '[', ']' })[1]);
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-                            VisitedCities[cityid].VisitCount = int.Parse(chunkOfline[1].Replace(" ", string.Empty));
-                            continue;
-                        }
-                        //Experience points
-                        if (tempSavefileInMemory[line].StartsWith(" experience_points"))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            EconomyPlayerData.ExperiencePoints = uint.Parse(chunkOfline[2]);
-                            continue;
-                        }
-
-                        //Skills
-                        if (tempSavefileInMemory[line].StartsWith(" adr:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-
-                            char[] ADR = Convert.ToString(byte.Parse(LineArray[2]), 2).PadLeft(6, '0').ToCharArray();
-                            Array.Reverse(ADR);
-                            EconomyPlayerData.PlayerSkills[0] = Convert.ToByte(new string(ADR), 2);
-                            //PlayerProfileData.PlayerSkills[0] = byte.Parse(LineArray[2]);
-                            continue;
-                        }
-                        if (tempSavefileInMemory[line].StartsWith(" long_dist:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            EconomyPlayerData.PlayerSkills[1] = byte.Parse(LineArray[2]);
-                            continue;
-                        }
-                        if (tempSavefileInMemory[line].StartsWith(" heavy:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            EconomyPlayerData.PlayerSkills[2] = byte.Parse(LineArray[2]);
-                            continue;
-                        }
-                        if (tempSavefileInMemory[line].StartsWith(" fragile:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            EconomyPlayerData.PlayerSkills[3] = byte.Parse(LineArray[2]);
-                            continue;
-                        }
-                        if (tempSavefileInMemory[line].StartsWith(" urgent:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            EconomyPlayerData.PlayerSkills[4] = byte.Parse(LineArray[2]);
-                            continue;
-                        }
-                        if (tempSavefileInMemory[line].StartsWith(" mechanical:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            EconomyPlayerData.PlayerSkills[5] = byte.Parse(LineArray[2]);
-                            continue;
-                        }
-
-                        //User Colors
-                        if (tempSavefileInMemory[line].StartsWith(" user_colors:"))
-                        {
-                            UInt16 ColorCount = Convert.ToUInt16(tempSavefileInMemory[line].Split(new string[] { ": " }, 0)[1]);
-
-                            for (short i = 0; i < ColorCount; i++)
-                            {
-                                line++;
-                                string userColorStr = tempSavefileInMemory[line].Split(new string[] { ": " }, 0)[1];
-                                Color userColor;
-
-                                if (userColorStr != "0")
-                                {
-                                    if (userColorStr == "nil")
-                                    {
-                                        userColorStr = "4294967295";
-                                    }
-
-                                    userColorStr = Utilities.NumericUtilities.IntegerToHexString(Convert.ToUInt32(userColorStr));
-
-                                    int[] hexColorParts = Utilities.NumericUtilities.SplitNConvertSSCHexColor(userColorStr, 2).ToArray();
-
-                                    int tmpAlpha = hexColorParts[0], tmpRed = hexColorParts[3], tmpGreen = hexColorParts[2], tmpBlue = hexColorParts[1];
-                                    userColor = Color.FromArgb(tmpAlpha, tmpRed, tmpGreen, tmpBlue);
-
-                                    UserColorsList.Add(userColor);
-                                }
-                                else
-                                {
-                                    userColor = Color.FromArgb(0, 0, 0, 0);
-                                    UserColorsList.Add(userColor);
-                                }
-                            }
-
-                            continue;
-                        }
-
                         //GPS
+
+                        /*
                         //Online
                         if (tempSavefileInMemory[line].StartsWith(" stored_online_gps_behind_waypoints:"))
                         {
@@ -308,6 +139,7 @@ namespace TS_SE_Tool
                             }
                             continue;
                         }
+                        */
 
                         //Offline
                         //Normal
@@ -349,27 +181,6 @@ namespace TS_SE_Tool
                             continue;
                         }
 
-                        //Find last visited city
-                        if (tempSavefileInMemory[line].StartsWith(" last_visited_city:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            LastVisitedCity = LineArray[2];
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" discovered_items:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            line += int.Parse(LineArray[2]);
-                            continue;
-                        }
-
-                        if (tempSavefileInMemory[line].StartsWith(" driver_pool["))
-                        {
-                            chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            DriverPool.Add(chunkOfline[2]);
-                            continue;
-                        }
                     }
 
                     //Bank
@@ -388,6 +199,7 @@ namespace TS_SE_Tool
 
                             line++;
                         }
+
                         Bank = new Bank(Data.ToArray());
                     }
 
@@ -455,10 +267,48 @@ namespace TS_SE_Tool
                             UserDriverDictionary.Add(drvr, new UserCompanyDriverData());
                         }
 
-                        EconomyPlayerData.UserDriver = Player.drivers[0];
-
                         UserDriverDictionary.ElementAt(0).Value.AssignedTruck = Player.assigned_truck;
                         UserDriverDictionary.ElementAt(0).Value.AssignedTrailer = Player.assigned_trailer;
+
+                        continue;
+                    }
+
+                    //Find garages status
+                    if (tempSavefileInMemory[line].StartsWith("garage : garage."))
+                    {
+                        //bool garageinfoended = false;
+
+                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { '.', '{' });
+                        Garages tempGarage = GaragesList.Find(x => x.GarageName == chunkOfline[1].TrimEnd(new char[] { ' ' }));
+
+                        line++;
+
+                        while (true)//(!garageinfoended)
+                        {
+                            if (tempSavefileInMemory[line].StartsWith("}"))
+                                break;
+
+                            string res = "";
+                            try
+                            {
+                                res = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                                if (res == "null")
+                                    res = null;
+                            }
+                            catch { }
+
+                            if (tempSavefileInMemory[line].StartsWith(" vehicles["))
+                                tempGarage.Vehicles.Add(res);
+                            else if (tempSavefileInMemory[line].StartsWith(" drivers["))
+                                tempGarage.Drivers.Add(res);
+                            else if (tempSavefileInMemory[line].StartsWith(" trailers["))
+                                tempGarage.Trailers.Add(res);
+                            else if (tempSavefileInMemory[line].StartsWith(" status:"))
+                                tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
+
+                            line++;
+                        }
 
                         continue;
                     }
@@ -595,18 +445,6 @@ namespace TS_SE_Tool
                         do
                         {
                             line++;
-
-                            //cargo: cargo.pork_meat
-                            if (tempSavefileInMemory[line].StartsWith(" cargo:"))
-                            {
-                                chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-
-                                EconomyPlayerData.CurrentJob.Cargo = chunkOfline[1].Trim(' ').Split(new char[] { '.' })[1];
-
-                                UserDriverDictionary.ElementAt(0).Value.DriverJob = EconomyPlayerData.CurrentJob;
-
-                                continue;
-                            }
 
                             if (tempSavefileInMemory[line].StartsWith(" company_truck:"))
                             {
@@ -1475,22 +1313,23 @@ namespace TS_SE_Tool
         }
 
         //Remove broken color sets
+        
         private void PrepareUserColors()
         {
             if (MainSaveFileInfoData.Version < 49)
                 return;
 
-            int setcount = UserColorsList.Count() / 4;
+            int setcount = Economy.user_colors.Count() / 4;
 
             //iterate through sets
             for (int i = 0; i < setcount; i++)
             {
-                if (UserColorsList[4 * i].A == 0)
+                if (Economy.user_colors[4 * i].color.A == 0)
                 {
                     //clear color set
                     for (int j = 1; j < 4; j++)
                     {
-                        UserColorsList[4 * i + j] = Color.FromArgb(0, 0, 0, 0);
+                        Economy.user_colors[4 * i + j] = new Save.DataFormat.SCS_Color(0, 0, 0, 0);
                     }
                     continue;
                 }
@@ -1498,8 +1337,57 @@ namespace TS_SE_Tool
 
             RemoveUserColorUnused4slot();
         }
-
+        
         //
+        private void PrepareCitiesInitial()
+        {
+            string[] chunks;
+
+            foreach(string company in Economy.companies)
+            {
+                chunks = company.Split(new char[] { '.' });
+
+                if (chunks[3] == null)
+                {
+                    continue;
+                }
+
+                //Add City to List from companies list
+                if (CitiesList.Where(x => x.CityName == chunks[3]).Count() == 0)
+                {
+                    CitiesList.Add(new City(chunks[3]));
+                }
+
+                CompaniesList.Add(chunks[2]); //add company to list
+
+                //Add Company to City from companies list                            
+                foreach (City tempcity in CitiesList.FindAll(x => x.CityName == chunks[3]))
+                {
+                    tempcity.AddCompany(chunks[2]);
+                }
+            }
+        }
+
+        private void PrepareGaragesInitial()
+        {
+            foreach(string garage in Economy.garages)
+            {
+                string garageName = garage.Split(new char[] { '.' })[1];
+
+                GaragesList.Add(new Garages(garageName));
+            }
+        }
+
+        private void PrepareVisitedCitiesInitial()
+        {
+            int cityid = 0;
+            foreach (string city in Economy.visited_cities)
+            {
+                VisitedCities.Add(new VisitedCity(city, Economy.visited_cities_count[cityid], true));
+                cityid++;
+            }
+        }
+
         private void PrepareVisitedCities()
         {
             foreach (City city in CitiesList)
@@ -1594,7 +1482,7 @@ namespace TS_SE_Tool
 
             if (extraDrivers.Count() > 0)
             {
-                if (extraDrivers.Contains(EconomyPlayerData.UserDriver))
+                if (extraDrivers.Contains(Economy.driver_pool[0]))
                 {
                     Garages tmpG = new Garages(Player.hq_city);
 
@@ -1632,7 +1520,7 @@ namespace TS_SE_Tool
                     extraDrivers.Add(GaragesList[hqIdx].Drivers[DrvIdx]);
                     extraVehicles.Add(GaragesList[hqIdx].Vehicles[DrvIdx]);
 
-                    int tmpIdx = extraDrivers.IndexOf(EconomyPlayerData.UserDriver);
+                    int tmpIdx = extraDrivers.IndexOf(Economy.driver_pool[0]);
 
                     GaragesList[hqIdx].Drivers[DrvIdx] = extraDrivers[tmpIdx];
                     GaragesList[hqIdx].Vehicles[DrvIdx] = extraVehicles[tmpIdx];
@@ -1652,7 +1540,7 @@ namespace TS_SE_Tool
             {
                 if (tmp != null)
                 {
-                    DriverPool.Add(tmp);
+                    Economy.driver_pool.Add(tmp);
                     UserDriverDictionary.Remove(tmp);
                 }
             }
@@ -1669,7 +1557,7 @@ namespace TS_SE_Tool
                 {
                     if ((EconomyEventUnitLinkStringList[i] == EconomyEventsTable[j, 3]) && (EconomyEventsTable[j, 4] == " param: 0"))
                     {
-                        EconomyEventsTable[j, 2] = (InGameTime + (((i + 1) * ProgSettingsV.JobPickupTime) * 60)).ToString(); //time
+                        EconomyEventsTable[j, 2] = (Economy.game_time + (((i + 1) * ProgSettingsV.JobPickupTime) * 60)).ToString(); //time
                     }
                     j++;
                 }
@@ -1760,7 +1648,7 @@ namespace TS_SE_Tool
                     unCertainRouteLength = "*";
                 }
                 //Time untill job expires
-                int ExpirationTime = InGameTime + RandomValue.Next(180, 1800) + (JobsAmountAdded * ProgSettingsV.JobPickupTime * 60);
+                int ExpirationTime = Economy.game_time + RandomValue.Next(180, 1800) + (JobsAmountAdded * ProgSettingsV.JobPickupTime * 60);
                 #endregion
 
                 //Creating Job data

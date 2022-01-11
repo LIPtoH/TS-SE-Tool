@@ -42,8 +42,6 @@ namespace TS_SE_Tool
         //internal int SupportedSavefileVersionATS;
         internal string SupportedGameVersionATS;//Program
 
-        private int InGameTime; //+
-        //private int JobsTotalDistance;
         private int JobsAmountAdded;//process result
 
         private int[] UrgencyArray;//Program
@@ -52,7 +50,7 @@ namespace TS_SE_Tool
 
         internal string GameType;//Program
         private string SavefilePath; //+
-        private string LastVisitedCity; //+
+
         private string LoopStartCity;//Program
         private string LoopStartCompany;//Program
         private string unCertainRouteLength;//Program
@@ -69,14 +67,10 @@ namespace TS_SE_Tool
         private string[] tempInfoFileInMemory;//Program
         private string[] tempSavefileInMemory; //+
         //
-        //private string[] CitiesListAddedToCompare;
-        //private string[] JobsListAdded;
-        //private List<string>  ListSavefileCompanysString;
         private Dictionary<string, List<JobAdded>> AddedJobsDictionary;//Program
         private List<JobAdded> AddedJobsList;
         private JobAdded FreightMarketJob;//Program
         private string[] EconomyEventUnitLinkStringList;//Program
-        //private string[] EconomyEventQueueList;
 
         public List<LevelNames> PlayerLevelNames;//Program
 
@@ -102,7 +96,6 @@ namespace TS_SE_Tool
         private List<string> CountriesList;//Program
 
         private List<string> DBDependencies;//Program DB
-        //private List<string> SFDependencies;//Program Info
 
         public List<Garages> GaragesList; //+
         public List<string> extraVehicles;//process result
@@ -116,19 +109,16 @@ namespace TS_SE_Tool
 
         private List<ExtCompany> ExternalCompanies;//Program cache
         private List<ExtCargo> ExtCargoList;//Program cache
-
-        internal List<Color> UserColorsList; //+
-
         private SqlCeConnection DBconnection;//Program
 
         private DateTime LastModifiedTimestamp; //+
 
+        internal Save.Items.Economy Economy;
         internal Save.Items.Bank Bank;
         internal Dictionary<string, Save.Items.Bank_Loan> BankLoans;
 
         internal Save.Items.Player Player;
 
-        public PlayerData EconomyPlayerData; //+
         public SaveFileProfileData MainSaveFileProfileData;
         internal SaveFileInfoData MainSaveFileInfoData;
 
@@ -148,7 +138,7 @@ namespace TS_SE_Tool
 
         public static Dictionary<string, string> CitiesLngDict;//, CustomStringsDict;
         public Dictionary<string, UserCompanyTruckData> UserTruckDictionary; //+
-        private List<string> DriverPool; //+
+
         public Dictionary<string, UserCompanyDriverData> UserDriverDictionary; //+
         private Dictionary<string, UserCompanyTrailerData> UserTrailerDictionary; //+
         private Dictionary<string, List<string>> UserTrailerDefDictionary; //+

@@ -19,16 +19,23 @@ namespace TS_SE_Tool
 {
     class Company
     {
+        public string CompanyName { get; set; }
+        public string CompanyNameTranslated { get; set; }
+
+        public int JobsOffers { get; set; } = 0;
+        public int[] CragoSeeds = new int[0];
+
+        public bool Excluded { get; set; } = false;
+
+        public Company(string _companyName)
+        {
+            CompanyName = _companyName;
+        }
+
         public Company(string _companyName, int _jobs)
         {
             CompanyName = _companyName;
             JobsOffers = _jobs;
         }
-        public int[] CragoSeeds = new int[0];
-
-        public string CompanyName { get; set; }
-        public string CompanyNameTranslated { get; set; }
-        public int JobsOffers { get; set; } = 0;
-        public bool Excluded { get; set; } = false;
     }
 }

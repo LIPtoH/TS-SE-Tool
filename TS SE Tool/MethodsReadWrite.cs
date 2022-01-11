@@ -908,7 +908,7 @@ namespace TS_SE_Tool
                 jobdata += "\r\nUrgency " + tempStr;
                 jobdata += "\r\nMinimum travel distance of " + tempJobData.Distance + " km ";
                 jobdata += "in " + tempJobData.CompanyTruck;
-                jobdata += "\r\nJob valid for " + (tempJobData.ExpirationTime - InGameTime) + " minutes";
+                jobdata += "\r\nJob valid for " + (tempJobData.ExpirationTime - Economy.game_time) + " minutes";
 
                 if (tempJobData.Ferrytime > 0 || tempJobData.Ferryprice > 0)
                 {
@@ -976,123 +976,6 @@ namespace TS_SE_Tool
 
                         if (EconomySection)
                         {
-                            //Experience points
-                            if (SaveInMemLine.StartsWith(" experience_points"))
-                            {
-                                writer.WriteLine(" experience_points: " + EconomyPlayerData.ExperiencePoints.ToString());
-                                continue;
-                            }
-
-                            //Skills
-                            if (SaveInMemLine.StartsWith(" adr:"))
-                            {
-                                char[] ADR = Convert.ToString(EconomyPlayerData.PlayerSkills[0], 2).PadLeft(6, '0').ToCharArray();
-                                Array.Reverse(ADR);
-
-                                writer.WriteLine(" adr: " + Convert.ToByte(new string(ADR), 2));
-                                continue;
-                            }
-                            if (SaveInMemLine.StartsWith(" long_dist:"))
-                            {
-                                writer.WriteLine(" long_dist: " + EconomyPlayerData.PlayerSkills[1].ToString());
-                                continue;
-                            }
-                            if (SaveInMemLine.StartsWith(" heavy:"))
-                            {
-                                writer.WriteLine(" heavy: " + EconomyPlayerData.PlayerSkills[2].ToString());
-                                continue;
-                            }
-                            if (SaveInMemLine.StartsWith(" fragile:"))
-                            {
-                                writer.WriteLine(" fragile: " + EconomyPlayerData.PlayerSkills[3].ToString());
-                                continue;
-                            }
-                            if (SaveInMemLine.StartsWith(" urgent:"))
-                            {
-                                writer.WriteLine(" urgent: " + EconomyPlayerData.PlayerSkills[4].ToString());
-                                continue;
-                            }
-                            if (SaveInMemLine.StartsWith(" mechanical:"))
-                            {
-                                writer.WriteLine(" mechanical: " + EconomyPlayerData.PlayerSkills[5].ToString());
-                                continue;
-                            }
-
-                            //User Colors
-                            if (SaveInMemLine.StartsWith(" user_colors:"))
-                            {
-                                writer.WriteLine(" user_colors: " + UserColorsList.Count);
-
-                                UInt16 ColorCount = Convert.ToUInt16(SaveInMemLine.Split(new string[] { ": " }, 0)[1]);
-                                line = line + ColorCount;
-
-                                string userColor; ushort colorcounter = 0;
-
-                                foreach (Color usercolor in UserColorsList)
-                                {
-                                    if (usercolor == Color.FromArgb(0, 0, 0, 0))
-                                    {
-                                        userColor = "0";
-                                    }
-                                    else if (usercolor == Color.FromArgb(255, 255, 255, 255))
-                                    {
-                                        userColor = "nil";
-                                    }
-                                    else
-                                    {
-                                        Byte[] bytes = new Byte[] { usercolor.R, usercolor.G, usercolor.B, 255 };
-                                        uint temp = BitConverter.ToUInt32(bytes, 0);
-
-                                        userColor = temp.ToString();
-                                    }
-
-                                    writer.WriteLine(" user_colors[" + colorcounter + "]: " + userColor);
-                                    colorcounter++;
-                                }
-                                continue;
-                            }
-
-                            if (SaveInMemLine.StartsWith(" stored_gps_behind_waypoints:"))
-                            {
-                                //behind
-                                writer.WriteLine(" stored_gps_behind_waypoints: " + GPSbehind.Count);
-
-                                int count = 0;
-                                foreach (KeyValuePair<string, List<string>> temp in GPSbehind)
-                                {
-                                    writer.WriteLine(" stored_gps_behind_waypoints[" + count + "]: _nameless." + temp.Key);
-                                    count++;
-                                }
-                                //ahead
-                                writer.WriteLine(" stored_gps_ahead_waypoints: " + GPSahead.Count);
-
-                                count = 0;
-                                foreach (KeyValuePair<string, List<string>> temp in GPSahead)
-                                {
-                                    writer.WriteLine(" stored_gps_ahead_waypoints[" + count + "]: _nameless." + temp.Key);
-                                    count++;
-                                }
-                                //avoid
-
-                                writer.WriteLine(" stored_gps_avoid_waypoints: " + GPSAvoid.Count);
-
-                                count = 0;
-                                foreach (KeyValuePair<string, List<string>> temp in GPSAvoid)
-                                {
-                                    writer.WriteLine(" stored_gps_avoid_waypoints[" + count + "]: _nameless." + temp.Key);
-                                    count++;
-                                }
-
-                                while (!tempSavefileInMemory[line].StartsWith(" stored_start_tollgate_pos:"))
-                                {
-                                    line++;
-                                }
-
-                                line--;
-                                continue;
-                            }
-
-
                             //Visited cities
                             if (SaveInMemLine.StartsWith(" visited_cities:"))
                             {
@@ -1130,26 +1013,6 @@ namespace TS_SE_Tool
                                 foreach (VisitedCity vc in newvc)
                                 {
                                     writer.WriteLine(" visited_cities_count[" + vcindex + "]: " + vc.VisitCount);
-                                    vcindex++;
-                                }
-
-                                continue;
-                            }
-
-                            //Drivers pool
-                            if (tempSavefileInMemory[line].StartsWith(" driver_pool:"))
-                            {
-                                int before = int.Parse(SaveInMemLine.Split(new char[] { ':' })[1]);
-                                line += before;
-
-                                int after = DriverPool.Count;
-
-                                writer.WriteLine(" driver_pool: " + after);
-
-                                int vcindex = 0;
-                                foreach (string tmpD in DriverPool)
-                                {
-                                    writer.WriteLine(" driver_pool[" + vcindex + "]: " + tmpD);
                                     vcindex++;
                                 }
 
@@ -1832,28 +1695,5 @@ namespace TS_SE_Tool
             }
         }
         
-        /*
-        private void ExportnamelessList()
-        {
-            using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\namelessList.txt", false))
-            {
-                foreach (string strArray in namelessList)
-                {
-                    writer.WriteLine(strArray);
-                }
-            }
-        }
-
-        private void ExportTestnamelessList()
-        {
-            using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\TestnamelessList.txt", false))
-            {
-                for(int i = 0; i < 3000; i++)
-                {
-                    writer.WriteLine(GetSpareNameless());
-                }
-            }
-        }
-        */
     }
 }

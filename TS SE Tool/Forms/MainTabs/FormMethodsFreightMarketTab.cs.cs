@@ -602,9 +602,11 @@ namespace TS_SE_Tool
             comboBoxFreightMarketSourceCity.DisplayMember = "CityName";
             comboBoxFreightMarketSourceCity.DataSource = combDT;
             //end filling
-            DataRow foundRow = combDT.Rows.Find(new object[1] { LastVisitedCity });
-            if (combDT.Rows.Find(new object[1] { LastVisitedCity }) != null)
-                comboBoxFreightMarketSourceCity.SelectedValue = LastVisitedCity;
+
+            DataRow foundRow = combDT.Rows.Find(new object[1] { Economy.last_visited_city });
+
+            if (combDT.Rows.Find(new object[1] { Economy.last_visited_city }) != null)
+                comboBoxFreightMarketSourceCity.SelectedValue = Economy.last_visited_city;
             //end
         }
 

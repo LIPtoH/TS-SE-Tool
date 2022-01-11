@@ -294,7 +294,7 @@ namespace TS_SE_Tool
                 }
 
                 if (tmpDriverName != null && tmpDriverName != "null")
-                    if (EconomyPlayerData.UserDriver == tmpDriverName)
+                    if (Economy.driver_pool[0] == tmpDriverName)
                     {
                         tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                     }

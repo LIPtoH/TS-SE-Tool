@@ -74,7 +74,7 @@ namespace TS_SE_Tool
                         {
                             string DriverName = tempD;
 
-                            if (MainForm.EconomyPlayerData.UserDriver == DriverName)
+                            if (MainForm.Economy.driver_pool[0] == DriverName)
                             {
                                 DriverName = Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                             }
@@ -187,7 +187,7 @@ namespace TS_SE_Tool
                         Garages tempG = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == tempD.Parent.Name)];
                         string driverNL = tempD.Name;
 
-                        if(driverNL != MainForm.EconomyPlayerData.UserDriver)
+                        if(driverNL != MainForm.Economy.driver_pool[0])
                         {
                             tempG.Drivers[tempG.Drivers.FindIndex(x => x == driverNL)] = null;
                             MainForm.extraDrivers.Add(driverNL);
