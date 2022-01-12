@@ -104,83 +104,9 @@ namespace TS_SE_Tool
                         PrepareCitiesInitial();
                         PrepareGaragesInitial();
                         PrepareVisitedCitiesInitial();
+                        PrepareGPSInitial();
 
                         continue;
-                    }
-
-                    //Economy Section                    
-                    if (true)
-                    {
-                        //GPS
-
-                        /*
-                        //Online
-                        if (tempSavefileInMemory[line].StartsWith(" stored_online_gps_behind_waypoints:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            int gpscount = int.Parse(LineArray[2]);
-
-                            for (int i = 0; i < gpscount; i++)
-                            {
-                                line++;
-                                GPSbehindOnline.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
-                            }
-                            continue;
-                        }
-                        if (tempSavefileInMemory[line].StartsWith(" stored_online_gps_ahead_waypoints:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            int gpscount = int.Parse(LineArray[2]);
-
-                            for (int i = 0; i < gpscount; i++)
-                            {
-                                line++;
-                                GPSaheadOnline.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
-                            }
-                            continue;
-                        }
-                        */
-
-                        //Offline
-                        //Normal
-                        if (tempSavefileInMemory[line].StartsWith(" stored_gps_behind_waypoints:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            int gpscount = int.Parse(LineArray[2]);
-
-                            for (int i = 0; i < gpscount; i++)
-                            {
-                                line++;
-                                GPSbehind.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
-                            }
-                            continue;
-                        }
-                        if (tempSavefileInMemory[line].StartsWith(" stored_gps_ahead_waypoints:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            int gpscount = int.Parse(LineArray[2]);
-
-                            for (int i = 0; i < gpscount; i++)
-                            {
-                                line++;
-                                GPSahead.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
-                            }
-                            continue;
-                        }
-                        //Avoid
-                        if (tempSavefileInMemory[line].StartsWith(" stored_gps_avoid_waypoints:"))
-                        {
-                            string[] LineArray = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                            int gpscount = int.Parse(LineArray[2]);
-
-                            for (int i = 0; i < gpscount; i++)
-                            {
-                                line++;
-                                GPSAvoid.Add(tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' }, 2)[1], new List<string>());
-                            }
-                            continue;
-                        }
-
                     }
 
                     //Bank
@@ -385,7 +311,7 @@ namespace TS_SE_Tool
                     //Populate GPS
                     if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage"))
                     {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2].Split(new char[] { '.' },2)[1];
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
 
                         if (GPSbehind.ContainsKey(nameless))
                         {
@@ -1385,6 +1311,38 @@ namespace TS_SE_Tool
             {
                 VisitedCities.Add(new VisitedCity(city, Economy.visited_cities_count[cityid], true));
                 cityid++;
+            }
+        }
+
+        private void PrepareGPSInitial()
+        {
+            //GPS
+            //Online
+            foreach(string entry in Economy.stored_online_gps_behind_waypoints)
+            {
+                GPSbehindOnline.Add(entry, new List<string>());
+            }
+
+            foreach (string entry in Economy.stored_online_gps_ahead_waypoints)
+            {
+                GPSaheadOnline.Add(entry, new List<string>());
+            }
+
+            //Offline
+            //Normal
+            foreach (string entry in Economy.stored_gps_behind_waypoints)
+            {
+                GPSbehind.Add(entry, new List<string>());
+            }
+
+            foreach (string entry in Economy.stored_gps_ahead_waypoints)
+            {
+                GPSahead.Add(entry, new List<string>());
+            }
+            //Avoid
+            foreach (string entry in Economy.stored_gps_avoid_waypoints)
+            {
+                GPSAvoid.Add(entry, new List<string>());
             }
         }
 

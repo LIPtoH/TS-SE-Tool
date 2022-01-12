@@ -1410,7 +1410,7 @@ namespace TS_SE_Tool
         {
             foreach (KeyValuePair<string, List<string>> tempgpsdata in _inputGPSdata)
             {
-                _inputWriter.WriteLine("gps_waypoint_storage : _nameless." + tempgpsdata.Key + " {");
+                _inputWriter.WriteLine("gps_waypoint_storage : " + tempgpsdata.Key + " {");
 
                 foreach (string templine in tempgpsdata.Value)
                 {
