@@ -245,34 +245,40 @@ namespace TS_SE_Tool
                 if (UserTruck.Value == null)
                     continue;
 
+                if (UserTruck.Value.TruckMainData.accessories.Count == 0)
+                    continue;
+
                 string truckname = "undetected", truckNameless = "";
                 string tmpTruckType = "", tmpTruckName = "", tmpGarageName = "", tmpDriverName = "";
 
-                try
-                {
-                    if (UserTruck.Value.Parts.Count > 0)
-                    {
-                        string templine = UserTruck.Value.Parts.Find(x => x.PartType == "truckbrandname").PartData.Find(xline => xline.StartsWith(" data_path:"));
-                        truckname = templine.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
-                    }
-                }
-                catch
-                {
-                    continue;
-                }
-                //
-
+                //link
                 truckNameless = UserTruck.Key;
 
+                //Quick job or Bought
                 if (UserTruck.Value.Users)
                 {
                     tmpTruckType = "U";
 
+                    //Garage
                     tmpGarageName = GaragesList.Find(x => x.Vehicles.Contains(truckNameless)).GarageNameTranslated;
                 }
                 else
                     tmpTruckType = "Q";
-                //
+
+                //Brand
+                foreach (string accLink in UserTruck.Value.TruckMainData.accessories)
+                {
+                    Type t = VehicleAccessories[accLink].GetType();
+
+                    if (t.Name == "Vehicle_Accessory")
+                    {
+                        Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)VehicleAccessories[accLink];
+                        if (tmp.accType == "basepart")
+                        {
+                            truckname = tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
+                        }
+                    }
+                }
 
                 TruckBrandsLngDict.TryGetValue(truckname, out string trucknamevalue);
 
@@ -282,8 +288,8 @@ namespace TS_SE_Tool
                 }
                 else
                     tmpTruckName = truckname;
-                //
 
+                //Driver
                 Garages tmpGrg = GaragesList.Where(tX => tX.Vehicles.Contains(truckNameless))?.SingleOrDefault() ?? null;
 
                 if (tmpGrg != null)
@@ -296,7 +302,7 @@ namespace TS_SE_Tool
                 }
 
                 if (tmpDriverName != null && tmpDriverName != "null")
-                    if (Economy.driver_pool[0] == tmpDriverName)
+                    if (Player.drivers[0] == tmpDriverName)
                     {
                         tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                     }
@@ -309,8 +315,8 @@ namespace TS_SE_Tool
                             tmpDriverName = _resultvalue.TrimStart(new char[] { '+' });
                         }
                     }
-                //
 
+                //
                 combDT.Rows.Add(truckNameless, tmpTruckType, tmpTruckName, tmpGarageName, tmpDriverName);
             }
 
@@ -367,31 +373,30 @@ namespace TS_SE_Tool
             if (pbPanel != null)
             {
                 float _wear = 0;
-
-                List<UserCompanyTruckDataPart> DataPart = null;
+                string partType = "";
 
                 try
                 {
                     switch (_number)
                     {
                         case 0:
-                            DataPart = SelectedUserCompanyTruck.Parts.FindAll(xp => xp.PartType == "engine");
+                            partType = "engine";
                             _wear = SelectedUserCompanyTruck.TruckMainData.engine_wear;
                             break;
                         case 1:
-                            DataPart = SelectedUserCompanyTruck.Parts.FindAll(xp => xp.PartType == "transmission");
+                            partType = "transmission";
                             _wear = SelectedUserCompanyTruck.TruckMainData.transmission_wear;
                             break;
                         case 2:
-                            DataPart = SelectedUserCompanyTruck.Parts.FindAll(xp => xp.PartType == "chassis");
+                            partType = "chassis";
                             _wear = SelectedUserCompanyTruck.TruckMainData.chassis_wear;
                             break;
                         case 3:
-                            DataPart = SelectedUserCompanyTruck.Parts.FindAll(xp => xp.PartType == "cabin");
+                            partType = "cabin";
                             _wear = SelectedUserCompanyTruck.TruckMainData.cabin_wear;
                             break;
                         case 4:
-                            DataPart = SelectedUserCompanyTruck.Parts.FindAll(xp => xp.PartType == "tire");
+                            partType = "tire";
                             if (SelectedUserCompanyTruck.TruckMainData.wheels_wear.Count > 0)
                                 _wear = SelectedUserCompanyTruck.TruckMainData.wheels_wear.Sum() / SelectedUserCompanyTruck.TruckMainData.wheels_wear.Count;
                             break;
@@ -404,14 +409,37 @@ namespace TS_SE_Tool
                 }
 
                 if (pnLabel != null)
-                    if (DataPart != null && DataPart.Count > 0)
+                {
+                    string pnlText = "none";
+
+                    foreach (string accLink in SelectedUserCompanyTruck.TruckMainData.accessories)
                     {
-                        //pnLabel.Text = TruckDataPart[0].PartData.Find(xl => xl.StartsWith(" data_path:")).Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                        Type t = VehicleAccessories[accLink].GetType();
+
+                        if (t.Name == "Vehicle_Accessory" && partType != "tire")
+                        {
+                            Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)VehicleAccessories[accLink];
+
+                            if (tmp.accType == partType)
+                            {
+                                pnlText = tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                                break;
+                            }
+                        }
+                        else if (t.Name == "Vehicle_Wheel_Accessory" && partType == "tire")
+                        {
+                            Save.Items.Vehicle_Wheel_Accessory tmp = (Save.Items.Vehicle_Wheel_Accessory)VehicleAccessories[accLink];
+
+                            if (tmp.accType == "tire")
+                            {
+                                pnlText = tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                                break;
+                            }
+                        }
                     }
-                    else
-                    {
-                        pnLabel.Text = "none";
-                    }
+
+                    pnLabel.Text = pnlText;
+                }
 
                 if (_wear == 0)
                     repairButton.Enabled = false;

@@ -151,6 +151,11 @@
     <Compile Include="CustomClasses\Save\Items\Trailer.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyTrailerData.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle.cs" />
+    <Compile Include="CustomClasses\Save\Items\Vehicle_Drv_plate_Accessory.cs" />
+    <Compile Include="CustomClasses\Save\Items\Vehicle_Paint_job_Accessory.cs" />
+    <Compile Include="CustomClasses\Save\Items\Vehicle_Wheel_Accessory.cs" />
+    <Compile Include="CustomClasses\Save\Items\Vehicle_Addon_Accessory.cs" />
+    <Compile Include="CustomClasses\Save\Items\Vehicle_Accessory.cs" />
     <Compile Include="CustomClasses\SCSFontLetter.cs" />
     <Compile Include="CustomClasses\SCSLicensePlate.cs" />
     <Compile Include="CustomClasses\Utilities\AssemblyData.cs" />

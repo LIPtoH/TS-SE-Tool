@@ -1,0 +1,133 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using TS_SE_Tool.Utilities;
+using TS_SE_Tool.Save.DataFormat;
+
+namespace TS_SE_Tool.Save.Items
+{
+    class Vehicle_Paint_job_Accessory
+    {
+        internal Vector_3f mask_r_color { get; set; } = new Vector_3f();
+        internal Vector_3f mask_g_color { get; set; } = new Vector_3f();
+        internal Vector_3f mask_b_color { get; set; } = new Vector_3f();
+
+        internal Vector_3f flake_color { get; set; } = new Vector_3f();
+        internal Vector_3f flip_color { get; set; } = new Vector_3f();
+        internal Vector_3f base_color { get; set; } = new Vector_3f();
+
+        internal string data_path { get; set; } = "";
+        internal int refund { get; set; } = 0;
+
+
+        internal Vehicle_Paint_job_Accessory()
+        { }
+
+        internal Vehicle_Paint_job_Accessory(string[] _input)
+        {
+            string tagLine = "", dataLine = "";
+
+            foreach (string currentLine in _input)
+            {
+                if (currentLine.Contains(':'))
+                {
+                    string[] splittedLine = currentLine.Split(new char[] { ':' }, 2);
+
+                    tagLine = splittedLine[0].Trim();
+                    dataLine = splittedLine[1].Trim();
+                }
+                else
+                {
+                    tagLine = currentLine.Trim();
+                    dataLine = "";
+                }
+
+                switch (tagLine)
+                {
+                    case "":
+                        {
+                            break;
+                        }
+
+                    case "mask_r_color":
+                        {
+                            mask_r_color = new Vector_3f(dataLine);
+                            break;
+                        }
+
+                    case "mask_g_color":
+                        {
+                            mask_g_color = new Vector_3f(dataLine);
+                            break;
+                        }
+
+                    case "mask_b_color":
+                        {
+                            mask_b_color = new Vector_3f(dataLine);
+                            break;
+                        }
+
+                    case "flake_color":
+                        {
+                            flake_color = new Vector_3f(dataLine);
+                            break;
+                        }
+
+                    case "flip_color":
+                        {
+                            flip_color = new Vector_3f(dataLine);
+                            break;
+                        }
+
+                    case "base_color":
+                        {
+                            base_color = new Vector_3f(dataLine);
+                            break;
+                        }
+
+                    case "data_path":
+                        {
+                            data_path = dataLine;
+                            break;
+                        }
+
+                    case "refund":
+                        {
+                            refund = int.Parse(dataLine);
+                            break;
+                        }
+
+                }
+            }
+        }
+
+        internal string PrintOut(uint _version, string _nameless)
+        {
+            string returnString = "";
+
+            StringBuilder returnSB = new StringBuilder();
+
+            returnSB.AppendLine("vehicle_paint_job_accessory : " + _nameless + " {");
+
+            returnSB.AppendLine(" mask_r_color: " + mask_r_color.ToString());
+            returnSB.AppendLine(" mask_g_color: " + mask_g_color.ToString());
+            returnSB.AppendLine(" mask_b_color: " + mask_b_color.ToString());
+
+            returnSB.AppendLine(" flake_color: " + flake_color.ToString());
+            returnSB.AppendLine(" flip_color: " + flip_color.ToString());
+            returnSB.AppendLine(" base_color: " + base_color.ToString());
+
+            returnSB.AppendLine(" data_path: " + data_path);
+            returnSB.AppendLine(" refund: " + refund.ToString());
+
+            returnSB.AppendLine("}");
+
+            returnString = returnSB.ToString();
+
+            return returnString;
+        }
+    }
+}

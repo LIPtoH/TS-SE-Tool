@@ -53,7 +53,7 @@ namespace TS_SE_Tool
             for (int line = 0; line < tempSavefileInMemory.Length; line++)
             {
 
-                string curLine = tempSavefileInMemory[line];
+                string currentLine = tempSavefileInMemory[line];
 
                 try
                 {
@@ -421,84 +421,6 @@ namespace TS_SE_Tool
 
                             UserTruckDictionary[vehiclenameless].TruckMainData = new Vehicle(truckData.ToArray());
 
-                            /*
-                            while (accessoriescount > 0)
-                            {
-                                if (tempSavefileInMemory[line].StartsWith("vehicle_"))
-                                {
-                                    string accessorynameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-                                    bool paintadded = false;
-
-                                    if (tempSavefileInMemory[line].StartsWith("vehicle_paint_job_accessory :"))
-                                    {
-                                        thisTruck.Parts.Add(new UserCompanyTruckDataPart("paintjob"));
-                                        paintadded = true;
-                                    }
-                                    line++;
-
-                                    List<string> tempPartData = new List<string>();
-
-                                    while (!tempSavefileInMemory[line].StartsWith("}"))
-                                    {
-                                        tempPartData.Add(tempSavefileInMemory[line]);
-
-                                        //--
-                                        if (!paintadded)
-                                            if (tempSavefileInMemory[line].StartsWith(" data_path:"))
-                                            {
-                                                chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                                                string truckpart = chunkOfline[2].Split(new char[] { '"' })[1];
-
-                                                string partType = "";
-
-                                                switch (truckpart)
-                                                {
-                                                    case var s when s.Contains("/data.sii"):
-                                                        partType = "truckbrandname";
-                                                        break;
-
-                                                    case var s when s.Contains("/chassis/"):
-                                                        partType = "chassis";
-                                                        break;
-
-                                                    case var s when s.Contains("/cabin/"):
-                                                        partType = "cabin";
-                                                        break;
-
-                                                    case var s when s.Contains("/engine/"):
-                                                        partType = "engine";
-                                                        break;
-
-                                                    case var s when s.Contains("/transmission/"):
-                                                        partType = "transmission";
-                                                        break;
-
-                                                    case var s when s.Contains("/f_tire/") || s.Contains("/r_tire/") || s.Contains("/f_wheel/") || s.Contains("/r_wheel/"):
-                                                        partType = "tire";
-                                                        break;
-
-                                                    default:
-                                                        partType = "generalpart";
-                                                        break;
-                                                }
-
-                                                thisTruck.Parts.Add(new UserCompanyTruckDataPart(partType));
-                                            }
-                                        //--
-
-                                        line++;
-                                    }
-
-                                    thisTruck.Parts.Last().PartNameless = accessorynameless;
-                                    thisTruck.Parts.Last().PartData = tempPartData;
-                                    accessoriescount--;
-
-                                    if (paintadded)
-                                        paintadded = false;
-                                }
-                                line++;
-                            }
-                            */
                         }
                         continue;
                     }
@@ -531,55 +453,80 @@ namespace TS_SE_Tool
                         continue;
                     }
 
-                    /*
-                    if (tempSavefileInMemory[line].StartsWith("vehicle_"))
+                    if (currentLine.StartsWith("vehicle_accessory"))
                     {
-                        List<string> tempPartData = new List<string>();
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                        List<string> Data = new List<string>();
 
                         while (!tempSavefileInMemory[line].StartsWith("}"))
                         {
-                            tempPartData.Add(tempSavefileInMemory[line]);
-
-                            if (tempSavefileInMemory[line].StartsWith(" data_path:"))
-                            {
-                                chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                                string truckpart = chunkOfline[2].Split(new char[] { '"' })[1];
-
-                                string partType = "";
-
-                                switch (truckpart)
-                                {
-                                    case var s when s.Contains("/data.sii"):
-                                        partType = "trailerchassistype";
-                                        break;
-
-                                    case var s when s.Contains("/body/"):
-                                        partType = "body";
-                                        break;
-
-                                    case var s when s.Contains("chassis") || s.Contains("/def/vehicle/trailer/"):
-                                        partType = "chassis";
-                                        break;
-
-                                    case var s when s.Contains("/f_tire/") || s.Contains("/r_tire/") || s.Contains("/f_wheel/") || s.Contains("/r_wheel/") || s.Contains("/t_wheel/"):
-                                        partType = "tire";
-                                        break;
-
-                                    default:
-                                        partType = "generalpart";
-                                        break;
-                                }
-
-                                //UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Add(new UserCompanyTruckDataPart(partType));
-                            }
-
+                            Data.Add(tempSavefileInMemory[line]);
                             line++;
                         }
 
-                        //UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Last().PartNameless = accessorynameless;
-                        //UserTrailerDictionary[trailernamelessArray[trailerindex]].Parts.Last().PartData = tempPartData;
+                        VehicleAccessories.Add(nameless, new Vehicle_Accessory(Data.ToArray()));
                     }
-                    */
+
+                    if (currentLine.StartsWith("vehicle_addon_accessory"))
+                    {
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                        List<string> Data = new List<string>();
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                        {
+                            Data.Add(tempSavefileInMemory[line]);
+                            line++;
+                        }
+
+                        VehicleAccessories.Add(nameless, new Vehicle_Addon_Accessory(Data.ToArray()));
+                    }
+
+                    if (currentLine.StartsWith("vehicle_drv_plate_accessory"))
+                    {
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                        List<string> Data = new List<string>();
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                        {
+                            Data.Add(tempSavefileInMemory[line]);
+                            line++;
+                        }
+
+                        VehicleAccessories.Add(nameless, new Vehicle_Drv_plate_Accessory(Data.ToArray()));
+                    }
+
+                    if (currentLine.StartsWith("vehicle_wheel_accessory"))
+                    {
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                        List<string> Data = new List<string>();
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                        {
+                            Data.Add(tempSavefileInMemory[line]);
+                            line++;
+                        }
+
+                        VehicleAccessories.Add(nameless, new Vehicle_Wheel_Accessory(Data.ToArray()));
+                    }
+
+                    if (currentLine.StartsWith("vehicle_paint_job_accessory"))
+                    {
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                        List<string> Data = new List<string>();
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                        {
+                            Data.Add(tempSavefileInMemory[line]);
+                            line++;
+                        }
+
+                        VehicleAccessories.Add(nameless, new Vehicle_Paint_job_Accessory(Data.ToArray()));
+                    }
 
                     if (tempSavefileInMemory[line].StartsWith("trailer_def :"))
                     {

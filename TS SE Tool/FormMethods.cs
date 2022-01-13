@@ -342,6 +342,8 @@ namespace TS_SE_Tool
             BankLoans = new Dictionary<string, Save.Items.Bank_Loan>();
             Player = new Save.Items.Player();
 
+            VehicleAccessories = new Dictionary<string, dynamic>();
+
             MainSaveFileProfileData = new SaveFileProfileData();
             MainSaveFileInfoData = new SaveFileInfoData();
 

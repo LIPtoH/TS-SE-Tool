@@ -115,6 +115,8 @@ namespace TS_SE_Tool
         internal Save.Items.Bank Bank;
         internal Dictionary<string, Save.Items.Bank_Loan> BankLoans;
 
+        internal Dictionary<string, dynamic> VehicleAccessories;
+
         internal Save.Items.Player Player;
 
         public SaveFileProfileData MainSaveFileProfileData;

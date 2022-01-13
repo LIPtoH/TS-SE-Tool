@@ -94,11 +94,15 @@ namespace TS_SE_Tool
                 tbllPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
                 //
 
+                //FlowLayoutPanel
                 FlowLayoutPanel flowPanel = new FlowLayoutPanel();
                 flowPanel.FlowDirection = FlowDirection.LeftToRight;
                 flowPanel.Margin = new Padding(0);
-                tbllPanel.SetColumnSpan(flowPanel, 2);
+                flowPanel.Dock = DockStyle.Fill;
+                flowPanel.WrapContents = false;
+
                 tbllPanel.Controls.Add(flowPanel, 0, 0);
+                tbllPanel.SetColumnSpan(flowPanel, 2);
                 //
                 //Part type
                 partLabel = new Label();
@@ -223,20 +227,22 @@ namespace TS_SE_Tool
                     string trailername = "", trailerNameless = "";
                     string tmpTrailerType = "", tmpTrailerkName = "", tmpGarageName = "", tmpDriverName = "";
 
+                    //link
                     trailerNameless = UserTrailer.Key;
-                    //
 
-                    if (UserTrailerDictionary[trailerNameless].Users)
+                    //Quick job or Bought
+                    if (UserTrailer.Value.Users)
                     {
                         tmpTrailerType = "U";
 
+                        //Garage
                         tmpGarageName = GaragesList.Find(x => x.Trailers.Contains(trailerNameless)).GarageNameTranslated;
                     }
                     else
                         tmpTrailerType = "Q";
-                    //
 
-                    string trailerdef = UserTrailerDictionary[trailerNameless].TrailerMainData.trailer_definition;
+                    //Trailer type
+                    string trailerdef = UserTrailer.Value.TrailerMainData.trailer_definition;
 
                     if (UserTrailerDefDictionary.Count > 0)
                     {
@@ -278,12 +284,12 @@ namespace TS_SE_Tool
                     {
                         tmpTrailerkName = trailerdef;
                     }
-                    //
 
+                    //Driver
                     tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTrailer == trailerNameless)?.SingleOrDefault().Key ?? "null";
                     
                     if (tmpDriverName != "null")
-                        if (Economy.driver_pool[0] == tmpDriverName)
+                        if (Player.drivers[0] == tmpDriverName)
                         {
                             tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                         }
@@ -296,8 +302,8 @@ namespace TS_SE_Tool
                                 tmpDriverName = _resultvalue.TrimStart(new char[] { '+' });
                             }
                         }
-                    //
 
+                    //
                     combDT.Rows.Add(trailerNameless, tmpTrailerType, tmpTrailerkName, tmpGarageName, tmpDriverName);
                 }
             }
@@ -349,27 +355,27 @@ namespace TS_SE_Tool
 
             if (pbPanel != null)
             {
-                List<UserCompanyTruckDataPart> DataPart = null;
                 float _wear = 0;
+                string partType = "";
 
                 try
                 {
                     switch (_number)
                     {
-                        case 0:                            
-                            DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "trailerdata");
+                        case 0:
+                            partType = "cargo";
                             _wear = SelectedUserCompanyTrailer.TrailerMainData.cargo_damage;
                             break;                            
                         case 1:
-                            DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "body");
+                            partType = "body";
                             _wear = SelectedUserCompanyTrailer.TrailerMainData.trailer_body_wear;
                             break;
                         case 2:
-                            DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "chassis");
+                            partType = "chassis";
                             _wear = SelectedUserCompanyTrailer.TrailerMainData.chassis_wear;
                             break;
                         case 3:
-                            DataPart = SelectedUserCompanyTrailer.Parts.FindAll(xp => xp.PartType == "tire");
+                            partType = "tire";
                             if (SelectedUserCompanyTrailer.TrailerMainData.wheels_wear.Count > 0)
                                 _wear = SelectedUserCompanyTrailer.TrailerMainData.wheels_wear.Sum() / SelectedUserCompanyTrailer.TrailerMainData.wheels_wear.Count;
                             break;
@@ -381,51 +387,90 @@ namespace TS_SE_Tool
                     return;
                 }
 
-
                 if (pnLabel != null)
-                    if (DataPart != null && DataPart.Count > 0)
+                {
+                    pnLabel.Text = "";
+                    string pnlText = "";
+
+                    if (partType == "cargo")
                     {
-                        /*
-                        if (_number != 0)
+                        //player_job
+
+                        //drivers job
+                        var tmp = UserDriverDictionary.Select(tx => tx.Value).Where(tX => tX.AssignedTrailer == comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()).ToList();
+
+                        if (tmp != null && tmp.Count > 0)
                         {
-                            pnLabel.Text = DataPart[0].PartData.Find(xl => xl.StartsWith(" data_path:")).Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                            string tmpCargo = tmp[0].DriverJob.Cargo;
+
+                            if (CargoLngDict.TryGetValue(tmpCargo, out string value))
+                            {
+                                if (value != null && value != "")
+                                {
+                                    pnLabel.Text = value;
+                                }
+                                else
+                                {
+                                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(value);
+
+                                    pnLabel.Text = CapName;
+                                }
+                            }
                         }
                         else
                         {
-                            var tmp = UserDriverDictionary.Select(tx => tx.Value)
-                                    .Where(tX => tX.AssignedTrailer == comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()).ToList();
-
-                            if (tmp != null && tmp.Count > 0)
-                            {
-                                string tmpCargo = tmp[0].DriverJob.Cargo;
-
-                                if (CargoLngDict.TryGetValue(tmpCargo, out string value))
-                                {
-                                    if (value != null && value != "")
-                                    {
-                                        pnLabel.Text = value;
-                                    }
-                                    else
-                                    {
-                                        string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(value);
-
-                                        pnLabel.Text = CapName;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                pbPanel.BackgroundImage = null;
-                                pnLabel.Text = "";
-                                return;
-                            }
+                            repairButton.Enabled = false;
+                            pbPanel.BackgroundImage = null;
+                            pnLabel.Text = "";
+                            return;
                         }
-                        */
                     }
                     else
                     {
-                        pnLabel.Text = "none";
+                        foreach (string accLink in SelectedUserCompanyTrailer.TrailerMainData.accessories)
+                        {
+                            dynamic accessoryDyn = VehicleAccessories[accLink];
+
+                            Type accType = accessoryDyn.GetType();
+
+                            if (accType.Name == "Vehicle_Accessory" && partType != "tire")
+                            {
+                                Save.Items.Vehicle_Accessory accessoryThis = (Save.Items.Vehicle_Accessory)accessoryDyn;
+
+                                if (accessoryThis.accType == partType)
+                                {
+                                    pnlText = accessoryThis.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                                    continue;
+                                }
+                                if (accessoryThis.accType == "basepart")
+                                {
+                                    pnlText = accessoryThis.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
+                                    continue;
+                                }
+                            }
+
+                            if (accType.Name == "Vehicle_Wheel_Accessory" && partType == "tire")
+                            {
+                                Save.Items.Vehicle_Wheel_Accessory tmp = (Save.Items.Vehicle_Wheel_Accessory)accessoryDyn;
+
+                                if (tmp.accType == "tire")
+                                {
+                                    if (pnlText.Length != 0)
+                                        pnlText += " | ";
+
+                                    pnlText += tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                                    continue;
+                                }
+                            }
+                        }
                     }
+
+                    if(pnlText == "")
+                        pnlText = "none";
+
+                    pnLabel.Text = pnlText;
+                    toolTipMain.SetToolTip(pnLabel, pnlText);
+                }
 
                 if (_wear == 0)
                     repairButton.Enabled = false;
