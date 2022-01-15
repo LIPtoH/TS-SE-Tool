@@ -109,8 +109,11 @@ namespace TS_SE_Tool
                 FlowLayoutPanel flowPanel = new FlowLayoutPanel();
                 flowPanel.FlowDirection = FlowDirection.LeftToRight;
                 flowPanel.Margin = new Padding(0);
-                tbllPanel.SetColumnSpan(flowPanel, 2);
+                flowPanel.Dock = DockStyle.Fill;
+                flowPanel.WrapContents = false;
+
                 tbllPanel.Controls.Add(flowPanel, 0, 0);
+                tbllPanel.SetColumnSpan(flowPanel, 2);
 
                 //Part type
                 partLabel = new Label();
@@ -410,13 +413,16 @@ namespace TS_SE_Tool
 
                 if (pnLabel != null)
                 {
-                    string pnlText = "none";
+                    pnLabel.Text = "";
+                    string pnlText = "";
 
                     foreach (string accLink in SelectedUserCompanyTruck.TruckMainData.accessories)
                     {
-                        Type t = VehicleAccessories[accLink].GetType();
+                        dynamic accessoryDyn = VehicleAccessories[accLink];
 
-                        if (t.Name == "Vehicle_Accessory" && partType != "tire")
+                        Type accType = accessoryDyn.GetType();
+
+                        if (accType.Name == "Vehicle_Accessory" && partType != "tire")
                         {
                             Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)VehicleAccessories[accLink];
 
@@ -426,19 +432,23 @@ namespace TS_SE_Tool
                                 break;
                             }
                         }
-                        else if (t.Name == "Vehicle_Wheel_Accessory" && partType == "tire")
+                        else if (accType.Name == "Vehicle_Wheel_Accessory" && partType == "tire")
                         {
-                            Save.Items.Vehicle_Wheel_Accessory tmp = (Save.Items.Vehicle_Wheel_Accessory)VehicleAccessories[accLink];
+                            Save.Items.Vehicle_Wheel_Accessory tmp = (Save.Items.Vehicle_Wheel_Accessory)accessoryDyn;
 
                             if (tmp.accType == "tire")
                             {
-                                pnlText = tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
-                                break;
+                                if (pnlText.Length != 0)
+                                    pnlText += " | ";
+
+                                pnlText += tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' }).Last().Split(new char[] { '.' })[0];
+                                continue;
                             }
                         }
                     }
 
                     pnLabel.Text = pnlText;
+                    toolTipMain.SetToolTip(pnLabel, pnlText);
                 }
 
                 if (_wear == 0)

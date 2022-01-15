@@ -225,7 +225,7 @@ namespace TS_SE_Tool
                 if (UserTrailer.Value.Main)
                 {
                     string trailername = "", trailerNameless = "";
-                    string tmpTrailerType = "", tmpTrailerkName = "", tmpGarageName = "", tmpDriverName = "";
+                    string tmpTrailerType = "", tmpTrailerName = "", tmpGarageName = "", tmpDriverName = "";
 
                     //link
                     trailerNameless = UserTrailer.Key;
@@ -239,7 +239,12 @@ namespace TS_SE_Tool
                         tmpGarageName = GaragesList.Find(x => x.Trailers.Contains(trailerNameless)).GarageNameTranslated;
                     }
                     else
+                    {
                         tmpTrailerType = "Q";
+
+                        //
+                        tmpGarageName = "---";
+                    }
 
                     //Trailer type
                     string trailerdef = UserTrailer.Value.TrailerMainData.trailer_definition;
@@ -252,37 +257,39 @@ namespace TS_SE_Tool
                             string[] trailerDefExtra = { "{0}", "{0} axles", "{0}" };
 
                             int iCounter = 0;
-                            List<string> CurTrailerDef = UserTrailerDefDictionary[trailerdef];
 
-                            bool wasfound = false;
+                            Save.Items.Trailer_Def CurTrailerDef = UserTrailerDefDictionary[trailerdef];
 
-                            foreach (string Property in trailerDefPropertys)
+                            addToString(CurTrailerDef.body_type.ToString());
+
+                            addToString(CurTrailerDef.axles.ToString());
+
+                            addToString(CurTrailerDef.chain_type.ToString());
+
+                            void addToString(string _input)
                             {
-                                try
+                                if (_input != "")
                                 {
-                                    string tmp = CurTrailerDef.Find(x => x.StartsWith(" " + Property + ":")).Split(':')[1].Trim(new char[] { ' ' }).Replace('_', ' ');
-
-                                    if (wasfound)
+                                    if (trailername != "")
                                         trailername += " | ";
-                                    trailername += String.Format(trailerDefExtra[iCounter], CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tmp));
-
-                                    wasfound = true;
+                                    trailername += String.Format(trailerDefExtra[iCounter], CultureInfo.CurrentCulture.TextInfo.ToTitleCase(_input));
                                 }
-                                catch { wasfound = false; }
 
                                 iCounter++;
                             }
 
-                            tmpTrailerkName = trailername;
+                            tmpTrailerName = trailername;
                         }
                         else
                         {
-                            tmpTrailerkName = trailerdef;
+                            trailername = String.Join(" ", trailerdef.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).Where(x => x != "trailer_def"));
+
+                            tmpTrailerName = trailername;
                         }
                     }
                     else
                     {
-                        tmpTrailerkName = trailerdef;
+                        tmpTrailerName = trailerdef;
                     }
 
                     //Driver
@@ -304,7 +311,7 @@ namespace TS_SE_Tool
                         }
 
                     //
-                    combDT.Rows.Add(trailerNameless, tmpTrailerType, tmpTrailerkName, tmpGarageName, tmpDriverName);
+                    combDT.Rows.Add(trailerNameless, tmpTrailerType, tmpTrailerName, tmpGarageName, tmpDriverName);
                 }
             }
 

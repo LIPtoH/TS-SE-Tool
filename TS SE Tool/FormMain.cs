@@ -29,6 +29,7 @@ using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Deployment.Application;
 using System.Threading;
+
 using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
@@ -141,7 +142,7 @@ namespace TS_SE_Tool
 
         public Dictionary<string, UserCompanyDriverData> UserDriverDictionary; //+
         private Dictionary<string, UserCompanyTrailerData> UserTrailerDictionary; //+
-        private Dictionary<string, List<string>> UserTrailerDefDictionary; //+
+        private Dictionary<string, Save.Items.Trailer_Def> UserTrailerDefDictionary; //+
 
         private List<string> namelessList;//Program
         private string namelessLast;//Program

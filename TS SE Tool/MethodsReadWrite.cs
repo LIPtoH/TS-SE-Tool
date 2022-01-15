@@ -1076,6 +1076,20 @@ namespace TS_SE_Tool
                             continue;
                         }
 
+                        //Find Trailer def
+                        if (SaveInMemLine.StartsWith("trailer_def :"))
+                        {
+                            nameless = SaveInMemLine.Split(new char[] { ' ' })[2];
+
+                            writer.Write(UserTrailerDefDictionary[nameless].PrintOut(0, nameless));
+
+                            //Skip lines
+                            while (tempSavefileInMemory[line] != "}")
+                                line++;
+
+                            continue;
+                        }
+
                         //Find Truck vehicle
                         if (SaveInMemLine.StartsWith("vehicle :"))
                         {

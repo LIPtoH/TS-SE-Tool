@@ -127,6 +127,8 @@ namespace TS_SE_Tool
                         }
 
                         Bank = new Bank(Data.ToArray());
+
+                        continue;
                     }
 
                     //Bank loans
@@ -147,6 +149,8 @@ namespace TS_SE_Tool
                         }
 
                         BankLoans.Add(nameless, new Bank_Loan(Data.ToArray()));
+
+                        continue;
                     }
 
                     //Player section
@@ -184,7 +188,7 @@ namespace TS_SE_Tool
                         //
                         foreach (string trlrDef in Player.trailer_defs)
                         {
-                            UserTrailerDefDictionary.Add(trlrDef, new List<string>());
+                            UserTrailerDefDictionary.Add(trlrDef, new Trailer_Def());
                         }
 
                         //
@@ -466,6 +470,8 @@ namespace TS_SE_Tool
                         }
 
                         VehicleAccessories.Add(nameless, new Vehicle_Accessory(Data.ToArray()));
+
+                        continue;
                     }
 
                     if (currentLine.StartsWith("vehicle_addon_accessory"))
@@ -481,6 +487,8 @@ namespace TS_SE_Tool
                         }
 
                         VehicleAccessories.Add(nameless, new Vehicle_Addon_Accessory(Data.ToArray()));
+
+                        continue;
                     }
 
                     if (currentLine.StartsWith("vehicle_drv_plate_accessory"))
@@ -496,6 +504,8 @@ namespace TS_SE_Tool
                         }
 
                         VehicleAccessories.Add(nameless, new Vehicle_Drv_plate_Accessory(Data.ToArray()));
+
+                        continue;
                     }
 
                     if (currentLine.StartsWith("vehicle_wheel_accessory"))
@@ -511,6 +521,8 @@ namespace TS_SE_Tool
                         }
 
                         VehicleAccessories.Add(nameless, new Vehicle_Wheel_Accessory(Data.ToArray()));
+
+                        continue;
                     }
 
                     if (currentLine.StartsWith("vehicle_paint_job_accessory"))
@@ -526,22 +538,25 @@ namespace TS_SE_Tool
                         }
 
                         VehicleAccessories.Add(nameless, new Vehicle_Paint_job_Accessory(Data.ToArray()));
+
+                        continue;
                     }
 
                     if (tempSavefileInMemory[line].StartsWith("trailer_def :"))
                     {
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        string nameless = chunkOfline[2];
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
 
-                        line++;
+                        List<string> Data = new List<string>();
 
                         while (!tempSavefileInMemory[line].StartsWith("}"))
                         {
-                            UserTrailerDefDictionary[nameless].Add(tempSavefileInMemory[line]);
+                            Data.Add(tempSavefileInMemory[line]);
                             line++;
                         }
 
-                        continue;
+                        UserTrailerDefDictionary[nameless] = new Trailer_Def(Data.ToArray());
+
+                    continue;
                     }
 
                     //find existing jobs
@@ -555,8 +570,7 @@ namespace TS_SE_Tool
                         List<int> cargoseeds = new List<int>();
                         string deliveredTrailer = "";
                         bool CompanyJobStructureEnded = false;
-
-
+                        
                         while (!CompanyJobStructureEnded)
                         {
                             if (tempSavefileInMemory[index].StartsWith(" delivered_trailer:"))

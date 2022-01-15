@@ -109,6 +109,23 @@ namespace TS_SE_Tool.Utilities
             }
         }
 
+        public static string FromOutputStringToString(string _input)
+        {
+            try
+            {
+                if(_input.StartsWith("\"") && _input.EndsWith("\""))
+                {
+                    return _input.Substring(1, _input.Length - 2);
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public static string ByteArrayToString(byte[] _ba)
         {
             return BitConverter.ToString(_ba).Replace("-", "");

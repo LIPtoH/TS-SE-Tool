@@ -367,7 +367,7 @@ namespace TS_SE_Tool
             UserDriverDictionary = new Dictionary<string, UserCompanyDriverData>();
             
             UserTrailerDictionary = new Dictionary<string, UserCompanyTrailerData>();
-            UserTrailerDefDictionary = new Dictionary<string, List<string>>();
+            UserTrailerDefDictionary = new Dictionary<string, Save.Items.Trailer_Def>();
 
             extraVehicles = new List<string>();
             extraDrivers = new List<string>();
