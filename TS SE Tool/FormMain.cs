@@ -117,12 +117,14 @@ namespace TS_SE_Tool
         internal Dictionary<string, Save.Items.Bank_Loan> BankLoans;
 
         internal Dictionary<string, dynamic> VehicleAccessories;
-
+        //
         internal Save.Items.Player Player;
+        internal Save.Items.Player_Job Player_Job;
 
         public SaveFileProfileData MainSaveFileProfileData;
         internal SaveFileInfoData MainSaveFileInfoData;
 
+        //
         internal ProgSettings ProgSettingsV;//Program
 
         private Random RandomValue;//Program

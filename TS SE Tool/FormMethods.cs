@@ -340,7 +340,9 @@ namespace TS_SE_Tool
             Economy = new Save.Items.Economy();
             Bank = new Save.Items.Bank();
             BankLoans = new Dictionary<string, Save.Items.Bank_Loan>();
+
             Player = new Save.Items.Player();
+            Player_Job = new Save.Items.Player_Job();
 
             VehicleAccessories = new Dictionary<string, dynamic>();
 

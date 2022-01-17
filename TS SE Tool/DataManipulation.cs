@@ -372,34 +372,35 @@ namespace TS_SE_Tool
 
                     if (tempSavefileInMemory[line].StartsWith("player_job :"))
                     {
-                        do
+                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
+                        string nameless = chunkOfline[2];
+
+                        string workLine = "";
+                        List<string> Data = new List<string>();
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
                         {
+                            workLine = tempSavefileInMemory[line];
+                            Data.Add(workLine);
+
                             line++;
+                        }
 
-                            if (tempSavefileInMemory[line].StartsWith(" company_truck:"))
-                            {
-                                chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                                if (chunkOfline[2] != "null")
-                                {
-                                    UserTruckDictionary.Add(chunkOfline[2], new UserCompanyTruckData());
-                                    UserTruckDictionary[chunkOfline[2]].Users = false;
-                                }
-                                continue;
-                            }
+                        Player_Job = new Player_Job(Data.ToArray());
 
-                            if (tempSavefileInMemory[line].StartsWith(" company_trailer:"))
-                            {
-                                chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                                if (chunkOfline[2] != "null")
-                                {
-                                    UserTrailerDictionary.Add(chunkOfline[2], new UserCompanyTrailerData());
-                                    UserTrailerDictionary[chunkOfline[2]].Users = false;
-                                }
-                                continue;
-                            }
-                        } while (!tempSavefileInMemory[line].StartsWith("}"));
+                        if (Player_Job.company_truck != "null")
+                        {
+                            UserTruckDictionary.Add(Player_Job.company_truck, new UserCompanyTruckData());
+                            UserTruckDictionary[Player_Job.company_truck].Users = false;
+                        }
 
-                        continue;
+                        if (Player_Job.company_trailer != "null")
+                        {
+                            UserTrailerDictionary.Add(Player_Job.company_trailer, new UserCompanyTrailerData());
+                            UserTrailerDictionary[Player_Job.company_trailer].Users = false;
+                        }
+
+                        continue;                        
                     }
 
                     //find vehicles Truck

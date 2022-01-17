@@ -1090,6 +1090,20 @@ namespace TS_SE_Tool
                             continue;
                         }
 
+                        //Find Player job
+                        if (SaveInMemLine.StartsWith("player_job :"))
+                        {
+                            nameless = SaveInMemLine.Split(new char[] { ' ' })[2];
+
+                            writer.Write(Player_Job.PrintOut(0, nameless));
+
+                            //Skip lines
+                            while (tempSavefileInMemory[line] != "}")
+                                line++;
+
+                            continue;
+                        }
+
                         //Find Truck vehicle
                         if (SaveInMemLine.StartsWith("vehicle :"))
                         {

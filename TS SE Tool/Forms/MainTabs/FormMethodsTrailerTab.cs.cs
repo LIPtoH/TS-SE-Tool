@@ -398,38 +398,63 @@ namespace TS_SE_Tool
                 {
                     pnLabel.Text = "";
                     string pnlText = "";
+                    bool accExist = true;
 
                     if (partType == "cargo")
                     {
                         //player_job
-
-                        //drivers job
-                        var tmp = UserDriverDictionary.Select(tx => tx.Value).Where(tX => tX.AssignedTrailer == comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()).ToList();
-
-                        if (tmp != null && tmp.Count > 0)
+                        if (Player.assigned_trailer == comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString())
                         {
-                            string tmpCargo = tmp[0].DriverJob.Cargo;
-
-                            if (CargoLngDict.TryGetValue(tmpCargo, out string value))
+                            if (Player_Job != null)
                             {
-                                if (value != null && value != "")
-                                {
-                                    pnLabel.Text = value;
-                                }
-                                else
-                                {
-                                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(value);
+                                string tmpCargo = Player_Job.cargo.Split(new char[] { '.' })[1];
 
-                                    pnLabel.Text = CapName;
+                                if (CargoLngDict.TryGetValue(tmpCargo, out string value))
+                                {
+                                    if (value != null && value != "")
+                                    {
+                                        pnlText = value;
+                                    }
+                                    else
+                                    {
+                                        string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(value);
+
+                                        pnlText = CapName;
+                                    }
                                 }
+                            }
+                            else
+                            {
+                                accExist = false;
                             }
                         }
                         else
                         {
-                            repairButton.Enabled = false;
-                            pbPanel.BackgroundImage = null;
-                            pnLabel.Text = "";
-                            return;
+                            //drivers job
+                            var tmp = UserDriverDictionary.Select(tx => tx.Value).Where(tX => tX.AssignedTrailer == comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString()).ToList();
+
+                            if (tmp != null && tmp.Count > 0)
+                            {
+                                string tmpCargo = tmp[0].DriverJob.Cargo;
+
+                                if (CargoLngDict.TryGetValue(tmpCargo, out string value))
+                                {
+                                    if (value != null && value != "")
+                                    {
+                                        pnLabel.Text = value;
+                                    }
+                                    else
+                                    {
+                                        string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(value);
+
+                                        pnLabel.Text = CapName;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                accExist = false;
+                            }
                         }
                     }
                     else
@@ -472,11 +497,21 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    if(pnlText == "")
+                    if (!accExist)
+                    {
+                        repairButton.Enabled = false;
+                        pbPanel.BackgroundImage = null;
+                        pnLabel.Text = "";
+
+                        return;
+                    }
+
+                    if (pnlText == "")
                         pnlText = "none";
 
                     pnLabel.Text = pnlText;
                     toolTipMain.SetToolTip(pnLabel, pnlText);
+
                 }
 
                 if (_wear == 0)
