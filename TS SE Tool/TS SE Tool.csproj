@@ -146,10 +146,13 @@
     <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
     <Compile Include="CustomClasses\Save\Items\Bank.cs" />
     <Compile Include="CustomClasses\Save\Items\Bank_Loan.cs" />
+    <Compile Include="CustomClasses\Save\Items\Driver_Player.cs" />
     <Compile Include="CustomClasses\Save\Items\Economy.cs" />
     <Compile Include="CustomClasses\Save\Items\Player.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\PlayerJob.cs" />
     <Compile Include="CustomClasses\Save\Items\Player_Job.cs" />
+    <Compile Include="CustomClasses\Save\Items\Profit_log.cs" />
+    <Compile Include="CustomClasses\Save\Items\Profit_log_Entry.cs" />
     <Compile Include="CustomClasses\Save\Items\SiiNunit.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyTrailerData.cs" />
