@@ -150,6 +150,7 @@
     <Compile Include="CustomClasses\Save\Items\Player.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\PlayerJob.cs" />
     <Compile Include="CustomClasses\Save\Items\Player_Job.cs" />
+    <Compile Include="CustomClasses\Save\Items\SiiNunit.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyTrailerData.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer_Def.cs" />
