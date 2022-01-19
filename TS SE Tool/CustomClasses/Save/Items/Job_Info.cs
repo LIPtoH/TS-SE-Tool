@@ -21,7 +21,7 @@ namespace TS_SE_Tool.Save.Items
         internal int planned_distance_km { get; set; } = 0;
         internal int ferry_time { get; set; } = 0;
         internal int ferry_price { get; set; } = 0;
-        internal int urgency { get; set; } = 0;
+        internal int? urgency { get; set; } = 0;
 
         internal string special { get; set; } = "";
 
@@ -119,7 +119,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "urgency":
                         {
-                            urgency = int.Parse(dataLine);
+                            urgency = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
                             break;
                         }
 
@@ -165,7 +165,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" planned_distance_km: " + planned_distance_km.ToString());
             returnSB.AppendLine(" ferry_time: " + ferry_time.ToString());
             returnSB.AppendLine(" ferry_price: " + ferry_price.ToString());
-            returnSB.AppendLine(" urgency: " + urgency.ToString());
+            returnSB.AppendLine(" urgency: " + (urgency == null ? "nil" : urgency.ToString()));
 
             returnSB.AppendLine(" special: " + special);
 

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using TS_SE_Tool.Save.DataFormat;
+
 namespace TS_SE_Tool.Save.Items
 {
     class Driver_AI
@@ -18,7 +20,7 @@ namespace TS_SE_Tool.Save.Items
         internal string hometown { get; set; } = "";
         internal string current_city { get; set; } = "";
 
-        internal int state { get; set; } = 0;
+        internal uint state { get; set; } = 0;
         internal int on_duty_timer { get; set; } = 0;
         internal int extra_maintenance { get; set; } = 0;
 
@@ -30,11 +32,11 @@ namespace TS_SE_Tool.Save.Items
         internal string adopted_truck { get; set; } = "";
         internal string assigned_truck { get; set; } = "";
 
-        internal int assigned_truck_efficiency { get; set; } = 0;
+        internal SCS_Float assigned_truck_efficiency { get; set; } = 0;
         internal int assigned_truck_axle_count { get; set; } = 0;
         internal int assigned_truck_mass { get; set; } = 0;
 
-        internal int slot_truck_efficiency { get; set; } = 0;
+        internal SCS_Float slot_truck_efficiency { get; set; } = 0;
         internal int slot_truck_axle_count { get; set; } = 0;
         internal int slot_truck_mass { get; set; } = 0;
 
@@ -125,7 +127,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "state":
                         {
-                            state = int.Parse(dataLine);
+                            state = uint.Parse(dataLine);
                             break;
                         }
 
@@ -173,7 +175,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "assigned_truck_efficiency":
                         {
-                            assigned_truck_efficiency = int.Parse(dataLine);
+                            assigned_truck_efficiency = dataLine;
                             break;
                         }
 
@@ -191,7 +193,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "slot_truck_efficiency":
                         {
-                            slot_truck_efficiency = int.Parse(dataLine);
+                            slot_truck_efficiency = dataLine;
                             break;
                         }
 

@@ -30,6 +30,14 @@ namespace TS_SE_Tool.Save.Items
 
         internal Dictionary<string, dynamic> VehicleAccessories = new Dictionary<string, dynamic>();
 
+        internal Dictionary<string, Profit_log> Profit_log = new Dictionary<string, Profit_log>();
+        internal Dictionary<string, Profit_log_Entry> Profit_log_Entry = new Dictionary<string, Profit_log_Entry>();
+
+        internal Driver_Player Driver_Player = new Driver_Player();
+
+        internal Dictionary<string, Driver_AI> Driver_AI = new Dictionary<string, Driver_AI>();
+
+        internal Dictionary<string, Job_Info> Job_Info = new Dictionary<string, Job_Info>();
 
         internal SiiNunit()
         { }
@@ -37,6 +45,8 @@ namespace TS_SE_Tool.Save.Items
         internal SiiNunit(string[] _input)
         {
             string tagLine = "", dataLine = "", nameless = "";
+
+            List<string> NewDataBlocks = new List<string>();
 
             //block decoding
             for (int line = 0; line < _input.Length; line++)
@@ -60,6 +70,11 @@ namespace TS_SE_Tool.Save.Items
                 switch (tagLine)
                 {
                     case "":
+                        {
+                            break;
+                        }
+
+                    case "}":
                         {
                             break;
                         }
@@ -140,24 +155,28 @@ namespace TS_SE_Tool.Save.Items
 
                             break;
                         }
+
                     case "vehicle_addon_accessory":
                         {
                             VehicleAccessories.Add(nameless, new Vehicle_Addon_Accessory(GetLines().ToArray()));
 
                             break;
                         }
+
                     case "vehicle_drv_plate_accessory":
                         {
                             VehicleAccessories.Add(nameless, new Vehicle_Drv_plate_Accessory(GetLines().ToArray()));
 
                             break;
                         }
+
                     case "vehicle_wheel_accessory":
                         {
                             VehicleAccessories.Add(nameless, new Vehicle_Wheel_Accessory(GetLines().ToArray()));
 
                             break;
                         }
+
                     case "vehicle_paint_job_accessory":
                         {
                             VehicleAccessories.Add(nameless, new Vehicle_Paint_job_Accessory(GetLines().ToArray()));
@@ -165,8 +184,63 @@ namespace TS_SE_Tool.Save.Items
                             break;
                         }
 
+                    case "profit_log":
+                        {
+                            Profit_log.Add(nameless, new Profit_log(GetLines().ToArray()));
 
+                            break;
+                        }
+
+                    case "profit_log_entry":
+                        {
+                            Profit_log_Entry.Add(nameless, new Profit_log_Entry(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "driver_player":
+                        {
+                            Driver_Player = new Driver_Player(GetLines().ToArray());
+
+                            break;
+                        }
+
+                    case "driver_ai":
+                        {
+                            Driver_AI.Add(nameless, new Driver_AI(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "job_info":
+                        {
+                            Job_Info.Add(nameless, new Job_Info(GetLines().ToArray()));
+
+                            break;
+                        }
+
+
+
+                    default:
+                        {
+                            break;
+                        }
+
+                    /*
+                    default:
+                        {
+                            if (!NewDataBlocks.Contains(tagLine))
+                            {
+                                NewDataBlocks.Add(tagLine);
+                                Utilities.IO_Utilities.ErrorLogWriter("Save | New Data block | " + tagLine);
+                            }
+
+                            break;
+                        }
+                    */
                 }
+
+                continue;
 
                 List<string> GetLines()
                 {
@@ -183,6 +257,7 @@ namespace TS_SE_Tool.Save.Items
 
                     return Data;
                 }
+
             }
         }
 

@@ -122,6 +122,9 @@ namespace TS_SE_Tool
         {
             listBoxCargoMarketCargoListForCompany.Items.Clear();
 
+            if (comboBoxSourceCargoMarketCompany.SelectedValue == null)
+                return;
+
             ExtCompany t = ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString());
 
             if (t != null)
