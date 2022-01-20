@@ -158,10 +158,12 @@
     <Compile Include="CustomClasses\Save\Items\Ferry_log_Entry.cs" />
     <Compile Include="CustomClasses\Save\Items\Game_Progress.cs" />
     <Compile Include="CustomClasses\Save\Items\Garage.cs" />
+    <Compile Include="CustomClasses\Save\Items\GPS_waypoint_Storage.cs" />
     <Compile Include="CustomClasses\Save\Items\Job_Info.cs" />
     <Compile Include="CustomClasses\Save\Items\Job_offer_Data.cs" />
     <Compile Include="CustomClasses\Save\Items\Mail_Ctrl.cs" />
     <Compile Include="CustomClasses\Save\Items\Mail_Def.cs" />
+    <Compile Include="CustomClasses\Save\Items\Map_action.cs" />
     <Compile Include="CustomClasses\Save\Items\Oversize_Offer.cs" />
     <Compile Include="CustomClasses\Save\Items\Oversize_offer_Ctrl.cs" />
     <Compile Include="CustomClasses\Save\Items\Oversize_Route_offers.cs" />
