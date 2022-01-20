@@ -150,6 +150,8 @@
     <Compile Include="CustomClasses\Save\Items\Driver_AI.cs" />
     <Compile Include="CustomClasses\Save\Items\Driver_Player.cs" />
     <Compile Include="CustomClasses\Save\Items\Economy.cs" />
+    <Compile Include="CustomClasses\Save\Items\Economy_event.cs" />
+    <Compile Include="CustomClasses\Save\Items\Economy_event_Queue.cs" />
     <Compile Include="CustomClasses\Save\Items\Game_Progress.cs" />
     <Compile Include="CustomClasses\Save\Items\Garage.cs" />
     <Compile Include="CustomClasses\Save\Items\Job_Info.cs" />
