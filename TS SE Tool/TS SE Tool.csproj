@@ -158,6 +158,9 @@
     <Compile Include="CustomClasses\Save\Items\Job_offer_Data.cs" />
     <Compile Include="CustomClasses\Save\Items\Mail_Ctrl.cs" />
     <Compile Include="CustomClasses\Save\Items\Mail_Def.cs" />
+    <Compile Include="CustomClasses\Save\Items\Oversize_Offer.cs" />
+    <Compile Include="CustomClasses\Save\Items\Oversize_offer_Ctrl.cs" />
+    <Compile Include="CustomClasses\Save\Items\Oversize_Route_offers.cs" />
     <Compile Include="CustomClasses\Save\Items\Player.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\PlayerJob.cs" />
     <Compile Include="CustomClasses\Save\Items\Player_Job.cs" />
