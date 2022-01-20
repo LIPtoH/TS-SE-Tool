@@ -39,6 +39,45 @@ namespace TS_SE_Tool.Save.Items
 
         internal Dictionary<string, Job_Info> Job_Info = new Dictionary<string, Job_Info>();
 
+        internal Dictionary<string, Company> Company = new Dictionary<string, Company>();
+
+        internal Dictionary<string, Job_offer_Data> Job_offer_Data = new Dictionary<string, Job_offer_Data>();
+
+        internal Dictionary<string, Garage> Garage = new Dictionary<string, Garage>();
+
+        internal Game_Progress Game_Progress = new Game_Progress();
+
+        internal Dictionary<string, Transport_Data> Transport_Data = new Dictionary<string, Transport_Data>();
+
+        internal Economy_event_Queue Economy_event_Queue = new Economy_event_Queue();
+
+        internal Dictionary<string, Economy_event> Economy_event = new Dictionary<string, Economy_event>();
+
+        internal Mail_Ctrl Mail_Ctrl = new Mail_Ctrl();
+
+        internal Dictionary<string, Mail_Def> Mail_Def = new Dictionary<string, Mail_Def>();
+
+        internal Police_Ctrl Police_Ctrl = new Police_Ctrl();
+
+        internal Oversize_offer_Ctrl Oversize_offer_Ctrl = new Oversize_offer_Ctrl();
+
+        internal Dictionary<string, Oversize_Route_offers> Oversize_Route_offers = new Dictionary<string, Oversize_Route_offers>();
+
+        internal Dictionary<string, Oversize_Offer> Oversize_Offer = new Dictionary<string, Oversize_Offer>();
+
+        internal Delivery_log Delivery_log = new Delivery_log();
+
+        internal Dictionary<string, Delivery_log_Entry> Delivery_log_Entry = new Dictionary<string, Delivery_log_Entry>();
+
+        internal Ferry_log Ferry_log = new Ferry_log();
+
+        internal Dictionary<string, Ferry_log_Entry> Ferry_log_Entry = new Dictionary<string, Ferry_log_Entry>();
+
+        internal Dictionary<string, GPS_waypoint_Storage> GPS_waypoint_Storage = new Dictionary<string, GPS_waypoint_Storage>();
+
+        internal Dictionary<string, Map_action> Map_action = new Dictionary<string, Map_action>();
+
+
         internal SiiNunit()
         { }
 
@@ -219,7 +258,137 @@ namespace TS_SE_Tool.Save.Items
                             break;
                         }
 
+                    case "сompany":
+                        {
+                            Company.Add(nameless, new Company(GetLines().ToArray()));
 
+                            break;
+                        }
+                    case "job_offer_data":
+                        {
+                            Job_offer_Data.Add(nameless, new Job_offer_Data(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "garage":
+                        {
+                            Garage.Add(nameless, new Garage(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "game_progress":
+                        {
+                            Game_Progress = new Game_Progress(GetLines().ToArray());
+
+                            break;
+                        }
+
+                    case "transport_data":
+                        {
+                            Transport_Data.Add(nameless, new Transport_Data(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "economy_event_queue":
+                        {
+                            Economy_event_Queue = new Economy_event_Queue(GetLines().ToArray());
+
+                            break;
+                        }
+
+                    case "economy_event":
+                        {
+                            Economy_event.Add(nameless, new Economy_event(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "mail_ctrl":
+                        {
+                            Mail_Ctrl = new Mail_Ctrl(GetLines().ToArray());
+
+                            break;
+                        }
+
+                    case "mail_def":
+                        {
+                            Mail_Def.Add(nameless, new Mail_Def(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "police_ctrl":
+                        {
+                            Police_Ctrl = new Police_Ctrl(GetLines().ToArray());
+
+                            break;
+                        }
+
+                    case "oversize_offer_ctrl":
+                        {
+                            Oversize_offer_Ctrl = new Oversize_offer_Ctrl(GetLines().ToArray());
+
+                            break;
+                        }
+
+                    case "oversize_route_offers":
+                        {
+                            Oversize_Route_offers.Add(nameless, new Oversize_Route_offers(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "oversize_offer":
+                        {
+                            Oversize_Offer.Add(nameless, new Oversize_Offer(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "delivery_log":
+                        {
+                            Delivery_log = new Delivery_log(GetLines().ToArray());
+
+                            break;
+                        }
+
+                    case "delivery_log_entry":
+                        {
+                            Delivery_log_Entry.Add(nameless, new Delivery_log_Entry(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "ferry_log":
+                        {
+                            Ferry_log = new Ferry_log(GetLines().ToArray());
+
+                            break;
+                        }
+
+                    case "ferry_log_entry":
+                        {
+                            Ferry_log_Entry.Add(nameless, new Ferry_log_Entry(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "gps_waypoint_storage":
+                        {
+                            GPS_waypoint_Storage.Add(nameless, new GPS_waypoint_Storage(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "map_action":
+                        {
+                            Map_action.Add(nameless, new Map_action(GetLines().ToArray()));
+
+                            break;
+                        }
 
                     default:
                         {

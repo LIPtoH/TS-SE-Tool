@@ -10,9 +10,9 @@ namespace TS_SE_Tool.Save.Items
     {
         internal string target { get; set; } = "";
 
-        internal int expiration_time { get; set; } = 0;
+        internal int? expiration_time { get; set; } = null;
 
-        internal int urgency { get; set; } = 0;
+        internal int? urgency { get; set; } = 0;
 
         internal int shortest_distance_km { get; set; } = 0;
 
@@ -70,13 +70,13 @@ namespace TS_SE_Tool.Save.Items
 
                     case "expiration_time":
                         {
-                            expiration_time = int.Parse(dataLine);
+                            expiration_time = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
                             break;
                         }
 
                     case "urgency":
                         {
-                            urgency = int.Parse(dataLine);
+                            urgency = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
                             break;
                         }
 
@@ -154,8 +154,8 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" target: " + target);
 
-            returnSB.AppendLine(" expiration_time: " + expiration_time.ToString());
-            returnSB.AppendLine(" urgency: " + urgency.ToString());
+            returnSB.AppendLine(" expiration_time: " + (expiration_time == null ? "nil" : expiration_time.ToString()));
+            returnSB.AppendLine(" urgency: " + (urgency == null ? "nil" : urgency.ToString()));
             returnSB.AppendLine(" shortest_distance_km: " + shortest_distance_km.ToString());
             returnSB.AppendLine(" ferry_time: " + ferry_time.ToString());
             returnSB.AppendLine(" ferry_price: " + ferry_price.ToString());

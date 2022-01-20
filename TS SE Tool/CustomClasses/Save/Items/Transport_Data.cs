@@ -11,7 +11,7 @@ namespace TS_SE_Tool.Save.Items
     class Transport_Data
     {
         internal int distance { get; set; } = 0;
-        internal int time { get; set; } = 0;
+        internal uint time { get; set; } = 0;
         internal int money { get; set; } = 0;
 
         internal List<int> count_per_adr { get; set; } = new List<int>();
@@ -57,7 +57,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "time":
                         {
-                            time = int.Parse(dataLine);
+                            time = uint.Parse(dataLine);
                             break;
                         }
 

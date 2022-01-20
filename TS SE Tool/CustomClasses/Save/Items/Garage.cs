@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using TS_SE_Tool.Save.DataFormat;
+
 namespace TS_SE_Tool.Save.Items
 {
     class Garage
@@ -18,7 +20,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal string profit_log { get; set; } = "";
 
-        internal int productivity { get; set; } = 0;
+        internal SCS_Float productivity { get; set; } = 0;
 
         internal Garage()
         { }
@@ -100,7 +102,7 @@ namespace TS_SE_Tool.Save.Items
 
                     case "productivity":
                         {
-                            productivity = int.Parse(dataLine);
+                            productivity = dataLine;
                             break;
                         }
                 }
@@ -129,7 +131,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" status: " + status);
             returnSB.AppendLine(" profit_log: " + profit_log.ToString());
-            returnSB.AppendLine(" productivity: " + productivity);
+            returnSB.AppendLine(" productivity: " + productivity.ToString());
 
             returnSB.AppendLine("}");
 
