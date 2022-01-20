@@ -156,9 +156,12 @@
     <Compile Include="CustomClasses\Save\Items\Garage.cs" />
     <Compile Include="CustomClasses\Save\Items\Job_Info.cs" />
     <Compile Include="CustomClasses\Save\Items\Job_offer_Data.cs" />
+    <Compile Include="CustomClasses\Save\Items\Mail_Ctrl.cs" />
+    <Compile Include="CustomClasses\Save\Items\Mail_Def.cs" />
     <Compile Include="CustomClasses\Save\Items\Player.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\PlayerJob.cs" />
     <Compile Include="CustomClasses\Save\Items\Player_Job.cs" />
+    <Compile Include="CustomClasses\Save\Items\Police_Ctrl.cs" />
     <Compile Include="CustomClasses\Save\Items\Profit_log.cs" />
     <Compile Include="CustomClasses\Save\Items\Profit_log_Entry.cs" />
     <Compile Include="CustomClasses\Save\Items\SiiNunit.cs" />
