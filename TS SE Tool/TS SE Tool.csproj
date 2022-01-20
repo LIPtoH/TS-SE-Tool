@@ -150,6 +150,7 @@
     <Compile Include="CustomClasses\Save\Items\Driver_AI.cs" />
     <Compile Include="CustomClasses\Save\Items\Driver_Player.cs" />
     <Compile Include="CustomClasses\Save\Items\Economy.cs" />
+    <Compile Include="CustomClasses\Save\Items\Game_Progress.cs" />
     <Compile Include="CustomClasses\Save\Items\Garage.cs" />
     <Compile Include="CustomClasses\Save\Items\Job_Info.cs" />
     <Compile Include="CustomClasses\Save\Items\Job_offer_Data.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="CustomClasses\Save\Items\Trailer_Def.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer_Utilization_log.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer_Utilization_log_Entry.cs" />
+    <Compile Include="CustomClasses\Save\Items\Transport_Data.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle_Drv_plate_Accessory.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle_Paint_job_Accessory.cs" />
