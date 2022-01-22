@@ -43,68 +43,75 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
 
-                    case "vehicles":
-                        {
-                            vehicles.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "vehicles":
+                            {
+                                vehicles.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("vehicles["):
-                        {
-                            vehicles.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("vehicles["):
+                            {
+                                vehicles.Add(dataLine);
+                                break;
+                            }
 
-                    case "drivers":
-                        {
-                            drivers.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "drivers":
+                            {
+                                drivers.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("drivers["):
-                        {
-                            drivers.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("drivers["):
+                            {
+                                drivers.Add(dataLine);
+                                break;
+                            }
 
-                    case "trailers":
-                        {
-                            trailers.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "trailers":
+                            {
+                                trailers.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("trailers["):
-                        {
-                            trailers.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("trailers["):
+                            {
+                                trailers.Add(dataLine);
+                                break;
+                            }
 
-                    case "status":
-                        {
-                            status = int.Parse(dataLine);
-                            break;
-                        }
+                        case "status":
+                            {
+                                status = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "profit_log":
-                        {
-                            profit_log = dataLine;
-                            break;
-                        }
+                        case "profit_log":
+                            {
+                                profit_log = dataLine;
+                                break;
+                            }
 
-                    case "productivity":
-                        {
-                            productivity = dataLine;
-                            break;
-                        }
+                        case "productivity":
+                            {
+                                productivity = dataLine;
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

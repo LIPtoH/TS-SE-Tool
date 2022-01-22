@@ -40,43 +40,50 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "entries":
-                        {
-                            entries.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "entries":
+                            {
+                                entries.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("entries["):
-                        {
-                            entries.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("entries["):
+                            {
+                                entries.Add(dataLine);
+                                break;
+                            }
 
-                    case "total_driven_distance_km":
-                        {
-                            total_driven_distance_km = int.Parse(dataLine);
-                            break;
-                        }
+                        case "total_driven_distance_km":
+                            {
+                                total_driven_distance_km = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "total_transported_cargoes":
-                        {
-                            total_transported_cargoes = int.Parse(dataLine);
-                            break;
-                        }
+                        case "total_transported_cargoes":
+                            {
+                                total_transported_cargoes = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "total_transported_weight":
-                        {
-                            total_transported_weight = dataLine;
-                            break;
-                        }
-
+                        case "total_transported_weight":
+                            {
+                                total_transported_weight = dataLine;
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

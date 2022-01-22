@@ -35,26 +35,32 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "nav_node_position":
-                        {
-                            nav_node_position = new Vector_3i(dataLine);
-                            break;
-                        }
+                        case "nav_node_position":
+                            {
+                                nav_node_position = new Vector_3i(dataLine);
+                                break;
+                            }
 
-                    case "direction":
-                        {
-                            direction = dataLine;
-                            break;
-                        }
-
+                        case "direction":
+                            {
+                                direction = dataLine;
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

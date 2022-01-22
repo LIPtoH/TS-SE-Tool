@@ -20,7 +20,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal SCS_Float      chassis_wear { get; set; } = 0;
 
-        internal List<SCS_Float> wheels_wear { get; set; } = new List<SCS_Float>(); //new FloatList();
+        internal List<SCS_Float> wheels_wear { get; set; } = new List<SCS_Float>();
 
         internal List<string> accessories { get; set; } = new List<string>();
 
@@ -99,175 +99,182 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "engine_wear":
-                        {
-                            engine_wear = dataLine;
-                            break;
-                        }
+                        case "engine_wear":
+                            {
+                                engine_wear = dataLine;
+                                break;
+                            }
 
-                    case "transmission_wear":
-                        {
-                            transmission_wear = dataLine;
-                            break;
-                        }
+                        case "transmission_wear":
+                            {
+                                transmission_wear = dataLine;
+                                break;
+                            }
 
-                    case "cabin_wear":
-                        {
-                            cabin_wear = dataLine;
-                            break;
-                        }
+                        case "cabin_wear":
+                            {
+                                cabin_wear = dataLine;
+                                break;
+                            }
 
-                    case "chassis_wear":
-                        {
-                            chassis_wear = dataLine;
-                            break;
-                        }
+                        case "chassis_wear":
+                            {
+                                chassis_wear = dataLine;
+                                break;
+                            }
 
-                    case "wheels_wear":
-                        {
-                            wheels_wear.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "wheels_wear":
+                            {
+                                wheels_wear.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("wheels_wear["):
-                        {
-                            wheels_wear.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("wheels_wear["):
+                            {
+                                wheels_wear.Add(dataLine);
+                                break;
+                            }
 
-                    case "fuel_relative":
-                        {
-                            fuel_relative = dataLine;
-                            break;
-                        }
+                        case "fuel_relative":
+                            {
+                                fuel_relative = dataLine;
+                                break;
+                            }
 
-                    case "license_plate":
-                        {
-                            _license_plate = dataLine;
-                            break;
-                        }
+                        case "license_plate":
+                            {
+                                _license_plate = dataLine;
+                                break;
+                            }
 
-                    case "accessories":
-                        {
-                            accessories.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "accessories":
+                            {
+                                accessories.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("accessories["):
-                        {
-                            accessories.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("accessories["):
+                            {
+                                accessories.Add(dataLine);
+                                break;
+                            }
 
-                    case "user_mirror_rot":
-                        {
-                            user_mirror_rot.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "user_mirror_rot":
+                            {
+                                user_mirror_rot.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("user_mirror_rot["):
-                        {
-                            user_mirror_rot.Add(new Vector_4f(dataLine));
-                            break;
-                        }                        
+                        case var s when s.StartsWith("user_mirror_rot["):
+                            {
+                                user_mirror_rot.Add(new Vector_4f(dataLine));
+                                break;
+                            }
 
-                    case "user_head_offset":
-                        {
-                            user_head_offset.ToVector(dataLine);
-                            break;
-                        }
+                        case "user_head_offset":
+                            {
+                                user_head_offset.ToVector(dataLine);
+                                break;
+                            }
 
-                    case "user_fov":
-                        {
-                            user_fov = dataLine;
-                            break;
-                        }
+                        case "user_fov":
+                            {
+                                user_fov = dataLine;
+                                break;
+                            }
 
-                    case "user_wheel_up_down":
-                        {
-                            user_wheel_up_down = dataLine;
-                            break;
-                        }
+                        case "user_wheel_up_down":
+                            {
+                                user_wheel_up_down = dataLine;
+                                break;
+                            }
 
-                    case "user_wheel_front_back":
-                        {
-                            user_wheel_front_back = dataLine;
-                            break;
-                        }
+                        case "user_wheel_front_back":
+                            {
+                                user_wheel_front_back = dataLine;
+                                break;
+                            }
 
-                    case "user_mouse_left_right_default":
-                        {
-                            user_mouse_left_right_default = dataLine;
-                            break;
-                        }
+                        case "user_mouse_left_right_default":
+                            {
+                                user_mouse_left_right_default = dataLine;
+                                break;
+                            }
 
-                    case "user_mouse_up_down_default":
-                        {
-                            user_mouse_up_down_default = dataLine;
-                            break;
-                        }
+                        case "user_mouse_up_down_default":
+                            {
+                                user_mouse_up_down_default = dataLine;
+                                break;
+                            }
 
-                    case "rheostat_factor":
-                        {
-                            rheostat_factor = dataLine;
-                            break;
-                        }
+                        case "rheostat_factor":
+                            {
+                                rheostat_factor = dataLine;
+                                break;
+                            }
 
-                    case "odometer":
-                        {
-                            odometer = uint.Parse(dataLine);
-                            break;
-                        }
+                        case "odometer":
+                            {
+                                odometer = uint.Parse(dataLine);
+                                break;
+                            }
 
-                    case "odometer_float_part":
-                        {
-                            odometer_float_part = dataLine;
-                            break;
-                        }
+                        case "odometer_float_part":
+                            {
+                                odometer_float_part = dataLine;
+                                break;
+                            }
 
-                    case "trip_fuel_l":
-                        {
-                            trip_fuel_l = uint.Parse(dataLine);
-                            break;
-                        }
+                        case "trip_fuel_l":
+                            {
+                                trip_fuel_l = uint.Parse(dataLine);
+                                break;
+                            }
 
-                    case "trip_fuel":
-                        {
-                            trip_fuel = dataLine;
-                            break;
-                        }
+                        case "trip_fuel":
+                            {
+                                trip_fuel = dataLine;
+                                break;
+                            }
 
-                    case "trip_distance_km":
-                        {
-                            trip_distance_km = uint.Parse(dataLine);
-                            break;
-                        }
+                        case "trip_distance_km":
+                            {
+                                trip_distance_km = uint.Parse(dataLine);
+                                break;
+                            }
 
-                    case "trip_distance":
-                        {
-                            trip_distance = dataLine;
-                            break;
-                        }
+                        case "trip_distance":
+                            {
+                                trip_distance = dataLine;
+                                break;
+                            }
 
-                    case "trip_time_min":
-                        {
-                            trip_time_min = uint.Parse(dataLine);
-                            break;
-                        }
+                        case "trip_time_min":
+                            {
+                                trip_time_min = uint.Parse(dataLine);
+                                break;
+                            }
 
-                    case "trip_time":
-                        {
-                            trip_time = dataLine;
-                            break;
-                        }
-
+                        case "trip_time":
+                            {
+                                trip_time = dataLine;
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

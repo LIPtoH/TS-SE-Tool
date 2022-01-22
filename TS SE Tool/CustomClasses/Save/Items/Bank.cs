@@ -58,97 +58,104 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "money_account":
-                        {
-                            money_account = Int64.Parse(dataLine);
-                            break;
-                        }
+                        case "money_account":
+                            {
+                                money_account = Int64.Parse(dataLine);
+                                break;
+                            }
 
-                    case "coinsurance_fixed":
-                        {
-                            coinsurance_fixed = int.Parse(dataLine);
-                            break;
-                        }
+                        case "coinsurance_fixed":
+                            {
+                                coinsurance_fixed = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "coinsurance_ratio":
-                        {
-                            coinsurance_ratio = dataLine;
-                            break;
-                        }
+                        case "coinsurance_ratio":
+                            {
+                                coinsurance_ratio = dataLine;
+                                break;
+                            }
 
-                    case "accident_severity":
-                        {
-                            accident_severity = dataLine;
-                            break;
-                        }
+                        case "accident_severity":
+                            {
+                                accident_severity = dataLine;
+                                break;
+                            }
 
-                    case "loans":
-                        {
-                            loans.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "loans":
+                            {
+                                loans.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("loans["):
-                        {
-                            loans.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("loans["):
+                            {
+                                loans.Add(dataLine);
+                                break;
+                            }
 
-                    case "app_enabled":
-                        {
-                            app_enabled = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "app_enabled":
+                            {
+                                app_enabled = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "loan_limit":
-                        {
-                            loan_limit = int.Parse(dataLine);
-                            break;
-                        }
+                        case "loan_limit":
+                            {
+                                loan_limit = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "payment_timer":
-                        {
-                            payment_timer = dataLine;
-                            break;
-                        }
+                        case "payment_timer":
+                            {
+                                payment_timer = dataLine;
+                                break;
+                            }
 
-                    case "overdraft":
-                        {
-                            overdraft = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "overdraft":
+                            {
+                                overdraft = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "overdraft_timer":
-                        {
-                            overdraft_timer = int.Parse(dataLine);
-                            break;
-                        }
+                        case "overdraft_timer":
+                            {
+                                overdraft_timer = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "overdraft_warn_count":
-                        {
-                            overdraft_warn_count = int.Parse(dataLine);
-                            break;
-                        }
+                        case "overdraft_warn_count":
+                            {
+                                overdraft_warn_count = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "sell_players_truck_later":
-                        {
-                            sell_players_truck_later = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "sell_players_truck_later":
+                            {
+                                sell_players_truck_later = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "sell_players_trailer_later":
-                        {
-                            sell_players_trailer_later = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "sell_players_trailer_later":
+                            {
+                                sell_players_trailer_later = bool.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

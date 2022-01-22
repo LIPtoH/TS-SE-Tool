@@ -101,271 +101,278 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "hq_city":
-                        {
-                            hq_city = dataLine;
-                            break;
-                        }
+                        case "hq_city":
+                            {
+                                hq_city = dataLine;
+                                break;
+                            }
 
-                    case "trailers":
-                        {
-                            trailers.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "trailers":
+                            {
+                                trailers.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("trailers["):
-                        {
-                            trailers.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("trailers["):
+                            {
+                                trailers.Add(dataLine);
+                                break;
+                            }
 
-                    case "trailer_utilization_logs":
-                        {
-                            trailer_utilization_logs.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "trailer_utilization_logs":
+                            {
+                                trailer_utilization_logs.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("trailer_utilization_logs["):
-                        {
-                            trailer_utilization_logs.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("trailer_utilization_logs["):
+                            {
+                                trailer_utilization_logs.Add(dataLine);
+                                break;
+                            }
 
-                    case "trailer_defs":
-                        {
-                            trailer_defs.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "trailer_defs":
+                            {
+                                trailer_defs.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("trailer_defs["):
-                        {
-                            trailer_defs.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("trailer_defs["):
+                            {
+                                trailer_defs.Add(dataLine);
+                                break;
+                            }
 
-                    case "assigned_truck":
-                        {
-                            assigned_truck = dataLine;
-                            break;
-                        }
+                        case "assigned_truck":
+                            {
+                                assigned_truck = dataLine;
+                                break;
+                            }
 
-                    case "my_truck":
-                        {
-                            my_truck = dataLine;
-                            break;
-                        }
+                        case "my_truck":
+                            {
+                                my_truck = dataLine;
+                                break;
+                            }
 
-                    case "my_truck_placement":
-                        {
-                            my_truck_placement = new Vector_3f_4f(dataLine);
-                            break;
-                        }
+                        case "my_truck_placement":
+                            {
+                                my_truck_placement = new Vector_3f_4f(dataLine);
+                                break;
+                            }
 
-                    case "my_truck_placement_valid":
-                        {
-                            my_truck_placement_valid = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "my_truck_placement_valid":
+                            {
+                                my_truck_placement_valid = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "my_trailer_placement":
-                        {
-                            my_trailer_placement = new Vector_3f_4f(dataLine);
-                            break;
-                        }
+                        case "my_trailer_placement":
+                            {
+                                my_trailer_placement = new Vector_3f_4f(dataLine);
+                                break;
+                            }
 
-                    case "my_slave_trailer_placements":
-                        {
-                            my_slave_trailer_placements = dataLine;
-                            break;
-                        }
+                        case "my_slave_trailer_placements":
+                            {
+                                my_slave_trailer_placements = dataLine;
+                                break;
+                            }
 
-                    case "my_trailer_attached":
-                        {
-                            my_trailer_attached = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "my_trailer_attached":
+                            {
+                                my_trailer_attached = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "my_trailer_used":
-                        {
-                            my_trailer_used = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "my_trailer_used":
+                            {
+                                my_trailer_used = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "assigned_trailer":
-                        {
-                            assigned_trailer = dataLine;
-                            break;
-                        }
+                        case "assigned_trailer":
+                            {
+                                assigned_trailer = dataLine;
+                                break;
+                            }
 
-                    case "my_trailer":
-                        {
-                            my_trailer = dataLine;
-                            break;
-                        }
+                        case "my_trailer":
+                            {
+                                my_trailer = dataLine;
+                                break;
+                            }
 
-                    case "assigned_trailer_connected":
-                        {
-                            assigned_trailer_connected = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "assigned_trailer_connected":
+                            {
+                                assigned_trailer_connected = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "truck_placement":
-                        {
-                            truck_placement = new Vector_3f_4f(dataLine);
-                            break;
-                        }
+                        case "truck_placement":
+                            {
+                                truck_placement = new Vector_3f_4f(dataLine);
+                                break;
+                            }
 
-                    case "trailer_placement":
-                        {
-                            trailer_placement = new Vector_3f_4f(dataLine);
-                            break;
-                        }
+                        case "trailer_placement":
+                            {
+                                trailer_placement = new Vector_3f_4f(dataLine);
+                                break;
+                            }
 
-                    case "slave_trailer_placements":
-                        {
-                            slave_trailer_placements = dataLine;
-                            break;
-                        }
+                        case "slave_trailer_placements":
+                            {
+                                slave_trailer_placements = dataLine;
+                                break;
+                            }
 
-                    case "schedule_transfer_to_hq":
-                        {
-                            schedule_transfer_to_hq = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "schedule_transfer_to_hq":
+                            {
+                                schedule_transfer_to_hq = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "flags":
-                        {
-                            flags = int.Parse(dataLine);
-                            break;
-                        }
+                        case "flags":
+                            {
+                                flags = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "gas_pump_money_debt":
-                        {
-                            gas_pump_money_debt = int.Parse(dataLine);
-                            break;
-                        }
+                        case "gas_pump_money_debt":
+                            {
+                                gas_pump_money_debt = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "current_job":
-                        {
-                            current_job = dataLine;
-                            break;
-                        }
+                        case "current_job":
+                            {
+                                current_job = dataLine;
+                                break;
+                            }
 
-                    case "current_bus_job":
-                        {
-                            current_bus_job = dataLine;
-                            break;
-                        }
+                        case "current_bus_job":
+                            {
+                                current_bus_job = dataLine;
+                                break;
+                            }
 
-                    case "selected_job":
-                        {
-                            selected_job = dataLine;
-                            break;
-                        }
+                        case "selected_job":
+                            {
+                                selected_job = dataLine;
+                                break;
+                            }
 
-                    case "driving_time":
-                        {
-                            driving_time = int.Parse(dataLine);
-                            break;
-                        }
+                        case "driving_time":
+                            {
+                                driving_time = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "sleeping_count":
-                        {
-                            sleeping_count = int.Parse(dataLine);
-                            break;
-                        }
+                        case "sleeping_count":
+                            {
+                                sleeping_count = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "free_roam_distance":
-                        {
-                            free_roam_distance = int.Parse(dataLine);
-                            break;
-                        }
+                        case "free_roam_distance":
+                            {
+                                free_roam_distance = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "discovary_distance":
-                        {
-                            discovary_distance = dataLine;
-                            break;
-                        }
+                        case "discovary_distance":
+                            {
+                                discovary_distance = dataLine;
+                                break;
+                            }
 
-                    case "dismissed_drivers":
-                        {
-                            dismissed_drivers.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "dismissed_drivers":
+                            {
+                                dismissed_drivers.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("dismissed_drivers["):
-                        {
-                            dismissed_drivers.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("dismissed_drivers["):
+                            {
+                                dismissed_drivers.Add(dataLine);
+                                break;
+                            }
 
-                    case "trucks":
-                        {
-                            trucks.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "trucks":
+                            {
+                                trucks.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("trucks["):
-                        {
-                            trucks.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("trucks["):
+                            {
+                                trucks.Add(dataLine);
+                                break;
+                            }
 
-                    case "truck_profit_logs":
-                        {
-                            truck_profit_logs.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "truck_profit_logs":
+                            {
+                                truck_profit_logs.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("truck_profit_logs["):
-                        {
-                            truck_profit_logs.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("truck_profit_logs["):
+                            {
+                                truck_profit_logs.Add(dataLine);
+                                break;
+                            }
 
-                    case "drivers":
-                        {
-                            drivers.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "drivers":
+                            {
+                                drivers.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("drivers["):
-                        {
-                            drivers.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("drivers["):
+                            {
+                                drivers.Add(dataLine);
+                                break;
+                            }
 
-                    case "driver_readiness_timer":
-                        {
-                            driver_readiness_timer.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "driver_readiness_timer":
+                            {
+                                driver_readiness_timer.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("driver_readiness_timer["):
-                        {
-                            driver_readiness_timer.Add(int.Parse(dataLine));
-                            break;
-                        }
+                        case var s when s.StartsWith("driver_readiness_timer["):
+                            {
+                                driver_readiness_timer.Add(int.Parse(dataLine));
+                                break;
+                            }
 
-                    case "driver_quit_warned":
-                        {
-                            driver_quit_warned.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "driver_quit_warned":
+                            {
+                                driver_quit_warned.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("driver_quit_warned["):
-                        {
-                            driver_quit_warned.Add(bool.Parse(dataLine));
-                            break;
-                        }
+                        case var s when s.StartsWith("driver_quit_warned["):
+                            {
+                                driver_quit_warned.Add(bool.Parse(dataLine));
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }
@@ -377,6 +384,7 @@ namespace TS_SE_Tool.Save.Items
             StringBuilder returnSB = new StringBuilder();
 
             returnSB.AppendLine("player : " + _nameless + " {");
+
             returnSB.AppendLine(" hq_city: " + hq_city);
 
             returnSB.AppendLine(" trailers: " + trailers.Count);

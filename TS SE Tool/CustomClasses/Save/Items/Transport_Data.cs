@@ -42,6 +42,8 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
+                try
+                { 
                 switch (tagLine)
                 {
                     case "":
@@ -102,7 +104,12 @@ namespace TS_SE_Tool.Save.Items
                             count_per_dock.Add(int.Parse(dataLine));
                             break;
                         }
-
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

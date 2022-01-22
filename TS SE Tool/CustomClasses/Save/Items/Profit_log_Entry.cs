@@ -48,91 +48,98 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "revenue":
-                        {
-                            revenue = int.Parse(dataLine);
-                            break;
-                        }
+                        case "revenue":
+                            {
+                                revenue = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "wage":
-                        {
-                            wage = int.Parse(dataLine);
-                            break;
-                        }
+                        case "wage":
+                            {
+                                wage = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "maintenance":
-                        {
-                            maintenance = int.Parse(dataLine);
-                            break;
-                        }
+                        case "maintenance":
+                            {
+                                maintenance = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "fuel":
-                        {
-                            fuel = int.Parse(dataLine);
-                            break;
-                        }
+                        case "fuel":
+                            {
+                                fuel = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "distance":
-                        {
-                            distance = int.Parse(dataLine);
-                            break;
-                        }
+                        case "distance":
+                            {
+                                distance = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "distance_on_job":
-                        {
-                            distance_on_job = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "distance_on_job":
+                            {
+                                distance_on_job = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "cargo_count":
-                        {
-                            cargo_count = int.Parse(dataLine);
-                            break;
-                        }
+                        case "cargo_count":
+                            {
+                                cargo_count = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "cargo":
-                        {
-                            cargo = dataLine;
-                            break;
-                        }
+                        case "cargo":
+                            {
+                                cargo = dataLine;
+                                break;
+                            }
 
-                    case "source_city":
-                        {
-                            source_city = dataLine;
-                            break;
-                        }
+                        case "source_city":
+                            {
+                                source_city = dataLine;
+                                break;
+                            }
 
-                    case "source_company":
-                        {
-                            source_company = dataLine;
-                            break;
-                        }
+                        case "source_company":
+                            {
+                                source_company = dataLine;
+                                break;
+                            }
 
-                    case "destination_city":
-                        {
-                            destination_city = dataLine;
-                            break;
-                        }
+                        case "destination_city":
+                            {
+                                destination_city = dataLine;
+                                break;
+                            }
 
-                    case "destination_company":
-                        {
-                            destination_company = dataLine;
-                            break;
-                        }
+                        case "destination_company":
+                            {
+                                destination_company = dataLine;
+                                break;
+                            }
 
-                    case "timestamp_day":
-                        {
-                            timestamp_day = int.Parse(dataLine);
-                            break;
-                        }
-
+                        case "timestamp_day":
+                            {
+                                timestamp_day = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

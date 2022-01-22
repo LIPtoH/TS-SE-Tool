@@ -46,74 +46,81 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "permanent_data":
-                        {
-                            permanent_data = dataLine;
-                            break;
-                        }
+                        case "permanent_data":
+                            {
+                                permanent_data = dataLine;
+                                break;
+                            }
 
-                    case "delivered_trailer":
-                        {
-                            delivered_trailer = dataLine;
-                            break;
-                        }
+                        case "delivered_trailer":
+                            {
+                                delivered_trailer = dataLine;
+                                break;
+                            }
 
-                    case "delivered_pos":
-                        {
-                            delivered_pos.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "delivered_pos":
+                            {
+                                delivered_pos.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("delivered_pos["):
-                        {
-                            delivered_pos.Add(new Vector_3f(dataLine));
-                            break;
-                        }
+                        case var s when s.StartsWith("delivered_pos["):
+                            {
+                                delivered_pos.Add(new Vector_3f(dataLine));
+                                break;
+                            }
 
-                    case "job_offer":
-                        {
-                            job_offer.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "job_offer":
+                            {
+                                job_offer.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("job_offer["):
-                        {
-                            job_offer.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("job_offer["):
+                            {
+                                job_offer.Add(dataLine);
+                                break;
+                            }
 
-                    case "cargo_offer_seeds":
-                        {
-                            cargo_offer_seeds.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "cargo_offer_seeds":
+                            {
+                                cargo_offer_seeds.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("cargo_offer_seeds["):
-                        {
-                            cargo_offer_seeds.Add(uint.Parse(dataLine));
-                            break;
-                        }
+                        case var s when s.StartsWith("cargo_offer_seeds["):
+                            {
+                                cargo_offer_seeds.Add(uint.Parse(dataLine));
+                                break;
+                            }
 
-                    case "discovered":
-                        {
-                            discovered = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "discovered":
+                            {
+                                discovered = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "reserved_trailer_slot":
-                        {
-                            reserved_trailer_slot = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
-                            break;
-                        }
+                        case "reserved_trailer_slot":
+                            {
+                                reserved_trailer_slot = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
+                                break;
+                            }
 
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

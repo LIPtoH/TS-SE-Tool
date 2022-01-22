@@ -36,37 +36,44 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "version":
-                        {
-                            version = int.Parse(dataLine);
-                            break;
-                        }
+                        case "version":
+                            {
+                                version = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "entries":
-                        {
-                            entries.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "entries":
+                            {
+                                entries.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("entries["):
-                        {
-                            entries.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("entries["):
+                            {
+                                entries.Add(dataLine);
+                                break;
+                            }
 
-                    case "cached_jobs_count":
-                        {
-                            cached_jobs_count = int.Parse(dataLine);
-                            break;
-                        }
-
+                        case "cached_jobs_count":
+                            {
+                                cached_jobs_count = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

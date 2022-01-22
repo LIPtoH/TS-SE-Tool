@@ -37,50 +37,56 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "offence_timer":
-                        {
-                            offence_timer.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "offence_timer":
+                            {
+                                offence_timer.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("offence_timer["):
-                        {
-                            offence_timer.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("offence_timer["):
+                            {
+                                offence_timer.Add(dataLine);
+                                break;
+                            }
 
-                    case "offence_counter":
-                        {
-                            offence_counter.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "offence_counter":
+                            {
+                                offence_counter.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("offence_counter["):
-                        {
-                            offence_counter.Add(int.Parse(dataLine));
-                            break;
-                        }
+                        case var s when s.StartsWith("offence_counter["):
+                            {
+                                offence_counter.Add(int.Parse(dataLine));
+                                break;
+                            }
 
-                    case "offence_valid":
-                        {
-                            offence_valid.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "offence_valid":
+                            {
+                                offence_valid.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("offence_valid["):
-                        {
-                            offence_valid.Add(bool.Parse(dataLine));
-                            break;
-                        }
-
+                        case var s when s.StartsWith("offence_valid["):
+                            {
+                                offence_valid.Add(bool.Parse(dataLine));
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

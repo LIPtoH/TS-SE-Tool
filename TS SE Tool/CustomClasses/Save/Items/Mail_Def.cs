@@ -44,73 +44,80 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "id":
-                        {
-                            id = int.Parse(dataLine);
-                            break;
-                        }
+                        case "id":
+                            {
+                                id = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "mail_text_ref":
-                        {
-                            mail_text_ref = dataLine;
-                            break;
-                        }
+                        case "mail_text_ref":
+                            {
+                                mail_text_ref = dataLine;
+                                break;
+                            }
 
-                    case "param_keys":
-                        {
-                            param_keys.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "param_keys":
+                            {
+                                param_keys.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("param_keys["):
-                        {
-                            param_keys.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("param_keys["):
+                            {
+                                param_keys.Add(dataLine);
+                                break;
+                            }
 
-                    case "param_values":
-                        {
-                            param_values.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "param_values":
+                            {
+                                param_values.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("param_values["):
-                        {
-                            param_values.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("param_values["):
+                            {
+                                param_values.Add(dataLine);
+                                break;
+                            }
 
-                    case "read":
-                        {
-                            read = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "read":
+                            {
+                                read = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "accepted":
-                        {
-                            accepted = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "accepted":
+                            {
+                                accepted = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "expired":
-                        {
-                            expired = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "expired":
+                            {
+                                expired = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "custom_data":
-                        {
-                            custom_data = int.Parse(dataLine);
-                            break;
-                        }
+                        case "custom_data":
+                            {
+                                custom_data = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

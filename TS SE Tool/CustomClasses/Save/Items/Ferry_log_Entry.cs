@@ -37,38 +37,44 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "ferry":
-                        {
-                            ferry = dataLine;
-                            break;
-                        }
+                        case "ferry":
+                            {
+                                ferry = dataLine;
+                                break;
+                            }
 
-                    case "connection":
-                        {
-                            connection = dataLine;
-                            break;
-                        }
+                        case "connection":
+                            {
+                                connection = dataLine;
+                                break;
+                            }
 
-                    case "last_visit":
-                        {
-                            last_visit = uint.Parse(dataLine);
-                            break;
-                        }
+                        case "last_visit":
+                            {
+                                last_visit = uint.Parse(dataLine);
+                                break;
+                            }
 
-                    case "use_count":
-                        {
-                            use_count = uint.Parse(dataLine);
-                            break;
-                        }
-
+                        case "use_count":
+                            {
+                                use_count = uint.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

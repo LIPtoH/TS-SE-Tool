@@ -39,50 +39,56 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "inbox":
-                        {
-                            inbox.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "inbox":
+                            {
+                                inbox.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("inbox["):
-                        {
-                            inbox.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("inbox["):
+                            {
+                                inbox.Add(dataLine);
+                                break;
+                            }
 
-                    case "last_id":
-                        {
-                            last_id = int.Parse(dataLine);
-                            break;
-                        }
+                        case "last_id":
+                            {
+                                last_id = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "unread_count":
-                        {
-                            unread_count = int.Parse(dataLine);
-                            break;
-                        }
+                        case "unread_count":
+                            {
+                                unread_count = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "pending_mails":
-                        {
-                            pending_mails = int.Parse(dataLine);
-                            break;
-                        }
+                        case "pending_mails":
+                            {
+                                pending_mails = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "pmail_timers":
-                        {
-                            pmail_timers = int.Parse(dataLine);
-                            break;
-                        }
-
+                        case "pmail_timers":
+                            {
+                                pmail_timers = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

@@ -19,9 +19,9 @@ namespace TS_SE_Tool.Save.Items
         internal Vector_3f_4f target_placement_rigid { get; set; } = new Vector_3f_4f();
         internal Vector_3f_4f source_placement { get; set; } = new Vector_3f_4f();
 
-        internal int selected_target { get; set; } = 0;
+        internal int? selected_target { get; set; } = 0;
         internal int time_lower_limit { get; set; } = 0;
-        internal int time_upper_limit { get; set; } = 0;
+        internal int? time_upper_limit { get; set; } = 0;
         internal int job_distance { get; set; } = 0;
 
         internal SCS_Float fuel_consumed { get; set; } = 0;
@@ -57,7 +57,6 @@ namespace TS_SE_Tool.Save.Items
         internal int units_count { get; set; } = 0;
         internal int fill_ratio { get; set; } = 0;
 
-
         internal Player_Job()
         { }
 
@@ -80,211 +79,219 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "company_truck":
-                        {
-                            company_truck = dataLine;
-                            break;
-                        }
+                        case "company_truck":
+                            {
+                                company_truck = dataLine;
+                                break;
+                            }
 
-                    case "company_trailer":
-                        {
-                            company_trailer = dataLine;
-                            break;
-                        }
+                        case "company_trailer":
+                            {
+                                company_trailer = dataLine;
+                                break;
+                            }
 
-                    case "target_placement":
-                        {
-                            target_placement = new Vector_3f_4f(dataLine);
-                            break;
-                        }
+                        case "target_placement":
+                            {
+                                target_placement = new Vector_3f_4f(dataLine);
+                                break;
+                            }
 
-                    case "target_placement_medium":
-                        {
-                            target_placement_medium = new Vector_3f_4f(dataLine);
-                            break;
-                        }
+                        case "target_placement_medium":
+                            {
+                                target_placement_medium = new Vector_3f_4f(dataLine);
+                                break;
+                            }
 
-                    case "target_placement_hard":
-                        {
-                            target_placement_hard = new Vector_3f_4f(dataLine);
-                            break;
-                        }
+                        case "target_placement_hard":
+                            {
+                                target_placement_hard = new Vector_3f_4f(dataLine);
+                                break;
+                            }
 
-                    case "target_placement_rigid":
-                        {
-                            target_placement_rigid = new Vector_3f_4f(dataLine);
-                            break;
-                        }
+                        case "target_placement_rigid":
+                            {
+                                target_placement_rigid = new Vector_3f_4f(dataLine);
+                                break;
+                            }
 
-                    case "source_placement":
-                        {
-                            source_placement = new Vector_3f_4f(dataLine);
-                            break;
-                        }
+                        case "source_placement":
+                            {
+                                source_placement = new Vector_3f_4f(dataLine);
+                                break;
+                            }
 
-                    case "selected_target":
-                        {
-                            selected_target = int.Parse(dataLine);
-                            break;
-                        }
+                        case "selected_target":
+                            {
+                                selected_target = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "time_lower_limit":
-                        {
-                            time_lower_limit = int.Parse(dataLine);
-                            break;
-                        }
+                        case "time_lower_limit":
+                            {
+                                time_lower_limit = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "time_upper_limit":
-                        {
-                            time_upper_limit = int.Parse(dataLine);
-                            break;
-                        }
+                        case "time_upper_limit":
+                            {
+                                time_upper_limit = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "job_distance":
-                        {
-                            job_distance = int.Parse(dataLine);
-                            break;
-                        }
+                        case "job_distance":
+                            {
+                                job_distance = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "fuel_consumed":
-                        {
-                            fuel_consumed = dataLine;
-                            break;
-                        }
+                        case "fuel_consumed":
+                            {
+                                fuel_consumed = dataLine;
+                                break;
+                            }
 
-                    case "last_reported_fuel":
-                        {
-                            last_reported_fuel = dataLine;
-                            break;
-                        }
+                        case "last_reported_fuel":
+                            {
+                                last_reported_fuel = dataLine;
+                                break;
+                            }
 
-                    case "total_fines":
-                        {
-                            total_fines = int.Parse(dataLine);
-                            break;
-                        }
+                        case "total_fines":
+                            {
+                                total_fines = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "is_trailer_loaded":
-                        {
-                            is_trailer_loaded = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "is_trailer_loaded":
+                            {
+                                is_trailer_loaded = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "online_job_id":
-                        {
-                            online_job_id = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
-                            break;
-                        }
+                        case "online_job_id":
+                            {
+                                online_job_id = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "online_job_trailer_model":
-                        {
-                            online_job_trailer_model = dataLine;
-                            break;
-                        }
+                        case "online_job_trailer_model":
+                            {
+                                online_job_trailer_model = dataLine;
+                                break;
+                            }
 
-                    case "autoload_used":
-                        {
-                            autoload_used = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "autoload_used":
+                            {
+                                autoload_used = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "cargo":
-                        {
-                            cargo = dataLine;
-                            break;
-                        }
+                        case "cargo":
+                            {
+                                cargo = dataLine;
+                                break;
+                            }
 
-                    case "source_company":
-                        {
-                            source_company = dataLine;
-                            break;
-                        }
+                        case "source_company":
+                            {
+                                source_company = dataLine;
+                                break;
+                            }
 
-                    case "target_company":
-                        {
-                            target_company = dataLine;
-                            break;
-                        }
+                        case "target_company":
+                            {
+                                target_company = dataLine;
+                                break;
+                            }
 
-                    case "cargo_model_index":
-                        {
-                            cargo_model_index = int.Parse(dataLine);
-                            break;
-                        }
+                        case "cargo_model_index":
+                            {
+                                cargo_model_index = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "is_articulated":
-                        {
-                            is_articulated = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "is_articulated":
+                            {
+                                is_articulated = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "is_cargo_market_job":
-                        {
-                            is_cargo_market_job = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "is_cargo_market_job":
+                            {
+                                is_cargo_market_job = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "start_time":
-                        {
-                            start_time = int.Parse(dataLine);
-                            break;
-                        }
+                        case "start_time":
+                            {
+                                start_time = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "planned_distance_km":
-                        {
-                            planned_distance_km = int.Parse(dataLine);
-                            break;
-                        }
+                        case "planned_distance_km":
+                            {
+                                planned_distance_km = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "ferry_time":
-                        {
-                            ferry_time = int.Parse(dataLine);
-                            break;
-                        }
+                        case "ferry_time":
+                            {
+                                ferry_time = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "ferry_price":
-                        {
-                            ferry_price = int.Parse(dataLine);
-                            break;
-                        }
+                        case "ferry_price":
+                            {
+                                ferry_price = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "urgency":
-                        {
-                            urgency = int.Parse(dataLine);
-                            break;
-                        }
+                        case "urgency":
+                            {
+                                urgency = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "special":
-                        {
-                            special = dataLine;
-                            break;
-                        }
+                        case "special":
+                            {
+                                special = dataLine;
+                                break;
+                            }
 
-                    case "units_count":
-                        {
-                            units_count = int.Parse(dataLine);
-                            break;
-                        }
+                        case "units_count":
+                            {
+                                units_count = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "fill_ratio":
-                        {
-                            fill_ratio = int.Parse(dataLine);
-                            break;
-                        }
+                        case "fill_ratio":
+                            {
+                                fill_ratio = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }
 
         internal string PrintOut(uint _version, string _nameless)
         {
-            string returnString = "", tmp = "";
+            string returnString = "";
 
             StringBuilder returnSB = new StringBuilder();
 
@@ -297,11 +304,14 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" target_placement_medium: " + target_placement_medium.ToString());
             returnSB.AppendLine(" target_placement_hard: " + target_placement_hard.ToString());
             returnSB.AppendLine(" target_placement_rigid: " + target_placement_rigid.ToString());
+
             returnSB.AppendLine(" source_placement: " + source_placement.ToString());
 
-            returnSB.AppendLine(" selected_target: " + selected_target.ToString());
+            returnSB.AppendLine(" selected_target: " + (selected_target == null ? "nil" : selected_target.ToString()));
+
             returnSB.AppendLine(" time_lower_limit: " + time_lower_limit.ToString());
-            returnSB.AppendLine(" time_upper_limit: " + time_upper_limit.ToString());
+            returnSB.AppendLine(" time_upper_limit: " + (time_upper_limit == null ? "nil" : time_upper_limit.ToString()));
+
             returnSB.AppendLine(" job_distance: " + job_distance.ToString());
 
             returnSB.AppendLine(" fuel_consumed: " + fuel_consumed.ToString());
@@ -330,6 +340,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" planned_distance_km: " + planned_distance_km.ToString());
             returnSB.AppendLine(" ferry_time: " + ferry_time.ToString());
             returnSB.AppendLine(" ferry_price: " + ferry_price.ToString());
+
             returnSB.AppendLine(" urgency: " + urgency.ToString());
 
             returnSB.AppendLine(" special: " + special);

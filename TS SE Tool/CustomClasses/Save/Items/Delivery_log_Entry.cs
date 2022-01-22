@@ -32,25 +32,32 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "params":
-                        {
-                            Params.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "params":
+                            {
+                                Params.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("params["):
-                        {
-                            Params.Add(dataLine);
-                            break;
-                        }
-
+                        case var s when s.StartsWith("params["):
+                            {
+                                Params.Add(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

@@ -43,43 +43,50 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "amount":
-                        {
-                            amount = int.Parse(dataLine);
-                            break;
-                        }
+                        case "amount":
+                            {
+                                amount = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "original_amount":
-                        {
-                            original_amount = int.Parse(dataLine);
-                            break;
-                        }
+                        case "original_amount":
+                            {
+                                original_amount = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "time_stamp":
-                        {
-                            time_stamp = int.Parse(dataLine);
-                            break;
-                        }
+                        case "time_stamp":
+                            {
+                                time_stamp = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "interest_rate":
-                        {
-                            interest_rate = dataLine;
-                            break;
-                        }
+                        case "interest_rate":
+                            {
+                                interest_rate = dataLine;
+                                break;
+                            }
 
-                    case "duration":
-                        {
-                            duration = int.Parse(dataLine);
-                            break;
-                        }
+                        case "duration":
+                            {
+                                duration = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

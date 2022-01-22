@@ -32,25 +32,32 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "economy_day":
-                        {
-                            economy_day = int.Parse(dataLine);
-                            break;
-                        }
+                        case "economy_day":
+                            {
+                                economy_day = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "use_time":
-                        {
-                            use_time = int.Parse(dataLine);
-                            break;
-                        }
+                        case "use_time":
+                            {
+                                use_time = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

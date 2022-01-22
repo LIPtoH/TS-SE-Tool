@@ -92,103 +92,111 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
+
+                        case "trailer_definition":
+                            trailer_definition = dataLine;
                             break;
-                        }
 
-                    case "trailer_definition":
-                        trailer_definition = dataLine;
-                        break;
+                        case "oversize":
+                            oversize = bool.Parse(dataLine);
+                            break;
 
-                    case "oversize":
-                        oversize = bool.Parse(dataLine);
-                        break;
+                        case "cargo_mass":
+                            cargo_mass = dataLine;
+                            break;
 
-                    case "cargo_mass":
-                        cargo_mass = dataLine;
-                        break;
+                        case "cargo_damage":
+                            cargo_damage = dataLine;
+                            break;
 
-                    case "cargo_damage":
-                        cargo_damage = dataLine;
-                        break;
+                        case "virtual_rear_wheels_offset":
+                            virtual_rear_wheels_offset = dataLine;
+                            break;
 
-                    case "virtual_rear_wheels_offset":
-                        virtual_rear_wheels_offset = dataLine;
-                        break;
+                        case "slave_trailer":
+                            slave_trailer = dataLine;
+                            break;
 
-                    case "slave_trailer":
-                        slave_trailer = dataLine;
-                        break;
+                        case "is_private":
+                            is_private = bool.Parse(dataLine);
+                            break;
 
-                    case "is_private":
-                        is_private = bool.Parse(dataLine);
-                        break;
+                        case "trailer_body_wear":
+                            trailer_body_wear = dataLine;
+                            break;
 
-                    case "trailer_body_wear":
-                        trailer_body_wear = dataLine;
-                        break;
+                        case "accessories":
+                            accessories.Capacity = int.Parse(dataLine);
+                            break;
 
-                    case "accessories":
-                        accessories.Capacity = int.Parse(dataLine);
-                        break;
+                        case var s when s.StartsWith("accessories["):
+                            accessories.Add(dataLine);
+                            break;
 
-                    case var s when s.StartsWith("accessories["):
-                        accessories.Add(dataLine);
-                        break;
+                        case "odometer":
+                            odometer = uint.Parse(dataLine);
+                            break;
 
-                    case "odometer":
-                        odometer = uint.Parse(dataLine);
-                        break;
+                        case "odometer_float_part":
+                            odometer_float_part = dataLine;
+                            break;
 
-                    case "odometer_float_part":
-                        odometer_float_part = dataLine;
-                        break;
+                        case "trip_fuel_l":
+                            trip_fuel_l = uint.Parse(dataLine);
+                            break;
 
-                    case "trip_fuel_l":
-                        trip_fuel_l = uint.Parse(dataLine);
-                        break;
+                        case "trip_fuel":
+                            trip_fuel = dataLine;
+                            break;
 
-                    case "trip_fuel":
-                        trip_fuel = dataLine;
-                        break;
+                        case "trip_distance_km":
+                            trip_distance_km = uint.Parse(dataLine);
+                            break;
 
-                    case "trip_distance_km":
-                        trip_distance_km = uint.Parse(dataLine);
-                        break;
+                        case "trip_distance":
+                            trip_distance = dataLine;
+                            break;
 
-                    case "trip_distance":
-                        trip_distance = dataLine;
-                        break;
+                        case "trip_time_min":
+                            trip_time_min = uint.Parse(dataLine);
+                            break;
 
-                    case "trip_time_min":
-                        trip_time_min = uint.Parse(dataLine);
-                        break;
+                        case "trip_time":
+                            trip_time = dataLine;
+                            break;
 
-                    case "trip_time":
-                        trip_time = dataLine;
-                        break;
+                        case "license_plate":
+                            _license_plate = dataLine;
+                            break;
 
-                    case "license_plate":
-                        _license_plate = dataLine;
-                        break;
+                        case "chassis_wear":
+                            chassis_wear = dataLine;
+                            break;
 
-                    case "chassis_wear":
-                        chassis_wear = dataLine;
-                        break;
+                        case "wheels_wear":
+                            wheels_wear.Capacity = int.Parse(dataLine);
+                            break;
 
-                    case "wheels_wear":
-                        wheels_wear.Capacity = int.Parse(dataLine);
-                        break;
+                        case var s when s.StartsWith("wheels_wear["):
+                            wheels_wear.Add(dataLine);
+                            break;
+                    }
 
-                    case var s when s.StartsWith("wheels_wear["):
-                        wheels_wear.Add(dataLine);
-                        break;
-
-                } //switch end
-            } //loop end
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
+                }
+            }
         }
 
         internal string PrintOut(uint _version, string _nameless)

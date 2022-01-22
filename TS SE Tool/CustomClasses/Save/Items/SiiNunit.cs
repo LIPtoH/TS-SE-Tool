@@ -17,11 +17,9 @@ namespace TS_SE_Tool.Save.Items
         internal Dictionary<string, Bank_Loan> Bank_Loan = new Dictionary<string, Bank_Loan>();
 
         internal Player Player = new Player();
-
         internal Player_Job Player_Job = new Player_Job();
 
         internal Dictionary<string, Trailer> Trailer = new Dictionary<string, Trailer>();
-
         internal Dictionary<string, Trailer_Def> Trailer_Def = new Dictionary<string, Trailer_Def>();
         internal Dictionary<string, Trailer_Utilization_log> Trailer_Utilization_log = new Dictionary<string, Trailer_Utilization_log>();
         internal Dictionary<string, Trailer_Utilization_log_Entry> Trailer_Utilization_log_Entry = new Dictionary<string, Trailer_Utilization_log_Entry>();
@@ -40,7 +38,6 @@ namespace TS_SE_Tool.Save.Items
         internal Dictionary<string, Job_Info> Job_Info = new Dictionary<string, Job_Info>();
 
         internal Dictionary<string, Company> Company = new Dictionary<string, Company>();
-
         internal Dictionary<string, Job_offer_Data> Job_offer_Data = new Dictionary<string, Job_offer_Data>();
 
         internal Dictionary<string, Garage> Garage = new Dictionary<string, Garage>();
@@ -50,33 +47,29 @@ namespace TS_SE_Tool.Save.Items
         internal Dictionary<string, Transport_Data> Transport_Data = new Dictionary<string, Transport_Data>();
 
         internal Economy_event_Queue Economy_event_Queue = new Economy_event_Queue();
-
         internal Dictionary<string, Economy_event> Economy_event = new Dictionary<string, Economy_event>();
 
         internal Mail_Ctrl Mail_Ctrl = new Mail_Ctrl();
-
         internal Dictionary<string, Mail_Def> Mail_Def = new Dictionary<string, Mail_Def>();
 
         internal Police_Ctrl Police_Ctrl = new Police_Ctrl();
 
         internal Oversize_offer_Ctrl Oversize_offer_Ctrl = new Oversize_offer_Ctrl();
-
         internal Dictionary<string, Oversize_Route_offers> Oversize_Route_offers = new Dictionary<string, Oversize_Route_offers>();
-
         internal Dictionary<string, Oversize_Offer> Oversize_Offer = new Dictionary<string, Oversize_Offer>();
 
         internal Delivery_log Delivery_log = new Delivery_log();
-
         internal Dictionary<string, Delivery_log_Entry> Delivery_log_Entry = new Dictionary<string, Delivery_log_Entry>();
 
         internal Ferry_log Ferry_log = new Ferry_log();
-
         internal Dictionary<string, Ferry_log_Entry> Ferry_log_Entry = new Dictionary<string, Ferry_log_Entry>();
 
         internal Dictionary<string, GPS_waypoint_Storage> GPS_waypoint_Storage = new Dictionary<string, GPS_waypoint_Storage>();
 
         internal Dictionary<string, Map_action> Map_action = new Dictionary<string, Map_action>();
 
+        //===
+        private Dictionary<string, List<string>> NewBlocks = new Dictionary<string, List<string>>();
 
         internal SiiNunit()
         { }
@@ -392,44 +385,42 @@ namespace TS_SE_Tool.Save.Items
 
                     default:
                         {
-                            break;
-                        }
-
-                    /*
-                    default:
-                        {
                             if (!NewDataBlocks.Contains(tagLine))
                             {
                                 NewDataBlocks.Add(tagLine);
                                 Utilities.IO_Utilities.ErrorLogWriter("Save | New Data block | " + tagLine);
+
+                                //Add new block data
+                                NewBlocks.Add(nameless, GetLines());
                             }
 
                             break;
                         }
-                    */
                 }
 
                 continue;
 
+                //===
                 List<string> GetLines()
                 {
                     string workLine = "";
                     List<string> Data = new List<string>();
 
-                    while (!_input[line].StartsWith("}"))
+                    line--;
+
+                    do
                     {
+                        line++;
                         workLine = _input[line];
                         Data.Add(workLine);
 
-                        line++;
-                    }
+                    } while (!_input[line].StartsWith("}"));
 
                     return Data;
                 }
-
+                //===
             }
         }
-
 
         internal string PrintOut(uint _version, string _nameless)
         {
@@ -441,6 +432,11 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(Economy.PrintOut(0, ""));
 
+            foreach (KeyValuePair<string, List<string>> blockData in NewBlocks)
+            {
+                foreach (string blockLine in blockData.Value)
+                    returnSB.AppendLine(blockLine);
+            }
 
             returnSB.AppendLine("}");
 

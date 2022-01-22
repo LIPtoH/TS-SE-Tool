@@ -40,48 +40,56 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "slot_name":
-                        {
-                            slot_name.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "slot_name":
+                            {
+                                slot_name.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("slot_name["):
-                        {
-                            slot_name.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("slot_name["):
+                            {
+                                slot_name.Add(dataLine);
+                                break;
+                            }
 
-                    case "slot_hookup":
-                        {
-                            slot_hookup.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "slot_hookup":
+                            {
+                                slot_hookup.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("slot_hookup["):
-                        {
-                            slot_hookup.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("slot_hookup["):
+                            {
+                                slot_hookup.Add(dataLine);
+                                break;
+                            }
 
-                    case "data_path":
-                        {
-                            data_path = dataLine;
-                            break;
-                        }
+                        case "data_path":
+                            {
+                                data_path = dataLine;
+                                break;
+                            }
 
-                    case "refund":
-                        {
-                            refund = int.Parse(dataLine);
-                            break;
-                        }
+                        case "refund":
+                            {
+                                refund = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

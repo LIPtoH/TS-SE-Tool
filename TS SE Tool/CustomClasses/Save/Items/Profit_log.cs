@@ -35,44 +35,50 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "stats_data":
-                        {
-                            stats_data.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "stats_data":
+                            {
+                                stats_data.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("stats_data["):
-                        {
-                            stats_data.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("stats_data["):
+                            {
+                                stats_data.Add(dataLine);
+                                break;
+                            }
 
-                    case "acc_distance_free":
-                        {
-                            acc_distance_free = int.Parse(dataLine);
-                            break;
-                        }
+                        case "acc_distance_free":
+                            {
+                                acc_distance_free = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "acc_distance_on_job":
-                        {
-                            acc_distance_on_job = int.Parse(dataLine);
-                            break;
-                        }
+                        case "acc_distance_on_job":
+                            {
+                                acc_distance_on_job = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "history_age":
-                        {
-                            history_age = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
-                            break;
-                        }
-
+                        case "history_age":
+                            {
+                                history_age = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

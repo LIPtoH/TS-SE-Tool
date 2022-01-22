@@ -52,100 +52,106 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "trailer":
-                        {
-                            trailer = dataLine;
-                            break;
-                        }
+                        case "trailer":
+                            {
+                                trailer = dataLine;
+                                break;
+                            }
 
-                    case "gross_trailer_weight_limit":
-                        {
-                            gross_trailer_weight_limit = int.Parse(dataLine);
-                            break;
-                        }
+                        case "gross_trailer_weight_limit":
+                            {
+                                gross_trailer_weight_limit = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "chassis_mass":
-                        {
-                            chassis_mass = int.Parse(dataLine);
-                            break;
-                        }
+                        case "chassis_mass":
+                            {
+                                chassis_mass = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "body_mass":
-                        {
-                            body_mass = int.Parse(dataLine);
-                            break;
-                        }
+                        case "body_mass":
+                            {
+                                body_mass = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "axles":
-                        {
-                            axles = int.Parse(dataLine);
-                            break;
-                        }
+                        case "axles":
+                            {
+                                axles = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "volume":
-                        {
-                            volume = int.Parse(dataLine);
-                            break;
-                        }
+                        case "volume":
+                            {
+                                volume = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "body_type":
-                        {
-                            body_type = dataLine;
-                            break;
-                        }
+                        case "body_type":
+                            {
+                                body_type = dataLine;
+                                break;
+                            }
 
-                    case "chain_type":
-                        {
-                            chain_type = dataLine;
-                            break;
-                        }
+                        case "chain_type":
+                            {
+                                chain_type = dataLine;
+                                break;
+                            }
 
-                    case "country_validity":
-                        {
-                            country_validity.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "country_validity":
+                            {
+                                country_validity.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("country_validity["):
-                        {
-                            country_validity.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("country_validity["):
+                            {
+                                country_validity.Add(dataLine);
+                                break;
+                            }
 
-                    case "mass_ratio":
-                        {
-                            mass_ratio.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "mass_ratio":
+                            {
+                                mass_ratio.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("mass_ratio["):
-                        {
-                            mass_ratio.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("mass_ratio["):
+                            {
+                                mass_ratio.Add(dataLine);
+                                break;
+                            }
 
-                    case "length":
-                        {
-                            length = dataLine;
-                            break;
-                        }
+                        case "length":
+                            {
+                                length = dataLine;
+                                break;
+                            }
 
-                    case "source_name":
-                        {
-                            source_name = dataLine;
-                            break;
-                        }
-
+                        case "source_name":
+                            {
+                                source_name = dataLine;
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
-
         }
 
         internal string PrintOut(uint _version, string _nameless)

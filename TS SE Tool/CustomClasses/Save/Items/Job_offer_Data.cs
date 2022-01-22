@@ -54,92 +54,98 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "target":
-                        {
-                            target = dataLine;
-                            break;
-                        }
+                        case "target":
+                            {
+                                target = dataLine;
+                                break;
+                            }
 
-                    case "expiration_time":
-                        {
-                            expiration_time = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
-                            break;
-                        }
+                        case "expiration_time":
+                            {
+                                expiration_time = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "urgency":
-                        {
-                            urgency = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
-                            break;
-                        }
+                        case "urgency":
+                            {
+                                urgency = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "shortest_distance_km":
-                        {
-                            shortest_distance_km = int.Parse(dataLine);
-                            break;
-                        }
+                        case "shortest_distance_km":
+                            {
+                                shortest_distance_km = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "ferry_time":
-                        {
-                            ferry_time = int.Parse(dataLine);
-                            break;
-                        }
+                        case "ferry_time":
+                            {
+                                ferry_time = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "ferry_price":
-                        {
-                            ferry_price = int.Parse(dataLine);
-                            break;
-                        }
+                        case "ferry_price":
+                            {
+                                ferry_price = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "cargo":
-                        {
-                            cargo = dataLine;
-                            break;
-                        }
+                        case "cargo":
+                            {
+                                cargo = dataLine;
+                                break;
+                            }
 
-                    case "company_truck":
-                        {
-                            company_truck = dataLine;
-                            break;
-                        }
+                        case "company_truck":
+                            {
+                                company_truck = dataLine;
+                                break;
+                            }
 
-                    case "trailer_variant":
-                        {
-                            trailer_variant = dataLine;
-                            break;
-                        }
+                        case "trailer_variant":
+                            {
+                                trailer_variant = dataLine;
+                                break;
+                            }
 
-                    case "trailer_definition":
-                        {
-                            trailer_definition = dataLine;
-                            break;
-                        }
+                        case "trailer_definition":
+                            {
+                                trailer_definition = dataLine;
+                                break;
+                            }
 
-                    case "units_count":
-                        {
-                            units_count = int.Parse(dataLine);
-                            break;
-                        }
+                        case "units_count":
+                            {
+                                units_count = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "fill_ratio":
-                        {
-                            fill_ratio = int.Parse(dataLine);
-                            break;
-                        }
+                        case "fill_ratio":
+                            {
+                                fill_ratio = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "trailer_place":
-                        {
-                            trailer_place = int.Parse(dataLine);
-                            break;
-                        }
-
+                        case "trailer_place":
+                            {
+                                trailer_place = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

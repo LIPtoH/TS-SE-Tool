@@ -40,44 +40,50 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "offer_data":
-                        {
-                            offer_data = dataLine;
-                            break;
-                        }
+                        case "offer_data":
+                            {
+                                offer_data = dataLine;
+                                break;
+                            }
 
-                    case "truck":
-                        {
-                            truck = dataLine;
-                            break;
-                        }
+                        case "truck":
+                            {
+                                truck = dataLine;
+                                break;
+                            }
 
-                    case "expiration":
-                        {
-                            expiration = uint.Parse(dataLine);
-                            break;
-                        }
+                        case "expiration":
+                            {
+                                expiration = uint.Parse(dataLine);
+                                break;
+                            }
 
-                    case "intro_cutscene":
-                        {
-                            intro_cutscene = dataLine;
-                            break;
-                        }
+                        case "intro_cutscene":
+                            {
+                                intro_cutscene = dataLine;
+                                break;
+                            }
 
-                    case "outro_cutscene":
-                        {
-                            outro_cutscene = dataLine;
-                            break;
-                        }
-
+                        case "outro_cutscene":
+                            {
+                                outro_cutscene = dataLine;
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

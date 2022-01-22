@@ -45,61 +45,68 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "mask_r_color":
-                        {
-                            mask_r_color = new Vector_3f(dataLine);
-                            break;
-                        }
+                        case "mask_r_color":
+                            {
+                                mask_r_color = new Vector_3f(dataLine);
+                                break;
+                            }
 
-                    case "mask_g_color":
-                        {
-                            mask_g_color = new Vector_3f(dataLine);
-                            break;
-                        }
+                        case "mask_g_color":
+                            {
+                                mask_g_color = new Vector_3f(dataLine);
+                                break;
+                            }
 
-                    case "mask_b_color":
-                        {
-                            mask_b_color = new Vector_3f(dataLine);
-                            break;
-                        }
+                        case "mask_b_color":
+                            {
+                                mask_b_color = new Vector_3f(dataLine);
+                                break;
+                            }
 
-                    case "flake_color":
-                        {
-                            flake_color = new Vector_3f(dataLine);
-                            break;
-                        }
+                        case "flake_color":
+                            {
+                                flake_color = new Vector_3f(dataLine);
+                                break;
+                            }
 
-                    case "flip_color":
-                        {
-                            flip_color = new Vector_3f(dataLine);
-                            break;
-                        }
+                        case "flip_color":
+                            {
+                                flip_color = new Vector_3f(dataLine);
+                                break;
+                            }
 
-                    case "base_color":
-                        {
-                            base_color = new Vector_3f(dataLine);
-                            break;
-                        }
+                        case "base_color":
+                            {
+                                base_color = new Vector_3f(dataLine);
+                                break;
+                            }
 
-                    case "data_path":
-                        {
-                            data_path = dataLine;
-                            break;
-                        }
+                        case "data_path":
+                            {
+                                data_path = dataLine;
+                                break;
+                            }
 
-                    case "refund":
-                        {
-                            refund = int.Parse(dataLine);
-                            break;
-                        }
-
+                        case "refund":
+                            {
+                                refund = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

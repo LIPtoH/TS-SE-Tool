@@ -42,48 +42,55 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
-
-                    case "offset":
-                        {
-                            offset = int.Parse(dataLine);
-                            break;
-                        }
-
-                    case "paint_color":
-                        {
-                            paint_color = new Vector_3f(dataLine);
-                            break;
-                        }
-
-                    case "data_path":
-                        {
-                            data_path = dataLine;
-
-                            //Type
-                            string pathString = data_path.Split(new char[] { '"' })[1];
-
-                            switch (pathString)
+                    switch (tagLine)
+                    {
+                        case "":
                             {
-                                case var s when s.Contains("/f_tire/") || s.Contains("/r_tire/") || s.Contains("/f_wheel/") || s.Contains("/r_wheel/") || s.Contains("/t_wheel/"):
-                                    accType = "tire";
-                                    break;
+                                break;
                             }
 
-                            break;
-                        }
+                        case "offset":
+                            {
+                                offset = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "refund":
-                        {
-                            refund = int.Parse(dataLine);
-                            break;
-                        }
+                        case "paint_color":
+                            {
+                                paint_color = new Vector_3f(dataLine);
+                                break;
+                            }
 
+                        case "data_path":
+                            {
+                                data_path = dataLine;
+
+                                //Type
+                                string pathString = data_path.Split(new char[] { '"' })[1];
+
+                                switch (pathString)
+                                {
+                                    case var s when s.Contains("/f_tire/") || s.Contains("/r_tire/") || s.Contains("/f_wheel/") || s.Contains("/r_wheel/") || s.Contains("/t_wheel/"):
+                                        accType = "tire";
+                                        break;
+                                }
+
+                                break;
+                            }
+
+                        case "refund":
+                            {
+                                refund = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

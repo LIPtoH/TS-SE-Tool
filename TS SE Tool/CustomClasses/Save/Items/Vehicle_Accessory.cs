@@ -38,56 +38,63 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
-
-                    case "data_path":
-                        {
-                            data_path = dataLine;
-
-                            //Type
-                            string pathString = data_path.Split(new char[] { '"' })[1];
-
-                            switch (pathString)
+                    switch (tagLine)
+                    {
+                        case "":
                             {
-                                case var s when s.Contains("/data.sii") :
-                                    accType = "basepart";
-                                    break;
-
-                                case var s when s.Contains("chassis"):
-                                    accType = "chassis";
-                                    break;
-
-                                case var s when s.Contains("body"):
-                                    accType = "body";
-                                    break;
-
-                                case var s when s.Contains("cabin"):
-                                    accType = "cabin";
-                                    break;
-
-                                case var s when s.Contains("engine"):
-                                    accType = "engine";
-                                    break;
-
-                                case var s when s.Contains("transmission"):
-                                    accType = "transmission";
-                                    break;
+                                break;
                             }
 
-                            break;
-                        }
+                        case "data_path":
+                            {
+                                data_path = dataLine;
 
-                    case "refund":
-                        {
-                            refund = int.Parse(dataLine);
-                            break;
-                        }
+                                //Type
+                                string pathString = data_path.Split(new char[] { '"' })[1];
 
+                                switch (pathString)
+                                {
+                                    case var s when s.Contains("/data.sii"):
+                                        accType = "basepart";
+                                        break;
+
+                                    case var s when s.Contains("chassis"):
+                                        accType = "chassis";
+                                        break;
+
+                                    case var s when s.Contains("body"):
+                                        accType = "body";
+                                        break;
+
+                                    case var s when s.Contains("cabin"):
+                                        accType = "cabin";
+                                        break;
+
+                                    case var s when s.Contains("engine"):
+                                        accType = "engine";
+                                        break;
+
+                                    case var s when s.Contains("transmission"):
+                                        accType = "transmission";
+                                        break;
+                                }
+
+                                break;
+                            }
+
+                        case "refund":
+                            {
+                                refund = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

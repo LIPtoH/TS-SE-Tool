@@ -49,97 +49,104 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "cargo":
-                        {
-                            cargo = dataLine;
-                            break;
-                        }
+                        case "cargo":
+                            {
+                                cargo = dataLine;
+                                break;
+                            }
 
-                    case "source_company":
-                        {
-                            source_company = dataLine;
-                            break;
-                        }
+                        case "source_company":
+                            {
+                                source_company = dataLine;
+                                break;
+                            }
 
-                    case "target_company":
-                        {
-                            target_company = dataLine;
-                            break;
-                        }
+                        case "target_company":
+                            {
+                                target_company = dataLine;
+                                break;
+                            }
 
-                    case "cargo_model_index":
-                        {
-                            cargo_model_index = int.Parse(dataLine);
-                            break;
-                        }
+                        case "cargo_model_index":
+                            {
+                                cargo_model_index = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "is_articulated":
-                        {
-                            is_articulated = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "is_articulated":
+                            {
+                                is_articulated = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "is_cargo_market_job":
-                        {
-                            is_cargo_market_job = bool.Parse(dataLine);
-                            break;
-                        }
+                        case "is_cargo_market_job":
+                            {
+                                is_cargo_market_job = bool.Parse(dataLine);
+                                break;
+                            }
 
-                    case "start_time":
-                        {
-                            start_time = int.Parse(dataLine);
-                            break;
-                        }
+                        case "start_time":
+                            {
+                                start_time = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "planned_distance_km":
-                        {
-                            planned_distance_km = int.Parse(dataLine);
-                            break;
-                        }
+                        case "planned_distance_km":
+                            {
+                                planned_distance_km = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "ferry_time":
-                        {
-                            ferry_time = int.Parse(dataLine);
-                            break;
-                        }
+                        case "ferry_time":
+                            {
+                                ferry_time = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "ferry_price":
-                        {
-                            ferry_price = int.Parse(dataLine);
-                            break;
-                        }
+                        case "ferry_price":
+                            {
+                                ferry_price = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "urgency":
-                        {
-                            urgency = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
-                            break;
-                        }
+                        case "urgency":
+                            {
+                                urgency = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "special":
-                        {
-                            special = dataLine;
-                            break;
-                        }
+                        case "special":
+                            {
+                                special = dataLine;
+                                break;
+                            }
 
-                    case "units_count":
-                        {
-                            units_count = int.Parse(dataLine);
-                            break;
-                        }
+                        case "units_count":
+                            {
+                                units_count = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "fill_ratio":
-                        {
-                            fill_ratio = int.Parse(dataLine);
-                            break;
-                        }
+                        case "fill_ratio":
+                            {
+                                fill_ratio = int.Parse(dataLine);
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }

@@ -47,80 +47,86 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                            {
+                                break;
+                            }
 
-                    case "id_params":
-                        {
-                            id_params.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "id_params":
+                            {
+                                id_params.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("id_params["):
-                        {
-                            id_params.Add(UInt64.Parse( dataLine));
-                            break;
-                        }
+                        case var s when s.StartsWith("id_params["):
+                            {
+                                id_params.Add(UInt64.Parse(dataLine));
+                                break;
+                            }
 
-                    case "name":
-                        {
-                            name = dataLine;
-                            break;
-                        }
+                        case "name":
+                            {
+                                name = dataLine;
+                                break;
+                            }
 
-                    case "command":
-                        {
-                            command = dataLine;
-                            break;
-                        }
+                        case "command":
+                            {
+                                command = dataLine;
+                                break;
+                            }
 
-                    case "num_params":
-                        {
-                            num_params.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "num_params":
+                            {
+                                num_params.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("num_params["):
-                        {
-                            num_params.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("num_params["):
+                            {
+                                num_params.Add(dataLine);
+                                break;
+                            }
 
-                    case "str_params":
-                        {
-                            str_params.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "str_params":
+                            {
+                                str_params.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("str_params["):
-                        {
-                            str_params.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("str_params["):
+                            {
+                                str_params.Add(dataLine);
+                                break;
+                            }
 
-                    case "target_tags":
-                        {
-                            target_tags = int.Parse(dataLine);
-                            break;
-                        }
+                        case "target_tags":
+                            {
+                                target_tags = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "target_range":
-                        {
-                            target_range = int.Parse(dataLine);
-                            break;
-                        }
+                        case "target_range":
+                            {
+                                target_range = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "type":
-                        {
-                            type = dataLine;
-                            break;
-                        }
-
+                        case "type":
+                            {
+                                type = dataLine;
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    break;
                 }
             }
         }
