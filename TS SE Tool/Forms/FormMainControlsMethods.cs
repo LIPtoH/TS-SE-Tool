@@ -863,42 +863,59 @@ namespace TS_SE_Tool
 
                     bool NotANumber = false;
 
-                    foreach (string profile in Globals.SavesHex)
+                    foreach (string saveFolder in Globals.SavesHex)
                     {
-                        if (!File.Exists(profile + @"\game.sii") || !File.Exists(profile + @"\info.sii"))
+                        if (!File.Exists(saveFolder + @"\game.sii") || !File.Exists(saveFolder + @"\info.sii"))
                             continue;
 
-                        string[] fold = profile.Split(new string[] { "\\" }, StringSplitOptions.None);
+                        string[] folders = saveFolder.Split(new string[] { "\\" }, StringSplitOptions.None);
 
-                        foreach (char c in fold[fold.Length - 1])
+                        if (folders.Last().Contains(' '))
                         {
-                            if (c < '0' || c > '9')
-                            {
-                                NotANumber = true;
-                                break;
-                            }
-                        }
+                            string tmpName = GetCustomSaveFilename(saveFolder);
 
-                        if (NotANumber)
-                        {
-                            string[] namearr = fold[fold.Length - 1].Split(new char[] { '_' });
-                            string ProfileName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(namearr[0]);
-
-                            for (int i = 1; i < namearr.Length; i++)
-                            {
-                                ProfileName += " " + namearr[i];
-                            }
-
-                            combDT.Rows.Add(profile, "- " + ProfileName + " -");
+                            if (tmpName != "")
+                                combDT.Rows.Add(saveFolder, tmpName);
+                            else
+                                combDT.Rows.Add(saveFolder, "NoName ( " + folders.Last() + " )");
                         }
                         else
                         {
-                            combDT.Rows.Add(profile, GetCustomSaveFilename(profile));
+                            foreach (char c in folders.Last())
+                            {
+                                if (c < '0' || c > '9')
+                                {
+                                    NotANumber = true;
+                                    break;
+                                }
+                            }
+
+                            if (NotANumber)
+                            {
+                                string[] namearr = folders.Last().Split(new char[] { '_' });
+                                string ProfileName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(namearr[0]);
+
+                                for (int i = 1; i < namearr.Length; i++)
+                                {
+                                    ProfileName += " " + namearr[i];
+                                }
+
+                                combDT.Rows.Add(saveFolder, "- " + ProfileName + " -");
+                            }
+                            else
+                            {
+                                string tmpName = GetCustomSaveFilename(saveFolder);
+
+                                if (tmpName != "")
+                                    combDT.Rows.Add(saveFolder, tmpName);
+                                else
+                                    combDT.Rows.Add(saveFolder, "NoName ( " + folders.Last() + " )");
+                            }
+
+                            NotANumber = false;
                         }
 
-                        NotANumber = false;
                     }
-
 
                     bool isFoundSaves = false;
 
