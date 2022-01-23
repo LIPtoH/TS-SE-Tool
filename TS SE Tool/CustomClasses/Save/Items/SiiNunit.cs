@@ -44,6 +44,8 @@ namespace TS_SE_Tool.Save.Items
 
         internal Game_Progress Game_Progress = new Game_Progress();
 
+        internal Registry Registry = new Registry();
+
         internal Dictionary<string, Transport_Data> Transport_Data = new Dictionary<string, Transport_Data>();
 
         internal Economy_event_Queue Economy_event_Queue = new Economy_event_Queue();
@@ -67,6 +69,9 @@ namespace TS_SE_Tool.Save.Items
         internal Dictionary<string, GPS_waypoint_Storage> GPS_waypoint_Storage = new Dictionary<string, GPS_waypoint_Storage>();
 
         internal Dictionary<string, Map_action> Map_action = new Dictionary<string, Map_action>();
+
+        internal Dictionary<string, Bus_stop> Bus_stop = new Dictionary<string, Bus_stop>();
+        internal Bus_job_Log Bus_job_Log = new Bus_job_Log();
 
         //===
         private Dictionary<string, List<string>> NewBlocks = new Dictionary<string, List<string>>();
@@ -251,7 +256,7 @@ namespace TS_SE_Tool.Save.Items
                             break;
                         }
 
-                    case "сompany":
+                    case "company":
                         {
                             Company.Add(nameless, new Company(GetLines().ToArray()));
 
@@ -274,6 +279,13 @@ namespace TS_SE_Tool.Save.Items
                     case "game_progress":
                         {
                             Game_Progress = new Game_Progress(GetLines().ToArray());
+
+                            break;
+                        }
+
+                    case "registry":
+                        {
+                            Registry = new Registry(GetLines().ToArray());
 
                             break;
                         }
@@ -379,6 +391,20 @@ namespace TS_SE_Tool.Save.Items
                     case "map_action":
                         {
                             Map_action.Add(nameless, new Map_action(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "bus_stop":
+                        {
+                            Bus_stop.Add(nameless, new Bus_stop(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "bus_job_log":
+                        {
+                            Bus_job_Log = new Bus_job_Log(GetLines().ToArray());
 
                             break;
                         }

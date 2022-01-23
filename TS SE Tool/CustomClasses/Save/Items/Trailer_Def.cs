@@ -13,10 +13,13 @@ namespace TS_SE_Tool.Save.Items
         internal SCS_String trailer { get; set; } = "";
 
         internal int gross_trailer_weight_limit { get; set; } = 0;
-        internal int chassis_mass { get; set; } = 0;
-        internal int body_mass { get; set; } = 0;
+
+        internal SCS_Float chassis_mass { get; set; } = 0;
+        internal SCS_Float body_mass { get; set; } = 0;
+
         internal int axles { get; set; } = 0;
-        internal int volume { get; set; } = 0;
+
+        internal SCS_Float volume { get; set; } = 0;
 
         internal string body_type { get; set; } = "";
         internal string chain_type { get; set; } = "";
@@ -75,13 +78,13 @@ namespace TS_SE_Tool.Save.Items
 
                         case "chassis_mass":
                             {
-                                chassis_mass = int.Parse(dataLine);
+                                chassis_mass = dataLine;
                                 break;
                             }
 
                         case "body_mass":
                             {
-                                body_mass = int.Parse(dataLine);
+                                body_mass = dataLine;
                                 break;
                             }
 
@@ -93,7 +96,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "volume":
                             {
-                                volume = int.Parse(dataLine);
+                                volume = dataLine;
                                 break;
                             }
 
@@ -165,9 +168,12 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" trailer: " + trailer.ToString());
 
             returnSB.AppendLine(" gross_trailer_weight_limit: " + gross_trailer_weight_limit.ToString());
+
             returnSB.AppendLine(" chassis_mass: " + chassis_mass.ToString());
             returnSB.AppendLine(" body_mass: " + body_mass.ToString());
+
             returnSB.AppendLine(" axles: " + axles.ToString());
+
             returnSB.AppendLine(" volume: " + volume.ToString());
 
             returnSB.AppendLine(" body_type: " + body_type);

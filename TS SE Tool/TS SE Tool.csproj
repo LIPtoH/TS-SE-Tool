@@ -146,6 +146,8 @@
     <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
     <Compile Include="CustomClasses\Save\Items\Bank.cs" />
     <Compile Include="CustomClasses\Save\Items\Bank_Loan.cs" />
+    <Compile Include="CustomClasses\Save\Items\Bus_job_Log.cs" />
+    <Compile Include="CustomClasses\Save\Items\Bus_stop.cs" />
     <Compile Include="CustomClasses\Save\Items\Company.cs" />
     <Compile Include="CustomClasses\Save\Items\Delivery_log.cs" />
     <Compile Include="CustomClasses\Save\Items\Delivery_log_Entry.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="CustomClasses\Save\Items\Police_Ctrl.cs" />
     <Compile Include="CustomClasses\Save\Items\Profit_log.cs" />
     <Compile Include="CustomClasses\Save\Items\Profit_log_Entry.cs" />
+    <Compile Include="CustomClasses\Save\Items\Registry.cs" />
     <Compile Include="CustomClasses\Save\Items\SiiNunit.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyTrailerData.cs" />
