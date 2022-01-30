@@ -54,6 +54,8 @@ namespace TS_SE_Tool
 
         public string   CurrencyMesATS  { get; set; } = "USD";
 
+        public DateTime LastUpdateCheck { get; set; } = DateTime.Now;
+
         public Dictionary<string, List<string>> CustomPaths { get; set; } = new Dictionary<string, List<string>>();
 
         public void LoadConfigFromFile()
@@ -84,11 +86,13 @@ namespace TS_SE_Tool
 
                                 break;
                             }
+
                         case "JobPickupTime":
                             {
                                 JobPickupTime = short.Parse(data);
                                 break;
                             }
+
                         case "LoopEvery":
                             {
                                 LoopEvery = byte.Parse(data);
@@ -100,6 +104,7 @@ namespace TS_SE_Tool
                                 ProposeRandom = bool.Parse(data);
                                 break;
                             }
+
                         case "TimeMultiplier":
                             {
                                 TimeMultiplier = short.Parse(data);
@@ -115,31 +120,37 @@ namespace TS_SE_Tool
 
                                 break;
                             }
+
                         case "DistanceMes":
                             {
                                 DistanceMes = data;
                                 break;
                             }
+
                         case "WeightMes":
                             {
                                 WeightMes = data;
                                 break;
                             }
+
                         case "CurrencyMesETS2":
                             {
                                 CurrencyMesETS2 = data;
                                 break;
                             }
+
                         case "CurrencyMesATS":
                             {
                                 CurrencyMesATS = data;
                                 break;
                             }
+
                         case "CustomPathGame":
                             {
                                 GameType = data;
                                 break;
                             }
+
                         case "CustomPath":
                             {
                                 if (GameType == "" || GameType == null)
@@ -159,6 +170,18 @@ namespace TS_SE_Tool
 
                                 break;
                             }
+
+                        case "LastUpdateCheck":
+                            {
+                                LastUpdateCheck = DateTime.FromFileTimeUtc(long.Parse(data)).ToLocalTime();
+                                break;
+                            }
+
+
+                        default:
+                            {
+                                break;
+                            }
                     }
                 }
 
@@ -174,7 +197,7 @@ namespace TS_SE_Tool
 
         public void WriteConfigToFile()
         {
-            string[] ExcludeList = new string[] { "CustomPaths", "ProgPrevVersion" };
+            string[] ExcludeList = new string[] { "CustomPaths", "ProgPrevVersion", "LastUpdateCheck" };
 
             try
             {
@@ -185,8 +208,11 @@ namespace TS_SE_Tool
                     foreach (PropertyInfo property in properties)
                     {
                         if(!ExcludeList.Contains(property.Name))                        
-                            writer.WriteLine(property.Name + "=" + property.GetValue(this).ToString());                        
+                            writer.WriteLine(property.Name + "=" + property.GetValue(this).ToString());
                     }
+
+                    //LastUpdateCheck
+                    writer.WriteLine("LastUpdateCheck=" + LastUpdateCheck.ToFileTimeUtc().ToString());
 
                     //Write Custom paths
                     string GameType = "";

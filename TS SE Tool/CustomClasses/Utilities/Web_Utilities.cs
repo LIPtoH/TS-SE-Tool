@@ -58,6 +58,16 @@ namespace TS_SE_Tool.Utilities
         private static string aTimerControlText = "";
 
         //Check for new version
+        internal bool CheckNewVersionTimeElapsed(DateTime _lastTime)
+        {
+            TimeSpan timeDifference = DateTime.Now.Subtract(_lastTime);
+
+            if (timeDifference.TotalHours > 24)
+                return true;
+            else
+                return false;
+        }
+
         internal string[] CheckNewVersionAvailability(Control _control)
         {
             aTimerControlText = _control.Text;

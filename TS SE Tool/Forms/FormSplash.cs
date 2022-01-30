@@ -159,7 +159,7 @@ namespace TS_SE_Tool
         //Extra
         private async void CheckLatestVersion()
         {
-            if (CheckForUpdates)
+            if (CheckForUpdates && Web_Utilities.External.CheckNewVersionTimeElapsed(MainForm.ProgSettingsV.LastUpdateCheck) )
             {
                 SetLinkLabelNewVersionvisual(visualStatus.neutral);
 
@@ -206,6 +206,9 @@ namespace TS_SE_Tool
 
                     SetLinkLabelNewVersionvisual(visualStatus.bad);
                 }
+
+                //Update time whaen checking for updates
+                MainForm.ProgSettingsV.LastUpdateCheck = DateTime.Now;
             }
             else
                 tableLayoutPanel2.RowStyles[3] = new RowStyle(SizeType.Absolute, 0F);
