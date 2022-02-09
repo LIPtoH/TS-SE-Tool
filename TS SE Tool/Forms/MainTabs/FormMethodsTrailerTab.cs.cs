@@ -461,6 +461,9 @@ namespace TS_SE_Tool
                     {
                         foreach (string accLink in SelectedUserCompanyTrailer.TrailerMainData.accessories)
                         {
+                            if (!VehicleAccessories.ContainsKey(accLink))
+                                continue;
+
                             dynamic accessoryDyn = VehicleAccessories[accLink];
 
                             Type accType = accessoryDyn.GetType();
