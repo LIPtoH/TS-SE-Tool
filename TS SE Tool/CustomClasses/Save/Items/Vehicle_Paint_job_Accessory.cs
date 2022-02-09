@@ -20,7 +20,7 @@ namespace TS_SE_Tool.Save.Items
         internal Vector_3f base_color { get; set; } = new Vector_3f();
 
         internal string data_path { get; set; } = "";
-        internal int refund { get; set; } = 0;
+        internal uint refund { get; set; } = 0;
 
 
         internal Vehicle_Paint_job_Accessory()
@@ -98,7 +98,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "refund":
                             {
-                                refund = int.Parse(dataLine);
+                                refund = uint.Parse(dataLine);
                                 break;
                             }
                     }

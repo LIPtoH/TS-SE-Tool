@@ -29,7 +29,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal bool overdraft { get; set; } = false;
 
-        internal int overdraft_timer { get; set; } = 0;
+        internal SCS_Float overdraft_timer { get; set; } = 0;
 
         internal int overdraft_warn_count { get; set; } = 0;
 
@@ -129,7 +129,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "overdraft_timer":
                             {
-                                overdraft_timer = int.Parse(dataLine);
+                                overdraft_timer = dataLine;
                                 break;
                             }
 

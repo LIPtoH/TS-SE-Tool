@@ -17,7 +17,7 @@ namespace TS_SE_Tool.Save.Items
         internal List<string> slot_hookup { get; set; } = new List<string>();
 
         internal string data_path { get; set; } = "";
-        internal int refund { get; set; } = 0;
+        internal uint refund { get; set; } = 0;
 
 
         internal Vehicle_Drv_plate_Accessory()
@@ -89,7 +89,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "refund":
                             {
-                                refund = int.Parse(dataLine);
+                                refund = uint.Parse(dataLine);
                                 break;
                             }
                     }

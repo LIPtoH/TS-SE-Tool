@@ -221,6 +221,13 @@ namespace TS_SE_Tool.Save.Items
                             break;
                         }
 
+                    case "vehicle_sound_accessory":
+                        {
+                            VehicleAccessories.Add(nameless, new Vehicle_Sound_Accessory(GetLines().ToArray()));
+
+                            break;
+                        }
+
                     case "profit_log":
                         {
                             Profit_log.Add(nameless, new Profit_log(GetLines().ToArray()));

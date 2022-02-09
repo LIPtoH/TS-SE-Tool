@@ -12,7 +12,7 @@ namespace TS_SE_Tool.Save.Items
     class Vehicle_Accessory
     {
         internal string data_path { get; set; } = "";
-        internal int refund { get; set; } = 0;
+        internal uint refund { get; set; } = 0;
 
         internal string accType { get; set; } = "generalpart";
 
@@ -86,7 +86,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "refund":
                             {
-                                refund = int.Parse(dataLine);
+                                refund = uint.Parse(dataLine);
                                 break;
                             }
                     }

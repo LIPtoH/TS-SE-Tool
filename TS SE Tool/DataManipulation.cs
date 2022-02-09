@@ -492,6 +492,23 @@ namespace TS_SE_Tool
                         continue;
                     }
 
+                    if (currentLine.StartsWith("vehicle_sound_accessory"))
+                    {
+                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
+
+                        List<string> Data = new List<string>();
+
+                        while (!tempSavefileInMemory[line].StartsWith("}"))
+                        {
+                            Data.Add(tempSavefileInMemory[line]);
+                            line++;
+                        }
+
+                        VehicleAccessories.Add(nameless, new Vehicle_Sound_Accessory(Data.ToArray()));
+
+                        continue;
+                    }
+
                     if (currentLine.StartsWith("vehicle_drv_plate_accessory"))
                     {
                         string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
