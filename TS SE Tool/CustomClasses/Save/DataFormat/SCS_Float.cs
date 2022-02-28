@@ -35,6 +35,10 @@ namespace TS_SE_Tool.Save.DataFormat
         {
             return NumericUtilities.SingleFloatToHexFloat(Value);
         }
+        public string ToHexString()
+        {
+            return NumericUtilities.SingleFloatToHexFloat(Value, true);
+        }
     }
 
 }

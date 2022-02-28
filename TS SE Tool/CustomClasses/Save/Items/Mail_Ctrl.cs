@@ -93,6 +93,10 @@ namespace TS_SE_Tool.Save.Items
             }
         }
 
+        internal string PrintOut(uint _version)
+        {
+            return PrintOut(_version, null);
+        }
         internal string PrintOut(uint _version, string _nameless)
         {
             string returnString = "";

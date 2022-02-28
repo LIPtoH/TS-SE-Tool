@@ -10,6 +10,7 @@ namespace TS_SE_Tool.Save.Items
 {
     class Driver_AI
     {
+        #region variables
         internal byte adr { get; set; } = 0;
         internal byte long_dist { get; set; } = 0;
         internal byte heavy { get; set; } = 0;
@@ -47,6 +48,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal string profit_log { get; set; } = "";
 
+        #endregion
 
         internal Driver_AI()
         { }
@@ -244,6 +246,10 @@ namespace TS_SE_Tool.Save.Items
             }
         }
 
+        internal string PrintOut(uint _version)
+        {
+            return PrintOut(_version, null);
+        }
         internal string PrintOut(uint _version, string _nameless)
         {
             string returnString = "";

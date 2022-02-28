@@ -35,6 +35,14 @@ namespace TS_SE_Tool
 {
     public partial class FormMain : Form
     {
+        private void NewPrepareData(object sender, DoWorkEventArgs e)
+        {
+            IO_Utilities.LogWriter("Prepare started");
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_preparing_data");
+
+            SiiNunitData = new SiiNunit(tempSavefileInMemory);
+        }
+
         private void PrepareData(object sender, DoWorkEventArgs e)
         {
             string[] chunkOfline;
@@ -49,10 +57,8 @@ namespace TS_SE_Tool
 
             int workerprogressmult = (int)Math.Floor((decimal)(tempSavefileInMemory.Length / 80)), workerprogress = 0;
 
-
             for (int line = 0; line < tempSavefileInMemory.Length; line++)
             {
-
                 string currentLine = tempSavefileInMemory[line];
 
                 try

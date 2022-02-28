@@ -113,12 +113,12 @@ namespace TS_SE_Tool.Utilities
         {
             try
             {
-                if(_input.StartsWith("\"") && _input.EndsWith("\""))
-                {
-                    return _input.Substring(1, _input.Length - 2);
-                }
+                string byteArrayString = StringToByteArrayStringFull(_input);
 
-                return null;
+                if (!CheckStringAlphaNumeric(byteArrayString))
+                    return _input.Substring(1, _input.Length - 2);
+                else
+                    return _input;
             }
             catch
             {

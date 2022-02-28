@@ -102,8 +102,13 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine("vehicle_addon_accessory : " + _nameless + " {");
 
-            returnSB.AppendLine(" slot_name: " + slot_name.ToString());
-            returnSB.AppendLine(" slot_hookup: " + slot_hookup.ToString());
+            returnSB.AppendLine(" slot_name: " + slot_name.Count);
+            for (int i = 0; i < slot_name.Count; i++)
+                returnSB.AppendLine(" slot_name[" + i + "]: " + slot_name[i]);
+
+            returnSB.AppendLine(" slot_hookup: " + slot_hookup.Count);
+            for (int i = 0; i < slot_hookup.Count; i++)
+                returnSB.AppendLine(" slot_hookup[" + i + "]: " + slot_hookup[i]);
 
             returnSB.AppendLine(" data_path: " + data_path);
             returnSB.AppendLine(" refund: " + refund.ToString());

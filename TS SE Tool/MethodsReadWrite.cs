@@ -780,7 +780,8 @@ namespace TS_SE_Tool
                     
                     worker = new BackgroundWorker();
                     worker.WorkerReportsProgress = true;
-                    worker.DoWork += PrepareData;//Start;
+                    //worker.DoWork += PrepareData;//Start;
+                    worker.DoWork += NewPrepareData;//Start;
                     worker.ProgressChanged += worker_ProgressChanged;
                     worker.RunWorkerCompleted += worker_RunWorkerCompleted;
 
@@ -924,6 +925,36 @@ namespace TS_SE_Tool
         }
 
         //button_save_file
+        private void NewWrireSaveFile()
+        {
+            string SiiSavePath = SavefilePath + @"\game.sii";
+
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_saving_file");
+
+            if (File.GetLastWriteTime(SiiSavePath) > LastModifiedTimestamp)
+            {
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_was_modified");
+                IO_Utilities.LogWriter("Save game was modified - reload file to prevent progress loss");
+            }
+            else
+            {
+                using (StreamWriter writer = new StreamWriter(SiiSavePath, false))
+                {
+                    writer.Write(SiiNunitData.PrintOut(0));
+                }
+            }
+
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_file_saved");
+            LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
+
+            //dispose attempt
+            SetDefaultValues(false);
+            ClearFormControls(true);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
         private void WriteSaveFile()
         {
             string[] chunkOfline;

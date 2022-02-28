@@ -123,7 +123,7 @@ namespace TS_SE_Tool
 
             for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < Economy.playerSkills[i + 1]; j++)
+                for (int j = 0; j < Economy._playerSkills[i + 1]; j++)
                 {
                     SkillButtonArray[i, j].Checked = true;
                 }
@@ -591,14 +591,14 @@ namespace TS_SE_Tool
                 for (int j = 0; j < buttonIndex; j++)                
                     SkillButtonArray[skillIndex, j].Checked = true;
                 
-                Economy.playerSkills[++skillIndex] = ++buttonIndex;
+                Economy._playerSkills[++skillIndex] = ++buttonIndex;
             }
             else
             {
                 for (int j = 5; j >= buttonIndex; j--)                
                     SkillButtonArray[skillIndex, j].Checked = false;
                 
-                Economy.playerSkills[++skillIndex] = buttonIndex;
+                Economy._playerSkills[++skillIndex] = buttonIndex;
             }
         }
 
@@ -662,13 +662,13 @@ namespace TS_SE_Tool
             CheckBox thisbutton = sender as CheckBox;
 
             byte adrIndex = byte.Parse(thisbutton.Name.Substring(9, 1));
-            char[] ADR = Convert.ToString(Economy.playerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+            char[] ADR = Convert.ToString(Economy._playerSkills[0], 2).PadLeft(6, '0').ToCharArray();
 
             if (thisbutton.Checked)
             {
                 ADR[adrIndex] = '1';
 
-                Economy.playerSkills[0] = Convert.ToByte(new string(ADR), 2);
+                Economy._playerSkills[0] = Convert.ToByte(new string(ADR), 2);
             }
             else
             {
@@ -676,7 +676,7 @@ namespace TS_SE_Tool
 
                 string temp = new string(ADR);
 
-                Economy.playerSkills[0] = Convert.ToByte(temp.PadLeft(6, '0'), 2);
+                Economy._playerSkills[0] = Convert.ToByte(temp.PadLeft(6, '0'), 2);
             }
 
             thisbutton.BackgroundImage = SkillImgSBG[1];

@@ -587,7 +587,7 @@ namespace TS_SE_Tool
         {
             UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTrailerData SelectedUserCompanyTrailer);
 
-            string LicensePlate = SelectedUserCompanyTrailer.TrailerMainData.license_plate;
+            string LicensePlate = SelectedUserCompanyTrailer.TrailerMainData.license_plate.ToString();
 
             SCS.SCSLicensePlate thisLP = new SCS.SCSLicensePlate(LicensePlate, SCS.SCSLicensePlate.LPtype.Truck);
 

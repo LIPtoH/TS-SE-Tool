@@ -131,6 +131,10 @@ namespace TS_SE_Tool.Save.Items
             }
         }
 
+        internal string PrintOut(uint _version)
+        {
+            return PrintOut(_version, null);
+        }
         internal string PrintOut(uint _version, string _nameless)
         {
             string returnString = "";
@@ -149,7 +153,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" num_params: " + num_params.Count);
             for (int i = 0; i < num_params.Count; i++)
-                returnSB.AppendLine(" num_params[" + i + "]: " + num_params[i].ToString());
+                returnSB.AppendLine(" num_params[" + i + "]: " + num_params[i].ToHexString());
 
             returnSB.AppendLine(" str_params: " + str_params.Count);
             for (int i = 0; i < str_params.Count; i++)

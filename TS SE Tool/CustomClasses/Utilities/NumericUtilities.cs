@@ -52,21 +52,24 @@ namespace TS_SE_Tool.Utilities
                 .Select(i => str.Substring(i * chunkSize, chunkSize));
         }
 
-        public static string SingleFloatToHexFloat(float _input)
+        public static string SingleFloatToHexFloat(float _input, bool _toHex)
         {
             int intFloat = (int)_input;
 
-            if (intFloat - _input != 0)
+            if (_toHex || intFloat - _input != 0)
             {
+                if (_input == 0)
+                    return _input.ToString();
+
                 //Get bytes
                 byte[] tmpByteArray = BitConverter.GetBytes(_input);
-                
+
                 //Reverse order
                 Array.Reverse(tmpByteArray);
 
                 //remove dashes and make it lower case
                 string hexFloat = BitConverter.ToString(tmpByteArray).Replace("-", "").ToLower();
-                
+
                 //Result
                 return "&" + hexFloat;
             }
@@ -74,6 +77,11 @@ namespace TS_SE_Tool.Utilities
             {
                 return _input.ToString();
             }
+        }
+
+        public static string SingleFloatToHexFloat(float _input)
+        {
+            return SingleFloatToHexFloat(_input, false);
         }
 
         public static string IntegerToHexString(uint _integer)

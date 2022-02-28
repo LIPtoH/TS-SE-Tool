@@ -11,35 +11,17 @@ namespace TS_SE_Tool.Save.Items
 {
     class Trailer
     {
+        #region variables
         internal SCS_Float  cargo_mass          { get; set; } = 0;
-
         internal SCS_Float  cargo_damage        { get; set; } = 0;
 
         internal SCS_Float  trailer_body_wear   { get; set; } = 0;
-
         internal SCS_Float  chassis_wear        { get; set; } = 0;
-
         internal List<SCS_Float> wheels_wear { get; set; } = new List<SCS_Float>();
 
         internal List<string>   accessories     { get; set; } = new List<string>();
 
-        internal string     license_plate       { get; set; } = "";
-        internal string     _license_plate
-        {
-            get
-            {
-                return TextUtilities.FromStringToOutputString(license_plate);
-            }
-            set
-            {
-                string data = value;
-
-                if (value.StartsWith("\"") && value.EndsWith("\""))
-                    data = value.Substring(1, value.Length - 2);
-
-                license_plate = data;
-            }
-        }
+        internal SCS_String     license_plate       { get; set; } = "";
 
         internal string     trailer_definition  { get; set; } = "";
 
@@ -52,21 +34,19 @@ namespace TS_SE_Tool.Save.Items
         internal SCS_Float  virtual_rear_wheels_offset { get; set; } = 0;
 
         internal uint       odometer            { get; set; } = 0;
-
         internal SCS_Float  odometer_float_part { get; set; } = 0;
 
 
         internal uint       trip_fuel_l         { get; set; } = 0;
-
         internal SCS_Float  trip_fuel           { get; set; } = 0;
 
         internal uint       trip_distance_km    { get; set; } = 0;
-
         internal SCS_Float  trip_distance       { get; set; } = 0;
 
         internal uint       trip_time_min       { get; set; } = 0;
-
         internal SCS_Float  trip_time           { get; set; } = 0;
+
+        #endregion
 
         internal Trailer()
         {
@@ -174,7 +154,7 @@ namespace TS_SE_Tool.Save.Items
                             break;
 
                         case "license_plate":
-                            _license_plate = dataLine;
+                            license_plate = dataLine;
                             break;
 
                         case "chassis_wear":
@@ -235,7 +215,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" trip_time_min: " + trip_time_min);
             returnSB.AppendLine(" trip_time: " + trip_time.ToString());
 
-            returnSB.AppendLine(" license_plate: " + _license_plate);
+            returnSB.AppendLine(" license_plate: " + license_plate.ToString());
 
             returnSB.AppendLine(" chassis_wear: " + chassis_wear.ToString());
 

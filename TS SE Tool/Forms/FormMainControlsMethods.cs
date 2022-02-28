@@ -344,7 +344,9 @@ namespace TS_SE_Tool
             //File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
             File.Copy(SiiSavePath, SavefilePath + @"\game_backup.sii", true);
 
-            WriteSaveFile(); //Save save file with or without changes
+            NewWrireSaveFile();
+
+            //WriteSaveFile(); //Save save file with or without changes
 
             buttonMainDecryptSave.Enabled = true;
             MessageBox.Show("File saved", "Saving", MessageBoxButtons.OK, MessageBoxIcon.Information);

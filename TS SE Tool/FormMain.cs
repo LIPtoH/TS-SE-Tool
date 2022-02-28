@@ -112,6 +112,8 @@ namespace TS_SE_Tool
 
         private DateTime LastModifiedTimestamp; //+
 
+        internal Save.Items.SiiNunit SiiNunitData;
+
         internal Save.Items.Economy Economy;
         internal Save.Items.Bank Bank;
         internal Dictionary<string, Save.Items.Bank_Loan> BankLoans;

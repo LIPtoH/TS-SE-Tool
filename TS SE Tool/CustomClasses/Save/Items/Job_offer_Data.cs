@@ -30,7 +30,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal int fill_ratio { get; set; } = 0;
 
-        internal int trailer_place { get; set; } = 0;
+        internal List<DataFormat.Vector_3f_4f> trailer_place { get; set; } = new List<DataFormat.Vector_3f_4f>();
 
 
         internal Job_offer_Data()
@@ -137,7 +137,13 @@ namespace TS_SE_Tool.Save.Items
 
                         case "trailer_place":
                             {
-                                trailer_place = int.Parse(dataLine);
+                                trailer_place.Capacity = int.Parse(dataLine);
+                                break;
+                            }
+
+                        case var s when s.StartsWith("trailer_place["):
+                            {
+                                trailer_place.Add(new DataFormat.Vector_3f_4f(dataLine));
                                 break;
                             }
                     }
@@ -175,7 +181,10 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" units_count: " + units_count.ToString());
             returnSB.AppendLine(" fill_ratio: " + fill_ratio.ToString());
-            returnSB.AppendLine(" trailer_place: " + trailer_place.ToString());
+
+            returnSB.AppendLine(" trailer_place: " + trailer_place.Count);
+            for (int i = 0; i < trailer_place.Count; i++)
+                returnSB.AppendLine(" trailer_place[" + i + "]: " + trailer_place[i]);
 
             returnSB.AppendLine("}");
 

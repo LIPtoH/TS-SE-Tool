@@ -12,6 +12,7 @@ namespace TS_SE_Tool.Save.Items
 {
     class Player
     {
+        #region variables
         internal string hq_city { get; set; } = "";
 
         internal List<string> trailers { get; set; } = new List<string>();
@@ -80,6 +81,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal List<bool> driver_quit_warned { get; set; } = new List<bool>();
 
+        #endregion
         internal Player()
         { }
 
@@ -375,6 +377,11 @@ namespace TS_SE_Tool.Save.Items
                     break;
                 }
             }
+        }
+
+        internal string PrintOut(uint _version)
+        {
+            return PrintOut(_version, null);
         }
 
         internal string PrintOut(uint _version, string _nameless)

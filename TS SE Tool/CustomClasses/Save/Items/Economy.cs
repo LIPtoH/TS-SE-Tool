@@ -12,6 +12,7 @@ namespace TS_SE_Tool.Save.Items
 {
     class Economy
     {
+        #region variables
         internal string bank { get; set; } = "";
         internal string player { get; set; } = "";
 
@@ -43,7 +44,7 @@ namespace TS_SE_Tool.Save.Items
         internal byte urgent { get; set; } = 0;
         internal byte mechanical { get; set; } = 0;
 
-        internal byte[] playerSkills { get; set; } = new byte[6] { 0, 0, 0, 0, 0, 0 };
+        internal byte[] _playerSkills { get; set; } = new byte[6] { 0, 0, 0, 0, 0, 0 };
 
         internal List<SCS_Color> user_colors = new List<SCS_Color>();
 
@@ -183,6 +184,8 @@ namespace TS_SE_Tool.Save.Items
         internal int bus_game_time { get; set; } = 0;
         internal int bus_playing_time { get; set; } = 0;
 
+        #endregion
+
         internal Economy()
         { }
 
@@ -204,6 +207,7 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
+
                 try
                 {
                     switch (tagLine)
@@ -651,6 +655,12 @@ namespace TS_SE_Tool.Save.Items
                                 break;
                             }
 
+                        case "stored_start_tollgate_pos":
+                            {
+                                stored_start_tollgate_pos = new Vector_3i(dataLine);
+                                break;
+                            }                            
+
                         case "stored_tutorial_state":
                             {
                                 stored_tutorial_state = int.Parse(dataLine);
@@ -1070,6 +1080,11 @@ namespace TS_SE_Tool.Save.Items
             }
         }
 
+        internal string PrintOut(uint _version)
+        {
+            return PrintOut(_version, null);
+        }
+
         internal string PrintOut(uint _version, string _nameless)
         {
             //get data from helping variables
@@ -1206,6 +1221,8 @@ namespace TS_SE_Tool.Save.Items
             for (int i = 0; i < stored_gps_avoid_waypoints.Count; i++)
                 returnSB.AppendLine(" stored_gps_avoid_waypoints[" + i + "]: " + stored_gps_avoid_waypoints[i].ToString());
 
+            returnSB.AppendLine(" stored_start_tollgate_pos: " + stored_start_tollgate_pos.ToString());
+
             returnSB.AppendLine(" stored_tutorial_state: " + stored_tutorial_state.ToString());
 
             returnSB.AppendLine(" stored_map_actions: " + stored_map_actions.Count);
@@ -1337,17 +1354,17 @@ namespace TS_SE_Tool.Save.Items
         //Methods Support
         internal void setPlayerSkillsArray()
         {
-            playerSkills = new byte[6] { adr, long_dist, heavy, fragile, urgent, mechanical};
+            _playerSkills = new byte[6] { adr, long_dist, heavy, fragile, urgent, mechanical};
         }
 
         internal void getPlayerSkillsFromArray()
         {
-            adr = playerSkills[0];
-            long_dist = playerSkills[1];
-            heavy = playerSkills[2];
-            fragile = playerSkills[3];
-            urgent = playerSkills[4];
-            mechanical = playerSkills[5];
+            adr = _playerSkills[0];
+            long_dist = _playerSkills[1];
+            heavy = _playerSkills[2];
+            fragile = _playerSkills[3];
+            urgent = _playerSkills[4];
+            mechanical = _playerSkills[5];
         }
 
         internal int[] getPlayerLvl()
