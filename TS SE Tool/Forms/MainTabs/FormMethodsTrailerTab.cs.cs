@@ -296,7 +296,7 @@ namespace TS_SE_Tool
                     tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTrailer == trailerNameless)?.SingleOrDefault().Key ?? "null";
                     
                     if (tmpDriverName != "null")
-                        if (Player.drivers[0] == tmpDriverName)
+                        if (SiiNunitData.Player.drivers[0] == tmpDriverName)
                         {
                             tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                         }
@@ -328,7 +328,7 @@ namespace TS_SE_Tool
             comboBoxUserTrailerCompanyTrailers.DisplayMember = "DisplayMember";
             comboBoxUserTrailerCompanyTrailers.DataSource = combDT;
 
-            comboBoxUserTrailerCompanyTrailers.SelectedValue = Player.assigned_trailer;
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = SiiNunitData.Player.assigned_trailer;
         }
         //
         private void UpdateTrailerPanelDetails()
@@ -403,11 +403,11 @@ namespace TS_SE_Tool
                     if (partType == "cargo")
                     {
                         //player_job
-                        if (Player.assigned_trailer == comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString())
+                        if (SiiNunitData.Player.assigned_trailer == comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString())
                         {
-                            if (Player_Job != null)
+                            if (SiiNunitData.Player_Job != null)
                             {
-                                string tmpCargo = Player_Job.cargo.Split(new char[] { '.' })[1];
+                                string tmpCargo = SiiNunitData.Player_Job.cargo.Split(new char[] { '.' })[1];
 
                                 if (CargoLngDict.TryGetValue(tmpCargo, out string value))
                                 {
@@ -461,10 +461,10 @@ namespace TS_SE_Tool
                     {
                         foreach (string accLink in SelectedUserCompanyTrailer.TrailerMainData.accessories)
                         {
-                            if (!VehicleAccessories.ContainsKey(accLink))
+                            if (!SiiNunitData.SiiNitems.ContainsKey(accLink))
                                 continue;
 
-                            dynamic accessoryDyn = VehicleAccessories[accLink];
+                            dynamic accessoryDyn = SiiNunitData.SiiNitems[accLink];
 
                             Type accType = accessoryDyn.GetType();
 
@@ -587,7 +587,7 @@ namespace TS_SE_Tool
         {
             UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTrailerData SelectedUserCompanyTrailer);
 
-            string LicensePlate = SelectedUserCompanyTrailer.TrailerMainData.license_plate.ToString();
+            string LicensePlate = SelectedUserCompanyTrailer.TrailerMainData.license_plate.Value;
 
             SCS.SCSLicensePlate thisLP = new SCS.SCSLicensePlate(LicensePlate, SCS.SCSLicensePlate.LPtype.Truck);
 
@@ -782,12 +782,12 @@ namespace TS_SE_Tool
         //
         private void buttonUserTrailerSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTrailerCompanyTrailers.SelectedValue = Player.assigned_trailer;
+            comboBoxUserTrailerCompanyTrailers.SelectedValue = SiiNunitData.Player.assigned_trailer;
         }
 
         private void buttonUserTrailerSwitchCurrent_Click(object sender, EventArgs e)
         {
-            Player.assigned_trailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+            SiiNunitData.Player.assigned_trailer = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
         }
         //Details
         public void buttonTrailerElRepair_Click(object sender, EventArgs e)

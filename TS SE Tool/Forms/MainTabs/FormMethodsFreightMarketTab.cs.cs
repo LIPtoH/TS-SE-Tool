@@ -603,10 +603,10 @@ namespace TS_SE_Tool
             comboBoxFreightMarketSourceCity.DataSource = combDT;
             //end filling
 
-            DataRow foundRow = combDT.Rows.Find(new object[1] { Economy.last_visited_city });
+            DataRow foundRow = combDT.Rows.Find(new object[1] { SiiNunitData.Economy.last_visited_city });
 
-            if (combDT.Rows.Find(new object[1] { Economy.last_visited_city }) != null)
-                comboBoxFreightMarketSourceCity.SelectedValue = Economy.last_visited_city;
+            if (combDT.Rows.Find(new object[1] { SiiNunitData.Economy.last_visited_city }) != null)
+                comboBoxFreightMarketSourceCity.SelectedValue = SiiNunitData.Economy.last_visited_city;
             //end
         }
 

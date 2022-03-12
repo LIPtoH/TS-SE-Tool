@@ -69,11 +69,11 @@ namespace TS_SE_Tool
         private Dictionary<string, List<JobAdded>> AddedJobsDictionary;//Program
         private List<JobAdded> AddedJobsList;
         private JobAdded FreightMarketJob;//Program
+
         private string[] EconomyEventUnitLinkStringList;//Program
+        private string[,] EconomyEventsTable;//Program
 
         public List<LevelNames> PlayerLevelNames;//Program
-
-        private string[,] EconomyEventsTable;//Program
 
         private List<City> CitiesList;//+
         private List<string> CitiesListDB;//Program
@@ -113,15 +113,6 @@ namespace TS_SE_Tool
         private DateTime LastModifiedTimestamp; //+
 
         internal Save.Items.SiiNunit SiiNunitData;
-
-        internal Save.Items.Economy Economy;
-        internal Save.Items.Bank Bank;
-        internal Dictionary<string, Save.Items.Bank_Loan> BankLoans;
-
-        internal Dictionary<string, dynamic> VehicleAccessories;
-        //
-        internal Save.Items.Player Player;
-        internal Save.Items.Player_Job Player_Job;
 
         public SaveFileProfileData MainSaveFileProfileData;
         internal SaveFileInfoData MainSaveFileInfoData;
@@ -172,10 +163,10 @@ namespace TS_SE_Tool
         private CheckBox[] ADRbuttonArray; //Program
 
         internal double DistanceMultiplier = 1; //Program
-        private double km_to_mileconvert = 0.621371; //Program
+        const double km_to_mileconvert = 0.621371; //Program
 
         internal double WeightMultiplier = 1; //Program
-        private double kg_to_lb = 2.20462262185; //Program
+        const double kg_to_lb = 2.20462262185; //Program
 
         public Dictionary<string, List<string>> CurrencyDictFormat;
         public Dictionary<string, double> CurrencyDictConversion;
@@ -263,7 +254,7 @@ namespace TS_SE_Tool
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult exitDR = DialogResult.Yes;
+            DialogResult exitDR;
 
             if (AddedJobsDictionary != null && AddedJobsDictionary.Count > 0)
                 exitDR = MessageBox.Show("You have unsaved changes. Do you really want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo);

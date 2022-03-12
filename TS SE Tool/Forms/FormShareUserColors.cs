@@ -50,7 +50,7 @@ namespace TS_SE_Tool
 
             SaveVersion = MainForm.MainSaveFileInfoData.Version;
 
-            int colorcount = MainForm.Economy.user_colors.Count;
+            int colorcount = MainForm.SiiNunitData.Economy.user_colors.Count;
 
             UserColorsB = new Button[colorcount];
 
@@ -78,12 +78,12 @@ namespace TS_SE_Tool
 
         private void CreateUserColorsButtons()
         {
-            int padding = 6, width = 48, offsetL = 4, offsetT = 4, colorcount = MainForm.Economy.user_colors.Count;
+            int padding = 6, width = 48, offsetL = 4, offsetT = 4, colorcount = MainForm.SiiNunitData.Economy.user_colors.Count;
             //UserColorsList.Count
 
             if (SaveVersion >= 49)
             {
-                int ucc = MainForm.Economy.user_colors.Count / 4;
+                int ucc = MainForm.SiiNunitData.Economy.user_colors.Count / 4;
                 int btnNumber = 0;
                 width = 24;
 
@@ -170,7 +170,7 @@ namespace TS_SE_Tool
         {
             int padding = 6, width = 23;//, colorcount = 8;
 
-            for (int i = 0; i < MainForm.Economy.user_colors.Count; i++)
+            for (int i = 0; i < MainForm.SiiNunitData.Economy.user_colors.Count; i++)
             {
                 Button btn = null;
                 string btnname = "buttonUC" + i.ToString();
@@ -196,7 +196,7 @@ namespace TS_SE_Tool
                 if (btn != null)
                 {
                     btn.Enabled = true;
-                    if (MainForm.Economy.user_colors[i].color.A == 0)
+                    if (MainForm.SiiNunitData.Economy.user_colors[i].color.A == 0)
                     {
                         btn.Text = "X";
                         btn.BackColor = Color.FromName("Control");
@@ -204,7 +204,7 @@ namespace TS_SE_Tool
                     else
                     {
                         btn.Text = "";
-                        btn.BackColor = MainForm.Economy.user_colors[i].color;
+                        btn.BackColor = MainForm.SiiNunitData.Economy.user_colors[i].color;
 
                         if (SaveVersion >= 49)
                             UserColorsCB[i / 4].Enabled = true;
@@ -258,7 +258,7 @@ namespace TS_SE_Tool
         {
             int padding = 6, width = 48, offsetL = 4, offsetT = 4, colorcount = _colorcount;//8;
             //UserColorsList.Count
-            int ucc = MainForm.Economy.user_colors.Count / 4;
+            int ucc = MainForm.SiiNunitData.Economy.user_colors.Count / 4;
             int btnNumber = 0;
 
             Array.Resize(ref ImportColorsB, colorcount);
@@ -363,7 +363,7 @@ namespace TS_SE_Tool
                     {
                         for (int j = 0; j < 4; j++)
                         {
-                            tempData += "\r\n" + MainForm.Economy.user_colors[i * 4 + j].color.ToArgb().ToString();
+                            tempData += "\r\n" + MainForm.SiiNunitData.Economy.user_colors[i * 4 + j].color.ToArgb().ToString();
                             temp.Checked = false;
                             ready = true;                            
                         }
@@ -490,7 +490,7 @@ namespace TS_SE_Tool
                             {
                                 for (int k = 0; k < 4; k++)
                                 {
-                                    MainForm.Economy.user_colors[i].color = tempBList[j].BackColor;
+                                    MainForm.SiiNunitData.Economy.user_colors[i].color = tempBList[j].BackColor;
 
                                     i++;
                                     j++;
@@ -527,7 +527,7 @@ namespace TS_SE_Tool
                         {
                             if (j < tempBList.Count)
                             {
-                                MainForm.Economy.user_colors[i].color = tempBList[j].BackColor;
+                                MainForm.SiiNunitData.Economy.user_colors[i].color = tempBList[j].BackColor;
                                 j++;
                             }
                             temp.Checked = false;

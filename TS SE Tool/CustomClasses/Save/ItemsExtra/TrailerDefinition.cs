@@ -38,6 +38,13 @@ namespace TS_SE_Tool
             CargoType = _CargoType;
             UnitsCount = int.Parse(_UnitsCount);
         }
+
+        public TrailerDefinition(string _DefName, int _CargoType, int _UnitsCount)
+        {
+            DefName = _DefName;
+            CargoType = _CargoType;
+            UnitsCount = _UnitsCount;
+        }
         /*
         public TrailerDefinition(string _DefName, int _Volume, int _CargoWeight)
         {

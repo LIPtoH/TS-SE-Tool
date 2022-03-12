@@ -41,797 +41,24 @@ namespace TS_SE_Tool
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_preparing_data");
 
             SiiNunitData = new SiiNunit(tempSavefileInMemory);
+
+            ExtraPrepareStuff();
+
+            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_operation_finished");
+            IO_Utilities.LogWriter("Prepare ended");
         }
 
-        private void PrepareData(object sender, DoWorkEventArgs e)
+        private void ExtraPrepareStuff()
         {
-            string[] chunkOfline;
-
-            IO_Utilities.LogWriter("Prepare started");
-            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_preparing_data");
-
-            int economyEventQueueIndex = 0;
-            int EconomyEventline = 0;
-
-            //scan through save file
-
-            int workerprogressmult = (int)Math.Floor((decimal)(tempSavefileInMemory.Length / 80)), workerprogress = 0;
-
-            for (int line = 0; line < tempSavefileInMemory.Length; line++)
-            {
-                string currentLine = tempSavefileInMemory[line];
-
-                try
-                {
-                    if ((int)Math.Floor((decimal)(line / workerprogressmult)) > workerprogress)
-                    {
-                        workerprogress++;
-                        worker.ReportProgress(workerprogress);
-                    }
-
-                    int EconomyEventColumn;
-                    string destinationcity;
-                    string destinationcompany;
-
-
-                    if (tempSavefileInMemory[line].Contains("_nameless"))
-                    {
-                        string nameless;
-
-                        string tmpNameless = tempSavefileInMemory[line].Substring(tempSavefileInMemory[line].IndexOf("_nameless"));
-                        int endIndex = tmpNameless.IndexOf(" ");
-
-                        if (endIndex == -1)
-                            nameless = tmpNameless.Substring(10);
-                        else
-                            nameless = tmpNameless.Substring(10, endIndex - 10);
-
-                        namelessList.Add(nameless);
-                    }
-
-                    if (tempSavefileInMemory[line].StartsWith("economy : "))
-                    {
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        string nameless = chunkOfline[2];
-
-                        string workLine = "";
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            workLine = tempSavefileInMemory[line];
-                            Data.Add(workLine);
-
-                            line++;
-                        }
-
-                        Economy = new Economy(Data.ToArray());
-
-                        PrepareCitiesInitial();
-                        PrepareGaragesInitial();
-                        PrepareVisitedCitiesInitial();
-                        PrepareGPSInitial();
-
-                        continue;
-                    }
-
-                    //Bank
-                    if (tempSavefileInMemory[line].StartsWith("bank :"))
-                    {
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        string nameless = chunkOfline[2];
-
-                        string workLine = "";
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            workLine = tempSavefileInMemory[line];
-                            Data.Add(workLine);
-
-                            line++;
-                        }
-
-                        Bank = new Bank(Data.ToArray());
-
-                        continue;
-                    }
-
-                    //Bank loans
-                    if (tempSavefileInMemory[line].StartsWith("bank_loan :"))
-                    {
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        string nameless = chunkOfline[2];
-
-                        string workLine = "";
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            workLine = tempSavefileInMemory[line];
-                            Data.Add(workLine);
-
-                            line++;
-                        }
-
-                        BankLoans.Add(nameless, new Bank_Loan(Data.ToArray()));
-
-                        continue;
-                    }
-
-                    //Player section
-                    if (tempSavefileInMemory[line].StartsWith("player :"))
-                    {
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        string nameless = chunkOfline[2];
-
-                        string workLine = "";
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            workLine = tempSavefileInMemory[line];
-                            Data.Add(workLine);
-
-                            line++;
-                        }
-
-                        Player = new Player(Data.ToArray());
-
-                        //Populate data dictionaries
-                        //
-                        foreach(string trck in Player.trucks)
-                        {
-                            UserTruckDictionary.Add(trck, new UserCompanyTruckData());
-                        }
-
-                        //
-                        foreach (string trlr in Player.trailers)
-                        {
-                            UserTrailerDictionary.Add(trlr, new UserCompanyTrailerData());
-                        }
-
-                        //
-                        foreach (string trlrDef in Player.trailer_defs)
-                        {
-                            UserTrailerDefDictionary.Add(trlrDef, new Trailer_Def());
-                        }
-
-                        //
-                        foreach (string drvr in Player.drivers)
-                        {
-                            UserDriverDictionary.Add(drvr, new UserCompanyDriverData());
-                        }
-
-                        UserDriverDictionary.ElementAt(0).Value.AssignedTruck = Player.assigned_truck;
-                        UserDriverDictionary.ElementAt(0).Value.AssignedTrailer = Player.assigned_trailer;
-
-                        continue;
-                    }
-
-                    //Find garages status
-                    if (tempSavefileInMemory[line].StartsWith("garage : garage."))
-                    {
-                        //bool garageinfoended = false;
-
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { '.', '{' });
-                        Garages tempGarage = GaragesList.Find(x => x.GarageName == chunkOfline[1].TrimEnd(new char[] { ' ' }));
-
-                        line++;
-
-                        while (true)//(!garageinfoended)
-                        {
-                            if (tempSavefileInMemory[line].StartsWith("}"))
-                                break;
-
-                            string res = "";
-                            try
-                            {
-                                res = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                                if (res == "null")
-                                    res = null;
-                            }
-                            catch { }
-
-                            if (tempSavefileInMemory[line].StartsWith(" vehicles["))
-                                tempGarage.Vehicles.Add(res);
-                            else if (tempSavefileInMemory[line].StartsWith(" drivers["))
-                                tempGarage.Drivers.Add(res);
-                            else if (tempSavefileInMemory[line].StartsWith(" trailers["))
-                                tempGarage.Trailers.Add(res);
-                            else if (tempSavefileInMemory[line].StartsWith(" status:"))
-                                tempGarage.GarageStatus = int.Parse(tempSavefileInMemory[line].Split(new char[] { ':' })[1]);
-
-                            line++;
-                        }
-
-                        continue;
-                    }
-
-                    if (tempSavefileInMemory[line].StartsWith("driver_ai :"))
-                    {
-                        string driverName = tempSavefileInMemory[line].Split(new char[] { ':', '{' })[1].Trim(new char[] { ' ' });
-
-                        if (UserDriverDictionary.ContainsKey(driverName))
-                        {
-                            do
-                            {
-                                line++;
-
-                                if (tempSavefileInMemory[line].StartsWith(" assigned_trailer:"))
-                                {
-                                    chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-
-                                    string tmpTrailer = chunkOfline[1].Trim(' ');
-
-                                    if (tmpTrailer != "null")
-                                    {
-                                        UserDriverDictionary[driverName].AssignedTrailer = chunkOfline[1].Trim(' ');
-                                    }
-
-                                    continue;
-                                }
-
-                                if (tempSavefileInMemory[line].StartsWith(" driver_job:"))
-                                {
-                                    chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-
-                                    UserDriverDictionary[driverName].DriverJob.JobInfoName = chunkOfline[1].Trim(' ');
-
-                                    continue;
-                                }
-
-                            } while (!tempSavefileInMemory[line].StartsWith("}"));
-                        }
-                        continue;
-                    }
-
-                    if (tempSavefileInMemory[line].StartsWith("job_info :"))
-                    {
-                        string jobinfoNameless = tempSavefileInMemory[line].Split(new char[] { ':', '{' })[1].Trim(new char[] { ' ' });
-
-                        var tmp = UserDriverDictionary.Select(tx => tx.Value)
-                                    .Where(tX => tX.DriverJob.JobInfoName == jobinfoNameless).ToList();
-
-                        if (tmp != null && tmp.Count > 0)
-                        {
-                            do
-                            {
-                                line++;
-
-                                if (tempSavefileInMemory[line].StartsWith(" cargo:"))
-                                {
-                                    chunkOfline = tempSavefileInMemory[line].Split(new char[] { ':' });
-
-                                    string tmpCargo = chunkOfline[1].Trim(' ');
-
-                                    if (tmpCargo != "null")
-                                    {
-                                        tmp[0].DriverJob.Cargo = tmpCargo.Split(new char[] { '.' })[1].Trim(' ');
-                                    }
-
-                                    continue;
-                                }
-                            } while (!tempSavefileInMemory[line].StartsWith("}"));
-                        }
-                        continue;
-                    }
-
-                    //Populate GPS
-                    if (tempSavefileInMemory[line].StartsWith("gps_waypoint_storage"))
-                    {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                        if (GPSbehind.ContainsKey(nameless))
-                        {
-                            line++;
-                            while (!tempSavefileInMemory[line].StartsWith("}"))
-                            {
-                                GPSbehind[nameless].Add(tempSavefileInMemory[line]);
-                                line++;
-                            }
-
-                        }
-                        else
-                        if (GPSahead.ContainsKey(nameless))
-                        {
-                            line++;
-                            while (!tempSavefileInMemory[line].StartsWith("}"))
-                            {
-                                GPSahead[nameless].Add(tempSavefileInMemory[line]);
-                                line++;
-                            }
-                        }
-                        else
-                        if (GPSbehindOnline.ContainsKey(nameless))
-                        {
-                            line++;
-                            while (!tempSavefileInMemory[line].StartsWith("}"))
-                            {
-                                GPSbehindOnline[nameless].Add(tempSavefileInMemory[line]);
-                                line++;
-                            }
-
-                        }
-                        else
-                        if (GPSaheadOnline.ContainsKey(nameless))
-                        {
-                            line++;
-                            while (!tempSavefileInMemory[line].StartsWith("}"))
-                            {
-                                GPSaheadOnline[nameless].Add(tempSavefileInMemory[line]);
-                                line++;
-                            }
-                        }
-                        else
-                        if (GPSAvoid.ContainsKey(nameless))
-                        {
-                            line++;
-                            while (!tempSavefileInMemory[line].StartsWith("}"))
-                            {
-                                GPSAvoid[nameless].Add(tempSavefileInMemory[line]);
-                                line++;
-                            }
-                        }
-                    }
-
-                    if (tempSavefileInMemory[line].StartsWith("player_job :"))
-                    {
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        string nameless = chunkOfline[2];
-
-                        string workLine = "";
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            workLine = tempSavefileInMemory[line];
-                            Data.Add(workLine);
-
-                            line++;
-                        }
-
-                        Player_Job = new Player_Job(Data.ToArray());
-
-                        if (Player_Job.company_truck != "null")
-                        {
-                            UserTruckDictionary.Add(Player_Job.company_truck, new UserCompanyTruckData());
-                            UserTruckDictionary[Player_Job.company_truck].Users = false;
-                        }
-
-                        if (Player_Job.company_trailer != "null")
-                        {
-                            UserTrailerDictionary.Add(Player_Job.company_trailer, new UserCompanyTrailerData());
-                            UserTrailerDictionary[Player_Job.company_trailer].Users = false;
-                        }
-
-                        continue;                        
-                    }
-
-                    //find vehicles Truck
-                    if (tempSavefileInMemory[line].StartsWith("vehicle :"))
-                    {
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        string vehiclenameless = chunkOfline[2];
-
-                        if (UserTruckDictionary.ContainsKey(vehiclenameless))
-                        {
-                            line++;
-
-                            string workLine = "";
-                            List<string> truckData = new List<string>();
-
-                            while (!tempSavefileInMemory[line].StartsWith("}"))
-                            {
-                                workLine = tempSavefileInMemory[line];
-                                truckData.Add(workLine);
-
-                                line++;
-                            }
-
-                            UserTruckDictionary[vehiclenameless].TruckMainData = new Vehicle(truckData.ToArray());
-
-                        }
-                        continue;
-                    }
-
-                    //Find vehicles Trailer
-                    if (tempSavefileInMemory[line].StartsWith("trailer :"))
-                    {
-                        chunkOfline = tempSavefileInMemory[line].Split(new char[] { ' ' });
-                        string vehiclenameless = chunkOfline[2];
-
-                        if (!UserTrailerDictionary.ContainsKey(vehiclenameless))
-                        {
-                            UserTrailerDictionary.Add(vehiclenameless, new UserCompanyTrailerData());
-                            UserTrailerDictionary[vehiclenameless].Main = false;
-                        }
-
-                        string workLine = "";
-                        List<string> trailerData = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            workLine = tempSavefileInMemory[line];
-                            trailerData.Add(workLine);
-
-                            line++;
-                        }
-
-                        UserTrailerDictionary[vehiclenameless].TrailerMainData = new Trailer(trailerData.ToArray());
-
-                        continue;
-                    }
-
-                    if (currentLine.StartsWith("vehicle_accessory"))
-                    {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            Data.Add(tempSavefileInMemory[line]);
-                            line++;
-                        }
-
-                        VehicleAccessories.Add(nameless, new Vehicle_Accessory(Data.ToArray()));
-
-                        continue;
-                    }
-
-                    if (currentLine.StartsWith("vehicle_addon_accessory"))
-                    {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            Data.Add(tempSavefileInMemory[line]);
-                            line++;
-                        }
-
-                        VehicleAccessories.Add(nameless, new Vehicle_Addon_Accessory(Data.ToArray()));
-
-                        continue;
-                    }
-
-                    if (currentLine.StartsWith("vehicle_sound_accessory"))
-                    {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            Data.Add(tempSavefileInMemory[line]);
-                            line++;
-                        }
-
-                        VehicleAccessories.Add(nameless, new Vehicle_Sound_Accessory(Data.ToArray()));
-
-                        continue;
-                    }
-
-                    if (currentLine.StartsWith("vehicle_drv_plate_accessory"))
-                    {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            Data.Add(tempSavefileInMemory[line]);
-                            line++;
-                        }
-
-                        VehicleAccessories.Add(nameless, new Vehicle_Drv_plate_Accessory(Data.ToArray()));
-
-                        continue;
-                    }
-
-                    if (currentLine.StartsWith("vehicle_wheel_accessory"))
-                    {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            Data.Add(tempSavefileInMemory[line]);
-                            line++;
-                        }
-
-                        VehicleAccessories.Add(nameless, new Vehicle_Wheel_Accessory(Data.ToArray()));
-
-                        continue;
-                    }
-
-                    if (currentLine.StartsWith("vehicle_paint_job_accessory"))
-                    {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            Data.Add(tempSavefileInMemory[line]);
-                            line++;
-                        }
-
-                        VehicleAccessories.Add(nameless, new Vehicle_Paint_job_Accessory(Data.ToArray()));
-
-                        continue;
-                    }
-
-                    if (tempSavefileInMemory[line].StartsWith("trailer_def :"))
-                    {
-                        string nameless = tempSavefileInMemory[line].Split(new char[] { ' ' })[2];
-
-                        List<string> Data = new List<string>();
-
-                        while (!tempSavefileInMemory[line].StartsWith("}"))
-                        {
-                            Data.Add(tempSavefileInMemory[line]);
-                            line++;
-                        }
-
-                        UserTrailerDefDictionary[nameless] = new Trailer_Def(Data.ToArray());
-
-                    continue;
-                    }
-
-                    //find existing jobs
-                    if (tempSavefileInMemory[line].StartsWith("company : company.volatile."))
-                    {
-                        string sourcecity = tempSavefileInMemory[line].Split(new char[] { '.' })[3].Split(new char[] { ' ' })[0]; //Source city
-                        string sourcecompany = tempSavefileInMemory[line].Split(new char[] { '.' })[2].Split(new char[] { ' ' })[0]; //Source company
-
-                        int index = line + 1;
-                        int numOfJobOffers = 0, numOfCargoOffers = 0, cargoseed = 0;
-                        List<int> cargoseeds = new List<int>();
-                        string deliveredTrailer = "";
-                        bool CompanyJobStructureEnded = false;
-                        
-                        while (!CompanyJobStructureEnded)
-                        {
-                            if (tempSavefileInMemory[index].StartsWith(" delivered_trailer:"))
-                            {
-                                deliveredTrailer = tempSavefileInMemory[index].Split(new char[] { ' ' })[2];
-                            }
-                            else
-                            if (tempSavefileInMemory[index].StartsWith(" job_offer:")) //number of jobs in company
-                            {
-                                numOfJobOffers = int.Parse(tempSavefileInMemory[index].Split(new char[] { ' ' })[2]);
-
-                                //update Company Max jobs in City
-                                foreach (City tempcity in CitiesList.FindAll(x => x.CityName == sourcecity))
-                                {
-                                    tempcity.UpdateCompany(sourcecompany, numOfJobOffers);
-                                }
-                            }
-                            else
-                            if (tempSavefileInMemory[index].StartsWith(" cargo_offer_seeds:")) //number of cargo offers in company
-                            {
-                                numOfCargoOffers = int.Parse(tempSavefileInMemory[index].Split(new char[] { ' ' })[2]);
-
-                                //Array.Resize(ref cargoseeds, numOfCargoOffers);
-                                CitiesList.Find(x => x.CityName == sourcecity).UpdateCompanyCargoOfferCount(sourcecompany, numOfCargoOffers);
-                            }
-                            else
-                            if (tempSavefileInMemory[index].StartsWith(" cargo_offer_seeds[")) //number of cargo offers in company
-                            {
-                                cargoseed = int.Parse(tempSavefileInMemory[index].Split(new char[] { ' ' })[2]);
-
-                                cargoseeds.Add(cargoseed);
-                            }
-                            else
-                            if (tempSavefileInMemory[index].StartsWith("}"))
-                            {
-                                CitiesList.Find(x => x.CityName == sourcecity).Companies.Find(x => x.CompanyName == sourcecompany).CragoSeeds = cargoseeds.ToArray();
-                                CompanyJobStructureEnded = true;
-                            }
-                            index++;
-                        }
-
-                        destinationcity = null;
-                        destinationcompany = null;
-                        string distance = null;
-                        string ferrytime = null;
-                        string ferryprice = null;
-                        string[] strArrayTarget = null;
-
-                        if ((numOfJobOffers != 0) && (deliveredTrailer == "null"))
-                        {
-                            int cargotype = 0;
-                            string cargo = "", trailervariant = "", trailerdefinition = "", units_count = "";
-                            index++;
-
-                            for (int i = 0; i < numOfJobOffers; i++)
-                            {
-                                bool JobOfferDataEnded = false;
-
-                                searforstart:
-                                //Find Job offer data
-                                if (tempSavefileInMemory[index].StartsWith("job_offer_data :"))//&& tempSavefileInMemory[line + 1].StartsWith(" cargo: cargo"))
-                                {
-                                    index++;
-
-                                    if (!tempSavefileInMemory[index].StartsWith(" target: \"\""))
-                                    {
-                                        while (!JobOfferDataEnded)
-                                        {
-
-                                            if (tempSavefileInMemory[index].StartsWith(" target:")) //Destination city
-                                            {
-                                                strArrayTarget = tempSavefileInMemory[index].Split(new char[] { '"' });
-                                            }
-                                            else
-                                            if (tempSavefileInMemory[index].StartsWith(" shortest_distance_km:")) //Distance
-                                            {
-                                                distance = tempSavefileInMemory[index].Split(new char[] { ' ' })[2];
-                                            }
-                                            else
-                                            if (tempSavefileInMemory[index].StartsWith(" ferry_time:")) //Ferry time
-                                            {
-                                                ferrytime = tempSavefileInMemory[index].Split(new char[] { ' ' })[2];
-                                            }
-                                            else
-                                            if (tempSavefileInMemory[index].StartsWith(" ferry_price:")) //ferry price
-                                            {
-                                                ferryprice = tempSavefileInMemory[index].Split(new char[] { ' ' })[2];
-                                            }
-                                            else
-                                            if (tempSavefileInMemory[index].StartsWith(" cargo: cargo."))
-                                            {
-                                                //Getting Cargo name
-                                                cargo = tempSavefileInMemory[index].Split(new char[] { '.' })[1];//""; 
-                                            }
-                                            else
-                                            //cargotype
-                                            //Company Truck
-                                            if (tempSavefileInMemory[index].StartsWith(" company_truck:"))
-                                            {
-                                                string[] LineArray = tempSavefileInMemory[index].Split(new char[] { ' ' });
-                                                cargotype = 0;
-
-                                                if (tempSavefileInMemory[index].Contains("\"heavy"))
-                                                {
-                                                    cargotype = 1;
-                                                }
-                                                else if (tempSavefileInMemory[index].Contains("\"double"))
-                                                {
-                                                    cargotype = 2;
-                                                }
-
-                                                CompanyTruckList.Add(new CompanyTruck(LineArray[2], cargotype));
-                                            }
-                                            else
-                                            //Find cargo trailer variant
-                                            if (tempSavefileInMemory[index].StartsWith(" trailer_variant:"))
-                                            {
-                                                trailervariant = tempSavefileInMemory[index].Split(new char[] { ' ' })[2];
-                                                if (!TrailerVariants.Contains(trailervariant))
-                                                    TrailerVariants.Add(trailervariant);
-                                            }
-                                            else
-                                            //Find cargo trailer definition
-                                            if (tempSavefileInMemory[index].StartsWith(" trailer_definition:"))
-                                            {
-                                                trailerdefinition = tempSavefileInMemory[index].Split(new char[] { ' ' })[2];
-                                            }
-                                            else
-                                            if (tempSavefileInMemory[index].StartsWith(" units_count:"))
-                                            {
-                                                units_count = tempSavefileInMemory[index].Split(new char[] { ' ' })[2];
-                                            }
-                                            else
-                                            if (tempSavefileInMemory[index].StartsWith("}"))
-                                            {
-                                                Cargo tempCargo = CargoesList.Find(x => x.CargoName == cargo);
-
-                                                if (tempCargo == null)
-                                                {
-                                                    CargoesList.Add(new Cargo(cargo, cargotype, trailerdefinition, units_count));
-                                                }
-                                                else
-                                                {
-                                                    if (!tempCargo.TrailerDefList.Exists(x => x.DefName == trailerdefinition && x.CargoType == cargotype && x.UnitsCount == int.Parse(units_count)))
-                                                    {
-                                                        CargoesList.Find(x => x.CargoName == cargo).TrailerDefList.Add(new TrailerDefinition(trailerdefinition, cargotype, units_count));
-                                                    }   
-                                                }
-
-                                                if (!TrailerDefinitionVariants.ContainsKey(trailerdefinition))
-                                                {
-                                                    List<string> tmp = new List<string> { trailervariant };
-                                                    TrailerDefinitionVariants.Add(trailerdefinition, tmp);
-                                                }
-                                                else
-                                                {
-                                                    if (!TrailerDefinitionVariants[trailerdefinition].Contains(trailervariant))
-                                                    {
-                                                        TrailerDefinitionVariants[trailerdefinition].Add(trailervariant);
-                                                    }
-                                                }                                                
-
-                                                JobOfferDataEnded = true;
-                                            }
-
-                                            index++;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        index = index + 13;
-                                    }
-                                }
-                                else
-                                {
-                                    index++;
-                                    goto searforstart;
-                                }
-
-                                if (((strArrayTarget != null) && (strArrayTarget.Length == 3)) && (strArrayTarget[1] != ""))
-                                {
-                                    destinationcity = strArrayTarget[1].Split(new char[] { '.' })[1];
-                                    destinationcompany = strArrayTarget[1].Split(new char[] { '.' })[0];
-
-                                    DistancesTable.Rows.Add(sourcecity, sourcecompany, destinationcity, destinationcompany, int.Parse(distance), int.Parse(ferrytime), int.Parse(ferryprice));
-                                }
-                            }
-                        }
-
-                        continue;
-                    }
-
-                    if (tempSavefileInMemory[line].StartsWith("economy_event_queue :"))
-                    {
-                        int newSize = int.Parse(tempSavefileInMemory[line + 1].Split(new char[] { ' ' })[2]); // queue size
-                        //Array.Resize(ref EconomyEventQueueList, newSize);
-                        EconomyEventsTable = new string[newSize, 5];
-
-                        continue;
-                    }
-
-                    if (tempSavefileInMemory[line].StartsWith(" data[") && tempSavefileInMemory[line].Contains("nameless"))
-                    {
-                        EconomyEventsTable[economyEventQueueIndex, 0] = tempSavefileInMemory[line].Split(new char[] { ' ' })[2]; //save nameless string full
-                        economyEventQueueIndex++;
-
-                        continue;
-                    }
-
-                    //Economy events
-                    if (tempSavefileInMemory[line].StartsWith("economy_event : "))
-                    {
-                        for (EconomyEventColumn = 1; EconomyEventColumn < 5; EconomyEventColumn++)
-                        {
-                            EconomyEventsTable[EconomyEventline, EconomyEventColumn] = tempSavefileInMemory[line + EconomyEventColumn - 1];
-
-                            if (EconomyEventColumn == 2)
-                            {
-                                EconomyEventsTable[EconomyEventline, EconomyEventColumn] = EconomyEventsTable[EconomyEventline, EconomyEventColumn].Split(new char[] { ' ' })[2]; //time
-                            }
-                        }
-                        EconomyEventline++;
-
-                        continue;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
-                    MessageBox.Show(ex.Message, "Exception.\r\n" + line.ToString() + " | " + tempSavefileInMemory[line], MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-
-            //end scan
-
             namelessList.Sort();
             namelessList = namelessList.Distinct().ToList();
+
+            PreparePlayerDictionariesInitial();
+            PrepareCitiesInitial();
+            PrepareGaragesInitial();
+            PrepareVisitedCitiesInitial();
+            PrepareGPSInitial();
+            PrepareCargoTrailerDefsVariantsLists();
 
             //ExportnamelessList();
 
@@ -878,139 +105,13 @@ namespace TS_SE_Tool
             }
 
             GaragesList = GaragesList.Distinct().OrderBy(x => x.GarageName).ToList();
+            
+            PrepareDBdata();
 
-            //GetDataFrom Database
-
-            //GetDataFromDatabase("CargoesTable");
-            GetDataFromDatabase("CitysTable");
-            GetDataFromDatabase("CompaniesTable");
-            GetDataFromDatabase("TrucksTable");
-
-            //Compare Data to Database
-            if (CargoesListDB.Count() > 0)
-            {
-
-                CargoComparer CCaad = new CargoComparer();
-                CargoesListDiff = CargoesList.Except(CargoesListDB, CCaad).ToList();
-                Predicate<Cargo> tempCargoPred = null;
-
-                foreach (Cargo tempCargo in CargoesListDiff)
-                {
-                    tempCargoPred = x => x.CargoName == tempCargo.CargoName;
-
-                    int listDBindex = CargoesListDB.FindIndex(tempCargoPred);
-                    int listDIFFindex = CargoesListDiff.FindIndex(tempCargoPred);
-
-                    if (listDBindex != -1)
-                    {
-                        foreach (TrailerDefinition cdef in tempCargo.TrailerDefList)
-                        {
-                            Dictionary<string, int> tempdef = new Dictionary<string, int>();
-
-                            CargoesListDB[listDBindex].TrailerDefList.Add(cdef);
-                        }
-                        CargoesListDB[listDBindex].TrailerDefList = CargoesListDB[listDBindex].TrailerDefList.Distinct().ToList();
-
-                        CargoesListDiff[listDIFFindex].TrailerDefList = CargoesListDB[listDBindex].TrailerDefList;
-                    }
-                    else
-                    {
-                        CargoesListDB.Add(new Cargo(tempCargo.CargoName, tempCargo.TrailerDefList));
-                    }
-                }
-
-            }
-            else
-            {
-                CargoesListDB = CargoesList;
-                CargoesListDiff = CargoesList;
-            }
-
-            if (CitiesListDB.Count() > 0)
-            {
-                foreach (string tempCity in CitiesListDB)
-                {
-                    if (CitiesList.Where(x => x.CityName == tempCity) == null)
-                        CitiesListDiff.Add(tempCity);
-                }
-
-                if (CitiesListDiff != null)
-                    foreach (string tempCity in CitiesListDiff)
-                    {
-                        CitiesListDB.Add(tempCity);
-                    }
-            }
-            else
-            {
-                foreach (City tempCity in CitiesList)
-                {
-                    CitiesListDB.Add(tempCity.CityName);
-                }
-
-                CitiesListDiff = CitiesListDB;
-            }
-
-            if (CompaniesListDB.Count() > 0)
-            {
-                foreach (string tempCompany in CompaniesListDB)
-                {
-                    if (CompaniesList.Where(x => x == tempCompany) == null)
-                        CompaniesListDiff.Add(tempCompany);
-                }
-
-                if (CompaniesListDiff != null)
-                    foreach (string tempCompany in CompaniesListDiff)
-                    {
-                        CompaniesListDB.Add(tempCompany);
-                    }
-            }
-            else
-            {
-                foreach (string tempCompany in CompaniesList)
-                {
-                    CompaniesListDB.Add(tempCompany);
-                }
-
-                CompaniesListDiff = CompaniesListDB;
-            }
-
-            if (CompanyTruckListDB.Count() > 0)
-            {
-                CompanyTruckListDiff = CompanyTruckList.Except(CompanyTruckListDB, new CompanyTruckComparer()).ToList();
-
-                foreach (CompanyTruck tempCompany in CompanyTruckListDiff)
-                {
-                    CompanyTruckListDB.Add(tempCompany);
-                }
-            }
-            else
-            {
-                CompanyTruckListDB = CompanyTruckList;
-                CompanyTruckListDiff = CompanyTruckList;
-            }
-
-
-            SaveCompaniesLng();
-            SaveCitiesLng();
-            SaveCargoLng();
-
-            //save new data to database
-
-            //InsertDataIntoDatabase("CargoesTable");
-            InsertDataIntoDatabase("CitysTable");
-            InsertDataIntoDatabase("CompaniesTable");
-            InsertDataIntoDatabase("TrucksTable");
-
-            //end save data
-
-            AddDistances_DataTableToDB_Bulk(DistancesTable);
             //GetCompaniesCargoInOut();
             worker.ReportProgress(90);
             GetAllDistancesFromDB();
             worker.ReportProgress(100);
-            
-            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_operation_finished");
-            IO_Utilities.LogWriter("Prepare ended");
         }
 
         private void CheckSaveInfoData()
@@ -1230,17 +331,17 @@ namespace TS_SE_Tool
             if (MainSaveFileInfoData.Version < 49)
                 return;
 
-            int setcount = Economy.user_colors.Count() / 4;
+            int setcount = SiiNunitData.Economy.user_colors.Count() / 4;
 
             //iterate through sets
             for (int i = 0; i < setcount; i++)
             {
-                if (Economy.user_colors[4 * i].color.A == 0)
+                if (SiiNunitData.Economy.user_colors[4 * i].color.A == 0)
                 {
                     //clear color set
                     for (int j = 1; j < 4; j++)
                     {
-                        Economy.user_colors[4 * i + j] = new Save.DataFormat.SCS_Color(0, 0, 0, 0);
+                        SiiNunitData.Economy.user_colors[4 * i + j] = new Save.DataFormat.SCS_Color(0, 0, 0, 0);
                     }
                     continue;
                 }
@@ -1254,48 +355,108 @@ namespace TS_SE_Tool
         {
             string[] chunks;
 
-            foreach(string company in Economy.companies)
+            foreach(string company in SiiNunitData.Economy.companies)
             {
                 chunks = company.Split(new char[] { '.' });
 
-                if (chunks[3] == null)
-                {
-                    continue;
-                }
+                string cityname = chunks[3], companyname = chunks[2];
+
+                if (cityname == null)
+                    continue;                
 
                 //Add City to List from companies list
-                if (CitiesList.Where(x => x.CityName == chunks[3]).Count() == 0)
+                if (CitiesList.Where(x => x.CityName == cityname).Count() == 0)
                 {
-                    CitiesList.Add(new City(chunks[3]));
+                    CitiesList.Add(new City(cityname));
                 }
 
-                CompaniesList.Add(chunks[2]); //add company to list
+                CompaniesList.Add(companyname); //add company to list
 
                 //Add Company to City from companies list                            
-                foreach (City tempcity in CitiesList.FindAll(x => x.CityName == chunks[3]))
+                foreach (City tempcity in CitiesList.FindAll(x => x.CityName == cityname))
                 {
-                    tempcity.AddCompany(chunks[2]);
+                    tempcity.AddCompany(companyname);
+
+                    Save.Items.Company tempcompany = (Save.Items.Company)SiiNunitData.SiiNitems[company];
+
+                    tempcity.UpdateCompanyJobOffersCount(companyname, tempcompany.job_offer.Count);
+
+                    tempcity.UpdateCompanyCargoSeeds(companyname, tempcompany.cargo_offer_seeds.ToArray());
                 }
             }
         }
 
         private void PrepareGaragesInitial()
         {
-            foreach(string garage in Economy.garages)
+            foreach (string garage in SiiNunitData.Economy.garages)
             {
                 string garageName = garage.Split(new char[] { '.' })[1];
 
-                GaragesList.Add(new Garages(garageName));
+                Save.Items.Garage tmpSiiNGarage = SiiNunitData.SiiNitems[garage];
+
+                GaragesList.Add(new Garages(garageName, tmpSiiNGarage.status));
+
+                Garages tempGarage = GaragesList.Find(x => x.GarageName == garageName);
+
+                tempGarage.Vehicles.AddRange(tmpSiiNGarage.vehicles);
+                tempGarage.Drivers.AddRange(tmpSiiNGarage.drivers);
+                tempGarage.Trailers.AddRange(tmpSiiNGarage.trailers);
             }
         }
 
         private void PrepareVisitedCitiesInitial()
         {
             int cityid = 0;
-            foreach (string city in Economy.visited_cities)
+            foreach (string city in SiiNunitData.Economy.visited_cities)
             {
-                VisitedCities.Add(new VisitedCity(city, Economy.visited_cities_count[cityid], true));
+                VisitedCities.Add(new VisitedCity(city, SiiNunitData.Economy.visited_cities_count[cityid], true));
                 cityid++;
+            }
+        }
+
+        private void PreparePlayerDictionariesInitial()
+        {
+            foreach (string trck in SiiNunitData.Player.trucks)
+            {
+                UserTruckDictionary.Add(trck, new UserCompanyTruckData());
+
+                UserTruckDictionary[trck].TruckMainData = SiiNunitData.SiiNitems[trck];
+            }
+
+            //
+            foreach (string trlr in SiiNunitData.Player.trailers)
+            {
+                UserTrailerDictionary.Add(trlr, new UserCompanyTrailerData());
+                UserTrailerDictionary[trlr].TrailerMainData = SiiNunitData.SiiNitems[trlr];
+            }
+
+            //
+            foreach (string trlrDef in SiiNunitData.Player.trailer_defs)
+            {
+                UserTrailerDefDictionary.Add(trlrDef, SiiNunitData.SiiNitems[trlrDef]);
+            }
+
+            //
+            string jobtrck = SiiNunitData.Player_Job.company_truck;
+            if(jobtrck != "null")
+            {
+                UserTruckDictionary.Add(jobtrck, new UserCompanyTruckData());
+                UserTruckDictionary[jobtrck].TruckMainData = SiiNunitData.SiiNitems[jobtrck];
+                UserTruckDictionary[jobtrck].Users = false;
+            }
+
+            string jobtrlr = SiiNunitData.Player_Job.company_trailer;
+            if (jobtrlr != "null")
+            {
+                UserTrailerDictionary.Add(jobtrlr, new UserCompanyTrailerData());
+                UserTrailerDictionary[jobtrlr].TrailerMainData = SiiNunitData.SiiNitems[jobtrlr];
+                UserTrailerDictionary[jobtrlr].Users = false;
+            }
+
+            //
+            foreach (string drvr in SiiNunitData.Player.drivers)
+            {
+                UserDriverDictionary.Add(drvr, new UserCompanyDriverData());
             }
         }
 
@@ -1303,35 +464,35 @@ namespace TS_SE_Tool
         {
             //GPS
             //Online
-            foreach(string entry in Economy.stored_online_gps_behind_waypoints)
+            foreach(string entry in SiiNunitData.Economy.stored_online_gps_behind_waypoints)
             {
                 GPSbehindOnline.Add(entry, new List<string>());
             }
 
-            foreach (string entry in Economy.stored_online_gps_ahead_waypoints)
+            foreach (string entry in SiiNunitData.Economy.stored_online_gps_ahead_waypoints)
             {
                 GPSaheadOnline.Add(entry, new List<string>());
             }
 
             //Offline
             //Normal
-            foreach (string entry in Economy.stored_gps_behind_waypoints)
+            foreach (string entry in SiiNunitData.Economy.stored_gps_behind_waypoints)
             {
                 GPSbehind.Add(entry, new List<string>());
             }
 
-            foreach (string entry in Economy.stored_gps_ahead_waypoints)
+            foreach (string entry in SiiNunitData.Economy.stored_gps_ahead_waypoints)
             {
                 GPSahead.Add(entry, new List<string>());
             }
             //Avoid
-            foreach (string entry in Economy.stored_gps_avoid_waypoints)
+            foreach (string entry in SiiNunitData.Economy.stored_gps_avoid_waypoints)
             {
                 GPSAvoid.Add(entry, new List<string>());
             }
         }
 
-        private void PrepareVisitedCities()
+        private void PrepareVisitedCitiesWrite()
         {
             foreach (City city in CitiesList)
             {
@@ -1350,6 +511,250 @@ namespace TS_SE_Tool
                         VisitedCities.Add(new VisitedCity(city.CityName, 0, false));
                 }
             }
+
+            foreach (VisitedCity vc in VisitedCities)
+            {
+                if (vc.Visited)
+                {
+                    if (!SiiNunitData.Economy.visited_cities.Contains(vc.Name))
+                    {
+                        SiiNunitData.Economy.visited_cities.Add(vc.Name);
+                        SiiNunitData.Economy.visited_cities_count.Add(vc.VisitCount);
+                    }
+                }
+                else
+                {
+                    if (SiiNunitData.Economy.visited_cities.Contains(vc.Name))
+                    {
+                        int idx = SiiNunitData.Economy.visited_cities.IndexOf(vc.Name);
+
+                        SiiNunitData.Economy.visited_cities.RemoveAt(idx);
+                        SiiNunitData.Economy.visited_cities_count.RemoveAt(idx);
+                    }
+                }
+            }
+
+        }
+
+        private void PrepareCargoTrailerDefsVariantsLists()
+        {
+            foreach (string company in SiiNunitData.Economy.companies)
+            {
+                Save.Items.Company tmpCompany = SiiNunitData.SiiNitems[company];
+
+                //
+                int cargotype = 0, units_count = 0;
+                string cargo = "", trailervariant = "", trailerdefinition = "", company_truck = "";
+
+                foreach (string job_offer in tmpCompany.job_offer)
+                {
+                    Save.Items.Job_offer_Data tmpJob_offer_Data = SiiNunitData.SiiNitems[job_offer];
+
+                    if (tmpJob_offer_Data.cargo == "null")
+                        continue;
+
+                    //===
+                    company_truck = tmpJob_offer_Data.company_truck;
+
+                    cargo = tmpJob_offer_Data.cargo.Split(new char[] { '.' })[1];
+                    trailervariant = tmpJob_offer_Data.trailer_variant;
+                    trailerdefinition = tmpJob_offer_Data.trailer_definition;
+
+                    units_count = tmpJob_offer_Data.units_count;
+
+                    //===
+
+                    cargotype = 0;
+
+                    //===
+
+                    if (company_truck.Contains("\"heavy"))
+                    {
+                        cargotype = 1;
+                    }
+                    else if (company_truck.Contains("\"double"))
+                    {
+                        cargotype = 2;
+                    }
+
+                    //===
+
+                    CompanyTruckList.Add(new CompanyTruck(company_truck, cargotype));
+
+                    //===
+
+                    if (!TrailerVariants.Contains(trailervariant))
+                        TrailerVariants.Add(trailervariant);
+
+                    //===
+
+
+                    Cargo tempCargo = CargoesList.Find(x => x.CargoName == cargo);
+
+                    if (tempCargo == null)
+                    {
+                        CargoesList.Add(new Cargo(cargo, cargotype, trailerdefinition, units_count));
+                    }
+                    else
+                    {
+                        if (!tempCargo.TrailerDefList.Exists(x => x.DefName == trailerdefinition && x.CargoType == cargotype && x.UnitsCount == units_count))
+                        {
+                            CargoesList.Find(x => x.CargoName == cargo).TrailerDefList.Add(new TrailerDefinition(trailerdefinition, cargotype, units_count));
+                        }
+                    }
+
+                    if (!TrailerDefinitionVariants.ContainsKey(trailerdefinition))
+                    {
+                        List<string> tmp = new List<string> { trailervariant };
+                        TrailerDefinitionVariants.Add(trailerdefinition, tmp);
+                    }
+                    else
+                    {
+                        if (!TrailerDefinitionVariants[trailerdefinition].Contains(trailervariant))
+                        {
+                            TrailerDefinitionVariants[trailerdefinition].Add(trailervariant);
+                        }
+                    }
+                    //===
+                }
+            }
+        }
+
+        private void PrepareDBdata()
+        {
+            //GetDataFrom Database
+
+            //GetDataFromDatabase("CargoesTable");
+            GetDataFromDatabase("CitysTable");
+            GetDataFromDatabase("CompaniesTable");
+            GetDataFromDatabase("TrucksTable");
+
+            //Compare Data to Database
+
+            //=== Cargo
+
+            if (CargoesListDB.Count() > 0)
+            {
+                CargoComparer CCaad = new CargoComparer();
+                CargoesListDiff = CargoesList.Except(CargoesListDB, CCaad).ToList();
+                Predicate<Cargo> tempCargoPred = null;
+
+                foreach (Cargo tempCargo in CargoesListDiff)
+                {
+                    tempCargoPred = x => x.CargoName == tempCargo.CargoName;
+
+                    int listDBindex = CargoesListDB.FindIndex(tempCargoPred);
+                    int listDIFFindex = CargoesListDiff.FindIndex(tempCargoPred);
+
+                    if (listDBindex != -1)
+                    {
+                        foreach (TrailerDefinition cdef in tempCargo.TrailerDefList)
+                        {
+                            Dictionary<string, int> tempdef = new Dictionary<string, int>();
+
+                            CargoesListDB[listDBindex].TrailerDefList.Add(cdef);
+                        }
+                        CargoesListDB[listDBindex].TrailerDefList = CargoesListDB[listDBindex].TrailerDefList.Distinct().ToList();
+
+                        CargoesListDiff[listDIFFindex].TrailerDefList = CargoesListDB[listDBindex].TrailerDefList;
+                    }
+                    else
+                    {
+                        CargoesListDB.Add(new Cargo(tempCargo.CargoName, tempCargo.TrailerDefList));
+                    }
+                }
+            }
+            else
+            {
+                CargoesListDB = CargoesList;
+                CargoesListDiff = CargoesList;
+            }
+
+            //=== Cities
+
+            if (CitiesListDB.Count() > 0)
+            {
+                foreach (string tempCity in CitiesListDB)
+                {
+                    if (CitiesList.Where(x => x.CityName == tempCity) == null)
+                        CitiesListDiff.Add(tempCity);
+                }
+
+                if (CitiesListDiff != null)
+                    foreach (string tempCity in CitiesListDiff)
+                    {
+                        CitiesListDB.Add(tempCity);
+                    }
+            }
+            else
+            {
+                foreach (City tempCity in CitiesList)
+                {
+                    CitiesListDB.Add(tempCity.CityName);
+                }
+
+                CitiesListDiff = CitiesListDB;
+            }
+
+            //=== Companies
+
+            if (CompaniesListDB.Count() > 0)
+            {
+                foreach (string tempCompany in CompaniesListDB)
+                {
+                    if (CompaniesList.Where(x => x == tempCompany) == null)
+                        CompaniesListDiff.Add(tempCompany);
+                }
+
+                if (CompaniesListDiff != null)
+                    foreach (string tempCompany in CompaniesListDiff)
+                    {
+                        CompaniesListDB.Add(tempCompany);
+                    }
+            }
+            else
+            {
+                foreach (string tempCompany in CompaniesList)
+                {
+                    CompaniesListDB.Add(tempCompany);
+                }
+
+                CompaniesListDiff = CompaniesListDB;
+            }
+
+            //=== Trucks
+
+            if (CompanyTruckListDB.Count() > 0)
+            {
+                CompanyTruckListDiff = CompanyTruckList.Except(CompanyTruckListDB, new CompanyTruckComparer()).ToList();
+
+                foreach (CompanyTruck tempCompany in CompanyTruckListDiff)
+                {
+                    CompanyTruckListDB.Add(tempCompany);
+                }
+            }
+            else
+            {
+                CompanyTruckListDB = CompanyTruckList;
+                CompanyTruckListDiff = CompanyTruckList;
+            }
+
+            //
+
+            SaveCompaniesLng();
+            SaveCitiesLng();
+            SaveCargoLng();
+
+            //save new data to database
+
+            //InsertDataIntoDatabase("CargoesTable");
+            InsertDataIntoDatabase("CitysTable");
+            InsertDataIntoDatabase("CompaniesTable");
+            InsertDataIntoDatabase("TrucksTable");
+
+            //end save data
+
+            AddDistances_DataTableToDB_Bulk(DistancesTable);
         }
 
         //Apply new garage size and Copy extra items to temp Lists
@@ -1408,7 +813,7 @@ namespace TS_SE_Tool
 
             if (extraTrailers.Count > 0)
             {
-                GaragesList[GaragesList.FindIndex(x => x.GarageName == Player.hq_city)].Trailers.AddRange(extraTrailers);
+                GaragesList[GaragesList.FindIndex(x => x.GarageName == SiiNunitData.Player.hq_city)].Trailers.AddRange(extraTrailers);
                 extraTrailers.Clear();
             }
 
@@ -1425,9 +830,9 @@ namespace TS_SE_Tool
 
             if (extraDrivers.Count() > 0)
             {
-                if (extraDrivers.Contains(Economy.driver_pool[0]))
+                if (extraDrivers.Contains(SiiNunitData.Economy.driver_pool[0]))
                 {
-                    Garages tmpG = new Garages(Player.hq_city);
+                    Garages tmpG = new Garages(SiiNunitData.Player.hq_city);
 
                     int hqIdx = GaragesList.IndexOf(tmpG);
                     int sIdx = 0;
@@ -1463,7 +868,7 @@ namespace TS_SE_Tool
                     extraDrivers.Add(GaragesList[hqIdx].Drivers[DrvIdx]);
                     extraVehicles.Add(GaragesList[hqIdx].Vehicles[DrvIdx]);
 
-                    int tmpIdx = extraDrivers.IndexOf(Economy.driver_pool[0]);
+                    int tmpIdx = extraDrivers.IndexOf(SiiNunitData.Economy.driver_pool[0]);
 
                     GaragesList[hqIdx].Drivers[DrvIdx] = extraDrivers[tmpIdx];
                     GaragesList[hqIdx].Vehicles[DrvIdx] = extraVehicles[tmpIdx];
@@ -1474,8 +879,22 @@ namespace TS_SE_Tool
             }
         }
 
+        private void PrepareGaragesWrite()
+        {
+            foreach(string grg in SiiNunitData.Economy.garages)
+            {
+                Save.Items.Garage siiGarage = SiiNunitData.SiiNitems[grg];
+                Garages prgrGarage = GaragesList.Find(x => x.GarageName == grg.Split(new char[] { '.' })[1]);
+
+                siiGarage.drivers = prgrGarage.Drivers;
+                siiGarage.vehicles = prgrGarage.Vehicles;
+                siiGarage.trailers = prgrGarage.Trailers;
+                siiGarage.status = prgrGarage.GarageStatus;
+            }
+        }
+
         //Rearrange extra User Drivers to glogal Driver pool
-        private void PrepareDriversTrucks()
+        private void PrepareDriversTrucksWrite()
         {
             extraDrivers.RemoveAll(x => x == null);
 
@@ -1483,13 +902,14 @@ namespace TS_SE_Tool
             {
                 if (tmp != null)
                 {
-                    Economy.driver_pool.Add(tmp);
+                    SiiNunitData.Economy.driver_pool.Add(tmp);
                     UserDriverDictionary.Remove(tmp);
                 }
             }
 
             extraVehicles.RemoveAll(x => x == null);
         }
+
         //Sort events by time
         private void PrepareEvents()
         {
@@ -1500,7 +920,7 @@ namespace TS_SE_Tool
                 {
                     if ((EconomyEventUnitLinkStringList[i] == EconomyEventsTable[j, 3]) && (EconomyEventsTable[j, 4] == " param: 0"))
                     {
-                        EconomyEventsTable[j, 2] = (Economy.game_time + (((i + 1) * ProgSettingsV.JobPickupTime) * 60)).ToString(); //time
+                        EconomyEventsTable[j, 2] = (SiiNunitData.Economy.game_time + (((i + 1) * ProgSettingsV.JobPickupTime) * 60)).ToString(); //time
                     }
                     j++;
                 }
@@ -1529,6 +949,9 @@ namespace TS_SE_Tool
                     }
                 }
             }
+
+            //===
+
         }
 
         private void AddCargo(bool JobEditing )
@@ -1591,7 +1014,7 @@ namespace TS_SE_Tool
                     unCertainRouteLength = "*";
                 }
                 //Time untill job expires
-                int ExpirationTime = Economy.game_time + RandomValue.Next(180, 1800) + (JobsAmountAdded * ProgSettingsV.JobPickupTime * 60);
+                int ExpirationTime = SiiNunitData.Economy.game_time + RandomValue.Next(180, 1800) + (JobsAmountAdded * ProgSettingsV.JobPickupTime * 60);
                 #endregion
 
                 //Creating Job data
@@ -1653,6 +1076,7 @@ namespace TS_SE_Tool
                 {
                     //Editin Job
                     AddedJobsDictionary[companyNameJob].Remove(FreightMarketJob);
+
                     if (AddedJobsDictionary[companyNameJob].Count == 0)
                         AddedJobsDictionary.Remove(companyNameJob);
 

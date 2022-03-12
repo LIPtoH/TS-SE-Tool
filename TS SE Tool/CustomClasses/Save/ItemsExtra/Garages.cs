@@ -80,5 +80,10 @@ namespace TS_SE_Tool
             return output;
         }
 
+
+        public override string ToString()
+        {
+            return GarageName + " | D:" + Drivers.Count + "| V:" + Vehicles.Count;
+        }
     }
 }

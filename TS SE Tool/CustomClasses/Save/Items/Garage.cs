@@ -37,6 +37,8 @@ namespace TS_SE_Tool.Save.Items
 
                     tagLine = splittedLine[0].Trim();
                     dataLine = splittedLine[1].Trim();
+
+                    dataLine = dataLine == "null" ? null : dataLine;
                 }
                 else
                 {
@@ -126,11 +128,11 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" vehicles: " + vehicles.Count);
             for (int i = 0; i < vehicles.Count; i++)
-                returnSB.AppendLine(" vehicles[" + i + "]: " + vehicles[i]);
+                returnSB.AppendLine(" vehicles[" + i + "]: " + (vehicles[i] == null ? "null" : vehicles[i]));
 
             returnSB.AppendLine(" drivers: " + drivers.Count);
             for (int i = 0; i < drivers.Count; i++)
-                returnSB.AppendLine(" drivers[" + i + "]: " + drivers[i]);
+                returnSB.AppendLine(" drivers[" + i + "]: " + (drivers[i] == null ? "null" : drivers[i]));
 
             returnSB.AppendLine(" trailers: " + trailers.Count);
             for (int i = 0; i < trailers.Count; i++)

@@ -113,7 +113,7 @@ namespace TS_SE_Tool
         {
             FormUpdatePlayerLevel();
 
-            char[] ADR = Convert.ToString(Economy.adr, 2).PadLeft(6, '0').ToCharArray();
+            char[] ADR = Convert.ToString(SiiNunitData.Economy.adr, 2).PadLeft(6, '0').ToCharArray();
 
             for (int i = 0; i < ADR.Length; i++)
             {
@@ -123,7 +123,7 @@ namespace TS_SE_Tool
 
             for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < Economy._playerSkills[i + 1]; j++)
+                for (int j = 0; j < SiiNunitData.Economy._playerSkills[i + 1]; j++)
                 {
                     SkillButtonArray[i, j].Checked = true;
                 }
@@ -139,7 +139,10 @@ namespace TS_SE_Tool
 
         private void FormUpdatePlayerLevel()
         {
-            int[] playerLvlPlus = Economy.getPlayerLvl();
+            if (SiiNunitData == null)
+                return;
+
+            int[] playerLvlPlus = SiiNunitData.Economy.getPlayerLvl();
             int playerlvl = playerLvlPlus[0];
 
             for (int i = PlayerLevelNames.Count - 1; i >= 0; i--)
@@ -152,8 +155,8 @@ namespace TS_SE_Tool
 
             labelPlayerLevelNumber.Text = playerlvl.ToString();
 
-            labelPlayerExperience.Text = Economy.experience_points.ToString();
-            labelExperienceNxtLvlThreshhold.Text = "/   " + playerLvlPlus[1].ToString();
+            labelPlayerExperience.Text = SiiNunitData.Economy.experience_points.ToString();
+            labelPlayerExperienceNxtLvlThreshhold.Text = playerLvlPlus[1].ToString();
         }
 
         private void CreateUserColorsButtons()
@@ -163,7 +166,7 @@ namespace TS_SE_Tool
                         
             if (MainSaveFileInfoData.Version >= 49)
             {
-                int ucc = Economy.user_colors.Count / 4;
+                int ucc = SiiNunitData.Economy.user_colors.Count / 4;
                 int btnNumber = 0;
 
                 for (int i = 0; i < ucc; i++)
@@ -200,7 +203,7 @@ namespace TS_SE_Tool
                 panelProfileUserColors.MouseWheel += new MouseEventHandler(this.panelProfileUserColors_MouseWheel);
             }
             else
-                for (int i = 0; i < Economy.user_colors.Count; i++)
+                for (int i = 0; i < SiiNunitData.Economy.user_colors.Count; i++)
                 {
                     Button rb = new Button();
                     rb.Name = "buttonUC" + i.ToString();
@@ -265,9 +268,9 @@ namespace TS_SE_Tool
             {
                 int padding = 3, width = 24, height = 24, spacing = 4;
 
-                panelProfileUserColors.VerticalScroll.Maximum = (height + spacing) * Economy.user_colors.Count / 4;
+                panelProfileUserColors.VerticalScroll.Maximum = (height + spacing) * SiiNunitData.Economy.user_colors.Count / 4;
 
-                for (int i = 0; i < Economy.user_colors.Count; i++)
+                for (int i = 0; i < SiiNunitData.Economy.user_colors.Count; i++)
                 {
                     Button btn = null;
                     string btnname = "buttonUC" + i.ToString();
@@ -278,7 +281,7 @@ namespace TS_SE_Tool
 
                         btn.Enabled = true;
 
-                        if (Economy.user_colors[i].color.A == 0)
+                        if (SiiNunitData.Economy.user_colors[i].color.A == 0)
                         {
                             btn.Text = "X";
                             btn.BackColor = Color.FromName("Control");
@@ -286,7 +289,7 @@ namespace TS_SE_Tool
                         else
                         {
                             btn.Text = "";
-                            btn.BackColor = Economy.user_colors[i].color;
+                            btn.BackColor = SiiNunitData.Economy.user_colors[i].color;
                         }
                     }
                     else
@@ -311,7 +314,7 @@ namespace TS_SE_Tool
 
                             btn.Enabled = true;
 
-                            if (Economy.user_colors[i].color.A == 0)
+                            if (SiiNunitData.Economy.user_colors[i].color.A == 0)
                             {
                                 btn.Text = "X";
                                 btn.BackColor = Color.FromName("Control");
@@ -319,7 +322,7 @@ namespace TS_SE_Tool
                             else
                             {
                                 btn.Text = "";
-                                btn.BackColor = Economy.user_colors[i].color;
+                                btn.BackColor = SiiNunitData.Economy.user_colors[i].color;
                             }
                             i++;
                         }
@@ -331,7 +334,7 @@ namespace TS_SE_Tool
             {
                 int padding = 6, width = 23;
 
-                for (int i = 0; i < Economy.user_colors.Count; i++)
+                for (int i = 0; i < SiiNunitData.Economy.user_colors.Count; i++)
                 {
                     Button btn = null;
                     string btnname = "buttonUC" + i.ToString();
@@ -356,7 +359,7 @@ namespace TS_SE_Tool
                     if (btn != null)
                     {
                         btn.Enabled = true;
-                        if (Economy.user_colors[i].color.A == 0)
+                        if (SiiNunitData.Economy.user_colors[i].color.A == 0)
                         {
                             btn.Text = "X";
                             btn.BackColor = Color.FromName("Control");
@@ -364,7 +367,7 @@ namespace TS_SE_Tool
                         else
                         {
                             btn.Text = "";
-                            btn.BackColor = Economy.user_colors[i].color;
+                            btn.BackColor = SiiNunitData.Economy.user_colors[i].color;
                         }
                     }
                 }
@@ -413,7 +416,7 @@ namespace TS_SE_Tool
             {
                 int index = int.Parse(obj.Name.Substring(8));
 
-                Economy.user_colors[index].color = frm.PrimaryColor;
+                SiiNunitData.Economy.user_colors[index].color = frm.PrimaryColor;
 
                 if (frm.PrimaryColor.A != 0)
                 {
@@ -440,7 +443,7 @@ namespace TS_SE_Tool
         {
             for (int i = 0; i < 4; i++)
             {
-                Economy.user_colors.Add(new Save.DataFormat.SCS_Color(0, 0, 0, 0));
+                SiiNunitData.Economy.user_colors.Add(new Save.DataFormat.SCS_Color(0, 0, 0, 0));
             }
 
             //Scroll panel to the top to properly add buttons
@@ -461,8 +464,8 @@ namespace TS_SE_Tool
 
         internal void RemoveUserColorUnused4slot()
         {
-            int counter = Economy.user_colors.Count - 1;
-            int slotCount = Economy.user_colors.Count / 4;
+            int counter = SiiNunitData.Economy.user_colors.Count - 1;
+            int slotCount = SiiNunitData.Economy.user_colors.Count / 4;
 
             try
             {
@@ -472,7 +475,7 @@ namespace TS_SE_Tool
 
                     for (int i = 0; i < 4; i++)
                     {
-                        if (Economy.user_colors[counter - i].color.A == 0)
+                        if (SiiNunitData.Economy.user_colors[counter - i].color.A == 0)
                         {
                             delete = true;
                         }
@@ -496,7 +499,7 @@ namespace TS_SE_Tool
                             if (tempArray.Length > 0)
                             {
                                 panelProfileUserColors.Controls.Remove(tempArray[0]);
-                                Economy.user_colors.RemoveAt(btnNumber);
+                                SiiNunitData.Economy.user_colors.RemoveAt(btnNumber);
                             }
                             else
                             {
@@ -510,7 +513,7 @@ namespace TS_SE_Tool
                     }
                 }
 
-                if (Economy.user_colors.Count / 4 >= 40)
+                if (SiiNunitData.Economy.user_colors.Count / 4 >= 40)
                     buttonAddUserColor.Enabled = false;
                 else
                     buttonAddUserColor.Enabled = true;
@@ -537,42 +540,42 @@ namespace TS_SE_Tool
         //Profile buttons
         private void buttonPlayerLvlPlus01_Click(object sender, EventArgs e)
         {
-            Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
+            SiiNunitData.Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 1);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlPlus10_Click(object sender, EventArgs e)
         {
-            Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
+            SiiNunitData.Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) + 10);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMax_Click(object sender, EventArgs e)
         {
-            Economy.setPlayerExp(150);
+            SiiNunitData.Economy.setPlayerExp(150);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMinus01_Click(object sender, EventArgs e)
         {
-            Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
+            SiiNunitData.Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 1);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMinus10_Click(object sender, EventArgs e)
         {
-            Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
+            SiiNunitData.Economy.setPlayerExp(int.Parse(labelPlayerLevelNumber.Text) - 10);
 
             FormUpdatePlayerLevel();
         }
 
         private void buttonPlayerLvlMin_Click(object sender, EventArgs e)
         {
-            Economy.setPlayerExp(0);
+            SiiNunitData.Economy.setPlayerExp(0);
 
             FormUpdatePlayerLevel();
         }
@@ -590,15 +593,15 @@ namespace TS_SE_Tool
             {
                 for (int j = 0; j < buttonIndex; j++)                
                     SkillButtonArray[skillIndex, j].Checked = true;
-                
-                Economy._playerSkills[++skillIndex] = ++buttonIndex;
+
+                SiiNunitData.Economy._playerSkills[++skillIndex] = ++buttonIndex;
             }
             else
             {
                 for (int j = 5; j >= buttonIndex; j--)                
                     SkillButtonArray[skillIndex, j].Checked = false;
-                
-                Economy._playerSkills[++skillIndex] = buttonIndex;
+
+                SiiNunitData.Economy._playerSkills[++skillIndex] = buttonIndex;
             }
         }
 
@@ -662,13 +665,13 @@ namespace TS_SE_Tool
             CheckBox thisbutton = sender as CheckBox;
 
             byte adrIndex = byte.Parse(thisbutton.Name.Substring(9, 1));
-            char[] ADR = Convert.ToString(Economy._playerSkills[0], 2).PadLeft(6, '0').ToCharArray();
+            char[] ADR = Convert.ToString(SiiNunitData.Economy._playerSkills[0], 2).PadLeft(6, '0').ToCharArray();
 
             if (thisbutton.Checked)
             {
                 ADR[adrIndex] = '1';
 
-                Economy._playerSkills[0] = Convert.ToByte(new string(ADR), 2);
+                SiiNunitData.Economy._playerSkills[0] = Convert.ToByte(new string(ADR), 2);
             }
             else
             {
@@ -676,7 +679,7 @@ namespace TS_SE_Tool
 
                 string temp = new string(ADR);
 
-                Economy._playerSkills[0] = Convert.ToByte(temp.PadLeft(6, '0'), 2);
+                SiiNunitData.Economy._playerSkills[0] = Convert.ToByte(temp.PadLeft(6, '0'), 2);
             }
 
             thisbutton.BackgroundImage = SkillImgSBG[1];

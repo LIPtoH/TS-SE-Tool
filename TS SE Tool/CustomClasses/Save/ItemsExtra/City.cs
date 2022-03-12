@@ -55,20 +55,25 @@ namespace TS_SE_Tool
             Companies.Add(new Company(_companyName, _jobsoffer));
         }
 
-        public void UpdateCompany(string _companyName, int _jobsoffer)
+        public void UpdateCompanyJobOffersCount(string _companyName, int _jobsoffer)
         {
-            foreach (Company company in Companies)
-            {
-                if (company.CompanyName == _companyName)
-                {
-                    company.JobsOffers = _jobsoffer;
-                }
-            }
+            Company val =  Companies.First(x => x.CompanyName == _companyName);
+
+            if (val != null)
+                val.JobsOffers = _jobsoffer;
+        }
+
+        public void UpdateCompanyCargoSeeds(string _companyName, uint[] _cargoSeeds)
+        {
+            Company val = Companies.First(x => x.CompanyName == _companyName);
+
+            if (val != null)
+                val.CargoSeeds = _cargoSeeds;
         }
 
         public void UpdateCompanyCargoOfferCount(string _companyName, int _cargooffers)
         {
-            Array.Resize(ref Companies.Find(x => x.CompanyName == _companyName).CragoSeeds, _cargooffers);
+            Array.Resize(ref Companies.Find(x => x.CompanyName == _companyName).CargoSeeds, _cargooffers);
         }
 
         public void ExcludeCompany()

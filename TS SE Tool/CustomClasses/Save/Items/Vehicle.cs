@@ -24,23 +24,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal List<string> accessories { get; set; } = new List<string>();
 
-        internal string license_plate { get; set; } = "";
-        internal string _license_plate
-        {
-            get
-            {
-                return TextUtilities.FromStringToOutputString(license_plate);
-            }
-            set
-            {
-                string data = value;
-
-                if (value.StartsWith("\"") && value.EndsWith("\""))
-                    data = value.Substring(1, value.Length - 2);
-
-                license_plate = data;
-            }
-        }
+        internal SCS_String license_plate { get; set; } = "";
 
         internal SCS_Float fuel_relative { get; set; } = 1;
 
@@ -152,7 +136,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "license_plate":
                             {
-                                _license_plate = dataLine;
+                                license_plate = dataLine;
                                 break;
                             }
 
@@ -321,7 +305,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" trip_time_min: " + trip_time_min);
             returnSB.AppendLine(" trip_time: " + trip_time.ToString());
 
-            returnSB.AppendLine(" license_plate: " + _license_plate);
+            returnSB.AppendLine(" license_plate: " + license_plate.ToString());
 
             returnSB.AppendLine(" chassis_wear: " + chassis_wear.ToString());
 

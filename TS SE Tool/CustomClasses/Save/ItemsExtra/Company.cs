@@ -23,7 +23,7 @@ namespace TS_SE_Tool
         public string CompanyNameTranslated { get; set; }
 
         public int JobsOffers { get; set; } = 0;
-        public int[] CragoSeeds = new int[0];
+        public uint[] CargoSeeds = new uint[0];
 
         public bool Excluded { get; set; } = false;
 

@@ -14,8 +14,32 @@ namespace TS_SE_Tool.Save.Items
         internal Dictionary<string, dynamic> SiiNitems = new Dictionary<string, dynamic>();
 
         internal string EconomyNameless = "";
-                
+
         private Dictionary<string, List<string>> NewBlocks = new Dictionary<string, List<string>>();
+
+        internal Economy Economy
+        {
+            get => (Economy)SiiNitems[EconomyNameless];
+            set => SiiNitems[EconomyNameless] = value;
+        }
+
+        internal Bank Bank
+        {
+            get => (Bank)SiiNitems[Economy.bank];
+            set => SiiNitems[Economy.bank] = value;
+        }
+
+        internal Player Player
+        {
+            get => (Player)SiiNitems[Economy.player];
+            set => SiiNitems[Economy.player] = value;
+        }
+
+        internal Player_Job Player_Job
+        {
+            get => (Player_Job)SiiNitems[Player.current_job];
+            set => SiiNitems[Player.current_job] = value;
+        }
 
         internal SiiNunit()
         { }
@@ -167,6 +191,13 @@ namespace TS_SE_Tool.Save.Items
                     case "vehicle_sound_accessory":
                         {
                             SiiNitems.Add(nameless, new Vehicle_Sound_Accessory(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "vehicle_cargo_accessory":
+                        {
+                            SiiNitems.Add(nameless, new Vehicle_Cargo_Accessory(GetLines().ToArray()));
 
                             break;
                         }
@@ -364,10 +395,13 @@ namespace TS_SE_Tool.Save.Items
                             if (!NewDataBlocks.Contains(tagLine))
                             {
                                 NewDataBlocks.Add(tagLine);
-                                Utilities.IO_Utilities.ErrorLogWriter("Save | New Data block | " + tagLine);
+
+                                List<string> tmpNewBlockLines = GetLines();
+
+                                Utilities.IO_Utilities.ErrorLogWriter("Save | New Data block | " + tagLine + Environment.NewLine + string.Join(Environment.NewLine, tmpNewBlockLines));
 
                                 //Add new block data
-                                NewBlocks.Add(nameless, GetLines());
+                                NewBlocks.Add(nameless, tmpNewBlockLines);
                             }
 
                             break;
@@ -681,15 +715,18 @@ namespace TS_SE_Tool.Save.Items
 
             //=== 
 
-            Ferry_log Ferry_log = SiiNitems[Economy.ferry_log];
-
-            returnSB.AppendLine(Ferry_log.PrintOut(0, Economy.ferry_log));
-
-            foreach (string item in Ferry_log.entries)
+            if (SiiNitems.ContainsKey(Economy.ferry_log))
             {
-                returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
+                Ferry_log Ferry_log = SiiNitems[Economy.ferry_log];
+
+                returnSB.AppendLine(Ferry_log.PrintOut(0, Economy.ferry_log));
+
+                foreach (string item in Ferry_log.entries)
+                {
+                    returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
+                }
             }
-            
+
             //=== GPS Online
 
             foreach (string item in Economy.stored_online_gps_behind_waypoints)

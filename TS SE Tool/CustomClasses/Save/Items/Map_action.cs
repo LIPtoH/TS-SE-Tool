@@ -16,7 +16,8 @@ namespace TS_SE_Tool.Save.Items
 
         internal string command { get; set; } = "";
 
-        internal List<SCS_Float> num_params { get; set; } = new List<SCS_Float>();
+        internal List<string> num_params { get; set; } = new List<string>();
+        //internal List<SCS_Float> num_params { get; set; } = new List<SCS_Float>();
 
         internal List<string> str_params { get; set; } = new List<string>();
 
@@ -153,7 +154,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" num_params: " + num_params.Count);
             for (int i = 0; i < num_params.Count; i++)
-                returnSB.AppendLine(" num_params[" + i + "]: " + num_params[i].ToHexString());
+                returnSB.AppendLine(" num_params[" + i + "]: " + num_params[i]);
 
             returnSB.AppendLine(" str_params: " + str_params.Count);
             for (int i = 0; i < str_params.Count; i++)

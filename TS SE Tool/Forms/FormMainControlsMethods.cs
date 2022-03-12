@@ -109,8 +109,8 @@ namespace TS_SE_Tool
                 CorrectControlsPositions();
             }
             catch
-            {
-            }
+            { }
+
             //rm.ReleaseAllResources();
         }
 
@@ -125,6 +125,7 @@ namespace TS_SE_Tool
         private void localPDFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string pdf_path = Directory.GetCurrentDirectory() + @"\HowTo.pdf";
+
             if (File.Exists(pdf_path))
                 Process.Start(pdf_path);
             else
@@ -221,7 +222,8 @@ namespace TS_SE_Tool
         {
             if (tempSavefileInMemory != null)
             {
-                DialogResult result = MessageBox.Show("Savefile not saved.\nDo you want to discard changes and switch game type?", "Switching game", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("Savefile not saved.\nDo you want to discard changes and switch game type?", "Switching game", 
+                    MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.No)
                     return;
@@ -259,7 +261,7 @@ namespace TS_SE_Tool
             FormWindow.ParentForm = this;
             DialogResult t = FormWindow.ShowDialog();
 
-            if(t != DialogResult.Cancel)
+            if (t != DialogResult.Cancel)
             {
                 //Refresh
                 buttonMainDecryptSave.Enabled = true;
@@ -344,9 +346,8 @@ namespace TS_SE_Tool
             //File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
             File.Copy(SiiSavePath, SavefilePath + @"\game_backup.sii", true);
 
+            //Write
             NewWrireSaveFile();
-
-            //WriteSaveFile(); //Save save file with or without changes
 
             buttonMainDecryptSave.Enabled = true;
             MessageBox.Show("File saved", "Saving", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -584,10 +585,8 @@ namespace TS_SE_Tool
 
         private void comboBoxPrevProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!Directory.Exists(Globals.ProfilesPaths[comboBoxPrevProfiles.SelectedIndex]))
-            {
-                return;
-            }
+            if (!Directory.Exists(Globals.ProfilesPaths[comboBoxPrevProfiles.SelectedIndex]))            
+                return;            
 
             buttonProfilesAndSavesEditProfile.Enabled = false;
             buttonMainDecryptSave.Enabled = false;

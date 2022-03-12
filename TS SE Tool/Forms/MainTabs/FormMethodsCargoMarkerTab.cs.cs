@@ -58,9 +58,9 @@ namespace TS_SE_Tool
             comboBoxCargoMarketSourceCity.DisplayMember = "CityName";
             comboBoxCargoMarketSourceCity.DataSource = combDT;
 
-            DataRow foundRow = combDT.Rows.Find(new object[1] { Economy.last_visited_city });
-            if (combDT.Rows.Find(new object[1] { Economy.last_visited_city }) != null)
-                comboBoxCargoMarketSourceCity.SelectedValue = Economy.last_visited_city;
+            DataRow foundRow = combDT.Rows.Find(new object[1] { SiiNunitData.Economy.last_visited_city });
+            if (combDT.Rows.Find(new object[1] { SiiNunitData.Economy.last_visited_city }) != null)
+                comboBoxCargoMarketSourceCity.SelectedValue = SiiNunitData.Economy.last_visited_city;
         }
 
         private void comboBoxSourceCityCM_SelectedIndexChanged(object sender, EventArgs e)
@@ -163,11 +163,11 @@ namespace TS_SE_Tool
 
             if (comboBoxCargoMarketSourceCity.SelectedValue != null && comboBoxSourceCargoMarketCompany.SelectedValue != null) //&& ExternalCompanies.Count > 0)
             {
-                foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds)
+                foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CargoSeeds)
                 {
                     string cargoforseed = "";
-                    listBoxCargoMarketSourceCargoSeeds.Items.Add("" + cargoseed.ToString().PadRight(12, ' ') + " | Time left " + ((cargoseed - Economy.game_time) / 60).ToString().PadLeft(2) + " h " +
-                        ((cargoseed - Economy.game_time) % 60).ToString().PadLeft(2) + " m " + cargoforseed);
+                    listBoxCargoMarketSourceCargoSeeds.Items.Add("" + cargoseed.ToString().PadRight(12, ' ') + " | Time left " + ((cargoseed - SiiNunitData.Economy.game_time) / 60).ToString().PadLeft(2) + " h " +
+                        ((cargoseed - SiiNunitData.Economy.game_time) % 60).ToString().PadLeft(2) + " m " + cargoforseed);
                 }
             }
             else
@@ -181,14 +181,14 @@ namespace TS_SE_Tool
             List<Company> CityCompanies = CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies();
             List<Company> RealCompanies = CityCompanies.FindAll(x => !x.Excluded);
 
-            int[] tempseeds = new int[10];
+            uint[] tempseeds = new uint[10];
 
             for (int i = 0; i < tempseeds.Length; i++)
             {
-                tempseeds[i] = Economy.game_time + RandomValue.Next(180, 1800);
+                tempseeds[i] = (uint)SiiNunitData.Economy.game_time + (uint)RandomValue.Next(180, 1800);
             }
 
-            RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds = tempseeds;
+            RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CargoSeeds = tempseeds;
 
             PrintCargoSeeds();
         }
@@ -198,7 +198,7 @@ namespace TS_SE_Tool
             List<Company> CityCompanies = CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies();
             List<Company> RealCompanies = CityCompanies.FindAll(x => !x.Excluded);
 
-            RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CragoSeeds = new int[0];
+            RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CargoSeeds = new uint[0];
 
             PrintCargoSeeds();
         }
@@ -210,14 +210,14 @@ namespace TS_SE_Tool
 
             foreach (Company company in RealCompanies)
             {
-                int[] tempseeds = new int[10];
+                uint[] tempseeds = new uint[10];
 
                 for (int i = 0; i < tempseeds.Length; i++)
                 {
-                    tempseeds[i] = Economy.game_time + RandomValue.Next(180, 1800);
+                    tempseeds[i] = (uint)SiiNunitData.Economy.game_time + (uint)RandomValue.Next(180, 1800);
                 }
 
-                company.CragoSeeds = tempseeds;
+                company.CargoSeeds = tempseeds;
             }
 
             PrintCargoSeeds();
@@ -230,7 +230,7 @@ namespace TS_SE_Tool
 
             foreach (Company company in RealCompanies)
             {
-                company.CragoSeeds = new int[0];
+                company.CargoSeeds = new uint[0];
             }
 
             PrintCargoSeeds();

@@ -184,6 +184,7 @@
     <Compile Include="CustomClasses\Save\Items\Trailer_Utilization_log_Entry.cs" />
     <Compile Include="CustomClasses\Save\Items\Transport_Data.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle.cs" />
+    <Compile Include="CustomClasses\Save\Items\Vehicle_Cargo_Accessory.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle_Drv_plate_Accessory.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle_Paint_job_Accessory.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle_Sound_Accessory.cs" />

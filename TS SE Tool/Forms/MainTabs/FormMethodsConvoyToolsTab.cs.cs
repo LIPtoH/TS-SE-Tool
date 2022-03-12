@@ -28,7 +28,7 @@ namespace TS_SE_Tool
         {
             string tempString = "GPS_TruckPosition\r\n";
 
-            tempString += Player.my_truck_placement;
+            tempString += SiiNunitData.Player.my_truck_placement;
             string asd = BitConverter.ToString(Utilities.ZipDataUtilities.zipText(tempString)).Replace("-", "");
             Clipboard.SetText(asd);
             MessageBox.Show("Truck GPS position has been copied.");
@@ -50,7 +50,7 @@ namespace TS_SE_Tool
                         tempstr.Add(Lines[i]);
                     }
 
-                    Player.my_truck_placement = new Vector_3f_4f(tempstr[0]);
+                    SiiNunitData.Player.my_truck_placement = new Vector_3f_4f(tempstr[0]);
 
                     MessageBox.Show("Truck GPS position has been inserted.");
                 }

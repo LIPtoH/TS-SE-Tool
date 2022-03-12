@@ -161,8 +161,10 @@ namespace TS_SE_Tool
             // 
             this.treeViewSavedTrucks.CheckBoxes = true;
             this.treeViewSavedTrucks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewSavedTrucks.FullRowSelect = true;
             this.treeViewSavedTrucks.Location = new System.Drawing.Point(198, 37);
             this.treeViewSavedTrucks.Name = "treeViewSavedTrucks";
+            this.treeViewSavedTrucks.ShowNodeToolTips = true;
             this.treeViewSavedTrucks.Size = new System.Drawing.Size(189, 326);
             this.treeViewSavedTrucks.TabIndex = 1;
             // 
@@ -313,6 +315,7 @@ namespace TS_SE_Tool
             this.treeViewSortingTrucks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewSortingTrucks.Location = new System.Drawing.Point(198, 37);
             this.treeViewSortingTrucks.Name = "treeViewSortingTrucks";
+            this.treeViewSortingTrucks.ShowNodeToolTips = true;
             this.treeViewSortingTrucks.Size = new System.Drawing.Size(189, 326);
             this.treeViewSortingTrucks.TabIndex = 1;
             // 

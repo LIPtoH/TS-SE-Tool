@@ -52,10 +52,10 @@ namespace TS_SE_Tool
             this.buttonCloneProfile = new System.Windows.Forms.Button();
             this.buttonExportSettings = new System.Windows.Forms.Button();
             this.buttonImportSettings = new System.Windows.Forms.Button();
+            this.labelSettings = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.labelSettings = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanelProfileName.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -128,7 +128,8 @@ namespace TS_SE_Tool
             this.tableLayoutPanel3.Controls.Add(this.buttonImportSettings, 0, 4);
             this.tableLayoutPanel3.Controls.Add(this.labelSettings, 0, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 43);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(1, 41);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -137,7 +138,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(304, 275);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(308, 279);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // buttonRenameProfile
@@ -145,7 +146,7 @@ namespace TS_SE_Tool
             this.buttonRenameProfile.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonRenameProfile.Location = new System.Drawing.Point(3, 3);
             this.buttonRenameProfile.Name = "buttonRenameProfile";
-            this.buttonRenameProfile.Size = new System.Drawing.Size(298, 24);
+            this.buttonRenameProfile.Size = new System.Drawing.Size(302, 24);
             this.buttonRenameProfile.TabIndex = 1;
             this.buttonRenameProfile.Text = "Rename Profile";
             this.buttonRenameProfile.UseVisualStyleBackColor = true;
@@ -156,7 +157,7 @@ namespace TS_SE_Tool
             this.buttonCloneProfile.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonCloneProfile.Location = new System.Drawing.Point(3, 33);
             this.buttonCloneProfile.Name = "buttonCloneProfile";
-            this.buttonCloneProfile.Size = new System.Drawing.Size(298, 24);
+            this.buttonCloneProfile.Size = new System.Drawing.Size(302, 24);
             this.buttonCloneProfile.TabIndex = 2;
             this.buttonCloneProfile.Text = "Clone Profile";
             this.buttonCloneProfile.UseVisualStyleBackColor = true;
@@ -167,7 +168,7 @@ namespace TS_SE_Tool
             this.buttonExportSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonExportSettings.Location = new System.Drawing.Point(3, 93);
             this.buttonExportSettings.Name = "buttonExportSettings";
-            this.buttonExportSettings.Size = new System.Drawing.Size(298, 24);
+            this.buttonExportSettings.Size = new System.Drawing.Size(302, 24);
             this.buttonExportSettings.TabIndex = 3;
             this.buttonExportSettings.Text = "Export";
             this.buttonExportSettings.UseVisualStyleBackColor = true;
@@ -178,11 +179,22 @@ namespace TS_SE_Tool
             this.buttonImportSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonImportSettings.Location = new System.Drawing.Point(3, 123);
             this.buttonImportSettings.Name = "buttonImportSettings";
-            this.buttonImportSettings.Size = new System.Drawing.Size(298, 24);
+            this.buttonImportSettings.Size = new System.Drawing.Size(302, 24);
             this.buttonImportSettings.TabIndex = 4;
             this.buttonImportSettings.Text = "Import";
             this.buttonImportSettings.UseVisualStyleBackColor = true;
             this.buttonImportSettings.Click += new System.EventHandler(this.buttonImportSettings_Click);
+            // 
+            // labelSettings
+            // 
+            this.labelSettings.AutoSize = true;
+            this.labelSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelSettings.Location = new System.Drawing.Point(3, 60);
+            this.labelSettings.Name = "labelSettings";
+            this.labelSettings.Size = new System.Drawing.Size(302, 30);
+            this.labelSettings.TabIndex = 5;
+            this.labelSettings.Text = "Settings";
+            this.labelSettings.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel4
             // 
@@ -192,11 +204,12 @@ namespace TS_SE_Tool
             this.tableLayoutPanel4.Controls.Add(this.buttonSave, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.buttonCancel, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 324);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(1, 322);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(304, 34);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(308, 38);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
             // buttonSave
@@ -204,8 +217,8 @@ namespace TS_SE_Tool
             this.buttonSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonSave.Location = new System.Drawing.Point(3, 3);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(146, 28);
-            this.buttonSave.TabIndex = 0;
+            this.buttonSave.Size = new System.Drawing.Size(148, 32);
+            this.buttonSave.TabIndex = 1;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
@@ -213,24 +226,13 @@ namespace TS_SE_Tool
             // buttonCancel
             // 
             this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonCancel.Location = new System.Drawing.Point(155, 3);
+            this.buttonCancel.Location = new System.Drawing.Point(157, 3);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(146, 28);
-            this.buttonCancel.TabIndex = 1;
+            this.buttonCancel.Size = new System.Drawing.Size(148, 32);
+            this.buttonCancel.TabIndex = 0;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // labelSettings
-            // 
-            this.labelSettings.AutoSize = true;
-            this.labelSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelSettings.Location = new System.Drawing.Point(3, 60);
-            this.labelSettings.Name = "labelSettings";
-            this.labelSettings.Size = new System.Drawing.Size(298, 30);
-            this.labelSettings.TabIndex = 5;
-            this.labelSettings.Text = "Settings";
-            this.labelSettings.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormProfileEditor
             // 
@@ -246,6 +248,7 @@ namespace TS_SE_Tool
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Profile Manager";
             this.Load += new System.EventHandler(this.FormProfileEditor_Load);
+            this.Shown += new System.EventHandler(this.FormProfileEditor_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanelProfileName.ResumeLayout(false);
             this.tableLayoutPanelProfileName.PerformLayout();

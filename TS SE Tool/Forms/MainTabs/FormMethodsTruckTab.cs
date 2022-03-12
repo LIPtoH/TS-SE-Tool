@@ -271,14 +271,11 @@ namespace TS_SE_Tool
                 //Brand
                 foreach (string accLink in UserTruck.Value.TruckMainData.accessories)
                 {
-                    if (!VehicleAccessories.ContainsKey(accLink))
-                        continue;
-
-                    Type t = VehicleAccessories[accLink].GetType();
+                    Type t = SiiNunitData.SiiNitems[accLink].GetType();
 
                     if (t.Name == "Vehicle_Accessory")
                     {
-                        Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)VehicleAccessories[accLink];
+                        Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)SiiNunitData.SiiNitems[accLink];
                         if (tmp.accType == "basepart")
                         {
                             truckname = tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
@@ -308,7 +305,7 @@ namespace TS_SE_Tool
                 }
 
                 if (tmpDriverName != null && tmpDriverName != "null")
-                    if (Player.drivers[0] == tmpDriverName)
+                    if (SiiNunitData.Player.drivers[0] == tmpDriverName)
                     {
                         tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                     }
@@ -341,7 +338,7 @@ namespace TS_SE_Tool
             comboBoxUserTruckCompanyTrucks.Enabled = !noTrucks;
 
             if (!noTrucks)
-                comboBoxUserTruckCompanyTrucks.SelectedValue = Player.assigned_truck;
+                comboBoxUserTruckCompanyTrucks.SelectedValue = SiiNunitData.Player.assigned_truck;
             else
                 comboBoxUserTruckCompanyTrucks.SelectedValue = "null";
         }
@@ -421,16 +418,16 @@ namespace TS_SE_Tool
 
                     foreach (string accLink in SelectedUserCompanyTruck.TruckMainData.accessories)
                     {
-                        if (!VehicleAccessories.ContainsKey(accLink))
-                            continue;
+                        //if (!VehicleAccessories.ContainsKey(accLink))
+                        //    continue;
 
-                        dynamic accessoryDyn = VehicleAccessories[accLink];
+                        dynamic accessoryDyn = SiiNunitData.SiiNitems[accLink];
 
                         Type accType = accessoryDyn.GetType();
 
                         if (accType.Name == "Vehicle_Accessory" && partType != "tire")
                         {
-                            Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)VehicleAccessories[accLink];
+                            Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)SiiNunitData.SiiNitems[accLink];
 
                             if (tmp.accType == partType)
                             {
@@ -570,7 +567,7 @@ namespace TS_SE_Tool
         {
             UserTruckDictionary.TryGetValue(comboBoxUserTruckCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTruck);
 
-            string LicensePlate = SelectedUserCompanyTruck.TruckMainData.license_plate;
+            string LicensePlate = SelectedUserCompanyTruck.TruckMainData.license_plate.Value;
 
             SCS.SCSLicensePlate thisLP = new SCS.SCSLicensePlate(LicensePlate, SCS.SCSLicensePlate.LPtype.Truck);
 
@@ -811,12 +808,12 @@ namespace TS_SE_Tool
         //
         private void buttonUserTruckSelectCurrent_Click(object sender, EventArgs e)
         {
-            comboBoxUserTruckCompanyTrucks.SelectedValue = Player.assigned_truck;
+            comboBoxUserTruckCompanyTrucks.SelectedValue = SiiNunitData.Player.assigned_truck;
         }
 
         private void buttonUserTruckSwitchCurrent_Click(object sender, EventArgs e)
         {
-            Player.assigned_truck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
+            SiiNunitData.Player.assigned_truck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
         }
         //
         //Share buttons

@@ -60,7 +60,7 @@
             this.buttonPlayerLevelMaximum = new System.Windows.Forms.Button();
             this.buttonPlayerLevelPlus10 = new System.Windows.Forms.Button();
             this.buttonPlayerLevelPlus01 = new System.Windows.Forms.Button();
-            this.labelExperienceNxtLvlThreshhold = new System.Windows.Forms.Label();
+            this.labelPlayerExperienceNxtLvlThreshhold = new System.Windows.Forms.Label();
             this.labelPlayerExperience = new System.Windows.Forms.Label();
             this.labelPlayerLevelName = new System.Windows.Forms.Label();
             this.buttonPlayerLevelMinus10 = new System.Windows.Forms.Button();
@@ -97,8 +97,8 @@
             this.labelUserCompanyHQcity = new System.Windows.Forms.Label();
             this.textBoxUserCompanyCompanyName = new System.Windows.Forms.TextBox();
             this.comboBoxUserCompanyHQcity = new System.Windows.Forms.ComboBox();
-            this.textBoxUserCompanyMoneyAccount = new System.Windows.Forms.TextBox();
             this.labelCompanyNameSize = new System.Windows.Forms.Label();
+            this.textBoxUserCompanyMoneyAccount = new System.Windows.Forms.TextBox();
             this.tabPageTruck = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxUserTruckTruck = new System.Windows.Forms.GroupBox();
@@ -215,6 +215,7 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.labelPlayerExperienceSpacer = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -505,10 +506,11 @@
             // 
             // panelPlayerLevel
             // 
+            this.panelPlayerLevel.Controls.Add(this.labelPlayerExperienceSpacer);
             this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelMaximum);
             this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelPlus10);
             this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelPlus01);
-            this.panelPlayerLevel.Controls.Add(this.labelExperienceNxtLvlThreshhold);
+            this.panelPlayerLevel.Controls.Add(this.labelPlayerExperienceNxtLvlThreshhold);
             this.panelPlayerLevel.Controls.Add(this.labelPlayerExperience);
             this.panelPlayerLevel.Controls.Add(this.labelPlayerLevelName);
             this.panelPlayerLevel.Controls.Add(this.buttonPlayerLevelMinus10);
@@ -553,14 +555,14 @@
             this.buttonPlayerLevelPlus01.UseVisualStyleBackColor = true;
             this.buttonPlayerLevelPlus01.Click += new System.EventHandler(this.buttonPlayerLvlPlus01_Click);
             // 
-            // labelExperienceNxtLvlThreshhold
+            // labelPlayerExperienceNxtLvlThreshhold
             // 
-            this.labelExperienceNxtLvlThreshhold.AutoSize = true;
-            this.labelExperienceNxtLvlThreshhold.Location = new System.Drawing.Point(211, 40);
-            this.labelExperienceNxtLvlThreshhold.Name = "labelExperienceNxtLvlThreshhold";
-            this.labelExperienceNxtLvlThreshhold.Size = new System.Drawing.Size(27, 13);
-            this.labelExperienceNxtLvlThreshhold.TabIndex = 38;
-            this.labelExperienceNxtLvlThreshhold.Text = "/   0";
+            this.labelPlayerExperienceNxtLvlThreshhold.AutoSize = true;
+            this.labelPlayerExperienceNxtLvlThreshhold.Location = new System.Drawing.Point(229, 40);
+            this.labelPlayerExperienceNxtLvlThreshhold.Name = "labelPlayerExperienceNxtLvlThreshhold";
+            this.labelPlayerExperienceNxtLvlThreshhold.Size = new System.Drawing.Size(13, 13);
+            this.labelPlayerExperienceNxtLvlThreshhold.TabIndex = 38;
+            this.labelPlayerExperienceNxtLvlThreshhold.Text = "0";
             // 
             // labelPlayerExperience
             // 
@@ -573,13 +575,13 @@
             // 
             // labelPlayerLevelName
             // 
-            this.labelPlayerLevelName.AutoSize = true;
             this.labelPlayerLevelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelPlayerLevelName.Location = new System.Drawing.Point(162, 12);
+            this.labelPlayerLevelName.Location = new System.Drawing.Point(144, 9);
             this.labelPlayerLevelName.Name = "labelPlayerLevelName";
-            this.labelPlayerLevelName.Size = new System.Drawing.Size(54, 16);
+            this.labelPlayerLevelName.Size = new System.Drawing.Size(150, 19);
             this.labelPlayerLevelName.TabIndex = 16;
             this.labelPlayerLevelName.Text = "Newbie";
+            this.labelPlayerLevelName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonPlayerLevelMinus10
             // 
@@ -603,8 +605,10 @@
             // 
             // labelPlayerLevelNumber
             // 
+            this.labelPlayerLevelNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPlayerLevelNumber.AutoSize = true;
             this.labelPlayerLevelNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelPlayerLevelNumber.Location = new System.Drawing.Point(108, 6);
+            this.labelPlayerLevelNumber.Location = new System.Drawing.Point(90, 6);
             this.labelPlayerLevelNumber.Name = "labelPlayerLevelNumber";
             this.labelPlayerLevelNumber.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.labelPlayerLevelNumber.Size = new System.Drawing.Size(48, 25);
@@ -913,9 +917,9 @@
             // buttonUserCompanyGaragesManage
             // 
             this.buttonUserCompanyGaragesManage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesManage.Location = new System.Drawing.Point(183, 3);
+            this.buttonUserCompanyGaragesManage.Location = new System.Drawing.Point(184, 3);
             this.buttonUserCompanyGaragesManage.Name = "buttonUserCompanyGaragesManage";
-            this.buttonUserCompanyGaragesManage.Size = new System.Drawing.Size(96, 24);
+            this.buttonUserCompanyGaragesManage.Size = new System.Drawing.Size(95, 24);
             this.buttonUserCompanyGaragesManage.TabIndex = 19;
             this.buttonUserCompanyGaragesManage.Text = "Manage";
             this.buttonUserCompanyGaragesManage.UseVisualStyleBackColor = true;
@@ -1019,18 +1023,6 @@
             this.comboBoxUserCompanyHQcity.TabIndex = 12;
             this.comboBoxUserCompanyHQcity.SelectedIndexChanged += new System.EventHandler(this.comboBoxUserCompanyHQcity_SelectedIndexChanged);
             // 
-            // textBoxUserCompanyMoneyAccount
-            // 
-            this.textBoxUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxUserCompanyMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(248, 39);
-            this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
-            this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(255, 20);
-            this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
-            this.textBoxUserCompanyMoneyAccount.Enter += new System.EventHandler(this.textBoxUserCompanyMoneyAccount_Enter);
-            this.textBoxUserCompanyMoneyAccount.Leave += new System.EventHandler(this.textBoxUserCompanyMoneyAccount_Leave);
-            this.textBoxUserCompanyMoneyAccount.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxUserCompanyMoneyAccount_Validating);
-            // 
             // labelCompanyNameSize
             // 
             this.labelCompanyNameSize.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1044,6 +1036,18 @@
             this.labelCompanyNameSize.TabIndex = 23;
             this.labelCompanyNameSize.Text = "0 / 20";
             this.labelCompanyNameSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBoxUserCompanyMoneyAccount
+            // 
+            this.textBoxUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBoxUserCompanyMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(248, 39);
+            this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
+            this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(255, 20);
+            this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
+            this.textBoxUserCompanyMoneyAccount.Enter += new System.EventHandler(this.textBoxUserCompanyMoneyAccount_Enter);
+            this.textBoxUserCompanyMoneyAccount.Leave += new System.EventHandler(this.textBoxUserCompanyMoneyAccount_Leave);
+            this.textBoxUserCompanyMoneyAccount.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxUserCompanyMoneyAccount_Validating);
             // 
             // tabPageTruck
             // 
@@ -1276,7 +1280,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1315,7 +1319,7 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(449, 0);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(448, 0);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
@@ -1554,7 +1558,7 @@
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
             this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
@@ -2477,6 +2481,15 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
             // 
+            // labelPlayerExperienceSpacer
+            // 
+            this.labelPlayerExperienceSpacer.AutoSize = true;
+            this.labelPlayerExperienceSpacer.Location = new System.Drawing.Point(211, 40);
+            this.labelPlayerExperienceSpacer.Name = "labelPlayerExperienceSpacer";
+            this.labelPlayerExperienceSpacer.Size = new System.Drawing.Size(12, 13);
+            this.labelPlayerExperienceSpacer.TabIndex = 40;
+            this.labelPlayerExperienceSpacer.Text = "/";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2627,7 +2640,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
-        private System.Windows.Forms.Label labelExperienceNxtLvlThreshhold;
+        private System.Windows.Forms.Label labelPlayerExperienceNxtLvlThreshhold;
         private System.Windows.Forms.GroupBox groupBoxUserTruckTruckDetails;
         private System.Windows.Forms.Panel panelPlayerLevel;
         private System.Windows.Forms.ListBox listBoxFreightMarketAddedJobs;
@@ -2744,6 +2757,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTruckFuel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTrailerDetails;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTrailerLP;
+        private System.Windows.Forms.Label labelPlayerExperienceSpacer;
     }
 }
 

@@ -29,6 +29,11 @@ namespace TS_SE_Tool
             CargoName = _CargoName;
             TrailerDefList.Add(new TrailerDefinition(_TrailerDefinition, _CargoType, _UnitsCount));
         }
+        public Cargo(string _CargoName, int _CargoType, string _TrailerDefinition, int _UnitsCount)
+        {
+            CargoName = _CargoName;
+            TrailerDefList.Add(new TrailerDefinition(_TrailerDefinition, _CargoType, _UnitsCount));
+        }
 
         public Cargo(string _CargoName, List<TrailerDefinition> _CargoDefList)
         {

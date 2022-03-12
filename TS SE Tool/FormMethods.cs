@@ -337,15 +337,6 @@ namespace TS_SE_Tool
                 Globals.CurrencyName = ProgSettingsV.CurrencyMesATS;
             }
 
-            Economy = new Save.Items.Economy();
-            Bank = new Save.Items.Bank();
-            BankLoans = new Dictionary<string, Save.Items.Bank_Loan>();
-
-            Player = new Save.Items.Player();
-            //Player_Job = new Save.Items.Player_Job();
-
-            VehicleAccessories = new Dictionary<string, dynamic>();
-
             MainSaveFileProfileData = new SaveFileProfileData();
             MainSaveFileInfoData = new SaveFileInfoData();
 
@@ -500,7 +491,14 @@ namespace TS_SE_Tool
             this.SuspendLayout();
             //Profile
             //Level
-            FormUpdatePlayerLevel();
+            
+            labelPlayerLevelName.Text = "*****";
+            panelPlayerLevel.BackColor = Color.Transparent;
+            labelPlayerLevelNumber.Text = "";
+
+            labelPlayerExperience.Text = "0";
+            labelPlayerExperienceNxtLvlThreshhold.Text = "0";
+            
             //Skills
             foreach (CheckBox temp in ADRbuttonArray)
                 temp.Checked = false;

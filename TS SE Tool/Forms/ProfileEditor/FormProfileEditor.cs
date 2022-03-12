@@ -42,7 +42,6 @@ namespace TS_SE_Tool
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
 
-
             PrepareForm();
             TranslateForm();
 
@@ -66,6 +65,10 @@ namespace TS_SE_Tool
             ProfileType = ((DataTable)ParentForm.comboBoxPrevProfiles.DataSource).Rows[ParentForm.comboBoxPrevProfiles.SelectedIndex].ItemArray[2].ToString();
 
             labelProfileNameValue.Text = WorkingProfileName;
+        }
+        private void FormProfileEditor_Shown(object sender, EventArgs e)
+        {
+            buttonCancel.Focus();
         }
 
 
@@ -179,5 +182,6 @@ namespace TS_SE_Tool
         {
             this.Close();
         }
+
     }
 }
