@@ -283,7 +283,7 @@ namespace TS_SE_Tool
                 //Urgency
                 UrgencyArray = new int[] { 0, 1, 2 };
 
-                DistanceMultipliers = new Dictionary<string, double> { { "km", 1 }, { "mi", km_to_mileconvert } };
+                DistanceMultipliers = new Dictionary<string, double> { { "km", 1 }, { "mi", km_to_mile } };
                 WeightMultipliers = new Dictionary<string, double> { { "kg", 1 }, { "lb", kg_to_lb } };
 
                 ADRImgS = new Image[6];

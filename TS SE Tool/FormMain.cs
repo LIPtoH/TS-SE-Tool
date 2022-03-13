@@ -160,7 +160,7 @@ namespace TS_SE_Tool
         private CheckBox[] ADRbuttonArray; //Program
 
         internal double DistanceMultiplier = 1; //Program
-        const double km_to_mileconvert = 0.621371; //Program
+        const double km_to_mile = 0.621371; //Program
 
         internal double WeightMultiplier = 1; //Program
         const double kg_to_lb = 2.20462262185; //Program
