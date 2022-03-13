@@ -10,7 +10,7 @@ namespace TS_SE_Tool.Save.Items
     {
         internal string target { get; set; } = "";
 
-        internal int? expiration_time { get; set; } = null;
+        internal uint? expiration_time { get; set; } = null;
 
         internal int? urgency { get; set; } = 0;
 
@@ -71,7 +71,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "expiration_time":
                             {
-                                expiration_time = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
+                                expiration_time = dataLine == "nil" ? (uint?)null : uint.Parse(dataLine);
                                 break;
                             }
 

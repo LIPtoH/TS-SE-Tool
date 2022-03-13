@@ -893,6 +893,36 @@ namespace TS_SE_Tool
             }
         }
 
+        private void PrepareCompaniesJobWrite()
+        {
+            foreach (KeyValuePair<string, List<JobAdded>> cmp in AddedJobsDictionary)
+            {
+                Save.Items.Company siiCompany = SiiNunitData.SiiNitems[cmp.Key];
+
+                for (int i = 0; i < cmp.Value.Count; i++)
+                {
+                    JobAdded job = cmp.Value.ElementAt(i);
+
+                    string jobId = siiCompany.job_offer[i];
+
+                    Save.Items.Job_offer_Data siiJob = SiiNunitData.SiiNitems[jobId];
+
+                    siiJob.target = "\"" + job.DestinationCompany + "." + job.DestinationCity + "\"";
+                    siiJob.expiration_time = job.ExpirationTime;
+                    siiJob.urgency = job.Urgency;
+                    siiJob.shortest_distance_km = job.Distance;
+                    siiJob.ferry_time = job.Ferrytime;
+                    siiJob.ferry_price = job.Ferryprice;
+                    siiJob.cargo = "cargo." + job.Cargo;
+                    siiJob.company_truck = job.CompanyTruck;
+                    siiJob.trailer_variant = job.TrailerVariant;
+                    siiJob.trailer_definition = job.TrailerDefinition;
+                    siiJob.units_count = job.UnitsCount;
+                    //siiJob.fill_ratio = 1;
+                }
+            }
+        }
+
         //Rearrange extra User Drivers to glogal Driver pool
         private void PrepareDriversTrucksWrite()
         {

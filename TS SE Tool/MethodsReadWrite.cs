@@ -945,6 +945,7 @@ namespace TS_SE_Tool
                 PrepareGarages();
 
                 PrepareGaragesWrite();
+                PrepareCompaniesJobWrite();
                 PrepareDriversTrucksWrite();
                 PrepareVisitedCitiesWrite();
 
