@@ -380,9 +380,6 @@ namespace TS_SE_Tool
 
             ExtCargoList = new List<ExtCargo>();
 
-            EconomyEventsTable = new string[0, 0];
-            EconomyEventUnitLinkStringList = new string[0];
-
             JobsAmountAdded = 0;
             RandomValue = new Random();
 

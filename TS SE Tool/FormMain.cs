@@ -70,9 +70,6 @@ namespace TS_SE_Tool
         private List<JobAdded> AddedJobsList;
         private JobAdded FreightMarketJob;//Program
 
-        private string[] EconomyEventUnitLinkStringList;//Program
-        private string[,] EconomyEventsTable;//Program
-
         public List<LevelNames> PlayerLevelNames;//Program
 
         private List<City> CitiesList;//+

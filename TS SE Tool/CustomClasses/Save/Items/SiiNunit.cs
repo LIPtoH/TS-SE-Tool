@@ -40,6 +40,11 @@ namespace TS_SE_Tool.Save.Items
             get => (Player_Job)SiiNitems[Player.current_job];
             set => SiiNitems[Player.current_job] = value;
         }
+        internal Economy_event_Queue Economy_event_Queue
+        {
+            get => (Economy_event_Queue)SiiNitems[Economy.event_queue];
+            set => SiiNitems[Economy.event_queue] = value;
+        }
 
         internal SiiNunit()
         { }

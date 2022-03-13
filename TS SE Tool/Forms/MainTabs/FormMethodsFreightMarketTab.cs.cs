@@ -1455,7 +1455,6 @@ namespace TS_SE_Tool
             JobsAmountAdded = 0;
 
             AddedJobsDictionary.Clear();
-            Array.Resize(ref EconomyEventUnitLinkStringList, 0);
 
             listBoxFreightMarketAddedJobs.Items.Clear();
             labelFreightMarketDistanceNumbers.Text = " - ";// + ProgSettingsV.DistanceMes;

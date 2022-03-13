@@ -25,7 +25,7 @@ namespace TS_SE_Tool.Save.Items
         internal string mail_ctrl { get; set; } = "";
         internal string oversize_offer_ctrl { get; set; } = "";
 
-        internal int game_time { get; set; } = 0;
+        internal uint game_time { get; set; } = 0;
 
         internal SCS_Float game_time_secs { get; set; } = 0;
 
@@ -291,7 +291,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "game_time":
                             {
-                                game_time = int.Parse(dataLine);
+                                game_time = uint.Parse(dataLine);
                                 break;
                             }
 

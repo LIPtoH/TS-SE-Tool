@@ -913,45 +913,32 @@ namespace TS_SE_Tool
         //Sort events by time
         private void PrepareEvents()
         {
-            for (int i = 0; i < EconomyEventUnitLinkStringList.Length; i++)
-            {
-                int j = 0;
-                while (j < EconomyEventsTable.GetLength(0))
-                {
-                    if ((EconomyEventUnitLinkStringList[i] == EconomyEventsTable[j, 3]) && (EconomyEventsTable[j, 4] == " param: 0"))
-                    {
-                        EconomyEventsTable[j, 2] = (SiiNunitData.Economy.game_time + (((i + 1) * ProgSettingsV.JobPickupTime) * 60)).ToString(); //time
-                    }
-                    j++;
-                }
-            }
+            Dictionary<string, Economy_event> timeList = new Dictionary<string, Economy_event>();
 
-            string[,] tempArray = new string[1, 5];
+            foreach (string ecEventLink in SiiNunitData.Economy_event_Queue.data)
+            {
+                Economy_event ecEvent = ((Economy_event)SiiNunitData.SiiNitems[ecEventLink]);
+                string cmpLink = ecEvent.unit_link;
+
+                if (AddedJobsDictionary.ContainsKey(cmpLink))
+                {
+                    if (ecEvent.param < AddedJobsDictionary[cmpLink].Count)
+                    {
+                        ecEvent.time = AddedJobsDictionary[cmpLink].ElementAt(ecEvent.param).ExpirationTime;
+                    }
+                }
+
+                timeList.Add(ecEventLink, ecEvent);
+            }
 
             //Sort by time
-            for (int i = 1; i < EconomyEventsTable.GetLength(0); i++)
-            {
-                int k = 0;
-                while (k < 5)
-                {
-                    tempArray[0, k] = EconomyEventsTable[i, k];
-                    k++;
-                }
-                for (int j = i; j > 0; j--)
-                {
-                    if (int.Parse(tempArray[0, 2]) < int.Parse(EconomyEventsTable[j - 1, 2]))
-                    {
-                        for (k = 0; k < 5; k++)
-                        {
-                            EconomyEventsTable[j, k] = EconomyEventsTable[j - 1, k];
-                            EconomyEventsTable[j - 1, k] = tempArray[0, k];
-                        }
-                    }
-                }
-            }
+            var sortedDict = from entry in timeList orderby entry.Value.time ascending select entry;
 
-            //===
+            List<string> newQueue = new List<string>();
+            newQueue.AddRange(sortedDict.Select(x => x.Key));
 
+            SiiNunitData.Economy_event_Queue.data = newQueue;
+            
         }
 
         private void AddCargo(bool JobEditing )
@@ -987,6 +974,7 @@ namespace TS_SE_Tool
                 string distance = route[4];
                 string FerryTime = route[5];
                 string FerryPrice = route[6];
+
                 //Setting proper ferry time
                 if (FerryTime == "-1")
                 {
@@ -1014,7 +1002,7 @@ namespace TS_SE_Tool
                     unCertainRouteLength = "*";
                 }
                 //Time untill job expires
-                int ExpirationTime = SiiNunitData.Economy.game_time + RandomValue.Next(180, 1800) + (JobsAmountAdded * ProgSettingsV.JobPickupTime * 60);
+                uint ExpirationTime = (uint)(SiiNunitData.Economy.game_time + RandomValue.Next(180, 1800) + (JobsAmountAdded * ProgSettingsV.JobPickupTime * 60));
                 #endregion
 
                 //Creating Job data
@@ -1029,17 +1017,13 @@ namespace TS_SE_Tool
                 }
 
                 //Add Job data to program storage
-                string companyNameJob = "company : company.volatile." + SourceCompany + "." + SourceCity + " {";
+                string companyNameJob = "company.volatile." + SourceCompany + "." + SourceCity;
 
                 if (!JobEditing)
                 {
                     //Adding new Job
                     //Tracking total amount of jobs added
                     JobsAmountAdded++;
-
-                    // Prepairing structures
-                    Array.Resize(ref EconomyEventUnitLinkStringList, JobsAmountAdded);
-                    EconomyEventUnitLinkStringList[JobsAmountAdded - 1] = " unit_link: company.volatile." + SourceCompany + "." + SourceCity;
 
                     //Add Job data to Listbox
                     listBoxFreightMarketAddedJobs.Items.Add(tempJobData);
@@ -1093,8 +1077,8 @@ namespace TS_SE_Tool
                 else
                     AddedJobsDictionary.Add(companyNameJob, new List<JobAdded> { tempJobData });
 
+                //Add
                 AddedJobsList.Add(tempJobData);
-                //
 
                 //Total distance for Form label
                 RefreshFreightMarketDistance();

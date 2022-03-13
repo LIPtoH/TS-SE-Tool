@@ -906,7 +906,7 @@ namespace TS_SE_Tool
                     if (value != null && value != "")
                         tempStr = value;
 
-                jobdata += "\r\nUrgency " + tempStr;
+                jobdata += "\r\nUrgency - " + tempStr;
                 jobdata += "\r\nMinimum travel distance of " + tempJobData.Distance + " km ";
                 jobdata += "in " + tempJobData.CompanyTruck;
                 jobdata += "\r\nJob valid for " + (tempJobData.ExpirationTime - SiiNunitData.Economy.game_time) + " minutes";
@@ -917,7 +917,8 @@ namespace TS_SE_Tool
                     jobdata += "and it will cost " + tempJobData.Ferryprice;
                 }
 
-                IO_Utilities.LogWriter("Job from:" + SourceCityName + " | " + SourceCompanyName + " To " + DestinationCityName + " | " + DestinationCompanyName +
+                IO_Utilities.LogWriter("Job Added" + Environment.NewLine +
+                    "From -> " + SourceCityName + " | " + SourceCompanyName + " -> To -> " + DestinationCityName + " | " + DestinationCompanyName +
                     "\r\n-----------" + jobdata + "\r\n-----------");
 
                 #endregion
@@ -956,12 +957,10 @@ namespace TS_SE_Tool
                 {
                     writer.Write(SiiNunitData.PrintOut(0));
                 }
+
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_file_saved");
+                
             }
-
-            PrintAddedJobs();
-
-            UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_file_saved");
-            LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
 
             //dispose attempt
             SetDefaultValues(false);

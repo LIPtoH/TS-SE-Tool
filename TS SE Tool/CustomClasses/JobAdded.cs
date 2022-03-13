@@ -34,14 +34,14 @@ namespace TS_SE_Tool
         public int Ferrytime { get; set; }
         public int Ferryprice { get; set; }
         public int UnitsCount { get; set; }
-        public int ExpirationTime { get; set; }
+        public uint ExpirationTime { get; set; }
         public string CompanyTruck { get; set; }
         public string TrailerVariant { get; set; }
         public string TrailerDefinition { get; set; }
 
 
         public JobAdded(string _SourceCity, string _SourceCompany, string _DestinationCity, string _DestinationCompany, string _Cargo, int _Urgency, int _Type, 
-            int _UnitsCount, int _Distance, int _Ferrytime, int _Ferryprice, int _ExpirationTime, string _CompanyTruck, string _TrailerVariant, string _TrailerDefinition)
+            int _UnitsCount, int _Distance, int _Ferrytime, int _Ferryprice, uint _ExpirationTime, string _CompanyTruck, string _TrailerVariant, string _TrailerDefinition)
         {
             SourceCity = _SourceCity;
             SourceCompany = _SourceCompany;
