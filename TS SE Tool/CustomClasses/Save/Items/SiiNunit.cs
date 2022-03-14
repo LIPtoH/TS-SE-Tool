@@ -15,7 +15,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal string EconomyNameless = "";
 
-        private Dictionary<string, List<string>> NewBlocks = new Dictionary<string, List<string>>();
+        private List<string> UnidentifiedBlocks = new List<string>();
 
         internal Economy Economy
         {
@@ -52,8 +52,6 @@ namespace TS_SE_Tool.Save.Items
         internal SiiNunit(string[] _input)
         {
             string tagLine = "", dataLine = "", nameless = "";
-
-            List<string> NewDataBlocks = new List<string>();
 
             //block decoding
             for (int line = 0; line < _input.Length; line++)
@@ -397,17 +395,13 @@ namespace TS_SE_Tool.Save.Items
 
                     default:
                         {
-                            if (!NewDataBlocks.Contains(tagLine))
-                            {
-                                NewDataBlocks.Add(tagLine);
+                            List<string> tmpNewBlockLines = GetLines();
 
-                                List<string> tmpNewBlockLines = GetLines();
+                            UnidentifiedBlocks.Add(nameless);
+                            SiiNitems.Add(nameless, new Unidentified(tmpNewBlockLines));
 
-                                Utilities.IO_Utilities.ErrorLogWriter("Save | New Data block | " + tagLine + Environment.NewLine + string.Join(Environment.NewLine, tmpNewBlockLines));
-
-                                //Add new block data
-                                NewBlocks.Add(nameless, tmpNewBlockLines);
-                            }
+                            Utilities.IO_Utilities.ErrorLogWriter("Save | New Data block | " + tagLine + Environment.NewLine + 
+                                string.Join(Environment.NewLine, tmpNewBlockLines));
 
                             break;
                         }
@@ -453,7 +447,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(Bank.PrintOut(0, Economy.bank));
 
-            foreach (string item in Bank.loans)
+            foreach (string item in Bank.loans.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
@@ -466,7 +460,7 @@ namespace TS_SE_Tool.Save.Items
 
             List<string> tmpAccList = new List<string>();
 
-            foreach (string item in Player.trailers)
+            foreach (string item in Player.trailers.Where(x => x != null && x != "null"))
             {
                 string trailerNameless = item;
 
@@ -484,7 +478,7 @@ namespace TS_SE_Tool.Save.Items
                     goto trStart;
                 }
 
-                foreach (string accNameless in tmpAccList)
+                foreach (string accNameless in tmpAccList.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[accNameless].PrintOut(0, accNameless));
                 }
@@ -492,19 +486,19 @@ namespace TS_SE_Tool.Save.Items
                 tmpAccList.Clear();
             }
 
-            foreach (string item in Player.trailer_utilization_logs)
+            foreach (string item in Player.trailer_utilization_logs.Where(x => x != null && x != "null"))
             {
                 Trailer_Utilization_log Trailer_Utilization_log = SiiNitems[item];
 
                 returnSB.AppendLine(Trailer_Utilization_log.PrintOut(0, item));
 
-                foreach (string item2 in Trailer_Utilization_log.entries)
+                foreach (string item2 in Trailer_Utilization_log.entries.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[item2].PrintOut(0, item2));
                 }
             }
 
-            foreach (string item in Player.trailer_defs)
+            foreach (string item in Player.trailer_defs.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
@@ -521,7 +515,7 @@ namespace TS_SE_Tool.Save.Items
 
                     returnSB.AppendLine(Vehicle.PrintOut(0, Player_Job.company_truck));
 
-                    foreach (string accNameless in Vehicle.accessories)
+                    foreach (string accNameless in Vehicle.accessories.Where(x => x != null && x != "null"))
                     {
                         returnSB.AppendLine(SiiNitems[accNameless].PrintOut(0, accNameless));
                     }
@@ -546,7 +540,7 @@ namespace TS_SE_Tool.Save.Items
                         goto trStart;
                     }
 
-                    foreach (string accNameless in tmpAccList)
+                    foreach (string accNameless in tmpAccList.Where(x => x != null && x != "null"))
                     {
                         returnSB.AppendLine(SiiNitems[accNameless].PrintOut(0, accNameless));
                     }
@@ -555,31 +549,31 @@ namespace TS_SE_Tool.Save.Items
                 }
             }
 
-            foreach (string item in Player.trucks)
+            foreach (string item in Player.trucks.Where(x => x != null && x != "null"))
             {
                 Vehicle Vehicle = SiiNitems[item];
 
                 returnSB.AppendLine(Vehicle.PrintOut(0, item));
 
-                foreach (string accNameless in Vehicle.accessories)
+                foreach (string accNameless in Vehicle.accessories.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[accNameless].PrintOut(0, accNameless));
                 }
             }
 
-            foreach (string item in Player.truck_profit_logs)
+            foreach (string item in Player.truck_profit_logs.Where(x => x != null && x != "null"))
             {
                 Profit_log Profit_log = SiiNitems[item];
 
                 returnSB.AppendLine(Profit_log.PrintOut(0, item));
 
-                foreach (string item2 in Profit_log.stats_data)
+                foreach (string item2 in Profit_log.stats_data.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[item2].PrintOut(0, item2));
                 }
             }
 
-            foreach (string item in Player.drivers)
+            foreach (string item in Player.drivers.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
 
@@ -591,7 +585,7 @@ namespace TS_SE_Tool.Save.Items
 
                     returnSB.AppendLine(Profit_log.PrintOut(0, Driver_Player.profit_log));                    
 
-                    foreach (string item2 in Profit_log.stats_data)
+                    foreach (string item2 in Profit_log.stats_data.Where(x => x != null && x != "null"))
                     {
                         returnSB.AppendLine(SiiNitems[item2].PrintOut(0, item2));
                     }
@@ -606,20 +600,20 @@ namespace TS_SE_Tool.Save.Items
 
                     returnSB.AppendLine(Profit_log.PrintOut(0, Driver_AI.profit_log));
 
-                    foreach (string item2 in Profit_log.stats_data)
+                    foreach (string item2 in Profit_log.stats_data.Where(x => x != null && x != "null"))
                     {
                         returnSB.AppendLine(SiiNitems[item2].PrintOut(0, item2));
                     }
                 }
             }
 
-            foreach (string item in Economy.companies)
+            foreach (string item in Economy.companies.Where(x => x != null && x != "null"))
             {
                 Company Company = SiiNitems[item];
 
                 returnSB.AppendLine(Company.PrintOut(0, item));
 
-                foreach (string item2 in Company.job_offer)
+                foreach (string item2 in Company.job_offer.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[item2].PrintOut(0, item2));
                 }
@@ -627,7 +621,7 @@ namespace TS_SE_Tool.Save.Items
 
             //=== Garages
 
-            foreach (string item in Economy.garages)
+            foreach (string item in Economy.garages.Where(x => x != null && x != "null"))
             {
                 Garage Garage = SiiNitems[item];
 
@@ -637,7 +631,7 @@ namespace TS_SE_Tool.Save.Items
 
                 returnSB.AppendLine(Profit_log.PrintOut(0, Garage.profit_log));
 
-                foreach (string item2 in Profit_log.stats_data)
+                foreach (string item2 in Profit_log.stats_data.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[item2].PrintOut(0, item2));
                 }
@@ -669,11 +663,9 @@ namespace TS_SE_Tool.Save.Items
 
             //=== Economy event Queue
 
-            Economy_event_Queue Economy_event_Queue = SiiNitems[Economy.event_queue];
-
             returnSB.AppendLine(Economy_event_Queue.PrintOut(0, Economy.event_queue));
 
-            foreach (string item in Economy_event_Queue.data)
+            foreach (string item in Economy_event_Queue.data.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
@@ -684,7 +676,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(Mail_Ctrl.PrintOut(0, Economy.mail_ctrl));
 
-            foreach (string item in Mail_Ctrl.inbox)
+            foreach (string item in Mail_Ctrl.inbox.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
@@ -695,13 +687,13 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(Oversize_offer_Ctrl.PrintOut(0, Economy.oversize_offer_ctrl));
 
-            foreach (string item in Oversize_offer_Ctrl.route_offers)
+            foreach (string item in Oversize_offer_Ctrl.route_offers.Where(x => x != null && x != "null"))
             {
                 Oversize_Route_offers Oversize_Route_offers = SiiNitems[item];
 
                 returnSB.AppendLine(Oversize_Route_offers.PrintOut(0, item));
 
-                foreach (string item2 in Oversize_Route_offers.offers)
+                foreach (string item2 in Oversize_Route_offers.offers.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[item2].PrintOut(0, item2));
                 }
@@ -713,7 +705,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(Delivery_log.PrintOut(0, Economy.delivery_log));
 
-            foreach (string item in Delivery_log.entries)
+            foreach (string item in Delivery_log.entries.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
@@ -726,7 +718,7 @@ namespace TS_SE_Tool.Save.Items
 
                 returnSB.AppendLine(Ferry_log.PrintOut(0, Economy.ferry_log));
 
-                foreach (string item in Ferry_log.entries)
+                foreach (string item in Ferry_log.entries.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
                 }
@@ -734,17 +726,17 @@ namespace TS_SE_Tool.Save.Items
 
             //=== GPS Online
 
-            foreach (string item in Economy.stored_online_gps_behind_waypoints)
+            foreach (string item in Economy.stored_online_gps_behind_waypoints.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            foreach (string item in Economy.stored_online_gps_ahead_waypoints)
+            foreach (string item in Economy.stored_online_gps_ahead_waypoints.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            foreach (string item in Economy.stored_online_gps_avoid_waypoints)
+            foreach (string item in Economy.stored_online_gps_avoid_waypoints.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
@@ -755,24 +747,24 @@ namespace TS_SE_Tool.Save.Items
 
             //=== GPS
 
-            foreach (string item in Economy.stored_gps_behind_waypoints)
+            foreach (string item in Economy.stored_gps_behind_waypoints.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            foreach (string item in Economy.stored_gps_ahead_waypoints)
+            foreach (string item in Economy.stored_gps_ahead_waypoints.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            foreach (string item in Economy.stored_gps_avoid_waypoints)
+            foreach (string item in Economy.stored_gps_avoid_waypoints.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
             //===
 
-            foreach (string item in Economy.stored_map_actions)
+            foreach (string item in Economy.stored_map_actions.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
@@ -784,7 +776,7 @@ namespace TS_SE_Tool.Save.Items
             AI_Drivers.AddRange(Economy.drivers_offer);
             AI_Drivers.AddRange(Economy.driver_pool);
 
-            foreach (string item in AI_Drivers)
+            foreach (string item in AI_Drivers.Where(x => x != null && x != "null"))
             {
                 Driver_AI Driver_AI = SiiNitems[item];
 
@@ -804,7 +796,7 @@ namespace TS_SE_Tool.Save.Items
 
                 returnSB.AppendLine(Profit_log.PrintOut(0, logNameless));
 
-                foreach (string statNameless in Profit_log.stats_data)
+                foreach (string statNameless in Profit_log.stats_data.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[statNameless].PrintOut(0, statNameless));
                 }
@@ -816,7 +808,7 @@ namespace TS_SE_Tool.Save.Items
 
             //=== Bus stops
 
-            foreach (string item in Economy.bus_stops)
+            foreach (string item in Economy.bus_stops.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
@@ -827,17 +819,16 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(Bus_job_Log.PrintOut(0, Economy.bus_job_log));
 
-            foreach (string item in Bus_job_Log.entries)
+            foreach (string item in Bus_job_Log.entries.Where(x => x != null && x != "null"))
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            //New blocks
+            //=== Unidentified blocks
 
-            foreach (KeyValuePair<string, List<string>> blockData in NewBlocks)
+            foreach (string item in UnidentifiedBlocks)
             {
-                foreach (string blockLine in blockData.Value)
-                    returnSB.AppendLine(blockLine);
+                returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
             returnSB.Append("}");
