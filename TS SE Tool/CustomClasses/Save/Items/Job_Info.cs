@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Job_Info
+    class Job_Info : SiiNBlockCore
     {
         internal string cargo { get; set; } = "";
         internal string source_company { get; set; } = "";
@@ -186,6 +186,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

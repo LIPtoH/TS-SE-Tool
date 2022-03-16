@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Delivery_log_Entry
+    class Delivery_log_Entry : SiiNBlockCore
     {
         List<string> Params = new List<string>();
 
@@ -77,6 +77,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

@@ -8,7 +8,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Map_action
+    class Map_action : SiiNBlockCore
     {
         internal List<UInt64> id_params { get; set; } = new List<UInt64>();
 
@@ -168,6 +168,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

@@ -8,8 +8,9 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Player_Job
+    class Player_Job : SiiNBlockCore
     {
+        #region variables
         internal string company_truck { get; set; } = "";
         internal string company_trailer { get; set; } = "";
 
@@ -57,6 +58,8 @@ namespace TS_SE_Tool.Save.Items
         internal int units_count { get; set; } = 0;
         internal int fill_ratio { get; set; } = 0;
 
+        #endregion
+        
         internal Player_Job()
         { }
 
@@ -357,6 +360,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

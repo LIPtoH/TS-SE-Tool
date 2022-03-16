@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    internal class Oversize_Block_rule_Save
+    internal class Oversize_Block_rule_Save : SiiNBlockCore
     {
         internal int escort_char_type = 0;
 
@@ -94,6 +94,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

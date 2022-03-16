@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Mail_Ctrl
+    class Mail_Ctrl : SiiNBlockCore
     {
         internal List<string> inbox { get; set; } = new List<string>();
 
@@ -120,6 +120,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

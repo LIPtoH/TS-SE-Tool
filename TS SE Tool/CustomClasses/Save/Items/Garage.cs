@@ -8,7 +8,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Garage
+    class Garage : SiiNBlockCore
     {
         internal List<string> vehicles { get; set; } = new List<string>();
 
@@ -145,6 +145,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

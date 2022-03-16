@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Trajectory_orders_Save
+    class Trajectory_orders_Save : SiiNBlockCore
     {
         internal List<bool> handled_array { get; set; } = new List<bool>();
 
@@ -110,6 +110,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

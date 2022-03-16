@@ -10,7 +10,7 @@ using TS_SE_Tool.CustomClasses.Global;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Bank_Loan
+    class Bank_Loan : SiiNBlockCore
     {
         internal int amount { get; set; } = 0;
 
@@ -113,6 +113,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

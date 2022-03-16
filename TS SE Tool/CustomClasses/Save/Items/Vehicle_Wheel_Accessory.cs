@@ -9,7 +9,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Vehicle_Wheel_Accessory
+    class Vehicle_Wheel_Accessory : SiiNBlockCore
     {
 
         internal int offset { get; set; } = 0;
@@ -112,6 +112,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

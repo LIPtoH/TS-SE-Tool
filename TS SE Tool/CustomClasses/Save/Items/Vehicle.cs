@@ -10,8 +10,9 @@ using TS_SE_Tool.CustomClasses.Global;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Vehicle
+    class Vehicle : SiiNBlockCore
     {
+        #region variables
         internal SCS_Float      engine_wear { get; set; } = 0;
 
         internal SCS_Float      transmission_wear { get; set; } = 0;
@@ -59,6 +60,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal SCS_Float trip_time { get; set; } = 0;
 
+        #endregion
         internal Vehicle()
         {
 
@@ -317,6 +319,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

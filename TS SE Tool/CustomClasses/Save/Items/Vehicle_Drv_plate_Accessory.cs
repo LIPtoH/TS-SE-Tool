@@ -9,7 +9,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Vehicle_Drv_plate_Accessory
+    class Vehicle_Drv_plate_Accessory : SiiNBlockCore
     {
         internal string text { get; set; } = "";
 
@@ -126,6 +126,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

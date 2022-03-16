@@ -8,7 +8,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Oversize_Job_save
+    class Oversize_Job_save : SiiNBlockCore
     {
         internal Vector_3f front_escort_ws_position { get; set; } = new Vector_3f();
         internal Vector_3f back_escort_ws_position { get; set; } = new Vector_3f();
@@ -320,6 +320,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

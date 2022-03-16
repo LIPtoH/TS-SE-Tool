@@ -178,6 +178,7 @@
     <Compile Include="CustomClasses\Save\Items\Profit_log.cs" />
     <Compile Include="CustomClasses\Save\Items\Profit_log_Entry.cs" />
     <Compile Include="CustomClasses\Save\Items\Registry.cs" />
+    <Compile Include="CustomClasses\Save\Items\SiiNBlockCore.cs" />
     <Compile Include="CustomClasses\Save\Items\SiiNunit.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyTrailerData.cs" />

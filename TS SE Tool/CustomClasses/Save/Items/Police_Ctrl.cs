@@ -8,7 +8,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Police_Ctrl
+    class Police_Ctrl : SiiNBlockCore
     {
         internal List<SCS_Float> offence_timer { get; set; } = new List<SCS_Float>();
 
@@ -118,6 +118,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

@@ -17,6 +17,8 @@ namespace TS_SE_Tool.Save.Items
 
         private List<string> UnidentifiedBlocks = new List<string>();
 
+        internal List<string> NamelessControlList = new List<string>();
+
         internal Economy Economy
         {
             get => (Economy)SiiNitems[EconomyNameless];
@@ -72,6 +74,8 @@ namespace TS_SE_Tool.Save.Items
                 }
 
                 nameless = dataLine;
+
+                NamelessControlList.Add(nameless);
 
                 switch (tagLine)
                 {
@@ -900,6 +904,19 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
+            //=== Skipped blocks
+
+            if (NamelessControlList.Count > 0)
+            {
+                List<string> skippedBlocks = new List<string>();
+                skippedBlocks.AddRange(NamelessControlList);
+
+                foreach (string item in skippedBlocks)
+                {
+                    returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
+                }
+            }
+            
             returnSB.Append("}");
 
             returnString = returnSB.ToString();

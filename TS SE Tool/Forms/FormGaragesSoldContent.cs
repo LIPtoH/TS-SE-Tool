@@ -75,7 +75,7 @@ namespace TS_SE_Tool
                         {
                             string DriverName = tempD;
 
-                            if (MainForm.SiiNunitData.Player.drivers[0] == DriverName)
+                            if (FormMain.SiiNunitData.Player.drivers[0] == DriverName)
                             {
                                 DriverName = Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                             }
@@ -159,11 +159,11 @@ namespace TS_SE_Tool
             //Brand
             foreach (string accLink in MainForm.UserTruckDictionary[_tmptruckname].TruckMainData.accessories)
             {
-                Type t = MainForm.SiiNunitData.SiiNitems[accLink].GetType();
+                Type t = FormMain.SiiNunitData.SiiNitems[accLink].GetType();
 
                 if (t.Name == "Vehicle_Accessory")
                 {
-                    Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)MainForm.SiiNunitData.SiiNitems[accLink];
+                    Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)FormMain.SiiNunitData.SiiNitems[accLink];
                     if (tmp.accType == "basepart")
                     {
                         tmpTruckName = tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
@@ -195,7 +195,7 @@ namespace TS_SE_Tool
                         Garages tempG = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == tempD.Parent.Name)];
                         string driverNL = tempD.Name;
 
-                        if (driverNL != MainForm.SiiNunitData.Economy.driver_pool[0])
+                        if (driverNL != FormMain.SiiNunitData.Economy.driver_pool[0])
                         {
                             tempG.Drivers[tempG.Drivers.FindIndex(x => x == driverNL)] = null;
                             MainForm.extraDrivers.Add(driverNL);

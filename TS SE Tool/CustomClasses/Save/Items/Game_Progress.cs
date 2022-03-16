@@ -8,7 +8,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Game_Progress
+    class Game_Progress : SiiNBlockCore
     {
         internal string generic_transports { get; set; } = "";
         internal string undamaged_transports { get; set; } = "";
@@ -103,6 +103,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

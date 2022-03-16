@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    internal class Unidentified
+    internal class Unidentified : SiiNBlockCore
     {
         internal List<string> lines { get; set; } = new List<string>();
 
@@ -32,6 +32,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(String.Join(Environment.NewLine, lines));
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

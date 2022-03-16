@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Oversize_Route_offers
+    class Oversize_Route_offers : SiiNBlockCore
     {
         internal List<string> offers { get; set; } = new List<string>();
 
@@ -80,6 +80,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

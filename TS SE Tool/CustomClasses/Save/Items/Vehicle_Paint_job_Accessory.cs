@@ -9,7 +9,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Vehicle_Paint_job_Accessory
+    class Vehicle_Paint_job_Accessory : SiiNBlockCore
     {
         internal Vector_3f mask_r_color { get; set; } = new Vector_3f();
         internal Vector_3f mask_g_color { get; set; } = new Vector_3f();
@@ -133,6 +133,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

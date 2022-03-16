@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Ferry_log
+    class Ferry_log : SiiNBlockCore
     {
         internal List<string> entries { get; set; } = new List<string>();
 
@@ -74,6 +74,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

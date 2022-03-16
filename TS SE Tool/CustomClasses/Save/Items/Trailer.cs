@@ -9,7 +9,7 @@ using TS_SE_Tool.CustomClasses.Global;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Trailer
+    class Trailer : SiiNBlockCore
     {
         #region variables
         internal SCS_Float  cargo_mass          { get; set; } = 0;
@@ -226,6 +226,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

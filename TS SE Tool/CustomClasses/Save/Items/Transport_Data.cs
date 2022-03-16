@@ -8,7 +8,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Transport_Data
+    class Transport_Data : SiiNBlockCore
     {
         internal int distance { get; set; } = 0;
         internal uint time { get; set; } = 0;
@@ -141,6 +141,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

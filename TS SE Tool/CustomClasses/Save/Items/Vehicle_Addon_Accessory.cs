@@ -9,7 +9,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Vehicle_Addon_Accessory
+    class Vehicle_Addon_Accessory : SiiNBlockCore
     {
         internal List<string> slot_name { get; set; } = new List<string>();
         internal List<string> slot_hookup { get; set; } = new List<string>();
@@ -116,6 +116,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

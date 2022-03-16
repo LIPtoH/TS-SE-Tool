@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Trailer_Utilization_log_Entry
+    class Trailer_Utilization_log_Entry : SiiNBlockCore
     {
         internal int economy_day { get; set; } = 0;
         internal int use_time { get; set; } = 0;
@@ -76,6 +76,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

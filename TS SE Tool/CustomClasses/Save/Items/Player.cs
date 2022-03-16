@@ -10,7 +10,7 @@ using TS_SE_Tool.CustomClasses.Global;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Player
+    class Player : SiiNBlockCore
     {
         #region variables
         internal string hq_city { get; set; } = "";
@@ -458,6 +458,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

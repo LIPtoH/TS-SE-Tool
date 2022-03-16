@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Profit_log_Entry
+    class Profit_log_Entry : SiiNBlockCore
     {
         internal int revenue { get; set; } = 0;
         internal int wage { get; set; } = 0;
@@ -173,6 +173,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

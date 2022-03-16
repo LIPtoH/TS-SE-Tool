@@ -9,7 +9,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Vehicle_Cargo_Accessory
+    class Vehicle_Cargo_Accessory : SiiNBlockCore
     {
         internal string cargo_data { get; set; } = "";
         internal uint model_seed { get; set; } = 0;
@@ -98,6 +98,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

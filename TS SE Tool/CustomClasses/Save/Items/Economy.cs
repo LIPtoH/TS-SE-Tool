@@ -10,7 +10,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class Economy
+    class Economy : SiiNBlockCore
     {
         #region variables
         internal string bank { get; set; } = "";
@@ -1347,6 +1347,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }

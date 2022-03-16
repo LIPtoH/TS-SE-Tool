@@ -8,7 +8,7 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
-    class GPS_waypoint_Storage
+    class GPS_waypoint_Storage : SiiNBlockCore
     {
         Vector_3i nav_node_position { get; set; } = new Vector_3i();
 
@@ -84,6 +84,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("}");
 
             returnString = returnSB.ToString();
+
+            this.removeWritenBlock(_nameless);
 
             return returnString;
         }
