@@ -37,9 +37,10 @@ namespace TS_SE_Tool.Save.Items
 
         internal Player_Job Player_Job
         {
-            get => (Player_Job)SiiNitems[Player.current_job];
+            get => Player.current_job != "null" ? (Player_Job)SiiNitems[Player.current_job] : null;
             set => SiiNitems[Player.current_job] = value;
         }
+
         internal Economy_event_Queue Economy_event_Queue
         {
             get => (Economy_event_Queue)SiiNitems[Economy.event_queue];
@@ -309,6 +310,27 @@ namespace TS_SE_Tool.Save.Items
                             break;
                         }
 
+                    case "oversize_job_save":
+                        {
+                            SiiNitems.Add(nameless, new Oversize_Job_save(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "trajectory_orders_save":
+                        {
+                            SiiNitems.Add(nameless, new Trajectory_orders_Save(GetLines().ToArray()));
+
+                            break;
+                        }
+
+                    case "oversize_block_rule_save":
+                        {
+                            SiiNitems.Add(nameless, new Oversize_Block_rule_Save(GetLines().ToArray()));
+
+                            break;
+                        }
+
                     case "police_ctrl":
                         {
                             SiiNitems.Add(nameless, new Police_Ctrl(GetLines().ToArray()));
@@ -439,11 +461,11 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine("SiiNunit" + Environment.NewLine + "{");
 
-            Economy Economy = (Economy)SiiNitems[EconomyNameless];
+            //=== Economy
 
             returnSB.AppendLine(Economy.PrintOut(0, EconomyNameless));
 
-            Bank Bank = SiiNitems[Economy.bank];
+            //=== Bank
 
             returnSB.AppendLine(Bank.PrintOut(0, Economy.bank));
 
@@ -452,11 +474,11 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            //===
-
-            Player Player = SiiNitems[Economy.player];
+            //=== Player
 
             returnSB.AppendLine(Player.PrintOut(0, Economy.player));
+
+            //=== Trailers
 
             List<string> tmpAccList = new List<string>();
 
@@ -503,6 +525,8 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
+            //=== Current job
+
             if (Player.current_job != "null")
             {
                 Player_Job Player_Job = SiiNitems[Player.current_job];
@@ -520,7 +544,6 @@ namespace TS_SE_Tool.Save.Items
                         returnSB.AppendLine(SiiNitems[accNameless].PrintOut(0, accNameless));
                     }
                 }
-                    
 
                 if (Player_Job.company_trailer != "null")
                 {
@@ -547,7 +570,28 @@ namespace TS_SE_Tool.Save.Items
 
                     tmpAccList.Clear();
                 }
+
+                if (Player_Job.special != "null")
+                {
+                    returnSB.AppendLine(SiiNitems[Player_Job.special].PrintOut(0, Player_Job.special));
+                }
             }
+
+            //=== Selected job
+
+            if (Player.selected_job != "null")
+            {
+                Job_Info Job_Info = SiiNitems[Player.selected_job];
+
+                returnSB.AppendLine(Job_Info.PrintOut(0, Player.selected_job));
+
+                if (Job_Info.special != null)
+                {
+                    returnSB.AppendLine(SiiNitems[Job_Info.special].PrintOut(0, Job_Info.special));
+                }
+            }
+
+            //=== Trucks
 
             foreach (string item in Player.trucks.Where(x => x != null && x != "null"))
             {
@@ -561,6 +605,8 @@ namespace TS_SE_Tool.Save.Items
                 }
             }
 
+            //---
+
             foreach (string item in Player.truck_profit_logs.Where(x => x != null && x != "null"))
             {
                 Profit_log Profit_log = SiiNitems[item];
@@ -572,6 +618,8 @@ namespace TS_SE_Tool.Save.Items
                     returnSB.AppendLine(SiiNitems[item2].PrintOut(0, item2));
                 }
             }
+
+            //=== Drivers
 
             foreach (string item in Player.drivers.Where(x => x != null && x != "null"))
             {
@@ -606,6 +654,8 @@ namespace TS_SE_Tool.Save.Items
                     }
                 }
             }
+
+            //=== Companies
 
             foreach (string item in Economy.companies.Where(x => x != null && x != "null"))
             {
@@ -643,19 +693,19 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(Game_Progress.PrintOut(0, Economy.game_progress));
 
-            //===
+            //---
 
             Transport_Data Transport_Data = SiiNitems[Game_Progress.generic_transports];
 
             returnSB.AppendLine(Transport_Data.PrintOut(0, Game_Progress.generic_transports));
 
-            //===
+            //---
 
             Transport_Data = SiiNitems[Game_Progress.undamaged_transports];
 
             returnSB.AppendLine(Transport_Data.PrintOut(0, Game_Progress.undamaged_transports));
 
-            //===
+            //---
 
             Transport_Data = SiiNitems[Game_Progress.clean_transports];
 
@@ -670,7 +720,7 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            //===
+            //=== Mail Control
 
             Mail_Ctrl Mail_Ctrl = SiiNitems[Economy.mail_ctrl];
 
@@ -699,7 +749,7 @@ namespace TS_SE_Tool.Save.Items
                 }
             }
 
-            //===
+            //=== Delivery log
 
             Delivery_log Delivery_log = SiiNitems[Economy.delivery_log];
 
@@ -710,7 +760,7 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            //=== 
+            //=== Ferry log
 
             if (SiiNitems.ContainsKey(Economy.ferry_log))
             {
@@ -741,7 +791,26 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            //===
+            //=== Special job
+
+            if (Economy.stored_special_job != "null")
+            {
+                Oversize_Job_save Oversize_Job_save = SiiNitems[Economy.stored_special_job];
+
+                returnSB.AppendLine(Oversize_Job_save.PrintOut(0, Economy.stored_special_job));
+
+                foreach (string item in Oversize_Job_save.trajectory_orders.Where(x => x != null && x != "null"))
+                {
+                    returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
+                }
+
+                foreach (string item in Oversize_Job_save.active_blocks_rules.Where(x => x != null && x != "null"))
+                {
+                    returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
+                }
+            }
+
+            //=== Police Control
 
             returnSB.AppendLine(SiiNitems[Economy.police_ctrl].PrintOut(0, Economy.police_ctrl));
 
@@ -762,7 +831,7 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            //===
+            //=== Stored Map actions
 
             foreach (string item in Economy.stored_map_actions.Where(x => x != null && x != "null"))
             {

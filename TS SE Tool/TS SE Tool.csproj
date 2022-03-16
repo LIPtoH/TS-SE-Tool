@@ -166,6 +166,8 @@
     <Compile Include="CustomClasses\Save\Items\Mail_Ctrl.cs" />
     <Compile Include="CustomClasses\Save\Items\Mail_Def.cs" />
     <Compile Include="CustomClasses\Save\Items\Map_action.cs" />
+    <Compile Include="CustomClasses\Save\Items\Oversize_Block_rule_Save.cs" />
+    <Compile Include="CustomClasses\Save\Items\Oversize_Job_save.cs" />
     <Compile Include="CustomClasses\Save\Items\Oversize_Offer.cs" />
     <Compile Include="CustomClasses\Save\Items\Oversize_offer_Ctrl.cs" />
     <Compile Include="CustomClasses\Save\Items\Oversize_Route_offers.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="CustomClasses\Save\Items\Trailer_Def.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer_Utilization_log.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer_Utilization_log_Entry.cs" />
+    <Compile Include="CustomClasses\Save\Items\Trajectory_orders_Save.cs" />
     <Compile Include="CustomClasses\Save\Items\Transport_Data.cs" />
     <Compile Include="CustomClasses\Save\Items\Unidentified.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle.cs" />

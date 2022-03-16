@@ -437,20 +437,23 @@ namespace TS_SE_Tool
             }
 
             //
-            string jobtrck = SiiNunitData.Player_Job.company_truck;
-            if(jobtrck != "null")
+            if (SiiNunitData.Player_Job != null)
             {
-                UserTruckDictionary.Add(jobtrck, new UserCompanyTruckData());
-                UserTruckDictionary[jobtrck].TruckMainData = SiiNunitData.SiiNitems[jobtrck];
-                UserTruckDictionary[jobtrck].Users = false;
-            }
+                string jobtrck = SiiNunitData.Player_Job.company_truck;
+                if (jobtrck != "null")
+                {
+                    UserTruckDictionary.Add(jobtrck, new UserCompanyTruckData());
+                    UserTruckDictionary[jobtrck].TruckMainData = SiiNunitData.SiiNitems[jobtrck];
+                    UserTruckDictionary[jobtrck].Users = false;
+                }
 
-            string jobtrlr = SiiNunitData.Player_Job.company_trailer;
-            if (jobtrlr != "null")
-            {
-                UserTrailerDictionary.Add(jobtrlr, new UserCompanyTrailerData());
-                UserTrailerDictionary[jobtrlr].TrailerMainData = SiiNunitData.SiiNitems[jobtrlr];
-                UserTrailerDictionary[jobtrlr].Users = false;
+                string jobtrlr = SiiNunitData.Player_Job.company_trailer;
+                if (jobtrlr != "null")
+                {
+                    UserTrailerDictionary.Add(jobtrlr, new UserCompanyTrailerData());
+                    UserTrailerDictionary[jobtrlr].TrailerMainData = SiiNunitData.SiiNitems[jobtrlr];
+                    UserTrailerDictionary[jobtrlr].Users = false;
+                }
             }
 
             //
