@@ -320,7 +320,14 @@ namespace TS_SE_Tool
 
             ToggleControlsAccess(false);
 
-            LoadSaveFile(); //Load save file
+            //Load save file
+            LoadSaveFile();
+
+            MessageBox.Show("Some of the blocks in save file was not recognized and it may affect Program behavior." + Environment.NewLine + Environment.NewLine +
+                "Please contact Developer via e-mail <" + Utilities.Web_Utilities.External.linkMailDeveloper + ">" + Environment.NewLine + Environment.NewLine +
+                "Information can be found in error.log file.",
+                "Unidentified blocks in save file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             //GC
             GC.Collect();
             //GC.WaitForPendingFinalizers();
