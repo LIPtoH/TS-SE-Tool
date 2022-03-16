@@ -57,6 +57,7 @@
             this.tabPageProfile = new System.Windows.Forms.TabPage();
             this.groupBoxProfilePlayerLevel = new System.Windows.Forms.GroupBox();
             this.panelPlayerLevel = new System.Windows.Forms.Panel();
+            this.labelPlayerExperienceSpacer = new System.Windows.Forms.Label();
             this.buttonPlayerLevelMaximum = new System.Windows.Forms.Button();
             this.buttonPlayerLevelPlus10 = new System.Windows.Forms.Button();
             this.buttonPlayerLevelPlus01 = new System.Windows.Forms.Button();
@@ -215,7 +216,6 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelPlayerExperienceSpacer = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -524,6 +524,15 @@
             this.panelPlayerLevel.Padding = new System.Windows.Forms.Padding(3);
             this.panelPlayerLevel.Size = new System.Drawing.Size(420, 70);
             this.panelPlayerLevel.TabIndex = 5;
+            // 
+            // labelPlayerExperienceSpacer
+            // 
+            this.labelPlayerExperienceSpacer.AutoSize = true;
+            this.labelPlayerExperienceSpacer.Location = new System.Drawing.Point(211, 40);
+            this.labelPlayerExperienceSpacer.Name = "labelPlayerExperienceSpacer";
+            this.labelPlayerExperienceSpacer.Size = new System.Drawing.Size(12, 13);
+            this.labelPlayerExperienceSpacer.TabIndex = 40;
+            this.labelPlayerExperienceSpacer.Text = "/";
             // 
             // buttonPlayerLevelMaximum
             // 
@@ -1280,7 +1289,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1319,7 +1328,7 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(448, 0);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(447, 0);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
@@ -1558,7 +1567,7 @@
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
             this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
@@ -2110,9 +2119,9 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(6, 159);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(552, 155);
+            this.label5.Size = new System.Drawing.Size(558, 155);
             this.label5.TabIndex = 8;
-            this.label5.Text = "Work In Progres";
+            this.label5.Text = "Work In Progress";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel1
@@ -2126,6 +2135,7 @@
             this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSStoredGPSPathPaste, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSTruckPositionMultySavePaste, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.buttonConvoyToolsGPSTruckPositionMultySaveCopy, 0, 2);
+            this.tableLayoutPanel1.Enabled = false;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -2480,15 +2490,6 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
-            // 
-            // labelPlayerExperienceSpacer
-            // 
-            this.labelPlayerExperienceSpacer.AutoSize = true;
-            this.labelPlayerExperienceSpacer.Location = new System.Drawing.Point(211, 40);
-            this.labelPlayerExperienceSpacer.Name = "labelPlayerExperienceSpacer";
-            this.labelPlayerExperienceSpacer.Size = new System.Drawing.Size(12, 13);
-            this.labelPlayerExperienceSpacer.TabIndex = 40;
-            this.labelPlayerExperienceSpacer.Text = "/";
             // 
             // FormMain
             // 
