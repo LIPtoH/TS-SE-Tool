@@ -777,10 +777,10 @@ namespace TS_SE_Tool
                 else if (tempSavefileInMemory != null)
                 {
                     LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
-                    
+
                     worker = new BackgroundWorker();
                     worker.WorkerReportsProgress = true;
-                    //worker.DoWork += PrepareData;//Start;
+
                     worker.DoWork += NewPrepareData;//Start;
                     worker.ProgressChanged += worker_ProgressChanged;
                     worker.RunWorkerCompleted += worker_RunWorkerCompleted;
@@ -858,6 +858,14 @@ namespace TS_SE_Tool
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (SiiNunitData.UnidentifiedBlocks.Count > 0)
+            {
+                MessageBox.Show("Some of the blocks in save file was not recognized and it may affect Program behavior." + Environment.NewLine + Environment.NewLine +
+                    "Please contact Developer via e-mail <" + Utilities.Web_Utilities.External.linkMailDeveloper + ">" + Environment.NewLine + Environment.NewLine +
+                    "Information can be found in error.log file.",
+                    "Unidentified blocks in save file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
             toolStripProgressBarMain.Value = 0;
             //ClearFormControls(false);
 

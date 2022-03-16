@@ -15,7 +15,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal string EconomyNameless = "";
 
-        private List<string> UnidentifiedBlocks = new List<string>();
+        internal List<string> UnidentifiedBlocks = new List<string>();
 
         internal List<string> NamelessControlList = new List<string>();
 
@@ -411,14 +411,14 @@ namespace TS_SE_Tool.Save.Items
 
                             break;
                         }
-
+                        
                     case "bus_job_log":
                         {
                             SiiNitems.Add(nameless, new Bus_job_Log(GetLines().ToArray()));
 
                             break;
                         }
-
+                        
                     default:
                         {
                             List<string> tmpNewBlockLines = GetLines();
