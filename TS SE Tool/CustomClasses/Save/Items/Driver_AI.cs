@@ -35,11 +35,11 @@ namespace TS_SE_Tool.Save.Items
 
         internal SCS_Float assigned_truck_efficiency { get; set; } = 0;
         internal int assigned_truck_axle_count { get; set; } = 0;
-        internal int assigned_truck_mass { get; set; } = 0;
+        internal SCS_Float assigned_truck_mass { get; set; } = 0;
 
         internal SCS_Float slot_truck_efficiency { get; set; } = 0;
         internal int slot_truck_axle_count { get; set; } = 0;
-        internal int slot_truck_mass { get; set; } = 0;
+        internal SCS_Float slot_truck_mass { get; set; } = 0;
 
         internal string adopted_trailer { get; set; } = "";
         internal string assigned_trailer { get; set; } = "";
@@ -190,7 +190,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "assigned_truck_mass":
                             {
-                                assigned_truck_mass = int.Parse(dataLine);
+                                assigned_truck_mass = dataLine;
                                 break;
                             }
 
@@ -208,7 +208,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "slot_truck_mass":
                             {
-                                slot_truck_mass = int.Parse(dataLine);
+                                slot_truck_mass = dataLine;
                                 break;
                             }
 
