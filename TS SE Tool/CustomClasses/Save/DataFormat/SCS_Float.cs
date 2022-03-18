@@ -33,11 +33,7 @@ namespace TS_SE_Tool.Save.DataFormat
 
         public override string ToString()
         {
-            return NumericUtilities.SingleFloatToHexFloat(Value);
-        }
-        public string ToHexString()
-        {
-            return NumericUtilities.SingleFloatToHexFloat(Value, true);
+            return NumericUtilities.SingleFloatToString(Value);
         }
     }
 

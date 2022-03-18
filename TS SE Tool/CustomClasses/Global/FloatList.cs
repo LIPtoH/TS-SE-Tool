@@ -14,7 +14,7 @@ namespace TS_SE_Tool.CustomClasses.Global
         {
             get
             {
-                return NumericUtilities.SingleFloatToHexFloat(base[index]);
+                return NumericUtilities.SingleFloatToString(base[index]);
             }
 
             set

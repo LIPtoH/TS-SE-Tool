@@ -40,7 +40,7 @@ namespace TS_SE_Tool.Save.DataFormat
         override public string ToString()
         {
             // (&bd85bf17, &bd5ecfd4)
-            return "(" + NumericUtilities.SingleFloatToHexFloat(X) + ", " + NumericUtilities.SingleFloatToHexFloat(Y) + ")";
+            return "(" + NumericUtilities.SingleFloatToString(X) + ", " + NumericUtilities.SingleFloatToString(Y) + ")";
         }
     }
 }

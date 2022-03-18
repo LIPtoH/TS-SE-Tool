@@ -42,7 +42,7 @@ namespace TS_SE_Tool.Utilities
             }
             else
             {
-                return Convert.ToSingle(_input);
+                return float.Parse(_input, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
             }
         }
 
@@ -52,36 +52,39 @@ namespace TS_SE_Tool.Utilities
                 .Select(i => str.Substring(i * chunkSize, chunkSize));
         }
 
-        public static string SingleFloatToHexFloat(float _input)
+        public static string SingleFloatToString(float _input)
         {
-            return SingleFloatToHexFloat(_input, false);
-        }
-
-        public static string SingleFloatToHexFloat(float _input, bool _toHex)
-        {
-            int intFloat = (int)_input;
-
-            if (_toHex || intFloat - _input != 0)
+            if (!Single.IsNaN(_input))
             {
-                if (_input == 0)
-                    return _input.ToString();
+                int intFloat = (int)_input;
 
-                //Get bytes
-                byte[] tmpByteArray = BitConverter.GetBytes(_input);
-
-                //Reverse order
-                Array.Reverse(tmpByteArray);
-
-                //remove dashes and make it lower case
-                string hexFloat = BitConverter.ToString(tmpByteArray).Replace("-", "").ToLower();
-
-                //Result
-                return "&" + hexFloat;
+                if (intFloat - _input != 0 || _input >= 1e7)
+                {
+                    return "&" + SingleFloatToHexFloat(_input);
+                }
+                else
+                {
+                    return _input.ToString("g6", System.Globalization.CultureInfo.InvariantCulture);
+                }
             }
             else
             {
-                return _input.ToString();
+                return "&" + SingleFloatToHexFloat(_input);
             }
+        }
+
+        public static string SingleFloatToHexFloat(float _input)
+        {
+            //Get bytes
+            byte[] tmpByteArray = BitConverter.GetBytes(_input);
+
+            //Reverse order
+            Array.Reverse(tmpByteArray);
+
+            //remove dashes and make it lower case
+            string hexFloat = BitConverter.ToString(tmpByteArray).Replace("-", "").ToLower();
+
+            return hexFloat;
         }
 
         public static string IntegerToHexString(uint _integer)
