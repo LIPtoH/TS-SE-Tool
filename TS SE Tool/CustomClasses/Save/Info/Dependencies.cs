@@ -23,7 +23,7 @@ namespace TS_SE_Tool
 {
     class Dependency
     {
-        internal string Raw;
+        internal Save.DataFormat.SCS_String Raw;
 
         internal string RawDepType;
         internal string DepType;
@@ -37,7 +37,7 @@ namespace TS_SE_Tool
         {
             Raw = _RawText;
 
-            string[] DepParts = Raw.Split(new char[] { '|' }, 3);
+            string[] DepParts = Raw.Value.Split(new char[] { '|' }, 3);
 
             RawDepType = DepParts[0];
 

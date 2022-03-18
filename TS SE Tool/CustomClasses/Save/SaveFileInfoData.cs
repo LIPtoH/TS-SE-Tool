@@ -20,43 +20,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+
 using TS_SE_Tool.Utilities;
+using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool
 {
     public class SaveFileInfoData
     {
-        private string      SaveContainerNameless       { get; set; } = "";
+        private string SaveContainerNameless { get; set; } = "";
 
         //Data
-        internal string     Name                       { get; set; } = "";     //Save name
-        internal string     _Name
-        {
-            get
-            {
-                return TextUtilities.FromStringToOutputString(Name);
-            }
-            set
-            {
-                Name = TextUtilities.CheckAndClearStringFromQuotes(value);
-            }
-        }
+        internal SCS_String Name { get; set; } = "";     //Save name
 
-        public uint         Time                        { get; set; } = 0;          //IngameTime
-        public uint         FileTime                    { get; set; } = 0;
-        public ushort       Version                     { get; set; } = 0;
+        public uint Time { get; set; } = 0;      //IngameTime
+        public uint FileTime { get; set; } = 0;
+        public ushort Version { get; set; } = 0;
 
         //Info 
-        private byte        InfoVersion                 { get; set; } = 0;
-        private uint        InfoPlayersExperience       { get; set; } = 0;
-        private ushort      InfoUnlockedRecruitments    { get; set; } = 0;
-        private ushort      InfoUnlockedDealers         { get; set; } = 0;
-        private ushort      InfoVisitedCities           { get; set; } = 0;
-        private long        InfoMoneyAccount            { get; set; } = 0;
-        private float       InfoExploredRatio           { get; set; } = 0.0F;
+        private byte InfoVersion { get; set; } = 0;
+        private uint InfoPlayersExperience { get; set; } = 0;
+        private ushort InfoUnlockedRecruitments { get; set; } = 0;
+        private ushort InfoUnlockedDealers { get; set; } = 0;
+        private ushort InfoVisitedCities { get; set; } = 0;
+        private long InfoMoneyAccount { get; set; } = 0;
+        private SCS_Float InfoExploredRatio { get; set; } = 0.0F;
 
         //
-        internal List<Dependency> Dependencies { get; set; }
+        internal List<Dependency> Dependencies { get; set; } = new List<Dependency>();
 
         //====
         Dictionary<string, string> unsortedDataDictionary = new Dictionary<string, string>();
@@ -65,7 +56,6 @@ namespace TS_SE_Tool
 
         public void ProcessData(string[] _fileLines)
         {
-            string[] lineParts;
             string currentLine = "";
             string tagLine = "", dataLine = "";
 
@@ -91,6 +81,7 @@ namespace TS_SE_Tool
                 switch (tagLine)
                 {
                     case "SiiNunit":
+
                     case "":
                         {
                             break;
@@ -100,6 +91,7 @@ namespace TS_SE_Tool
                         {
                             break;
                         }
+
                     case "}":
                         {
                             --exitLoopMarker;
@@ -110,7 +102,6 @@ namespace TS_SE_Tool
                             break;
                         }
 
-
                     case "save_container":
                         {
                             SaveContainerNameless = dataLine.Split(new char[] { '{' })[0].Trim();
@@ -119,7 +110,7 @@ namespace TS_SE_Tool
 
                     case "name":
                         {
-                            _Name = dataLine;
+                            Name = dataLine;
                             break;
                         }
 
@@ -137,25 +128,19 @@ namespace TS_SE_Tool
 
                     case "version":
                         {
-                            Version = ushort.Parse(dataLine);                            
+                            Version = ushort.Parse(dataLine);
                             break;
                         }
 
                     case "dependencies":
                         {
-                            Dependencies = new List<Dependency>(int.Parse(dataLine));
+                            Dependencies.Capacity = int.Parse(dataLine);
+                            break;
+                        }
 
-                            for (int x = 0; x < Dependencies.Capacity; x++)
-                            {
-                                lineNumber++;
-                                lineParts = _fileLines[lineNumber].Split(new char[] { ':' }, 2);
-
-                                string tmpDep = lineParts[1].Trim();
-                                tmpDep = tmpDep.Substring(1, tmpDep.Length - 2);
-
-                                Dependencies.Add(new Dependency(tmpDep));
-                            }
-
+                    case var s when s.StartsWith("dependencies["):
+                        {
+                            Dependencies.Add(new Dependency(dataLine));
                             break;
                         }
 
@@ -225,7 +210,7 @@ namespace TS_SE_Tool
             sbResult.AppendLine("{");
 
             sbResult.AppendLine("save_container : " + SaveContainerNameless + " {");
-            sbResult.AppendLine(" name: " + _Name);
+            sbResult.AppendLine(" name: " + Name);
             sbResult.AppendLine(" time: " + Time.ToString());
             sbResult.AppendLine(" file_time: " + FileTime.ToString());
             sbResult.AppendLine(" version: " + Version.ToString());
@@ -233,11 +218,9 @@ namespace TS_SE_Tool
             if (InfoExist55)
                 sbResult.AppendLine(" info_version: " + this.InfoVersion.ToString());
 
-            sbResult.AppendLine(" dependencies: " + Dependencies.Count.ToString());
-                for (int i = 0; i < Dependencies.Capacity; i++)
-                {
-                    sbResult.AppendLine(" dependencies[" + i.ToString() + "]: \"" + Dependencies[i].Raw + "\"");
-                }
+            sbResult.AppendLine(" dependencies: " + Dependencies.Count);
+            for (int i = 0; i < Dependencies.Count; i++)
+                sbResult.AppendLine(" dependencies[" + i + "]: " + Dependencies[i].Raw.ToString());
 
             if (InfoExist55)
             {
@@ -246,7 +229,7 @@ namespace TS_SE_Tool
                 sbResult.AppendLine(" info_unlocked_dealers: " + InfoUnlockedDealers.ToString());
                 sbResult.AppendLine(" info_visited_cities: " + InfoVisitedCities.ToString());
                 sbResult.AppendLine(" info_money_account: " + InfoMoneyAccount.ToString());
-                sbResult.AppendLine(" info_explored_ratio: " + NumericUtilities.SingleFloatToHexFloat(InfoExploredRatio));
+                sbResult.AppendLine(" info_explored_ratio: " + InfoExploredRatio.ToString());
             }
 
             //Add lines with unsorted data
@@ -266,7 +249,7 @@ namespace TS_SE_Tool
             return sbResult.ToString();
         }
 
-        public void WriteToStream (StreamWriter _streamWriter)
+        public void WriteToStream(StreamWriter _streamWriter)
         {
             _streamWriter.Write(GetDataText());
         }

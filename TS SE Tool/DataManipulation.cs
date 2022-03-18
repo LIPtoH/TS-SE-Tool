@@ -187,7 +187,7 @@ namespace TS_SE_Tool
             }
             else
             {
-                List<string> tmpSFdep = MainSaveFileInfoData.Dependencies.Select(x => x.Raw).ToList();
+                List<string> tmpSFdep = MainSaveFileInfoData.Dependencies.Select(x => x.Raw.Value).ToList();
 
                 List<string> dbdep = DBDependencies.Except(tmpSFdep).ToList();
                 List<string> sfdep = tmpSFdep.Except(DBDependencies).ToList();
@@ -1556,7 +1556,7 @@ namespace TS_SE_Tool
                             string SQLCommandCMD = "";
                             bool first = true;
 
-                            List<string> temp = DBDependencies.Except(MainSaveFileInfoData.Dependencies.Select(x => x.Raw).ToList()).ToList();
+                            List<string> temp = DBDependencies.Except(MainSaveFileInfoData.Dependencies.Select(x => x.Raw.Value).ToList()).ToList();
 
                             if (temp != null && temp.Count() > 0)
                             {
@@ -1595,7 +1595,7 @@ namespace TS_SE_Tool
                                 UpdateDatabase(SQLCommandCMD);
                             }
 
-                            temp = MainSaveFileInfoData.Dependencies.Select(x => x.Raw).ToList().Except(DBDependencies).ToList();
+                            temp = MainSaveFileInfoData.Dependencies.Select(x => x.Raw.Value).ToList().Except(DBDependencies).ToList();
 
                             if (temp != null && temp.Count() > 0)
                             {
