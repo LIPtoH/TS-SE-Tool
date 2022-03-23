@@ -316,6 +316,7 @@ namespace TS_SE_Tool
             tempSavefileInMemory = null;
             tempProfileFileInMemory = null;
 
+            SiiNunitData = null;
 
             //Game dependant
             if (GameType == "ETS2")
@@ -417,11 +418,14 @@ namespace TS_SE_Tool
 
         public void ApplySettingsUI()
         {
-            //Company
-            FillAccountMoneyTB();
-            //Freight
-            RefreshFreightMarketDistance();
-            listBoxFreightMarketAddedJobs.Refresh();
+            if (SiiNunitData != null)
+            {
+                //Company
+                FillAccountMoneyTB();
+                //Freight
+                RefreshFreightMarketDistance();
+                listBoxFreightMarketAddedJobs.Refresh();
+            }
         }
 
         private void AddImagesToControls()

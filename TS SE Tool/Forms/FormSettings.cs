@@ -308,6 +308,7 @@ namespace TS_SE_Tool
             MainForm.ProgSettingsV.CurrencyMesETS2 = comboBoxSettingCurrencySelectETS2.SelectedValue.ToString();
             MainForm.ProgSettingsV.CurrencyMesATS = comboBoxSettingCurrencySelectATS.SelectedValue.ToString();
             MainForm.ProgSettingsV.JobPickupTime = (short)(numericUpDownSettingPickTimeH.Value + numericUpDownSettingPickTimeD.Value * 24);
+            MainForm.ProgSettingsV.LoopEvery = (byte)(numericUpDownSettingLoopCitys.Value);
 
             MainForm.ProgSettingsV.WriteConfigToFile();
 
