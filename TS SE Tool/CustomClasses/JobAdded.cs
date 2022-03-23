@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace TS_SE_Tool
 {
-    class JobAdded
+    internal class JobAdded
     {
         public string SourceCity { get; set; }
         public string SourceCompany { get; set; }
