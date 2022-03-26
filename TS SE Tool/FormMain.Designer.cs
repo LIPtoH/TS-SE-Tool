@@ -209,6 +209,7 @@
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
+            this.buttonProfilesAndSavesRestoreBackup = new System.Windows.Forms.Button();
             this.buttonProfilesAndSavesEditProfile = new System.Windows.Forms.Button();
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
@@ -1289,7 +1290,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1328,7 +1329,7 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(447, 0);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(445, 0);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
@@ -1567,7 +1568,7 @@
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
             this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
@@ -2359,6 +2360,7 @@
             // 
             // groupBoxMainProfilesAndSaves
             // 
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRestoreBackup);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesEditProfile);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonMainDecryptSave);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRefreshAll);
@@ -2375,6 +2377,16 @@
             this.groupBoxMainProfilesAndSaves.TabIndex = 21;
             this.groupBoxMainProfilesAndSaves.TabStop = false;
             this.groupBoxMainProfilesAndSaves.Text = "Profiles And Saves";
+            // 
+            // buttonProfilesAndSavesRestoreBackup
+            // 
+            this.buttonProfilesAndSavesRestoreBackup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonProfilesAndSavesRestoreBackup.Location = new System.Drawing.Point(209, 160);
+            this.buttonProfilesAndSavesRestoreBackup.Name = "buttonProfilesAndSavesRestoreBackup";
+            this.buttonProfilesAndSavesRestoreBackup.Size = new System.Drawing.Size(21, 21);
+            this.buttonProfilesAndSavesRestoreBackup.TabIndex = 22;
+            this.buttonProfilesAndSavesRestoreBackup.UseVisualStyleBackColor = true;
+            this.buttonProfilesAndSavesRestoreBackup.Click += new System.EventHandler(this.buttonProfilesAndSavesRestoreBackup_Click);
             // 
             // buttonProfilesAndSavesEditProfile
             // 
@@ -2759,6 +2771,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTrailerDetails;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTrailerLP;
         private System.Windows.Forms.Label labelPlayerExperienceSpacer;
+        private System.Windows.Forms.Button buttonProfilesAndSavesRestoreBackup;
     }
 }
 

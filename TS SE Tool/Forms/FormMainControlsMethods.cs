@@ -270,7 +270,39 @@ namespace TS_SE_Tool
                 FillAllProfilesPaths();
             }
         }
-        
+        private void buttonProfilesAndSavesRestoreBackup_Click(object sender, EventArgs e)
+        {
+            SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
+            string SiiSavePath = SavefilePath + @"\game.sii", 
+                   SiiSavePathBackup = SavefilePath + @"\game_backup.sii",
+                   SiiSavePathTmp = SavefilePath + @"\game_tmp.sii";
+
+            if (File.Exists(SiiSavePathBackup))
+            {
+                DialogResult dr = MessageBox.Show("Restoring from backup file will overwrite existing save file." + Environment.NewLine +
+                                                  "Select: Yes - Overwrite | No - Swap files | Cancel - Abort restoring.", 
+                                                  "Restoring save file from Backup", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+
+                if (dr == DialogResult.Cancel)
+                    return;
+
+                if (dr == DialogResult.No)
+                {
+                    File.Copy(SiiSavePath, SiiSavePathTmp, true);
+                    File.Copy(SiiSavePathBackup, SiiSavePath, true);
+                    File.Copy(SiiSavePathTmp, SiiSavePathBackup, true);
+
+                    File.Delete(SiiSavePathTmp);
+                }
+                else
+                {
+                    File.Copy(SiiSavePathBackup, SiiSavePath, true);
+
+                    File.Delete(SiiSavePathBackup);
+                }   
+            }
+        }
+
         //Buttons
         private void buttonDecryptSave_Click(object sender, EventArgs e)
         {
@@ -863,7 +895,6 @@ namespace TS_SE_Tool
 
                 if (Globals.SavesHex.Length > 0)
                 {
-
                     bool NotANumber = false;
 
                     foreach (string saveFolder in Globals.SavesHex)
@@ -1002,7 +1033,16 @@ namespace TS_SE_Tool
                 buttonMainLoadSave.Text = "Load";
 
                 buttonMainLoadSave.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            }                
+            }
+
+            drv = (DataRowView)comboBoxSaves.SelectedItem;
+
+            string savePath = drv["savePath"].ToString() + @"\game.sii", backupPath = drv["savePath"].ToString() + @"\game_backup.sii";
+
+            if (File.Exists(backupPath))
+                buttonProfilesAndSavesRestoreBackup.Enabled = true;
+            else
+                buttonProfilesAndSavesRestoreBackup.Enabled = false;
         }
 
         private void comboBoxSaves_DropDown(object sender, EventArgs e)
