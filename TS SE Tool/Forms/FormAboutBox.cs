@@ -40,7 +40,7 @@ namespace TS_SE_Tool
 
         private void SetFormVisual()
         {
-            this.Icon = Utilities.TS_Graphics.IconFromImage(MainForm.ProgUIImgsDict["Info"]);
+            this.Icon = Utilities.Graphics.IconFromImage(MainForm.ProgUIImgsDict["Info"]);
         }
 
         private void PopulateFormControls()

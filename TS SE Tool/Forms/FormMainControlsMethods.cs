@@ -765,13 +765,13 @@ namespace TS_SE_Tool
                     else
                     {
                         string[] imgpaths = new string[] { @"img\unknown.dds" };
-                        pictureBoxProfileAvatar.Image = ExtImgLoader(imgpaths, 95, 95, 0, 0)[0];
+                        pictureBoxProfileAvatar.Image = Utilities.Graphics.ddsImgLoader(imgpaths, 95, 95)[0];
                     }
                 }
                 catch
                 {
                     string[] imgpaths = new string[] { @"img\unknown.dds" };
-                    pictureBoxProfileAvatar.Image = ExtImgLoader(imgpaths, 95, 95, 0, 0)[0];
+                    pictureBoxProfileAvatar.Image = Utilities.Graphics.ddsImgLoader(imgpaths, 95, 95)[0];
                 }
 
                 try

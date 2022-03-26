@@ -222,177 +222,109 @@ namespace TS_SE_Tool
 
         private void LoadExtImages()
         {
-            string[] imgpaths;
+            //=== UI images
 
-            string[] imgNames = new string[] { "Language", "github", "SCS", "TMP", "PDF", "YouTube", "ProgramSettings", "Settings", "Cross", "Info", "Download", "Question", "NetworkCloud", "Reload", "EditList" };
-            imgpaths = new string[] { @"img\UI\globe.png", @"img\UI\github.png", @"img\UI\SCS.png", @"img\UI\TMP.png", @"img\UI\PDF.png", @"img\UI\YouTube.png", @"img\UI\pSettings.png", @"img\UI\cogwheel.png",
-                                    @"img\UI\quit.png", @"img\UI\info.png", @"img\UI\download.png", @"img\UI\question.png", @"img\UI\networkCloud.png", @"img\UI\reload.png", @"img\UI\edit.png"};
+            string[] imgNames = new string[] { "Language", "github", "SCS", "TMP", "PDF", "YouTube", "ProgramSettings", 
+                                               "Settings", "Cross", "Info", "Download", 
+                                               "Question", "NetworkCloud", "Reload", "EditList" },
 
-            for(int i = 0; i < imgpaths.Length; i++)
-            {
-                ProgUIImgsDict.Add(imgNames[i], Bitmap.FromFile(imgpaths[i]));
-            }
+                     imgPaths = new string[] { @"img\UI\globe.png", @"img\UI\github.png", @"img\UI\SCS.png", @"img\UI\TMP.png", @"img\UI\PDF.png", @"img\UI\YouTube.png", 
+                                               @"img\UI\pSettings.png", @"img\UI\cogwheel.png", @"img\UI\quit.png", @"img\UI\info.png", @"img\UI\download.png", 
+                                               @"img\UI\question.png", @"img\UI\networkCloud.png", @"img\UI\reload.png", @"img\UI\edit.png"};
 
-            MemoryStream ms = new MemoryStream();
-            ImageFromDDS(@"img\service_ico.dds").Save(ms, ImageFormat.Png);
-            RepairImg = Image.FromStream(ms);
-            ms.Dispose();
+            for (int i = 0; i < imgPaths.Length; i++)
+                ProgUIImgsDict.Add(imgNames[i], Bitmap.FromFile(imgPaths[i]));
 
-            ms = new MemoryStream();
-            ImageFromDDS(@"img\gas_ico.dds").Save(ms, ImageFormat.Png);
-            RefuelImg = Image.FromStream(ms);
-            ms.Dispose();
+            //=== Game Icons
 
-            ms = new MemoryStream();
-            ImageFromDDS(@"img\customize_p.dds").Save(ms, ImageFormat.Png);
-            CustomizeImg = Image.FromStream(ms);
-            ms.Dispose();
+            imgPaths = new string[] { @"img\ETS2\game_n.dds", @"img\ATS\game_n.dds" };
+            GameIconeImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
 
-            imgpaths = new string[] { @"img\" + GameType + @"\adr_1.dds", @"img\" + GameType + @"\adr_2.dds", @"img\" + GameType + @"\adr_3.dds", @"img\" + GameType + @"\adr_4.dds", @"img\" + GameType + @"\adr_6.dds", @"img\" + GameType + @"\adr_8.dds" };
-            ADRImgS = ExtImgLoader(imgpaths, 46, 46, 9, 9, 32, 32);
+            //=== Tab page icons
 
-            imgpaths = new string[] { @"img\" + GameType + @"\adr_1_grey.dds", @"img\" + GameType + @"\adr_2_grey.dds", @"img\" + GameType + @"\adr_3_grey.dds", @"img\" + GameType + @"\adr_4_grey.dds", @"img\" + GameType + @"\adr_6_grey.dds", @"img\" + GameType + @"\adr_8_grey.dds" };
-            ADRImgSGrey = ExtImgLoader(imgpaths, 46, 46, 9, 9, 32, 32);
+            imgPaths = new string[] { @"img\profiles.dds", @"img\comp_man.dds", @"img\truck_service.dds", @"img\trailers.dds", 
+                                      @"img\company_job.dds", @"img\cargo_market.dds", @"img\maps.dds" };
+            TabpagesImages.Images.AddRange(Utilities.Graphics.ddsImgLoader(imgPaths, 64, 64, 64, 0));
 
-            imgpaths = new string[] { @"img\skill_bar_s.dds", @"img\skill_bar_s2.dds", @"img\skill_bar1.dds", @"img\skill_bar2.dds", @"img\skill_bar3.dds" };
+            //=== Profile
+
+            // skill icons
+            imgPaths = new string[] { @"img\skill_adr.dds", @"img\skill_distance.dds", @"img\skill_heavy.dds", @"img\skill_fragile.dds", 
+                                      @"img\skill_jit.dds", @"img\skill_mechanical.dds" };
+            SkillImgS = Utilities.Graphics.ddsImgLoader(imgPaths, 64, 64);
+
+            // ADR icons
+            imgPaths = new string[] { @"img\" + GameType + @"\adr_1.dds", @"img\" + GameType + @"\adr_2.dds", @"img\" + GameType + @"\adr_3.dds", 
+                                      @"img\" + GameType + @"\adr_4.dds", @"img\" + GameType + @"\adr_6.dds", @"img\" + GameType + @"\adr_8.dds" };
+            ADRImgS = Utilities.Graphics.ddsImgLoader(imgPaths, 46, 46, 9, 9, 32, 32);
+
+            imgPaths = new string[] { @"img\" + GameType + @"\adr_1_grey.dds", @"img\" + GameType + @"\adr_2_grey.dds", @"img\" + GameType + @"\adr_3_grey.dds", 
+                                      @"img\" + GameType + @"\adr_4_grey.dds", @"img\" + GameType + @"\adr_6_grey.dds", @"img\" + GameType + @"\adr_8_grey.dds" };
+            ADRImgSGrey = Utilities.Graphics.ddsImgLoader(imgPaths, 46, 46, 9, 9, 32, 32);
+
+            // skill level select
+            imgPaths = new string[] { @"img\skill_bar_s.dds", @"img\skill_bar_s2.dds", @"img\skill_bar1.dds", @"img\skill_bar2.dds", @"img\skill_bar3.dds" };
+
             int y = 9;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < imgPaths.Count(); i++)
             {
-                if (i == 2)
-                    y = 8;
-                ms = new MemoryStream();
-                Bitmap temp = ImageFromDDS(imgpaths[i]);
-                temp.Clone(new Rectangle(9, y, 46, 46), temp.PixelFormat).Save(ms, ImageFormat.Png);
-                SkillImgSBG[i] = Image.FromStream(ms);
-                ms.Dispose();
+                if (i == 2) y = 8;
+
+                SkillImgSBG[i] = Utilities.Graphics.ddsImgLoader(new[] { imgPaths[i] }, 46, 46, 9, y)[0];
             }
 
-            imgpaths = new string[] { @"img\skill_adr.dds", @"img\skill_distance.dds", @"img\skill_heavy.dds", @"img\skill_fragile.dds", @"img\skill_jit.dds", @"img\skill_mechanical.dds" };
-            SkillImgS = ExtImgLoader(imgpaths, 64, 64, 0, 0);
+            //=== Company
 
-            imgpaths = new string[] { @"img\profiles.dds", @"img\comp_man.dds", @"img\truck_service.dds", @"img\trailers.dds", @"img\company_job.dds", @"img\cargo_market.dds", @"img\maps.dds" };
-            TabpagesImages.Images.AddRange (ExtImgLoader(imgpaths, 64, 64, 64, 0));
-            //Garages
-            imgpaths = new string[] { @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_small_ico.dds", @"img\garage_large_ico.dds", @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_tiny_ico.dds" };
-            GaragesImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
-            //HQ garages
-            imgpaths = new string[] { @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\hq_garage_ico_small_n.dds", @"img\hq_garage_ico_big_n.dds", @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\hq_garage_ico_tiny_n.dds" };
-            GaragesHQImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
+            // garages
+            imgPaths = new string[] { @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_small_ico.dds", @"img\garage_large_ico.dds", 
+                                      @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_tiny_ico.dds" };
+            GaragesImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
 
-            imgpaths = new string[] { @"img\city_pin_0.dds", @"img\city_pin_1.dds"};
-            CitiesImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
+            // hq
+            imgPaths = new string[] { @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\hq_garage_ico_small_n.dds", @"img\hq_garage_ico_big_n.dds", 
+                                      @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\hq_garage_ico_tiny_n.dds" };
+            GaragesHQImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
 
-            imgpaths = new string[] { @"img\easy.dds", @"img\normal.dds", @"img\hard.dds" };
-            UrgencyImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
+            // visited cities
+            imgPaths = new string[] { @"img\city_pin_0.dds", @"img\city_pin_1.dds"};
+            CitiesImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
 
-            imgpaths = new string[] { @"img\none_32.dds", @"img\heavy.dds", @"img\articulated.dds" };
-            CargoTypeImg =  ExtImgLoader(imgpaths, 32, 32, 0, 0);
 
-            imgpaths = new string[] { @"img\fragile.dds", @"img\valuable.dds" };
-            CargoType2Img = ExtImgLoader(imgpaths, 32, 32, 0, 0);
+            //=== Truck & Trailer tab
 
-            imgpaths = new string[] { @"img\" + GameType + @"\engine.dds", @"img\" + GameType + @"\transmission.dds", @"img\" + GameType + @"\chassis.dds", @"img\" + GameType + @"\cabin.dds", @"img\" + GameType + @"\tyres.dds" };
-            TruckPartsImg = ExtImgLoader(imgpaths, 64, 64, 0, 0);
+            // truck parts
+            imgPaths = new string[] { @"img\" + GameType + @"\engine.dds", @"img\" + GameType + @"\transmission.dds", @"img\" + GameType + @"\chassis.dds", 
+                                      @"img\" + GameType + @"\cabin.dds", @"img\" + GameType + @"\tyres.dds" };
+            TruckPartsImg = Utilities.Graphics.ddsImgLoader(imgPaths, 64, 64);
 
-            imgpaths = new string[] { @"img\" + GameType + @"\cargo.dds", @"img\" + GameType + @"\trailer_body.dds", @"img\" + GameType + @"\trailer_chassis.dds", @"img\" + GameType + @"\tyres.dds" };
-            TrailerPartsImg = ExtImgLoader(imgpaths, 64, 64, 0, 0);
+            // trailer parts
+            imgPaths = new string[] { @"img\" + GameType + @"\cargo.dds", @"img\" + GameType + @"\trailer_body.dds", 
+                                      @"img\" + GameType + @"\trailer_chassis.dds", @"img\" + GameType + @"\tyres.dds" };
+            TrailerPartsImg = Utilities.Graphics.ddsImgLoader(imgPaths, 64, 64);
 
-            imgpaths = new string[] { @"img\ETS2\game_n.dds", @"img\ATS\game_n.dds" };
-            GameIconeImg = ExtImgLoader(imgpaths, 32, 32, 0, 0);
-        }
+            // buttons
+            imgPaths = new string[] { @"img\service_ico.dds", @"img\gas_ico.dds", @"img\customize_p.dds" };
 
-        public Image[] ExtImgLoader(string[] _filenamesarray)
-        {
-            Image[] tempImgarray = new Image[_filenamesarray.Length];
+            Image[] imgArray = Utilities.Graphics.ddsImgLoader(imgPaths);
 
-            for (int i = 0; i < _filenamesarray.Length; i++)
-            {
-                try
-                {
-                    MemoryStream ms = new MemoryStream();
+            RepairImg = imgArray[0];
+            RefuelImg = imgArray[1];
+            CustomizeImg = imgArray[2];
 
-                    if (File.Exists(_filenamesarray[i]))
-                    {
-                        Bitmap temp = ImageFromDDS(_filenamesarray[i]);
-                        temp.Save(ms, ImageFormat.Png);
-                        tempImgarray[i] = Image.FromStream(ms);
-                        ms.Dispose();
-                    }
-                    else
-                        tempImgarray[i] = null;
-                }
-                catch
-                {
-                    tempImgarray[i] = null;
-                }
-            }
+            //=== Freight market
 
-            return tempImgarray;
-        }
+            // urgency
+            imgPaths = new string[] { @"img\easy.dds", @"img\normal.dds", @"img\hard.dds" };
+            UrgencyImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
 
-        public Image[] ExtImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y )
-        {
-            Image[] tempImgarray = new Image[_filenamesarray.Length];
+            // trailer type
+            imgPaths = new string[] { @"img\none_32.dds", @"img\heavy.dds", @"img\articulated.dds" };
+            CargoTypeImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
 
-            for (int i = 0; i < _filenamesarray.Length; i++)
-            {
-                try
-                {
-                    MemoryStream ms = new MemoryStream();
-                    Bitmap temp = ImageFromDDS(_filenamesarray[i]);
-                    temp.Clone(new Rectangle(_x, _y, _width, _height), temp.PixelFormat).Save(ms, ImageFormat.Png);
-                    tempImgarray[i] = Image.FromStream(ms);
-                    ms.Dispose();
-                }
-                catch
-                {
-                    tempImgarray[i] = new Bitmap(_width, _height);
-                }
-            }
+            // cargo type
+            imgPaths = new string[] { @"img\fragile.dds", @"img\valuable.dds" };
+            CargoType2Img = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
 
-            return tempImgarray;
-        }
-
-        public Image[] ExtImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y, int _newwidth, int _newheight)
-        {
-            MemoryStream ms;
-            Image[] tempImgarray = new Image[_filenamesarray.Length];
-
-            for (int i = 0; i < _filenamesarray.Length; i++)
-            {
-                try
-                {
-                    ms = new MemoryStream();
-                    Bitmap temp = ImageFromDDS(_filenamesarray[i]);
-                    temp.Clone(new Rectangle(_x, _y, _width, _height), temp.PixelFormat).Save(ms, ImageFormat.Png);
-                    tempImgarray[i] = new Bitmap(Image.FromStream(ms), new Size(_newwidth, _newheight));
-                    ms.Dispose();
-                }
-                catch
-                {
-                    tempImgarray[i] = new Bitmap(_width, _height);
-                }
-            }
-
-            return tempImgarray;
-        }
-
-        private Bitmap ImageFromDDS(string _path)
-        {
-            Bitmap bitmap = null;
-
-            if (File.Exists(_path))
-            {
-                S16.Drawing.DDSImage asd;
-                using (FileStream fsimage = new FileStream(_path, FileMode.Open))
-                    asd = new S16.Drawing.DDSImage(fsimage);
-
-                bitmap = asd.BitmapImage;
-
-                return bitmap;
-            }
-            else
-                return bitmap;
         }
 
         //Save new language strings

@@ -28,10 +28,8 @@ using System.Globalization;
 namespace TS_SE_Tool.Utilities
 {
 
-    internal class TS_Graphics
+    internal class Graphics
     {
-        static FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
-        
         internal static Icon IconFromImage(Image _inputImage)
         {
             return IconFromImage(_inputImage, 0);
@@ -41,20 +39,11 @@ namespace TS_SE_Tool.Utilities
         {
             Bitmap bmpIcon = new Bitmap(_inputImage, _inputImage.Width - _offset * 2, _inputImage.Height - _offset * 2);
 
-            //bmpIcon
-
             Bitmap bmpCanvas = new Bitmap(_inputImage.Width, _inputImage.Height);
-            /*
-            if (_offset > 0)
-                using (Graphics gfx = Graphics.FromImage(bmpCanvas))
-                using (SolidBrush brush = new SolidBrush(Color.FromArgb(0xff, 0xff, 0xff)))
-                {
-                    gfx.FillRectangle(brush, 0, 0, bmpCanvas.Width, bmpCanvas.Height);
-                }
-            */
-            using (var canvas = Graphics.FromImage(bmpCanvas))
+
+            using (var canvas = System.Drawing.Graphics.FromImage(bmpCanvas))
             {   
-                canvas.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                canvas.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 canvas.DrawImage(bmpIcon, _offset, _offset);
                 canvas.Save();
             }
@@ -66,7 +55,7 @@ namespace TS_SE_Tool.Utilities
         {
             Image newImage = new Bitmap(_newWidth, _newHeight);
 
-            using (var canvas = Graphics.FromImage(newImage))
+            using (var canvas = System.Drawing.Graphics.FromImage(newImage))
             {
                 canvas.InterpolationMode = InterpolationMode.Bicubic;
                 canvas.SmoothingMode = SmoothingMode.HighQuality;
@@ -83,25 +72,80 @@ namespace TS_SE_Tool.Utilities
             return newImage;
         }
 
-        public static Image SimpleResizeImage(Image _inputImage, int _newWidth, int _newHeight)
+        public static Image[] ddsImgLoader(string[] _filenamesarray)
         {
-            Image newImage = new Bitmap(_inputImage, _newWidth, _newHeight);
-            return newImage;
+            return ddsImgLoader(_filenamesarray, -1, -1, 0, 0, -1, -1);
         }
 
-        private Image ReColorMonochrome(Image _inpulLetter, Color _newColor)
+        public static Image[] ddsImgLoader(string[] _filenamesarray, int _width, int _height)
         {
-            Bitmap tmp = new Bitmap(_inpulLetter);
+            return ddsImgLoader(_filenamesarray, _width, _height, 0, 0, _width, _height);
+        }
 
-            for (int y = 0; y < _inpulLetter.Height; y++)
+        public static Image[] ddsImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y)
+        {
+            return ddsImgLoader(_filenamesarray, _width, _height, _x, _y, _width, _height);
+        }
+
+        public static Image[] ddsImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y, int _newWidth, int _newHeight)
+        {
+            Image[] tempImgarray = new Image[_filenamesarray.Length];
+
+            Bitmap ddsImg;
+
+            for (int i = 0; i < _filenamesarray.Length; i++)
             {
-                for (int x = 0; x < _inpulLetter.Width; x++)
+                try
                 {
-                    tmp.SetPixel(x, y, Color.FromArgb(tmp.GetPixel(x, y).A, _newColor.R, _newColor.G, _newColor.B));
+                    if (File.Exists(_filenamesarray[i]))
+                    {
+                        ddsImg = ImageFromDDS(_filenamesarray[i]);
+
+                        if (_width == -1)
+                        {
+                            _width = ddsImg.Width;
+                            _height = ddsImg.Height;
+                        }
+
+                        ddsImg = ddsImg.Clone(new Rectangle(_x, _y, _width, _height), ddsImg.PixelFormat);
+
+                        if (_newWidth == -1)
+                        {
+                            _newWidth = ddsImg.Width;
+                            _newHeight = ddsImg.Height;
+                        }
+
+                        tempImgarray[i] = new Bitmap(ddsImg, _newWidth, _newHeight);
+
+                    }
+                    else
+                        tempImgarray[i] = new Bitmap(1, 1);
+                }
+                catch
+                {
+                    tempImgarray[i] = new Bitmap(1, 1);
                 }
             }
 
-            return tmp;
+            return tempImgarray;
+        }
+
+        internal static Bitmap ImageFromDDS(string _path)
+        {
+            Bitmap bitmap = null;
+
+            if (File.Exists(_path))
+            {
+                S16.Drawing.DDSImage ddsImg;
+                using (FileStream fsimage = new FileStream(_path, FileMode.Open))
+                    ddsImg = new S16.Drawing.DDSImage(fsimage);
+
+                bitmap = ddsImg.BitmapImage;
+
+                return bitmap;
+            }
+            else
+                return bitmap;
         }
     }
 }

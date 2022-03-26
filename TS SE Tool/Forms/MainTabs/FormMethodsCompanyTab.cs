@@ -43,19 +43,7 @@ namespace TS_SE_Tool
             FillVisitedCities(0);
             FillGaragesList(0);
 
-            MemoryStream ms = new MemoryStream();
-
-            Bitmap temp = ImageFromDDS(@"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds");
-            if (temp != null)
-            {
-                temp.Clone(new Rectangle(0, 0, 94, 94), temp.PixelFormat).Save(ms, ImageFormat.Png);
-                PlayerCompanyLogo = Image.FromStream(ms);
-            }
-            else
-            {
-                PlayerCompanyLogo = new Bitmap(94, 94);
-            }
-            ms.Dispose();
+            PlayerCompanyLogo = Utilities.Graphics.ddsImgLoader(new string[] { @"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds" }, 94, 94, 0, 0)[0];
 
             pictureBoxCompanyLogo.Image = PlayerCompanyLogo;
         }
