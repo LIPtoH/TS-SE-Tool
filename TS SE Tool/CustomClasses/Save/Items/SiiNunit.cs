@@ -735,6 +735,11 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
+            foreach (string item in Mail_Ctrl.pending_mails.Where(x => x != null && x != "null"))
+            {
+                returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
+            }
+
             //=== Oversize offer
 
             Oversize_offer_Ctrl Oversize_offer_Ctrl = SiiNitems[Economy.oversize_offer_ctrl];
