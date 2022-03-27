@@ -194,6 +194,7 @@ namespace TS_SE_Tool
             checkBoxProfilesAndSavesProfileBackups.Enabled = _state;
             buttonProfilesAndSavesRefreshAll.Enabled = _state;
             buttonProfilesAndSavesEditProfile.Enabled = _state;
+            buttonProfilesAndSavesRestoreBackup.Enabled = _state;
 
             comboBoxPrevProfiles.Enabled = _state;
             comboBoxProfiles.Enabled = _state;
@@ -203,6 +204,51 @@ namespace TS_SE_Tool
             buttonMainLoadSave.Enabled = _state;
 
             buttonMainWriteSave.Enabled = _state;
+
+            if (_state)
+                CheckSaveControls();
+        }
+
+        private void CheckSaveControls()
+        {
+            DataRowView drv = (DataRowView)comboBoxPrevProfiles.SelectedItem;
+
+            Font loadButtonFont = buttonMainLoadSave.Font;
+
+            if (drv["ProfileType"].ToString() == "steam")
+            {
+                buttonMainLoadSave.Enabled = false;
+                buttonMainLoadSave.Text = "Disable Steam Cloud";
+
+                buttonMainLoadSave.Font = new Font(loadButtonFont.FontFamily, 12f, FontStyle.Bold);
+            }
+            else
+            {
+                buttonMainLoadSave.Enabled = true;
+                buttonMainLoadSave.Text = "Load";
+
+                buttonMainLoadSave.Font = new Font(loadButtonFont.FontFamily, 18F, FontStyle.Bold);
+            }
+
+            //===
+
+            drv = (DataRowView)comboBoxSaves.SelectedItem;
+
+            string savePath = drv["savePath"].ToString() + @"\game.sii", backupPath = drv["savePath"].ToString() + @"\game_backup.sii";
+
+            if (File.Exists(backupPath))
+                buttonProfilesAndSavesRestoreBackup.Enabled = true;
+            else
+                buttonProfilesAndSavesRestoreBackup.Enabled = false;
+
+            //===
+
+            sbyte saveFileFormat = GetSaveFileFormat(savePath).saveFileFormat;
+
+            if (saveFileFormat == 2 || saveFileFormat == 4)
+                buttonMainDecryptSave.Enabled = true;
+            else
+                buttonMainDecryptSave.Enabled = false;
         }
 
         //Main part controls
@@ -270,6 +316,7 @@ namespace TS_SE_Tool
                 FillAllProfilesPaths();
             }
         }
+        
         private void buttonProfilesAndSavesRestoreBackup_Click(object sender, EventArgs e)
         {
             SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
@@ -1016,33 +1063,7 @@ namespace TS_SE_Tool
 
         private void comboBoxSaves_SelectedIndexChanged(object sender, EventArgs e)
         {
-            buttonMainDecryptSave.Enabled = true;
-
-            DataRowView drv = (DataRowView)comboBoxPrevProfiles.SelectedItem;
-
-            if (drv["ProfileType"].ToString() == "steam")
-            {
-                buttonMainLoadSave.Enabled = false;
-                buttonMainLoadSave.Text = "Disable Steam Cloud";
-
-                buttonMainLoadSave.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            }
-            else
-            {
-                buttonMainLoadSave.Enabled = true;
-                buttonMainLoadSave.Text = "Load";
-
-                buttonMainLoadSave.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            }
-
-            drv = (DataRowView)comboBoxSaves.SelectedItem;
-
-            string savePath = drv["savePath"].ToString() + @"\game.sii", backupPath = drv["savePath"].ToString() + @"\game_backup.sii";
-
-            if (File.Exists(backupPath))
-                buttonProfilesAndSavesRestoreBackup.Enabled = true;
-            else
-                buttonProfilesAndSavesRestoreBackup.Enabled = false;
+            CheckSaveControls();
         }
 
         private void comboBoxSaves_DropDown(object sender, EventArgs e)

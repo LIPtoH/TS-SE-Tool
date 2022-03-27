@@ -33,40 +33,22 @@ namespace TS_SE_Tool
         {
             if (_verbose)
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_loading_save_file");
-            if(_verbose)
+            if (_verbose)
                 IO_Utilities.LogWriter("Loading file into memory: " + _savefile_path);
 
-            //string FileData = "";
-            byte[] FileDataB = new byte[10];
+            var returnData = GetSaveFileFormat(_savefile_path);
 
-            try
-            {
-                FileDataB = File.ReadAllBytes(_savefile_path);
-            }
-            catch
-            {
-                IO_Utilities.LogWriter("Could not find file in: " + _savefile_path);
-                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
+            sbyte saveFileFormat = returnData.saveFileFormat;
+            byte[] fileDataInBytes = returnData.fileDataInBytes;
+            UInt32 buff = (UInt32)fileDataInBytes.Length;
 
-                FileDecoded = false;
-                return null;
-            }
-
-            int MemFileFrm = -1;
-            UInt32 buff = (UInt32)FileDataB.Length;
-
-            fixed (byte* ptr = FileDataB)
-            {
-                MemFileFrm = SIIGetMemoryFormat(ptr, buff);
-            }
-
-            switch (MemFileFrm)
+            switch (saveFileFormat)
             {
                 case 1:
                     // "SIIDEC_RESULT_FORMAT_PLAINTEXT";
                     {
                         FileDecoded = true;
-                        string BigS = Encoding.UTF8.GetString(FileDataB);
+                        string BigS = Encoding.UTF8.GetString(fileDataInBytes);
                         return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
                     }
                 case 2:
@@ -81,7 +63,7 @@ namespace TS_SE_Tool
                         uint newbuff = 0;
                         uint* newbuffP = &newbuff;
 
-                        fixed (byte* ptr = FileDataB)
+                        fixed (byte* ptr = fileDataInBytes)
                         {
                             result = SIIDecryptAndDecodeMemory(ptr, buff, null, newbuffP);
                         }
@@ -90,7 +72,7 @@ namespace TS_SE_Tool
                         {
                             byte[] newFileData = new byte[(int)newbuff];
 
-                            fixed (byte* ptr = FileDataB)
+                            fixed (byte* ptr = fileDataInBytes)
                             {
                                 fixed (byte* ptr2 = newFileData)
                                     result = SIIDecryptAndDecodeMemory(ptr, buff, ptr2, newbuffP);
@@ -107,7 +89,7 @@ namespace TS_SE_Tool
                         return null;
                     }
                 case 3:
-                // "SIIDEC_RESULT_FORMAT_BINARY";
+                    // "SIIDEC_RESULT_FORMAT_BINARY";
                 case 4:
                     // "SIIDEC_RESULT_FORMAT_3NK";
                     {
@@ -120,7 +102,7 @@ namespace TS_SE_Tool
                         uint newbuff = 0;
                         uint* newbuffP = &newbuff;
 
-                        fixed (byte* ptr = FileDataB)
+                        fixed (byte* ptr = fileDataInBytes)
                         {
                             result = SIIDecodeMemory(ptr, buff, null, newbuffP);
                         }
@@ -129,7 +111,7 @@ namespace TS_SE_Tool
                         {
                             byte[] newFileData = new byte[(int)newbuff];
 
-                            fixed (byte* ptr = FileDataB)
+                            fixed (byte* ptr = fileDataInBytes)
                             {
                                 fixed (byte* ptr2 = newFileData)
                                     result = SIIDecodeMemory(ptr, buff, ptr2, newbuffP);
@@ -144,15 +126,39 @@ namespace TS_SE_Tool
                         return null;
                     }
                 case -1:
-                // "SIIDEC_RESULT_GENERIC_ERROR";
+                    // "SIIDEC_RESULT_GENERIC_ERROR";
                 case 10:
-                // "SIIDEC_RESULT_FORMAT_UNKNOWN";
+                    // "SIIDEC_RESULT_FORMAT_UNKNOWN";
                 case 11:
-                // "SIIDEC_RESULT_TOO_FEW_DATA";
+                    // "SIIDEC_RESULT_TOO_FEW_DATA";
                 default:
                     // "UNEXPECTED_ERROR";
                     return null;
             }
+        }
+
+        private unsafe (sbyte saveFileFormat, byte[] fileDataInBytes) GetSaveFileFormat(string _savefile_path)
+        {
+            if (!File.Exists(_savefile_path))
+            {
+                IO_Utilities.LogWriter("Could not find file in: " + _savefile_path);
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
+
+                FileDecoded = false;
+                return (-1, null);
+            }    
+
+            byte[] fileDataInBytes = File.ReadAllBytes(_savefile_path);
+
+            sbyte saveFileFormat = -1;
+            UInt32 buff = (UInt32)fileDataInBytes.Length;
+
+            fixed (byte* ptr = fileDataInBytes)
+            {
+                saveFileFormat = (sbyte)SIIGetMemoryFormat(ptr, buff);
+            }
+
+            return (saveFileFormat, fileDataInBytes);
         }
 
         //SII decrypt
