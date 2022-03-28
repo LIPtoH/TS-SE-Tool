@@ -30,13 +30,14 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
+
 using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
     public partial class FormMain : Form
     {
-        private BackgroundWorker worker;
+        private BackgroundWorker generalWorker;
 
         private void LoadExtCountries()
         {
@@ -511,176 +512,136 @@ namespace TS_SE_Tool
             return _buffer;
         }
 
-        private void LoadSaveFile()
+        private void LoadSaveFile(object sender, DoWorkEventArgs e)
         {
-            SetDefaultValues(false);
-            ClearFormControls(true);
+            UpdateStatusBarMessage.MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
-            ClearJobData();
-
+            // Status
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_decoding_save_file");
+            IO_Utilities.LogWriter("Working on " + Globals.SelectedSavePath + " save file");
 
-            SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
-            Globals.SelectedSavePath = SavefilePath;
-            Globals.SelectedSave = Globals.SavesHex[comboBoxSaves.SelectedIndex].Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+            // Variables
+            string SiiProfilePath = Globals.SelectedProfilePath + @"\profile.sii";
+            string SiiInfoPath = Globals.SelectedSavePath + @"\info.sii";
+            string SiiSavePath = Globals.SelectedSavePath + @"\game.sii";
 
-            IO_Utilities.LogWriter("Working on " + SavefilePath + " save file");
-
-            string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
-
-            Globals.SelectedProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
-            Globals.SelectedProfile = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex].Split(new string[] { "\\" }, StringSplitOptions.None).Last();
-
-            string SiiInfoPath = SavefilePath + @"\info.sii";
-
-            string SiiSavePath = SavefilePath + @"\game.sii";
-
-            string dbPath = "dbs/" + GameType + "." + Path.GetFileName(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex]) + ".sdf";
-            DBconnection = new SqlCeConnection("Data Source = " + dbPath);
+            (bool valid, string[] fileArray) resulCheck;
 
             if (File.Exists(SiiSavePath))
+            {
+                string dbPath = "dbs/" + GameType + "." + Path.GetFileName(Globals.SelectedProfilePath) + ".sdf";
+                DBconnection = new SqlCeConnection("Data Source = " + dbPath);
+
                 CreateDatabase(dbPath);
+            }                
             else
+            {
+                e.Cancel = true;
                 return;
+            }
 
-            //Profile Info
-            if (!File.Exists(SiiProfilePath))
+            //=== Profile Info
+            resulCheck = preProcessFile(SiiProfilePath, "Profile file");
+
+            if (resulCheck.valid)
             {
-                IO_Utilities.LogWriter("File does not exist in " + SiiProfilePath);
-                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
+                tempProfileFileInMemory = resulCheck.fileArray;
+
+                MainSaveFileProfileData = new SaveFileProfileData();
+                MainSaveFileProfileData.ProcessData(tempProfileFileInMemory);
+
+                tempProfileFileInMemory = null;
             }
             else
             {
-                FileDecoded = false;
-                try
-                {
-                    int decodeAttempt = 0;
-                    while (decodeAttempt < 5)
-                    {
-                        tempProfileFileInMemory = NewDecodeFile(SiiProfilePath);
-
-                        if (FileDecoded)
-                        {
-                            break;
-                        }
-
-                        decodeAttempt++;
-                    }
-
-                    if (decodeAttempt == 5)
-                    {
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
-                        IO_Utilities.LogWriter("Could not decrypt after 5 attempts");
-                    }
-                }
-                catch
-                {
-                    IO_Utilities.LogWriter("Could not read: " + SiiProfilePath);
-                }
-
-                if ((tempProfileFileInMemory == null) || (tempProfileFileInMemory[0] != "SiiNunit"))
-                {
-                    IO_Utilities.LogWriter("Wrongly decoded Profile file or wrong file format");
-                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
-
-                    tempProfileFileInMemory = null;
-
-                    SetDefaultValues(false);
-                    ToggleMainControlsAccess(true);
-                    ToggleControlsAccess(false);
-                }
-                else if (tempProfileFileInMemory != null)
-                {
-                    MainSaveFileProfileData = new SaveFileProfileData();
-                    MainSaveFileProfileData.ProcessData(tempProfileFileInMemory);
-                }
+                e.Cancel = true;
+                return;
             }
+            //=== End Profile Info
 
-            tempProfileFileInMemory = null; //clearmemory
-            //End Profile Info
+            //=== Save info
+            resulCheck = preProcessFile(SiiInfoPath, "Info file");
 
-            //Save info
-            if (!File.Exists(SiiInfoPath))
+            if (resulCheck.valid)
             {
-                IO_Utilities.LogWriter("File does not exist in " + SiiInfoPath);
-                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
+                tempInfoFileInMemory = resulCheck.fileArray;
+
+                CheckSaveInfoData();
+                tempInfoFileInMemory = null;
             }
             else
             {
-                FileDecoded = false;
-                try
-                {
-                    int decodeAttempt = 0;
-                    while (decodeAttempt < 5)
-                    {
-                        tempInfoFileInMemory = NewDecodeFile(SiiInfoPath);
-
-                        if (FileDecoded)
-                        {
-                            break;
-                        }
-                        decodeAttempt++;
-                    }
-
-                    if (decodeAttempt == 5)
-                    {
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
-                        IO_Utilities.LogWriter("Could not decrypt after 5 attempts");
-                    }
-                }
-                catch
-                {
-                    IO_Utilities.LogWriter("Could not read: " + SiiInfoPath);
-                }
-
-                if ((tempInfoFileInMemory == null) || (tempInfoFileInMemory[0] != "SiiNunit"))
-                {
-                    IO_Utilities.LogWriter("Wrongly decoded Info file or wrong file format");
-                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
-
-                    tempInfoFileInMemory = null;
-
-                    SetDefaultValues(false);
-                    ToggleMainControlsAccess(true);
-                    ToggleControlsAccess(false);
-                }
-                else if (tempInfoFileInMemory != null)
-                {   
-                    CheckSaveInfoData();
-                }
+                e.Cancel = true;
+                return;
             }
 
-            tempInfoFileInMemory = null; //clearmemory
-            //endinfo
+            //=== End Save Info
 
+            //=== Check for Dependencies conflict
             if (!InfoDepContinue)
             {
-                ToggleMainControlsAccess(true);
+                e.Cancel = true;
                 return;
             }
+            //=== End
 
-            //End Save Info
+            //=== Save file
+            resulCheck = preProcessFile(SiiSavePath, "Save file");
 
-            //Save file
-            if (!File.Exists(SiiSavePath))
+            if (resulCheck.valid)
             {
-                IO_Utilities.LogWriter("File does not exist in " + SavefilePath);
-                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
+                tempSavefileInMemory = resulCheck.fileArray;
+
+                LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
+
+                NewPrepareData();
             }
             else
             {
-                FileDecoded = false;
+                e.Cancel = true;
+                return;
+            }
+            // End Save file
+
+            //===
+            (bool valid, string[] fileArray) preProcessFile(string _filePath, string _type)
+            {
+                string[] _inputArray;
+
+                if (!File.Exists(_filePath))
+                {
+                    IO_Utilities.LogWriter("File does not exist in " + _filePath);
+                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
+
+                    return (false, null);
+                }
+                else
+                {
+                    FileDecoded = false;
+                    _inputArray = decodeFile(_filePath);
+                    bool checkResult = checkDecodedFile(_inputArray, _type);
+
+                    return (checkResult, _inputArray);
+                }
+            }
+            //===
+            string[] decodeFile(string _filePath)
+            {
+                string[] fileArray = null;
+
                 try
                 {
                     int decodeAttempt = 0;
+
                     while (decodeAttempt < 5)
                     {
-                        tempSavefileInMemory = NewDecodeFile(SiiSavePath);
+                        fileArray = NewDecodeFile(_filePath);
 
                         if (FileDecoded)
                         {
                             break;
                         }
+
                         decodeAttempt++;
                     }
 
@@ -692,34 +653,27 @@ namespace TS_SE_Tool
                 }
                 catch
                 {
-                    IO_Utilities.LogWriter("Could not read: " + SiiSavePath);
+                    IO_Utilities.LogWriter("Could not read: " + _filePath);
                 }
 
-                if ((tempSavefileInMemory == null) || (tempSavefileInMemory[0] != "SiiNunit"))
+                return fileArray;
+            }
+            //===
+            bool checkDecodedFile(string[] _input, string _type)
+            {
+                if (_input == null || _input[0] != "SiiNunit")
                 {
-                    IO_Utilities.LogWriter("Wrongly decoded Save file or wrong file format");
+                    IO_Utilities.LogWriter("Wrongly decoded " + _type + " or wrong file format");
                     UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
 
-                    tempSavefileInMemory = null;
+                    _input = null;
 
-                    SetDefaultValues(false);
-                    ToggleMainControlsAccess(true);
-                    ToggleControlsAccess(false);
+                    return false;
                 }
-                else if (tempSavefileInMemory != null)
-                {
-                    LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
-
-                    worker = new BackgroundWorker();
-                    worker.WorkerReportsProgress = true;
-
-                    worker.DoWork += NewPrepareData;//Start;
-                    worker.ProgressChanged += worker_ProgressChanged;
-                    worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-
-                    worker.RunWorkerAsync();
-                }
+                else
+                    return true;
             }
+            //===
         }
 
         private void LoadProfileDataFile()
@@ -790,6 +744,15 @@ namespace TS_SE_Tool
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Cancelled == true)
+            {
+                SetDefaultValues(false);
+                ToggleMainControlsAccess(true);
+                ToggleControlsAccess(false);
+
+                return;
+            }
+
             if (SiiNunitData.UnidentifiedBlocks.Count > 0)
             {
                 MessageBox.Show("Some of the blocks in save file was not recognized and it may affect Program behavior." + Environment.NewLine + Environment.NewLine +
@@ -802,12 +765,11 @@ namespace TS_SE_Tool
             //ClearFormControls(false);
 
             ToggleMainControlsAccess(true);
-            buttonMainDecryptSave.Enabled = false;
             ToggleControlsAccess(true);
 
             PopulateFormControlsk();
 
-            IO_Utilities.LogWriter("Successfully completed work with " + SavefilePath + " save file");
+            IO_Utilities.LogWriter("Successfully completed work with " + Globals.SelectedSavePath + " save file");
         }
 
         private void PrintAddedJobs()
@@ -868,7 +830,7 @@ namespace TS_SE_Tool
         //button_save_file
         private void NewWrireSaveFile()
         {
-            string SiiSavePath = SavefilePath + @"\game.sii";
+            string SiiSavePath = Globals.SelectedSavePath + @"\game.sii";
 
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_saving_file");
 
@@ -1002,10 +964,10 @@ namespace TS_SE_Tool
         //Caching
         private void CacheGameData()
         {
-            worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = false;
-            worker.DoWork += CacheExternalGameData;
-            worker.RunWorkerAsync();
+            generalWorker = new BackgroundWorker();
+            generalWorker.WorkerReportsProgress = false;
+            generalWorker.DoWork += CacheExternalGameData;
+            generalWorker.RunWorkerAsync();
         }
 
         private void CacheExternalGameData(object sender, DoWorkEventArgs e)

@@ -24,10 +24,12 @@ using System.Threading;
 using System.Drawing;
 using System.Globalization;
 using System.Collections;
-using ErikEJ.SqlCe;
 using System.ComponentModel;
 using System.Reflection;
 using System.Text.RegularExpressions;
+
+using ErikEJ.SqlCe;
+
 using TS_SE_Tool.Utilities;
 using TS_SE_Tool.Save.Items;
 
@@ -35,7 +37,7 @@ namespace TS_SE_Tool
 {
     public partial class FormMain : Form
     {
-        private void NewPrepareData(object sender, DoWorkEventArgs e)
+        private void NewPrepareData()
         {
             IO_Utilities.LogWriter("Prepare started");
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_preparing_data");
@@ -50,8 +52,10 @@ namespace TS_SE_Tool
 
         private void ExtraPrepareStuff()
         {
-            namelessList.Sort();
-            namelessList = namelessList.Distinct().ToList();
+            workerLoadSaveFile.ReportProgress(80);
+
+            //namelessList.Sort();
+            //namelessList = namelessList.Distinct().ToList();
 
             PreparePlayerDictionariesInitial();
             PrepareCitiesInitial();
@@ -109,9 +113,11 @@ namespace TS_SE_Tool
             PrepareDBdata();
 
             //GetCompaniesCargoInOut();
-            worker.ReportProgress(90);
+            workerLoadSaveFile.ReportProgress(90);
+
             GetAllDistancesFromDB();
-            worker.ReportProgress(100);
+
+            workerLoadSaveFile.ReportProgress(100);
         }
 
         private void CheckSaveInfoData()
@@ -218,9 +224,20 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    DialogResult r = JR.Utils.GUI.Forms.FlexibleMessageBox.Show(this, "Save file and Database has different Dependencies due to installed\\deleted mods\\dlc's.\r\n" +
-                        "This may result in wrong path and cargo data.\r\n" +
-                        "Do you want to proceed and Update Dependencies?\r\n" + dbdepstr + "\r\n" + sfdepstr, "Dependencies conflict", MessageBoxButtons.YesNo);
+                    DialogResult r = UpdateStatusBarMessage.ShowMessageBox(this,
+                        "Save file and Database has different Dependencies due to installed\\deleted mods\\dlc's." + Environment.NewLine +
+                        "This may result in wrong path and cargo data." + Environment.NewLine + Environment.NewLine +
+                        "Do you want to Proceed and Update Dependencies?" + Environment.NewLine +
+                        dbdepstr + Environment.NewLine + sfdepstr, "Dependencies conflict",
+                        MessageBoxButtons.YesNo);
+                    /*
+                    DialogResult r = JR.Utils.GUI.Forms.FlexibleMessageBox.Show(this, 
+                        "Save file and Database has different Dependencies due to installed\\deleted mods\\dlc's." + Environment.NewLine + 
+                        "This may result in wrong path and cargo data." + Environment.NewLine + Environment.NewLine +
+                        "Do you want to Proceed and Update Dependencies?" + Environment.NewLine + 
+                        dbdepstr + Environment.NewLine + sfdepstr, "Dependencies conflict", 
+                        MessageBoxButtons.YesNo);
+                    */
 
                     if (r == DialogResult.Yes)
                     {

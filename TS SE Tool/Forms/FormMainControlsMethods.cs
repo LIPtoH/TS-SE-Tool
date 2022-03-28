@@ -24,10 +24,11 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.ComponentModel;
 using System.Windows.Forms;
 using System.Reflection;
-using ICSharpCode.SharpZipLib.GZip;
 using Microsoft.Win32;
+
 using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
@@ -158,6 +159,7 @@ namespace TS_SE_Tool
             FormCheckUpdates FormWindow = new FormCheckUpdates("check");
             FormWindow.ShowDialog();
         }
+
         //Menu controls End
 
         //Form methods
@@ -319,10 +321,9 @@ namespace TS_SE_Tool
         
         private void buttonProfilesAndSavesRestoreBackup_Click(object sender, EventArgs e)
         {
-            SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
-            string SiiSavePath = SavefilePath + @"\game.sii", 
-                   SiiSavePathBackup = SavefilePath + @"\game_backup.sii",
-                   SiiSavePathTmp = SavefilePath + @"\game_tmp.sii";
+            string SiiSavePath = Globals.SelectedSavePath + @"\game.sii", 
+                   SiiSavePathBackup = Globals.SelectedSavePath + @"\game_backup.sii",
+                   SiiSavePathTmp = Globals.SelectedSavePath + @"\game_tmp.sii";
 
             if (File.Exists(SiiSavePathBackup))
             {
@@ -358,16 +359,16 @@ namespace TS_SE_Tool
 
             ToggleMainControlsAccess(false);
 
-            SavefilePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
-            string SiiSavePath = SavefilePath + @"\game.sii";
+            Globals.SelectedSavePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
+            string SiiSavePath = Globals.SelectedSavePath + @"\game.sii";
 
             string[] file = NewDecodeFile(SiiSavePath);
 
             if (file != null)
             {
-                IO_Utilities.LogWriter("Backing up file to: " + SavefilePath + @"\game_backup.sii");
+                IO_Utilities.LogWriter("Backing up file to: " + Globals.SelectedSavePath + @"\game_backup.sii");
 
-                File.Copy(SiiSavePath, SavefilePath + @"\game_backup.sii", true);
+                File.Copy(SiiSavePath, Globals.SelectedSavePath + @"\game_backup.sii", true);
 
                 File.WriteAllLines(SiiSavePath, file);
 
@@ -393,14 +394,32 @@ namespace TS_SE_Tool
             //else
         }
 
+        internal static BackgroundWorker workerLoadSaveFile;
         private void LoadSaveFile_Click(object sender, EventArgs e)
         {
             ToggleMainControlsAccess(false);
-
             ToggleControlsAccess(false);
+            ClearFormControls(true);
+
+            SetDefaultValues(false);
+            ClearJobData();
 
             //Load save file
-            LoadSaveFile();
+
+            Globals.SelectedSavePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
+            Globals.SelectedSave = Globals.SelectedSavePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+            Globals.SelectedProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
+            Globals.SelectedProfile = Globals.SelectedProfilePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+            workerLoadSaveFile = new BackgroundWorker();
+            workerLoadSaveFile.WorkerReportsProgress = true;
+
+            workerLoadSaveFile.DoWork += LoadSaveFile;
+            workerLoadSaveFile.ProgressChanged += worker_ProgressChanged;
+            workerLoadSaveFile.RunWorkerCompleted += worker_RunWorkerCompleted;
+
+            workerLoadSaveFile.RunWorkerAsync();
 
             //GC
             GC.Collect();
@@ -421,11 +440,11 @@ namespace TS_SE_Tool
 
             ToggleControlsAccess(false);
 
-            string SiiSavePath = SavefilePath + @"\game.sii";
+            string SiiSavePath = Globals.SelectedSavePath + @"\game.sii";
 
-            IO_Utilities.LogWriter("Backing up file to: " + SavefilePath + @"\game_backup.sii");
+            IO_Utilities.LogWriter("Backing up file to: " + Globals.SelectedSavePath + @"\game_backup.sii");
             //File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
-            File.Copy(SiiSavePath, SavefilePath + @"\game_backup.sii", true);
+            File.Copy(SiiSavePath, Globals.SelectedSavePath + @"\game_backup.sii", true);
 
             //Write
             NewWrireSaveFile();
@@ -1063,6 +1082,12 @@ namespace TS_SE_Tool
 
         private void comboBoxSaves_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Globals.SelectedSavePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
+            Globals.SelectedSave = Globals.SelectedSavePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
+            Globals.SelectedProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
+            Globals.SelectedProfile = Globals.SelectedProfilePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+
             CheckSaveControls();
         }
 

@@ -36,12 +36,14 @@ namespace TS_SE_Tool
     }
     
     public delegate void AddStatusMessageDelegate(SMStatus _status, string _message, string _option);
+    public delegate DialogResult AddStatusMessageBoxDelegate(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons);
 
     public static class UpdateStatusBarMessage
     {
         public static FormMain MainForm;
 
         public static event AddStatusMessageDelegate OnNewStatusMessage;
+        public static event AddStatusMessageBoxDelegate OnNewMessageBox;
 
         public static void ShowStatusMessage(SMStatus _status)
         {
@@ -64,6 +66,17 @@ namespace TS_SE_Tool
                 MainForm.Invoke(new AddStatusMessageDelegate(ThreadSafeStatusMessage), new object[] { _status, _message, _option });     // call self from main thread
             else
                 OnNewStatusMessage(_status, _message, _option);
+        }
+        public static DialogResult ShowMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons )
+        {
+            return ThreadSafeMessageBox(_this, _text, _caption, _buttons);
+        }
+        private static DialogResult ThreadSafeMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons)
+        {
+            if (MainForm != null && MainForm.InvokeRequired)
+                return (DialogResult)MainForm.Invoke(new AddStatusMessageBoxDelegate(ThreadSafeMessageBox), new object[] { _this, _text, _caption, _buttons });
+            else
+                return (DialogResult)OnNewMessageBox(_this, _text, _caption, _buttons);
         }
     }
 
@@ -109,6 +122,11 @@ namespace TS_SE_Tool
 
                 toolStripStatusMessages.Text = toolTipText;
             }
+        }
+
+        DialogResult ShowMessageBox_OnNewMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons)
+        {
+            return JR.Utils.GUI.Forms.FlexibleMessageBox.Show(_this, _text, _caption, _buttons);
         }
 
         public void SetDefaultValues(bool _initial)
@@ -310,7 +328,6 @@ namespace TS_SE_Tool
 
             unCertainRouteLength = "";
             FileDecoded = false;
-            SavefilePath = "";
 
             tempInfoFileInMemory = null;
             tempSavefileInMemory = null;

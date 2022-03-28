@@ -50,7 +50,6 @@ namespace TS_SE_Tool
         public bool FileDecoded;  //+
 
         internal string GameType;//Program
-        private string SavefilePath; //+
 
         private string LoopStartCity;//Program
         private string LoopStartCompany;//Program
@@ -190,6 +189,7 @@ namespace TS_SE_Tool
 
             //Program
             UpdateStatusBarMessage.OnNewStatusMessage += UpdateStatusBarMessage_OnNewStatusMessage;
+            UpdateStatusBarMessage.OnNewMessageBox += ShowMessageBox_OnNewMessageBox;
             this.Icon = Properties.Resources.MainIco;
             this.Text += " [ " + AssemblyData.AssemblyVersion + " ]";
 
