@@ -168,6 +168,8 @@ namespace TS_SE_Tool
             buttonMainWriteSave.Enabled = _state;
             buttonMainWriteSave.Visible = _state;
 
+            buttonMainCloseSave.Visible = _state;
+
             foreach (TabPage tp in tabControlMain.TabPages)
             {
                 tp.Enabled = _state;
@@ -424,6 +426,18 @@ namespace TS_SE_Tool
             //GC
             GC.Collect();
             //GC.WaitForPendingFinalizers();
+        }
+
+        private void buttonMainCloseSave_Click(object sender, EventArgs e)
+        {
+            ToggleControlsAccess(false);
+
+            SetDefaultValues(false);
+
+            ClearFormControls(true);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void buttonWriteSave_Click(object sender, EventArgs e)

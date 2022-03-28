@@ -217,6 +217,7 @@
             this.radioButtonMainGameSwitchETS = new System.Windows.Forms.RadioButton();
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonMainCloseSave = new System.Windows.Forms.Button();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -1290,7 +1291,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1329,14 +1330,14 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(444, 0);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(442, 0);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
             this.tableLayoutPanelTruckDetails.SetRowSpan(this.tableLayoutPanelTruckFuel, 5);
             this.tableLayoutPanelTruckFuel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
             this.tableLayoutPanelTruckFuel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTruckFuel.Size = new System.Drawing.Size(73, 265);
+            this.tableLayoutPanelTruckFuel.Size = new System.Drawing.Size(72, 265);
             this.tableLayoutPanelTruckFuel.TabIndex = 1;
             // 
             // tabPageTrailer
@@ -1568,7 +1569,7 @@
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
             this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
@@ -2420,15 +2421,17 @@
             this.tableLayoutPanel16.Controls.Add(this.groupBoxMainProfilesAndSaves, 0, 1);
             this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel10, 0, 0);
             this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel11, 0, 2);
-            this.tableLayoutPanel16.Controls.Add(this.buttonMainWriteSave, 0, 4);
+            this.tableLayoutPanel16.Controls.Add(this.buttonMainWriteSave, 0, 5);
+            this.tableLayoutPanel16.Controls.Add(this.buttonMainCloseSave, 0, 3);
             this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel16.Location = new System.Drawing.Point(585, 1);
             this.tableLayoutPanel16.Margin = new System.Windows.Forms.Padding(1, 1, 5, 1);
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
-            this.tableLayoutPanel16.RowCount = 5;
+            this.tableLayoutPanel16.RowCount = 6;
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 236F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel16.Size = new System.Drawing.Size(244, 573);
@@ -2502,6 +2505,18 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel11.Size = new System.Drawing.Size(244, 62);
             this.tableLayoutPanel11.TabIndex = 22;
+            // 
+            // buttonMainCloseSave
+            // 
+            this.buttonMainCloseSave.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonMainCloseSave.Location = new System.Drawing.Point(141, 381);
+            this.buttonMainCloseSave.Name = "buttonMainCloseSave";
+            this.buttonMainCloseSave.Size = new System.Drawing.Size(100, 24);
+            this.buttonMainCloseSave.TabIndex = 23;
+            this.buttonMainCloseSave.Text = "Unload";
+            this.buttonMainCloseSave.UseVisualStyleBackColor = true;
+            this.buttonMainCloseSave.Visible = false;
+            this.buttonMainCloseSave.Click += new System.EventHandler(this.buttonMainCloseSave_Click);
             // 
             // FormMain
             // 
@@ -2772,6 +2787,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTrailerLP;
         private System.Windows.Forms.Label labelPlayerExperienceSpacer;
         private System.Windows.Forms.Button buttonProfilesAndSavesRestoreBackup;
+        private System.Windows.Forms.Button buttonMainCloseSave;
     }
 }
 
