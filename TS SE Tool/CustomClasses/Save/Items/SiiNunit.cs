@@ -19,6 +19,8 @@ namespace TS_SE_Tool.Save.Items
 
         internal List<string> NamelessControlList = new List<string>();
 
+        internal List<string> NamelessIgnoreList = new List<string>();
+
         internal Economy Economy
         {
             get => (Economy)SiiNitems[EconomyNameless];
@@ -635,7 +637,7 @@ namespace TS_SE_Tool.Save.Items
 
                     Profit_log Profit_log = SiiNitems[Driver_Player.profit_log];
 
-                    returnSB.AppendLine(Profit_log.PrintOut(0, Driver_Player.profit_log));                    
+                    returnSB.AppendLine(Profit_log.PrintOut(0, Driver_Player.profit_log));
 
                     foreach (string item2 in Profit_log.stats_data.Where(x => x != null && x != "null"))
                     {
@@ -911,12 +913,58 @@ namespace TS_SE_Tool.Save.Items
 
             //=== Skipped blocks
 
+            //--- Remove Ignored
+            if (NamelessIgnoreList.Count > 0)
+            {
+                foreach (string item in NamelessIgnoreList.Where(x => x != null && x != "null"))
+                {
+                    Type accType = SiiNitems[item].GetType();
+
+                    switch (accType.Name)
+                    {
+                        case "Vehicle":
+                            {
+                                Vehicle tmpItem = (Vehicle)SiiNitems[item];
+
+                                foreach(string acc in tmpItem.accessories)
+                                {
+                                    NamelessControlList.Remove(acc);
+                                }
+
+                                NamelessControlList.Remove(item);
+                                break;
+                            }
+
+                        case "Trailer":
+                            {
+                                Trailer tmpItem = (Trailer)SiiNitems[item];
+
+                                foreach (string acc in tmpItem.accessories)
+                                {
+                                    NamelessControlList.Remove(acc);
+                                }
+
+                                NamelessControlList.Remove(item);
+                                break;
+                            }
+
+                        default:
+                            {
+                                NamelessControlList.Remove(item);
+                                break;
+                            }
+                    }
+                }
+            }
+
+            //--- Print skipped blocks
+
             if (NamelessControlList.Count > 0)
             {
                 List<string> skippedBlocks = new List<string>();
                 skippedBlocks.AddRange(NamelessControlList);
 
-                foreach (string item in skippedBlocks)
+                foreach (string item in skippedBlocks.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
                 }

@@ -813,7 +813,27 @@ namespace TS_SE_Tool
 
         private void buttonUserTruckSwitchCurrent_Click(object sender, EventArgs e)
         {
-            SiiNunitData.Player.assigned_truck = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
+            var SelectedItem = ((DataRowView)comboBoxUserTruckCompanyTrucks.SelectedItem).Row;
+
+            SiiNunitData.Player.assigned_truck = SelectedItem[0].ToString(); // Truck link
+
+            if (SiiNunitData.Player_Job != null)
+            {
+                if ((string)SelectedItem[1] == "Q") // check Truck type
+                {
+                    SiiNunitData.NamelessIgnoreList.Remove(SiiNunitData.Player.assigned_truck);
+
+                    SiiNunitData.Player_Job.company_truck = SiiNunitData.Player.assigned_truck;
+                }
+                else
+                {
+                    if (SiiNunitData.Player_Job.company_truck != "null")
+                        SiiNunitData.NamelessIgnoreList.Add(SiiNunitData.Player_Job.company_truck);
+
+                    SiiNunitData.Player_Job.company_truck = "null";
+                }
+                    
+            }
         }
         //
         //Share buttons
