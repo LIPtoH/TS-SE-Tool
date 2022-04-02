@@ -60,8 +60,8 @@ namespace TS_SE_Tool
             this.labelor2 = new System.Windows.Forms.Label();
             this.linkLabelNewVersion = new System.Windows.Forms.LinkLabel();
             this.linkLabelGitHub = new System.Windows.Forms.LinkLabel();
-            this.buttonSupport = new System.Windows.Forms.Button();
-            this.labelSupportDev = new System.Windows.Forms.Label();
+            this.buttonSupportDeveloper = new System.Windows.Forms.Button();
+            this.labelSupportDeveloper = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -106,8 +106,8 @@ namespace TS_SE_Tool
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 8);
             this.tableLayoutPanel2.Controls.Add(this.linkLabelNewVersion, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.linkLabelGitHub, 0, 6);
-            this.tableLayoutPanel2.Controls.Add(this.buttonSupport, 0, 10);
-            this.tableLayoutPanel2.Controls.Add(this.labelSupportDev, 0, 9);
+            this.tableLayoutPanel2.Controls.Add(this.buttonSupportDeveloper, 0, 10);
+            this.tableLayoutPanel2.Controls.Add(this.labelSupportDeveloper, 0, 9);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
@@ -303,29 +303,29 @@ namespace TS_SE_Tool
             this.linkLabelGitHub.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkLabelGitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGitHub_LinkClicked);
             // 
-            // buttonSupport
+            // buttonSupportDeveloper
             // 
-            this.buttonSupport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonSupport.Location = new System.Drawing.Point(20, 290);
-            this.buttonSupport.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.buttonSupport.Name = "buttonSupport";
-            this.buttonSupport.Size = new System.Drawing.Size(220, 40);
-            this.buttonSupport.TabIndex = 11;
-            this.buttonSupport.Text = "paypal.me/LIPtoHCode";
-            this.buttonSupport.UseVisualStyleBackColor = true;
-            this.buttonSupport.Click += new System.EventHandler(this.buttonSupport_Click);
+            this.buttonSupportDeveloper.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonSupportDeveloper.Location = new System.Drawing.Point(20, 290);
+            this.buttonSupportDeveloper.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.buttonSupportDeveloper.Name = "buttonSupportDeveloper";
+            this.buttonSupportDeveloper.Size = new System.Drawing.Size(220, 40);
+            this.buttonSupportDeveloper.TabIndex = 11;
+            this.buttonSupportDeveloper.Text = "paypal.me/LIPtoHCode";
+            this.buttonSupportDeveloper.UseVisualStyleBackColor = true;
+            this.buttonSupportDeveloper.Click += new System.EventHandler(this.buttonSupportDeveloper_Click);
             // 
-            // labelSupportDev
+            // labelSupportDeveloper
             // 
-            this.labelSupportDev.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.labelSupportDeveloper.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelSupportDev.AutoSize = true;
-            this.labelSupportDev.Location = new System.Drawing.Point(3, 267);
-            this.labelSupportDev.Name = "labelSupportDev";
-            this.labelSupportDev.Size = new System.Drawing.Size(254, 13);
-            this.labelSupportDev.TabIndex = 12;
-            this.labelSupportDev.Text = "Help Developer";
-            this.labelSupportDev.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelSupportDeveloper.AutoSize = true;
+            this.labelSupportDeveloper.Location = new System.Drawing.Point(3, 267);
+            this.labelSupportDeveloper.Name = "labelSupportDeveloper";
+            this.labelSupportDeveloper.Size = new System.Drawing.Size(254, 13);
+            this.labelSupportDeveloper.TabIndex = 12;
+            this.labelSupportDeveloper.Text = "Help Developer";
+            this.labelSupportDeveloper.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormSplash
             // 
@@ -371,7 +371,7 @@ namespace TS_SE_Tool
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.LinkLabel linkLabelNewVersion;
         private System.Windows.Forms.LinkLabel linkLabelGitHub;
-        private System.Windows.Forms.Button buttonSupport;
-        private System.Windows.Forms.Label labelSupportDev;
+        private System.Windows.Forms.Button buttonSupportDeveloper;
+        private System.Windows.Forms.Label labelSupportDeveloper;
     }
 }

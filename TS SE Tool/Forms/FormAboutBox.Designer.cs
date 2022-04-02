@@ -53,7 +53,7 @@ namespace TS_SE_Tool
             this.labelETS2version = new System.Windows.Forms.Label();
             this.labelATSversion = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonSupportDeveloper = new System.Windows.Forms.Button();
             this.tableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,7 +72,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel.Controls.Add(this.labelETS2version, 1, 7);
             this.tableLayoutPanel.Controls.Add(this.labelATSversion, 1, 8);
             this.tableLayoutPanel.Controls.Add(this.okButton, 1, 12);
-            this.tableLayoutPanel.Controls.Add(this.button1, 0, 12);
+            this.tableLayoutPanel.Controls.Add(this.buttonSupportDeveloper, 0, 12);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(9, 9);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -215,19 +215,19 @@ namespace TS_SE_Tool
             this.okButton.TabIndex = 24;
             this.okButton.Text = "&OK";
             // 
-            // button1
+            // buttonSupportDeveloper
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.buttonSupportDeveloper.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel.SetColumnSpan(this.button1, 2);
-            this.button1.Location = new System.Drawing.Point(3, 359);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(259, 52);
-            this.button1.TabIndex = 29;
-            this.button1.Text = "Help developer\r\npaypal.me/LIPtoHCode";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.buttonSupportDeveloper_Click);
+            this.tableLayoutPanel.SetColumnSpan(this.buttonSupportDeveloper, 2);
+            this.buttonSupportDeveloper.Location = new System.Drawing.Point(3, 359);
+            this.buttonSupportDeveloper.Name = "buttonSupportDeveloper";
+            this.buttonSupportDeveloper.Size = new System.Drawing.Size(259, 52);
+            this.buttonSupportDeveloper.TabIndex = 29;
+            this.buttonSupportDeveloper.Text = "Help developer\r\npaypal.me/LIPtoHCode";
+            this.buttonSupportDeveloper.UseVisualStyleBackColor = true;
+            this.buttonSupportDeveloper.Click += new System.EventHandler(this.buttonSupportDeveloper_Click);
             // 
             // FormAboutBox
             // 
@@ -263,6 +263,6 @@ namespace TS_SE_Tool
         private System.Windows.Forms.Label labelETS2version;
         private System.Windows.Forms.Label labelATSversion;
         private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonSupportDeveloper;
     }
 }

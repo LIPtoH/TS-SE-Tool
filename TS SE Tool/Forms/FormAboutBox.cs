@@ -45,6 +45,8 @@ namespace TS_SE_Tool
 
         private void PopulateFormControls()
         {
+            buttonSupportDeveloper.Visible = false;
+
             labelProductName.Text = Utilities.AssemblyData.AssemblyProduct;
             labelCopyright.Text = Utilities.AssemblyData.AssemblyCopyright;
 

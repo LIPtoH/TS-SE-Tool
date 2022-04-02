@@ -53,6 +53,9 @@ namespace TS_SE_Tool
                 labelVersion.Text = String.Format(translatedString, Utilities.AssemblyData.AssemblyVersion);
             else
                 labelVersion.Text = String.Format("{0} (alpha)", Utilities.AssemblyData.AssemblyVersion);
+
+            labelSupportDeveloper.Visible = false;
+            buttonSupportDeveloper.Visible = false;
         }
 
         private void FormSplash_Load(object sender, EventArgs e)
@@ -147,7 +150,7 @@ namespace TS_SE_Tool
             Application.Exit();
         }
 
-        private void buttonSupport_Click(object sender, EventArgs e)
+        private void buttonSupportDeveloper_Click(object sender, EventArgs e)
         {
             string url = Utilities.Web_Utilities.External.linkHelpDeveloper;
 
