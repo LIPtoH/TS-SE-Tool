@@ -422,10 +422,6 @@ namespace TS_SE_Tool
             workerLoadSaveFile.RunWorkerCompleted += worker_RunWorkerCompleted;
 
             workerLoadSaveFile.RunWorkerAsync();
-
-            //GC
-            GC.Collect();
-            //GC.WaitForPendingFinalizers();
         }
 
         private void buttonMainCloseSave_Click(object sender, EventArgs e)
@@ -452,19 +448,25 @@ namespace TS_SE_Tool
                 }
             }
 
+            ToggleMainControlsAccess(false);
             ToggleControlsAccess(false);
 
-            string SiiSavePath = Globals.SelectedSavePath + @"\game.sii";
+            string SiiSavePath = Globals.SelectedSavePath + @"\game.sii", SiiBackup = Globals.SelectedSavePath + @"\game_backup.sii";
 
-            IO_Utilities.LogWriter("Backing up file to: " + Globals.SelectedSavePath + @"\game_backup.sii");
-            //File.Copy(SiiSavePath, SiiSavePath + "_backup", true);
-            File.Copy(SiiSavePath, Globals.SelectedSavePath + @"\game_backup.sii", true);
+            IO_Utilities.LogWriter("Backing up file to: " + SiiBackup);
+
+            File.Copy(SiiSavePath, SiiBackup, true);
 
             //Write
-            NewWrireSaveFile();
 
-            buttonMainDecryptSave.Enabled = true;
-            MessageBox.Show("File saved", "Saving", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            workerLoadSaveFile = new BackgroundWorker();
+            workerLoadSaveFile.WorkerReportsProgress = true;
+
+            workerLoadSaveFile.DoWork += NewWrireSaveFile;
+            workerLoadSaveFile.ProgressChanged += worker_ProgressChanged;
+            workerLoadSaveFile.RunWorkerCompleted += workerWrite_RunWorkerCompleted;
+
+            workerLoadSaveFile.RunWorkerAsync();
         }
 
         //Profile and Saves groupbox

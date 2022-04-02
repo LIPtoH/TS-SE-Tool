@@ -770,7 +770,40 @@ namespace TS_SE_Tool
             PopulateFormControlsk();
 
             IO_Utilities.LogWriter("Successfully completed work with " + Globals.SelectedSavePath + " save file");
+
+            //GC
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
+
+        void workerWrite_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                ToggleMainControlsAccess(true);
+                ToggleControlsAccess(true);
+
+                IO_Utilities.ErrorLogWriter("Error during Writing save file" + Environment.NewLine + e.Error.Message +  Environment.NewLine + e.Error.StackTrace);
+                MessageBox.Show("Something went wrong during Writing Save file", "Error during Writing save file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
+            toolStripProgressBarMain.Value = 0;
+
+            ClearFormControls(false);
+
+            ToggleMainControlsAccess(true);
+            ToggleControlsAccess(false);
+
+            //GC
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            IO_Utilities.LogWriter("Save game successfully writen in " + Globals.SelectedSavePath);
+            MessageBox.Show("File saved", "Saving", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
 
         private void PrintAddedJobs()
         {
@@ -828,7 +861,7 @@ namespace TS_SE_Tool
         }
 
         //button_save_file
-        private void NewWrireSaveFile()
+        private void NewWrireSaveFile(object sender, DoWorkEventArgs e)
         {
             string SiiSavePath = Globals.SelectedSavePath + @"\game.sii";
 
@@ -861,16 +894,8 @@ namespace TS_SE_Tool
                     writer.Write(SiiNunitData.PrintOut(0));
                 }
 
-                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_file_saved");
-                
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_file_saved");                
             }
-
-            //dispose attempt
-            SetDefaultValues(false);
-            ClearFormControls(true);
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
 
         private void GetTranslationFiles()
