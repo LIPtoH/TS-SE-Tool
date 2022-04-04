@@ -32,8 +32,8 @@ namespace TS_SE_Tool
         //User Company tab
         private void FillFormCompanyControls()
         {
-            textBoxUserCompanyCompanyName.Text = MainSaveFileProfileData.CompanyName;
-            //textBoxUserCompanyCompanyName.ReadOnly = false;
+            textBoxUserCompanyCompanyName.Text = MainSaveFileProfileData.CompanyName.Value;
+
             FillAccountMoneyTB();
             FillHQcities();
 

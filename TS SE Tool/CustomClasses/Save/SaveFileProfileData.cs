@@ -21,7 +21,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+
 using TS_SE_Tool.Utilities;
+using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool
 {
@@ -36,18 +38,7 @@ namespace TS_SE_Tool
 
         public string   Logo                { get; set; } = "";
 
-        internal string CompanyName         { get; set; } = "";
-        internal string _CompanyName
-        {
-            get
-            {
-                return TextUtilities.FromStringToOutputString(CompanyName);
-            }
-            set
-            {
-                CompanyName = TextUtilities.CheckAndClearStringFromQuotes(value);
-            }
-        }
+        internal SCS_String CompanyName         { get; set; } = "";
 
         //---
         internal string MapPath             { get; set; } = "";
@@ -73,6 +64,7 @@ namespace TS_SE_Tool
         public ulong        ud9_GameTimeSpent       { get; set; } = 0;      //9 Game time spent
         public uint         ud10_RealTimeSpent      { get; set; } = 0;      //10 Real time spent
         public string       ud11_CurrentTruck       { get; set; } = "";     //11 Current truck //brand.model
+        
         public List<string> ud12_OwnedTruckList = new List<string>();       //12 Owned trucks //brand.model:count,brand.model:count,...;
         internal string     ud13_SomeUserData       { get; set; } = "";     //13 ???
         internal uint?      ud14_SomeUserData       { get; set; } = null;   //14 ??? //0
@@ -261,44 +253,11 @@ namespace TS_SE_Tool
         //End
         internal byte   Version         { get; set; } = 0;      //profile data format version
 
-        internal string OnlineUserName  { get; set; } = "";
-        internal string _OnlineUserName
-        {
-            get
-            {
-                return TextUtilities.FromStringToOutputString(OnlineUserName);
-            }
-            set
-            {
-                OnlineUserName = TextUtilities.CheckAndClearStringFromQuotes(value);
-            }
-        }
+        internal SCS_String OnlineUserName  { get; set; } = "";
 
-        internal string OnlinePassword  { get; set; } = "";
-        internal string _OnlinePassword
-        {
-            get
-            {
-                return TextUtilities.FromStringToOutputString(OnlinePassword);
-            }
-            set
-            {
-                OnlinePassword = TextUtilities.CheckAndClearStringFromQuotes(value);
-            }
-        }
+        internal SCS_String OnlinePassword  { get; set; } = "";
 
-        internal string ProfileName     { get; set; } = "";
-        internal string _ProfileName
-        {
-            get
-            {
-                return TextUtilities.FromStringToOutputString(ProfileName);
-            }
-            set
-            {
-                ProfileName = TextUtilities.CheckAndClearStringFromQuotes(value);
-            }
-        }
+        internal SCS_String ProfileName     { get; set; } = "";
 
         public uint     CreationTime    { get; set; } = 0;
         public uint     SaveTime        { get; set; } = 0;
@@ -463,7 +422,7 @@ namespace TS_SE_Tool
 
                     case "company_name":
                         {
-                            _CompanyName = dataLine;
+                            CompanyName = dataLine;
                             break;
                         }
 
@@ -556,26 +515,25 @@ namespace TS_SE_Tool
 
                     case "version":
                         {
-
                             Version = byte.Parse(dataLine);
                             break;
                         }
                         
                     case "online_user_name":
                         {
-                            _OnlineUserName = dataLine;
+                            OnlineUserName = dataLine;
                             break;
                         }
 
                     case "online_password":
                         {
-                            _OnlinePassword = dataLine;
+                            OnlinePassword = dataLine;
                             break;
                         }
 
                     case "profile_name":
                         {
-                            _ProfileName = dataLine;
+                            ProfileName = dataLine;
                             break;
                         }
 
@@ -614,7 +572,7 @@ namespace TS_SE_Tool
             sbResult.AppendLine(" brand: " + Brand);
             sbResult.AppendLine(" map_path: " + MapPath);
             sbResult.AppendLine(" logo: " + Logo);
-            sbResult.AppendLine(" company_name: " + _CompanyName);
+            sbResult.AppendLine(" company_name: " + CompanyName.ToString());
             sbResult.AppendLine(" male: " + GenederMale.ToString().ToLower());
             sbResult.AppendLine(" cached_experience: " + CachedExperiencePoints.ToString());
             sbResult.AppendLine(" cached_distance: " + CachedDistance.ToString());
@@ -658,7 +616,7 @@ namespace TS_SE_Tool
             if (verCheck5 || !verCheck4)            
                 sbResult.AppendLine(VerOnline());
 
-            sbResult.AppendLine(" profile_name: " + _ProfileName);
+            sbResult.AppendLine(" profile_name: " + ProfileName.ToString());
             sbResult.AppendLine(" creation_time: " + CreationTime.ToString());
             sbResult.AppendLine(" save_time: " + SaveTime.ToString());
 
@@ -683,8 +641,8 @@ namespace TS_SE_Tool
                 StringBuilder sbVerOnline = new StringBuilder();
 
                 sbVerOnline.AppendLine(" version: " + Version.ToString());
-                sbVerOnline.AppendLine(" online_user_name: " + _OnlineUserName);
-                sbVerOnline.Append(" online_password: " + _OnlinePassword);
+                sbVerOnline.AppendLine(" online_user_name: " + OnlineUserName.ToString());
+                sbVerOnline.Append(" online_password: " + OnlinePassword.ToString());
 
                 return sbVerOnline.ToString();
             }
