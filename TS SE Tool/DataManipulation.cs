@@ -193,7 +193,7 @@ namespace TS_SE_Tool
             }
             else
             {
-                List<string> tmpSFdep = MainSaveFileInfoData.Dependencies.Select(x => x.Raw.Value).ToList();
+                List<string> tmpSFdep = MainSaveFileInfoData.Dependencies.Where(x => x.RawDepType != "rdlc").Select(x => x.Raw.Value).ToList();
 
                 List<string> dbdep = DBDependencies.Except(tmpSFdep).ToList();
                 List<string> sfdep = tmpSFdep.Except(DBDependencies).ToList();
@@ -204,7 +204,7 @@ namespace TS_SE_Tool
 
                     if(dbdep.Count > 0)
                     {
-                        dbdepstr += "\r\nDependencies only in Database (" + dbdep.Count.ToString() +  "):\r\n";
+                        dbdepstr += "\r\nDependencies only in Database (" + dbdep.Count.ToString() +  ") will be Deleted:\r\n";
                         int i = 0;
                         foreach (string temp in dbdep)
                         {
@@ -215,7 +215,7 @@ namespace TS_SE_Tool
 
                     if(sfdep.Count > 0)
                     {
-                        sfdepstr += "\r\nDependencies only in Save file (" + sfdep.Count.ToString() + "):\r\n";
+                        sfdepstr += "\r\nDependencies only in Save file (" + sfdep.Count.ToString() + ") will be Added:\r\n";
                         int i = 0;
                         foreach (string temp in sfdep)
                         {
@@ -230,14 +230,6 @@ namespace TS_SE_Tool
                         "Do you want to Proceed and Update Dependencies?" + Environment.NewLine +
                         dbdepstr + Environment.NewLine + sfdepstr, "Dependencies conflict",
                         MessageBoxButtons.YesNo);
-                    /*
-                    DialogResult r = JR.Utils.GUI.Forms.FlexibleMessageBox.Show(this, 
-                        "Save file and Database has different Dependencies due to installed\\deleted mods\\dlc's." + Environment.NewLine + 
-                        "This may result in wrong path and cargo data." + Environment.NewLine + Environment.NewLine +
-                        "Do you want to Proceed and Update Dependencies?" + Environment.NewLine + 
-                        dbdepstr + Environment.NewLine + sfdepstr, "Dependencies conflict", 
-                        MessageBoxButtons.YesNo);
-                    */
 
                     if (r == DialogResult.Yes)
                     {
@@ -1429,13 +1421,15 @@ namespace TS_SE_Tool
                             string SQLCommandCMD = "";
                             bool first = true;
 
-                            List<string> temp = DBDependencies.Except(MainSaveFileInfoData.Dependencies.Select(x => x.Raw.Value).ToList()).ToList();
+                            List<string> gameplayDependencies = MainSaveFileInfoData.Dependencies.Where(x => x.RawDepType != "rdlc").Select(x => x.Raw.Value).ToList();
 
-                            if (temp != null && temp.Count() > 0)
+                            List<string> uniqueDependencies = DBDependencies.Except(gameplayDependencies).ToList();
+
+                            if (uniqueDependencies != null && uniqueDependencies.Count() > 0)
                             {
                                 SQLCommandCMD += "DELETE FROM [Dependencies] WHERE Dependency IN (";
 
-                                foreach (string tempitem in temp)
+                                foreach (string tempitem in uniqueDependencies)
                                 {
                                     if (!first)
                                     {
@@ -1468,14 +1462,14 @@ namespace TS_SE_Tool
                                 UpdateDatabase(SQLCommandCMD);
                             }
 
-                            temp = MainSaveFileInfoData.Dependencies.Select(x => x.Raw.Value).ToList().Except(DBDependencies).ToList();
+                            uniqueDependencies = gameplayDependencies.Except(DBDependencies).ToList();
 
-                            if (temp != null && temp.Count() > 0)
+                            if (uniqueDependencies != null && uniqueDependencies.Count() > 0)
                             {
                                 SQLCommandCMD = "INSERT INTO [Dependencies] (Dependency) ";
                                 first = true;
 
-                                foreach (string tempitem in temp)
+                                foreach (string tempitem in uniqueDependencies)
                                 {
                                     if (!first)
                                     {
