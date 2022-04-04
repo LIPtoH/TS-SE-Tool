@@ -750,6 +750,8 @@ namespace TS_SE_Tool
                 ToggleMainControlsAccess(true);
                 ToggleControlsAccess(false);
 
+                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
+
                 return;
             }
 

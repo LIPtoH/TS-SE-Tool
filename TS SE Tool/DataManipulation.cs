@@ -133,17 +133,11 @@ namespace TS_SE_Tool
 
                     dialogText = Regex.Unescape(String.Format(returnValues[1], MainSaveFileInfoData.Version));
 
-                    var DR = MessageBox.Show(dialogText, returnValues[0],
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    DialogResult DR = UpdateStatusBarMessage.ShowMessageBox(this, dialogText, returnValues[0], MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (DR == DialogResult.No)
                     {
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
-
-                        ToggleMainControlsAccess(true);
-
-                        buttonMainWriteSave.Enabled = false;
-
+                        InfoDepContinue = false;
                         return;
                     }
                 }
@@ -155,27 +149,22 @@ namespace TS_SE_Tool
 
                     dialogText = Regex.Unescape(String.Format(returnValues[1], MainSaveFileInfoData.Version));
 
-                    var DR = MessageBox.Show(dialogText, returnValues[0],
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DialogResult DR = UpdateStatusBarMessage.ShowMessageBox(this, dialogText, returnValues[0], MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                     if (DR == DialogResult.OK)
                     {
-                        UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
-
-                        ToggleMainControlsAccess(true);
-
-                        buttonMainWriteSave.Enabled = false;
-
+                        InfoDepContinue = false;
                         return;
                     }
                 }
             }
             else if (MainSaveFileInfoData.Version == 0)
             {
-                DialogResult result = MessageBox.Show("Savefile version was not recognised.\nDo you want to continue?", "Version not recognised", MessageBoxButtons.YesNo);
+                DialogResult result = UpdateStatusBarMessage.ShowMessageBox(this, "Savefile version was not recognised." + Environment.NewLine +"Do you want to continue?", "Version not recognised", MessageBoxButtons.YesNo);
+                
                 if (result == DialogResult.No)
                 {
-                    UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
+                    InfoDepContinue = false;
                     return;
                 }
             }
@@ -202,7 +191,7 @@ namespace TS_SE_Tool
                 {
                     string dbdepstr = "", sfdepstr = "";
 
-                    if(dbdep.Count > 0)
+                    if (dbdep.Count > 0)
                     {
                         dbdepstr += "\r\nDependencies only in Database (" + dbdep.Count.ToString() +  ") will be Deleted:\r\n";
                         int i = 0;
@@ -213,7 +202,7 @@ namespace TS_SE_Tool
                         }
                     }
 
-                    if(sfdep.Count > 0)
+                    if (sfdep.Count > 0)
                     {
                         sfdepstr += "\r\nDependencies only in Save file (" + sfdep.Count.ToString() + ") will be Added:\r\n";
                         int i = 0;

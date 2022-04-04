@@ -36,7 +36,7 @@ namespace TS_SE_Tool
     }
     
     public delegate void AddStatusMessageDelegate(SMStatus _status, string _message, string _option);
-    public delegate DialogResult AddStatusMessageBoxDelegate(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons);
+    public delegate DialogResult AddStatusMessageBoxDelegate(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons, MessageBoxIcon _icon);
 
     public static class UpdateStatusBarMessage
     {
@@ -67,16 +67,31 @@ namespace TS_SE_Tool
             else
                 OnNewStatusMessage(_status, _message, _option);
         }
+        
         public static DialogResult ShowMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons )
         {
             return ThreadSafeMessageBox(_this, _text, _caption, _buttons);
         }
+
+        public static DialogResult ShowMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons, MessageBoxIcon _icon)
+        {
+            return ThreadSafeMessageBox(_this, _text, _caption, _buttons, _icon);
+        }
+
         private static DialogResult ThreadSafeMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons)
         {
             if (MainForm != null && MainForm.InvokeRequired)
                 return (DialogResult)MainForm.Invoke(new AddStatusMessageBoxDelegate(ThreadSafeMessageBox), new object[] { _this, _text, _caption, _buttons });
             else
-                return (DialogResult)OnNewMessageBox(_this, _text, _caption, _buttons);
+                return (DialogResult)OnNewMessageBox(_this, _text, _caption, _buttons, MessageBoxIcon.None);
+        }
+
+        private static DialogResult ThreadSafeMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons, MessageBoxIcon _icon)
+        {
+            if (MainForm != null && MainForm.InvokeRequired)
+                return (DialogResult)MainForm.Invoke(new AddStatusMessageBoxDelegate(ThreadSafeMessageBox), new object[] { _this, _text, _caption, _buttons, _icon });
+            else
+                return (DialogResult)OnNewMessageBox(_this, _text, _caption, _buttons, _icon);
         }
     }
 
@@ -124,9 +139,9 @@ namespace TS_SE_Tool
             }
         }
 
-        DialogResult ShowMessageBox_OnNewMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons)
+        DialogResult ShowMessageBox_OnNewMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons, MessageBoxIcon _icon)
         {
-            return JR.Utils.GUI.Forms.FlexibleMessageBox.Show(_this, _text, _caption, _buttons);
+            return JR.Utils.GUI.Forms.FlexibleMessageBox.Show(_this, _text, _caption, _buttons, _icon);
         }
 
         public void SetDefaultValues(bool _initial)
