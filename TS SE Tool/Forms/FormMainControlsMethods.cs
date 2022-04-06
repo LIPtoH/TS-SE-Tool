@@ -185,7 +185,7 @@ namespace TS_SE_Tool
                     Bitmap bgimg = new Bitmap(SkillImgS[i], pSkillsNameHeight, pSkillsNameWidth);
                     tmp[0].BackgroundImage = bgimg;
                     if (!_state)
-                        tmp[0].BackgroundImage = ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
+                        tmp[0].BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(tmp[0].BackgroundImage);
                 }
             }
         }
@@ -879,13 +879,13 @@ namespace TS_SE_Tool
                     else
                     {
                         string[] imgpaths = new string[] { @"img\unknown.dds" };
-                        pictureBoxProfileAvatar.Image = Utilities.Graphics.ddsImgLoader(imgpaths, 95, 95)[0];
+                        pictureBoxProfileAvatar.Image = Graphics_TSSET.ddsImgLoader(imgpaths, 95, 95)[0];
                     }
                 }
                 catch
                 {
                     string[] imgpaths = new string[] { @"img\unknown.dds" };
-                    pictureBoxProfileAvatar.Image = Utilities.Graphics.ddsImgLoader(imgpaths, 95, 95)[0];
+                    pictureBoxProfileAvatar.Image = Graphics_TSSET.ddsImgLoader(imgpaths, 95, 95)[0];
                 }
 
                 try

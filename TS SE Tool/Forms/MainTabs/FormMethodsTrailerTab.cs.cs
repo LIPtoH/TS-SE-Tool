@@ -24,6 +24,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 using TS_SE_Tool.Global;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -59,7 +60,7 @@ namespace TS_SE_Tool
             buttonInfo.FlatStyle = FlatStyle.Flat;
             buttonInfo.Size = new Size(CustomizeImg.Width, CustomizeImg.Height);
             buttonInfo.Name = "buttonTrailerInfo";
-            buttonInfo.BackgroundImage = ConvertBitmapToGrayscale(CustomizeImg);
+            buttonInfo.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(CustomizeImg);
             buttonInfo.BackgroundImageLayout = ImageLayout.Zoom;
             buttonInfo.Text = "";
             buttonInfo.FlatAppearance.BorderSize = 0;
@@ -419,7 +420,7 @@ namespace TS_SE_Tool
                 //===
 
                 //=== Progress bar
-                SolidBrush ppen = new SolidBrush(GetProgressbarColor(_wear));
+                SolidBrush ppen = new SolidBrush(Graphics_TSSET.GetProgressbarColor(_wear));
 
                 int x = 0, y = 0, pnlwidth = (int)(progressBarPanel.Width * (1 - _wear));
 
@@ -615,7 +616,7 @@ namespace TS_SE_Tool
             Panel lpPanel = groupBoxUserTrailerTrailerDetails.Controls.Find("TrailerLicensePlateIMG", true).FirstOrDefault() as Panel;
 
             if (lpPanel != null)
-                lpPanel.BackgroundImage = Utilities.Graphics.ResizeImage(thisLP.LicensePlateIMG, LicensePlateWidth[GameType], 32);
+                lpPanel.BackgroundImage = Graphics_TSSET.ResizeImage(thisLP.LicensePlateIMG, LicensePlateWidth[GameType], 32);
         }
 
         //Events
@@ -673,7 +674,7 @@ namespace TS_SE_Tool
                 if (_state)
                     tmpButtonRepair.BackgroundImage = RepairImg;
                 else
-                    tmpButtonRepair.BackgroundImage = ConvertBitmapToGrayscale(RepairImg);
+                    tmpButtonRepair.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(RepairImg);
             }
         }
 
@@ -698,7 +699,7 @@ namespace TS_SE_Tool
                 if (_state && tmpControl.Enabled)
                     tmpControl.BackgroundImage = images[i];
                 else
-                    tmpControl.BackgroundImage = ConvertBitmapToGrayscale(images[i]);
+                    tmpControl.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(images[i]);
             }
         }
         
@@ -845,7 +846,7 @@ namespace TS_SE_Tool
             if (tmpButton.Enabled)
                 tmpButton.BackgroundImage = RepairImg;
             else
-                tmpButton.BackgroundImage = ConvertBitmapToGrayscale(RepairImg);
+                tmpButton.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(RepairImg);
         }
 
         //end User Trailer tab

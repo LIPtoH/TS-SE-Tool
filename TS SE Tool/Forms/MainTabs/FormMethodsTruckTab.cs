@@ -22,6 +22,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Globalization;
 
+using TS_SE_Tool.Utilities;
 using TS_SE_Tool.Global;
 
 namespace TS_SE_Tool
@@ -460,7 +461,7 @@ namespace TS_SE_Tool
                     repairButton.Enabled = true;
 
                 //
-                SolidBrush ppen = new SolidBrush(GetProgressbarColor(_wear));
+                SolidBrush ppen = new SolidBrush(Graphics_TSSET.GetProgressbarColor(_wear));
 
                 int x = 0, y = 0, pnlwidth = (int)(pbPanel.Width * (1 - _wear));
 
@@ -534,7 +535,7 @@ namespace TS_SE_Tool
                     refuelTruck.Enabled = true;
 
 
-                SolidBrush ppen = new SolidBrush(GetProgressbarColor(1 - _fuel));
+                SolidBrush ppen = new SolidBrush(Graphics_TSSET.GetProgressbarColor(1 - _fuel));
                 int pnlheight = (int)(pnlfuel.Height * (_fuel)), x = 0, y = pnlfuel.Height - pnlheight;
 
                 Bitmap progress = new Bitmap(pnlfuel.Width, pnlfuel.Height);
@@ -595,7 +596,7 @@ namespace TS_SE_Tool
             Panel lpPanel = groupBoxUserTruckTruckDetails.Controls.Find("TruckLicensePlateIMG", true).FirstOrDefault() as Panel;
             if (lpPanel != null)
             {
-                lpPanel.BackgroundImage = Utilities.Graphics.ResizeImage(thisLP.LicensePlateIMG, LicensePlateWidth[GameType], 32); //ETS - 128x32 or ATS - 128x64 | 64x32
+                lpPanel.BackgroundImage = Graphics_TSSET.ResizeImage(thisLP.LicensePlateIMG, LicensePlateWidth[GameType], 32); //ETS - 128x32 or ATS - 128x64 | 64x32
             }
         }
 
@@ -652,7 +653,7 @@ namespace TS_SE_Tool
                 if (_state)
                     tmpButtonRepair.BackgroundImage = RepairImg;
                 else
-                    tmpButtonRepair.BackgroundImage = ConvertBitmapToGrayscale(RepairImg);                
+                    tmpButtonRepair.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(RepairImg);                
             }
         }
 
@@ -677,7 +678,7 @@ namespace TS_SE_Tool
                 if (_state && TMP.Enabled)
                     TMP.BackgroundImage = images[i];
                 else
-                    TMP.BackgroundImage = ConvertBitmapToGrayscale(images[i]);
+                    TMP.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(images[i]);
             }
         }
 
@@ -793,7 +794,7 @@ namespace TS_SE_Tool
             if (tmp.Enabled)
                 tmp.BackgroundImage = RepairImg;
             else
-                tmp.BackgroundImage = ConvertBitmapToGrayscale(RepairImg);
+                tmp.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(RepairImg);
         }
 
         public void buttonRefuel_EnabledChanged(object sender, EventArgs e)
@@ -803,7 +804,7 @@ namespace TS_SE_Tool
             if (tmp.Enabled)
                 tmp.BackgroundImage = RefuelImg;
             else
-                tmp.BackgroundImage = ConvertBitmapToGrayscale(RefuelImg);
+                tmp.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(RefuelImg);
         }
         //
         private void buttonUserTruckSelectCurrent_Click(object sender, EventArgs e)

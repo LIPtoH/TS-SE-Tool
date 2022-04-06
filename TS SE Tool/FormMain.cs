@@ -145,7 +145,8 @@ namespace TS_SE_Tool
 
         private DataTable DistancesTable; //Program
 
-        private Bitmap ProgressBarGradient; //Program
+        //internal static Bitmap ProgressBarGradient; //Program
+
         private Image RepairImg, RefuelImg, CustomizeImg, PlayerCompanyLogo; //Program
 
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
@@ -208,7 +209,7 @@ namespace TS_SE_Tool
             //Create page controls
             IO_Utilities.LogWriter("Creating form elements...");
             CreateProfilePanelControls();
-            CreateProgressBarBitmap();
+            Graphics_TSSET.CreateProgressBarBitmap();
             CreateTruckPanelControls();
             CreateTrailerPanelControls();
             IO_Utilities.LogWriter("Done.");

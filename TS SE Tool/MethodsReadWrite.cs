@@ -239,29 +239,29 @@ namespace TS_SE_Tool
             //=== Game Icons
 
             imgPaths = new string[] { @"img\ETS2\game_n.dds", @"img\ATS\game_n.dds" };
-            GameIconeImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
+            GameIconeImg = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32);
 
             //=== Tab page icons
 
             imgPaths = new string[] { @"img\profiles.dds", @"img\comp_man.dds", @"img\truck_service.dds", @"img\trailers.dds", 
                                       @"img\company_job.dds", @"img\cargo_market.dds", @"img\maps.dds" };
-            TabpagesImages.Images.AddRange(Utilities.Graphics.ddsImgLoader(imgPaths, 64, 64, 64, 0));
+            TabpagesImages.Images.AddRange(Graphics_TSSET.ddsImgLoader(imgPaths, 64, 64, 64, 0));
 
             //=== Profile
 
             // skill icons
             imgPaths = new string[] { @"img\skill_adr.dds", @"img\skill_distance.dds", @"img\skill_heavy.dds", @"img\skill_fragile.dds", 
                                       @"img\skill_jit.dds", @"img\skill_mechanical.dds" };
-            SkillImgS = Utilities.Graphics.ddsImgLoader(imgPaths, 64, 64);
+            SkillImgS = Graphics_TSSET.ddsImgLoader(imgPaths, 64, 64);
 
             // ADR icons
             imgPaths = new string[] { @"img\" + GameType + @"\adr_1.dds", @"img\" + GameType + @"\adr_2.dds", @"img\" + GameType + @"\adr_3.dds", 
                                       @"img\" + GameType + @"\adr_4.dds", @"img\" + GameType + @"\adr_6.dds", @"img\" + GameType + @"\adr_8.dds" };
-            ADRImgS = Utilities.Graphics.ddsImgLoader(imgPaths, 46, 46, 9, 9, 32, 32);
+            ADRImgS = Graphics_TSSET.ddsImgLoader(imgPaths, 46, 46, 9, 9, 32, 32);
 
             imgPaths = new string[] { @"img\" + GameType + @"\adr_1_grey.dds", @"img\" + GameType + @"\adr_2_grey.dds", @"img\" + GameType + @"\adr_3_grey.dds", 
                                       @"img\" + GameType + @"\adr_4_grey.dds", @"img\" + GameType + @"\adr_6_grey.dds", @"img\" + GameType + @"\adr_8_grey.dds" };
-            ADRImgSGrey = Utilities.Graphics.ddsImgLoader(imgPaths, 46, 46, 9, 9, 32, 32);
+            ADRImgSGrey = Graphics_TSSET.ddsImgLoader(imgPaths, 46, 46, 9, 9, 32, 32);
 
             // skill level select
             imgPaths = new string[] { @"img\skill_bar_s.dds", @"img\skill_bar_s2.dds", @"img\skill_bar1.dds", @"img\skill_bar2.dds", @"img\skill_bar3.dds" };
@@ -271,7 +271,7 @@ namespace TS_SE_Tool
             {
                 if (i == 2) y = 8;
 
-                SkillImgSBG[i] = Utilities.Graphics.ddsImgLoader(new[] { imgPaths[i] }, 46, 46, 9, y)[0];
+                SkillImgSBG[i] = Graphics_TSSET.ddsImgLoader(new[] { imgPaths[i] }, 46, 46, 9, y)[0];
             }
 
             //=== Company
@@ -279,16 +279,16 @@ namespace TS_SE_Tool
             // garages
             imgPaths = new string[] { @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_small_ico.dds", @"img\garage_large_ico.dds", 
                                       @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\garage_tiny_ico.dds" };
-            GaragesImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
+            GaragesImg = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32);
 
             // hq
             imgPaths = new string[] { @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\hq_garage_ico_small_n.dds", @"img\hq_garage_ico_big_n.dds", 
                                       @"img\garage_free_ico.dds", @"img\garage_free_ico.dds", @"img\hq_garage_ico_tiny_n.dds" };
-            GaragesHQImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
+            GaragesHQImg = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32);
 
             // visited cities
             imgPaths = new string[] { @"img\city_pin_0.dds", @"img\city_pin_1.dds"};
-            CitiesImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
+            CitiesImg = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32);
 
 
             //=== Truck & Trailer tab
@@ -296,17 +296,17 @@ namespace TS_SE_Tool
             // truck parts
             imgPaths = new string[] { @"img\" + GameType + @"\engine.dds", @"img\" + GameType + @"\transmission.dds", @"img\" + GameType + @"\chassis.dds", 
                                       @"img\" + GameType + @"\cabin.dds", @"img\" + GameType + @"\tyres.dds" };
-            TruckPartsImg = Utilities.Graphics.ddsImgLoader(imgPaths, 64, 64);
+            TruckPartsImg = Graphics_TSSET.ddsImgLoader(imgPaths, 64, 64);
 
             // trailer parts
             imgPaths = new string[] { @"img\" + GameType + @"\cargo.dds", @"img\" + GameType + @"\trailer_body.dds", 
                                       @"img\" + GameType + @"\trailer_chassis.dds", @"img\" + GameType + @"\tyres.dds" };
-            TrailerPartsImg = Utilities.Graphics.ddsImgLoader(imgPaths, 64, 64);
+            TrailerPartsImg = Graphics_TSSET.ddsImgLoader(imgPaths, 64, 64);
 
             // buttons
             imgPaths = new string[] { @"img\service_ico.dds", @"img\gas_ico.dds", @"img\customize_p.dds" };
 
-            Image[] imgArray = Utilities.Graphics.ddsImgLoader(imgPaths);
+            Image[] imgArray = Graphics_TSSET.ddsImgLoader(imgPaths);
 
             RepairImg = imgArray[0];
             RefuelImg = imgArray[1];
@@ -316,15 +316,15 @@ namespace TS_SE_Tool
 
             // urgency
             imgPaths = new string[] { @"img\easy.dds", @"img\normal.dds", @"img\hard.dds" };
-            UrgencyImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
+            UrgencyImg = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32);
 
             // trailer type
             imgPaths = new string[] { @"img\none_32.dds", @"img\heavy.dds", @"img\articulated.dds" };
-            CargoTypeImg = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
+            CargoTypeImg = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32);
 
             // cargo type
             imgPaths = new string[] { @"img\fragile.dds", @"img\valuable.dds" };
-            CargoType2Img = Utilities.Graphics.ddsImgLoader(imgPaths, 32, 32);
+            CargoType2Img = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32);
 
         }
 

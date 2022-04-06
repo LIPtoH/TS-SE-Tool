@@ -43,7 +43,7 @@ namespace TS_SE_Tool
             FillVisitedCities(0);
             FillGaragesList(0);
 
-            PlayerCompanyLogo = Utilities.Graphics.ddsImgLoader(new string[] { @"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds" }, 94, 94, 0, 0)[0];
+            PlayerCompanyLogo = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { @"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds" }, 94, 94, 0, 0)[0];
 
             pictureBoxCompanyLogo.Image = PlayerCompanyLogo;
         }

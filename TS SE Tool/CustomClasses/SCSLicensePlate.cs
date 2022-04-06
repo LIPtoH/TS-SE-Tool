@@ -155,7 +155,7 @@ namespace TS_SE_Tool.SCS
             if (ValidLPcountry)
             {
                 //Load BG image
-                Image BGImg = Utilities.Graphics.ddsImgLoader(new string[] { IMGpath })[0];
+                Image BGImg = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { IMGpath })[0];
                 //
                 LicensePlateIMG = new Bitmap(BGImg.Width * 4, BGImg.Height * 4);
                 LicensePlateTXT = "";
@@ -442,7 +442,7 @@ namespace TS_SE_Tool.SCS
 
                         //Load img
                         string tmpImgPath = @"img\" + MainForm.GameType + @"\lp" + imgToLoad + @".dds";
-                        Image tmpImg = Utilities.Graphics.ddsImgLoader(new string[] { tmpImgPath })[0];
+                        Image tmpImg = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { tmpImgPath })[0];
 
                         //Draw img
                         if (tmpImg != null)
@@ -735,7 +735,7 @@ namespace TS_SE_Tool.SCS
 
             //Load Font 
             IMGpath = @"img\" + gametype + @"\lpFont\" + fontimg + @".dds";
-            Image FontImg = Utilities.Graphics.ddsImgLoader(new string[] { IMGpath })[0];
+            Image FontImg = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { IMGpath })[0];
 
             //Create font map
             foreach (KeyValuePair< UInt16, SCSFontLetter> letter in thisFontMap)

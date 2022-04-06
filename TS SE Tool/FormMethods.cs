@@ -1226,69 +1226,7 @@ namespace TS_SE_Tool
 
         }
         //Language End
-
-        //IMG
-        //Custom PB color gradient
-        private void CreateProgressBarBitmap()
-        {
-            ProgressBarGradient = new Bitmap(100, 1);
-
-            LinearGradientBrush br = new LinearGradientBrush(new RectangleF(0, 0, 100, 1), Color.Black, Color.Black, 0, false);
-            ColorBlend cb = new ColorBlend();
-
-            cb.Positions = new[] { 0.0f, 0.5f, 1f };
-            cb.Colors = new[] { Color.FromArgb(255, 255, 0, 0), Color.FromArgb(255, 255, 255, 0), Color.FromArgb(255, 0, 255, 0), };
-
-            br.InterpolationColors = cb;
-
-            //puts the gradient scale onto a bitmap which allows for getting a color from pixel
-            Graphics g = Graphics.FromImage(ProgressBarGradient);
-            g.FillRectangle(br, new RectangleF(0, 0, ProgressBarGradient.Width, ProgressBarGradient.Height));
-        }
-
-        private Color GetProgressbarColor(float _value)
-        {
-            if (_value < 0)
-                _value = 0;
-            else if (_value > 1)
-                _value = 1;
-            return ProgressBarGradient.GetPixel(Convert.ToInt32((1 - _value) * 99), 0);
-        }
-
-        private Bitmap ConvertBitmapToGrayscale(Image _source)
-        {
-            Bitmap bm = new Bitmap(_source);
-            //get a graphics object from the new image
-            Graphics g = Graphics.FromImage(bm);
-
-            //create the grayscale ColorMatrix
-            ColorMatrix colorMatrix = new ColorMatrix(
-               new float[][]
-               {
-                 new float[] {.299f, .299f, .299f, 0, 0},
-                 new float[] {.587f, .587f, .587f, 0, 0},
-                 new float[] {.114f, .114f, .114f, 0, 0},
-                 new float[] {0, 0, 0, 1, 0},
-                 new float[] {0, 0, 0, 0, 1}
-               });
-
-            //create some image attributes
-            ImageAttributes attributes = new ImageAttributes();
-
-            //set the color matrix attribute
-            attributes.SetColorMatrix(colorMatrix);
-
-            //draw the original image on the new image
-            //using the grayscale color matrix
-            g.DrawImage(_source, new Rectangle(0, 0, _source.Width, _source.Height), 0, 0, _source.Width, _source.Height, GraphicsUnit.Pixel, attributes);
-
-            //dispose the Graphics object
-            g.Dispose();
-
-            return bm;
-        }
-        //IMG End
-        
+                
         //Extra
         //Search index in CB by Value
         private int FindByValue (ComboBox _inputComboBox, string _value)

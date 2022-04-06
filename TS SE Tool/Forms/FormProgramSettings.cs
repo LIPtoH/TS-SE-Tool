@@ -33,7 +33,7 @@ namespace TS_SE_Tool
         {
             InitializeComponent();
 
-            this.Icon = Utilities.Graphics.IconFromImage(MainForm.ProgUIImgsDict["ProgramSettings"]);
+            this.Icon = Utilities.Graphics_TSSET.IconFromImage(MainForm.ProgUIImgsDict["ProgramSettings"]);
 
             this.SuspendLayout();
 

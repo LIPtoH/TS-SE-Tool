@@ -219,7 +219,7 @@ namespace TS_SE_Tool
         internal Image freightMarketGetCompanyIcon(string _companyName, Brush _brush)
         {
             if (File.Exists(@"img\" + GameType + @"\companies\" + _companyName + ".dds"))
-                return Utilities.Graphics.ddsImgLoader(new string[] { @"img\" + GameType + @"\companies\" + _companyName + ".dds" }, 100, 32, 0, 0)[0];
+                return Utilities.Graphics_TSSET.ddsImgLoader(new string[] { @"img\" + GameType + @"\companies\" + _companyName + ".dds" }, 100, 32, 0, 0)[0];
             else
             {
                 string currentDirName = Directory.GetCurrentDirectory() + @"\img\" + GameType + @"\companies";
@@ -227,7 +227,7 @@ namespace TS_SE_Tool
                 string[] files = Directory.GetFiles(currentDirName, searchpattern);
 
                 if (files.Length > 0)
-                    return Utilities.Graphics.ddsImgLoader(new string[] { files[0] }, 100, 32, 0, 0)[0];
+                    return Utilities.Graphics_TSSET.ddsImgLoader(new string[] { files[0] }, 100, 32, 0, 0)[0];
                 else                
                     return freightMarketDrawCompanyIconAsText(_companyName, 100, 32, _brush, 12);                
             }
