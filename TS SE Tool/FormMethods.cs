@@ -81,7 +81,7 @@ namespace TS_SE_Tool
         private static DialogResult ThreadSafeMessageBox(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons)
         {
             if (MainForm != null && MainForm.InvokeRequired)
-                return (DialogResult)MainForm.Invoke(new AddStatusMessageBoxDelegate(ThreadSafeMessageBox), new object[] { _this, _text, _caption, _buttons });
+                return (DialogResult)MainForm.Invoke(new AddStatusMessageBoxDelegate(ThreadSafeMessageBox), new object[] { _this, _text, _caption, _buttons, MessageBoxIcon.None });
             else
                 return (DialogResult)OnNewMessageBox(_this, _text, _caption, _buttons, MessageBoxIcon.None);
         }
