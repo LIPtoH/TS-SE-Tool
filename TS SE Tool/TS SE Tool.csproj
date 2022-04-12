@@ -144,6 +144,8 @@
     <Compile Include="CustomClasses\Save\DataFormat\Vector_3i.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\Vector_4f.cs" />
     <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
+    <Compile Include="CustomClasses\Save\Items\Accessory_Hookup_int_data.cs" />
+    <Compile Include="CustomClasses\Save\Items\Accessory_Hookup_data.cs" />
     <Compile Include="CustomClasses\Save\Items\Bank.cs" />
     <Compile Include="CustomClasses\Save\Items\Bank_Loan.cs" />
     <Compile Include="CustomClasses\Save\Items\Bus_job_Log.cs" />
@@ -158,6 +160,7 @@
     <Compile Include="CustomClasses\Save\Items\Economy_event_Queue.cs" />
     <Compile Include="CustomClasses\Save\Items\Ferry_log.cs" />
     <Compile Include="CustomClasses\Save\Items\Ferry_log_Entry.cs" />
+    <Compile Include="CustomClasses\Save\Items\Flare_blink.cs" />
     <Compile Include="CustomClasses\Save\Items\Game_Progress.cs" />
     <Compile Include="CustomClasses\Save\Items\Garage.cs" />
     <Compile Include="CustomClasses\Save\Items\GPS_waypoint_Storage.cs" />
