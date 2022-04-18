@@ -71,6 +71,19 @@ namespace TS_SE_Tool.Utilities
             return newImage;
         }
 
+        public static Image[] ImgFromFileLoader(string[] _filenamesarray)
+        {
+            Image[] tempImgarray = new Image[_filenamesarray.Length];
+
+            for (int i = 0; i < _filenamesarray.Length; i++)
+                if (File.Exists(_filenamesarray[i]))
+                    tempImgarray[i] = Bitmap.FromFile(_filenamesarray[i]);
+                else
+                    tempImgarray[i] = null;
+
+            return tempImgarray;
+        }
+
         public static Image[] ddsImgLoader(string[] _filenamesarray)
         {
             return ddsImgLoader(_filenamesarray, -1, -1, 0, 0, -1, -1);
