@@ -176,6 +176,10 @@ namespace TS_SE_Tool
 
         internal Dictionary<string, Dictionary<UInt16, SCS.SCSFontLetter>> GlobalFontMap;
         internal Dictionary<string, byte> LicensePlateWidth;
+
+        internal bool TssetFoldersExist = false;
+        internal bool ForseExit = false;
+
         #endregion
 
         public FormMain()
@@ -183,10 +187,6 @@ namespace TS_SE_Tool
             IO_Utilities.LogWriter("Initializing form...");
             InitializeComponent();
             IO_Utilities.LogWriter("Form initialized.");
-            //Non program task
-            IO_Utilities.LogWriter("Caching game data...");
-            CacheGameData();
-            IO_Utilities.LogWriter("Caching finished.");
 
             //Program
             UpdateStatusBarMessage.OnNewStatusMessage += UpdateStatusBarMessage_OnNewStatusMessage;
@@ -197,6 +197,7 @@ namespace TS_SE_Tool
             SetDefaultValues(true);
             IO_Utilities.LogWriter("Loading config...");
             ProgSettingsV.LoadConfigFromFile();
+            CheckTssetFoldersExist();
             ApplySettings();
             IO_Utilities.LogWriter("Config loaded.");
 
@@ -226,6 +227,11 @@ namespace TS_SE_Tool
             GetTranslationFiles();
             ChangeLanguage();
             IO_Utilities.LogWriter("Done.");
+
+            //Non program task
+            IO_Utilities.LogWriter("Caching game data...");
+            CacheGameData();
+            IO_Utilities.LogWriter("Caching finished.");
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
@@ -233,26 +239,35 @@ namespace TS_SE_Tool
             IO_Utilities.LogWriter("Opening form...");
             try
             {
-                if (Properties.Settings.Default.ShowSplashOnStartup || Properties.Settings.Default.CheckUpdatesOnStartup)
-                {
-                    FormSplash WindowSplash = new FormSplash();
-                    WindowSplash.ShowDialog();
-                }
                 IO_Utilities.LogWriter("Done.");
+
+                if (Properties.Settings.Default.ShowSplashOnStartup || Properties.Settings.Default.CheckUpdatesOnStartup)
+                    OpenSplashScreen();                
             }
             catch
             {
                 IO_Utilities.LogWriter("Done. Settings error.");
-                FormSplash WindowSplash = new FormSplash();
-                WindowSplash.ShowDialog();
+
+                OpenSplashScreen();
             }
 
             DetectGame();
+
+            void OpenSplashScreen()
+            {
+                FormSplash WindowSplash = new FormSplash();
+                WindowSplash.ShowDialog();
+            }
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult exitDR;
+
+            if (this.ForseExit)
+            {
+                return;
+            }
 
             if (AddedJobsDictionary != null && AddedJobsDictionary.Count > 0)
                 exitDR = MessageBox.Show("You have unsaved changes. Do you really want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo);

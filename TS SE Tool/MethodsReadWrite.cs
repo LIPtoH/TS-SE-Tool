@@ -39,6 +39,22 @@ namespace TS_SE_Tool
     {
         private BackgroundWorker generalWorker;
 
+        //Check if tsset folders exist
+        private void CheckTssetFoldersExist()
+        {
+            bool foldersExist = true;
+
+            string[] folderPaths = new string[] { "libs", "img", "lang", "updater" };
+
+            foreach (string path in folderPaths)
+            {
+                if (!Directory.Exists(path))
+                    foldersExist = false;
+            }
+
+            TssetFoldersExist = foldersExist;
+        }
+
         private void LoadExtCountries()
         {
             string[] inputFile;

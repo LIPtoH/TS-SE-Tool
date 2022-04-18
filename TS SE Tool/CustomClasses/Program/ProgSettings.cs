@@ -55,7 +55,6 @@ namespace TS_SE_Tool
         public string   CurrencyMesATS  { get; set; } = "USD";
 
         public DateTime LastUpdateCheck { get; set; } = DateTime.Now;
-
         public Dictionary<string, List<string>> CustomPaths { get; set; } = new Dictionary<string, List<string>>();
 
         public void LoadConfigFromFile()

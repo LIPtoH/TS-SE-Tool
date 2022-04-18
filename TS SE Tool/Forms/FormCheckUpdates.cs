@@ -35,6 +35,8 @@ namespace TS_SE_Tool
 {
     public partial class FormCheckUpdates : Form
     {
+        FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+
         internal string[] NewVersion = { "", "" };
         string FormMode = "check";
 
@@ -123,6 +125,7 @@ namespace TS_SE_Tool
             buttonDownload.Visible = false;
             labelStatus.Text = "Starting Updater";
             buttonOK.Text = "OK";
+
             //copy updater
             if (File.Exists(Directory.GetCurrentDirectory() + @"\updater\updater.exe"))
             {
@@ -130,9 +133,13 @@ namespace TS_SE_Tool
             }
             else
             {
-                MessageBox.Show("Unable to find Updater.exe. Please update manually. New version located in Updater folder.", "File not exist");
+                MessageBox.Show("Unable to find Updater.exe." + Environment.NewLine + "Please update manually." + Environment.NewLine + "New version located in Updater folder.", "Updater not exist. Manual update");
                 labelStatus.Text = "Updater.exe doesn't exist";
-                return;
+
+                Process.Start("updater");
+
+                MainForm.ForseExit = true;
+                Application.Exit();
             }
 
             if (File.Exists(Directory.GetCurrentDirectory() + @"\updater.exe"))
@@ -141,12 +148,18 @@ namespace TS_SE_Tool
                 Process.Start(Directory.GetCurrentDirectory() + @"\updater.exe", "true " + NewVersion[1] + " " + Process.GetCurrentProcess().Id.ToString());
                 labelStatus.Text = "You can now finish your work.\r\nUpdate will start on exit.";
 
+                MainForm.ForseExit = true;
                 Application.Exit();
             }
             else
             {
                 MessageBox.Show("Unable to find Updater.exe. Please update manually. New version located in Updater folder.", "File not exist");
                 labelStatus.Text = "Updater.exe doesn't exist";
+
+                Process.Start("updater");
+
+                MainForm.ForseExit = true;
+                Application.Exit();
             }
 
             buttonOK.Enabled = true;
@@ -267,6 +280,11 @@ namespace TS_SE_Tool
         {
             labelStatus.ForeColor = this.ForeColor;
             labelStatus.Text = "Downloading...";
+
+            if(!Directory.Exists("updater"))
+            {
+                Directory.CreateDirectory("updater");
+            }    
 
             Task t = Task.Run(() => {
                 var url = Web_Utilities.External.linkDownloadVersion;
