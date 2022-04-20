@@ -887,7 +887,9 @@ namespace TS_SE_Tool
         //button_save_file
         private void NewWrireSaveFile(object sender, DoWorkEventArgs e)
         {
-            string SiiSavePath = Globals.SelectedSavePath + @"\game.sii";
+            string ProfileFolderPath = Globals.SelectedProfilePath + "\\profile.sii";
+            string SiiInfoPath = Globals.SelectedSavePath + "\\info.sii";
+            string SiiSavePath = Globals.SelectedSavePath + "\\game.sii";
 
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_saving_file");
 
@@ -912,7 +914,28 @@ namespace TS_SE_Tool
 
                 PrintAddedJobs();
 
-                //Write
+                //Backup
+                string ProfileFolderPathBackup = Globals.SelectedProfilePath + "\\profile_backup.sii";
+                string SiiInfoPathBackup = Globals.SelectedSavePath + "\\info_backup.sii";
+                string SiiSavePathBackup = Globals.SelectedSavePath + "\\game_backup.sii";
+
+                File.Copy(ProfileFolderPath, ProfileFolderPathBackup, true);
+                File.Copy(SiiInfoPath, SiiInfoPathBackup, true);
+                File.Copy(SiiSavePath, SiiSavePathBackup, true);
+
+                //Write Profile data
+                using (StreamWriter writer = new StreamWriter(ProfileFolderPath, false))
+                {
+                    writer.Write(MainSaveFileProfileData.PrintOut());
+                }
+
+                //Write Info data
+                using (StreamWriter writer = new StreamWriter(SiiInfoPath, false))
+                {
+                    writer.Write(MainSaveFileInfoData.PrintOut());
+                }
+
+                //Write Save data
                 using (StreamWriter writer = new StreamWriter(SiiSavePath, false))
                 {
                     writer.Write(SiiNunitData.PrintOut(0));

@@ -31,9 +31,9 @@ namespace TS_SE_Tool
         private string SaveContainerNameless { get; set; } = "";
 
         //Data
-        internal SCS_String Name { get; set; } = "";     //Save name
+        internal SCS_String Name { get; set; } = "";
 
-        public uint Time { get; set; } = 0;      //IngameTime
+        public uint Time { get; set; } = 0;
         public uint FileTime { get; set; } = 0;
         public ushort Version { get; set; } = 0;
 
@@ -50,10 +50,9 @@ namespace TS_SE_Tool
         internal List<Dependency> Dependencies { get; set; } = new List<Dependency>();
 
         //====
-        Dictionary<string, string> unsortedDataDictionary = new Dictionary<string, string>();
+        List<string> unsortedDataList = new List<string>();
 
         //Methods
-
         public void ProcessData(string[] _fileLines)
         {
             string currentLine = "";
@@ -81,12 +80,7 @@ namespace TS_SE_Tool
                 switch (tagLine)
                 {
                     case "SiiNunit":
-
                     case "":
-                        {
-                            break;
-                        }
-
                     case "{":
                         {
                             break;
@@ -188,7 +182,7 @@ namespace TS_SE_Tool
 
                     default:
                         {
-                            unsortedDataDictionary.Add(tagLine, dataLine);
+                            unsortedDataList.Add(currentLine);
                             break;
                         }
                 }
@@ -198,7 +192,7 @@ namespace TS_SE_Tool
             endOfProcessData:;
         }
 
-        public string GetDataText()
+        public string PrintOut()
         {
             bool InfoExist55 = false;
             if (Version >= 55 && this.InfoVersion > 0)
@@ -233,12 +227,10 @@ namespace TS_SE_Tool
             }
 
             //Add lines with unsorted data
-            if (unsortedDataDictionary.Count > 0)
+            if (unsortedDataList.Count > 0)
             {
-                foreach (KeyValuePair<string, string> record in unsortedDataDictionary)
-                {
-                    sbResult.AppendLine(" " + record.Key + ": " + record.Value);
-                }
+                foreach (string line in unsortedDataList)                
+                    sbResult.AppendLine(line);
             }
             //===
 
@@ -251,7 +243,7 @@ namespace TS_SE_Tool
 
         public void WriteToStream(StreamWriter _streamWriter)
         {
-            _streamWriter.Write(GetDataText());
+            _streamWriter.Write(PrintOut());
         }
 
     }

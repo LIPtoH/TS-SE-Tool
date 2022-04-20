@@ -102,26 +102,44 @@ namespace TS_SE_Tool
                 textBoxUserCompanyCompanyName.Select(20, 0);
             }
 
-            if (textBoxUserCompanyCompanyName.Text.Length == 0)
+            int txtLength = textBoxUserCompanyCompanyName.Text.Length;
+
+            switch (txtLength)
             {
-                labelUserCompanyCompanyName.ForeColor = Color.Red;
-                labelCompanyNameSize.ForeColor = Color.Red;
-                labelCompanyNameSize.Font = new Font(labelCompanyNameSize.Font, FontStyle.Bold);
-            }
-            else if (textBoxUserCompanyCompanyName.Text.Length == 20)
-            {
-                labelUserCompanyCompanyName.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
-                labelCompanyNameSize.ForeColor = Color.DarkGreen;
-                labelCompanyNameSize.Font = new Font(labelCompanyNameSize.Font, FontStyle.Bold);
-            }
-            else
-            {
-                labelUserCompanyCompanyName.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
-                labelCompanyNameSize.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
-                labelCompanyNameSize.Font = new Font(labelCompanyNameSize.Font, FontStyle.Regular);
+                case 0:
+                    {
+                        labelUserCompanyCompanyName.ForeColor = Color.Red;
+
+                        labelCompanyNameSize.ForeColor = Color.Red;
+                        labelCompanyNameSize.Font = new Font(labelCompanyNameSize.Font, FontStyle.Bold);
+
+                        break;
+                    }
+
+                case 20:
+                    {
+                        labelUserCompanyCompanyName.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+
+                        labelCompanyNameSize.ForeColor = Color.DarkGreen;
+                        labelCompanyNameSize.Font = new Font(labelCompanyNameSize.Font, FontStyle.Bold);
+
+                        break;
+                    }
+
+                default:
+                    {
+                        labelUserCompanyCompanyName.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+
+                        labelCompanyNameSize.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+                        labelCompanyNameSize.Font = new Font(labelCompanyNameSize.Font, FontStyle.Regular);
+
+                        break;
+                    }
             }
 
             labelCompanyNameSize.Text = textBoxUserCompanyCompanyName.Text.Length.ToString() + " / 20";
+
+            MainSaveFileProfileData.CompanyName = new Save.DataFormat.SCS_String(textBoxUserCompanyCompanyName.Text);
         }
 
         private void textBoxUserCompanyCompanyName_Validating(object sender, CancelEventArgs e)
@@ -132,7 +150,7 @@ namespace TS_SE_Tool
                 if (txtbx.TextLength == 0)
                 {
                     // Cancel the event and select the text to be corrected by the user.
-                    MessageBox.Show("Company name empty");
+                    MessageBox.Show("Company name is empty." + Environment.NewLine + "It must contain at least 1 letter. ", "Company name",MessageBoxButtons.OK, MessageBoxIcon.Error);
                     e.Cancel = true;
                 }
         }

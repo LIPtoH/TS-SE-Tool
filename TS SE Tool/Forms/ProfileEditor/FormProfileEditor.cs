@@ -50,9 +50,16 @@ namespace TS_SE_Tool
 
         private void PrepareForm()
         {
+            //Profile backup
+            string ProfilePathBackup = Globals.SelectedProfilePath + @"\profile_backup.sii";
+
+            if (!File.Exists(ProfilePathBackup))
+                buttonRestoreProfileBackup.Enabled = false;
+
             //dialog result
             buttonSave.DialogResult = DialogResult.OK;
             buttonCancel.DialogResult = DialogResult.Cancel;
+
         }
 
         private void FormProfileEditor_Load(object sender, EventArgs e)
@@ -130,6 +137,45 @@ namespace TS_SE_Tool
                     }
                     else
                         MessageBox.Show("No profiles created due to duplicating names.");
+                }
+            }
+        }
+
+        //Restore Backup
+        private void buttonRestoreProfileBackup_Click(object sender, EventArgs e)
+        {
+            string ProfilePath = Globals.SelectedProfilePath + @"\profile.sii",
+                   ProfilePathBackup = Globals.SelectedProfilePath + @"\profile_backup.sii";
+
+            if (File.Exists(ProfilePathBackup))
+            {
+                DialogResult dr = MessageBox.Show("Restoring from backup file will overwrite existing file." + Environment.NewLine +
+                                                  "Select: Yes - Overwrite | No - Swap files | Cancel - Abort restoring.",
+                                                  "Restoring Profile from Backup", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+
+                if (dr == DialogResult.Cancel)
+                    return;
+
+                if (dr == DialogResult.No)
+                {
+                    SwapFiles(ProfilePath, ProfilePathBackup);
+                }
+                else
+                {
+                    File.Copy(ProfilePathBackup, ProfilePath, true);
+
+                    File.Delete(ProfilePathBackup);
+                }
+
+                void SwapFiles(string _firstFile, string _secondFile)
+                {
+                    string tmpFile = Directory.GetParent(_firstFile).FullName + "\\tmp";
+
+                    File.Copy(_firstFile, tmpFile, true);
+                    File.Copy(_secondFile, _firstFile, true);
+                    File.Copy(tmpFile, _secondFile, true);
+
+                    File.Delete(tmpFile);
                 }
             }
         }

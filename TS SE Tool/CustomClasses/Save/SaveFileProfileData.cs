@@ -263,7 +263,7 @@ namespace TS_SE_Tool
         public uint     SaveTime        { get; set; } = 0;
 
         //====
-        Dictionary<string, string> unsortedDataDictionary = new Dictionary<string, string>();
+        List<string> unsortedDataList = new List<string>();
 
         //====
         private char[] charsToTrim = new char[] { '"' };
@@ -551,7 +551,7 @@ namespace TS_SE_Tool
                         
                     default:
                         {
-                            unsortedDataDictionary.Add(tagLine, dataLine);
+                            unsortedDataList.Add(currentLine);
                             break;
                         }
                 }
@@ -560,9 +560,12 @@ namespace TS_SE_Tool
             endOfProcessData:;
         }
 
-        public string GetTextFileFormat()
+        public string PrintOut()
         {
             StringBuilder sbResult = new StringBuilder();
+
+            bool verCheck4 = (new sbyte[] { 4 }).Any(x => x == Version);
+            bool verCheck5 = (new sbyte[] { 5, 6 }).Any(x => x == Version);
 
             sbResult.AppendLine("SiiNunit");
             sbResult.AppendLine("{");
@@ -577,7 +580,6 @@ namespace TS_SE_Tool
             sbResult.AppendLine(" cached_experience: " + CachedExperiencePoints.ToString());
             sbResult.AppendLine(" cached_distance: " + CachedDistance.ToString());
 
-            bool verCheck4 = (new sbyte[] { 4 }).Any(x => x == Version);
             if (verCheck4)
                 sbResult.AppendLine(VerOnline());
             
@@ -588,8 +590,8 @@ namespace TS_SE_Tool
 
                     if (this.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.NonPublic) != null)
                         sbResult.AppendLine(" user_data[" + i.ToString() + "]: " + this[propertyName]);
-                    else                    
-                        sbResult.AppendLine(user_data_array[i]);                    
+                    else
+                        sbResult.AppendLine(user_data_array[i]);
                 }
 
             sbResult.AppendLine(" active_mods: " + ActiveMods.Capacity.ToString());
@@ -612,8 +614,7 @@ namespace TS_SE_Tool
                     sbResult.AppendLine(" cached_discovery[" + i.ToString() + "]: " + CachedDiscovery[i].ToString());
                 }
 
-            bool verCheck5 = (new sbyte[] { 5, 6 }).Any(x => x == Version);
-            if (verCheck5 || !verCheck4)            
+            if (verCheck5 || !verCheck4)
                 sbResult.AppendLine(VerOnline());
 
             sbResult.AppendLine(" profile_name: " + ProfileName.ToString());
@@ -621,12 +622,10 @@ namespace TS_SE_Tool
             sbResult.AppendLine(" save_time: " + SaveTime.ToString());
 
             //Add lines with unsorted data
-            if (unsortedDataDictionary.Count > 0)
+            if (unsortedDataList.Count > 0)
             {
-                foreach( KeyValuePair<string, string> record  in unsortedDataDictionary)
-                {
-                    sbResult.AppendLine(" " + record.Key + ": " + record.Value);
-                }
+                foreach( string line  in unsortedDataList)                
+                    sbResult.AppendLine(line);                
             }
             //===
 
@@ -642,7 +641,7 @@ namespace TS_SE_Tool
 
                 sbVerOnline.AppendLine(" version: " + Version.ToString());
                 sbVerOnline.AppendLine(" online_user_name: " + OnlineUserName.ToString());
-                sbVerOnline.Append(" online_password: " + OnlinePassword.ToString());
+                sbVerOnline.Append    (" online_password: " + OnlinePassword.ToString());
 
                 return sbVerOnline.ToString();
             }
@@ -650,7 +649,7 @@ namespace TS_SE_Tool
 
         public void WriteToStream(StreamWriter _streamWriter)
         {
-            _streamWriter.Write(GetTextFileFormat());
+            _streamWriter.Write(PrintOut());
         }
     }
 }

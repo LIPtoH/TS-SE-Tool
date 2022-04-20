@@ -324,32 +324,44 @@ namespace TS_SE_Tool
         private void buttonProfilesAndSavesRestoreBackup_Click(object sender, EventArgs e)
         {
             string SiiSavePath = Globals.SelectedSavePath + @"\game.sii", 
-                   SiiSavePathBackup = Globals.SelectedSavePath + @"\game_backup.sii",
-                   SiiSavePathTmp = Globals.SelectedSavePath + @"\game_tmp.sii";
+                   SiiSavePathBackup = Globals.SelectedSavePath + @"\game_backup.sii";
 
             if (File.Exists(SiiSavePathBackup))
             {
                 DialogResult dr = MessageBox.Show("Restoring from backup file will overwrite existing save file." + Environment.NewLine +
                                                   "Select: Yes - Overwrite | No - Swap files | Cancel - Abort restoring.", 
-                                                  "Restoring save file from Backup", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                                                  "Restoring Save file from Backup", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
                 if (dr == DialogResult.Cancel)
                     return;
 
                 if (dr == DialogResult.No)
                 {
-                    File.Copy(SiiSavePath, SiiSavePathTmp, true);
-                    File.Copy(SiiSavePathBackup, SiiSavePath, true);
-                    File.Copy(SiiSavePathTmp, SiiSavePathBackup, true);
+                    SwapFiles(SiiSavePath, SiiSavePathBackup);
 
-                    File.Delete(SiiSavePathTmp);
+                    string SiiInfoPath = Globals.SelectedSavePath + @"\info.sii",
+                           SiiInfoPathBackup = Globals.SelectedSavePath + @"\info_backup.sii";
+
+                    if (File.Exists(SiiInfoPathBackup))
+                        SwapFiles(SiiInfoPath, SiiInfoPathBackup);
                 }
                 else
                 {
                     File.Copy(SiiSavePathBackup, SiiSavePath, true);
 
                     File.Delete(SiiSavePathBackup);
-                }   
+                }
+
+                void SwapFiles(string _firstFile, string _secondFile)
+                {
+                    string tmpFile = Directory.GetParent(_firstFile).FullName + "\\tmp";
+
+                    File.Copy(_firstFile, tmpFile, true);
+                    File.Copy(_secondFile, _firstFile, true);
+                    File.Copy(tmpFile, _secondFile, true);
+
+                    File.Delete(tmpFile);
+                }
             }
         }
 
@@ -450,12 +462,6 @@ namespace TS_SE_Tool
 
             ToggleMainControlsAccess(false);
             ToggleControlsAccess(false);
-
-            string SiiSavePath = Globals.SelectedSavePath + @"\game.sii", SiiBackup = Globals.SelectedSavePath + @"\game_backup.sii";
-
-            IO_Utilities.LogWriter("Backing up file to: " + SiiBackup);
-
-            File.Copy(SiiSavePath, SiiBackup, true);
 
             //Write
 
