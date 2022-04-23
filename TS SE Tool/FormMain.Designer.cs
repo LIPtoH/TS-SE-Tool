@@ -1025,7 +1025,6 @@
             // comboBoxUserCompanyHQcity
             // 
             this.comboBoxUserCompanyHQcity.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.comboBoxUserCompanyHQcity.Enabled = false;
             this.comboBoxUserCompanyHQcity.FormattingEnabled = true;
             this.comboBoxUserCompanyHQcity.Location = new System.Drawing.Point(248, 72);
             this.comboBoxUserCompanyHQcity.Name = "comboBoxUserCompanyHQcity";
@@ -1291,7 +1290,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1330,7 +1329,7 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(440, 0);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(439, 0);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
@@ -1569,7 +1568,7 @@
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
             this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);

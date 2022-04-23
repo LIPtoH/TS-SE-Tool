@@ -786,7 +786,8 @@ namespace TS_SE_Tool
                     extraVehicles.AddRange(tempGarage.Vehicles);
                     extraDrivers.AddRange(tempGarage.Drivers);
                     extraTrailers.AddRange(tempGarage.Trailers);
-                    //Delete                    
+
+                    //Delete
                     tempGarage.Vehicles.Clear();
                     tempGarage.Drivers.Clear();
                     tempGarage.Trailers.Clear();
@@ -812,23 +813,26 @@ namespace TS_SE_Tool
                 }
             }
 
+            //Move extra trailers to HQ garage
             if (extraTrailers.Count > 0)
             {
                 GaragesList[GaragesList.FindIndex(x => x.GarageName == SiiNunitData.Player.hq_city)].Trailers.AddRange(extraTrailers);
                 extraTrailers.Clear();
             }
 
+            //Remove empty records from lists
             int iV = extraDrivers.Count();
 
             for (int i = iV - 1; i >= 0; i--)
             {
-                if(extraVehicles[i] == extraDrivers[i])
+                if (extraVehicles[i] == extraDrivers[i])
                 {
                     extraVehicles.RemoveAt(i);
                     extraDrivers.RemoveAt(i);
                 }
             }
 
+            //Unallocated Drivers
             if (extraDrivers.Count() > 0)
             {
                 if (extraDrivers.Contains(SiiNunitData.Economy.driver_pool[0]))
@@ -882,7 +886,7 @@ namespace TS_SE_Tool
 
         private void PrepareGaragesWrite()
         {
-            foreach(string grg in SiiNunitData.Economy.garages)
+            foreach (string grg in SiiNunitData.Economy.garages)
             {
                 Save.Items.Garage siiGarage = SiiNunitData.SiiNitems[grg];
                 Garages prgrGarage = GaragesList.Find(x => x.GarageName == grg.Split(new char[] { '.' })[1]);

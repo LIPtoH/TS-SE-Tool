@@ -91,7 +91,54 @@ namespace TS_SE_Tool
         private void comboBoxUserCompanyHQcity_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxUserCompanyHQcity.SelectedValue != null)
-                SiiNunitData.Player.hq_city = comboBoxUserCompanyHQcity.SelectedValue.ToString();
+            {
+                string prevHQ = SiiNunitData.Player.hq_city, newHQ = comboBoxUserCompanyHQcity.SelectedValue.ToString();
+
+                Garages prevGarage = GaragesList.Where(x => x.GarageName == prevHQ).First(),
+                        newGarage = GaragesList.Where(x => x.GarageName == newHQ).First();
+
+                string playerDriver = SiiNunitData.Player.drivers[0];
+                int prevSlotIdx = prevGarage.Drivers.IndexOf(playerDriver);
+
+                string tmpDrvr = newGarage.Drivers[0],
+                       tmpVhcl = newGarage.Vehicles[0];
+
+                newGarage.Drivers[0] = prevGarage.Drivers[prevSlotIdx];
+                newGarage.Vehicles[0] = prevGarage.Vehicles[prevSlotIdx];
+
+                //Check for spare slots
+                int spareSlots = -1;
+
+                for (int i = 0; i < newGarage.Drivers.Count; i++)
+                {
+                    if (newGarage.Drivers[i] == newGarage.Vehicles[i])
+                    {
+                        spareSlots = i;
+                        break;
+                    }
+                }
+
+                if (spareSlots > -1)
+                {
+                    //Move
+                    newGarage.Drivers[spareSlots] = tmpDrvr;
+                    newGarage.Vehicles[spareSlots] = tmpVhcl;
+
+                    prevGarage.Drivers[prevSlotIdx] = null;
+                    prevGarage.Vehicles[prevSlotIdx] = null;
+                }
+                else
+                {
+                    //Swap
+                    prevGarage.Drivers[prevSlotIdx] = tmpDrvr;
+                    prevGarage.Vehicles[prevSlotIdx] = tmpVhcl;
+                }
+
+                //Set HQ
+                SiiNunitData.Player.hq_city = newHQ;
+
+                FillGaragesList(listBoxGarages.TopIndex);
+            }
         }
 
         private void textBoxUserCompanyCompanyName_TextChanged(object sender, EventArgs e)
