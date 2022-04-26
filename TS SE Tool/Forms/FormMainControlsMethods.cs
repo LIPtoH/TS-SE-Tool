@@ -222,14 +222,14 @@ namespace TS_SE_Tool
             if (drv["ProfileType"].ToString() == "steam")
             {
                 buttonMainLoadSave.Enabled = false;
-                buttonMainLoadSave.Text = "Disable Steam Cloud";
+                buttonMainLoadSave.Text = ResourceManagerMain.GetString(buttonMainLoadSave.Name + "SteamCloud"); // Disable Steam Cloud
 
                 buttonMainLoadSave.Font = new Font(loadButtonFont.FontFamily, 12f, FontStyle.Bold);
             }
             else
             {
                 buttonMainLoadSave.Enabled = true;
-                buttonMainLoadSave.Text = "Load";
+                buttonMainLoadSave.Text = ResourceManagerMain.GetString(buttonMainLoadSave.Name);// Load
 
                 buttonMainLoadSave.Font = new Font(loadButtonFont.FontFamily, 18F, FontStyle.Bold);
             }

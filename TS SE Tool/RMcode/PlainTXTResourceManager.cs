@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Resources;
 using System.Globalization;
 using System.IO;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
@@ -54,6 +55,16 @@ namespace TS_SE_Tool
             }
 
             return rs;
+        }
+
+        internal string GetPlainString(string _input, CultureInfo _currentUIculture)
+        {
+            return GetString("string" + _input, _currentUIculture);
+        }
+
+        internal string GetTooltipString(string _input, CultureInfo _currentUIculture)
+        {
+            return GetString("tooltip" + _input, _currentUIculture);
         }
 
     }

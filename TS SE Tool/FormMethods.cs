@@ -616,10 +616,10 @@ namespace TS_SE_Tool
 
                     if (_formTooltip != null)
                     {
-                        string TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name, _ci);
+                        string TolltipString = ResourceManagerMain.GetTooltipString(cntrl.Name, _ci);
 
                         if (TolltipString == null)                        
-                            TolltipString = ResourceManagerMain.GetString("tooltip" + cntrl.Name.TrimEnd(charsToTrimTranslation), _ci);                        
+                            TolltipString = ResourceManagerMain.GetTooltipString(cntrl.Name.TrimEnd(charsToTrimTranslation), _ci);                        
 
                         if (TolltipString != null)
                         {
