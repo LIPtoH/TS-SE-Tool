@@ -22,6 +22,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
@@ -273,10 +274,14 @@ namespace TS_SE_Tool
             //Country name translated
             if (countryName != "")
             {
+                textToWrite = "(";
+
                 if (CountriesDataList.ContainsKey(countryName))                
-                    textToWrite = "(" + CountriesDataList[countryName].ShortName + ")";                
+                    textToWrite += CountriesDataList[countryName].ShortName;                
                 else                
-                    textToWrite = "(" + countryName.First() + ")";
+                    textToWrite += countryName.First();
+
+                textToWrite += ")";
 
                 countryNameWidth = Convert.ToInt32(e.Graphics.MeasureString(textToWrite, BoldFont).Width);
 
@@ -837,8 +842,7 @@ namespace TS_SE_Tool
             if (e.Index < 0)
                 return;
 
-            //if ((e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit)
-            //    return;
+            CultureInfo ci = Thread.CurrentThread.CurrentUICulture;
 
             ComboBox lst = sender as ComboBox;
 
@@ -862,7 +866,7 @@ namespace TS_SE_Tool
                 CargoDN = lst.GetItemText(lst.Items[e.Index]);
 
             if (CargoName.EndsWith("_c"))
-                CargoDN += " (Cont)";
+                CargoDN += " " + ResourceManagerMain.GetPlainString("CargoContainer", ci); ;
 
             string txt = CargoDN;
 
@@ -1426,8 +1430,8 @@ namespace TS_SE_Tool
             AddedJobsDictionary.Clear();
 
             listBoxFreightMarketAddedJobs.Items.Clear();
-            labelFreightMarketDistanceNumbers.Text = " - ";// + ProgSettingsV.DistanceMes;
-            buttonFreightMarketClearJobList.Enabled = false;
+
+            RefreshFreightMarketDistance();
         }
 
         private void checkBoxRandomDest_CheckedChanged(object sender, EventArgs e)
