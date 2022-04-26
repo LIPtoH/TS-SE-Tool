@@ -218,6 +218,10 @@
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonMainCloseSave = new System.Windows.Forms.Button();
+            this.panelVisitedCities = new System.Windows.Forms.Panel();
+            this.labelUserCompanyVisitedCitiesCurrent = new System.Windows.Forms.Label();
+            this.labelUserCompanyVisitedCitiesDelimetry = new System.Windows.Forms.Label();
+            this.labelUserCompanyVisitedCitiesTotal = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -263,6 +267,7 @@
             this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
+            this.panelVisitedCities.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripMain
@@ -736,12 +741,12 @@
             this.tableLayoutPanel4.ColumnCount = 2;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.labelUserCompanyVisitedCities, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.listBoxGarages, 1, 1);
             this.tableLayoutPanel4.Controls.Add(this.listBoxVisitedCities, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel6, 1, 2);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel17, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.panelVisitedCities, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 100);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
@@ -757,7 +762,7 @@
             // 
             this.labelUserCompanyVisitedCities.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelUserCompanyVisitedCities.AutoSize = true;
-            this.labelUserCompanyVisitedCities.Location = new System.Drawing.Point(3, 8);
+            this.labelUserCompanyVisitedCities.Location = new System.Drawing.Point(7, 9);
             this.labelUserCompanyVisitedCities.Name = "labelUserCompanyVisitedCities";
             this.labelUserCompanyVisitedCities.Size = new System.Drawing.Size(65, 13);
             this.labelUserCompanyVisitedCities.TabIndex = 20;
@@ -1290,7 +1295,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1329,7 +1334,7 @@
             this.tableLayoutPanelTruckFuel.ColumnCount = 1;
             this.tableLayoutPanelTruckFuel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTruckFuel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(439, 0);
+            this.tableLayoutPanelTruckFuel.Location = new System.Drawing.Point(438, 0);
             this.tableLayoutPanelTruckFuel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelTruckFuel.Name = "tableLayoutPanelTruckFuel";
             this.tableLayoutPanelTruckFuel.RowCount = 2;
@@ -1568,7 +1573,7 @@
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
             this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
@@ -2517,6 +2522,49 @@
             this.buttonMainCloseSave.Visible = false;
             this.buttonMainCloseSave.Click += new System.EventHandler(this.buttonMainCloseSave_Click);
             // 
+            // panelVisitedCities
+            // 
+            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCitiesTotal);
+            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCitiesDelimetry);
+            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCitiesCurrent);
+            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCities);
+            this.panelVisitedCities.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelVisitedCities.Location = new System.Drawing.Point(0, 0);
+            this.panelVisitedCities.Margin = new System.Windows.Forms.Padding(0);
+            this.panelVisitedCities.Name = "panelVisitedCities";
+            this.panelVisitedCities.Size = new System.Drawing.Size(282, 30);
+            this.panelVisitedCities.TabIndex = 24;
+            // 
+            // labelUserCompanyVisitedCitiesCurrent
+            // 
+            this.labelUserCompanyVisitedCitiesCurrent.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelUserCompanyVisitedCitiesCurrent.AutoSize = true;
+            this.labelUserCompanyVisitedCitiesCurrent.Location = new System.Drawing.Point(198, 9);
+            this.labelUserCompanyVisitedCitiesCurrent.Name = "labelUserCompanyVisitedCitiesCurrent";
+            this.labelUserCompanyVisitedCitiesCurrent.Size = new System.Drawing.Size(25, 13);
+            this.labelUserCompanyVisitedCitiesCurrent.TabIndex = 21;
+            this.labelUserCompanyVisitedCitiesCurrent.Text = "000";
+            // 
+            // labelUserCompanyVisitedCitiesDelimetry
+            // 
+            this.labelUserCompanyVisitedCitiesDelimetry.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelUserCompanyVisitedCitiesDelimetry.AutoSize = true;
+            this.labelUserCompanyVisitedCitiesDelimetry.Location = new System.Drawing.Point(229, 9);
+            this.labelUserCompanyVisitedCitiesDelimetry.Name = "labelUserCompanyVisitedCitiesDelimetry";
+            this.labelUserCompanyVisitedCitiesDelimetry.Size = new System.Drawing.Size(9, 13);
+            this.labelUserCompanyVisitedCitiesDelimetry.TabIndex = 22;
+            this.labelUserCompanyVisitedCitiesDelimetry.Text = "|";
+            // 
+            // labelUserCompanyVisitedCitiesTotal
+            // 
+            this.labelUserCompanyVisitedCitiesTotal.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelUserCompanyVisitedCitiesTotal.AutoSize = true;
+            this.labelUserCompanyVisitedCitiesTotal.Location = new System.Drawing.Point(244, 9);
+            this.labelUserCompanyVisitedCitiesTotal.Name = "labelUserCompanyVisitedCitiesTotal";
+            this.labelUserCompanyVisitedCitiesTotal.Size = new System.Drawing.Size(25, 13);
+            this.labelUserCompanyVisitedCitiesTotal.TabIndex = 23;
+            this.labelUserCompanyVisitedCitiesTotal.Text = "000";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2546,7 +2594,6 @@
             this.tabPageCompany.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel17.ResumeLayout(false);
@@ -2591,6 +2638,8 @@
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
+            this.panelVisitedCities.ResumeLayout(false);
+            this.panelVisitedCities.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2787,6 +2836,10 @@
         private System.Windows.Forms.Label labelPlayerExperienceSpacer;
         private System.Windows.Forms.Button buttonProfilesAndSavesRestoreBackup;
         private System.Windows.Forms.Button buttonMainCloseSave;
+        private System.Windows.Forms.Panel panelVisitedCities;
+        private System.Windows.Forms.Label labelUserCompanyVisitedCitiesTotal;
+        private System.Windows.Forms.Label labelUserCompanyVisitedCitiesDelimetry;
+        private System.Windows.Forms.Label labelUserCompanyVisitedCitiesCurrent;
     }
 }
 

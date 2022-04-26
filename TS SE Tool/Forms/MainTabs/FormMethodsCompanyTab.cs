@@ -317,13 +317,20 @@ namespace TS_SE_Tool
             if (CitiesList.Count <= 0)
                 return;
 
+            int vicited = 0;
             foreach (City vc in from x in CitiesList where !x.Disabled select x)
             {
+                if (vc.Visited)
+                    vicited++;
+
                 listBoxVisitedCities.Items.Add(vc);
             }
 
             listBoxVisitedCities.TopIndex = _vindex;
             listBoxVisitedCities.EndUpdate();
+
+            labelUserCompanyVisitedCitiesCurrent.Text = vicited.ToString();
+            labelUserCompanyVisitedCitiesTotal.Text = listBoxVisitedCities.Items.Count.ToString();
         }
         //Draw
         private int VisitedCitiesItemMargin = 3;
@@ -339,10 +346,33 @@ namespace TS_SE_Tool
         {
             // Get the ListBox and the item.
             ListBox lst = sender as ListBox;
+
             City vc = (City)lst.Items[e.Index];
+
+            StringFormat format = new StringFormat();
+            Font RegularFont = new Font(this.Font.FontFamily, 9f), BoldFont = new Font(this.Font, FontStyle.Bold);
+            Brush br;
+
+            float x, y, width, height;
+            RectangleF layout_rect, source_rect, dest_rect;
+
+            SizeF textSize;
+
+            int textWidth;
+
+            string txt = "",
+                   countryName = CitiesList.Find(xc => xc.CityName == vc.CityName).Country;
 
             // Draw the background.
             e.DrawBackground();
+
+            // See if the item is selected.
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                br = SystemBrushes.HighlightText;
+            else
+                br = new SolidBrush(e.ForeColor);
+
+            // Icon
 
             int index = 0;
             if (vc.Visited)
@@ -350,46 +380,56 @@ namespace TS_SE_Tool
 
             Image cityicon = CitiesImg[index];
 
-            // Draw the picture.
             float scale = VisitedCitiesPictureHeight / cityicon.Height;
-            RectangleF source_rect = new RectangleF(0, 0, cityicon.Width, cityicon.Height);
+            source_rect = new RectangleF(0, 0, cityicon.Width, cityicon.Height);
 
             float picture_width = scale * cityicon.Width;
+            dest_rect = new RectangleF(e.Bounds.Left + VisitedCitiesItemMargin, e.Bounds.Top + VisitedCitiesItemMargin, picture_width, VisitedCitiesPictureHeight);
 
-            RectangleF dest_rect = new RectangleF(e.Bounds.Left + VisitedCitiesItemMargin, e.Bounds.Top + VisitedCitiesItemMargin, picture_width, VisitedCitiesPictureHeight);
+            // Draw
             e.Graphics.DrawImage(cityicon, dest_rect, source_rect, GraphicsUnit.Pixel);
-            ////
 
-            // See if the item is selected.
-            Brush br;
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-                br = SystemBrushes.HighlightText;
-            else
-                br = new SolidBrush(e.ForeColor);
+            //===
 
-            // Find the area in which to put the text.
-            float x = e.Bounds.Left + picture_width + 3 * VisitedCitiesItemMargin;
-            float y = e.Bounds.Top + VisitedCitiesItemMargin * 2;
-            float width = e.Bounds.Right - VisitedCitiesItemMargin - x;
-            float height = e.Bounds.Bottom - VisitedCitiesItemMargin - y;
-            RectangleF layout_rect = new RectangleF(x, y, width, height);
-
-            // Draw the text.
-            string txt = "";//, DisplayCityName = "";
-
-            //CitiesLngDict.TryGetValue(vc.CityName, out string value);
-            /*
-            DisplayCityName = vc.CityNameTranslated;
-
-            if (DisplayCityName != null && DisplayCityName != "")
-                txt = DisplayCityName;
-            else
-            {
-                txt = vc.CityName + " -nt";
-            }
-            */
+            // City
             txt = vc.CityNameTranslated;
-            e.Graphics.DrawString(txt, Font, br, layout_rect);
+
+            textSize = e.Graphics.MeasureString(txt, RegularFont);
+
+            x = e.Bounds.Left + picture_width + 3 * VisitedCitiesItemMargin;
+            y = e.Bounds.Top + (e.Bounds.Bottom - e.Bounds.Top - textSize.Height) / 2;
+            width = textSize.Width;
+            height = textSize.Height;
+
+            layout_rect = new RectangleF(x, y, width, height);
+
+            // Draw the text
+            e.Graphics.DrawString(txt, RegularFont, br, layout_rect);
+
+            //=== Country
+
+            txt = "[ ";
+
+            if (CountriesDataList.ContainsKey(countryName))
+                txt += CountriesDataList[countryName].ShortName;
+            else
+                txt += countryName.First();
+
+            txt += " ]";
+
+            textWidth = Convert.ToInt32(e.Graphics.MeasureString(txt, BoldFont).Width);
+
+            x = e.Bounds.Right - textWidth - GarageItemMargin * 4;
+            y = e.Bounds.Top + (e.Bounds.Bottom - e.Bounds.Top - textSize.Height) / 2;
+            width = textWidth + GarageItemMargin * 2;
+            height = textSize.Height;
+
+            layout_rect = new RectangleF(x, y, width, height);
+
+            format.Alignment = StringAlignment.Far;
+
+            // Draw
+            e.Graphics.DrawString(txt, BoldFont, br, layout_rect, format);
 
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
@@ -471,94 +511,152 @@ namespace TS_SE_Tool
 
             // Get the ListBox and the item.
             ListBox lst = sender as ListBox;
-            string txt = "";
+
             Garages grg = (Garages)lst.Items[e.Index];
 
-            // Draw the background.
-            e.DrawBackground();
+            string txt = "",
+                   countryName = CitiesList.Find(xc => xc.CityName == grg.GarageName).Country;
+
+            CultureInfo ci = Thread.CurrentThread.CurrentUICulture;
+
+            StringFormat format = new StringFormat();
+
+            Font RegularFontSized = new Font(this.Font.FontFamily, 10f), BoldFont = new Font(this.Font, FontStyle.Bold);
+            Brush brush;
+
             Image grgicon;
+            float scale, picture_width;
+
+            SizeF itemSize;
+
+            float x, y, width, height;
+            RectangleF layout_rect, source_rect, dest_rect;
+
+            // Brush if the item is selected
+
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                brush = SystemBrushes.HighlightText;
+            else
+                brush = new SolidBrush(e.ForeColor);
+
+            // Draw the background
+            e.DrawBackground();
+
+            //=== Icon status
+
             if (grg.GarageName != SiiNunitData.Player.hq_city)
                 grgicon = GaragesImg[grg.GarageStatus];
             else
                 grgicon = GaragesHQImg[grg.GarageStatus];
 
-            // Draw the picture.
-            float scale = GaragePictureHeight / grgicon.Height;
-            RectangleF source_rect = new RectangleF(0, 0, grgicon.Width, grgicon.Height);
+            source_rect = new RectangleF(0, 0, grgicon.Width, grgicon.Height);
 
-            float picture_width = scale * grgicon.Width;
+            scale = GaragePictureHeight / grgicon.Height;
+            picture_width = scale * grgicon.Width;
 
-            RectangleF dest_rect = new RectangleF(e.Bounds.Left + GarageItemMargin, e.Bounds.Top + GarageItemMargin, picture_width, GaragePictureHeight);
+            dest_rect = new RectangleF(e.Bounds.Left + GarageItemMargin, e.Bounds.Top + GarageItemMargin, picture_width, GaragePictureHeight);
+
+            // Draw
             e.Graphics.DrawImage(grgicon, dest_rect, source_rect, GraphicsUnit.Pixel);
-            ////
 
-            // See if the item is selected.
-            Brush br;
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-                br = SystemBrushes.HighlightText;
-            else
-                br = new SolidBrush(e.ForeColor);
+            //===
 
-            int maxvehdr = 0;
+            //=== City
 
-            if (grg.GarageStatus == 0)
-                goto skipVehAndDrDraw;//"Not owned";
-            else if (grg.GarageStatus == 2)
-                maxvehdr = 3;
-            else if (grg.GarageStatus == 3)
-                maxvehdr = 5;
-            else if (grg.GarageStatus == 6)
-                maxvehdr = 1;
+            txt = grg.GarageNameTranslated;
 
-            //Vehicles & Drivers
-
-            int curVeh = 0, curDr = 0;
-
-            foreach (string temp in grg.Vehicles)
-            {
-                if (temp != null)
-                    curVeh++;
-            }
-            foreach (string temp in grg.Drivers)
-            {
-                if (temp != null)
-                    curDr++;
-            }
-
-            string Vs = "", Ds = "", Ts = "";
-
-            Vs = ResourceManagerMain.GetString("VehicleShort", Thread.CurrentThread.CurrentUICulture);
-            Ds = ResourceManagerMain.GetString("DriverShort", Thread.CurrentThread.CurrentUICulture);
-            Ts = ResourceManagerMain.GetString("TrailerShort", Thread.CurrentThread.CurrentUICulture);
-
-            txt = Vs + ": " + curVeh + " / " + maxvehdr + " " + Ds + ": " + curDr + " / " + maxvehdr + " " + Ts + ": " + grg.Trailers.Count;
-
-            Size size = TextRenderer.MeasureText(txt, this.Font);
-
-            float x = e.Bounds.Right - size.Width - 3;
-            float y = e.Bounds.Top + 18;
-            float width = e.Bounds.Right - 100;
-            float height = e.Bounds.Bottom - 14;
-
-            RectangleF layout_rect = new RectangleF(x, y, size.Width, height);
-
-            // Draw the text.
-            e.Graphics.DrawString(txt, this.Font, br, layout_rect);
-
-            skipVehAndDrDraw:;
-
-            //City and Size
-            // Find the area in which to put the text.
             x = e.Bounds.Left + picture_width + 3 * GarageItemMargin;
             y = e.Bounds.Top + GarageItemMargin * 2;
             width = e.Bounds.Right - GarageItemMargin - x;
             height = e.Bounds.Bottom - GarageItemMargin - y;
+
             layout_rect = new RectangleF(x, y, width, height);
 
-            //txt = lst.Items[e.Index].ToString();
-            txt = grg.GarageNameTranslated + "\n" + grg.GetStatusString();
             // Draw the text.
-            e.Graphics.DrawString(txt, this.Font, br, layout_rect);
+            e.Graphics.DrawString(txt, BoldFont, brush, layout_rect);
+
+            //===
+
+            //=== Country
+
+            txt = "[ ";
+
+            if (CountriesDataList.ContainsKey(countryName))
+                txt += CountriesDataList[countryName].ShortName;
+            else
+                txt += countryName.First();
+
+            txt += " ]";
+
+            itemSize = e.Graphics.MeasureString(txt, BoldFont);
+
+            x = e.Bounds.Right - itemSize.Width - GarageItemMargin * 4;
+            width = itemSize.Width + GarageItemMargin * 2;
+
+            layout_rect = new RectangleF(x, y, width, height);
+
+            format.Alignment = StringAlignment.Far;
+
+            // Draw
+            e.Graphics.DrawString(txt, BoldFont, brush, layout_rect, format);
+
+            //===
+
+            // Garage status
+
+            txt = grg.GetStatusString();
+
+            itemSize = e.Graphics.MeasureString(txt, this.Font);
+
+            x = e.Bounds.Left + picture_width + 3 * GarageItemMargin;
+            y = e.Bounds.Top + GarageItemMargin * 2 + 15;
+            width = itemSize.Width + GarageItemMargin * 2;
+
+            layout_rect = new RectangleF(x, y, width, height);
+
+            // Draw the text.
+            e.Graphics.DrawString(txt, this.Font, brush, layout_rect);
+
+            //===
+
+            //=== Vehicles & Drivers
+
+            if (grg.GarageStatus == 0)
+                goto skipVehAndDrDraw;
+
+            int curVeh = 0, curDr = 0;
+
+            foreach (string temp in grg.Vehicles)
+                if (temp != null)
+                    curVeh++;
+
+            foreach (string temp in grg.Drivers)
+                if (temp != null)
+                    curDr++;
+
+            string stringV = "", stringD = "", stringT = "";
+
+            stringV = ResourceManagerMain.GetPlainString("VehicleShort", ci);
+            stringD = ResourceManagerMain.GetPlainString("DriverShort", ci);
+            stringT = ResourceManagerMain.GetPlainString("TrailerShort", ci);
+
+            txt = String.Format("{0}: {1} / {2} {3}: {4} / {5} {6}: {7}", stringV, curVeh, grg.Trailers.Count, stringD, curDr, grg.Drivers.Count, stringT, grg.Trailers.Count);
+
+            itemSize = e.Graphics.MeasureString(txt, this.Font);
+
+            x = e.Bounds.Right - itemSize.Width - GarageItemMargin * 2;
+            y = y + 1;
+
+            layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
+
+            format.Alignment = StringAlignment.Far;
+
+            // Draw
+            e.Graphics.DrawString(txt, this.Font, brush, layout_rect, format);
+
+            //===
+
+            skipVehAndDrDraw:;
 
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
