@@ -349,19 +349,22 @@ namespace TS_SE_Tool
 
             City vc = (City)lst.Items[e.Index];
 
+            string txt = "",
+                   countryName = CitiesList.Find(xc => xc.CityName == vc.CityName).Country;
+
             StringFormat format = new StringFormat();
-            Font RegularFont = new Font(this.Font.FontFamily, 9f), BoldFont = new Font(this.Font, FontStyle.Bold);
+
             Brush br;
+            Font RegularFont = new Font(this.Font.FontFamily, 9f), 
+                 BoldFont = new Font(this.Font, FontStyle.Bold);
+
+            Image cityicon;
+            float scale, picture_width;
 
             float x, y, width, height;
             RectangleF layout_rect, source_rect, dest_rect;
 
-            SizeF textSize;
-
-            int textWidth;
-
-            string txt = "",
-                   countryName = CitiesList.Find(xc => xc.CityName == vc.CityName).Country;
+            SizeF itemSize;
 
             // Draw the background.
             e.DrawBackground();
@@ -374,16 +377,16 @@ namespace TS_SE_Tool
 
             // Icon
 
-            int index = 0;
-            if (vc.Visited)
-                index = 1;
+            if (vc.Visited) 
+                cityicon = CitiesImg[1];
+            else
+                cityicon = CitiesImg[0];
 
-            Image cityicon = CitiesImg[index];
-
-            float scale = VisitedCitiesPictureHeight / cityicon.Height;
             source_rect = new RectangleF(0, 0, cityicon.Width, cityicon.Height);
 
-            float picture_width = scale * cityicon.Width;
+            scale = VisitedCitiesPictureHeight / cityicon.Height;
+            picture_width = scale * cityicon.Width;
+
             dest_rect = new RectangleF(e.Bounds.Left + VisitedCitiesItemMargin, e.Bounds.Top + VisitedCitiesItemMargin, picture_width, VisitedCitiesPictureHeight);
 
             // Draw
@@ -394,42 +397,46 @@ namespace TS_SE_Tool
             // City
             txt = vc.CityNameTranslated;
 
-            textSize = e.Graphics.MeasureString(txt, RegularFont);
+            itemSize = e.Graphics.MeasureString(txt, RegularFont);
 
             x = e.Bounds.Left + picture_width + 3 * VisitedCitiesItemMargin;
-            y = e.Bounds.Top + (e.Bounds.Bottom - e.Bounds.Top - textSize.Height) / 2;
-            width = textSize.Width;
-            height = textSize.Height;
+            y = e.Bounds.Top + (e.Bounds.Bottom - e.Bounds.Top - itemSize.Height) / 2;
 
-            layout_rect = new RectangleF(x, y, width, height);
+            layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
 
             // Draw the text
             e.Graphics.DrawString(txt, RegularFont, br, layout_rect);
 
             //=== Country
 
-            txt = "[ ";
+            if (!string.IsNullOrEmpty(countryName))
+            {
+                txt = "[ ";
 
-            if (CountriesDataList.ContainsKey(countryName))
-                txt += CountriesDataList[countryName].ShortName;
+                if (CountriesDataList.ContainsKey(countryName))
+                    txt += CountriesDataList[countryName].ShortName;
+                else
+                    txt += countryName.First();
+
+                txt += " ]";
+            }
             else
-                txt += countryName.First();
+            {
+                txt = "[ - - ]";
+            }
 
-            txt += " ]";
+            itemSize = e.Graphics.MeasureString(txt, BoldFont);
 
-            textWidth = Convert.ToInt32(e.Graphics.MeasureString(txt, BoldFont).Width);
+            x = e.Bounds.Right - itemSize.Width - GarageItemMargin;
+            y = e.Bounds.Top + (e.Bounds.Bottom - e.Bounds.Top - itemSize.Height) / 2 + 1; 
 
-            x = e.Bounds.Right - textWidth - GarageItemMargin * 4;
-            y = e.Bounds.Top + (e.Bounds.Bottom - e.Bounds.Top - textSize.Height) / 2;
-            width = textWidth + GarageItemMargin * 2;
-            height = textSize.Height;
-
-            layout_rect = new RectangleF(x, y, width, height);
+            layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
 
             format.Alignment = StringAlignment.Far;
 
             // Draw
             e.Graphics.DrawString(txt, BoldFont, br, layout_rect, format);
+            
 
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
@@ -521,8 +528,9 @@ namespace TS_SE_Tool
 
             StringFormat format = new StringFormat();
 
-            Font RegularFontSized = new Font(this.Font.FontFamily, 10f), BoldFont = new Font(this.Font, FontStyle.Bold);
             Brush brush;
+            Font RegularFontSized = new Font(this.Font.FontFamily, 10f), 
+                 BoldFont = new Font(this.Font, FontStyle.Bold);
 
             Image grgicon;
             float scale, picture_width;
@@ -565,12 +573,12 @@ namespace TS_SE_Tool
 
             txt = grg.GarageNameTranslated;
 
-            x = e.Bounds.Left + picture_width + 3 * GarageItemMargin;
-            y = e.Bounds.Top + GarageItemMargin * 2;
-            width = e.Bounds.Right - GarageItemMargin - x;
-            height = e.Bounds.Bottom - GarageItemMargin - y;
+            itemSize = e.Graphics.MeasureString(txt, BoldFont);
 
-            layout_rect = new RectangleF(x, y, width, height);
+            x = e.Bounds.Left + picture_width + GarageItemMargin * 3;
+            y = e.Bounds.Top + GarageItemMargin * 2;
+
+            layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
 
             // Draw the text.
             e.Graphics.DrawString(txt, BoldFont, brush, layout_rect);
@@ -579,21 +587,28 @@ namespace TS_SE_Tool
 
             //=== Country
 
-            txt = "[ ";
+            if (!string.IsNullOrEmpty(countryName))
+            {
+                txt = "[ ";
 
-            if (CountriesDataList.ContainsKey(countryName))
-                txt += CountriesDataList[countryName].ShortName;
+                if (CountriesDataList.ContainsKey(countryName))
+                    txt += CountriesDataList[countryName].ShortName;
+                else
+                    txt += countryName.First();
+
+                txt += " ]";
+
+            }
             else
-                txt += countryName.First();
-
-            txt += " ]";
+            {
+                txt = "[ - - ]";
+            }    
 
             itemSize = e.Graphics.MeasureString(txt, BoldFont);
 
-            x = e.Bounds.Right - itemSize.Width - GarageItemMargin * 4;
-            width = itemSize.Width + GarageItemMargin * 2;
+            x = e.Bounds.Right - itemSize.Width - GarageItemMargin;
 
-            layout_rect = new RectangleF(x, y, width, height);
+            layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
 
             format.Alignment = StringAlignment.Far;
 
@@ -608,11 +623,10 @@ namespace TS_SE_Tool
 
             itemSize = e.Graphics.MeasureString(txt, this.Font);
 
-            x = e.Bounds.Left + picture_width + 3 * GarageItemMargin;
-            y = e.Bounds.Top + GarageItemMargin * 2 + 15;
-            width = itemSize.Width + GarageItemMargin * 2;
+            x = e.Bounds.Left + picture_width + GarageItemMargin * 3;
+            y = e.Bounds.Bottom - itemSize.Height - GarageItemMargin * 1;
 
-            layout_rect = new RectangleF(x, y, width, height);
+            layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
 
             // Draw the text.
             e.Graphics.DrawString(txt, this.Font, brush, layout_rect);
@@ -621,42 +635,39 @@ namespace TS_SE_Tool
 
             //=== Vehicles & Drivers
 
-            if (grg.GarageStatus == 0)
-                goto skipVehAndDrDraw;
+            if (grg.GarageStatus != 0)
+            {
+                int curVeh = 0, curDr = 0;
 
-            int curVeh = 0, curDr = 0;
+                foreach (string temp in grg.Vehicles)
+                    if (temp != null)
+                        curVeh++;
 
-            foreach (string temp in grg.Vehicles)
-                if (temp != null)
-                    curVeh++;
+                foreach (string temp in grg.Drivers)
+                    if (temp != null)
+                        curDr++;
 
-            foreach (string temp in grg.Drivers)
-                if (temp != null)
-                    curDr++;
+                string stringV = "", stringD = "", stringT = "";
 
-            string stringV = "", stringD = "", stringT = "";
+                stringV = ResourceManagerMain.GetPlainString("VehicleShort", ci);
+                stringD = ResourceManagerMain.GetPlainString("DriverShort", ci);
+                stringT = ResourceManagerMain.GetPlainString("TrailerShort", ci);
 
-            stringV = ResourceManagerMain.GetPlainString("VehicleShort", ci);
-            stringD = ResourceManagerMain.GetPlainString("DriverShort", ci);
-            stringT = ResourceManagerMain.GetPlainString("TrailerShort", ci);
+                txt = String.Format("{0}: {1} / {2} {3}: {4} / {5} {6}: {7}", stringV, curVeh, grg.Vehicles.Count, stringD, curDr, grg.Drivers.Count, stringT, grg.Trailers.Count);
 
-            txt = String.Format("{0}: {1} / {2} {3}: {4} / {5} {6}: {7}", stringV, curVeh, grg.Trailers.Count, stringD, curDr, grg.Drivers.Count, stringT, grg.Trailers.Count);
+                itemSize = e.Graphics.MeasureString(txt, this.Font);
 
-            itemSize = e.Graphics.MeasureString(txt, this.Font);
+                x = e.Bounds.Right - itemSize.Width - GarageItemMargin * 1;
 
-            x = e.Bounds.Right - itemSize.Width - GarageItemMargin * 2;
-            y = y + 1;
+                layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
 
-            layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
+                format.Alignment = StringAlignment.Far;
 
-            format.Alignment = StringAlignment.Far;
-
-            // Draw
-            e.Graphics.DrawString(txt, this.Font, brush, layout_rect, format);
+                // Draw
+                e.Graphics.DrawString(txt, this.Font, brush, layout_rect, format);
+            }
 
             //===
-
-            skipVehAndDrDraw:;
 
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
