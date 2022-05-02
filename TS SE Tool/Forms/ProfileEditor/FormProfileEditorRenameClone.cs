@@ -303,7 +303,7 @@ namespace TS_SE_Tool
                                 progress = 5;
 
                                 //New name
-                                ProfileData.ProfileName = NewProfileName;
+                                ProfileData.ProfileName = new Save.DataFormat.SCS_String(NewProfileName);
                                 progress = 6;
 
                                 //Write file
@@ -490,7 +490,7 @@ namespace TS_SE_Tool
                                 progress = 7;
 
                                 //New name
-                                ProfileData.ProfileName = NewProfileName;
+                                ProfileData.ProfileName = new Save.DataFormat.SCS_String(NewProfileName);
                                 ProfileData.CreationTime = Utilities.DateTimeUtilities.DateTimeToUnixTimeStamp();
                                 progress = 8;
 
