@@ -30,22 +30,59 @@ namespace TS_SE_Tool
     public partial class FormMain
     {
         //User Company tab
-        private void FillFormCompanyControls()
-        {
-            textBoxUserCompanyCompanyName.Text = MainSaveFileProfileData.CompanyName.Value;
 
-            FillAccountMoneyTB();
-            FillHQcities();
+        private void CreateCompanyPanelControls()
+        {
+            buttonUserCompanyGaragesManage.Text = "";
+            buttonUserCompanyGaragesManage.BackgroundImage = CustomizeImg;
+            buttonUserCompanyGaragesManage.BackgroundImageLayout = ImageLayout.Center;
 
             listBoxVisitedCities.DrawMode = DrawMode.OwnerDrawVariable;
             listBoxGarages.DrawMode = DrawMode.OwnerDrawVariable;
+        }
+
+        private void tableLayoutPanel2_EnabledChanged(object sender, EventArgs e)
+        {
+            ToggleVisualUserCompanyControls(tableLayoutPanel2.Enabled);
+        }
+
+        private void ToggleVisualUserCompanyControls(bool _state)
+        {
+            Control tmpControl;
+
+            string[] buttons = { "buttonUserCompanyGaragesManage" };
+            Image[] images = { CustomizeImg };
+
+            for (int i = 0; i < buttons.Count(); i++)
+            {
+                try
+                {
+                    tmpControl = tabControlMain.TabPages["tabPageCompany"].Controls.Find(buttons[i], true)[0];
+                }
+                catch
+                {
+                    break;
+                }
+
+                if (_state && tmpControl.Enabled)
+                    tmpControl.BackgroundImage = images[i];
+                else
+                    tmpControl.BackgroundImage = Utilities.Graphics_TSSET.ConvertBitmapToGrayscale(images[i]);
+            }
+        }
+
+        private void FillFormCompanyControls()
+        {
+            pictureBoxCompanyLogo.Image = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { @"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds" }, 94, 94, 0, 0)[0];
+
+            textBoxUserCompanyCompanyName.Text = MainSaveFileProfileData.CompanyName.Value;
+
+            FillAccountMoneyTB();
+
+            FillHQcities();
 
             FillVisitedCities(0);
             FillGaragesList(0);
-
-            PlayerCompanyLogo = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { @"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds" }, 94, 94, 0, 0)[0];
-
-            pictureBoxCompanyLogo.Image = PlayerCompanyLogo;
         }
 
         public void FillAccountMoneyTB()
@@ -211,6 +248,39 @@ namespace TS_SE_Tool
             //
             textBoxUserCompanyMoneyAccount.KeyPress += textBoxMoneyAccount_KeyPress;
             textBoxUserCompanyMoneyAccount.TextChanged += textBoxMoneyAccount_TextChanged;
+
+            MoneyAccountEntered = true;
+        }
+
+        bool MoneyAccountEntered = false;
+
+        private void textBoxUserCompanyMoneyAccount_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (MoneyAccountEntered)
+            {
+                int selbefore = textBoxUserCompanyMoneyAccount.SelectionStart;
+
+                var charIndex = textBoxUserCompanyMoneyAccount.GetCharIndexFromPosition(e.Location);
+                var charPosition = textBoxUserCompanyMoneyAccount.GetPositionFromCharIndex(charIndex);
+
+                string charChar = textBoxUserCompanyMoneyAccount.Text[charIndex].ToString();
+
+                Graphics g = Graphics.FromImage(new Bitmap(1, 1));
+                var charSize = g.MeasureString(charChar, textBoxUserCompanyMoneyAccount.Font);
+
+                if (e.Location.X > charPosition.X + charSize.Width) selbefore++;
+
+                string newtext = "";
+
+                if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
+                    newtext += CurrencyDictFormat[Globals.CurrencyName][0] + "-";
+
+                newtext += CurrencyDictFormat[Globals.CurrencyName][1];
+
+                textBoxUserCompanyMoneyAccount.SelectionStart = selbefore - newtext.Length;
+
+                MoneyAccountEntered = false;
+            }
         }
 
         private void textBoxUserCompanyMoneyAccount_Validating(object sender, CancelEventArgs e)
@@ -220,7 +290,6 @@ namespace TS_SE_Tool
 
         private void textBoxUserCompanyMoneyAccount_Leave(object sender, EventArgs e)
         {
-            //
             textBoxUserCompanyMoneyAccount.KeyPress -= textBoxMoneyAccount_KeyPress;
             textBoxUserCompanyMoneyAccount.TextChanged -= textBoxMoneyAccount_TextChanged;
             
@@ -244,8 +313,6 @@ namespace TS_SE_Tool
         private void textBoxMoneyAccount_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBox textBoxAccountMoney = sender as TextBox;
-
-            string onlyDigits = textBoxAccountMoney.Text;
 
             if (!string.IsNullOrEmpty(textBoxAccountMoney.Text))
             {
@@ -287,6 +354,7 @@ namespace TS_SE_Tool
                 newtext = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
 
                 int cSpace1 = textBoxAccountMoney.Text.Substring(0, selectionStart).Count(Char.IsWhiteSpace);
+                string txtBefore = textBoxAccountMoney.Text;
 
                 //
                 textBoxUserCompanyMoneyAccount.TextChanged -= textBoxMoneyAccount_TextChanged;
@@ -298,8 +366,26 @@ namespace TS_SE_Tool
                     selectionStart = textBoxAccountMoney.Text.Length;
 
                 int cSpace2 = textBoxAccountMoney.Text.Substring(0, selectionStart).Count(Char.IsWhiteSpace);
+                string txtAfter = textBoxAccountMoney.Text;
 
-                textBoxAccountMoney.SelectionStart = selectionStart + cSpace2 - cSpace1;
+                int cSpaceDiff = 0, txtDiff = txtBefore.Length - txtAfter.Length;
+
+                if (txtDiff <= 0)
+                {
+                    if (cSpace1 >= cSpace2)
+                        cSpaceDiff = cSpace1 - cSpace2;
+                    else
+                        cSpaceDiff = cSpace2 - cSpace1;
+                }
+                else
+                {
+                    if (cSpace1 <= cSpace2)
+                        cSpaceDiff = cSpace1 - cSpace2;
+                    else
+                        cSpaceDiff = cSpace2 - cSpace1;
+                }
+
+                textBoxAccountMoney.SelectionStart = selectionStart + cSpaceDiff;
             }
             else
             {
@@ -332,6 +418,7 @@ namespace TS_SE_Tool
             labelUserCompanyVisitedCitiesCurrent.Text = vicited.ToString();
             labelUserCompanyVisitedCitiesTotal.Text = listBoxVisitedCities.Items.Count.ToString();
         }
+
         //Draw
         private int VisitedCitiesItemMargin = 3;
         private const float VisitedCitiesPictureHeight = 32;
@@ -493,14 +580,22 @@ namespace TS_SE_Tool
             if (GaragesList.Count <= 0)
                 return;
 
+            int grgs = 0;
             foreach (Garages garage in from x in GaragesList where !x.IgnoreStatus select x)
             {
                 listBoxGarages.Items.Add(garage);
+
+                if (garage.GarageStatus != 0)
+                    grgs++;
             }
 
             listBoxGarages.TopIndex = _vindex;
             listBoxGarages.EndUpdate();
+
+            labelUserCompanyGaragesCurrent.Text = grgs.ToString();
+            labelUserCompanyGaragesTotal.Text = listBoxGarages.Items.Count.ToString();
         }
+
         //Draw
         private int GarageItemMargin = 3;
         private const float GaragePictureHeight = 32;
@@ -680,6 +775,8 @@ namespace TS_SE_Tool
 
             FormGaragesSoldContent testDialog = new FormGaragesSoldContent();
             testDialog.ShowDialog(this);
+
+            FillGaragesList(listBoxGarages.TopIndex);
         }
 
         private void buttonGaragesBuy_Click(object sender, EventArgs e)

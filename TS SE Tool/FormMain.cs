@@ -152,6 +152,7 @@ namespace TS_SE_Tool
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg; //Program
 
+
         internal Dictionary<string, Image> ProgUIImgsDict;
 
         private ImageList TabpagesImages; //Program
@@ -210,6 +211,7 @@ namespace TS_SE_Tool
             //Create page controls
             IO_Utilities.LogWriter("Creating form elements...");
             CreateProfilePanelControls();
+            CreateCompanyPanelControls();
             Graphics_TSSET.CreateProgressBarBitmap();
             CreateTruckPanelControls();
             CreateTrailerPanelControls();

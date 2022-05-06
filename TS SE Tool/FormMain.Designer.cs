@@ -77,7 +77,6 @@
             this.tabPageCompany = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelUserCompanyVisitedCities = new System.Windows.Forms.Label();
             this.listBoxGarages = new System.Windows.Forms.ListBox();
             this.listBoxVisitedCities = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
@@ -89,8 +88,17 @@
             this.buttonUserCompanyGaragesSell = new System.Windows.Forms.Button();
             this.buttonUserCompanyGaragesUpgrade = new System.Windows.Forms.Button();
             this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelUserCompanyGarages = new System.Windows.Forms.Label();
             this.buttonUserCompanyGaragesManage = new System.Windows.Forms.Button();
+            this.panelGarages = new System.Windows.Forms.Panel();
+            this.labelUserCompanyGaragesCurrent = new System.Windows.Forms.Label();
+            this.labelUserCompanyGaragesDelimetry = new System.Windows.Forms.Label();
+            this.labelUserCompanyGaragesTotal = new System.Windows.Forms.Label();
+            this.labelUserCompanyGarages = new System.Windows.Forms.Label();
+            this.panelVisitedCities = new System.Windows.Forms.Panel();
+            this.labelUserCompanyVisitedCitiesTotal = new System.Windows.Forms.Label();
+            this.labelUserCompanyVisitedCitiesDelimetry = new System.Windows.Forms.Label();
+            this.labelUserCompanyVisitedCitiesCurrent = new System.Windows.Forms.Label();
+            this.labelUserCompanyVisitedCities = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBoxCompanyLogo = new System.Windows.Forms.PictureBox();
             this.labelUserCompanyCompanyName = new System.Windows.Forms.Label();
@@ -184,7 +192,7 @@
             this.labelCargoMarketCompany = new System.Windows.Forms.Label();
             this.comboBoxCargoMarketSourceCity = new System.Windows.Forms.ComboBox();
             this.labelCargoMarketCity = new System.Windows.Forms.Label();
-            this.comboBoxSourceCargoMarketCompany = new System.Windows.Forms.ComboBox();
+            this.comboBoxCargoMarketSourceCompany = new System.Windows.Forms.ComboBox();
             this.tabPageConvoyTools = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -218,10 +226,6 @@
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonMainCloseSave = new System.Windows.Forms.Button();
-            this.panelVisitedCities = new System.Windows.Forms.Panel();
-            this.labelUserCompanyVisitedCitiesCurrent = new System.Windows.Forms.Label();
-            this.labelUserCompanyVisitedCitiesDelimetry = new System.Windows.Forms.Label();
-            this.labelUserCompanyVisitedCitiesTotal = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -235,6 +239,8 @@
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel17.SuspendLayout();
+            this.panelGarages.SuspendLayout();
+            this.panelVisitedCities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCompanyLogo)).BeginInit();
             this.tabPageTruck.SuspendLayout();
@@ -267,7 +273,6 @@
             this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
-            this.panelVisitedCities.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripMain
@@ -735,6 +740,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 137F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(564, 531);
             this.tableLayoutPanel2.TabIndex = 29;
+            this.tableLayoutPanel2.EnabledChanged += new System.EventHandler(this.tableLayoutPanel2_EnabledChanged);
             // 
             // tableLayoutPanel4
             // 
@@ -752,21 +758,11 @@
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 3;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(564, 431);
             this.tableLayoutPanel4.TabIndex = 30;
-            // 
-            // labelUserCompanyVisitedCities
-            // 
-            this.labelUserCompanyVisitedCities.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelUserCompanyVisitedCities.AutoSize = true;
-            this.labelUserCompanyVisitedCities.Location = new System.Drawing.Point(7, 9);
-            this.labelUserCompanyVisitedCities.Name = "labelUserCompanyVisitedCities";
-            this.labelUserCompanyVisitedCities.Size = new System.Drawing.Size(65, 13);
-            this.labelUserCompanyVisitedCities.TabIndex = 20;
-            this.labelUserCompanyVisitedCities.Text = "Visited cities";
             // 
             // listBoxGarages
             // 
@@ -774,7 +770,7 @@
             this.listBoxGarages.Font = new System.Drawing.Font("Microsoft Sans Serif", 2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxGarages.FormattingEnabled = true;
             this.listBoxGarages.ItemHeight = 4;
-            this.listBoxGarages.Location = new System.Drawing.Point(285, 33);
+            this.listBoxGarages.Location = new System.Drawing.Point(285, 43);
             this.listBoxGarages.Name = "listBoxGarages";
             this.listBoxGarages.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxGarages.Size = new System.Drawing.Size(276, 313);
@@ -788,7 +784,7 @@
             this.listBoxVisitedCities.Font = new System.Drawing.Font("Microsoft Sans Serif", 2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBoxVisitedCities.FormattingEnabled = true;
             this.listBoxVisitedCities.ItemHeight = 4;
-            this.listBoxVisitedCities.Location = new System.Drawing.Point(3, 33);
+            this.listBoxVisitedCities.Location = new System.Drawing.Point(3, 43);
             this.listBoxVisitedCities.Name = "listBoxVisitedCities";
             this.listBoxVisitedCities.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxVisitedCities.Size = new System.Drawing.Size(276, 313);
@@ -804,12 +800,12 @@
             this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesVisit, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesUnVisit, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 349);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 359);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(282, 82);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(282, 72);
             this.tableLayoutPanel5.TabIndex = 21;
             // 
             // buttonUserCompanyCitiesVisit
@@ -818,7 +814,7 @@
             this.buttonUserCompanyCitiesVisit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonUserCompanyCitiesVisit.Location = new System.Drawing.Point(3, 3);
             this.buttonUserCompanyCitiesVisit.Name = "buttonUserCompanyCitiesVisit";
-            this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(135, 76);
+            this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(135, 66);
             this.buttonUserCompanyCitiesVisit.TabIndex = 26;
             this.buttonUserCompanyCitiesVisit.Text = "Visit";
             this.buttonUserCompanyCitiesVisit.UseVisualStyleBackColor = true;
@@ -830,7 +826,7 @@
             this.buttonUserCompanyCitiesUnVisit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonUserCompanyCitiesUnVisit.Location = new System.Drawing.Point(144, 3);
             this.buttonUserCompanyCitiesUnVisit.Name = "buttonUserCompanyCitiesUnVisit";
-            this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(135, 76);
+            this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(135, 66);
             this.buttonUserCompanyCitiesUnVisit.TabIndex = 27;
             this.buttonUserCompanyCitiesUnVisit.Text = "Unvisit";
             this.buttonUserCompanyCitiesUnVisit.UseVisualStyleBackColor = true;
@@ -847,13 +843,13 @@
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesSell, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesUpgrade, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(282, 349);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(282, 359);
             this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(282, 82);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(282, 72);
             this.tableLayoutPanel6.TabIndex = 22;
             // 
             // buttonUserCompanyGaragesBuy
@@ -862,7 +858,7 @@
             this.buttonUserCompanyGaragesBuy.Location = new System.Drawing.Point(3, 3);
             this.buttonUserCompanyGaragesBuy.Name = "buttonUserCompanyGaragesBuy";
             this.tableLayoutPanel6.SetRowSpan(this.buttonUserCompanyGaragesBuy, 2);
-            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(91, 76);
+            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(91, 66);
             this.buttonUserCompanyGaragesBuy.TabIndex = 23;
             this.buttonUserCompanyGaragesBuy.Text = "Buy";
             this.buttonUserCompanyGaragesBuy.UseVisualStyleBackColor = true;
@@ -871,9 +867,9 @@
             // buttonUserCompanyGaragesBuyDowngrade
             // 
             this.buttonUserCompanyGaragesBuyDowngrade.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesBuyDowngrade.Location = new System.Drawing.Point(100, 44);
+            this.buttonUserCompanyGaragesBuyDowngrade.Location = new System.Drawing.Point(100, 39);
             this.buttonUserCompanyGaragesBuyDowngrade.Name = "buttonUserCompanyGaragesBuyDowngrade";
-            this.buttonUserCompanyGaragesBuyDowngrade.Size = new System.Drawing.Size(91, 35);
+            this.buttonUserCompanyGaragesBuyDowngrade.Size = new System.Drawing.Size(91, 30);
             this.buttonUserCompanyGaragesBuyDowngrade.TabIndex = 25;
             this.buttonUserCompanyGaragesBuyDowngrade.Text = "Downgrade";
             this.buttonUserCompanyGaragesBuyDowngrade.UseVisualStyleBackColor = true;
@@ -885,7 +881,7 @@
             this.buttonUserCompanyGaragesSell.Location = new System.Drawing.Point(197, 3);
             this.buttonUserCompanyGaragesSell.Name = "buttonUserCompanyGaragesSell";
             this.tableLayoutPanel6.SetRowSpan(this.buttonUserCompanyGaragesSell, 2);
-            this.buttonUserCompanyGaragesSell.Size = new System.Drawing.Size(82, 76);
+            this.buttonUserCompanyGaragesSell.Size = new System.Drawing.Size(82, 66);
             this.buttonUserCompanyGaragesSell.TabIndex = 28;
             this.buttonUserCompanyGaragesSell.Text = "Sell";
             this.buttonUserCompanyGaragesSell.UseVisualStyleBackColor = true;
@@ -896,7 +892,7 @@
             this.buttonUserCompanyGaragesUpgrade.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonUserCompanyGaragesUpgrade.Location = new System.Drawing.Point(100, 3);
             this.buttonUserCompanyGaragesUpgrade.Name = "buttonUserCompanyGaragesUpgrade";
-            this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(91, 35);
+            this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(91, 30);
             this.buttonUserCompanyGaragesUpgrade.TabIndex = 24;
             this.buttonUserCompanyGaragesUpgrade.Text = "Upgrade";
             this.buttonUserCompanyGaragesUpgrade.UseVisualStyleBackColor = true;
@@ -905,41 +901,143 @@
             // tableLayoutPanel17
             // 
             this.tableLayoutPanel17.ColumnCount = 2;
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.18439F));
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.8156F));
-            this.tableLayoutPanel17.Controls.Add(this.labelUserCompanyGarages, 0, 0);
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 82.97872F));
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.02128F));
             this.tableLayoutPanel17.Controls.Add(this.buttonUserCompanyGaragesManage, 1, 0);
+            this.tableLayoutPanel17.Controls.Add(this.panelGarages, 0, 0);
             this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel17.Location = new System.Drawing.Point(282, 0);
             this.tableLayoutPanel17.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 1;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(282, 30);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(282, 40);
             this.tableLayoutPanel17.TabIndex = 23;
+            // 
+            // buttonUserCompanyGaragesManage
+            // 
+            this.buttonUserCompanyGaragesManage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyGaragesManage.Location = new System.Drawing.Point(237, 3);
+            this.buttonUserCompanyGaragesManage.Name = "buttonUserCompanyGaragesManage";
+            this.buttonUserCompanyGaragesManage.Size = new System.Drawing.Size(42, 34);
+            this.buttonUserCompanyGaragesManage.TabIndex = 19;
+            this.buttonUserCompanyGaragesManage.Text = "Manage";
+            this.buttonUserCompanyGaragesManage.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesManage.Click += new System.EventHandler(this.buttonUserCompanyGaragesManage_Click);
+            // 
+            // panelGarages
+            // 
+            this.panelGarages.Controls.Add(this.labelUserCompanyGaragesCurrent);
+            this.panelGarages.Controls.Add(this.labelUserCompanyGaragesDelimetry);
+            this.panelGarages.Controls.Add(this.labelUserCompanyGaragesTotal);
+            this.panelGarages.Controls.Add(this.labelUserCompanyGarages);
+            this.panelGarages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelGarages.Location = new System.Drawing.Point(0, 0);
+            this.panelGarages.Margin = new System.Windows.Forms.Padding(0);
+            this.panelGarages.Name = "panelGarages";
+            this.panelGarages.Size = new System.Drawing.Size(234, 40);
+            this.panelGarages.TabIndex = 20;
+            // 
+            // labelUserCompanyGaragesCurrent
+            // 
+            this.labelUserCompanyGaragesCurrent.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelUserCompanyGaragesCurrent.AutoSize = true;
+            this.labelUserCompanyGaragesCurrent.Location = new System.Drawing.Point(160, 14);
+            this.labelUserCompanyGaragesCurrent.Name = "labelUserCompanyGaragesCurrent";
+            this.labelUserCompanyGaragesCurrent.Size = new System.Drawing.Size(25, 13);
+            this.labelUserCompanyGaragesCurrent.TabIndex = 22;
+            this.labelUserCompanyGaragesCurrent.Text = "000";
+            this.labelUserCompanyGaragesCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelUserCompanyGaragesDelimetry
+            // 
+            this.labelUserCompanyGaragesDelimetry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelUserCompanyGaragesDelimetry.AutoSize = true;
+            this.labelUserCompanyGaragesDelimetry.Location = new System.Drawing.Point(191, 14);
+            this.labelUserCompanyGaragesDelimetry.Name = "labelUserCompanyGaragesDelimetry";
+            this.labelUserCompanyGaragesDelimetry.Size = new System.Drawing.Size(9, 13);
+            this.labelUserCompanyGaragesDelimetry.TabIndex = 20;
+            this.labelUserCompanyGaragesDelimetry.Text = "|";
+            // 
+            // labelUserCompanyGaragesTotal
+            // 
+            this.labelUserCompanyGaragesTotal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelUserCompanyGaragesTotal.AutoSize = true;
+            this.labelUserCompanyGaragesTotal.Location = new System.Drawing.Point(206, 14);
+            this.labelUserCompanyGaragesTotal.Name = "labelUserCompanyGaragesTotal";
+            this.labelUserCompanyGaragesTotal.Size = new System.Drawing.Size(25, 13);
+            this.labelUserCompanyGaragesTotal.TabIndex = 19;
+            this.labelUserCompanyGaragesTotal.Text = "000";
+            this.labelUserCompanyGaragesTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelUserCompanyGarages
             // 
             this.labelUserCompanyGarages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.labelUserCompanyGarages.AutoSize = true;
-            this.labelUserCompanyGarages.Location = new System.Drawing.Point(3, 0);
+            this.labelUserCompanyGarages.Location = new System.Drawing.Point(3, 14);
             this.labelUserCompanyGarages.Name = "labelUserCompanyGarages";
-            this.labelUserCompanyGarages.Size = new System.Drawing.Size(47, 30);
+            this.labelUserCompanyGarages.Size = new System.Drawing.Size(47, 13);
             this.labelUserCompanyGarages.TabIndex = 18;
             this.labelUserCompanyGarages.Text = "Garages";
             this.labelUserCompanyGarages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // buttonUserCompanyGaragesManage
+            // panelVisitedCities
             // 
-            this.buttonUserCompanyGaragesManage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesManage.Location = new System.Drawing.Point(184, 3);
-            this.buttonUserCompanyGaragesManage.Name = "buttonUserCompanyGaragesManage";
-            this.buttonUserCompanyGaragesManage.Size = new System.Drawing.Size(95, 24);
-            this.buttonUserCompanyGaragesManage.TabIndex = 19;
-            this.buttonUserCompanyGaragesManage.Text = "Manage";
-            this.buttonUserCompanyGaragesManage.UseVisualStyleBackColor = true;
-            this.buttonUserCompanyGaragesManage.Click += new System.EventHandler(this.buttonUserCompanyGaragesManage_Click);
+            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCitiesTotal);
+            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCitiesDelimetry);
+            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCitiesCurrent);
+            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCities);
+            this.panelVisitedCities.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelVisitedCities.Location = new System.Drawing.Point(0, 0);
+            this.panelVisitedCities.Margin = new System.Windows.Forms.Padding(0);
+            this.panelVisitedCities.Name = "panelVisitedCities";
+            this.panelVisitedCities.Size = new System.Drawing.Size(282, 40);
+            this.panelVisitedCities.TabIndex = 24;
+            // 
+            // labelUserCompanyVisitedCitiesTotal
+            // 
+            this.labelUserCompanyVisitedCitiesTotal.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelUserCompanyVisitedCitiesTotal.AutoSize = true;
+            this.labelUserCompanyVisitedCitiesTotal.Location = new System.Drawing.Point(244, 14);
+            this.labelUserCompanyVisitedCitiesTotal.Name = "labelUserCompanyVisitedCitiesTotal";
+            this.labelUserCompanyVisitedCitiesTotal.Size = new System.Drawing.Size(25, 13);
+            this.labelUserCompanyVisitedCitiesTotal.TabIndex = 23;
+            this.labelUserCompanyVisitedCitiesTotal.Text = "000";
+            this.labelUserCompanyVisitedCitiesTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelUserCompanyVisitedCitiesDelimetry
+            // 
+            this.labelUserCompanyVisitedCitiesDelimetry.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelUserCompanyVisitedCitiesDelimetry.AutoSize = true;
+            this.labelUserCompanyVisitedCitiesDelimetry.Location = new System.Drawing.Point(229, 14);
+            this.labelUserCompanyVisitedCitiesDelimetry.Name = "labelUserCompanyVisitedCitiesDelimetry";
+            this.labelUserCompanyVisitedCitiesDelimetry.Size = new System.Drawing.Size(9, 13);
+            this.labelUserCompanyVisitedCitiesDelimetry.TabIndex = 22;
+            this.labelUserCompanyVisitedCitiesDelimetry.Text = "|";
+            // 
+            // labelUserCompanyVisitedCitiesCurrent
+            // 
+            this.labelUserCompanyVisitedCitiesCurrent.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelUserCompanyVisitedCitiesCurrent.AutoSize = true;
+            this.labelUserCompanyVisitedCitiesCurrent.Location = new System.Drawing.Point(198, 14);
+            this.labelUserCompanyVisitedCitiesCurrent.Name = "labelUserCompanyVisitedCitiesCurrent";
+            this.labelUserCompanyVisitedCitiesCurrent.Size = new System.Drawing.Size(25, 13);
+            this.labelUserCompanyVisitedCitiesCurrent.TabIndex = 21;
+            this.labelUserCompanyVisitedCitiesCurrent.Text = "000";
+            this.labelUserCompanyVisitedCitiesCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelUserCompanyVisitedCities
+            // 
+            this.labelUserCompanyVisitedCities.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelUserCompanyVisitedCities.AutoSize = true;
+            this.labelUserCompanyVisitedCities.Location = new System.Drawing.Point(7, 14);
+            this.labelUserCompanyVisitedCities.Name = "labelUserCompanyVisitedCities";
+            this.labelUserCompanyVisitedCities.Size = new System.Drawing.Size(65, 13);
+            this.labelUserCompanyVisitedCities.TabIndex = 20;
+            this.labelUserCompanyVisitedCities.Text = "Visited cities";
             // 
             // tableLayoutPanel3
             // 
@@ -1054,11 +1152,11 @@
             // textBoxUserCompanyMoneyAccount
             // 
             this.textBoxUserCompanyMoneyAccount.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxUserCompanyMoneyAccount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxUserCompanyMoneyAccount.Location = new System.Drawing.Point(248, 39);
             this.textBoxUserCompanyMoneyAccount.Name = "textBoxUserCompanyMoneyAccount";
             this.textBoxUserCompanyMoneyAccount.Size = new System.Drawing.Size(255, 20);
             this.textBoxUserCompanyMoneyAccount.TabIndex = 21;
+            this.textBoxUserCompanyMoneyAccount.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBoxUserCompanyMoneyAccount_MouseClick);
             this.textBoxUserCompanyMoneyAccount.Enter += new System.EventHandler(this.textBoxUserCompanyMoneyAccount_Enter);
             this.textBoxUserCompanyMoneyAccount.Leave += new System.EventHandler(this.textBoxUserCompanyMoneyAccount_Leave);
             this.textBoxUserCompanyMoneyAccount.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxUserCompanyMoneyAccount_Validating);
@@ -1295,7 +1393,7 @@
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelTruckDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckLP, 0, 5);
             this.tableLayoutPanelTruckDetails.Controls.Add(this.tableLayoutPanelTruckFuel, 2, 0);
             this.tableLayoutPanelTruckDetails.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1573,7 +1671,7 @@
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelTrailerDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanelTrailerDetails.Controls.Add(this.tableLayoutPanelTrailerLP, 0, 5);
             this.tableLayoutPanelTrailerDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTrailerDetails.Location = new System.Drawing.Point(3, 16);
@@ -1970,7 +2068,7 @@
             this.tabPageCargoMarket.Controls.Add(this.labelCargoMarketCompany);
             this.tabPageCargoMarket.Controls.Add(this.comboBoxCargoMarketSourceCity);
             this.tabPageCargoMarket.Controls.Add(this.labelCargoMarketCity);
-            this.tabPageCargoMarket.Controls.Add(this.comboBoxSourceCargoMarketCompany);
+            this.tabPageCargoMarket.Controls.Add(this.comboBoxCargoMarketSourceCompany);
             this.tabPageCargoMarket.Location = new System.Drawing.Point(4, 28);
             this.tabPageCargoMarket.Name = "tabPageCargoMarket";
             this.tabPageCargoMarket.Size = new System.Drawing.Size(570, 537);
@@ -2099,14 +2197,14 @@
             this.labelCargoMarketCity.TabIndex = 1;
             this.labelCargoMarketCity.Text = "City";
             // 
-            // comboBoxSourceCargoMarketCompany
+            // comboBoxCargoMarketSourceCompany
             // 
-            this.comboBoxSourceCargoMarketCompany.FormattingEnabled = true;
-            this.comboBoxSourceCargoMarketCompany.Location = new System.Drawing.Point(239, 22);
-            this.comboBoxSourceCargoMarketCompany.Name = "comboBoxSourceCargoMarketCompany";
-            this.comboBoxSourceCargoMarketCompany.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxSourceCargoMarketCompany.TabIndex = 0;
-            this.comboBoxSourceCargoMarketCompany.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCompanyCM_SelectedIndexChanged);
+            this.comboBoxCargoMarketSourceCompany.FormattingEnabled = true;
+            this.comboBoxCargoMarketSourceCompany.Location = new System.Drawing.Point(239, 22);
+            this.comboBoxCargoMarketSourceCompany.Name = "comboBoxCargoMarketSourceCompany";
+            this.comboBoxCargoMarketSourceCompany.Size = new System.Drawing.Size(161, 21);
+            this.comboBoxCargoMarketSourceCompany.TabIndex = 0;
+            this.comboBoxCargoMarketSourceCompany.SelectedIndexChanged += new System.EventHandler(this.comboBoxSourceCompanyCM_SelectedIndexChanged);
             // 
             // tabPageConvoyTools
             // 
@@ -2522,49 +2620,6 @@
             this.buttonMainCloseSave.Visible = false;
             this.buttonMainCloseSave.Click += new System.EventHandler(this.buttonMainCloseSave_Click);
             // 
-            // panelVisitedCities
-            // 
-            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCitiesTotal);
-            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCitiesDelimetry);
-            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCitiesCurrent);
-            this.panelVisitedCities.Controls.Add(this.labelUserCompanyVisitedCities);
-            this.panelVisitedCities.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelVisitedCities.Location = new System.Drawing.Point(0, 0);
-            this.panelVisitedCities.Margin = new System.Windows.Forms.Padding(0);
-            this.panelVisitedCities.Name = "panelVisitedCities";
-            this.panelVisitedCities.Size = new System.Drawing.Size(282, 30);
-            this.panelVisitedCities.TabIndex = 24;
-            // 
-            // labelUserCompanyVisitedCitiesCurrent
-            // 
-            this.labelUserCompanyVisitedCitiesCurrent.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelUserCompanyVisitedCitiesCurrent.AutoSize = true;
-            this.labelUserCompanyVisitedCitiesCurrent.Location = new System.Drawing.Point(198, 9);
-            this.labelUserCompanyVisitedCitiesCurrent.Name = "labelUserCompanyVisitedCitiesCurrent";
-            this.labelUserCompanyVisitedCitiesCurrent.Size = new System.Drawing.Size(25, 13);
-            this.labelUserCompanyVisitedCitiesCurrent.TabIndex = 21;
-            this.labelUserCompanyVisitedCitiesCurrent.Text = "000";
-            // 
-            // labelUserCompanyVisitedCitiesDelimetry
-            // 
-            this.labelUserCompanyVisitedCitiesDelimetry.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelUserCompanyVisitedCitiesDelimetry.AutoSize = true;
-            this.labelUserCompanyVisitedCitiesDelimetry.Location = new System.Drawing.Point(229, 9);
-            this.labelUserCompanyVisitedCitiesDelimetry.Name = "labelUserCompanyVisitedCitiesDelimetry";
-            this.labelUserCompanyVisitedCitiesDelimetry.Size = new System.Drawing.Size(9, 13);
-            this.labelUserCompanyVisitedCitiesDelimetry.TabIndex = 22;
-            this.labelUserCompanyVisitedCitiesDelimetry.Text = "|";
-            // 
-            // labelUserCompanyVisitedCitiesTotal
-            // 
-            this.labelUserCompanyVisitedCitiesTotal.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelUserCompanyVisitedCitiesTotal.AutoSize = true;
-            this.labelUserCompanyVisitedCitiesTotal.Location = new System.Drawing.Point(244, 9);
-            this.labelUserCompanyVisitedCitiesTotal.Name = "labelUserCompanyVisitedCitiesTotal";
-            this.labelUserCompanyVisitedCitiesTotal.Size = new System.Drawing.Size(25, 13);
-            this.labelUserCompanyVisitedCitiesTotal.TabIndex = 23;
-            this.labelUserCompanyVisitedCitiesTotal.Text = "000";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2597,7 +2652,10 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel17.ResumeLayout(false);
-            this.tableLayoutPanel17.PerformLayout();
+            this.panelGarages.ResumeLayout(false);
+            this.panelGarages.PerformLayout();
+            this.panelVisitedCities.ResumeLayout(false);
+            this.panelVisitedCities.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCompanyLogo)).EndInit();
@@ -2638,8 +2696,6 @@
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
-            this.panelVisitedCities.ResumeLayout(false);
-            this.panelVisitedCities.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2756,7 +2812,7 @@
         private System.Windows.Forms.Label labelCargoMarketCompany;
         private System.Windows.Forms.ComboBox comboBoxCargoMarketSourceCity;
         private System.Windows.Forms.Label labelCargoMarketCity;
-        private System.Windows.Forms.ComboBox comboBoxSourceCargoMarketCompany;
+        private System.Windows.Forms.ComboBox comboBoxCargoMarketSourceCompany;
         private System.Windows.Forms.ListBox listBoxCargoMarketSourceCargoSeeds;
         private System.Windows.Forms.ListBox listBoxCargoMarketCargoListForCompany;
         private System.Windows.Forms.Button buttonCargoMarketRandomizeCargoCompany;
@@ -2840,6 +2896,10 @@
         private System.Windows.Forms.Label labelUserCompanyVisitedCitiesTotal;
         private System.Windows.Forms.Label labelUserCompanyVisitedCitiesDelimetry;
         private System.Windows.Forms.Label labelUserCompanyVisitedCitiesCurrent;
+        private System.Windows.Forms.Panel panelGarages;
+        private System.Windows.Forms.Label labelUserCompanyGaragesCurrent;
+        private System.Windows.Forms.Label labelUserCompanyGaragesDelimetry;
+        private System.Windows.Forms.Label labelUserCompanyGaragesTotal;
     }
 }
 
