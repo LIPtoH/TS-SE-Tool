@@ -937,12 +937,29 @@ namespace TS_SE_Tool
             {
                 if (tmp != null)
                 {
+                    int idx = 0;
+
+                    idx = SiiNunitData.Player.drivers.IndexOf(tmp);
+
                     SiiNunitData.Economy.driver_pool.Add(tmp);
-                    UserDriverDictionary.Remove(tmp);
+
+                    SiiNunitData.Player.drivers.RemoveAt(idx);
+                    SiiNunitData.Player.driver_readiness_timer.RemoveAt(idx);
+                    SiiNunitData.Player.driver_quit_warned.RemoveAt(idx);
                 }
             }
 
             extraVehicles.RemoveAll(x => x == null);
+
+            foreach (string tmp in extraVehicles)
+            {
+                int idx = 0;
+
+                idx = SiiNunitData.Player.trucks.IndexOf(tmp);
+
+                SiiNunitData.Player.trucks.RemoveAt(idx);
+                SiiNunitData.Player.truck_profit_logs.RemoveAt(idx);
+            }
         }
 
         //Sort events by time
