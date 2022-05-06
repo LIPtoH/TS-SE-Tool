@@ -577,6 +577,11 @@ namespace TS_SE_Tool
             comboBoxFreightMarketTrailerVariant.DataSource = null;
 
             listBoxFreightMarketAddedJobs.Items.Clear();
+
+            //CargoMarket
+            comboBoxCargoMarketSourceCity.DataSource = null;
+            comboBoxCargoMarketSourceCompany.DataSource = null;
+
             //
             this.ResumeLayout();
         }
@@ -1011,7 +1016,7 @@ namespace TS_SE_Tool
                         savedvalue = tempCB.SelectedValue.ToString();
 
                     tempCB.SelectedIndexChanged -= CitiesCBeh[j];
-                    //i = 0;
+
                     foreach (DataRow temp in temptable.Rows)
                     {
                         string source = temp[0].ToString();
@@ -1032,13 +1037,14 @@ namespace TS_SE_Tool
                         tempCB.SelectedValue = savedvalue;
 
                     tempCB.SelectedIndexChanged += CitiesCBeh[j];
-                    j++;
                 }
+
+                j++;
             }
 
             //////
             //Companies ComboBoxes
-            ComboBox[] CompaniesCB = { comboBoxFreightMarketSourceCompany, comboBoxFreightMarketDestinationCompany, comboBoxSourceCargoMarketCompany };
+            ComboBox[] CompaniesCB = { comboBoxFreightMarketSourceCompany, comboBoxFreightMarketDestinationCompany, comboBoxCargoMarketSourceCompany };
             EventHandler[] CompaniesCBeh = { comboBoxSourceCompany_SelectedIndexChanged, comboBoxDestinationCompany_SelectedIndexChanged, comboBoxSourceCompanyCM_SelectedIndexChanged };
             j = 0;
             foreach (ComboBox tempCB in CompaniesCB)
@@ -1053,7 +1059,6 @@ namespace TS_SE_Tool
 
                     tempCB.SelectedIndexChanged -= CompaniesCBeh[j];
 
-                    //i = 0;
                     foreach (DataRow temp in temptable.Rows)
                     {
                         string source = temp[0].ToString();
@@ -1074,8 +1079,9 @@ namespace TS_SE_Tool
                         tempCB.SelectedValue = savedvalue;
 
                     tempCB.SelectedIndexChanged += CompaniesCBeh[j];
-                    j++;
-                    }
+                }
+
+                j++;
             }
 
             //Freight Market

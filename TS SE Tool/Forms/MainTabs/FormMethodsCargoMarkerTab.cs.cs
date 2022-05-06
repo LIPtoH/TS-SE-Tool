@@ -67,15 +67,15 @@ namespace TS_SE_Tool
         {
             if (comboBoxCargoMarketSourceCity.SelectedIndex >= 0)
             {
-                comboBoxSourceCargoMarketCompany.SelectedIndex = -1;
-                comboBoxSourceCargoMarketCompany.Text = "";
+                comboBoxCargoMarketSourceCompany.SelectedIndex = -1;
+                comboBoxCargoMarketSourceCompany.Text = "";
 
                 SetupSourceCompaniesCM();
             }
 
-            if (comboBoxSourceCargoMarketCompany.Items.Count > 0)
+            if (comboBoxCargoMarketSourceCompany.Items.Count > 0)
             {
-                comboBoxSourceCargoMarketCompany.SelectedIndex = RandomValue.Next(comboBoxSourceCargoMarketCompany.Items.Count);
+                comboBoxCargoMarketSourceCompany.SelectedIndex = RandomValue.Next(comboBoxCargoMarketSourceCompany.Items.Count);
             }
         }
 
@@ -98,14 +98,14 @@ namespace TS_SE_Tool
 
             combDT.DefaultView.Sort = "CompanyName ASC";
 
-            comboBoxSourceCargoMarketCompany.ValueMember = "Company";
-            comboBoxSourceCargoMarketCompany.DisplayMember = "CompanyName";
-            comboBoxSourceCargoMarketCompany.DataSource = combDT;
+            comboBoxCargoMarketSourceCompany.ValueMember = "Company";
+            comboBoxCargoMarketSourceCompany.DisplayMember = "CompanyName";
+            comboBoxCargoMarketSourceCompany.DataSource = combDT;
         }
 
         private void comboBoxSourceCompanyCM_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxSourceCargoMarketCompany.SelectedValue != null && ExternalCompanies.Count > 0)
+            if (comboBoxCargoMarketSourceCompany.SelectedValue != null && ExternalCompanies.Count > 0)
             {
                 PreparePossibleCargoes();
             }
@@ -122,10 +122,10 @@ namespace TS_SE_Tool
         {
             listBoxCargoMarketCargoListForCompany.Items.Clear();
 
-            if (comboBoxSourceCargoMarketCompany.SelectedValue == null)
+            if (comboBoxCargoMarketSourceCompany.SelectedValue == null)
                 return;
 
-            ExtCompany t = ExternalCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString());
+            ExtCompany t = ExternalCompanies.Find(x => x.CompanyName == comboBoxCargoMarketSourceCompany.SelectedValue.ToString());
 
             if (t != null)
             {
@@ -161,9 +161,9 @@ namespace TS_SE_Tool
         {
             listBoxCargoMarketSourceCargoSeeds.Items.Clear();
 
-            if (comboBoxCargoMarketSourceCity.SelectedValue != null && comboBoxSourceCargoMarketCompany.SelectedValue != null) //&& ExternalCompanies.Count > 0)
+            if (comboBoxCargoMarketSourceCity.SelectedValue != null && comboBoxCargoMarketSourceCompany.SelectedValue != null) //&& ExternalCompanies.Count > 0)
             {
-                foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CargoSeeds)
+                foreach (int cargoseed in CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies().Find(x => x.CompanyName == comboBoxCargoMarketSourceCompany.SelectedValue.ToString()).CargoSeeds)
                 {
                     string cargoforseed = "";
                     listBoxCargoMarketSourceCargoSeeds.Items.Add("" + cargoseed.ToString().PadRight(12, ' ') + " | Time left " + ((cargoseed - SiiNunitData.Economy.game_time) / 60).ToString().PadLeft(2) + " h " +
@@ -188,7 +188,7 @@ namespace TS_SE_Tool
                 tempseeds[i] = (uint)SiiNunitData.Economy.game_time + (uint)RandomValue.Next(180, 1800);
             }
 
-            RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CargoSeeds = tempseeds;
+            RealCompanies.Find(x => x.CompanyName == comboBoxCargoMarketSourceCompany.SelectedValue.ToString()).CargoSeeds = tempseeds;
 
             PrintCargoSeeds();
         }
@@ -198,7 +198,7 @@ namespace TS_SE_Tool
             List<Company> CityCompanies = CitiesList.Find(x => x.CityName == comboBoxCargoMarketSourceCity.SelectedValue.ToString()).ReturnCompanies();
             List<Company> RealCompanies = CityCompanies.FindAll(x => !x.Excluded);
 
-            RealCompanies.Find(x => x.CompanyName == comboBoxSourceCargoMarketCompany.SelectedValue.ToString()).CargoSeeds = new uint[0];
+            RealCompanies.Find(x => x.CompanyName == comboBoxCargoMarketSourceCompany.SelectedValue.ToString()).CargoSeeds = new uint[0];
 
             PrintCargoSeeds();
         }
