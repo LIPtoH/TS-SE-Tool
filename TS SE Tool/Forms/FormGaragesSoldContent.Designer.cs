@@ -140,6 +140,7 @@ namespace TS_SE_Tool
             // buttonMoveTrucksOut
             // 
             this.buttonMoveTrucksOut.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMoveTrucksOut.Enabled = false;
             this.buttonMoveTrucksOut.Location = new System.Drawing.Point(23, 3);
             this.buttonMoveTrucksOut.Name = "buttonMoveTrucksOut";
             this.buttonMoveTrucksOut.Size = new System.Drawing.Size(143, 38);
@@ -156,17 +157,18 @@ namespace TS_SE_Tool
             this.treeViewSavedDrivers.Name = "treeViewSavedDrivers";
             this.treeViewSavedDrivers.Size = new System.Drawing.Size(189, 326);
             this.treeViewSavedDrivers.TabIndex = 0;
+            this.treeViewSavedDrivers.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             // 
             // treeViewSavedTrucks
             // 
             this.treeViewSavedTrucks.CheckBoxes = true;
             this.treeViewSavedTrucks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewSavedTrucks.FullRowSelect = true;
             this.treeViewSavedTrucks.Location = new System.Drawing.Point(198, 37);
             this.treeViewSavedTrucks.Name = "treeViewSavedTrucks";
             this.treeViewSavedTrucks.ShowNodeToolTips = true;
             this.treeViewSavedTrucks.Size = new System.Drawing.Size(189, 326);
             this.treeViewSavedTrucks.TabIndex = 1;
+            this.treeViewSavedTrucks.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             // 
             // labelSavedDrivers
             // 
@@ -208,6 +210,7 @@ namespace TS_SE_Tool
             // buttonMoveDriversOut
             // 
             this.buttonMoveDriversOut.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMoveDriversOut.Enabled = false;
             this.buttonMoveDriversOut.Location = new System.Drawing.Point(23, 3);
             this.buttonMoveDriversOut.Name = "buttonMoveDriversOut";
             this.buttonMoveDriversOut.Size = new System.Drawing.Size(143, 38);
@@ -266,6 +269,7 @@ namespace TS_SE_Tool
             // buttonMoveDriversIn
             // 
             this.buttonMoveDriversIn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMoveDriversIn.Enabled = false;
             this.buttonMoveDriversIn.Location = new System.Drawing.Point(23, 3);
             this.buttonMoveDriversIn.Name = "buttonMoveDriversIn";
             this.buttonMoveDriversIn.Size = new System.Drawing.Size(143, 38);
@@ -292,6 +296,7 @@ namespace TS_SE_Tool
             // buttonMoveTrucksIn
             // 
             this.buttonMoveTrucksIn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMoveTrucksIn.Enabled = false;
             this.buttonMoveTrucksIn.Location = new System.Drawing.Point(23, 3);
             this.buttonMoveTrucksIn.Name = "buttonMoveTrucksIn";
             this.buttonMoveTrucksIn.Size = new System.Drawing.Size(143, 38);
@@ -308,6 +313,7 @@ namespace TS_SE_Tool
             this.treeViewSortingDrivers.Name = "treeViewSortingDrivers";
             this.treeViewSortingDrivers.Size = new System.Drawing.Size(189, 326);
             this.treeViewSortingDrivers.TabIndex = 0;
+            this.treeViewSortingDrivers.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             // 
             // treeViewSortingTrucks
             // 
@@ -318,6 +324,7 @@ namespace TS_SE_Tool
             this.treeViewSortingTrucks.ShowNodeToolTips = true;
             this.treeViewSortingTrucks.Size = new System.Drawing.Size(189, 326);
             this.treeViewSortingTrucks.TabIndex = 1;
+            this.treeViewSortingTrucks.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             // 
             // labelSortingDrivers
             // 

@@ -28,6 +28,7 @@ namespace TS_SE_Tool
     public partial class FormGaragesSoldContent : Form
     {
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+        int SpareDrvSpaces = 0, SpareVhcSpaces = 0;
 
         public FormGaragesSoldContent()
         {
@@ -38,17 +39,24 @@ namespace TS_SE_Tool
 
         private void FillTreeView()
         {
+            FillSavedDriversTreeView();
+            FillSavedTrucksTreeView();
+
+            FillSortingDriversTreeView();
+            FillSortingTrucksTreeView();
+        }
+
+        private void FillSavedDriversTreeView()
+        {
+            int TotalDrv = 0;
+            SpareDrvSpaces = 0;
+
+            treeViewSavedDrivers.BeginUpdate();
             treeViewSavedDrivers.Nodes.Clear();
-            treeViewSavedTrucks.Nodes.Clear();
-            treeViewSortingDrivers.Nodes.Clear();
-            treeViewSortingTrucks.Nodes.Clear();
 
-            int SpareDrvSpaces = 0, SpareVhcSpaces = 0, TotalDrv = 0, TotalVhc = 0;
-
-            //Saved Drivers and Trucks
             foreach (Garages tempG in MainForm.GaragesList)
             {
-                if(tempG.GarageStatus > 0)
+                if (tempG.GarageStatus > 0)
                 {
                     int curVeh = 0, curDr = 0;
                     foreach (string temp in tempG.Drivers)
@@ -63,37 +71,76 @@ namespace TS_SE_Tool
                     }
 
                     SpareDrvSpaces = SpareDrvSpaces + tempG.Drivers.Count - curDr;
-                    SpareVhcSpaces = SpareVhcSpaces + tempG.Vehicles.Count - curVeh;
                     TotalDrv += curDr;
-                    TotalVhc += curVeh;
 
                     //Drivers tree
+                    bool childes = false;
+
                     treeViewSavedDrivers.Nodes.Add(tempG.GarageName, "[ " + curDr + " | " + tempG.Drivers.Count + " ] " + tempG.GarageNameTranslated);
                     foreach (string tempD in tempG.Drivers)
                     {
                         if (tempD != null)
                         {
-                            string DriverName = tempD;
+                            treeViewSavedDrivers.Nodes[tempG.GarageName].Nodes.Add(tempD, GetDriverName(tempD));
 
-                            if (FormMain.SiiNunitData.Player.drivers[0] == DriverName)
-                            {
-                                DriverName = Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
-                            }
-                            else
-                            {
-                                MainForm.DriverNames.TryGetValue(DriverName, out string _resultvalue);
+                            childes = true;
+                        }
+                        else
+                        {
+                            treeViewSavedDrivers.Nodes[tempG.GarageName].Nodes.Add(null, "---");
+                        }
 
-                                if (_resultvalue != null && _resultvalue != "")
-                                {
-                                    DriverName = _resultvalue.TrimStart(new char[] { '+'});
-                                }
-                            }
-
-                            treeViewSavedDrivers.Nodes[tempG.GarageName].Nodes.Add(tempD, DriverName);
-                        }                            
                     }
 
+                    if (!childes)
+                        treeViewSavedDrivers.Nodes[tempG.GarageName].Nodes.Clear();
+                }
+            }
+
+            treeViewSavedDrivers.EndUpdate();
+
+            //Label
+            labelSavedDrivers.Text = "Drivers [ " + TotalDrv + " | " + (SpareDrvSpaces + TotalDrv).ToString() + " ]";
+
+            if (TotalDrv == (SpareDrvSpaces + TotalDrv))
+                labelSavedDrivers.ForeColor = Color.Red;
+            else
+                labelSavedDrivers.ForeColor = DefaultForeColor;
+
+        }
+
+        private void FillSavedTrucksTreeView()
+        {
+            int TotalVhc = 0;
+            SpareVhcSpaces = 0;
+
+            treeViewSavedTrucks.BeginUpdate();
+            treeViewSavedTrucks.Nodes.Clear();
+
+            foreach (Garages tempG in MainForm.GaragesList)
+            {
+                if (tempG.GarageStatus > 0)
+                {
+                    int curVeh = 0, curDr = 0;
+                    foreach (string temp in tempG.Drivers)
+                    {
+                        if (temp != null)
+                            curDr++;
+                    }
+                    foreach (string temp in tempG.Vehicles)
+                    {
+                        if (temp != null)
+                            curVeh++;
+                    }
+
+                    SpareVhcSpaces = SpareVhcSpaces + tempG.Vehicles.Count - curVeh;
+                    TotalVhc += curVeh;
+
+                    bool childes = false;
+
                     //Trucks tree
+                    childes = false;
+
                     treeViewSavedTrucks.Nodes.Add(tempG.GarageName, "[ " + curVeh + " | " + tempG.Vehicles.Count + " ] " + tempG.GarageNameTranslated);
                     foreach (string tempV in tempG.Vehicles)
                     {
@@ -102,31 +149,61 @@ namespace TS_SE_Tool
                             treeViewSavedTrucks.Nodes[tempG.GarageName].Nodes.Add(tempV, GetTruckName(tempV));
 
                             treeViewSavedTrucks.Nodes[tempG.GarageName].Nodes[tempV].ToolTipText = tempV;
+
+                            childes = true;
+                        }
+                        else
+                        {
+                            treeViewSavedTrucks.Nodes[tempG.GarageName].Nodes.Add(null, "---");
+
                         }
                     }
+
+                    if (!childes)
+                        treeViewSavedTrucks.Nodes[tempG.GarageName].Nodes.Clear();
                 }
             }
 
-            //Labels
-            labelSavedDrivers.Text = "Drivers [ " + TotalDrv + " | " + (SpareDrvSpaces + TotalDrv).ToString() + " ]";
+            treeViewSavedTrucks.EndUpdate();
 
-            if (TotalDrv == (SpareDrvSpaces + TotalDrv))
-                labelSavedDrivers.ForeColor = Color.Red;
-            else
-                labelSavedDrivers.ForeColor = DefaultForeColor;
-
+            //Label
             labelSavedTrucks.Text = "Trucks [ " + TotalVhc + " | " + (SpareVhcSpaces + TotalVhc).ToString() + " ]";
             if (TotalVhc == (SpareVhcSpaces + TotalVhc))
-                labelSortingTrucks.ForeColor = Color.Red;
+                labelSavedTrucks.ForeColor = Color.Red;
             else
-                labelSortingDrivers.ForeColor = DefaultForeColor;
+                labelSavedTrucks.ForeColor = DefaultForeColor;
+        }
 
-            //Drivers and Trucks to sort
+        private void FillSortingDriversTreeView()
+        {
+            treeViewSortingDrivers.BeginUpdate();
+
+            treeViewSortingDrivers.Nodes.Clear();
+
             foreach (string tempD in MainForm.extraDrivers)
             {
                 if (tempD != null)
-                    treeViewSortingDrivers.Nodes.Add(tempD, tempD);
+                {
+                    treeViewSortingDrivers.Nodes.Add(tempD, GetDriverName(tempD));
+                }
             }
+
+            treeViewSortingDrivers.EndUpdate();
+
+            //Label
+            labelSortingDrivers.Text = "Drivers " + MainForm.extraDrivers.Count(x => x != null).ToString();
+            if (SpareDrvSpaces < MainForm.extraDrivers.Count)
+                labelSortingDrivers.ForeColor = Color.Red;
+            else
+                labelSortingDrivers.ForeColor = DefaultForeColor;
+
+        }
+        
+        private void FillSortingTrucksTreeView()
+        {
+            treeViewSortingTrucks.BeginUpdate();
+
+            treeViewSortingTrucks.Nodes.Clear();
 
             foreach (string tempV in MainForm.extraVehicles)
             {
@@ -138,18 +215,14 @@ namespace TS_SE_Tool
                 }
             }
 
-            //Labels
-            labelSortingDrivers.Text = "Drivers " + MainForm.extraDrivers.Count(x => x != null).ToString();
-            if (SpareDrvSpaces < MainForm.extraDrivers.Count)
-                labelSortingDrivers.ForeColor = Color.Red;
-            else
-                labelSortingDrivers.ForeColor = DefaultForeColor;
+            treeViewSortingTrucks.EndUpdate();
 
-            labelSortingTrucks.Text = "Trucks " + MainForm.extraVehicles.Count(x =>x != null).ToString();
+            //Label
+            labelSortingTrucks.Text = "Trucks " + MainForm.extraVehicles.Count(x => x != null).ToString();
             if (SpareVhcSpaces < MainForm.extraVehicles.Count)
                 labelSortingTrucks.ForeColor = Color.Red;
             else
-                labelSortingDrivers.ForeColor = DefaultForeColor;
+                labelSortingTrucks.ForeColor = DefaultForeColor;
         }
 
         private string GetTruckName(string _tmptruckname)
@@ -181,104 +254,172 @@ namespace TS_SE_Tool
             return TruckName;
         }
 
+        private string GetDriverName(string _drivername)
+        {
+            if (FormMain.SiiNunitData.Player.drivers[0] == _drivername)
+            {
+               return Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
+            }
+            else
+            {
+                MainForm.DriverNames.TryGetValue(_drivername, out string _resultvalue);
+
+                if (_resultvalue != null && _resultvalue != "")
+                {
+                    return _resultvalue.TrimStart(new char[] { '+' });
+                }
+
+                return _drivername;
+            }
+        }
+
         private void buttonMoveDriversOut_Click(object sender, EventArgs e)
         {
             // Get the checked nodes.
-            List<TreeNode> checked_nodes = CheckedNodes(treeViewSavedDrivers, false);
+            List<TreeNode> source_nodes = CheckedNodes(treeViewSavedDrivers);
 
-            if (checked_nodes.Count() != 0)
+            if (source_nodes.Count() != 0)
             {
-                foreach (TreeNode tempD in checked_nodes)
+                foreach (TreeNode tempNode in source_nodes)
                 {
-                    if (tempD != null)
+                    if (tempNode != null && tempNode.Name != "")
                     {
-                        Garages tempG = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == tempD.Parent.Name)];
-                        string driverNL = tempD.Name;
+                        string grgName = "";
+                        List<string> DriverList = new List<string>();
 
-                        if (driverNL != FormMain.SiiNunitData.Economy.driver_pool[0])
+                        if (tempNode.Parent == null)
                         {
-                            tempG.Drivers[tempG.Drivers.FindIndex(x => x == driverNL)] = null;
-                            MainForm.extraDrivers.Add(driverNL);
-                            MainForm.extraVehicles.Add(null);
+                            grgName = tempNode.Name;
+
+                            foreach (TreeNode node in tempNode.Nodes)
+                                DriverList.Add(node.Name);
+
                         }
-                    }
-                }
-
-                FillTreeView();
-            }
-        }
-
-        private void buttonMoveTrucksOut_Click(object sender, EventArgs e)
-        {
-            // Get the checked nodes.
-            List<TreeNode> checked_nodes = CheckedNodes(treeViewSavedTrucks);
-
-            if (checked_nodes.Count() != 0)
-            {
-                foreach (TreeNode tempT in checked_nodes)
-                {
-                    if (tempT != null)
-                    {
-                        Garages tempG = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == tempT.Parent.Name)];
-                        string truckNL = tempT.Name;
-
-                        tempG.Vehicles[tempG.Vehicles.FindIndex(x => x == truckNL)] = null;
-
-                        MainForm.extraVehicles.Add(truckNL);
-                        MainForm.extraDrivers.Add(null);
-                    }
-                }
-                
-                FillTreeView();
-            }
-        }
-
-        private void buttonMoveDriversIn_Click(object sender, EventArgs e)
-        {
-            // Get the checked nodes.
-            List<TreeNode> checked_nodes = CheckedNodes(treeViewSortingDrivers);
-
-            if (checked_nodes.Count() != 0)
-            {
-                foreach (Garages tempG in MainForm.GaragesList)
-                {
-                    if (tempG.GarageStatus != 0)
-                    {
-                        for (int i = 0; i < tempG.Drivers.Count; i++)
+                        else
                         {
-                            if (tempG.Drivers[i] == null)
+                            grgName = tempNode.Parent.Name;
+
+                            DriverList.Add(tempNode.Name);
+                        }
+
+                        Garages tempGarage = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == grgName)];
+
+                        foreach (string entry in DriverList)
+                        {
+                            if (entry != "" && entry != FormMain.SiiNunitData.Player.drivers[0])
                             {
-                                string driverNL = checked_nodes[0].Name;
-                                tempG.Drivers[i] = driverNL;
-                                MainForm.extraDrivers[MainForm.extraDrivers.FindIndex(x => x == driverNL)] = null;
+                                tempGarage.Drivers[tempGarage.Drivers.IndexOf(entry)] = null;
+
+                                MainForm.extraDrivers.Add(entry);
+                                MainForm.extraVehicles.Add(null);
                             }
                         }
                     }
                 }
 
-                FillTreeView();
+                FillSavedDriversTreeView();
+
+                FillSortingDriversTreeView();
             }
+
+            buttonMoveDriversOut.Enabled = false;
         }
 
-        private void buttonMoveTrucksIn_Click(object sender, EventArgs e)
+        private void buttonMoveTrucksOut_Click(object sender, EventArgs e)
         {
             // Get the checked nodes.
-            List<TreeNode> checked_nodes = CheckedNodes(treeViewSortingTrucks);
+            List<TreeNode> source_nodes = CheckedNodes(treeViewSavedTrucks);
+
+            if (source_nodes.Count() != 0)
+            {
+                foreach (TreeNode tempNode in source_nodes)
+                {
+                    if (tempNode != null && tempNode.Name != "")
+                    {
+                        string grgName = "";
+                        List<string> TruckList = new List<string>();
+
+                        if (tempNode.Parent == null)
+                        {
+                            grgName = tempNode.Name;
+
+                            foreach (TreeNode node in tempNode.Nodes)                            
+                                TruckList.Add(node.Name);
+                            
+                        }   
+                        else
+                        {
+                            grgName = tempNode.Parent.Name;
+
+                            TruckList.Add(tempNode.Name);
+                        }
+
+                        Garages tempGarage = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == grgName)];
+
+                        foreach(string entry in TruckList)
+                        {
+                            if (entry == "")
+                                continue;
+
+                            tempGarage.Vehicles[tempGarage.Vehicles.IndexOf(entry)] = null;
+
+                            MainForm.extraVehicles.Add(entry);
+                            MainForm.extraDrivers.Add(null);
+                        }
+                    }
+                }
+
+                FillSavedTrucksTreeView();
+
+                FillSortingTrucksTreeView();
+            }
+
+            buttonMoveTrucksOut.Enabled = false;
+
+        }
+
+        private void buttonMoveDriversIn_Click(object sender, EventArgs e)
+        {
+            // Get the checked nodes.
+            List<TreeNode> source_nodes = CheckedNodes(treeViewSortingDrivers);
 
             //Target garage
-            List<TreeNode> target_nodes = CheckedNodes(treeViewSavedTrucks);
+            List<TreeNode> target_nodes = CheckedNodes(treeViewSavedDrivers);
 
-            if (checked_nodes.Count() != 0)
+            if (source_nodes.Count() != 0)
             {
                 if (target_nodes.Count() != 0)
                 {
-                    foreach (TreeNode tempT in target_nodes)
+                    foreach (TreeNode tempTreeNode in target_nodes)
                     {
-                        if (tempT != null)
+                        if (tempTreeNode != null && tempTreeNode.Parent == null)
                         {
+                            string grgName = tempTreeNode.Name;
+                            Garages tempGrg = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == grgName)];
 
+                            if (tempGrg.GarageStatus != 0)
+                            {
+                                for (int i = 0; i < tempGrg.Drivers.Count; i++)
+                                {
+                                    if (tempGrg.Drivers[i] == null)
+                                    {
+                                        string driverNL = source_nodes[0].Name;
+                                        tempGrg.Drivers[i] = driverNL;
+
+                                        MainForm.extraDrivers[MainForm.extraDrivers.FindIndex(x => x == driverNL)] = null;
+
+                                        source_nodes.RemoveAt(0);
+
+                                        if (source_nodes.Count == 0)
+                                            goto exitloop;
+                                    }
+                                }
+                            }
                         }
+
                     }
+
+                    exitloop:;
                 }
                 else
                 {
@@ -286,18 +427,19 @@ namespace TS_SE_Tool
                     {
                         if (tempG.GarageStatus != 0)
                         {
-                            for (int i = 0; i < tempG.Vehicles.Count; i++)
+                            for (int i = 0; i < tempG.Drivers.Count; i++)
                             {
-                                if (tempG.Vehicles[i] == null)
+                                if (tempG.Drivers[i] == null)
                                 {
-                                    string truckNL = checked_nodes[0].Name;
-                                    tempG.Vehicles[i] = truckNL;
+                                    string driverNL = source_nodes[0].Name;
+                                    tempG.Drivers[i] = driverNL;
 
-                                    MainForm.extraVehicles[MainForm.extraVehicles.FindIndex(x => x == truckNL)] = null;
+                                    MainForm.extraDrivers[MainForm.extraDrivers.FindIndex(x => x == driverNL)] = null;
 
-                                    checked_nodes.RemoveAt(0);
-                                    if (checked_nodes.Count == 0)
-                                     goto exitloop;
+                                    source_nodes.RemoveAt(0);
+
+                                    if (source_nodes.Count == 0)
+                                        goto exitloop;
                                 }
                             }
                         }
@@ -305,10 +447,90 @@ namespace TS_SE_Tool
                     exitloop:;
                 }
 
-                FillTreeView();
+                FillSavedDriversTreeView();
+
+                FillSortingDriversTreeView();
             }
+
+            buttonMoveDriversIn.Enabled = false;
         }
 
+        private void buttonMoveTrucksIn_Click(object sender, EventArgs e)
+        {
+            // Get the checked nodes.
+            List<TreeNode> source_nodes = CheckedNodes(treeViewSortingTrucks);
+
+            //Target garage
+            List<TreeNode> target_nodes = CheckedNodes(treeViewSavedTrucks);
+
+            if (source_nodes.Count() != 0)
+            {
+                if (target_nodes.Count() != 0)
+                {
+                    foreach (TreeNode tempTreeNode in target_nodes)
+                    {
+                        if (tempTreeNode != null && tempTreeNode.Parent == null)
+                        {
+                            string grgName = tempTreeNode.Name;
+                            Garages tempGrg = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == grgName)];
+
+                            if (tempGrg.GarageStatus != 0)
+                            {
+                                for (int i = 0; i < tempGrg.Vehicles.Count; i++)
+                                {
+                                    if (tempGrg.Vehicles[i] == null)
+                                    {
+                                        string truckNL = source_nodes[0].Name;
+                                        tempGrg.Vehicles[i] = truckNL;
+
+                                        MainForm.extraVehicles[MainForm.extraVehicles.FindIndex(x => x == truckNL)] = null;
+
+                                        source_nodes.RemoveAt(0);
+
+                                        if (source_nodes.Count == 0)
+                                            goto exitloop;
+                                    }
+                                }
+                            }  
+                        }
+                    }
+
+                    exitloop:;
+                }
+                else
+                {
+                    foreach (Garages tempGrg in MainForm.GaragesList)
+                    {
+                        if (tempGrg.GarageStatus != 0)
+                        {
+                            for (int i = 0; i < tempGrg.Vehicles.Count; i++)
+                            {
+                                if (tempGrg.Vehicles[i] == null)
+                                {
+                                    string truckNL = source_nodes[0].Name;
+                                    tempGrg.Vehicles[i] = truckNL;
+
+                                    MainForm.extraVehicles[MainForm.extraVehicles.FindIndex(x => x == truckNL)] = null;
+
+                                    source_nodes.RemoveAt(0);
+
+                                    if (source_nodes.Count == 0)
+                                     goto exitloop;
+                                }
+                            }
+                        }
+                    }
+
+                    exitloop:;
+                }
+
+                FillSavedTrucksTreeView();
+
+                FillSortingTrucksTreeView();
+            }
+
+            buttonMoveTrucksIn.Enabled = false;
+        }
 
         // Return a list of the checked TreeView nodes.
         private List<TreeNode> CheckedNodes(TreeView trv)
@@ -361,5 +583,42 @@ namespace TS_SE_Tool
                 }                    
             }
         }
+
+        //
+        private void treeView_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            TreeView sourceTreeView = sender as TreeView;
+
+            string n = sourceTreeView.Name;
+
+            List<TreeNode> selected_nodes = CheckedNodes(sourceTreeView);
+
+            bool state = selected_nodes.Count() != 0;
+
+            switch (sourceTreeView.Name)
+            {
+                case "treeViewSavedDrivers":
+                    {
+                        buttonMoveDriversOut.Enabled = state;
+                        break;
+                    }
+                case "treeViewSavedTrucks":
+                    {
+                        buttonMoveTrucksOut.Enabled = state;
+                        break;
+                    }
+                case "treeViewSortingDrivers":
+                    {
+                        buttonMoveDriversIn.Enabled = state;
+                        break;
+                    }
+                case "treeViewSortingTrucks":
+                    {
+                        buttonMoveTrucksIn.Enabled = state;
+                        break;
+                    }
+            }
+        }
+
     }
 }
