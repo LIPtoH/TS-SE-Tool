@@ -23,7 +23,7 @@ namespace TS_SE_Tool.Save.Items
         internal int? selected_target { get; set; } = 0;
         internal int time_lower_limit { get; set; } = 0;
         internal int? time_upper_limit { get; set; } = 0;
-        internal int job_distance { get; set; } = 0;
+        internal SCS_Float job_distance { get; set; } = 0;
 
         internal SCS_Float fuel_consumed { get; set; } = 0;
         internal SCS_Float last_reported_fuel { get; set; } = 0;
@@ -153,7 +153,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "job_distance":
                             {
-                                job_distance = int.Parse(dataLine);
+                                job_distance = dataLine;
                                 break;
                             }
 
