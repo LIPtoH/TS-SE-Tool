@@ -210,6 +210,12 @@
     <Compile Include="CustomClasses\Utilities\ZipDataUtilitiescs.cs" />
     <Compile Include="CustomClasses\Utilities\dotNetCheck.cs" />
     <Compile Include="CustomClasses\UtilitiesExternal\FlexibleMessageBox.cs" />
+    <Compile Include="Forms\FormLicensePlateEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLicensePlateEdit.Designer.cs">
+      <DependentUpon>FormLicensePlateEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ProfileEditor\FormProfileEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -353,6 +359,9 @@
     <Compile Include="RMcode\PlainTXTResourceReader.cs" />
     <Compile Include="RMcode\PlainTXTResourceSet.cs" />
     <Compile Include="CustomClasses\Utilities\Web_Utilities.cs" />
+    <EmbeddedResource Include="Forms\FormLicensePlateEdit.resx">
+      <DependentUpon>FormLicensePlateEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProfileEditor\FormProfileEditor.resx">
       <DependentUpon>FormProfileEditor.cs</DependentUpon>
     </EmbeddedResource>

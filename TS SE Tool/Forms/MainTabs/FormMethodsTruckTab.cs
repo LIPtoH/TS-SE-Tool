@@ -170,12 +170,6 @@ namespace TS_SE_Tool
                 tbllPanel.Controls.Add(button, 2, 1);
             }
 
-            //Fuel panel
-            Panel Ppanelf = new Panel();
-            Ppanelf.BorderStyle = BorderStyle.FixedSingle;
-            Ppanelf.Dock = DockStyle.Fill;
-            Ppanelf.Name = "progressbarTruckFuel";
-
             //label - Fuel
             Label labelF = new Label();
             labelF.Name = "labelTruckDetailsFuel";
@@ -184,10 +178,18 @@ namespace TS_SE_Tool
             labelF.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             labelF.TextAlign = ContentAlignment.MiddleCenter;
 
-            tableLayoutPanelTruckFuel.Controls.Add(Ppanelf, 0, 1);
             tableLayoutPanelTruckFuel.Controls.Add(labelF, 0, 0);
 
+            //Fuel panel
+            Panel Ppanelf = new Panel();
+            Ppanelf.BorderStyle = BorderStyle.FixedSingle;
+            Ppanelf.Dock = DockStyle.Fill;
+            Ppanelf.Name = "progressbarTruckFuel";
+
+            tableLayoutPanelTruckFuel.Controls.Add(Ppanelf, 0, 1);
+
             //License plate
+            //label
             Label labelPlate = new Label();
             labelPlate.Name = "labelUserTruckLicensePlate";
             labelPlate.Text = "License plate";
@@ -195,6 +197,9 @@ namespace TS_SE_Tool
             labelPlate.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             labelPlate.TextAlign = ContentAlignment.MiddleCenter;
 
+            tableLayoutPanelTruckLP.Controls.Add(labelPlate, 0, 0);
+
+            //text
             Label lcPlate = new Label();
             lcPlate.Name = "labelLicensePlate";
             lcPlate.Text = "A 000 AA";
@@ -202,17 +207,50 @@ namespace TS_SE_Tool
             lcPlate.Dock = DockStyle.Fill;
             lcPlate.TextAlign = ContentAlignment.MiddleLeft;
 
-            tableLayoutPanelTruckLP.Controls.Add(labelPlate, 0, 0);
             tableLayoutPanelTruckLP.Controls.Add(lcPlate, 1, 0);
 
-            //
+            //button Edit
+            Button buttonLPEdit = new Button();
+            buttonLPEdit.Size = new Size(CustomizeImg.Width, CustomizeImg.Height);
+            buttonLPEdit.Name = "buttonTruckLicensePlateEdit";
+            buttonLPEdit.BackgroundImage = CustomizeImg;
+            buttonLPEdit.BackgroundImageLayout = ImageLayout.Zoom;
+            buttonLPEdit.Text = "";
+            buttonLPEdit.Margin = new Padding(3, 0, 3, 0);
+            buttonLPEdit.Enabled = true;
+            buttonLPEdit.Dock = DockStyle.Fill;
+            buttonLPEdit.Click += new EventHandler(buttonTruckLicensePlateEdit_Click);            
+
+            tableLayoutPanelTruckLP.Controls.Add(buttonLPEdit, 2, 0);
+
+            //image
             Panel LPpanel = new Panel();
             LPpanel.Dock = DockStyle.Fill;
             LPpanel.Margin = new Padding(0);
             LPpanel.Name = "TruckLicensePlateIMG";
             LPpanel.BackgroundImageLayout = ImageLayout.Center;
+            LPpanel.BorderStyle = BorderStyle.FixedSingle;
 
-            tableLayoutPanelTruckLP.Controls.Add(LPpanel, 2, 0);
+            tableLayoutPanelTruckLP.Controls.Add(LPpanel, 3, 0);
+        }
+
+        public void buttonTruckLicensePlateEdit_Click(object sender, EventArgs e)
+        {
+            UserTruckDictionary.TryGetValue(comboBoxUserTruckCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTruck);
+            string LicensePlateText = SelectedUserCompanyTruck.TruckMainData.license_plate.Value;
+
+            FormLicensePlateEdit frm = new FormLicensePlateEdit(LicensePlateText);
+            frm.StartPosition = FormStartPosition.CenterParent;
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                //Find label control
+                Label lpText = groupBoxUserTruckTruckDetails.Controls.Find("labelLicensePlate", true).FirstOrDefault() as Label;
+
+                SelectedUserCompanyTruck.TruckMainData.license_plate = new Save.DataFormat.SCS_String(frm.licenseplatetext);
+
+                UpdateTruckPanelLicensePlate();
+            }
         }
 
         private void FillUserCompanyTrucksList()
@@ -574,6 +612,7 @@ namespace TS_SE_Tool
 
             //Find label control
             Label lpText = groupBoxUserTruckTruckDetails.Controls.Find("labelLicensePlate", true).FirstOrDefault() as Label;
+
             if (lpText != null)
             {
                 lpText.Text = thisLP.LicensePlateTXT + " | ";
@@ -581,15 +620,10 @@ namespace TS_SE_Tool
                 string value = null;
                 CountriesLngDict.TryGetValue(thisLP.SourceLPCountry, out value);
 
-                if (value != null && value != "")
-                {
+                if (value != null && value != "")                
                     lpText.Text += value;
-                }
-                else
-                {
-                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(thisLP.SourceLPCountry);
-                    lpText.Text += CapName;
-                }
+                else                
+                    lpText.Text += CultureInfo.InvariantCulture.TextInfo.ToTitleCase(thisLP.SourceLPCountry);
             }
 
             //
@@ -659,26 +693,26 @@ namespace TS_SE_Tool
 
         private void ToggleVisualTruckControls(bool _state)
         {
-            Control TMP;
+            Control tmpControl;
 
-            string[] buttons = { "buttonTruckReFuel", "buttonTruckRepair", "buttonTruckInfo" };
-            Image[] images = { RefuelImg, RepairImg, CustomizeImg };
+            string[] buttons = { "buttonTruckReFuel", "buttonTruckRepair", "buttonTruckInfo", "buttonTruckLicensePlateEdit" };
+            Image[] images = { RefuelImg, RepairImg, CustomizeImg, CustomizeImg };
 
             for (int i = 0; i < buttons.Count(); i++)
             {
                 try
                 {
-                    TMP = tabControlMain.TabPages["tabPageTruck"].Controls.Find(buttons[i], true)[0];
+                    tmpControl = tabControlMain.TabPages["tabPageTruck"].Controls.Find(buttons[i], true)[0];
                 }
                 catch
                 {
                     break;
                 }
                 
-                if (_state && TMP.Enabled)
-                    TMP.BackgroundImage = images[i];
+                if (_state && tmpControl.Enabled)
+                    tmpControl.BackgroundImage = images[i];
                 else
-                    TMP.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(images[i]);
+                    tmpControl.BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(images[i]);
             }
         }
 

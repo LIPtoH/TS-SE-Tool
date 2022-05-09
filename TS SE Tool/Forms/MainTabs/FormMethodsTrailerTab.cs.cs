@@ -158,7 +158,9 @@ namespace TS_SE_Tool
 
                 tbllPanel.Controls.Add(button, 2, 1);
             }
+
             //License plate
+            //label
             Label labelPlate = new Label();
             labelPlate.Name = "labelUserTrailerLicensePlate";
             labelPlate.Text = "License plate";
@@ -166,6 +168,9 @@ namespace TS_SE_Tool
             labelPlate.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             labelPlate.TextAlign = ContentAlignment.MiddleCenter;
 
+            tableLayoutPanelTrailerLP.Controls.Add(labelPlate, 0, 0);
+
+            //text
             Label lcPlate = new Label();
             lcPlate.Name = "labelLicensePlateTrailer";
             lcPlate.Text = "A 000 AA";
@@ -173,17 +178,50 @@ namespace TS_SE_Tool
             lcPlate.Dock = DockStyle.Fill;
             lcPlate.TextAlign = ContentAlignment.MiddleLeft;
 
-            tableLayoutPanelTrailerLP.Controls.Add(labelPlate, 0, 0);
             tableLayoutPanelTrailerLP.Controls.Add(lcPlate, 1, 0);
 
-            //
+            //button Edit
+            Button buttonLPEdit = new Button();
+            buttonLPEdit.Size = new Size(CustomizeImg.Width, CustomizeImg.Height);
+            buttonLPEdit.Name = "buttonTrailerLicensePlateEdit";
+            buttonLPEdit.BackgroundImage = CustomizeImg;
+            buttonLPEdit.BackgroundImageLayout = ImageLayout.Zoom;
+            buttonLPEdit.Text = "";
+            buttonLPEdit.Margin = new Padding(3, 0, 3, 0);
+            buttonLPEdit.Enabled = true;
+            buttonLPEdit.Dock = DockStyle.Fill;
+            buttonLPEdit.Click += new EventHandler(buttonTrailerLicensePlateEdit_Click);
+
+            tableLayoutPanelTrailerLP.Controls.Add(buttonLPEdit, 2, 0);
+
+            //image
             Panel LPpanel = new Panel();
             LPpanel.Dock = DockStyle.Fill;
             LPpanel.Margin = new Padding(0);
             LPpanel.Name = "TrailerLicensePlateIMG";
             LPpanel.BackgroundImageLayout = ImageLayout.Center;
+            LPpanel.BorderStyle = BorderStyle.FixedSingle;
 
-            tableLayoutPanelTrailerLP.Controls.Add(LPpanel, 2, 0);
+            tableLayoutPanelTrailerLP.Controls.Add(LPpanel, 3, 0);
+        }
+        
+        public void buttonTrailerLicensePlateEdit_Click(object sender, EventArgs e)
+        {
+            UserTrailerDictionary.TryGetValue(comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString(), out UserCompanyTrailerData SelectedUserCompanyTrailer);
+            string LicensePlateText = SelectedUserCompanyTrailer.TrailerMainData.license_plate.Value;
+
+            FormLicensePlateEdit frm = new FormLicensePlateEdit(LicensePlateText);
+            frm.StartPosition = FormStartPosition.CenterParent;
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                //Find label control
+                Label lpText = groupBoxUserTrailerTrailerDetails.Controls.Find("labelLicensePlateTrailer", true).FirstOrDefault() as Label;
+
+                SelectedUserCompanyTrailer.TrailerMainData.license_plate = new Save.DataFormat.SCS_String(frm.licenseplatetext);
+
+                UpdateTrailerPanelLicensePlate();
+            }
         }
 
         private void FillUserCompanyTrailerList()
@@ -682,8 +720,8 @@ namespace TS_SE_Tool
         {
             Control tmpControl;
 
-            string[] buttons = { "buttonTrailerRepair", "buttonTrailerInfo" };
-            Image[] images = { RepairImg, CustomizeImg };
+            string[] buttons = { "buttonTrailerRepair", "buttonTrailerInfo", "buttonTrailerLicensePlateEdit" };
+            Image[] images = { RepairImg, CustomizeImg, CustomizeImg };
 
             for (int i = 0; i < buttons.Count(); i++)
             {
