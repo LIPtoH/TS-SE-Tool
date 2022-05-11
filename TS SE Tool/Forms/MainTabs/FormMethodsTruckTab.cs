@@ -643,11 +643,11 @@ namespace TS_SE_Tool
             {
                 ToggleTruckPartsCondition(true);
 
-                buttonUserTruckSelectCurrent.Enabled = true;
-                tableLayoutPanelUserTruckControls.Enabled = true;
-
                 groupBoxUserTruckTruckDetails.Enabled = true;
                 groupBoxUserTruckShareTruckSettings.Enabled = true;
+
+                buttonUserTruckSelectCurrent.Enabled = true;
+                tableLayoutPanelUserTruckControls.Enabled = true;
 
                 UpdateTruckPanelDetails();
             }
@@ -655,11 +655,11 @@ namespace TS_SE_Tool
             {
                 ToggleTruckPartsCondition(false);
 
-                buttonUserTruckSelectCurrent.Enabled = false;
-                tableLayoutPanelUserTruckControls.Enabled = false;
-
                 groupBoxUserTruckTruckDetails.Enabled = false;
                 groupBoxUserTruckShareTruckSettings.Enabled = false;
+
+                buttonUserTruckSelectCurrent.Enabled = false;
+                tableLayoutPanelUserTruckControls.Enabled = false;
             }
         }
 

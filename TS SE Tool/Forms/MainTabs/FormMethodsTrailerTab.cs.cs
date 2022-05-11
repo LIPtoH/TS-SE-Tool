@@ -666,11 +666,11 @@ namespace TS_SE_Tool
             {
                 ToggleTrailerPartsCondition(true);
 
-                buttonUserTrailerSelectCurrent.Enabled = true;
-                tableLayoutPanelUserTrailerControls.Enabled = true;
-
                 groupBoxUserTrailerTrailerDetails.Enabled = true;
                 groupBoxUserTrailerShareTrailerSettings.Enabled = true;
+
+                buttonUserTrailerSelectCurrent.Enabled = true;
+                tableLayoutPanelUserTrailerControls.Enabled = true;
 
                 UpdateTrailerPanelDetails();
             }
@@ -678,13 +678,13 @@ namespace TS_SE_Tool
             {
                 ToggleTrailerPartsCondition(false);
 
+                groupBoxUserTrailerTrailerDetails.Enabled = false;
+                groupBoxUserTrailerShareTrailerSettings.Enabled = false;
+
                 if (!comboBoxUserTrailerCompanyTrailers.Enabled)
                     buttonUserTrailerSelectCurrent.Enabled = false;
 
                 tableLayoutPanelUserTrailerControls.Enabled = false;
-
-                groupBoxUserTrailerTrailerDetails.Enabled = false;
-                groupBoxUserTrailerShareTrailerSettings.Enabled = false;
             }
         }
         
