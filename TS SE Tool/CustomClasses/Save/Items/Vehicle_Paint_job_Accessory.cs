@@ -11,13 +11,13 @@ namespace TS_SE_Tool.Save.Items
 {
     class Vehicle_Paint_job_Accessory : SiiNBlockCore
     {
-        internal Vector_3f mask_r_color { get; set; } = new Vector_3f();
-        internal Vector_3f mask_g_color { get; set; } = new Vector_3f();
-        internal Vector_3f mask_b_color { get; set; } = new Vector_3f();
+        internal SCS_Float_3 mask_r_color { get; set; } = new SCS_Float_3();
+        internal SCS_Float_3 mask_g_color { get; set; } = new SCS_Float_3();
+        internal SCS_Float_3 mask_b_color { get; set; } = new SCS_Float_3();
 
-        internal Vector_3f flake_color { get; set; } = new Vector_3f();
-        internal Vector_3f flip_color { get; set; } = new Vector_3f();
-        internal Vector_3f base_color { get; set; } = new Vector_3f();
+        internal SCS_Float_3 flake_color { get; set; } = new SCS_Float_3();
+        internal SCS_Float_3 flip_color { get; set; } = new SCS_Float_3();
+        internal SCS_Float_3 base_color { get; set; } = new SCS_Float_3();
 
         internal string data_path { get; set; } = "";
         internal uint refund { get; set; } = 0;
@@ -56,37 +56,37 @@ namespace TS_SE_Tool.Save.Items
 
                         case "mask_r_color":
                             {
-                                mask_r_color = new Vector_3f(dataLine);
+                                mask_r_color = new SCS_Float_3(dataLine);
                                 break;
                             }
 
                         case "mask_g_color":
                             {
-                                mask_g_color = new Vector_3f(dataLine);
+                                mask_g_color = new SCS_Float_3(dataLine);
                                 break;
                             }
 
                         case "mask_b_color":
                             {
-                                mask_b_color = new Vector_3f(dataLine);
+                                mask_b_color = new SCS_Float_3(dataLine);
                                 break;
                             }
 
                         case "flake_color":
                             {
-                                flake_color = new Vector_3f(dataLine);
+                                flake_color = new SCS_Float_3(dataLine);
                                 break;
                             }
 
                         case "flip_color":
                             {
-                                flip_color = new Vector_3f(dataLine);
+                                flip_color = new SCS_Float_3(dataLine);
                                 break;
                             }
 
                         case "base_color":
                             {
-                                base_color = new Vector_3f(dataLine);
+                                base_color = new SCS_Float_3(dataLine);
                                 break;
                             }
 

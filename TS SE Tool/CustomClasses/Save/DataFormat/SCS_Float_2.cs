@@ -7,29 +7,21 @@ using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.DataFormat
 {
-    class Vector_2f
+    class SCS_Float_2
     {
         float X { get; set; } = 0;
         float Y { get; set; } = 0;
 
-        internal Vector_2f()
+        internal SCS_Float_2()
         { }
 
-        internal Vector_2f(float _x, float _y)
+        internal SCS_Float_2(float _x, float _y)
         {
             X = _x;
             Y = _y;
         }
 
-        internal Vector_2f(string _input)
-        {
-            string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 3, StringSplitOptions.RemoveEmptyEntries);
-
-            X = NumericUtilities.HexFloatToSingleFloat(parts[0].Trim());
-            Y = NumericUtilities.HexFloatToSingleFloat(parts[1].Trim());
-        }
-
-        internal void ToVector(string _input)
+        internal SCS_Float_2(string _input)
         {
             string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 3, StringSplitOptions.RemoveEmptyEntries);
 

@@ -25,11 +25,11 @@ namespace TS_SE_Tool.Save.Items
 
         internal string my_truck { get; set; } = "";
 
-        internal Vector_3f_4f my_truck_placement { get; set; } = new Vector_3f_4f();
+        internal SCS_Placement my_truck_placement { get; set; } = new SCS_Placement();
 
         internal bool my_truck_placement_valid { get; set; } = false;
 
-        internal Vector_3f_4f my_trailer_placement { get; set; } = new Vector_3f_4f();
+        internal SCS_Placement my_trailer_placement { get; set; } = new SCS_Placement();
 
         internal SCS_Float my_slave_trailer_placements { get; set; } = 0;
 
@@ -43,9 +43,9 @@ namespace TS_SE_Tool.Save.Items
 
         internal bool assigned_trailer_connected { get; set; } = false;
 
-        internal Vector_3f_4f truck_placement { get; set; } = new Vector_3f_4f();
+        internal SCS_Placement truck_placement { get; set; } = new SCS_Placement();
 
-        internal Vector_3f_4f trailer_placement { get; set; } = new Vector_3f_4f();
+        internal SCS_Placement trailer_placement { get; set; } = new SCS_Placement();
 
         internal SCS_Float slave_trailer_placements { get; set; } = 0;
 
@@ -168,7 +168,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "my_truck_placement":
                             {
-                                my_truck_placement = new Vector_3f_4f(dataLine);
+                                my_truck_placement = new SCS_Placement(dataLine);
                                 break;
                             }
 
@@ -180,7 +180,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "my_trailer_placement":
                             {
-                                my_trailer_placement = new Vector_3f_4f(dataLine);
+                                my_trailer_placement = new SCS_Placement(dataLine);
                                 break;
                             }
 
@@ -222,13 +222,13 @@ namespace TS_SE_Tool.Save.Items
 
                         case "truck_placement":
                             {
-                                truck_placement = new Vector_3f_4f(dataLine);
+                                truck_placement = new SCS_Placement(dataLine);
                                 break;
                             }
 
                         case "trailer_placement":
                             {
-                                trailer_placement = new Vector_3f_4f(dataLine);
+                                trailer_placement = new SCS_Placement(dataLine);
                                 break;
                             }
 

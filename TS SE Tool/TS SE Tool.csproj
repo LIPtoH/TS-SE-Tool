@@ -138,11 +138,11 @@
     <Compile Include="CustomClasses\Save\DataFormat\SCS_Color.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\SCS_Float.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\SCS_String.cs" />
-    <Compile Include="CustomClasses\Save\DataFormat\Vector_2f.cs" />
-    <Compile Include="CustomClasses\Save\DataFormat\Vector_3f.cs" />
-    <Compile Include="CustomClasses\Save\DataFormat\Vector_3f_4f.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\SCS_Float_2.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\SCS_Float_3.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\SCS_Placement.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\Vector_3i.cs" />
-    <Compile Include="CustomClasses\Save\DataFormat\Vector_4f.cs" />
+    <Compile Include="CustomClasses\Save\DataFormat\SCS_Quaternion.cs" />
     <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
     <Compile Include="CustomClasses\Save\Items\Accessory_Hookup_int_data.cs" />
     <Compile Include="CustomClasses\Save\Items\Accessory_Hookup_data.cs" />

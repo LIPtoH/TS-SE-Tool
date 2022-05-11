@@ -55,7 +55,7 @@ namespace TS_SE_Tool.Save.Items
         internal int stored_actor_state { get; set; } = 0;
         internal int stored_high_beam_style { get; set; } = 0;
 
-        internal Vector_2f stored_actor_windows_state { get; set; } = new Vector_2f();
+        internal SCS_Float_2 stored_actor_windows_state { get; set; } = new SCS_Float_2();
 
         internal int stored_actor_wiper_mode { get; set; } = 0;
         internal int stored_actor_retarder { get; set; } = 0;
@@ -132,11 +132,11 @@ namespace TS_SE_Tool.Save.Items
         internal int undamaged_cargo_row { get; set; } = 0;
         internal int service_visit_count { get; set; } = 0;
 
-        internal Vector_3f last_service_pos { get; set; } = new Vector_3f();
+        internal SCS_Float_3 last_service_pos { get; set; } = new SCS_Float_3();
 
         internal int gas_station_visit_count { get; set; } = 0;
 
-        internal Vector_3f last_gas_station_pos { get; set; } = new Vector_3f();
+        internal SCS_Float_3 last_gas_station_pos { get; set; } = new SCS_Float_3();
 
         internal int emergency_call_count { get; set; } = 0;
         internal int ai_crash_count { get; set; } = 0;
@@ -411,7 +411,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "stored_actor_windows_state":
                             {
-                                stored_actor_windows_state = new Vector_2f(dataLine);
+                                stored_actor_windows_state = new SCS_Float_2(dataLine);
                                 break;
                             }
 
@@ -825,7 +825,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "last_service_pos":
                             {
-                                last_service_pos = new Vector_3f(dataLine);
+                                last_service_pos = new SCS_Float_3(dataLine);
                                 break;
                             }
 
@@ -837,7 +837,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "last_gas_station_pos":
                             {
-                                last_gas_station_pos = new Vector_3f(dataLine);
+                                last_gas_station_pos = new SCS_Float_3(dataLine);
                                 break;
                             }
 

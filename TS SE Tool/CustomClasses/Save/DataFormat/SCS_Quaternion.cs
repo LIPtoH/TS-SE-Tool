@@ -7,7 +7,7 @@ using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.DataFormat
 {
-    class Vector_4f
+    class SCS_Quaternion
     {
         float W { get; set; } = 1;
 
@@ -15,28 +15,20 @@ namespace TS_SE_Tool.Save.DataFormat
         float Y { get; set; } = 0;
         float Z { get; set; } = 0;
 
-        internal Vector_4f()
+
+        internal SCS_Quaternion()
         { }
 
-        internal Vector_4f(float _w, float _x, float _y, float _z)
+        internal SCS_Quaternion(float _w, float _x, float _y, float _z)
         {
             W = _w;
+
             X = _x;
             Y = _y;
             Z = _z;
         }
 
-        internal Vector_4f(string _input)
-        {
-            string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 5, StringSplitOptions.RemoveEmptyEntries);
-
-            W = NumericUtilities.HexFloatToSingleFloat(parts[0].Trim());
-            X = NumericUtilities.HexFloatToSingleFloat(parts[1].Trim());
-            Y = NumericUtilities.HexFloatToSingleFloat(parts[2].Trim());
-            Z = NumericUtilities.HexFloatToSingleFloat(parts[3].Trim());
-        }
-
-        internal void ToVector(string _input)
+        internal SCS_Quaternion(string _input)
         {
             string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 5, StringSplitOptions.RemoveEmptyEntries);
 
@@ -49,8 +41,7 @@ namespace TS_SE_Tool.Save.DataFormat
         override public string ToString()
         {
             // (&3f7f126f; &bd85bf17, &bd5ecfd4, &bb69a963)
-            return "(" + NumericUtilities.SingleFloatToString(W) + "; " +
-                NumericUtilities.SingleFloatToString(X) + ", " + NumericUtilities.SingleFloatToString(Y) + ", " + NumericUtilities.SingleFloatToString(Z) + ")";
+            return "(" + NumericUtilities.SingleFloatToString(W) + "; " + NumericUtilities.SingleFloatToString(X) + ", " + NumericUtilities.SingleFloatToString(Y) + ", " + NumericUtilities.SingleFloatToString(Z) + ")";
         }
     }
 }

@@ -50,7 +50,7 @@ namespace TS_SE_Tool
                         tempstr.Add(Lines[i]);
                     }
 
-                    SiiNunitData.Player.my_truck_placement = new Vector_3f_4f(tempstr[0]);
+                    SiiNunitData.Player.my_truck_placement = new SCS_Placement(tempstr[0]);
 
                     MessageBox.Show("Truck GPS position has been inserted.");
                 }

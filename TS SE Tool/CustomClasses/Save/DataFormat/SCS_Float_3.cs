@@ -7,32 +7,23 @@ using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.DataFormat
 {
-    class Vector_3f
+    class SCS_Float_3
     {    
         float X { get; set; } = 0;
         float Y { get; set; } = 0;
         float Z { get; set; } = 0;
 
-        internal Vector_3f()
+        internal SCS_Float_3()
         { }
 
-        internal Vector_3f(float _x, float _y, float _z)
+        internal SCS_Float_3(float _x, float _y, float _z)
         {
             X = _x;
             Y = _y;
             Z = _z;
         }
 
-        internal Vector_3f(string _input)
-        {
-            string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 4, StringSplitOptions.RemoveEmptyEntries);
-
-            X = NumericUtilities.HexFloatToSingleFloat(parts[0].Trim());
-            Y = NumericUtilities.HexFloatToSingleFloat(parts[1].Trim());
-            Z = NumericUtilities.HexFloatToSingleFloat(parts[2].Trim());
-        }
-
-        internal void ToVector(string _input)
+        internal SCS_Float_3(string _input)
         {
             string[] parts = _input.Split(new char[] { '(', ')', ';', ',' }, 4, StringSplitOptions.RemoveEmptyEntries);
 

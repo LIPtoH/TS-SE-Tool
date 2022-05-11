@@ -34,9 +34,9 @@ namespace TS_SE_Tool.Save.Items
 
         internal SCS_Float rheostat_factor { get; set; } = 0;
 
-        internal List<Vector_4f> user_mirror_rot { get; set; } = new List<Vector_4f>();
+        internal List<SCS_Quaternion> user_mirror_rot { get; set; } = new List<SCS_Quaternion>();
 
-        internal Vector_3f user_head_offset { get; set; } = new Vector_3f();
+        internal SCS_Float_3 user_head_offset { get; set; } = new SCS_Float_3();
 
         internal SCS_Float user_fov { get; set; } = 0;
 
@@ -162,13 +162,13 @@ namespace TS_SE_Tool.Save.Items
 
                         case var s when s.StartsWith("user_mirror_rot["):
                             {
-                                user_mirror_rot.Add(new Vector_4f(dataLine));
+                                user_mirror_rot.Add(new SCS_Quaternion(dataLine));
                                 break;
                             }
 
                         case "user_head_offset":
                             {
-                                user_head_offset.ToVector(dataLine);
+                                user_head_offset = new SCS_Float_3(dataLine);
                                 break;
                             }
 

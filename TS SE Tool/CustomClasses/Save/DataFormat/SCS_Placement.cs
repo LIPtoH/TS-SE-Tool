@@ -7,22 +7,22 @@ using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.DataFormat
 {
-    class Vector_3f_4f
+    class SCS_Placement
     {
-        Vector_3f placement { get; set; } = new Vector_3f();
-        Vector_4f direction { get; set; } = new Vector_4f();
+        SCS_Float_3 placement { get; set; } = new SCS_Float_3();
+        SCS_Quaternion direction { get; set; } = new SCS_Quaternion();
 
-        internal Vector_3f_4f()
+        internal SCS_Placement()
         { }
 
-        internal Vector_3f_4f(string _input)
+        internal SCS_Placement(string _input)
         {
             string[] parts = _input.Split(new char[] { '(', ')' }, 5, StringSplitOptions.RemoveEmptyEntries);
 
             string place = parts[0], direct = parts[2];
 
-            placement = new Vector_3f(place);
-            direction = new Vector_4f(direct);
+            placement = new SCS_Float_3(place);
+            direction = new SCS_Quaternion(direct);
         }
 
         override public string ToString()
@@ -30,6 +30,5 @@ namespace TS_SE_Tool.Save.DataFormat
             // (&c75137e5, &40dfd91d, &453d1a51) (&3f59911d; &ba5459ea, &bf06e8dd, &ba03acdd)
             return placement + " " + direction;
         }
-
     }
 }
