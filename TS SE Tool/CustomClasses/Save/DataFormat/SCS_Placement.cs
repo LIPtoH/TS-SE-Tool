@@ -17,7 +17,7 @@ namespace TS_SE_Tool.Save.DataFormat
 
         internal SCS_Placement(string _input)
         {
-            string[] parts = _input.Split(new char[] { '(', ')' }, 5, StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = _input.Split(new char[] { '(', ')' }, 4, StringSplitOptions.RemoveEmptyEntries);
 
             string place = parts[0], direct = parts[2];
 

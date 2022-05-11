@@ -14,7 +14,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal string delivered_trailer { get; set; } = "";
 
-        internal List<SCS_Float_3> delivered_pos { get; set; } = new List<SCS_Float_3>();
+        internal List<SCS_Placement> delivered_pos { get; set; } = new List<SCS_Placement>();
 
         internal List<string> job_offer { get; set; } = new List<string>();
 
@@ -75,7 +75,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case var s when s.StartsWith("delivered_pos["):
                             {
-                                delivered_pos.Add(new SCS_Float_3(dataLine));
+                                delivered_pos.Add(new SCS_Placement(dataLine));
                                 break;
                             }
 
