@@ -80,8 +80,11 @@ namespace TS_SE_Tool.SCS
 
             //Load Font data
             string fontDataPath = @"img\" + MainForm.GameType + @"\lpFont\" + SourceLPCountry + @".font";
-            CreateFontMap(fontDataPath);
 
+            if (File.Exists(fontDataPath))
+                CreateFontMap(fontDataPath);
+
+            //Create license plate
             Create();
         }
 
@@ -145,10 +148,10 @@ namespace TS_SE_Tool.SCS
                 }
             }
 
-            if (IMGpath == "")
-                DrawWarning("NON STANDART COUNTRY");
-            else
+            if (IMGpath != "" && MainForm.GlobalFontMap.ContainsKey(SourceLPCountry))
                 ValidLPcountry = true;
+            else
+                DrawWarning("NON STANDART COUNTRY");
 
             Dictionary<UInt16, SCSFontLetter> thisFontMap = new Dictionary<ushort, SCSFontLetter>();
 
@@ -800,7 +803,10 @@ namespace TS_SE_Tool.SCS
 
             //Load Font 
             IMGpath = @"img\" + gametype + @"\lpFont\" + fontimg + @".dds";
-            Image FontImg = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { IMGpath })[0];
+            Image FontImg = null;
+
+            if (File.Exists(IMGpath))
+                FontImg = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { IMGpath })[0];
 
             if (FontImg == null)
                 return;
