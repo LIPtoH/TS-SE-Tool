@@ -8,7 +8,7 @@ namespace TS_SE_Tool.Save.Items
 {
     class Job_offer_Data : SiiNBlockCore
     {
-        internal string target { get; set; } = "";
+        internal Save.DataFormat.SCS_String target { get; set; } = "";
 
         internal uint? expiration_time { get; set; } = null;
 
@@ -164,7 +164,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine("job_offer_data : " + _nameless + " {");
 
-            returnSB.AppendLine(" target: " + target);
+            returnSB.AppendLine(" target: " + target.ToString());
 
             returnSB.AppendLine(" expiration_time: " + (expiration_time == null ? "nil" : expiration_time.ToString()));
             returnSB.AppendLine(" urgency: " + (urgency == null ? "nil" : urgency.ToString()));
