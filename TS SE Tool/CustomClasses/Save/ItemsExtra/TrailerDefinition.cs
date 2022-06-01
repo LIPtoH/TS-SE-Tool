@@ -15,17 +15,17 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TS_SE_Tool
 {
-    class TrailerDefinition
+    class TrailerDefinition : IEquatable<TrailerDefinition>
     {
-        public string DefName { get; set; }
+        public string DefName { get; set; } = "";
+        
         public int CargoType { get; set; } = 0;
-        public int UnitsCount { get; set; } = 1;
-        public int Volume { get; set; } = 1;
-        public int CargoWeight { get; set; } = 1;
 
+        public List<CargoLoadVariants> CargoLoadVariants { get; set; } = new List<CargoLoadVariants>();
 
         public TrailerDefinition (string _DefName)
         {
@@ -36,23 +36,37 @@ namespace TS_SE_Tool
         {
             DefName = _DefName;
             CargoType = _CargoType;
-            UnitsCount = int.Parse(_UnitsCount);
+            int uc = int.Parse(_UnitsCount);
+
+            if (!CargoLoadVariants.Exists(x => x.UnitsCount == uc))
+                CargoLoadVariants.Add(new CargoLoadVariants(uc));
         }
 
         public TrailerDefinition(string _DefName, int _CargoType, int _UnitsCount)
         {
             DefName = _DefName;
             CargoType = _CargoType;
-            UnitsCount = _UnitsCount;
+
+            if (!CargoLoadVariants.Exists(x => x.UnitsCount == _UnitsCount))
+                CargoLoadVariants.Add(new CargoLoadVariants(_UnitsCount));
         }
-        /*
-        public TrailerDefinition(string _DefName, int _Volume, int _CargoWeight)
+
+        public override string ToString()
         {
-            DefName = _DefName;
-            Volume = _Volume;
-            CargoWeight = _CargoWeight;
+            return DefName + " | " + CargoType.ToString() + " | " + String.Join(", ", CargoLoadVariants);
         }
-        */
+
+        public bool Equals(TrailerDefinition other)
+        {
+            if (other is null)
+                return false;
+
+            return this.DefName == other.DefName && this.CargoType == other.CargoType;
+        }
+
+        public override bool Equals(object obj) => Equals(obj as TrailerDefinition);
+
+        public override int GetHashCode() => (DefName, CargoType).GetHashCode();
     }
 
     #region Equality
@@ -61,19 +75,12 @@ namespace TS_SE_Tool
     {
         public bool Equals(TrailerDefinition obj1, TrailerDefinition obj2)
         {
+            if (ReferenceEquals(obj1, obj2)) return true;
+
             if (Object.ReferenceEquals(obj1, null) || Object.ReferenceEquals(obj2, null))
                 return false;
 
-            if (ReferenceEquals(obj1, obj2)) return true;
-
-            return Equals2(obj1, obj2);
-        }
-
-        public bool Equals2(TrailerDefinition obj1, TrailerDefinition obj2)
-        {
-            if (obj1 == null && obj2 == null) return true;
-
-            return obj1.DefName == obj2.DefName && obj1.CargoType == obj2.CargoType && obj1.UnitsCount == obj2.UnitsCount;
+            return obj1.DefName == obj2.DefName && obj1.CargoType == obj2.CargoType;
         }
 
         public int GetHashCode(TrailerDefinition obj)
@@ -86,9 +93,7 @@ namespace TS_SE_Tool
                 var myStrHashCode = !string.IsNullOrEmpty(obj.DefName) ? obj.DefName.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ myStrHashCode;
 
-                hashCode = hashCode * Tuple.Create(obj.CargoType, obj.UnitsCount
-                    //, obj.Volume, obj.CargoWeight
-                    ).GetHashCode();
+                hashCode = hashCode * obj.CargoType.GetHashCode();
                 return hashCode;
             }
         }
