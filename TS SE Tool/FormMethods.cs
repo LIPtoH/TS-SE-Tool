@@ -183,15 +183,6 @@ namespace TS_SE_Tool
                 TruckBrandsLngDict = new Dictionary<string, string>();
                 DriverNames = new Dictionary<string, string>();
                 
-                DistancesTable = new DataTable();
-                DistancesTable.Columns.Add("SourceCity", typeof(string));
-                DistancesTable.Columns.Add("SourceCompany", typeof(string));
-                DistancesTable.Columns.Add("DestinationCity", typeof(string));
-                DistancesTable.Columns.Add("DestinationCompany", typeof(string));
-                DistancesTable.Columns.Add("Distance", typeof(int));
-                DistancesTable.Columns.Add("FerryTime", typeof(int));
-                DistancesTable.Columns.Add("FerryPrice", typeof(int));
-
                 CountryDictionary = new CountryDictionary();
                 CountriesDataList = new Dictionary<string, Country>();
 
@@ -386,7 +377,6 @@ namespace TS_SE_Tool
             HeavyCargoList = new List<string>();
             CompanyTruckList = new List<CompanyTruck>();
             CompanyTruckListDB = new List<CompanyTruck>();
-            CompanyTruckListDiff = new List<CompanyTruck>();
 
             GaragesList = new List<Garages>();
             UserTruckDictionary = new Dictionary<string, UserCompanyTruckData>();
@@ -403,9 +393,9 @@ namespace TS_SE_Tool
             CargoesListDB = new List<Cargo>();
             CitiesListDB = new List<string>();
             CompaniesListDB = new List<string>();
-            CargoesListDiff = new List<Cargo>();
-            CitiesListDiff = new List<string>();
-            CompaniesListDiff = new List<string>();
+            TrailerDefinitionVariantsDB = new Dictionary<string, List<string>>();
+            TrailerDefinitionListDB = new List<string>();
+            TrailerVariantsListDB = new List<string>();
 
             DBDependencies = new List<string>();
 
@@ -434,7 +424,6 @@ namespace TS_SE_Tool
             LoopStartCompany = "";
 
             RouteList = new Routes();
-            DistancesTable.Clear();
 
             components = null;
 

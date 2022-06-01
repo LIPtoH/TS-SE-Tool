@@ -73,20 +73,21 @@ namespace TS_SE_Tool
 
         private List<City> CitiesList;//+
         private List<string> CitiesListDB;//Program
-        private List<string> CitiesListDiff;//Program
 
         private List<Cargo> CargoesList; //+
         private List<Cargo> CargoesListDB;//Program
-        private List<Cargo> CargoesListDiff;//Program
 
         private Dictionary<string, List<string>> TrailerDefinitionVariants;//Program
         private List<string> TrailerVariants;//Program
+
+        private Dictionary<string, List<string>> TrailerDefinitionVariantsDB;
+        private List<string> TrailerDefinitionListDB;
+        private List<string> TrailerVariantsListDB;
 
         private List<string> HeavyCargoList;
 
         private List<string> CompaniesList; //+
         private List<string> CompaniesListDB;//Program
-        private List<string> CompaniesListDiff;//Program
 
         private List<string> CountriesList;//Program
 
@@ -100,7 +101,6 @@ namespace TS_SE_Tool
 
         private List<CompanyTruck> CompanyTruckList;//Program
         private List<CompanyTruck> CompanyTruckListDB;//Program
-        private List<CompanyTruck> CompanyTruckListDiff;//Program
 
         private List<ExtCompany> ExternalCompanies;//Program cache
         private List<ExtCargo> ExtCargoList;//Program cache
@@ -142,8 +142,6 @@ namespace TS_SE_Tool
 
         internal Dictionary<string, double> DistanceMultipliers; //Program
         internal Dictionary<string, double> WeightMultipliers; //Program
-
-        private DataTable DistancesTable; //Program
 
         //internal static Bitmap ProgressBarGradient; //Program
 
