@@ -1097,17 +1097,18 @@ namespace TS_SE_Tool
 
             foreach (TrailerDefinition tempitem in TempCargo.TrailerDefList)
             {
-                string value = null;
+                string translatedCargoName = null;
 
-                CargoLngDict.TryGetValue(tempitem.DefName, out value);
+                CargoLngDict.TryGetValue(tempitem.DefName, out translatedCargoName);
+                string CapName = "";
 
-                if (value != null && value != "")
+                if (translatedCargoName != null && translatedCargoName != "")
                 {
-                    combDT.Rows.Add(tempitem.DefName, value + " (" + tempitem.UnitsCount + "u)", tempitem.CargoType, tempitem.UnitsCount);
-                }
+                    CapName = translatedCargoName;
+                }   
                 else
                 {
-                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tempitem.DefName);
+                    CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tempitem.DefName);
                     string[] CapNameArray = CapName.Split(new char[] { '.' });
 
                     CapName = "";
@@ -1115,9 +1116,11 @@ namespace TS_SE_Tool
                     {
                         CapName += CapNameArray[i] + " ";
                     }
+                }
 
-
-                    combDT.Rows.Add(tempitem.DefName, CapName + "(" + tempitem.UnitsCount + "u)", tempitem.CargoType, tempitem.UnitsCount);
+                foreach (CargoLoadVariants cargoVar in tempitem.CargoLoadVariants)
+                {
+                    combDT.Rows.Add(tempitem.DefName, CapName + "(" + cargoVar.UnitsCount + "u)", tempitem.CargoType, cargoVar.UnitsCount);
                 }
             }
 
