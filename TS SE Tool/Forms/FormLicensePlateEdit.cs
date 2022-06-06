@@ -113,7 +113,7 @@ namespace TS_SE_Tool
             sb.AppendLine("Offset Next symbols & images");
             sb.AppendLine("Add Image with possible Scaling");
             sb.AppendLine("Place Symbols in columns with offset");
-            sb.AppendLine("Upper && Lower index");
+            sb.AppendLine("Upper & Lower index");
             sb.AppendLine("Start over to Change column (align) or make Multilayer plate");
 
             string rightText = sb.ToString();

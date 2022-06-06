@@ -1324,7 +1324,7 @@ namespace TS_SE_Tool
                                         else
                                             break;
 
-                                        apoIndex = apoIndex + 2;
+                                        apoIndex += 2;
                                     }
 
                                     SQLCommandCMD += "'" + sqlstr + "'";
@@ -1364,7 +1364,7 @@ namespace TS_SE_Tool
                                         else
                                             break;
 
-                                        apoIndex = apoIndex + 2;
+                                        apoIndex += 2;
                                     }
 
                                     SQLCommandCMD += "SELECT '" + sqlstr + "'";

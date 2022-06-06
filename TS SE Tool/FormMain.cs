@@ -145,7 +145,7 @@ namespace TS_SE_Tool
 
         //internal static Bitmap ProgressBarGradient; //Program
 
-        private Image RepairImg, RefuelImg, CustomizeImg, PlayerCompanyLogo; //Program
+        private Image RepairImg, RefuelImg, CustomizeImg; //Program
 
         private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg; //Program
