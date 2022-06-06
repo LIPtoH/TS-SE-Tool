@@ -39,9 +39,11 @@ namespace TS_SE_Tool
         public string TrailerVariant { get; set; }
         public string TrailerDefinition { get; set; }
 
+        public bool realDistance { get; set; }
 
-        public JobAdded(string _SourceCity, string _SourceCompany, string _DestinationCity, string _DestinationCompany, string _Cargo, int _Urgency, int _Type, 
-            int _UnitsCount, int _Distance, int _Ferrytime, int _Ferryprice, uint _ExpirationTime, string _CompanyTruck, string _TrailerVariant, string _TrailerDefinition)
+
+        public JobAdded(string _SourceCity, string _SourceCompany, string _DestinationCity, string _DestinationCompany, string _Cargo, int _Urgency, int _Type, int _UnitsCount, 
+                        int _Distance, int _Ferrytime, int _Ferryprice, uint _ExpirationTime, string _CompanyTruck, string _TrailerVariant, string _TrailerDefinition, bool _realDistance)
         {
             SourceCity = _SourceCity;
             SourceCompany = _SourceCompany;
@@ -58,6 +60,7 @@ namespace TS_SE_Tool
             CompanyTruck = _CompanyTruck;
             TrailerVariant = _TrailerVariant;
             TrailerDefinition = _TrailerDefinition;
+            realDistance = _realDistance;
         }
 
     }

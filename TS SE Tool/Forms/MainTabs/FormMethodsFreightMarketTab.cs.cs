@@ -1501,10 +1501,13 @@ namespace TS_SE_Tool
 
                 //True Distance
                 int TrueDistance = (int)(int.Parse(distance) * ProgSettingsV.TimeMultiplier);
+                bool _realDistance = true;
 
                 if (distance == "11111")
                 {
                     TrueDistance = (int)(5 * ProgSettingsV.TimeMultiplier);
+                    _realDistance = false;
+
                     unCertainRouteLength = "*";
                 }
                 //Time untill job expires
@@ -1513,7 +1516,7 @@ namespace TS_SE_Tool
 
                 //Creating Job data
                 JobAdded tempJobData = new JobAdded(SourceCity, SourceCompany, DestinationCity, DestinationCompany, Cargo, int.Parse(Urgency), CargoType,
-                    UnitsCount, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice), ExpirationTime, TruckName, TrailerVariant, TrailerDefinition);
+                    UnitsCount, TrueDistance, int.Parse(FerryTime), int.Parse(FerryPrice), ExpirationTime, TruckName, TrailerVariant, TrailerDefinition, _realDistance);
 
                 //Settign start point for loopback route
                 if (JobsAmountAdded == 0)
@@ -1692,6 +1695,9 @@ namespace TS_SE_Tool
                 foreach (JobAdded tmpItem in listBoxFreightMarketAddedJobs.Items)
                 {
                     JobsTotalDistance += tmpItem.Distance;
+
+                    if (!tmpItem.realDistance)
+                        unCertainRouteLength = "*";
                 }
 
                 labelFreightMarketDistanceNumbers.Text = Math.Floor(JobsTotalDistance * DistanceMultiplier).ToString() + unCertainRouteLength + " " + ProgSettingsV.DistanceMes;
