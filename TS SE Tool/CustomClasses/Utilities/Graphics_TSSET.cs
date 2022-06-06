@@ -84,24 +84,33 @@ namespace TS_SE_Tool.Utilities
             return tempImgarray;
         }
 
-        public static Image[] ddsImgLoader(string[] _filenamesarray)
+        public static (Image[] images, bool[] validity) ddsImgLoader(string[] _filenamesarray)
         {
             return ddsImgLoader(_filenamesarray, -1, -1, 0, 0, -1, -1);
         }
+        public static (Image[] images, bool[] validity) ddsImgLoader(string _filename)
+        {
+            return ddsImgLoader( new string[] { _filename }, -1, -1, 0, 0, -1, -1);
+        }
 
-        public static Image[] ddsImgLoader(string[] _filenamesarray, int _width, int _height)
+        public static (Image[] images, bool[] validity) ddsImgLoader(string[] _filenamesarray, int _width, int _height)
         {
             return ddsImgLoader(_filenamesarray, _width, _height, 0, 0, _width, _height);
         }
+        public static (Image[] images, bool[] validity) ddsImgLoader(string _filename, int _width, int _height)
+        {
+            return ddsImgLoader(new string[] { _filename }, _width, _height, 0, 0, _width, _height);
+        }
 
-        public static Image[] ddsImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y)
+        public static (Image[] images, bool[] validity) ddsImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y)
         {
             return ddsImgLoader(_filenamesarray, _width, _height, _x, _y, _width, _height);
         }
 
-        public static Image[] ddsImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y, int _newWidth, int _newHeight)
+        public static (Image[] images, bool[] validity) ddsImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y, int _newWidth, int _newHeight)
         {
-            Image[] tempImgarray = new Image[_filenamesarray.Length];
+            var images = new Image[_filenamesarray.Length];
+            var validity = new bool[_filenamesarray.Length];
 
             Bitmap ddsImg;
 
@@ -127,19 +136,24 @@ namespace TS_SE_Tool.Utilities
                             _newHeight = ddsImg.Height;
                         }
 
-                        tempImgarray[i] = new Bitmap(ddsImg, _newWidth, _newHeight);
+                        images[i] = new Bitmap(ddsImg, _newWidth, _newHeight);
+                        validity[i] = true;
 
                     }
                     else
-                        tempImgarray[i] = new Bitmap(1, 1);
+                    {
+                        images[i] = new Bitmap(1, 1);
+                        validity[i] = false;
+                    }
                 }
                 catch
                 {
-                    tempImgarray[i] = new Bitmap(1, 1);
+                    images[i] = new Bitmap(1, 1);
+                    validity[i] = false;
                 }
             }
 
-            return tempImgarray;
+            return (images, validity);
         }
 
         internal static Bitmap ImageFromDDS(string _path)

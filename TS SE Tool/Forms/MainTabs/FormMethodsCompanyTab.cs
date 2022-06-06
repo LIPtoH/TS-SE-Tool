@@ -73,7 +73,7 @@ namespace TS_SE_Tool
 
         private void FillFormCompanyControls()
         {
-            pictureBoxCompanyLogo.Image = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { @"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds" }, 94, 94, 0, 0)[0];
+            pictureBoxCompanyLogo.Image = Utilities.Graphics_TSSET.ddsImgLoader( @"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds" , 94, 94).images[0];
 
             textBoxUserCompanyCompanyName.Text = MainSaveFileProfileData.CompanyName.Value;
 
@@ -448,7 +448,7 @@ namespace TS_SE_Tool
             Image cityicon;
             float scale, picture_width;
 
-            float x, y, width, height;
+            float x, y;
             RectangleF layout_rect, source_rect, dest_rect;
 
             SizeF itemSize;
@@ -632,7 +632,7 @@ namespace TS_SE_Tool
 
             SizeF itemSize;
 
-            float x, y, width, height;
+            float x, y;
             RectangleF layout_rect, source_rect, dest_rect;
 
             // Brush if the item is selected

@@ -406,8 +406,7 @@ namespace TS_SE_Tool
 
                                 if (!checkBoxCustomThumbnail.Checked)
                                 {
-                                    string[] imgpaths = new string[] { "img\\" + MainForm.GameType + "\\autosave.dds" };
-                                    newbmp = new Bitmap(Utilities.Graphics_TSSET.ddsImgLoader(imgpaths, 256, 128, 0, 0)[0]);
+                                    newbmp = new Bitmap(Utilities.Graphics_TSSET.ddsImgLoader("img\\" + MainForm.GameType + "\\autosave.dds", 256, 128).images[0]);
                                 }
                                 else if (checkBoxCustomThumbnail.Checked && Thumbnails.Length != 0)
                                 {

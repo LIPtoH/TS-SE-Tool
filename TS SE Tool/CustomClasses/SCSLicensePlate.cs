@@ -158,7 +158,7 @@ namespace TS_SE_Tool.SCS
             if (ValidLPcountry)
             {
                 //Load BG image
-                Image BGImg = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { IMGpath })[0];
+                Image BGImg = Utilities.Graphics_TSSET.ddsImgLoader(IMGpath).images[0];
 
                 if (BGImg == null)
                     return;
@@ -481,7 +481,14 @@ namespace TS_SE_Tool.SCS
 
                         //Load img
                         string tmpImgPath = @"img\" + MainForm.GameType + @"\lp" + imgToLoad + @".dds";
-                        Image tmpImg = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { tmpImgPath })[0];
+                        var tmpTuple = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { tmpImgPath });
+
+                        Image tmpImg;
+
+                        if (tmpTuple.validity[0])
+                            tmpImg = tmpTuple.images[0];
+                        else
+                            tmpImg = null;
 
                         //Draw img
                         if (tmpImg != null)
@@ -806,7 +813,7 @@ namespace TS_SE_Tool.SCS
             Image FontImg = null;
 
             if (File.Exists(IMGpath))
-                FontImg = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { IMGpath })[0];
+                FontImg = Utilities.Graphics_TSSET.ddsImgLoader(IMGpath).images[0];
 
             if (FontImg == null)
                 return;
