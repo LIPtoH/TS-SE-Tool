@@ -798,30 +798,25 @@ namespace TS_SE_Tool
             dc = new DataColumn("CargoName", typeof(string));
             combDT.Columns.Add(dc);
 
-            foreach (Cargo tempitem in CargoesList)
+            foreach (Cargo Item in CargoesList)
             {
-                if (CargoLngDict.TryGetValue(tempitem.CargoName, out string value))
-                {
-                    if (value != null && value != "")
-                    {
-                        string str = tempitem.CargoName;
+                string strName = Item.CargoName;
+                string сapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(strName.Replace('_', ' '));
 
-                        combDT.Rows.Add(str, value);
+                if (CargoLngDict.TryGetValue(Item.CargoName, out string trName))
+                {
+                    if (trName != null && trName != "")
+                    {
+                        combDT.Rows.Add(strName, trName);
                     }
                     else
                     {
-                        string str = tempitem.CargoName;
-                        string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
-
-                        combDT.Rows.Add(str, CapName);
+                        combDT.Rows.Add(strName, сapName + " -nt");
                     }
                 }
                 else
                 {
-                    string str = tempitem.CargoName;
-                    string CapName = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(str);
-
-                    combDT.Rows.Add(str, CapName);
+                    combDT.Rows.Add(strName, сapName + " -new");
                 }
             }
 
