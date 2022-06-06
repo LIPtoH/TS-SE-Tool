@@ -200,6 +200,8 @@
     <Compile Include="CustomClasses\Save\Items\Vehicle_Wheel_Accessory.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle_Addon_Accessory.cs" />
     <Compile Include="CustomClasses\Save\Items\Vehicle_Accessory.cs" />
+    <Compile Include="CustomClasses\SCSfiles\fileMAT.cs" />
+    <Compile Include="CustomClasses\SCSfiles\fileTOBJ.cs" />
     <Compile Include="CustomClasses\SCSFontLetter.cs" />
     <Compile Include="CustomClasses\SCSLicensePlate.cs" />
     <Compile Include="CustomClasses\Utilities\AssemblyData.cs" />

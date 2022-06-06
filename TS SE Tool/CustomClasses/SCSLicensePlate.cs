@@ -461,26 +461,48 @@ namespace TS_SE_Tool.SCS
                             return -1;
                         }
 
-                        //
-                        string imgToLoadmat = imgsource.Split(new string[] { "/material/ui/lp" }, StringSplitOptions.RemoveEmptyEntries).Last();
+                        //MAT
+                        string gameFilepathMat = imgsource.Split(new string[] { "/material/ui/lp" }, StringSplitOptions.RemoveEmptyEntries).Last();
 
-                        string imgToLoad = imgToLoadmat.Substring(0, imgToLoadmat.LastIndexOf('.'));
+                        string imgpath = gameFilepathMat.Substring(0, gameFilepathMat.LastIndexOf('/') + 1);
 
                         //Side detect
-                        if (imgToLoad.IndexOf("$SIDE$") != 1)
+                        if (gameFilepathMat.IndexOf("$SIDE$") != 1)
                         {
                             string side = "front";
 
                             if (LicensePlateType == LPtype.Trailer)
                                 side = "rear";
 
-                            imgToLoad = imgToLoad.Replace("$SIDE$", side);
+                            gameFilepathMat = gameFilepathMat.Replace("$SIDE$", side);
                         }
 
-                        //Resize
+                        //TOBJ
+                        string tobjFilepath = "";
+                        string imgToLoadMat = @"img\" + MainForm.GameType + @"\lp" + gameFilepathMat;
+
+                        if (File.Exists(imgToLoadMat))
+                        {
+                            tobjFilepath = new SCSfiles.fileMAT(imgToLoadMat).texture;
+                        }
+                        else
+                            break;
+
+                        //DDS
+                        string gameFilepathDds = "";
+                        string imgToLoadTobj = @"img\" + MainForm.GameType + @"\lp" + imgpath + tobjFilepath;
+
+                        if (File.Exists(imgToLoadTobj))
+                        {
+                            gameFilepathDds = new SCSfiles.fileTOBJ(imgToLoadTobj).texture_path;
+                        }
+                        else
+                            break;
+
+                        string ddsFilepath = gameFilepathDds.Split(new string[] { "/material/ui/lp" }, StringSplitOptions.RemoveEmptyEntries).Last();
 
                         //Load img
-                        string tmpImgPath = @"img\" + MainForm.GameType + @"\lp" + imgToLoad + @".dds";
+                        string tmpImgPath = @"img\" + MainForm.GameType + @"\lp" + ddsFilepath;
                         var tmpTuple = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { tmpImgPath });
 
                         Image tmpImg;
