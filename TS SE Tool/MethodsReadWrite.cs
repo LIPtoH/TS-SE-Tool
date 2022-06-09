@@ -126,10 +126,12 @@ namespace TS_SE_Tool
         private void LngFileLoader(string _sourcefile, Dictionary<string,string> _destDict, string _ci)
         {
             _destDict.Clear();
+            bool defaultDuplicates = false;
+            string defaultFile = Directory.GetCurrentDirectory() + @"\lang\Default\" + _sourcefile;
 
             try
             {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\Default\" + _sourcefile);
+                string[] tempFile = File.ReadAllLines(defaultFile);
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
@@ -144,14 +146,26 @@ namespace TS_SE_Tool
                         { }
 
                         if (tmp[0] != "")
-                            _destDict.Add(tmp[0], tmp[1]);
+                        {
+                            if (!_destDict.ContainsKey(tmp[0]))
+                                _destDict.Add(tmp[0], tmp[1]);
+                            else
+                                defaultDuplicates = true;
+                        }
                     }
-                        
                 }
             }
             catch
             {
                 IO_Utilities.LogWriter(_sourcefile + " file is missing");
+            }
+
+            if (defaultDuplicates)
+            {
+                var txtToWrite = _destDict.Select(x => string.Join(";", new string[] { x.Key, x.Value })).ToList();
+                txtToWrite.Insert(0, "[Default]");
+
+                File.WriteAllLines(defaultFile, txtToWrite, Encoding.UTF8);
             }
 
             string language = "";
