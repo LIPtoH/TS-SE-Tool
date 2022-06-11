@@ -20,7 +20,7 @@ namespace TS_SET_Updater
         bool updateStatus = false;
         int ProcessID = -1;
 
-        string FileHashnew = "Error", FileHashold = "Error";
+        string fileHASHnew = "Error", fileHASHold = "Error";
 
         public FormMain(string[] args)
         {
@@ -29,8 +29,10 @@ namespace TS_SET_Updater
             if(args.Length > 0)
             {
                 updateStatus = bool.Parse(args[0]);
-                FileHashold = args[1];
-                if(updateStatus)
+
+                fileHASHold = args[1];
+
+                if (updateStatus)
                     ProcessID = int.Parse(args[2]);
             }
             else
@@ -43,24 +45,31 @@ namespace TS_SET_Updater
         {
             if (updateStatus)
             {
-                extWinPos wp = new extWinPos();
-                Rectangle wpR = wp.GetExtWinRectangle(ProcessID);
-                this.Location = new Point(wpR.X + (wpR.Width - this.Width) / 2, wpR.Y + (wpR.Height - this.Height) / 2);
+                extWinPos windowPosition = new extWinPos();
+                Rectangle windowRectangle = windowPosition.GetExtWinRectangle(ProcessID);
+
+                this.Location = new Point(windowRectangle.X + (windowRectangle.Width - this.Width) / 2, windowRectangle.Y + (windowRectangle.Height - this.Height) / 2);
 
                 Updater();
             }
             else
-                createDatafile(FileHashold);
+                createDatafile(fileHASHold);
         }
 
         private async void Updater()
         {
-            Process tsset = Process.GetProcessById(ProcessID);
-            string SourceFileName = tsset.MainModule.FileName;
+            string SourceFileName = "TS SE Tool.exe";
+            try
+            {
+                Process tsset = Process.GetProcessById(ProcessID);
+                SourceFileName = tsset.MainModule.FileName;
 
+                this.Text = "Updater Waiting for " + Path.GetFileName(SourceFileName) + " exit";
+                tsset.WaitForExit();
+            }
+            catch
+            { }
 
-            this.Text = "Updater Waiting for " + Path.GetFileName(SourceFileName) + " exit";
-            tsset.WaitForExit();
             this.Text = "Updater";
             this.WindowState = FormWindowState.Normal;
 
@@ -68,7 +77,7 @@ namespace TS_SET_Updater
 
             if (File.Exists(updFilePath))
             {
-                bool goodFile = checkFileHash(updFilePath, FileHashold);
+                bool goodFile = checkFileHash(updFilePath, fileHASHold);
 
                 if (goodFile)
                 {
@@ -86,10 +95,10 @@ namespace TS_SET_Updater
                     this.Size = new Size(300, 130);
 
                     try
-                    {   
-                        if(File.Exists(SourceFileName)) // SourceFileName
+                    {
+                        if (File.Exists(SourceFileName))
                         {
-                            Process.Start(SourceFileName); // SourceFileName
+                            Process.Start(SourceFileName);
                             File.Delete(updFilePath);
                         }                            
                     }
@@ -105,8 +114,8 @@ namespace TS_SET_Updater
                 else
                 {
                     labelStatus.Text = "Error";
-                    MessageBox.Show("Update file failed integrity check. Please update manually of try again."+
-                        "\r\nExpected Hash: " + FileHashold + "\r\nCalculated Hash: " + FileHashnew, "File was corrupted");
+                    MessageBox.Show("Update file failed integrity check. Please update manually of try again." + Environment.NewLine +
+                        "Expected Hash: " + fileHASHold + Environment.NewLine + "Calculated Hash: " + fileHASHnew, "File was corrupted");
                     Application.Exit();
                 }
             }
@@ -152,9 +161,9 @@ namespace TS_SET_Updater
                 using (var stream = File.OpenRead(_filepath))
                 {
                     var fileHash = hash.ComputeHash(stream);
-                    FileHashnew = BitConverter.ToString(fileHash).Replace("-", "").ToUpperInvariant();
+                    fileHASHnew = BitConverter.ToString(fileHash).Replace("-", "").ToUpperInvariant();
 
-                    if (_hashtocompare == FileHashnew)
+                    if (_hashtocompare == fileHASHnew)
                         SameHash = true;
 
                     return SameHash;
@@ -185,13 +194,11 @@ namespace TS_SET_Updater
                 }
             }
             catch
-            {
-            }
+            { }
             finally
             {
                 Application.Exit();
             }
-
         }
 
     }    
