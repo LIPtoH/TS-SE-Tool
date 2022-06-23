@@ -45,13 +45,13 @@ namespace TS_SE_Tool
             tableLayoutPanelUserTruckControls.Controls.Add(buttonInfo, 3, 0);
             buttonInfo.FlatStyle = FlatStyle.Flat;
             buttonInfo.Size = new Size(CustomizeImg.Width, CustomizeImg.Height);
-            buttonInfo.Name = "buttonTruckInfo";
+            buttonInfo.Name = "buttonTruckVehicleEditor";
             buttonInfo.BackgroundImage = CustomizeImg;
             buttonInfo.BackgroundImageLayout = ImageLayout.Zoom;
             buttonInfo.Text = "";
             buttonInfo.FlatAppearance.BorderSize = 0;
-            buttonInfo.Enabled = false;
             buttonInfo.Dock = DockStyle.Fill;
+            buttonInfo.Click += new EventHandler(buttonUserTruckVehicleEditor_Click);
 
             Button buttonR = new Button();
             tableLayoutPanelUserTruckControls.Controls.Add(buttonR, 1, 0);
@@ -457,9 +457,6 @@ namespace TS_SE_Tool
 
                     foreach (string accLink in SelectedUserCompanyTruck.TruckMainData.accessories)
                     {
-                        //if (!VehicleAccessories.ContainsKey(accLink))
-                        //    continue;
-
                         dynamic accessoryDyn = SiiNunitData.SiiNitems[accLink];
 
                         Type accType = accessoryDyn.GetType();
@@ -695,7 +692,7 @@ namespace TS_SE_Tool
         {
             Control tmpControl;
 
-            string[] buttons = { "buttonTruckReFuel", "buttonTruckRepair", "buttonTruckInfo", "buttonTruckLicensePlateEdit" };
+            string[] buttons = { "buttonTruckReFuel", "buttonTruckRepair", "buttonTruckVehicleEditor", "buttonTruckLicensePlateEdit" };
             Image[] images = { RefuelImg, RepairImg, CustomizeImg, CustomizeImg };
 
             for (int i = 0; i < buttons.Count(); i++)
@@ -868,6 +865,61 @@ namespace TS_SE_Tool
                     SiiNunitData.Player_Job.company_truck = "null";
                 }
                     
+            }
+        }
+
+        private void buttonUserTruckVehicleEditor_Click(object sender, EventArgs e)
+        {
+            UserTruckDictionary.TryGetValue(comboBoxUserTruckCompanyTrucks.SelectedValue.ToString(), out UserCompanyTruckData SelectedUserCompanyTruck);
+
+            if (SelectedUserCompanyTruck == null)
+                return;
+
+            Dictionary<string, dynamic> partsDict = new Dictionary<string, dynamic>();
+
+            foreach (string acc in SelectedUserCompanyTruck.TruckMainData.accessories)
+            {
+                partsDict.Add(acc, SiiNunitData.SiiNitems[acc]);
+            }
+
+            FormVehicleEditor frm = new FormVehicleEditor(SelectedUserCompanyTruck.TruckMainData, partsDict);
+            frm.StartPosition = FormStartPosition.CenterParent;
+            DialogResult dr = frm.ShowDialog(this);
+
+            if (dr == DialogResult.OK)
+            {
+                List<string> newAccList = new List<string>();
+
+                foreach (KeyValuePair<string, dynamic> item in frm.Accessories)
+                {
+                    newAccList.Add(item.Key);
+                }
+
+                //Remove acc link
+                List<string> removeAcc = new List<string>();
+
+                removeAcc = SelectedUserCompanyTruck.TruckMainData.accessories.Except(newAccList).ToList();                
+
+                SiiNunitData.NamelessIgnoreList.AddRange(removeAcc);
+
+                foreach(string acc in removeAcc)
+                {
+                    SelectedUserCompanyTruck.TruckMainData.accessories.Remove(acc);
+                }                
+
+                //Add Acc
+                List<string> addAcc = new List<string>();
+
+                addAcc = newAccList.Except(SelectedUserCompanyTruck.TruckMainData.accessories).ToList();
+
+                foreach (string acc in addAcc)
+                {
+                    SiiNunitData.SiiNitems.Add(acc, frm.Accessories[acc]);
+                }
+
+                SiiNunitData.NamelessControlList.AddRange(addAcc);
+
+                SelectedUserCompanyTruck.TruckMainData.accessories.AddRange(addAcc);
             }
         }
         //
