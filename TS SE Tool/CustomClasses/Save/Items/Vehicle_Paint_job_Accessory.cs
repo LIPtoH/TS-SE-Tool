@@ -138,5 +138,10 @@ namespace TS_SE_Tool.Save.Items
 
             return returnString;
         }
+
+        public override string ToString()
+        {
+            return base.ToString().Split(new char[] { '.' })[3];
+        }
     }
 }
