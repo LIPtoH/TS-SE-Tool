@@ -79,361 +79,7 @@ namespace TS_SE_Tool.Save.Items
 
                 NamelessControlList.Add(nameless);
 
-                switch (tagLine)
-                {
-                    case "":
-                        {
-                            break;
-                        }
-
-                    case "}":
-                        {
-                            break;
-                        }
-
-                    case "economy":
-                        {
-                            EconomyNameless = nameless;
-
-                            SiiNitems.Add(nameless, new Economy(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "bank":
-                        {
-                            SiiNitems.Add(nameless, new Bank(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "bank_loan":
-                        {
-                            SiiNitems.Add(nameless, new Bank_Loan(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "player":
-                        {
-                            SiiNitems.Add(nameless, new Player(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "trailer":
-                        {
-                            SiiNitems.Add(nameless, new Trailer(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "trailer_utilization_log":
-                        {
-                            SiiNitems.Add(nameless, new Trailer_Utilization_log(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "trailer_utilization_log_entry":
-                        {
-                            SiiNitems.Add(nameless, new Trailer_Utilization_log_Entry(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "trailer_def":
-                        {
-                            SiiNitems.Add(nameless, new Trailer_Def(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "player_job":
-                        {
-                            SiiNitems.Add(nameless, new Player_Job(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "vehicle":
-                        {
-                            SiiNitems.Add(nameless, new Vehicle(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "vehicle_accessory":
-                        {
-                            SiiNitems.Add(nameless, new Vehicle_Accessory(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "vehicle_addon_accessory":
-                        {
-                            SiiNitems.Add(nameless, new Vehicle_Addon_Accessory(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "vehicle_drv_plate_accessory":
-                        {
-                            SiiNitems.Add(nameless, new Vehicle_Drv_plate_Accessory(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "vehicle_wheel_accessory":
-                        {
-                            SiiNitems.Add(nameless, new Vehicle_Wheel_Accessory(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "vehicle_paint_job_accessory":
-                        {
-                            SiiNitems.Add(nameless, new Vehicle_Paint_job_Accessory(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "vehicle_sound_accessory":
-                        {
-                            SiiNitems.Add(nameless, new Vehicle_Sound_Accessory(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "vehicle_cargo_accessory":
-                        {
-                            SiiNitems.Add(nameless, new Vehicle_Cargo_Accessory(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "profit_log":
-                        {
-                            SiiNitems.Add(nameless, new Profit_log(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "profit_log_entry":
-                        {
-                            SiiNitems.Add(nameless, new Profit_log_Entry(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "driver_player":
-                        {
-                            SiiNitems.Add(nameless, new Driver_Player(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "driver_ai":
-                        {
-                            SiiNitems.Add(nameless, new Driver_AI(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "job_info":
-                        {
-                            SiiNitems.Add(nameless, new Job_Info(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "company":
-                        {
-                            SiiNitems.Add(nameless, new Company(GetLines().ToArray()));
-
-                            break;
-                        }
-                    case "job_offer_data":
-                        {
-                            SiiNitems.Add(nameless, new Job_offer_Data(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "garage":
-                        {
-                            SiiNitems.Add(nameless, new Garage(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "game_progress":
-                        {
-                            SiiNitems.Add(nameless, new Game_Progress(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "registry":
-                        {
-                            SiiNitems.Add(nameless, new Registry(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "transport_data":
-                        {
-                            SiiNitems.Add(nameless, new Transport_Data(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "economy_event_queue":
-                        {
-                            SiiNitems.Add(nameless, new Economy_event_Queue(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "economy_event":
-                        {
-                            SiiNitems.Add(nameless, new Economy_event(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "mail_ctrl":
-                        {
-                            SiiNitems.Add(nameless, new Mail_Ctrl(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "mail_def":
-                        {
-                            SiiNitems.Add(nameless, new Mail_Def(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "oversize_job_save":
-                        {
-                            SiiNitems.Add(nameless, new Oversize_Job_save(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "trajectory_orders_save":
-                        {
-                            SiiNitems.Add(nameless, new Trajectory_orders_Save(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "oversize_block_rule_save":
-                        {
-                            SiiNitems.Add(nameless, new Oversize_Block_rule_Save(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "police_ctrl":
-                        {
-                            SiiNitems.Add(nameless, new Police_Ctrl(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "oversize_offer_ctrl":
-                        {
-                            SiiNitems.Add(nameless, new Oversize_offer_Ctrl(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "oversize_route_offers":
-                        {
-                            SiiNitems.Add(nameless, new Oversize_Route_offers(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "oversize_offer":
-                        {
-                            SiiNitems.Add(nameless, new Oversize_Offer(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "delivery_log":
-                        {
-                            SiiNitems.Add(nameless, new Delivery_log(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "delivery_log_entry":
-                        {
-                            SiiNitems.Add(nameless, new Delivery_log_Entry(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "ferry_log":
-                        {
-                            SiiNitems.Add(nameless, new Ferry_log(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "ferry_log_entry":
-                        {
-                            SiiNitems.Add(nameless, new Ferry_log_Entry(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "gps_waypoint_storage":
-                        {
-                            SiiNitems.Add(nameless, new GPS_waypoint_Storage(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "map_action":
-                        {
-                            SiiNitems.Add(nameless, new Map_action(GetLines().ToArray()));
-
-                            break;
-                        }
-
-                    case "bus_stop":
-                        {
-                            SiiNitems.Add(nameless, new Bus_stop(GetLines().ToArray()));
-
-                            break;
-                        }
-                        
-                    case "bus_job_log":
-                        {
-                            SiiNitems.Add(nameless, new Bus_job_Log(GetLines().ToArray()));
-
-                            break;
-                        }
-                        
-                    default:
-                        {
-                            List<string> tmpNewBlockLines = GetLines();
-
-                            UnidentifiedBlocks.Add(nameless);
-                            SiiNitems.Add(nameless, new Unidentified(tmpNewBlockLines));
-
-                            Utilities.IO_Utilities.ErrorLogWriter("Save | New Data block | " + tagLine + Environment.NewLine + 
-                                string.Join(Environment.NewLine, tmpNewBlockLines));
-
-                            break;
-                        }
-                }
+                SiiNitems.Add(nameless, DetectTag(nameless, tagLine, GetLines().ToArray()));
 
                 continue;
 
@@ -459,11 +105,328 @@ namespace TS_SE_Tool.Save.Items
             }
         }
 
+        public dynamic DetectTag(string tagLine, string[] _input)
+        {
+            return DetectTag("", tagLine, _input);
+        }
+
+        public dynamic DetectTag(string nameless, string tagLine, string[] _input)
+        {
+            switch (tagLine)
+            {
+                case "":
+                    {
+                        break;
+                    }
+
+                case "}":
+                    {
+                        break;
+                    }
+
+                case "economy":
+                    {
+                        EconomyNameless = nameless;
+                        return new Economy(_input);
+                    }
+
+                case "bank":
+                    {
+                        return new Bank(_input);
+                    }
+
+                case "bank_loan":
+                    {
+                        return new Bank_Loan(_input);
+                    }
+
+                case "player":
+                    {
+                        return new Player(_input);
+                    }
+
+                case "trailer":
+                    {
+                        return new Trailer(_input);
+                    }
+
+                case "trailer_utilization_log":
+                    {
+                        return new Trailer_Utilization_log(_input);
+                    }
+
+                case "trailer_utilization_log_entry":
+                    {
+                        return new Trailer_Utilization_log_Entry(_input);
+                    }
+
+                case "trailer_def":
+                    {
+                        return new Trailer_Def(_input);
+                    }
+
+                case "player_job":
+                    {
+                        return new Player_Job(_input);
+                    }
+
+                case "vehicle":
+                    {
+                        return new Vehicle(_input);
+                    }
+
+                case "vehicle_accessory":
+                    {
+                        return new Vehicle_Accessory(_input);
+                    }
+
+                case "vehicle_addon_accessory":
+                    {
+                        return new Vehicle_Addon_Accessory(_input);
+                    }
+
+                case "vehicle_drv_plate_accessory":
+                    {
+                        return new Vehicle_Drv_plate_Accessory(_input);
+                    }
+
+                case "vehicle_wheel_accessory":
+                    {
+                        return new Vehicle_Wheel_Accessory(_input);
+                    }
+
+                case "vehicle_paint_job_accessory":
+                    {
+                        return new Vehicle_Paint_job_Accessory(_input);
+                    }
+
+                case "vehicle_sound_accessory":
+                    {
+                        return new Vehicle_Sound_Accessory(_input);
+                    }
+
+                case "vehicle_cargo_accessory":
+                    {
+                        return new Vehicle_Cargo_Accessory(_input);
+                    }
+
+                case "profit_log":
+                    {
+                        return new Profit_log(_input);
+                    }
+
+                case "profit_log_entry":
+                    {
+                        return new Profit_log_Entry(_input);
+                    }
+
+                case "driver_player":
+                    {
+                        return new Driver_Player(_input);
+                    }
+
+                case "driver_ai":
+                    {
+                        return new Driver_AI(_input);
+                    }
+
+                case "job_info":
+                    {
+                        return new Job_Info(_input);
+                    }
+
+                case "company":
+                    {
+                        return new Company(_input);
+                    }
+                case "job_offer_data":
+                    {
+                        return new Job_offer_Data(_input);
+                    }
+
+                case "garage":
+                    {
+                        return new Garage(_input);
+                    }
+
+                case "game_progress":
+                    {
+                        return new Game_Progress(_input);
+                    }
+
+                case "registry":
+                    {
+                        return new Registry(_input);
+                    }
+
+                case "transport_data":
+                    {
+                        return new Transport_Data(_input);
+                    }
+
+                case "economy_event_queue":
+                    {
+                        return new Economy_event_Queue(_input);
+                    }
+
+                case "economy_event":
+                    {
+                        return new Economy_event(_input);
+                    }
+
+                case "mail_ctrl":
+                    {
+                        return new Mail_Ctrl(_input);
+                    }
+
+                case "mail_def":
+                    {
+                        return new Mail_Def(_input);
+                    }
+
+                case "oversize_job_save":
+                    {
+                        return new Oversize_Job_save(_input);
+                    }
+
+                case "trajectory_orders_save":
+                    {
+                        return new Trajectory_orders_Save(_input);
+                    }
+
+                case "oversize_block_rule_save":
+                    {
+                        return new Oversize_Block_rule_Save(_input);
+                    }
+
+                case "police_ctrl":
+                    {
+                        return new Police_Ctrl(_input);
+                    }
+
+                case "oversize_offer_ctrl":
+                    {
+                        return new Oversize_offer_Ctrl(_input);
+                    }
+
+                case "oversize_route_offers":
+                    {
+                        return new Oversize_Route_offers(_input);
+                    }
+
+                case "oversize_offer":
+                    {
+                        return new Oversize_Offer(_input);
+                    }
+
+                case "delivery_log":
+                    {
+                        return new Delivery_log(_input);
+                    }
+
+                case "delivery_log_entry":
+                    {
+                        return new Delivery_log_Entry(_input);
+                    }
+
+                case "ferry_log":
+                    {
+                        return new Ferry_log(_input);
+                    }
+
+                case "ferry_log_entry":
+                    {
+                        return new Ferry_log_Entry(_input);
+                    }
+
+                case "gps_waypoint_storage":
+                    {
+                        return new GPS_waypoint_Storage(_input);
+                    }
+
+                case "map_action":
+                    {
+                        return new Map_action(_input);
+                    }
+
+                case "bus_stop":
+                    {
+                        return new Bus_stop(_input);
+                    }
+
+                case "bus_job_log":
+                    {
+                        return new Bus_job_Log(_input);
+                    }
+
+                default:
+                    {
+                        List<string> tmpNewBlockLines = _input.ToList();
+
+                        UnidentifiedBlocks.Add(nameless);
+
+                        Utilities.IO_Utilities.ErrorLogWriter("Save | New Data block | " + tagLine + Environment.NewLine +
+                            string.Join(Environment.NewLine, tmpNewBlockLines));
+
+                        return new Unidentified(tmpNewBlockLines);
+                    }
+            }
+
+            return null;
+        }
+
         internal string PrintOut(uint _version)
         {
             string returnString = "";
 
             StringBuilder returnSB = new StringBuilder();
+
+            //=== Remove Ignored blocks
+
+            if (NamelessIgnoreList.Count > 0)
+            {
+                foreach (string item in NamelessIgnoreList.Where(x => x != null && x != "null"))
+                {
+                    Type accType = SiiNitems[item].GetType();
+
+                    switch (accType.Name)
+                    {
+                        case "Vehicle":
+                            {
+                                Vehicle tmpItem = (Vehicle)SiiNitems[item];
+
+                                foreach (string acc in tmpItem.accessories)
+                                {
+                                    NamelessControlList.Remove(acc);
+                                }
+
+                                NamelessControlList.Remove(item);
+                                break;
+                            }
+
+                        case "Trailer":
+                            {
+                                Trailer tmpItem = (Trailer)SiiNitems[item];
+
+                                foreach (string acc in tmpItem.accessories)
+                                {
+                                    NamelessControlList.Remove(acc);
+                                }
+
+                                NamelessControlList.Remove(item);
+                                break;
+                            }
+
+                        default:
+                            {
+                                NamelessControlList.Remove(item);
+                                break;
+                            }
+                    }
+                }
+            }
+
+            //=== Start row
 
             returnSB.AppendLine("SiiNunit" + Environment.NewLine + "{");
 
@@ -514,6 +477,8 @@ namespace TS_SE_Tool.Save.Items
                 tmpAccList.Clear();
             }
 
+            //--- utilization logs
+
             foreach (string item in Player.trailer_utilization_logs.Where(x => x != null && x != "null"))
             {
                 Trailer_Utilization_log Trailer_Utilization_log = SiiNitems[item];
@@ -525,6 +490,8 @@ namespace TS_SE_Tool.Save.Items
                     returnSB.AppendLine(SiiNitems[item2].PrintOut(0, item2));
                 }
             }
+
+            //--- definitions
 
             foreach (string item in Player.trailer_defs.Where(x => x != null && x != "null"))
             {
@@ -611,7 +578,7 @@ namespace TS_SE_Tool.Save.Items
                 }
             }
 
-            //---
+            //--- Profit logs
 
             foreach (string item in Player.truck_profit_logs.Where(x => x != null && x != "null"))
             {
@@ -911,53 +878,7 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }
 
-            //=== Skipped blocks
-
-            //--- Remove Ignored
-            if (NamelessIgnoreList.Count > 0)
-            {
-                foreach (string item in NamelessIgnoreList.Where(x => x != null && x != "null"))
-                {
-                    Type accType = SiiNitems[item].GetType();
-
-                    switch (accType.Name)
-                    {
-                        case "Vehicle":
-                            {
-                                Vehicle tmpItem = (Vehicle)SiiNitems[item];
-
-                                foreach(string acc in tmpItem.accessories)
-                                {
-                                    NamelessControlList.Remove(acc);
-                                }
-
-                                NamelessControlList.Remove(item);
-                                break;
-                            }
-
-                        case "Trailer":
-                            {
-                                Trailer tmpItem = (Trailer)SiiNitems[item];
-
-                                foreach (string acc in tmpItem.accessories)
-                                {
-                                    NamelessControlList.Remove(acc);
-                                }
-
-                                NamelessControlList.Remove(item);
-                                break;
-                            }
-
-                        default:
-                            {
-                                NamelessControlList.Remove(item);
-                                break;
-                            }
-                    }
-                }
-            }
-
-            //--- Print skipped blocks
+            //=== Print skipped blocks
 
             if (NamelessControlList.Count > 0)
             {
