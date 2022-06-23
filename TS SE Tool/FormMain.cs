@@ -147,8 +147,8 @@ namespace TS_SE_Tool
 
         private Image RepairImg, RefuelImg, CustomizeImg; //Program
 
-        private Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
-            TruckPartsImg, TrailerPartsImg, GameIconeImg; //Program
+        internal Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
+            TruckPartsImg, TrailerPartsImg, GameIconeImg, AccessoriesImg; //Program
 
 
         internal Dictionary<string, Image> ProgUIImgsDict;

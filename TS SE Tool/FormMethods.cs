@@ -324,6 +324,8 @@ namespace TS_SE_Tool
                 TruckPartsImg = new Image[5];
                 TrailerPartsImg = new Image[4];
 
+                AccessoriesImg = new Image[6];
+
                 ProgUIImgsDict = new Dictionary<string, Image>();
 
                 TabpagesImages = new ImageList();

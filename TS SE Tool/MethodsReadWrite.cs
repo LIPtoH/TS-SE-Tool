@@ -362,6 +362,26 @@ namespace TS_SE_Tool
             imgPaths = new string[] { @"img\fragile.dds", @"img\valuable.dds" };
             CargoType2Img = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32).images;
 
+            // Accessories icons
+            List<Image> tmpIMGlist = new List<Image>();
+
+            imgPaths = new string[] { @"img\Accessories\truck_config.dds", @"img\Accessories\upgrades.dds"};
+            tmpIMGlist.AddRange(Graphics_TSSET.ddsImgLoader(imgPaths, 40, 40, 0, 0, 32, 32).images);
+
+            imgPaths = new string[] { @"img\" + GameType + @"\tyres.dds" };
+            tmpIMGlist.AddRange(Graphics_TSSET.ddsImgLoader(imgPaths, 42, 42, 5, 5, 32, 32).images);
+
+            imgPaths = new string[] { @"img\Accessories\use_preset.dds" };
+            tmpIMGlist.AddRange(Graphics_TSSET.ddsImgLoader(imgPaths, 24, 24, 16, 16, 32, 32).images);
+
+            imgPaths = new string[] {  @"img\Accessories\mute_checkbox_2.dds" };
+            tmpIMGlist.AddRange(Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32, 0, 0, 32, 32, 4).images);
+
+            imgPaths = new string[] { @"img\Accessories\plate_number.dds" };
+            tmpIMGlist.AddRange(Graphics_TSSET.ddsImgLoader(imgPaths, 80, 54, 0, 0, 32, 32).images);
+
+            AccessoriesImg = tmpIMGlist.ToArray();
+
         }
 
         //Save new language strings
