@@ -876,7 +876,8 @@ namespace TS_SE_Tool
         {
             string tempPaint = "TruckPaint\r\n";
 
-            List<string> paintstr = UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.Find(xp => xp.PartType == "paintjob").PartData;
+            List<string> paintstr = new List<string>();
+            //List<string> paintstr = UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.Find(xp => xp.PartType == "paintjob").PartData;
 
             foreach (string temp in paintstr)
             {
@@ -903,7 +904,7 @@ namespace TS_SE_Tool
                         paintstr.Add(Lines[i]);
                     }
 
-                    UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.Find(xp => xp.PartType == "paintjob").PartData = paintstr;
+                    //UserTruckDictionary[comboBoxUserTruckCompanyTrucks.SelectedValue.ToString()].Parts.Find(xp => xp.PartType == "paintjob").PartData = paintstr;
 
                     MessageBox.Show("Paint data  has been inserted.");
                 }

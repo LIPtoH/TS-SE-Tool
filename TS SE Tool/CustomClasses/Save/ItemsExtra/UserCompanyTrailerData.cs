@@ -29,13 +29,9 @@ namespace TS_SE_Tool
 
         }
 
-        public List<UserCompanyTruckDataPart> Parts = new List<UserCompanyTruckDataPart>();
-        public string TrailerType { get; set; } = "fromsave";
         public bool Main { get; set; } = true;
         public bool Users { get; set; } = true;
 
         internal Trailer TrailerMainData { get; set; } = new Trailer();
-
-        public string ProfitLogs { get; set; } = null;
     }
 }
