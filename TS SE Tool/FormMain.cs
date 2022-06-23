@@ -135,7 +135,7 @@ namespace TS_SE_Tool
         private Dictionary<string, UserCompanyTrailerData> UserTrailerDictionary; //+
         private Dictionary<string, Save.Items.Trailer_Def> UserTrailerDefDictionary; //+
 
-        private List<string> namelessList;//Program
+        //private List<string> namelessList;//Program
         private string namelessLast;//Program
 
         private Dictionary<string, List<string>> GPSbehind, GPSahead, GPSAvoid, GPSbehindOnline, GPSaheadOnline; //+

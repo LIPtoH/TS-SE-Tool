@@ -420,7 +420,7 @@ namespace TS_SE_Tool
             GPSbehindOnline = new Dictionary<string, List<string>>();
             GPSaheadOnline = new Dictionary<string, List<string>>();
 
-            namelessList = new List<string>();
+            //namelessList = new List<string>();
             namelessLast = "";
             LoopStartCity = "";
             LoopStartCompany = "";
@@ -1248,11 +1248,27 @@ namespace TS_SE_Tool
         }
 
         //Iterating throught nameless
-        private string GetSpareNameless()
+        internal string GetSpareNameless()
         {
+            SiiNunitData.NamelessControlList.Sort();
+            
             if (namelessLast == "")
             {
-                namelessLast = namelessList.Last();
+                int i = 1;
+                do
+                {
+                    namelessLast = SiiNunitData.NamelessControlList[SiiNunitData.NamelessControlList.Count() - i];
+
+                    i++;
+
+                    if (namelessLast.StartsWith("_nameless."))
+                    {
+                        namelessLast = namelessLast.Replace("_nameless.", "");
+                        break;
+                    }
+                        
+
+                } while (true);
             }
 
             ushort _incr = 48;
@@ -1317,8 +1333,9 @@ namespace TS_SE_Tool
                     namelessLast = _namelessNumArray[i].ToString("x") + namelessLast;
                 }
             }
+
             //namelessLast
-            return namelessLast;
+            return "_nameless." + namelessLast;
         }
 
         private int GetRandomCBindex(int _previous, int _lessthen)
