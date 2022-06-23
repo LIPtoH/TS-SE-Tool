@@ -86,28 +86,39 @@ namespace TS_SE_Tool.Utilities
 
         public static (Image[] images, bool[] validity) ddsImgLoader(string[] _filenamesarray)
         {
-            return ddsImgLoader(_filenamesarray, -1, -1, 0, 0, -1, -1);
+            return ddsImgLoader(_filenamesarray, -1, -1, 0, 0, -1, -1, 0);
         }
+
         public static (Image[] images, bool[] validity) ddsImgLoader(string _filename)
         {
-            return ddsImgLoader( new string[] { _filename }, -1, -1, 0, 0, -1, -1);
+            return ddsImgLoader( new string[] { _filename }, -1, -1, 0, 0, -1, -1, 0);
         }
 
         public static (Image[] images, bool[] validity) ddsImgLoader(string[] _filenamesarray, int _width, int _height)
         {
-            return ddsImgLoader(_filenamesarray, _width, _height, 0, 0, _width, _height);
+            return ddsImgLoader(_filenamesarray, _width, _height, 0, 0, _width, _height, 0);
         }
+
         public static (Image[] images, bool[] validity) ddsImgLoader(string _filename, int _width, int _height)
         {
-            return ddsImgLoader(new string[] { _filename }, _width, _height, 0, 0, _width, _height);
+            return ddsImgLoader(new string[] { _filename }, _width, _height, 0, 0, _width, _height, 0);
         }
 
         public static (Image[] images, bool[] validity) ddsImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y)
         {
-            return ddsImgLoader(_filenamesarray, _width, _height, _x, _y, _width, _height);
+            return ddsImgLoader(_filenamesarray, _width, _height, _x, _y, _width, _height, 0);
         }
 
         public static (Image[] images, bool[] validity) ddsImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y, int _newWidth, int _newHeight)
+        {
+            return ddsImgLoader(_filenamesarray, _width, _height, _x, _y, _newWidth, _newHeight, 0);
+        }
+        public static (Image[] images, bool[] validity) ddsImgLoader(string _filenamesarray, int _width, int _height, int _x, int _y, int _newWidth, int _newHeight)
+        {
+            return ddsImgLoader(new string[] { _filenamesarray }, _width, _height, _x, _y, _newWidth, _newHeight, 0);
+        }
+
+        public static (Image[] images, bool[] validity) ddsImgLoader(string[] _filenamesarray, int _width, int _height, int _x, int _y, int _newWidth, int _newHeight, int _border)
         {
             var images = new Image[_filenamesarray.Length];
             var validity = new bool[_filenamesarray.Length];
@@ -137,6 +148,23 @@ namespace TS_SE_Tool.Utilities
                         }
 
                         images[i] = new Bitmap(ddsImg, _newWidth, _newHeight);
+
+                        if (_border > 0)
+                        {
+                            Rectangle srcRegion = new Rectangle(0, 0, _newWidth, _newHeight);
+                            Rectangle destRegion = new Rectangle(_border, _border, _newWidth, _newHeight);
+
+                            Bitmap tmp = new Bitmap(_newWidth + _border * 2, _newHeight + _border * 2);
+
+                            using (Graphics gr = Graphics.FromImage(tmp))
+                            {
+                                gr.DrawImage(images[i], destRegion, srcRegion, GraphicsUnit.Pixel);
+
+                                images[i] = tmp;
+                            }
+                        }    
+                            
+
                         validity[i] = true;
 
                     }
