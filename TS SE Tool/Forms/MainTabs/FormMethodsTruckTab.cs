@@ -706,7 +706,7 @@ namespace TS_SE_Tool
                 }
                 catch
                 {
-                    break;
+                    continue;
                 }
                 
                 if (_state && tmpControl.Enabled)
