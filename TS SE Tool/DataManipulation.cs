@@ -1453,7 +1453,7 @@ namespace TS_SE_Tool
                             SQLCommandCMD = "INSERT INTO [TrailerVariantTable] (TrailerVariantName) ";
                             first = true;
 
-                            foreach (string tempVar in TrailerVariants)
+                            foreach (string tempVar in TrailerVariantsListDiff)
                             {
                                 if (!first)
                                 {
