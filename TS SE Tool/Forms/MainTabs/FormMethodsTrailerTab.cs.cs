@@ -789,25 +789,26 @@ namespace TS_SE_Tool
         public void buttonTrailerRepair_Click(object sender, EventArgs e)
         {
             string trailerNameless = "", slaveTrailerNameless = "";
+            Save.Items.Trailer selectedTrailerData;
 
             trailerNameless = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+            slaveTrailerNameless = trailerNameless;
 
-            StartTrailerParts:
-
-            Save.Items.Trailer selectedTrailerData = UserTrailerDictionary[trailerNameless].TrailerMainData;
-
-            selectedTrailerData.cargo_damage = 0;
-            selectedTrailerData.trailer_body_wear = 0;
-            selectedTrailerData.chassis_wear = 0;
-            selectedTrailerData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
-
-            slaveTrailerNameless = UserTrailerDictionary[trailerNameless].TrailerMainData.slave_trailer;
-
-            if (slaveTrailerNameless != "null")
+            do
             {
-                trailerNameless = slaveTrailerNameless;
-                goto StartTrailerParts;
-            }
+                selectedTrailerData = SiiNunitData.SiiNitems[slaveTrailerNameless];
+
+                selectedTrailerData.cargo_damage = 0;
+                selectedTrailerData.trailer_body_wear = 0;
+                selectedTrailerData.chassis_wear = 0;
+                selectedTrailerData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
+
+                slaveTrailerNameless = selectedTrailerData.slave_trailer;
+
+                if (slaveTrailerNameless == "null")
+                    break;
+
+            } while (true);
 
             for (byte i = 0; i < 5; i++)
                 UpdateTrailerPanelProgressBar(i);
@@ -838,39 +839,40 @@ namespace TS_SE_Tool
 
             //
             string trailerNameless = "", slaveTrailerNameless = "";
+            Save.Items.Trailer selectedTrailerData;
 
             trailerNameless = comboBoxUserTrailerCompanyTrailers.SelectedValue.ToString();
+            slaveTrailerNameless = trailerNameless;
 
-            Save.Items.Trailer selectedTrailerData = UserTrailerDictionary[trailerNameless].TrailerMainData;
-
-            StartTrailerParts:
-
-            switch (buttonIndex)
+            do
             {
-                case 0:
-                    selectedTrailerData.cargo_damage = 0;
+                selectedTrailerData = SiiNunitData.SiiNitems[slaveTrailerNameless];
+
+                switch (buttonIndex)
+                {
+                    case 0:
+                        selectedTrailerData.cargo_damage = 0;
+                        break;
+
+                    case 1:
+                        selectedTrailerData.trailer_body_wear = 0;
+                        break;
+
+                    case 2:
+                        selectedTrailerData.chassis_wear = 0;
+                        break;
+
+                    case 3:
+                        selectedTrailerData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
+                        break;
+                }
+
+                slaveTrailerNameless = selectedTrailerData.slave_trailer;
+
+                if (slaveTrailerNameless == "null")
                     break;
 
-                case 1:
-                    selectedTrailerData.trailer_body_wear = 0;
-                    break;
-
-                case 2:
-                    selectedTrailerData.chassis_wear = 0;
-                    break;
-
-                case 3:
-                    selectedTrailerData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
-                    break;
-            }
-
-            slaveTrailerNameless = UserTrailerDictionary[trailerNameless].TrailerMainData.slave_trailer;
-
-            if (slaveTrailerNameless != "null")
-            {
-                trailerNameless = slaveTrailerNameless;
-                goto StartTrailerParts;
-            }
+            } while (true);
 
             UpdateTrailerPanelProgressBar(buttonIndex);
 
