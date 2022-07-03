@@ -853,6 +853,8 @@ namespace TS_SE_Tool
                     SiiNunitData.Player.drivers.RemoveAt(idx);
                     SiiNunitData.Player.driver_readiness_timer.RemoveAt(idx);
                     SiiNunitData.Player.driver_quit_warned.RemoveAt(idx);
+
+                    ((Save.Items.Driver_AI)SiiNunitData.SiiNitems[tmp]).SetForDriverPool();
                 }
             }
 
@@ -864,8 +866,12 @@ namespace TS_SE_Tool
 
                 idx = SiiNunitData.Player.trucks.IndexOf(tmp);
 
+                SiiNunitData.NamelessIgnoreList.Add(tmp);
                 SiiNunitData.Player.trucks.RemoveAt(idx);
+
+                SiiNunitData.NamelessIgnoreList.Add(SiiNunitData.Player.truck_profit_logs[idx]);
                 SiiNunitData.Player.truck_profit_logs.RemoveAt(idx);
+
             }
         }
 

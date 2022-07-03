@@ -18,8 +18,8 @@ namespace TS_SE_Tool.Save.Items
         internal byte urgent { get; set; } = 0;
         internal byte mechanical { get; set; } = 0;
 
-        internal string hometown { get; set; } = "";
-        internal string current_city { get; set; } = "";
+        internal SCS_String hometown { get; set; } = "";
+        internal SCS_String current_city { get; set; } = "";
 
         internal uint state { get; set; } = 0;
         internal int on_duty_timer { get; set; } = 0;
@@ -44,7 +44,7 @@ namespace TS_SE_Tool.Save.Items
         internal string adopted_trailer { get; set; } = "";
         internal string assigned_trailer { get; set; } = "";
 
-        internal string old_hometown { get; set; } = "";
+        internal SCS_String old_hometown { get; set; } = "";
 
         internal string profit_log { get; set; } = "";
 
@@ -250,6 +250,7 @@ namespace TS_SE_Tool.Save.Items
         {
             return PrintOut(_version, null);
         }
+
         internal string PrintOut(uint _version, string _nameless)
         {
             string returnString = "";
@@ -265,8 +266,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" urgent: " + urgent.ToString());
             returnSB.AppendLine(" mechanical: " + mechanical.ToString());
 
-            returnSB.AppendLine(" hometown: " + hometown);
-            returnSB.AppendLine(" current_city: " + current_city);
+            returnSB.AppendLine(" hometown: " + hometown.ToString());
+            returnSB.AppendLine(" current_city: " + current_city.ToString());
 
             returnSB.AppendLine(" state: " + state.ToString());
             returnSB.AppendLine(" on_duty_timer: " + on_duty_timer.ToString());
@@ -291,7 +292,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" adopted_trailer: " + adopted_trailer);
             returnSB.AppendLine(" assigned_trailer: " + assigned_trailer);
 
-            returnSB.AppendLine(" old_hometown: " + old_hometown);
+            returnSB.AppendLine(" old_hometown: " + old_hometown.ToString());
             returnSB.AppendLine(" profit_log: " + profit_log);
 
             returnSB.AppendLine("}");
@@ -301,6 +302,35 @@ namespace TS_SE_Tool.Save.Items
             this.removeWritenBlock(_nameless);
 
             return returnString;
+        }
+    
+        internal void SetForDriverPool()
+        {
+            hometown = "";
+            current_city = "";
+
+            state = 1;
+
+            on_duty_timer = 0;
+            extra_maintenance = 0;
+
+            training_policy = 0;
+
+            adopted_truck = "null";
+            assigned_truck = "null";
+
+            assigned_truck_efficiency = 1;
+            assigned_truck_axle_count = 2;
+            assigned_truck_mass = 10000;
+
+            slot_truck_efficiency = 1;
+            slot_truck_axle_count = 2;
+            slot_truck_mass = 10000;
+
+            adopted_trailer = "null";
+            assigned_truck = "null";
+
+            old_hometown = "";
         }
     }
 }
