@@ -774,9 +774,15 @@ namespace TS_SE_Tool
             PrepareGarages();
 
             FormGaragesSoldContent testDialog = new FormGaragesSoldContent();
-            testDialog.ShowDialog(this);
+            DialogResult dr = testDialog.ShowDialog(this);
 
-            FillGaragesList(listBoxGarages.TopIndex);
+            if (dr == DialogResult.OK)
+            {
+                FillGaragesList(listBoxGarages.TopIndex);
+
+                translateTruckComboBox();
+                translateTrailerComboBox();
+            }
         }
 
         private void buttonGaragesBuy_Click(object sender, EventArgs e)
@@ -842,6 +848,9 @@ namespace TS_SE_Tool
             PrepareGarages();
 
             FillGaragesList(listBoxGarages.TopIndex);
+
+            if (extraVehicles.Count > 0)
+                translateTruckComboBox();
         }
 
         private void buttonGaragesSell_Click(object sender, EventArgs e)
@@ -865,6 +874,9 @@ namespace TS_SE_Tool
 
             FillGaragesList(listBoxGarages.TopIndex);
             FillHQcities();
+
+            if (extraVehicles.Count > 0)
+                translateTruckComboBox();
         }
         //end User Company tab
     }

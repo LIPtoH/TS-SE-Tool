@@ -34,7 +34,12 @@ namespace TS_SE_Tool
         {
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
+
             FillTreeView();
+
+            //dialog result
+            buttonSave.DialogResult = DialogResult.OK;
+            buttonCancel.DialogResult = DialogResult.Cancel;
         }
 
         private void FillTreeView()

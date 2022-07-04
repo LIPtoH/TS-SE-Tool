@@ -64,6 +64,9 @@ namespace TS_SE_Tool
             this.treeViewSortingTrucks = new System.Windows.Forms.TreeView();
             this.labelSortingDrivers = new System.Windows.Forms.Label();
             this.labelSortingTrucks = new System.Windows.Forms.Label();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -73,6 +76,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -82,11 +86,13 @@ namespace TS_SE_Tool
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel8, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 72.66666F));
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(804, 441);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -96,7 +102,7 @@ namespace TS_SE_Tool
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(396, 435);
+            this.groupBox1.Size = new System.Drawing.Size(396, 405);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Saved items";
@@ -119,7 +125,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(390, 416);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(390, 386);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel5
@@ -130,7 +136,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel5.Controls.Add(this.buttonMoveTrucksOut, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(198, 369);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(198, 339);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -155,7 +161,7 @@ namespace TS_SE_Tool
             this.treeViewSavedDrivers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewSavedDrivers.Location = new System.Drawing.Point(3, 37);
             this.treeViewSavedDrivers.Name = "treeViewSavedDrivers";
-            this.treeViewSavedDrivers.Size = new System.Drawing.Size(189, 326);
+            this.treeViewSavedDrivers.Size = new System.Drawing.Size(189, 296);
             this.treeViewSavedDrivers.TabIndex = 0;
             this.treeViewSavedDrivers.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             // 
@@ -166,7 +172,7 @@ namespace TS_SE_Tool
             this.treeViewSavedTrucks.Location = new System.Drawing.Point(198, 37);
             this.treeViewSavedTrucks.Name = "treeViewSavedTrucks";
             this.treeViewSavedTrucks.ShowNodeToolTips = true;
-            this.treeViewSavedTrucks.Size = new System.Drawing.Size(189, 326);
+            this.treeViewSavedTrucks.Size = new System.Drawing.Size(189, 296);
             this.treeViewSavedTrucks.TabIndex = 1;
             this.treeViewSavedTrucks.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             // 
@@ -200,7 +206,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.Controls.Add(this.buttonMoveDriversOut, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 369);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 339);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -225,7 +231,7 @@ namespace TS_SE_Tool
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(405, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(396, 435);
+            this.groupBox2.Size = new System.Drawing.Size(396, 405);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Items to sort";
@@ -248,7 +254,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(390, 416);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(390, 386);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // tableLayoutPanel7
@@ -259,7 +265,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel7.Controls.Add(this.buttonMoveDriversIn, 1, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 369);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 339);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -286,7 +292,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.Controls.Add(this.buttonMoveTrucksIn, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(198, 369);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(198, 339);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -311,7 +317,7 @@ namespace TS_SE_Tool
             this.treeViewSortingDrivers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewSortingDrivers.Location = new System.Drawing.Point(3, 37);
             this.treeViewSortingDrivers.Name = "treeViewSortingDrivers";
-            this.treeViewSortingDrivers.Size = new System.Drawing.Size(189, 326);
+            this.treeViewSortingDrivers.Size = new System.Drawing.Size(189, 296);
             this.treeViewSortingDrivers.TabIndex = 0;
             this.treeViewSortingDrivers.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             // 
@@ -322,7 +328,7 @@ namespace TS_SE_Tool
             this.treeViewSortingTrucks.Location = new System.Drawing.Point(198, 37);
             this.treeViewSortingTrucks.Name = "treeViewSortingTrucks";
             this.treeViewSortingTrucks.ShowNodeToolTips = true;
-            this.treeViewSortingTrucks.Size = new System.Drawing.Size(189, 326);
+            this.treeViewSortingTrucks.Size = new System.Drawing.Size(189, 296);
             this.treeViewSortingTrucks.TabIndex = 1;
             this.treeViewSortingTrucks.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             // 
@@ -348,11 +354,49 @@ namespace TS_SE_Tool
             this.labelSortingTrucks.Text = "Trucks";
             this.labelSortingTrucks.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 2;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.Controls.Add(this.buttonSave, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.buttonCancel, 1, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(402, 411);
+            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 1;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(402, 30);
+            this.tableLayoutPanel8.TabIndex = 2;
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonSave.Location = new System.Drawing.Point(3, 3);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(195, 24);
+            this.buttonSave.TabIndex = 0;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonCancel.Location = new System.Drawing.Point(204, 3);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(195, 24);
+            this.buttonCancel.TabIndex = 1;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
             // FormGaragesSoldContent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 441);
+            this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
             this.MaximumSize = new System.Drawing.Size(820, 480);
             this.MinimumSize = new System.Drawing.Size(820, 480);
@@ -370,6 +414,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -397,5 +442,8 @@ namespace TS_SE_Tool
         private System.Windows.Forms.Button buttonMoveDriversIn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Button buttonMoveTrucksIn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button buttonCancel;
     }
 }
