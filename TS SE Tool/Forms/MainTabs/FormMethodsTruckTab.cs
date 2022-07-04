@@ -262,7 +262,7 @@ namespace TS_SE_Tool
             DataColumn dc = new DataColumn("UserTruckNameless", typeof(string));
             combDT.Columns.Add(dc);
 
-            dc = new DataColumn("TruckType", typeof(string));
+            dc = new DataColumn("TruckType", typeof(byte));
             combDT.Columns.Add(dc);
 
             dc = new DataColumn("TruckName", typeof(string));
@@ -274,11 +274,14 @@ namespace TS_SE_Tool
             dc = new DataColumn("DriverName", typeof(string));
             combDT.Columns.Add(dc);
 
+            dc = new DataColumn("TruckState", typeof(byte));
+            combDT.Columns.Add(dc);
+
             DataColumn dcDisplay = new DataColumn("DisplayMember");
             dcDisplay.Expression = string.Format("IIF(UserTruckNameless <> ''," +
-                                                        " '[' + {0} +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + IIF(DriverName <> 'null', ' || In use - ' + {3},'')," +
+                                                        " '[' + IIF(TruckState <> '3', IIF(TruckType = '0', 'Q' ,'U') ,'S') +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + IIF(DriverName <> 'null', ' || In use - ' + {3},'')," +
                                                         "'-- NONE --')",
-                                                "TruckType", "GarageName", "TruckName", "DriverName");
+                                                "TruckType", "GarageName", "TruckName", "DriverName", "TruckState");
             combDT.Columns.Add(dcDisplay);
             //
 
@@ -291,7 +294,8 @@ namespace TS_SE_Tool
                     continue;
 
                 string truckname = "undetected", truckNameless = "";
-                string tmpTruckType = "", tmpTruckName = "", tmpGarageName = "", tmpDriverName = "";
+                string tmpTruckName = "", tmpGarageName = "", tmpDriverName = "";
+                byte tmpTruckType = 0, tmpTruckState = 0;
 
                 //link
                 truckNameless = UserTruck.Key;
@@ -299,13 +303,19 @@ namespace TS_SE_Tool
                 //Quick job or Bought
                 if (UserTruck.Value.Users)
                 {
-                    tmpTruckType = "U";
+                    tmpTruckType = 1;
 
                     //Garage
                     tmpGarageName = GaragesList.Find(x => x.Vehicles.Contains(truckNameless)).GarageNameTranslated;
+
+                    tmpTruckState = 2;
                 }
                 else
-                    tmpTruckType = "Q";
+                {
+                    tmpTruckType = 0;
+
+                    tmpTruckState = 1;
+                }   
 
                 //Brand
                 foreach (string accLink in UserTruck.Value.TruckMainData.accessories)
@@ -344,7 +354,7 @@ namespace TS_SE_Tool
                 }
 
                 if (tmpDriverName != null && tmpDriverName != "null")
-                    if (SiiNunitData.Player.drivers[0] == tmpDriverName)
+                    if (SiiNunitData.Player.drivers[0] == tmpDriverName || tmpTruckType == 0)
                     {
                         tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                     }
@@ -359,7 +369,7 @@ namespace TS_SE_Tool
                     }
 
                 //
-                combDT.Rows.Add(truckNameless, tmpTruckType, tmpTruckName, tmpGarageName, tmpDriverName);
+                combDT.Rows.Add(truckNameless, tmpTruckType, tmpTruckName, tmpGarageName, tmpDriverName, tmpTruckState);
             }
 
             bool noTrucks = false;
@@ -369,6 +379,8 @@ namespace TS_SE_Tool
                 combDT.Rows.Add("null"); // -- NONE --
                 noTrucks = true;
             }
+
+            combDT.DefaultView.Sort = "TruckState, GarageName, TruckName";
 
             comboBoxUserTruckCompanyTrucks.ValueMember = "UserTruckNameless";
             comboBoxUserTruckCompanyTrucks.DisplayMember = "DisplayMember";

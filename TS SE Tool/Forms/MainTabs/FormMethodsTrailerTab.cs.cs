@@ -245,11 +245,14 @@ namespace TS_SE_Tool
             dc = new DataColumn("DriverName", typeof(string));
             combDT.Columns.Add(dc);
 
+            dc = new DataColumn("TrailerState", typeof(string));
+            combDT.Columns.Add(dc);
+
             DataColumn dcDisplay = new DataColumn("DisplayMember");
             dcDisplay.Expression = string.Format(
-                "IIF(UserTrailerNameless <> 'null', '[' + {0} +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + " +
+                "IIF(UserTrailerNameless <> 'null', '[' + IIF(TrailerState <> '3', {0} ,'S') +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + " +
                 "IIF(DriverName <> 'null', ' || In use - ' + {3},''), '-- NONE --')",
-                "TrailerType", "GarageName", "TrailerName", "DriverName");
+                "TrailerType", "GarageName", "TrailerName", "DriverName", "TrailerState");
             combDT.Columns.Add(dcDisplay);
             //
 
@@ -265,6 +268,7 @@ namespace TS_SE_Tool
                 {
                     string trailerNameless = "", 
                            tmpTrailerType = "", tmpTrailerName = "", tmpGarageName = "", tmpDriverName = "";
+                    byte tmpTruckState = 0;
 
                     //link
                     trailerNameless = UserTrailer.Key;
@@ -276,13 +280,14 @@ namespace TS_SE_Tool
 
                         //Garage
                         tmpGarageName = GaragesList.Find(x => x.Trailers.Contains(trailerNameless)).GarageNameTranslated;
+
+                        tmpTruckState = 2;
                     }
                     else
                     {
                         tmpTrailerType = "Q";
 
-                        //
-                        tmpGarageName = "---";
+                        tmpTruckState = 1;
                     }
 
                     //Trailer type
@@ -346,7 +351,7 @@ namespace TS_SE_Tool
                         }
 
                     //
-                    combDT.Rows.Add(trailerNameless, tmpTrailerType, tmpTrailerName, tmpGarageName, tmpDriverName);
+                    combDT.Rows.Add(trailerNameless, tmpTrailerType, tmpTrailerName, tmpGarageName, tmpDriverName, tmpTruckState);
                 }
             }
 
@@ -358,6 +363,8 @@ namespace TS_SE_Tool
             {
                 comboBoxUserTrailerCompanyTrailers.Enabled = false;
             }
+
+            combDT.DefaultView.Sort = "TrailerState, GarageName, TrailerName";
 
             comboBoxUserTrailerCompanyTrailers.ValueMember = "UserTrailerNameless";
             comboBoxUserTrailerCompanyTrailers.DisplayMember = "DisplayMember";
