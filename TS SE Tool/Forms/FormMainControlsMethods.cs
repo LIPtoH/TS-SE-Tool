@@ -106,7 +106,7 @@ namespace TS_SE_Tool
                 LoadDriverNamesLng();
 
                 AddTranslationToData();
-                RefreshComboboxes();
+                TranslateComboBoxes();
                 CorrectControlsPositions();
             }
             catch

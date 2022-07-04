@@ -789,15 +789,18 @@ namespace TS_SE_Tool
             //Freight Market
             labelFreightMarketDistanceNumbers.Location = new Point( labelFreightMarketDistance.Location.X + labelFreightMarketDistance.Width + 6, labelFreightMarketDistanceNumbers.Location.Y);
         }
+        
         //Translate CB
-        private void RefreshComboboxes()
+
+        private void translateTruckComboBox()
         {
-            int savedindex = 0, j = 0;
-            string savedvalue = "", ntFormat = " -nt";
+            int savedindex = 0;
+            string savedvalue = "";
             DataTable temptable = new DataTable();
 
             //Truck tab
             temptable = comboBoxUserTruckCompanyTrucks.DataSource as DataTable;
+
             if (temptable != null)
             {
                 savedindex = comboBoxUserTruckCompanyTrucks.SelectedIndex;
@@ -805,32 +808,46 @@ namespace TS_SE_Tool
                 if (savedindex != -1)
                     savedvalue = comboBoxUserTruckCompanyTrucks.SelectedValue.ToString();
 
-                //comboBoxUserTruckCompanyTrucks.SelectedIndexChanged -= comboBoxCompanyTrucks_SelectedIndexChanged;
-
                 foreach (DataRow temp in temptable.Rows)
                 {
                     string source = temp[0].ToString();
 
-                    string value = GaragesList.Find(x => x.Vehicles.Contains(source)).GarageNameTranslated;
+                    var grg = GaragesList.Find(x => x.Vehicles.Contains(source));
 
-                    if (value != null && value != "")
+                    if ((byte)temp["TruckType"] == 1) // Users
                     {
-                        temp["GarageName"] = value;
+                        if (grg != null) // In garage
+                        {
+                            temp["GarageName"] = grg.GarageNameTranslated;
+                            temp["TruckState"] = 2;
+                        }
+                        else // Sorting
+                        {
+                            temp["GarageName"] = "Not In Garage";
+                            temp["TruckState"] = 3;
+                        }
                     }
                     else
                     {
-                        temp["GarageName"] = "-unknown-";
+                        temp["TruckState"] = 1;
                     }
+
                 }
 
                 if (savedindex != -1)
                     comboBoxUserTruckCompanyTrucks.SelectedValue = savedvalue;
-
-                //comboBoxUserTruckCompanyTrucks.SelectedIndexChanged += comboBoxCompanyTrucks_SelectedIndexChanged;
             }
+        }
+
+        private void translateTrailerComboBox()
+        {
+            int savedindex = 0;
+            string savedvalue = "";
+            DataTable temptable = new DataTable();
 
             //Trailer tab
             temptable = comboBoxUserTrailerCompanyTrailers.DataSource as DataTable;
+
             if (temptable != null)
             {
                 savedindex = comboBoxUserTrailerCompanyTrailers.SelectedIndex;
@@ -843,6 +860,7 @@ namespace TS_SE_Tool
                 foreach (DataRow temp in temptable.Rows)
                 {
                     string source = temp[0].ToString();
+
                     if (source == "null")
                         continue;
 
@@ -863,7 +881,16 @@ namespace TS_SE_Tool
 
                 //comboBoxUserTrailerCompanyTrailers.SelectedIndexChanged += comboBoxCompanyTrailers_SelectedIndexChanged;
             }
+        }
 
+        private void TranslateComboBoxes()
+        {
+            int savedindex = 0, j = 0;
+            string savedvalue = "", ntFormat = " -nt";
+            DataTable temptable = new DataTable();
+
+            translateTruckComboBox();
+            translateTrailerComboBox();
 
             //Countries ComboBoxes
             temptable = comboBoxFreightMarketCountries.DataSource as DataTable;
@@ -899,6 +926,7 @@ namespace TS_SE_Tool
                 dv.Sort = "CountryName ASC";
                 sortedDT = dv.ToTable();
                 sortedDT.DefaultView.Sort = "";
+
                 //Shift All
                 DataRow sourceRow = sortedDT.Select("Country = '+all'")[0];
                 int rowi = sortedDT.Rows.IndexOf(sourceRow);
@@ -908,6 +936,7 @@ namespace TS_SE_Tool
 
                 sortedDT.Rows.RemoveAt(rowi);
                 sortedDT.Rows.InsertAt(row, 0);
+
                 //Shift Unsorted
                 try
                 {
@@ -1139,6 +1168,7 @@ namespace TS_SE_Tool
 
             listBoxFreightMarketAddedJobs.Refresh();
         }
+        
         //Get translation line
         private string GetranslatedString(string _key)
         {
