@@ -460,9 +460,27 @@ namespace TS_SE_Tool
             }
 
             //
-            foreach (string drvr in SiiNunitData.Player.drivers)
+            for(int i = 0; i < SiiNunitData.Player.drivers.Count; i++)
             {
-                UserDriverDictionary.Add(drvr, new UserCompanyDriverData());
+                UserCompanyDriverData DrData = new UserCompanyDriverData();
+                string drvr = SiiNunitData.Player.drivers[i];
+
+                if (i == 0)
+                {
+                    Save.Items.Player dr = (Save.Items.Player)SiiNunitData.Player;
+
+                    DrData.AssignedTruck = dr.assigned_truck;
+                    DrData.AssignedTrailer = dr.assigned_trailer;
+                }
+                else
+                {
+                    Save.Items.Driver_AI dr = (Save.Items.Driver_AI)SiiNunitData.SiiNitems[drvr];
+
+                    DrData.AssignedTruck = dr.assigned_truck;
+                    DrData.AssignedTrailer = dr.assigned_trailer;
+                }
+
+                UserDriverDictionary.Add(drvr, DrData);
             }
         }
 
