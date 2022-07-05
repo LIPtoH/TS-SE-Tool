@@ -30,12 +30,31 @@ namespace TS_SE_Tool
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
         int SpareDrvSpaces = 0, SpareVhcSpaces = 0;
 
+        List<Garages> thisGarageList = new List<Garages>();
+        List<string> thisExtraVehicles = new List<string>();
+        List<string> thisExtraDrivers = new List<string>();
+
         public FormGaragesSoldContent()
         {
             InitializeComponent();
+            
+            PrepareForm();
+        }
+
+        private void PrepareForm()
+        {
             this.Icon = Properties.Resources.MainIco;
 
             FillTreeView();
+
+            // Clone
+            foreach(Garages garage in MainForm.GaragesList)
+            {
+                thisGarageList.Add((Garages)garage.DeepClone());
+            }
+
+            thisExtraVehicles = new List<string>(MainForm.extraVehicles);
+            thisExtraDrivers = new List<string>(MainForm.extraDrivers);
 
             //dialog result
             buttonSave.DialogResult = DialogResult.OK;
@@ -587,6 +606,14 @@ namespace TS_SE_Tool
                     FindCheckedNodes(checked_nodes, node.Nodes, FindParentsOrChild);
                 }                    
             }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            MainForm.GaragesList = thisGarageList;
+
+            MainForm.extraVehicles = thisExtraVehicles;
+            MainForm.extraDrivers = thisExtraDrivers;
         }
 
         //

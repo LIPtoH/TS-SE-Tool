@@ -37,6 +37,9 @@ namespace TS_SE_Tool
         public bool IgnoreStatus { get; set; } = true;
 
         private FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+        
+        public Garages()
+        { }
 
         public Garages(string _GarageName)
         {
@@ -88,7 +91,25 @@ namespace TS_SE_Tool
 
         public override string ToString()
         {
-            return GarageName + " | D:" + Drivers.Count + "| V:" + Vehicles.Count;
+            return GarageName + " | D: [ " + Drivers.Where(x => x != null).Count() + " | " + Drivers.Count + " ]" +
+                                " | V: [ " + Vehicles.Where(x => x != null).Count() + " | " + Vehicles.Count + " ]";
+        }
+
+        public Garages DeepClone()
+        {
+            Garages cloneObj = new Garages();
+
+            cloneObj.GarageName = this.GarageName;
+            cloneObj.GarageNameTranslated = this.GarageNameTranslated;
+
+            cloneObj.GarageStatus = this.GarageStatus;
+
+            cloneObj.Vehicles = new List<string>(this.Vehicles);
+            cloneObj.Drivers = new List<string>(this.Drivers);
+            cloneObj.Trailers = new List<string>(this.Trailers);
+            cloneObj.IgnoreStatus = this.IgnoreStatus;
+
+            return cloneObj;
         }
     }
 }
