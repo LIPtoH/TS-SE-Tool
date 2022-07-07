@@ -558,7 +558,7 @@ namespace TS_SE_Tool.Save.Items
 
                 returnSB.AppendLine(Job_Info.PrintOut(0, Player.selected_job));
 
-                if (Job_Info.special != null)
+                if (Job_Info.special != "null")
                 {
                     returnSB.AppendLine(SiiNitems[Job_Info.special].PrintOut(0, Job_Info.special));
                 }
