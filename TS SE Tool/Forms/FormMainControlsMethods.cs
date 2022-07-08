@@ -335,12 +335,12 @@ namespace TS_SE_Tool
                 if (dr == DialogResult.Cancel)
                     return;
 
+                string SiiInfoPath = Globals.SelectedSavePath + @"\info.sii",
+                       SiiInfoPathBackup = Globals.SelectedSavePath + @"\info_backup.sii";
+
                 if (dr == DialogResult.No)
                 {
                     SwapFiles(SiiSavePath, SiiSavePathBackup);
-
-                    string SiiInfoPath = Globals.SelectedSavePath + @"\info.sii",
-                           SiiInfoPathBackup = Globals.SelectedSavePath + @"\info_backup.sii";
 
                     if (File.Exists(SiiInfoPathBackup))
                         SwapFiles(SiiInfoPath, SiiInfoPathBackup);
@@ -348,8 +348,13 @@ namespace TS_SE_Tool
                 else
                 {
                     File.Copy(SiiSavePathBackup, SiiSavePath, true);
-
                     File.Delete(SiiSavePathBackup);
+
+                    if (File.Exists(SiiInfoPathBackup))
+                    {
+                        File.Copy(SiiInfoPathBackup, SiiInfoPath, true);
+                        File.Delete(SiiInfoPathBackup);
+                    }                        
                 }
 
                 void SwapFiles(string _firstFile, string _secondFile)
