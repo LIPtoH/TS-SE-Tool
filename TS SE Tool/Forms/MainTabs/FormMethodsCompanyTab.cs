@@ -36,14 +36,11 @@ namespace TS_SE_Tool
             buttonUserCompanyGaragesManage.Text = "";
             buttonUserCompanyGaragesManage.BackgroundImage = CustomizeImg;
             buttonUserCompanyGaragesManage.BackgroundImageLayout = ImageLayout.Center;
-
-            listBoxVisitedCities.DrawMode = DrawMode.OwnerDrawVariable;
-            listBoxGarages.DrawMode = DrawMode.OwnerDrawVariable;
         }
 
         private void tableLayoutPanel2_EnabledChanged(object sender, EventArgs e)
         {
-            ToggleVisualUserCompanyControls(tableLayoutPanel2.Enabled);
+            ToggleVisualUserCompanyControls(tableLayoutPanelCompanyMain.Enabled);
         }
 
         private void ToggleVisualUserCompanyControls(bool _state)
@@ -83,6 +80,7 @@ namespace TS_SE_Tool
 
             FillVisitedCities(0);
             FillGaragesList(0);
+            PopulateDriversList();
         }
 
         public void FillAccountMoneyTB()
@@ -878,6 +876,133 @@ namespace TS_SE_Tool
             if (extraVehicles.Count > 0)
                 translateTruckComboBox();
         }
+
+        // Drivers
+        // Populate
+        private void PopulateDriversList()
+        {
+            bool userState = true;
+
+
+            // Staff
+            foreach (string driver in SiiNunitData.Player.drivers)
+            {
+                Driver driverInList = new Driver();
+
+                driverInList.driverNameless = driver;
+                driverInList.isStaff = true;
+                driverInList.isUser = userState;
+
+                if (userState)
+                    userState = false;
+
+                listBoxUserCompanyDrivers.Items.Add(driverInList);
+            }
+
+            // Drivers pool
+            List<string> thisDP = new List<string>(SiiNunitData.Economy.driver_pool);
+
+            thisDP = thisDP.Select(s => new { fullStr = s, splitStr = s.Split('.') }).OrderBy(x => int.Parse(x.splitStr[1]))
+            .Select(x => x.fullStr).ToList();
+
+            foreach (string driver in thisDP)
+            {
+                Driver driverInList = new Driver();
+
+                driverInList.driverNameless = driver;
+
+                listBoxUserCompanyDrivers.Items.Add(driverInList);
+            }
+
+            // Totals
+            labelUserCompanyDriversCurrent.Text = SiiNunitData.Player.drivers.Count.ToString();
+
+            labelUserCompanyDriversTotal.Text = (SiiNunitData.Player.drivers.Count + SiiNunitData.Economy.driver_pool.Count).ToString();
+        }
+
+        private void listBoxUserCompanyDrivers_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            // Get the ListBox and the item.
+            e.ItemHeight = (int)(GaragePictureHeight + 2 * GarageItemMargin);
+        }
+
+        private void listBoxUserCompanyDrivers_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            // Get the ListBox and the item.
+            ListBox lst = sender as ListBox;
+
+            Driver driver = (Driver)lst.Items[e.Index];
+
+            string txt = "", driverName = "";
+
+            StringFormat format = new StringFormat();
+
+            Brush br;
+            Font RegularFont = new Font(this.Font.FontFamily, 9f),
+                 BoldFont = new Font(this.Font, FontStyle.Bold);
+
+            Image itemIcon;
+            float scale, picture_width;
+
+            float x, y;
+            RectangleF layout_rect, source_rect, dest_rect;
+
+            SizeF itemSize;
+
+            // Draw the background.
+            e.DrawBackground();
+
+            // See if the item is selected.
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                br = SystemBrushes.HighlightText;
+            else
+                br = new SolidBrush(e.ForeColor);
+
+            // Icon
+
+            if (driver.isStaff)
+                itemIcon = CitiesImg[1];
+            else
+                itemIcon = CitiesImg[0];
+
+            source_rect = new RectangleF(0, 0, itemIcon.Width, itemIcon.Height);
+
+            scale = VisitedCitiesPictureHeight / itemIcon.Height;
+            picture_width = scale * itemIcon.Width;
+
+            dest_rect = new RectangleF(e.Bounds.Left + VisitedCitiesItemMargin, e.Bounds.Top + VisitedCitiesItemMargin, picture_width, VisitedCitiesPictureHeight);
+
+            // Draw
+            e.Graphics.DrawImage(itemIcon, dest_rect, source_rect, GraphicsUnit.Pixel);
+
+            //===
+
+            // Driver name
+
+            if (driver.driverNameless == SiiNunitData.Player.drivers[0])
+                driverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
+            else
+                if (DriverNames.ContainsKey(driver.driverNameless))
+                    driverName = DriverNames[driver.driverNameless].TrimStart(new char[] { '+' });
+                else
+                    driverName = driver.driverNameless;
+
+            txt = driverName;
+
+            itemSize = e.Graphics.MeasureString(txt, RegularFont);
+
+            x = e.Bounds.Left + picture_width + 3 * VisitedCitiesItemMargin;
+            y = e.Bounds.Top + (e.Bounds.Bottom - e.Bounds.Top - itemSize.Height) / 2;
+
+            layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
+
+            // Draw the text
+            e.Graphics.DrawString(txt, RegularFont, br, layout_rect);
+
+            // Draw the focus rectangle if appropriate.
+            e.DrawFocusRectangle();
+        }
+
         //end User Company tab
     }
 }

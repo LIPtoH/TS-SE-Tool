@@ -144,6 +144,7 @@
     <Compile Include="CustomClasses\Save\DataFormat\Vector_3i.cs" />
     <Compile Include="CustomClasses\Save\DataFormat\SCS_Quaternion.cs" />
     <Compile Include="CustomClasses\Save\Info\Dependencies.cs" />
+    <Compile Include="CustomClasses\Save\ItemsExtra\Driver.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\TrailerDefinitionCargoLoadVariant.cs" />
     <Compile Include="CustomClasses\Save\Items\Accessory_Hookup_int_data.cs" />
     <Compile Include="CustomClasses\Save\Items\Accessory_Hookup_data.cs" />

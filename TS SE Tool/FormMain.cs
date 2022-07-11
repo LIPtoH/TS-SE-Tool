@@ -150,7 +150,6 @@ namespace TS_SE_Tool
         internal Image[] ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
             TruckPartsImg, TrailerPartsImg, GameIconeImg, AccessoriesImg; //Program
 
-
         internal Dictionary<string, Image> ProgUIImgsDict;
 
         private ImageList TabpagesImages; //Program
