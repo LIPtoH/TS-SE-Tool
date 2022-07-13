@@ -29,6 +29,13 @@ namespace TS_SE_Tool
 
         internal bool isStaff { get; set; } = false;
 
+        internal byte adr { get; set; } = 0; 
+        internal byte long_dist { get; set; } = 0;
+        internal byte heavy { get; set; } = 0;
+        internal byte fragile { get; set; } = 0;
+        internal byte urgent { get; set; } = 0;
+        internal byte mechanical { get; set; } = 0;
+
         public Driver()
         { }
 

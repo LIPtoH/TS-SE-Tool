@@ -896,6 +896,13 @@ namespace TS_SE_Tool
                 if (userState)
                     userState = false;
 
+                driverInList.adr = SiiNunitData.Economy.adr;
+                driverInList.long_dist = SiiNunitData.Economy.long_dist;
+                driverInList.heavy = SiiNunitData.Economy.heavy;
+                driverInList.fragile = SiiNunitData.Economy.fragile;
+                driverInList.urgent = SiiNunitData.Economy.urgent;
+                driverInList.mechanical = SiiNunitData.Economy.mechanical;
+
                 listBoxUserCompanyDrivers.Items.Add(driverInList);
             }
 
@@ -910,6 +917,15 @@ namespace TS_SE_Tool
                 Driver driverInList = new Driver();
 
                 driverInList.driverNameless = driver;
+
+                Save.Items.Driver_AI dr = SiiNunitData.SiiNitems[driver];
+
+                driverInList.adr = dr.adr;
+                driverInList.long_dist = dr.long_dist;
+                driverInList.heavy = dr.heavy;
+                driverInList.fragile = dr.fragile;
+                driverInList.urgent = dr.urgent;
+                driverInList.mechanical = dr.mechanical;
 
                 listBoxUserCompanyDrivers.Items.Add(driverInList);
             }
@@ -939,10 +955,10 @@ namespace TS_SE_Tool
 
             Brush br;
             Font RegularFont = new Font(this.Font.FontFamily, 9f),
-                 BoldFont = new Font(this.Font, FontStyle.Bold);
+                 BoldFont = new Font(this.Font.FontFamily, 9f , FontStyle.Bold);
 
             Image itemIcon;
-            float scale, picture_width;
+            float scale, scale2, picture_width;
 
             float x, y;
             RectangleF layout_rect, source_rect, dest_rect;
@@ -983,9 +999,9 @@ namespace TS_SE_Tool
                 driverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
             else
                 if (DriverNames.ContainsKey(driver.driverNameless))
-                    driverName = DriverNames[driver.driverNameless].TrimStart(new char[] { '+' });
-                else
-                    driverName = driver.driverNameless;
+                driverName = DriverNames[driver.driverNameless].TrimStart(new char[] { '+' });
+            else
+                driverName = driver.driverNameless;
 
             txt = driverName;
 
@@ -998,6 +1014,65 @@ namespace TS_SE_Tool
 
             // Draw the text
             e.Graphics.DrawString(txt, RegularFont, br, layout_rect);
+
+            // Skill icons
+            int _idx = 5;
+            scale2 = 0.5f;
+
+            drawSkillIcons(driver.mechanical);
+            drawSkillIcons(driver.urgent);
+            drawSkillIcons(driver.fragile);
+            drawSkillIcons(driver.heavy);
+            drawSkillIcons(driver.long_dist);
+            drawSkillIcons((byte)numberOfSetBits(driver.adr));
+
+            void drawSkillIcons(byte _lvl)
+            {
+                if (_lvl != 0)
+                {
+                    itemIcon = SkillImgS[_idx];
+
+                    source_rect = new RectangleF(0, 0, itemIcon.Width, itemIcon.Height);
+
+                    scale = VisitedCitiesPictureHeight / (itemIcon.Height + 4);
+
+                    x = e.Bounds.Right - (itemIcon.Width * scale2 + GarageItemMargin) * (6 - _idx);
+                    y = e.Bounds.Top + GarageItemMargin;
+
+                    dest_rect = new RectangleF(x + 2, y, itemIcon.Width * scale2, itemIcon.Height * scale2);
+
+                    // Draw
+                    e.Graphics.DrawImage(itemIcon, dest_rect, source_rect, GraphicsUnit.Pixel);
+
+                    itemIcon = SkillImgSBG[3];
+
+                    source_rect = new RectangleF(0, 0, itemIcon.Width, itemIcon.Height);
+                    scale = 0.4f;
+                    dest_rect = new RectangleF(x - 3, y + 14, itemIcon.Width * scale, itemIcon.Height * scale);
+
+                    // Draw
+                    e.Graphics.DrawImage(itemIcon, dest_rect, source_rect, GraphicsUnit.Pixel);
+
+                    // Draw the text
+                    e.Graphics.DrawString(_lvl.ToString(), BoldFont, new SolidBrush(Color.FromArgb(0xff, 0x11, 0x11, 0x11)), x, y + 15);
+
+                    //
+                    _idx--;
+                }
+            }
+
+            int numberOfSetBits(byte v)
+            {
+                int i = 0; // store the total here
+
+                i = (v & 0x55555555) + ((v >> 1) & 0x55555555);
+                i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
+                i = (i & 0x0F0F0F0F) + ((i >> 4) & 0x0F0F0F0F);
+                i = (i & 0x00FF00FF) + ((i >> 8) & 0x00FF00FF);
+                i = (i & 0x0000FFFF) + ((i >> 16) & 0x0000FFFF);
+
+                return i;          // horizontal sum of bytes
+            }
 
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
