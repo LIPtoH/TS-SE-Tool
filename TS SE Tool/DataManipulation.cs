@@ -760,7 +760,7 @@ namespace TS_SE_Tool
             //Unallocated Drivers
             if (extraDrivers.Count() > 0)
             {
-                if (extraDrivers.Contains(SiiNunitData.Economy.driver_pool[0]))
+                if (extraDrivers.Contains(SiiNunitData.Player.drivers[0]))
                 {
                     Garages tmpG = new Garages(SiiNunitData.Player.hq_city);
 
@@ -798,7 +798,7 @@ namespace TS_SE_Tool
                     extraDrivers.Add(GaragesList[hqIdx].Drivers[DrvIdx]);
                     extraVehicles.Add(GaragesList[hqIdx].Vehicles[DrvIdx]);
 
-                    int tmpIdx = extraDrivers.IndexOf(SiiNunitData.Economy.driver_pool[0]);
+                    int tmpIdx = extraDrivers.IndexOf(SiiNunitData.Player.drivers[0]);
 
                     GaragesList[hqIdx].Drivers[DrvIdx] = extraDrivers[tmpIdx];
                     GaragesList[hqIdx].Vehicles[DrvIdx] = extraVehicles[tmpIdx];
