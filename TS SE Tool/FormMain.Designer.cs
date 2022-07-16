@@ -102,6 +102,9 @@
             this.labelUserCompanyGarages = new System.Windows.Forms.Label();
             this.tabPageDrivers = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelCompanyBottomDataDrivers = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelCompanyBottomDataDriversControls = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonUserCompanyDriversHire = new System.Windows.Forms.Button();
+            this.buttonUserCompanyDriversFire = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.labelUserCompanyDriversTotal = new System.Windows.Forms.Label();
             this.labelUserCompanyDriversDivider = new System.Windows.Forms.Label();
@@ -255,6 +258,7 @@
             this.panelGarages.SuspendLayout();
             this.tabPageDrivers.SuspendLayout();
             this.tableLayoutPanelCompanyBottomDataDrivers.SuspendLayout();
+            this.tableLayoutPanelCompanyBottomDataDriversControls.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabPageVisitedCities.SuspendLayout();
             this.tableLayoutPanelCompanyBottomDataVisitedCities.SuspendLayout();
@@ -1092,16 +1096,58 @@
             // 
             this.tableLayoutPanelCompanyBottomDataDrivers.ColumnCount = 1;
             this.tableLayoutPanelCompanyBottomDataDrivers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelCompanyBottomDataDrivers.Controls.Add(this.tableLayoutPanelCompanyBottomDataDriversControls, 0, 2);
             this.tableLayoutPanelCompanyBottomDataDrivers.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanelCompanyBottomDataDrivers.Controls.Add(this.listBoxUserCompanyDrivers, 0, 1);
             this.tableLayoutPanelCompanyBottomDataDrivers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelCompanyBottomDataDrivers.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelCompanyBottomDataDrivers.Name = "tableLayoutPanelCompanyBottomDataDrivers";
-            this.tableLayoutPanelCompanyBottomDataDrivers.RowCount = 2;
+            this.tableLayoutPanelCompanyBottomDataDrivers.RowCount = 3;
             this.tableLayoutPanelCompanyBottomDataDrivers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelCompanyBottomDataDrivers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelCompanyBottomDataDrivers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tableLayoutPanelCompanyBottomDataDrivers.Size = new System.Drawing.Size(544, 393);
             this.tableLayoutPanelCompanyBottomDataDrivers.TabIndex = 0;
+            // 
+            // tableLayoutPanelCompanyBottomDataDriversControls
+            // 
+            this.tableLayoutPanelCompanyBottomDataDriversControls.ColumnCount = 2;
+            this.tableLayoutPanelCompanyBottomDataDriversControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelCompanyBottomDataDriversControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Controls.Add(this.buttonUserCompanyDriversHire, 0, 0);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Controls.Add(this.buttonUserCompanyDriversFire, 1, 0);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Location = new System.Drawing.Point(0, 339);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Name = "tableLayoutPanelCompanyBottomDataDriversControls";
+            this.tableLayoutPanelCompanyBottomDataDriversControls.RowCount = 1;
+            this.tableLayoutPanelCompanyBottomDataDriversControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Size = new System.Drawing.Size(544, 54);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.TabIndex = 22;
+            // 
+            // buttonUserCompanyDriversHire
+            // 
+            this.buttonUserCompanyDriversHire.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyDriversHire.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonUserCompanyDriversHire.Location = new System.Drawing.Point(3, 3);
+            this.buttonUserCompanyDriversHire.Name = "buttonUserCompanyDriversHire";
+            this.buttonUserCompanyDriversHire.Size = new System.Drawing.Size(266, 48);
+            this.buttonUserCompanyDriversHire.TabIndex = 26;
+            this.buttonUserCompanyDriversHire.Text = "Hire";
+            this.buttonUserCompanyDriversHire.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyDriversHire.Click += new System.EventHandler(this.buttonUserCompanyDriversHire_Click);
+            // 
+            // buttonUserCompanyDriversFire
+            // 
+            this.buttonUserCompanyDriversFire.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyDriversFire.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonUserCompanyDriversFire.Location = new System.Drawing.Point(275, 3);
+            this.buttonUserCompanyDriversFire.Name = "buttonUserCompanyDriversFire";
+            this.buttonUserCompanyDriversFire.Size = new System.Drawing.Size(266, 48);
+            this.buttonUserCompanyDriversFire.TabIndex = 27;
+            this.buttonUserCompanyDriversFire.Text = "Fire";
+            this.buttonUserCompanyDriversFire.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyDriversFire.Click += new System.EventHandler(this.buttonUserCompanyDriversFire_Click);
             // 
             // panel1
             // 
@@ -1165,7 +1211,8 @@
             this.listBoxUserCompanyDrivers.FormattingEnabled = true;
             this.listBoxUserCompanyDrivers.Location = new System.Drawing.Point(3, 43);
             this.listBoxUserCompanyDrivers.Name = "listBoxUserCompanyDrivers";
-            this.listBoxUserCompanyDrivers.Size = new System.Drawing.Size(538, 347);
+            this.listBoxUserCompanyDrivers.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.listBoxUserCompanyDrivers.Size = new System.Drawing.Size(538, 293);
             this.listBoxUserCompanyDrivers.TabIndex = 1;
             this.listBoxUserCompanyDrivers.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxUserCompanyDrivers_DrawItem);
             this.listBoxUserCompanyDrivers.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxUserCompanyDrivers_MeasureItem);
@@ -2809,6 +2856,7 @@
             this.panelGarages.PerformLayout();
             this.tabPageDrivers.ResumeLayout(false);
             this.tableLayoutPanelCompanyBottomDataDrivers.ResumeLayout(false);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabPageVisitedCities.ResumeLayout(false);
@@ -3068,6 +3116,9 @@
         private System.Windows.Forms.Label labelUserCompanyDriversDivider;
         private System.Windows.Forms.Label labelUserCompanyDriversCurrent;
         private System.Windows.Forms.ListBox listBoxUserCompanyDrivers;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelCompanyBottomDataDriversControls;
+        private System.Windows.Forms.Button buttonUserCompanyDriversHire;
+        private System.Windows.Forms.Button buttonUserCompanyDriversFire;
     }
 }
 

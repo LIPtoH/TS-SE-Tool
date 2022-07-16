@@ -883,6 +883,7 @@ namespace TS_SE_Tool
         {
             bool userState = true;
 
+            List<Driver> driversList = new List<Driver>();
 
             // Staff
             foreach (string driver in SiiNunitData.Player.drivers)
@@ -903,7 +904,7 @@ namespace TS_SE_Tool
                 driverInList.urgent = SiiNunitData.Economy.urgent;
                 driverInList.mechanical = SiiNunitData.Economy.mechanical;
 
-                listBoxUserCompanyDrivers.Items.Add(driverInList);
+                driversList.Add(driverInList);
             }
 
             // Drivers pool
@@ -927,8 +928,12 @@ namespace TS_SE_Tool
                 driverInList.urgent = dr.urgent;
                 driverInList.mechanical = dr.mechanical;
 
-                listBoxUserCompanyDrivers.Items.Add(driverInList);
+                driversList.Add(driverInList);
             }
+
+            listBoxUserCompanyDrivers.SelectedIndex = -1;
+
+            listBoxUserCompanyDrivers.DataSource = driversList;
 
             // Totals
             labelUserCompanyDriversCurrent.Text = SiiNunitData.Player.drivers.Count.ToString();
@@ -1077,6 +1082,104 @@ namespace TS_SE_Tool
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
         }
+
+        private void buttonUserCompanyDriversHire_Click(object sender, EventArgs e)
+        {
+            List<Driver> tmpList;
+
+            ListBox sourceLB = listBoxUserCompanyDrivers;
+
+            if (sourceLB.SelectedItems.Count == 0)
+                tmpList = sourceLB.Items.Cast<Driver>().ToList();
+            else
+                tmpList = sourceLB.SelectedItems.Cast<Driver>().ToList();
+
+            foreach (Driver item in tmpList)
+            {
+                if (!item.isStaff)
+                {
+                    item.isStaff = true;
+
+                    if (!extraDrivers.Contains(item.driverNameless))
+                    {
+                        extraDrivers.Add(item.driverNameless);
+                        extraVehicles.Add(null);
+                    }
+                }
+            }
+
+            tmpList = sourceLB.Items.Cast<Driver>().ToList();
+
+            int currentStaff = 0;
+
+            foreach (Driver item in tmpList)
+            {
+                if (item.isStaff)
+                    currentStaff++;
+            }
+
+            // Totals
+            labelUserCompanyDriversCurrent.Text = currentStaff.ToString();
+
+            sourceLB.SelectedIndex = -1;
+            sourceLB.Invalidate();
+
+
+            PrepareGarages();
+            FillGaragesList(listBoxGarages.TopIndex);
+        }
+
+        private void buttonUserCompanyDriversFire_Click(object sender, EventArgs e)
+        {
+            List<Driver> tmpList;
+
+            ListBox sourceLB = listBoxUserCompanyDrivers;
+
+            if (sourceLB.SelectedItems.Count == 0)
+                tmpList = sourceLB.Items.Cast<Driver>().ToList();
+            else
+                tmpList = sourceLB.SelectedItems.Cast<Driver>().ToList();
+
+            foreach (Driver item in tmpList)
+            {
+                if (item.isStaff && !item.isUser)
+                {
+                    item.isStaff = false;
+
+                    if (extraDrivers.Contains(item.driverNameless))
+                    {
+                        int idx = extraDrivers.IndexOf(item.driverNameless);
+
+                        extraDrivers.RemoveAt(idx);
+                        extraVehicles.RemoveAt(idx);
+                    }
+                    else
+                    {
+                        GaragesList.Where(x => x.Drivers.Contains(item.driverNameless)).Single().Drivers.Remove(item.driverNameless);
+                    }
+                }
+            }
+
+            tmpList = sourceLB.Items.Cast<Driver>().ToList();
+
+            int currentStaff = 0;
+
+            foreach (Driver item in tmpList)
+            {
+                if (item.isStaff)
+                    currentStaff++;
+            }
+
+            // Totals
+            labelUserCompanyDriversCurrent.Text = currentStaff.ToString();
+
+            sourceLB.SelectedIndex = -1;
+            sourceLB.Invalidate();
+
+            PrepareGarages();
+            FillGaragesList(listBoxGarages.TopIndex);
+        }
+
 
         //end User Company tab
     }
