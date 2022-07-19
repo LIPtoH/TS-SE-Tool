@@ -489,7 +489,45 @@ namespace TS_SE_Tool
             {
                 tabControlMain.TabPages[i].ImageIndex = i;
             }
+
+            // contextMenuStripMain
+            contextMenuStripFreightMarketJobListEdit.Image = ProgUIImgsDict["EditList"];
+            contextMenuStripFreightMarketJobListDelete.Image = ProgUIImgsDict["Cross"];
+            contextMenuStripCompanyDriversEdit.Image = ProgUIImgsDict["EditList"];
+            contextMenuStripCompanyDriversHire.Image = ProgUIImgsDict["plus"];
+            contextMenuStripCompanyDriversFire.Image = ProgUIImgsDict["minus"];
         }
+
+        private void contextMenuStripMainStateChange(string name)
+        {
+            switch (name)
+            {
+                case "FreightMarketCargoList":
+                    {
+                        contextMenuStripFreightMarketJobListEdit.Visible = true;
+                        contextMenuStripFreightMarketJobListSeparator.Visible = true;
+                        contextMenuStripFreightMarketJobListDelete.Visible = true;
+                        contextMenuStripCompanyDriversEdit.Visible = false;
+                        contextMenuStripCompanyDriversSeparator.Visible = false;
+                        contextMenuStripCompanyDriversHire.Visible = false;
+                        contextMenuStripCompanyDriversFire.Visible = false;
+                        break;
+                    }
+
+                case "CompanyDriversList":
+                    {
+                        contextMenuStripFreightMarketJobListEdit.Visible = false;
+                        contextMenuStripFreightMarketJobListSeparator.Visible = false;
+                        contextMenuStripFreightMarketJobListDelete.Visible = false;
+                        contextMenuStripCompanyDriversEdit.Visible = true;
+                        contextMenuStripCompanyDriversSeparator.Visible = true;
+                        contextMenuStripCompanyDriversHire.Visible = true;
+                        contextMenuStripCompanyDriversFire.Visible = true;
+                        break;
+                    }
+            }
+        }
+
 
         private void DetectGame()
         {

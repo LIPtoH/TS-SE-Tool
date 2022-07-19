@@ -70,7 +70,7 @@ namespace TS_SE_Tool
 
         private void FillFormCompanyControls()
         {
-            pictureBoxCompanyLogo.Image = Utilities.Graphics_TSSET.ddsImgLoader( @"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds" , 94, 94).images[0];
+            pictureBoxCompanyLogo.Image = Utilities.Graphics_TSSET.ddsImgLoader(@"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds", 94, 94).images[0];
 
             textBoxUserCompanyCompanyName.Text = MainSaveFileProfileData.CompanyName.Value;
 
@@ -232,11 +232,11 @@ namespace TS_SE_Tool
                 if (txtbx.TextLength == 0)
                 {
                     // Cancel the event and select the text to be corrected by the user.
-                    MessageBox.Show("Company name is empty." + Environment.NewLine + "It must contain at least 1 letter. ", "Company name",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Company name is empty." + Environment.NewLine + "It must contain at least 1 letter. ", "Company name", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     e.Cancel = true;
                 }
         }
-        
+
         private void textBoxUserCompanyMoneyAccount_Enter(object sender, EventArgs e)
         {
             Int64 valueBefore = (long)Math.Floor(SiiNunitData.Bank.money_account * CurrencyDictConversion[Globals.CurrencyName]);
@@ -290,7 +290,7 @@ namespace TS_SE_Tool
         {
             textBoxUserCompanyMoneyAccount.KeyPress -= textBoxMoneyAccount_KeyPress;
             textBoxUserCompanyMoneyAccount.TextChanged -= textBoxMoneyAccount_TextChanged;
-            
+
             //
             if (!Int64.TryParse(textBoxUserCompanyMoneyAccount.Text, NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign, CultureInfo.CurrentCulture, out long newValue))
                 return;
@@ -440,7 +440,7 @@ namespace TS_SE_Tool
             StringFormat format = new StringFormat();
 
             Brush br;
-            Font RegularFont = new Font(this.Font.FontFamily, 9f), 
+            Font RegularFont = new Font(this.Font.FontFamily, 9f),
                  BoldFont = new Font(this.Font, FontStyle.Bold);
 
             Image cityicon;
@@ -462,7 +462,7 @@ namespace TS_SE_Tool
 
             // Icon
 
-            if (vc.Visited) 
+            if (vc.Visited)
                 cityicon = CitiesImg[1];
             else
                 cityicon = CitiesImg[0];
@@ -513,7 +513,7 @@ namespace TS_SE_Tool
             itemSize = e.Graphics.MeasureString(txt, BoldFont);
 
             x = e.Bounds.Right - itemSize.Width - GarageItemMargin;
-            y = e.Bounds.Top + (e.Bounds.Bottom - e.Bounds.Top - itemSize.Height) / 2 + 1; 
+            y = e.Bounds.Top + (e.Bounds.Bottom - e.Bounds.Top - itemSize.Height) / 2 + 1;
 
             layout_rect = new RectangleF(x, y, itemSize.Width, itemSize.Height);
 
@@ -521,7 +521,7 @@ namespace TS_SE_Tool
 
             // Draw
             e.Graphics.DrawString(txt, BoldFont, br, layout_rect, format);
-            
+
 
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
@@ -567,7 +567,7 @@ namespace TS_SE_Tool
 
             FillVisitedCities(listBoxVisitedCities.TopIndex);
         }
-        
+
         //Garages
         //Fill
         public void FillGaragesList(int _vindex)
@@ -622,7 +622,7 @@ namespace TS_SE_Tool
             StringFormat format = new StringFormat();
 
             Brush brush;
-            Font RegularFontSized = new Font(this.Font.FontFamily, 10f), 
+            Font RegularFontSized = new Font(this.Font.FontFamily, 10f),
                  BoldFont = new Font(this.Font, FontStyle.Bold);
 
             Image grgicon;
@@ -695,7 +695,7 @@ namespace TS_SE_Tool
             else
             {
                 txt = "[ - - ]";
-            }    
+            }
 
             itemSize = e.Graphics.MeasureString(txt, BoldFont);
 
@@ -765,7 +765,7 @@ namespace TS_SE_Tool
             // Draw the focus rectangle if appropriate.
             e.DrawFocusRectangle();
         }
-        
+
         //Buttons
         private void buttonUserCompanyGaragesManage_Click(object sender, EventArgs e)
         {
@@ -931,9 +931,12 @@ namespace TS_SE_Tool
                 driversList.Add(driverInList);
             }
 
-            listBoxUserCompanyDrivers.SelectedIndex = -1;
+            listBoxUserCompanyDrivers.BeginUpdate();
 
             listBoxUserCompanyDrivers.DataSource = driversList;
+            listBoxUserCompanyDrivers.SelectedIndex = -1;
+
+            listBoxUserCompanyDrivers.EndUpdate();
 
             // Totals
             labelUserCompanyDriversCurrent.Text = SiiNunitData.Player.drivers.Count.ToString();
@@ -960,7 +963,7 @@ namespace TS_SE_Tool
 
             Brush br;
             Font RegularFont = new Font(this.Font.FontFamily, 9f),
-                 BoldFont = new Font(this.Font.FontFamily, 9f , FontStyle.Bold);
+                 BoldFont = new Font(this.Font.FontFamily, 9f, FontStyle.Bold);
 
             Image itemIcon;
             float scale, scale2, picture_width;
@@ -1083,7 +1086,54 @@ namespace TS_SE_Tool
             e.DrawFocusRectangle();
         }
 
+        private void listBoxUserCompanyDrivers_MouseDown(object sender, MouseEventArgs e)
+        {
+
+            if (e.Button == MouseButtons.Right)
+            {
+                if (listBoxUserCompanyDrivers.Items.Count != 0)
+                {
+                    Rectangle rect = listBoxUserCompanyDrivers.GetItemRectangle(listBoxUserCompanyDrivers.Items.Count - 1);
+
+                    if (e.Y < rect.Bottom)
+                    {
+                        contextMenuStripMainStateChange("CompanyDriversList");
+
+                        contextMenuStripMain.Show(listBoxUserCompanyDrivers, e.Location);
+
+                        int index = listBoxUserCompanyDrivers.IndexFromPoint(e.Location);
+
+                        listBoxUserCompanyDrivers.SelectedIndices.Clear();
+                        listBoxUserCompanyDrivers.SelectedIndex = index;
+                    }
+                }
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                if (listBoxUserCompanyDrivers.Items.Count != 0)
+                {
+                    Rectangle rect = listBoxUserCompanyDrivers.GetItemRectangle(listBoxUserCompanyDrivers.Items.Count - 1);
+
+                    if (e.Y > rect.Bottom)
+                    {
+
+                    }
+                }
+            }
+        }
+
         private void buttonUserCompanyDriversHire_Click(object sender, EventArgs e)
+        {
+            CompanyDriverHireEvent();
+        }
+
+        private void buttonUserCompanyDriversFire_Click(object sender, EventArgs e)
+        {
+            CompanyDriverFireEvent();
+        }
+
+        private void CompanyDriverHireEvent()
         {
             List<Driver> tmpList;
 
@@ -1124,12 +1174,11 @@ namespace TS_SE_Tool
             sourceLB.SelectedIndex = -1;
             sourceLB.Invalidate();
 
-
             PrepareGarages();
             FillGaragesList(listBoxGarages.TopIndex);
         }
 
-        private void buttonUserCompanyDriversFire_Click(object sender, EventArgs e)
+        private void CompanyDriverFireEvent()
         {
             List<Driver> tmpList;
 
@@ -1180,6 +1229,20 @@ namespace TS_SE_Tool
             FillGaragesList(listBoxGarages.TopIndex);
         }
 
+        private void contextMenuStripCompanyDriversEdit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void contextMenuStripCompanyDriversHire_Click(object sender, EventArgs e)
+        {
+            CompanyDriverHireEvent();
+        }
+
+        private void contextMenuStripCompanyDriversFire_Click(object sender, EventArgs e)
+        {
+            CompanyDriverFireEvent();
+        }
 
         //end User Company tab
     }

@@ -1601,7 +1601,9 @@ namespace TS_SE_Tool
 
                     if (e.Y < rect.Bottom)
                     {
-                        contextMenuStripFreightMarketJobList.Show(listBoxFreightMarketAddedJobs, e.Location);
+                        contextMenuStripMainStateChange("FreightMarketCargoList");
+
+                        contextMenuStripMain.Show(listBoxFreightMarketAddedJobs, e.Location);
                         int index = listBoxFreightMarketAddedJobs.IndexFromPoint(e.Location);
                         listBoxFreightMarketAddedJobs.SelectedIndex = index;
                     }
