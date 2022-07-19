@@ -889,14 +889,12 @@ namespace TS_SE_Tool
                     }
                     else
                     {
-                        string[] imgpaths = new string[] { @"img\unknown.dds" };
-                        pictureBoxProfileAvatar.Image = Graphics_TSSET.ddsImgLoader(imgpaths, 95, 95).images[0];
+                        pictureBoxProfileAvatar.Image = MainIcons[0];
                     }
                 }
                 catch
                 {
-                    string[] imgpaths = new string[] { @"img\unknown.dds" };
-                    pictureBoxProfileAvatar.Image = Graphics_TSSET.ddsImgLoader(imgpaths, 95, 95).images[0];
+                    pictureBoxProfileAvatar.Image = MainIcons[0];
                 }
 
                 try

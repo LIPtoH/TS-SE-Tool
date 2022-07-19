@@ -310,6 +310,7 @@ namespace TS_SE_Tool
                 DistanceMultipliers = new Dictionary<string, double> { { "km", 1 }, { "mi", km_to_mile } };
                 WeightMultipliers = new Dictionary<string, double> { { "kg", 1 }, { "lb", kg_to_lb } };
 
+                MainIcons = new Image[1];
                 ADRImgS = new Image[6];
                 ADRImgSGrey = new Image[6];
                 SkillImgSBG = new Image[5];
