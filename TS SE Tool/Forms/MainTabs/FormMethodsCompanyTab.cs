@@ -1003,15 +1003,10 @@ namespace TS_SE_Tool
 
             // Driver name
 
-            if (driver.driverNameless == SiiNunitData.Player.drivers[0])
-                driverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
-            else
-                if (DriverNames.ContainsKey(driver.driverNameless))
-                driverName = DriverNames[driver.driverNameless].TrimStart(new char[] { '+' });
-            else
-                driverName = driver.driverNameless;
+            if (driver.isUser)
+                driverName += "> ";
 
-            txt = driverName;
+            txt = driverName + driver.driverNameTranslated;
 
             itemSize = e.Graphics.MeasureString(txt, RegularFont);
 
@@ -1024,7 +1019,7 @@ namespace TS_SE_Tool
             e.Graphics.DrawString(txt, RegularFont, br, layout_rect);
 
             // Skill icons
-            int _idx = 5;
+            int idx = 5, iconPos = 1;
             scale2 = 0.5f;
 
             drawSkillIcons(driver.mechanical);
@@ -1038,13 +1033,13 @@ namespace TS_SE_Tool
             {
                 if (_lvl != 0)
                 {
-                    itemIcon = SkillImgS[_idx];
+                    itemIcon = SkillImgS[idx];
 
                     source_rect = new RectangleF(0, 0, itemIcon.Width, itemIcon.Height);
 
                     scale = VisitedCitiesPictureHeight / (itemIcon.Height + 4);
 
-                    x = e.Bounds.Right - (itemIcon.Width * scale2 + GarageItemMargin) * (6 - _idx);
+                    x = e.Bounds.Right - (itemIcon.Width * scale2 + GarageItemMargin) * (iconPos);
                     y = e.Bounds.Top + GarageItemMargin;
 
                     dest_rect = new RectangleF(x + 2, y, itemIcon.Width * scale2, itemIcon.Height * scale2);
@@ -1065,8 +1060,10 @@ namespace TS_SE_Tool
                     e.Graphics.DrawString(_lvl.ToString(), BoldFont, new SolidBrush(Color.FromArgb(0xff, 0x11, 0x11, 0x11)), x, y + 15);
 
                     //
-                    _idx--;
+                    iconPos++;
                 }
+                //
+                idx--;
             }
 
             int numberOfSetBits(byte v)
@@ -1102,6 +1099,27 @@ namespace TS_SE_Tool
                         contextMenuStripMain.Show(listBoxUserCompanyDrivers, e.Location);
 
                         int index = listBoxUserCompanyDrivers.IndexFromPoint(e.Location);
+
+                        Driver selectedItem = (Driver)listBoxUserCompanyDrivers.Items[index];
+
+                        if (selectedItem.isUser)
+                        {                        
+                            contextMenuStripCompanyDriversHire.Enabled = false;
+                            contextMenuStripCompanyDriversFire.Enabled = false;
+                        }
+                        else
+                        {
+                            if (selectedItem.isStaff)
+                            {
+                                contextMenuStripCompanyDriversHire.Enabled = false;
+                                contextMenuStripCompanyDriversFire.Enabled = true;
+                            }
+                            else
+                            {
+                                contextMenuStripCompanyDriversHire.Enabled = true;
+                                contextMenuStripCompanyDriversFire.Enabled = false;
+                            }
+                        }
 
                         listBoxUserCompanyDrivers.SelectedIndices.Clear();
                         listBoxUserCompanyDrivers.SelectedIndex = index;
@@ -1231,7 +1249,23 @@ namespace TS_SE_Tool
 
         private void contextMenuStripCompanyDriversEdit_Click(object sender, EventArgs e)
         {
+            Driver selectedItem = (Driver)listBoxUserCompanyDrivers.SelectedItem;
 
+            if(!selectedItem.isUser)
+            {
+                FormAIDriverEditor driverEditor = new FormAIDriverEditor(selectedItem);
+
+                if (driverEditor.ShowDialog(this) == DialogResult.OK)
+                {
+                    // Save changes
+                    selectedItem = driverEditor.driverData;
+                }
+
+                driverEditor.Dispose();
+                listBoxUserCompanyDrivers.Invalidate();
+            }
+            else
+                tabControlMain.SelectedIndex = 0;
         }
 
         private void contextMenuStripCompanyDriversHire_Click(object sender, EventArgs e)

@@ -214,6 +214,12 @@
     <Compile Include="CustomClasses\Utilities\ZipDataUtilitiescs.cs" />
     <Compile Include="CustomClasses\Utilities\dotNetCheck.cs" />
     <Compile Include="CustomClasses\UtilitiesExternal\FlexibleMessageBox.cs" />
+    <Compile Include="Forms\FormAIDriverEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAIDriverEditor.Designer.cs">
+      <DependentUpon>FormAIDriverEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormLicensePlateEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -369,6 +375,9 @@
     <Compile Include="RMcode\PlainTXTResourceReader.cs" />
     <Compile Include="RMcode\PlainTXTResourceSet.cs" />
     <Compile Include="CustomClasses\Utilities\Web_Utilities.cs" />
+    <EmbeddedResource Include="Forms\FormAIDriverEditor.resx">
+      <DependentUpon>FormAIDriverEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLicensePlateEdit.resx">
       <DependentUpon>FormLicensePlateEdit.cs</DependentUpon>
     </EmbeddedResource>
