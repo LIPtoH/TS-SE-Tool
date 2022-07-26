@@ -27,9 +27,15 @@ namespace TS_SE_Tool
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
         internal string driverNameless { get; set; } = "";
 
-        internal bool isUser { get; set; } = false;
+        internal driverState state { get; set; } = driverState.Player;
 
-        internal bool isStaff { get; set; } = false;
+        public enum driverState : byte
+        {
+            Player,
+            Driver,
+            DismissedDriver,
+            FreeDriver
+        }
 
         internal byte adr { get; set; } = 0;
         internal byte long_dist { get; set; } = 0;
@@ -42,13 +48,13 @@ namespace TS_SE_Tool
         {
             get
             {
-                if (this.isUser)
+                if (this.state == driverState.Player)
                     return Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                 else
-                if (MainForm.DriverNames.ContainsKey(this.driverNameless))
-                    return MainForm.DriverNames[this.driverNameless].TrimStart(new char[] { '+' });
-                else
-                    return this.driverNameless;
+                    if (MainForm.DriverNames.ContainsKey(this.driverNameless))
+                        return MainForm.DriverNames[this.driverNameless].TrimStart(new char[] { '+' });
+                    else
+                        return this.driverNameless;
             }
 
             set
@@ -92,17 +98,10 @@ namespace TS_SE_Tool
         {
             driverNameless = _driverNameless;
         }
-        public Driver(string _driverNameless, bool _isUser)
+        public Driver(string _driverNameless, driverState _state)
         {
             driverNameless = _driverNameless;
-            isUser = _isUser;
-        }
-
-        public Driver(string _driverNameless, bool _isUser, bool _isStaff)
-        {
-            driverNameless = _driverNameless;
-            isUser = _isUser;
-            isStaff = _isStaff;
+            state = _state;
         }
     }
 }

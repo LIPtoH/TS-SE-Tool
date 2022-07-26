@@ -889,7 +889,6 @@ namespace TS_SE_Tool
                 Driver driverInList = new Driver();
 
                 driverInList.driverNameless = driver;
-                driverInList.isStaff = true;
 
                 string drvrType = SiiNunitData.SiiNitems[driver].GetType().Name;
 
@@ -897,7 +896,7 @@ namespace TS_SE_Tool
                 {
                     case "Driver_Player":
                         {
-                            driverInList.isUser = true;
+                            driverInList.state = Driver.driverState.Player;
 
                             driverInList.adr = SiiNunitData.Economy.adr;
                             driverInList.long_dist = SiiNunitData.Economy.long_dist;
@@ -910,7 +909,7 @@ namespace TS_SE_Tool
                         }
                     case "Driver_AI":
                         {
-                            driverInList.isUser = false;
+                            driverInList.state = Driver.driverState.Driver;
 
                             Save.Items.Driver_AI dr = SiiNunitData.SiiNitems[driver];
 
@@ -925,21 +924,40 @@ namespace TS_SE_Tool
                         }
                 }
 
+                driversList.Add(driverInList);
+            }
+
+            foreach (string driver in SiiNunitData.Player.dismissed_drivers)
+            {
+                Driver driverInList = new Driver();
+
+                driverInList.driverNameless = driver;
+                driverInList.state = Driver.driverState.DismissedDriver;
+
+                Save.Items.Driver_AI dr = SiiNunitData.SiiNitems[driver];
+
+                driverInList.adr = dr.adr;
+                driverInList.long_dist = dr.long_dist;
+                driverInList.heavy = dr.heavy;
+                driverInList.fragile = dr.fragile;
+                driverInList.urgent = dr.urgent;
+                driverInList.mechanical = dr.mechanical;
 
                 driversList.Add(driverInList);
             }
 
             // Drivers pool
-            List<string> thisDP = new List<string>(SiiNunitData.Economy.driver_pool);
+            List<string> driverPoolList = new List<string>(SiiNunitData.Economy.driver_pool);
 
-            thisDP = thisDP.Select(s => new { fullStr = s, splitStr = s.Split('.') }).OrderBy(x => int.Parse(x.splitStr[1]))
-            .Select(x => x.fullStr).ToList();
+            driverPoolList = driverPoolList.Select(s => new { fullStr = s, splitStr = s.Split('.') })
+                .OrderBy(x => int.Parse(x.splitStr[1])).Select(x => x.fullStr).ToList();
 
-            foreach (string driver in thisDP)
+            foreach (string driver in driverPoolList)
             {
                 Driver driverInList = new Driver();
 
                 driverInList.driverNameless = driver;
+                driverInList.state = Driver.driverState.FreeDriver;
 
                 Save.Items.Driver_AI dr = SiiNunitData.SiiNitems[driver];
 
@@ -966,6 +984,7 @@ namespace TS_SE_Tool
             labelUserCompanyDriversTotal.Text = (SiiNunitData.Player.drivers.Count + SiiNunitData.Economy.driver_pool.Count).ToString();
         }
 
+        // Draw
         private void listBoxUserCompanyDrivers_MeasureItem(object sender, MeasureItemEventArgs e)
         {
             // Get the ListBox and the item.
@@ -987,7 +1006,7 @@ namespace TS_SE_Tool
             Font RegularFont = new Font(this.Font.FontFamily, 9f),
                  BoldFont = new Font(this.Font.FontFamily, 9f, FontStyle.Bold);
 
-            Image itemIcon;
+            Image itemIcon = new Bitmap(1, 1);
             float scale, scale2, picture_width;
 
             float x, y;
@@ -1006,10 +1025,38 @@ namespace TS_SE_Tool
 
             // Icon
 
-            if (driver.isStaff)
-                itemIcon = CitiesImg[1];
-            else
-                itemIcon = CitiesImg[0];
+            switch(driver.state)
+            {
+                case Driver.driverState.Player:
+                    {
+                        itemIcon = CitiesImg[3];
+
+                        driverName += "=> ";
+
+                        break;
+                    }
+
+                case Driver.driverState.Driver:
+                    {
+                        itemIcon = CitiesImg[1];
+                        break;
+                    }
+
+                case Driver.driverState.DismissedDriver:
+                    {
+                        itemIcon = CitiesImg[2];
+
+                        driverName += "[X] ";
+
+                        break;
+                    }
+
+                case Driver.driverState.FreeDriver:
+                    {
+                        itemIcon = CitiesImg[0];
+                        break;
+                    }
+            }
 
             source_rect = new RectangleF(0, 0, itemIcon.Width, itemIcon.Height);
 
@@ -1024,9 +1071,6 @@ namespace TS_SE_Tool
             //===
 
             // Driver name
-
-            if (driver.isUser)
-                driverName += "> ";
 
             txt = driverName + driver.driverNameTranslated;
 
@@ -1124,23 +1168,29 @@ namespace TS_SE_Tool
 
                         Driver selectedItem = (Driver)listBoxUserCompanyDrivers.Items[index];
 
-                        if (selectedItem.isUser)
-                        {                        
-                            contextMenuStripCompanyDriversHire.Enabled = false;
-                            contextMenuStripCompanyDriversFire.Enabled = false;
-                        }
-                        else
+                        switch (selectedItem.state)
                         {
-                            if (selectedItem.isStaff)
-                            {
-                                contextMenuStripCompanyDriversHire.Enabled = false;
-                                contextMenuStripCompanyDriversFire.Enabled = true;
-                            }
-                            else
-                            {
-                                contextMenuStripCompanyDriversHire.Enabled = true;
-                                contextMenuStripCompanyDriversFire.Enabled = false;
-                            }
+                            case Driver.driverState.Player:
+                                {
+                                    contextMenuStripCompanyDriversHire.Enabled = false;
+                                    contextMenuStripCompanyDriversFire.Enabled = false;
+                                    break;
+                                }
+
+                            case Driver.driverState.Driver:
+                                {
+                                    contextMenuStripCompanyDriversHire.Enabled = false;
+                                    contextMenuStripCompanyDriversFire.Enabled = true;
+                                    break;
+                                }
+
+                            case Driver.driverState.DismissedDriver:
+                            case Driver.driverState.FreeDriver:
+                                {
+                                    contextMenuStripCompanyDriversHire.Enabled = true;
+                                    contextMenuStripCompanyDriversFire.Enabled = false;
+                                    break;
+                                }
                         }
 
                         listBoxUserCompanyDrivers.SelectedIndices.Clear();
@@ -1163,15 +1213,7 @@ namespace TS_SE_Tool
             }
         }
 
-        private void buttonUserCompanyDriversHire_Click(object sender, EventArgs e)
-        {
-            CompanyDriverHireEvent();
-        }
-
-        private void buttonUserCompanyDriversFire_Click(object sender, EventArgs e)
-        {
-            CompanyDriverFireEvent();
-        }
+        // Events
 
         private void CompanyDriverHireEvent()
         {
@@ -1186,10 +1228,8 @@ namespace TS_SE_Tool
 
             foreach (Driver item in tmpList)
             {
-                if (!item.isStaff)
+                if (item.state == Driver.driverState.FreeDriver || item.state == Driver.driverState.DismissedDriver)
                 {
-                    item.isStaff = true;
-
                     if (!extraDrivers.Contains(item.driverNameless))
                     {
                         extraDrivers.Add(item.driverNameless);
@@ -1200,28 +1240,18 @@ namespace TS_SE_Tool
                     SiiNunitData.Player.driver_quit_warned.Add(false);
                     SiiNunitData.Player.driver_readiness_timer.Add(0);
 
-                    SiiNunitData.Economy.driver_pool.Remove(item.driverNameless);
+                    if (item.state == Driver.driverState.FreeDriver)
+                        SiiNunitData.Economy.driver_pool.Remove(item.driverNameless);
+
+                    if (item.state == Driver.driverState.DismissedDriver)
+                        SiiNunitData.Player.dismissed_drivers.Remove(item.driverNameless);
+
+                    item.state = Driver.driverState.Driver;
+
                 }
             }
 
-            tmpList = sourceLB.Items.Cast<Driver>().ToList();
-
-            int currentStaff = 0;
-
-            foreach (Driver item in tmpList)
-            {
-                if (item.isStaff)
-                    currentStaff++;
-            }
-
-            // Totals
-            labelUserCompanyDriversCurrent.Text = currentStaff.ToString();
-
-            sourceLB.SelectedIndex = -1;
-            sourceLB.Invalidate();
-
-            PrepareGarages();
-            FillGaragesList(listBoxGarages.TopIndex);
+            UpdateDriverListTotals(sourceLB);
         }
 
         private void CompanyDriverFireEvent()
@@ -1237,10 +1267,8 @@ namespace TS_SE_Tool
 
             foreach (Driver item in tmpList)
             {
-                if (item.isStaff && !item.isUser)
+                if (item.state == Driver.driverState.Driver)
                 {
-                    item.isStaff = false;
-
                     if (extraDrivers.Contains(item.driverNameless))
                     {
                         int idx = extraDrivers.IndexOf(item.driverNameless);
@@ -1248,46 +1276,53 @@ namespace TS_SE_Tool
                         extraDrivers.RemoveAt(idx);
                         extraVehicles.RemoveAt(idx);
                     }
+
+                    Garages tmpGarage = GaragesList.Where(x => x.Drivers.Contains(item.driverNameless)).SingleOrDefault();
+
+                    if (tmpGarage != null)
+                    {
+                        List<string> tmpDrvrs = tmpGarage.Drivers;
+
+                        int tmpIdx = tmpDrvrs.IndexOf(item.driverNameless);
+
+                        tmpGarage.Drivers[tmpIdx] = null;
+                    }
+
+                    // Get driver job
+                    string driverJobNameless = ((Save.Items.Driver_AI)SiiNunitData.SiiNitems[item.driverNameless]).driver_job;
+                    Save.Items.Job_Info driverJobInfo = (Save.Items.Job_Info)SiiNunitData.SiiNitems[driverJobNameless];
+
+                    // Check if job is active
+
+                    if (driverJobInfo.cargo == "null")
+                    {
+                        int drvrIdx = SiiNunitData.Player.drivers.IndexOf(item.driverNameless);
+
+                        SiiNunitData.Player.drivers.RemoveAt(drvrIdx);
+                        SiiNunitData.Player.driver_quit_warned.RemoveAt(drvrIdx);
+                        SiiNunitData.Player.driver_readiness_timer.RemoveAt(drvrIdx);
+
+                        SiiNunitData.Economy.driver_pool.Add(item.driverNameless);
+
+                        item.state = Driver.driverState.FreeDriver;
+                    }
                     else
                     {
-                        Garages tmpGarage = GaragesList.Where(x => x.Drivers.Contains(item.driverNameless)).Single();
+                        SiiNunitData.Player.dismissed_drivers.Add(item.driverNameless);
 
-                        if (tmpGarage != null)
-                        {
-                            List<string> tmpDrvrs = tmpGarage.Drivers;
-
-                            int tmpIdx = tmpDrvrs.IndexOf(item.driverNameless);
-
-                            tmpGarage.Drivers[tmpIdx] = null;
-                        }
-
-                        // Get driver job
-                        string driverJobNameless = ((Save.Items.Driver_AI)SiiNunitData.SiiNitems[item.driverNameless]).driver_job;
-                        Save.Items.Job_Info driverJobInfo = (Save.Items.Job_Info)SiiNunitData.SiiNitems[driverJobNameless];
-
-                        // Check if job is active
-
-                        if (driverJobInfo.cargo == "null")
-                        {
-                            int drvrIdx = SiiNunitData.Player.drivers.IndexOf(item.driverNameless);
-
-                            SiiNunitData.Player.drivers.RemoveAt(drvrIdx);
-                            SiiNunitData.Player.driver_quit_warned.RemoveAt(drvrIdx);
-                            SiiNunitData.Player.driver_readiness_timer.RemoveAt(drvrIdx);
-
-                            SiiNunitData.Economy.driver_pool.Add(item.driverNameless);
-                        }
-                        else
-                        {
-                            SiiNunitData.Player.dismissed_drivers.Add(item.driverNameless);
-                        }
+                        item.state = Driver.driverState.DismissedDriver;
                     }
                 }
             }
 
-            tmpList = sourceLB.Items.Cast<Driver>().ToList();
+            UpdateDriverListTotals(sourceLB);
+        }
 
-            int currentStaff = tmpList.Count(x => x.isStaff == true);
+        private void UpdateDriverListTotals(ListBox sourceLB)
+        {
+            List<Driver> tmpList = sourceLB.Items.Cast<Driver>().ToList();
+
+            int currentStaff = tmpList.Count(x => x.state < Driver.driverState.FreeDriver);
 
             // Totals
             labelUserCompanyDriversCurrent.Text = currentStaff.ToString();
@@ -1299,11 +1334,23 @@ namespace TS_SE_Tool
             FillGaragesList(listBoxGarages.TopIndex);
         }
 
+        private void buttonUserCompanyDriversHire_Click(object sender, EventArgs e)
+        {
+            CompanyDriverHireEvent();
+        }
+
+        private void buttonUserCompanyDriversFire_Click(object sender, EventArgs e)
+        {
+            CompanyDriverFireEvent();
+        }
+
         private void contextMenuStripCompanyDriversEdit_Click(object sender, EventArgs e)
         {
             Driver selectedItem = (Driver)listBoxUserCompanyDrivers.SelectedItem;
 
-            if(!selectedItem.isUser)
+            if(selectedItem.state == Driver.driverState.Player)
+                tabControlMain.SelectedIndex = 0;
+            else
             {
                 FormAIDriverEditor driverEditor = new FormAIDriverEditor(selectedItem);
 
@@ -1328,8 +1375,6 @@ namespace TS_SE_Tool
                 driverEditor.Dispose();
                 listBoxUserCompanyDrivers.Invalidate();
             }
-            else
-                tabControlMain.SelectedIndex = 0;
         }
 
         private void contextMenuStripCompanyDriversHire_Click(object sender, EventArgs e)
