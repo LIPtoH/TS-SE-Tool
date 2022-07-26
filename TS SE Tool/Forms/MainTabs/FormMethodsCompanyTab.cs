@@ -1348,7 +1348,7 @@ namespace TS_SE_Tool
         {
             Driver selectedItem = (Driver)listBoxUserCompanyDrivers.SelectedItem;
 
-            if(selectedItem.state == Driver.driverState.Player)
+            if (selectedItem.state == Driver.driverState.Player)
                 tabControlMain.SelectedIndex = 0;
             else
             {
@@ -1370,10 +1370,11 @@ namespace TS_SE_Tool
                     saveDriver.fragile = tmpDriver.fragile;
                     saveDriver.urgent = tmpDriver.urgent;
                     saveDriver.mechanical = tmpDriver.mechanical;
+
+                    listBoxUserCompanyDrivers.Invalidate();
                 }
 
                 driverEditor.Dispose();
-                listBoxUserCompanyDrivers.Invalidate();
             }
         }
 

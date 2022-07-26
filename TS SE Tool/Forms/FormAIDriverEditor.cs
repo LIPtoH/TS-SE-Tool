@@ -47,13 +47,13 @@ namespace TS_SE_Tool
         {
             this.Icon = Properties.Resources.MainIco;
 
-            MainForm.HelpTranslateControl(this);
-            MainForm.HelpTranslateFormMethod(this);
-
-            labelDriverNameText.Text = driverData.driverNameTranslated;
-
             CreateProfilePanelControls();
             FillFormProfileControls();
+
+            MainForm.HelpTranslateControl(this);
+            MainForm.HelpTranslateFormMethod(this, toolTipAIDriverEditor);
+
+            labelDriverNameText.Text = driverData.driverNameTranslated;
 
             //dialog result
             buttonSave.DialogResult = DialogResult.OK;

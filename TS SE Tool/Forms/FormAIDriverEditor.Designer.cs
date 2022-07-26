@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelDriverName = new System.Windows.Forms.Label();
             this.groupBoxDriverSkill = new System.Windows.Forms.GroupBox();
@@ -35,6 +36,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.toolTipAIDriverEditor = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -126,6 +128,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(429, 549);
+            this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormAIDriverEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -146,5 +149,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.ToolTip toolTipAIDriverEditor;
     }
 }
