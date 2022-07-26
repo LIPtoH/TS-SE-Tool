@@ -317,7 +317,7 @@ namespace TS_SE_Tool
                 SkillImgS = new Image[6];
                 GaragesImg = new Image[1];
                 GaragesHQImg = new Image[1];
-                CitiesImg = new Image[2];
+                CitiesImg = new Image[3];
                 UrgencyImg = new Image[3];
                 CargoTypeImg = new Image[3];
                 CargoType2Img = new Image[3];

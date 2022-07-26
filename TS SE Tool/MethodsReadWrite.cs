@@ -336,7 +336,7 @@ namespace TS_SE_Tool
             GaragesHQImg = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32).images;
 
             // visited cities
-            imgPaths = new string[] { @"img\UI\Company\VisitedCities\city_pin_0.dds", @"img\UI\Company\VisitedCities\city_pin_1.dds" };
+            imgPaths = new string[] { @"img\UI\Company\VisitedCities\city_pin_0.dds", @"img\UI\Company\VisitedCities\city_pin_1.dds", @"img\UI\Company\VisitedCities\city_pin_2.dds", @"img\UI\notice_star.dds" };
             CitiesImg = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32).images;
 
 
