@@ -881,8 +881,6 @@ namespace TS_SE_Tool
         // Populate
         private void PopulateDriversList()
         {
-            bool userState = true;
-
             List<Driver> driversList = new List<Driver>();
 
             // Staff
@@ -892,17 +890,41 @@ namespace TS_SE_Tool
 
                 driverInList.driverNameless = driver;
                 driverInList.isStaff = true;
-                driverInList.isUser = userState;
 
-                if (userState)
-                    userState = false;
+                string drvrType = SiiNunitData.SiiNitems[driver].GetType().Name;
 
-                driverInList.adr = SiiNunitData.Economy.adr;
-                driverInList.long_dist = SiiNunitData.Economy.long_dist;
-                driverInList.heavy = SiiNunitData.Economy.heavy;
-                driverInList.fragile = SiiNunitData.Economy.fragile;
-                driverInList.urgent = SiiNunitData.Economy.urgent;
-                driverInList.mechanical = SiiNunitData.Economy.mechanical;
+                switch(drvrType)
+                {
+                    case "Driver_Player":
+                        {
+                            driverInList.isUser = true;
+
+                            driverInList.adr = SiiNunitData.Economy.adr;
+                            driverInList.long_dist = SiiNunitData.Economy.long_dist;
+                            driverInList.heavy = SiiNunitData.Economy.heavy;
+                            driverInList.fragile = SiiNunitData.Economy.fragile;
+                            driverInList.urgent = SiiNunitData.Economy.urgent;
+                            driverInList.mechanical = SiiNunitData.Economy.mechanical;
+
+                            break;
+                        }
+                    case "Driver_AI":
+                        {
+                            driverInList.isUser = false;
+
+                            Save.Items.Driver_AI dr = SiiNunitData.SiiNitems[driver];
+
+                            driverInList.adr = dr.adr;
+                            driverInList.long_dist = dr.long_dist;
+                            driverInList.heavy = dr.heavy;
+                            driverInList.fragile = dr.fragile;
+                            driverInList.urgent = dr.urgent;
+                            driverInList.mechanical = dr.mechanical;
+
+                            break;
+                        }
+                }
+
 
                 driversList.Add(driverInList);
             }
@@ -1173,6 +1195,12 @@ namespace TS_SE_Tool
                         extraDrivers.Add(item.driverNameless);
                         extraVehicles.Add(null);
                     }
+
+                    SiiNunitData.Player.drivers.Add(item.driverNameless);
+                    SiiNunitData.Player.driver_quit_warned.Add(false);
+                    SiiNunitData.Player.driver_readiness_timer.Add(0);
+
+                    SiiNunitData.Economy.driver_pool.Remove(item.driverNameless);
                 }
             }
 
@@ -1222,20 +1250,44 @@ namespace TS_SE_Tool
                     }
                     else
                     {
-                        GaragesList.Where(x => x.Drivers.Contains(item.driverNameless)).Single().Drivers.Remove(item.driverNameless);
+                        Garages tmpGarage = GaragesList.Where(x => x.Drivers.Contains(item.driverNameless)).Single();
+
+                        if (tmpGarage != null)
+                        {
+                            List<string> tmpDrvrs = tmpGarage.Drivers;
+
+                            int tmpIdx = tmpDrvrs.IndexOf(item.driverNameless);
+
+                            tmpGarage.Drivers[tmpIdx] = null;
+                        }
+
+                        // Get driver job
+                        string driverJobNameless = ((Save.Items.Driver_AI)SiiNunitData.SiiNitems[item.driverNameless]).driver_job;
+                        Save.Items.Job_Info driverJobInfo = (Save.Items.Job_Info)SiiNunitData.SiiNitems[driverJobNameless];
+
+                        // Check if job is active
+
+                        if (driverJobInfo.cargo == "null")
+                        {
+                            int drvrIdx = SiiNunitData.Player.drivers.IndexOf(item.driverNameless);
+
+                            SiiNunitData.Player.drivers.RemoveAt(drvrIdx);
+                            SiiNunitData.Player.driver_quit_warned.RemoveAt(drvrIdx);
+                            SiiNunitData.Player.driver_readiness_timer.RemoveAt(drvrIdx);
+
+                            SiiNunitData.Economy.driver_pool.Add(item.driverNameless);
+                        }
+                        else
+                        {
+                            SiiNunitData.Player.dismissed_drivers.Add(item.driverNameless);
+                        }
                     }
                 }
             }
 
             tmpList = sourceLB.Items.Cast<Driver>().ToList();
 
-            int currentStaff = 0;
-
-            foreach (Driver item in tmpList)
-            {
-                if (item.isStaff)
-                    currentStaff++;
-            }
+            int currentStaff = tmpList.Count(x => x.isStaff == true);
 
             // Totals
             labelUserCompanyDriversCurrent.Text = currentStaff.ToString();
@@ -1257,8 +1309,20 @@ namespace TS_SE_Tool
 
                 if (driverEditor.ShowDialog(this) == DialogResult.OK)
                 {
+                    // Update listbox
+
+                    Driver tmpDriver = driverEditor.driverData;
+                    selectedItem = tmpDriver;
+
                     // Save changes
-                    selectedItem = driverEditor.driverData;
+                    Save.Items.Driver_AI saveDriver = (Save.Items.Driver_AI)SiiNunitData.SiiNitems[driverEditor.driverData.driverNameless];
+
+                    saveDriver.adr = tmpDriver.adr;
+                    saveDriver.long_dist = tmpDriver.long_dist;
+                    saveDriver.heavy = tmpDriver.heavy;
+                    saveDriver.fragile = tmpDriver.fragile;
+                    saveDriver.urgent = tmpDriver.urgent;
+                    saveDriver.mechanical = tmpDriver.mechanical;
                 }
 
                 driverEditor.Dispose();
