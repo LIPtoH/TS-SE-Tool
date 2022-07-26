@@ -973,7 +973,7 @@ namespace TS_SE_Tool
 
             listBoxUserCompanyDrivers.BeginUpdate();
 
-            listBoxUserCompanyDrivers.DataSource = driversList;
+            listBoxUserCompanyDrivers.Items.AddRange(driversList.ToArray());
             listBoxUserCompanyDrivers.SelectedIndex = -1;
 
             listBoxUserCompanyDrivers.EndUpdate();

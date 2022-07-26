@@ -93,6 +93,8 @@ namespace TS_SE_Tool
                 HelpTranslateFormMethod(this, toolTipMain);
                 HelpTranslateMenuStripMethod(menuStripMain);
 
+                HelpTranslatContextMenuStripMethod(contextMenuStripMain);                
+
                 this.ResumeLayout();
 
                 LngFileLoader("countries_translate.txt", CountriesLngDict, ProgSettingsV.Language);

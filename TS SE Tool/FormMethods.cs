@@ -553,9 +553,10 @@ namespace TS_SE_Tool
         private void ClearFormControls(bool _initial)
         {
             this.SuspendLayout();
-            //Profile
-            //Level
-            
+
+            //=== Profile
+
+            //--- Level            
             labelPlayerLevelName.Text = "*****";
             panelPlayerLevel.BackColor = Color.Transparent;
             labelPlayerLevelNumber.Text = "";
@@ -563,18 +564,19 @@ namespace TS_SE_Tool
             labelPlayerExperience.Text = "0";
             labelPlayerExperienceNxtLvlThreshhold.Text = "0";
             
-            //Skills
+            //--- Skills
             foreach (CheckBox temp in ADRbuttonArray)
                 temp.Checked = false;
 
             foreach (CheckBox temp in SkillButtonArray)
                 temp.Checked = false;
 
-            //User Colors
+            //--- User Colors
             tableLayoutPanelUserColors.RowStyles[1].Height = 0; //Hide add slot
             DeleteUserColorsButtons();
 
-            //Company
+            //=== Company
+
             pictureBoxCompanyLogo.Image = null;
 
             textBoxUserCompanyCompanyName.Text = "";
@@ -583,14 +585,26 @@ namespace TS_SE_Tool
 
             listBoxVisitedCities.Items.Clear();
             listBoxGarages.Items.Clear();
+            listBoxUserCompanyDrivers.Items.Clear();
 
-            //Truck
+            //--- clear labels
+
+            labelUserCompanyVisitedCitiesCurrent.Text = "0";
+            labelUserCompanyVisitedCitiesTotal.Text = "0";
+
+            labelUserCompanyGaragesCurrent.Text = "0";
+            labelUserCompanyGaragesTotal.Text = "0";
+
+            labelUserCompanyDriversCurrent.Text = "0";
+            labelUserCompanyDriversTotal.Text = "0";
+
+            //=== Truck
             comboBoxUserTruckCompanyTrucks.DataSource = null;
 
-            //Trailer
+            //=== Trailer
             comboBoxUserTrailerCompanyTrailers.DataSource = null;
 
-            //FreightMarket
+            //=== FreightMarket
             comboBoxFreightMarketCountries.DataSource = null;
             comboBoxFreightMarketCompanies.DataSource = null;
 
@@ -608,7 +622,7 @@ namespace TS_SE_Tool
 
             listBoxFreightMarketAddedJobs.Items.Clear();
 
-            //CargoMarket
+            //=== CargoMarket
             comboBoxCargoMarketSourceCity.DataSource = null;
             comboBoxCargoMarketSourceCompany.DataSource = null;
 
@@ -742,6 +756,25 @@ namespace TS_SE_Tool
             }
             catch
             { }
+        }
+
+        private void HelpTranslatContextMenuStripMethod(ContextMenuStrip parent)
+        {
+            CultureInfo _ci = Thread.CurrentThread.CurrentUICulture;
+
+            foreach (ToolStripItem tmpTSMI in parent.Items)
+            {
+                try
+                {
+                    string translatedString = ResourceManagerMain.GetString(tmpTSMI.Name, _ci);
+                    if (translatedString != null)
+                        tmpTSMI.Text = translatedString;
+                }
+                catch
+                { }
+
+                //HelpTranslateMenuStripDDMethod(tmpTSMI, ResourceManagerMain, _ci);
+            }
         }
 
         private void HelpTranslateMenuStripMethod(MenuStrip parent)
