@@ -985,7 +985,7 @@ namespace TS_SE_Tool
                 //Write Save data
                 using (StreamWriter writer = new StreamWriter(SiiSavePath, false))
                 {
-                    writer.Write(SiiNunitData.PrintOut(0));
+                    writer.Write(SiiNunitData.PrintOut(MainSaveFileInfoData.Version));
                 }
 
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_file_saved");                

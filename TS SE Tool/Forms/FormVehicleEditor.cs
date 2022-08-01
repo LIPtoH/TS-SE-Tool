@@ -102,7 +102,7 @@ namespace TS_SE_Tool
 
             dynamic item = dataGridViewAccessories.Rows[selectedIndex].Cells[2].Value;
 
-            List<string> tmpLST = ((string)item.PrintOut(0, "")).Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            List<string> tmpLST = ((string)item.PrintOut(MainForm.MainSaveFileInfoData.Version, "")).Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             tmpLST.RemoveAt(0);
             tmpLST.RemoveAt(tmpLST.Count() - 1);
@@ -222,7 +222,7 @@ namespace TS_SE_Tool
             int selectedIndex = dataGridViewAccessories.CurrentCell.RowIndex;
             dynamic item = dataGridViewAccessories.Rows[selectedIndex].Cells[2].Value;
 
-            string clipText = item.PrintOut(0, "");
+            string clipText = item.PrintOut(MainForm.MainSaveFileInfoData.Version, "");
 
             Clipboard.SetText(format + clipText);
         }
