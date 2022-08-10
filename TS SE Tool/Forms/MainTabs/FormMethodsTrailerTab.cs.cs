@@ -226,7 +226,7 @@ namespace TS_SE_Tool
 
         private void FillUserCompanyTrailerList()
         {
-            if (UserTrailerDictionary == null)
+            if (UserTrailerDictionary is null)
                 return;
 
             DataTable combDT = new DataTable();
@@ -261,27 +261,29 @@ namespace TS_SE_Tool
 
             foreach (KeyValuePair<string, UserCompanyTrailerData> UserTrailer in UserTrailerDictionary)
             {
-                if (UserTrailer.Value == null)
+                if (UserTrailer.Value is null)
                     continue;
 
                 if (UserTrailer.Value.Main)
                 {
-                    string trailerNameless = "", 
+                    string trailerNameless = UserTrailer.Key, //link
                            tmpTrailerType = "", tmpTrailerName = "", tmpGarageName = "", tmpDriverName = "";
-                    byte tmpTruckState = 0;
 
-                    //link
-                    trailerNameless = UserTrailer.Key;
+                    byte tmpTruckState = 0;                    
 
                     //Quick job or Bought
                     if (UserTrailer.Value.Users)
                     {
                         tmpTrailerType = "U";
 
-                        //Garage
-                        tmpGarageName = GaragesList.Find(x => x.Trailers.Contains(trailerNameless)).GarageNameTranslated;
-
                         tmpTruckState = 2;
+
+                        Garages tmpGrg = GaragesList.Find(x => x.Trailers.Contains(trailerNameless));
+
+                        if (tmpGrg is null)
+                            continue;
+
+                        tmpGarageName = tmpGrg.GarageNameTranslated;
                     }
                     else
                     {
@@ -291,16 +293,21 @@ namespace TS_SE_Tool
                     }
 
                     //Trailer type
-                    string trailerdef = UserTrailer.Value.TrailerMainData.trailer_definition;
+                    Save.Items.Trailer tmpTrailerData = UserTrailer.Value.TrailerMainData;
+
+                    if (tmpTrailerData is null)
+                        continue;
+
+                    string trailerdef = tmpTrailerData.trailer_definition;
 
                     if (UserTrailerDefDictionary.Count > 0)
                     {
                         if (UserTrailerDefDictionary.ContainsKey(trailerdef))
                         {
-                            string[] trailerDefPropertys = { "body_type", "axles", "chain_type" };
+                            //string[] trailerDefPropertys = { "body_type", "axles", "chain_type" };
                             string[] trailerDefExtra = { "{0}", "{0} axles", "{0}" };
                             string trailername = "";
-                            int iCounter = 0;
+                            int lCounter = 0;
 
                             Save.Items.Trailer_Def CurTrailerDef = UserTrailerDefDictionary[trailerdef];
 
@@ -310,14 +317,15 @@ namespace TS_SE_Tool
 
                             void addToString(string _input)
                             {
-                                if (_input != "")
+                                if (!string.IsNullOrEmpty(_input))
                                 {
-                                    if (trailername != "")
+                                    if (!string.IsNullOrEmpty(trailername))
                                         trailername += " | ";
-                                    trailername += String.Format(trailerDefExtra[iCounter], CultureInfo.CurrentCulture.TextInfo.ToTitleCase(_input));
+
+                                    trailername += String.Format(trailerDefExtra[lCounter], CultureInfo.CurrentCulture.TextInfo.ToTitleCase(_input));
                                 }
 
-                                iCounter++;
+                                lCounter++;
                             }
 
                             tmpTrailerName = trailername;
@@ -333,9 +341,14 @@ namespace TS_SE_Tool
                     }
 
                     //Driver
-                    tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTrailer == trailerNameless)?.SingleOrDefault().Key ?? "null";
-                    
-                    if (tmpDriverName != "null")
+                    KeyValuePair<string, UserCompanyDriverData> tmpKVP = UserDriverDictionary.Where(x => x.Value.AssignedTrailer == trailerNameless).FirstOrDefault();
+
+                    if (tmpKVP.Key is null)
+                        tmpDriverName = "null";
+                    else
+                    {
+                        tmpDriverName = tmpKVP.Key;
+
                         if (SiiNunitData.Player.drivers[0] == tmpDriverName)
                         {
                             tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
@@ -344,11 +357,10 @@ namespace TS_SE_Tool
                         {
                             DriverNames.TryGetValue(tmpDriverName, out string _resultvalue);
 
-                            if (_resultvalue != null && _resultvalue != "")
-                            {
+                            if (!string.IsNullOrEmpty(_resultvalue))
                                 tmpDriverName = _resultvalue.TrimStart(new char[] { '+' });
-                            }
                         }
+                    }
 
                     //
                     combDT.Rows.Add(trailerNameless, tmpTrailerType, tmpTrailerName, tmpGarageName, tmpDriverName, tmpTruckState);
