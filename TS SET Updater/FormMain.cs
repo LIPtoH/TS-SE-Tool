@@ -26,7 +26,7 @@ namespace TS_SET_Updater
         {
             InitializeComponent();
 
-            if(args.Length > 0)
+            if (args.Length > 0)
             {
                 updateStatus = bool.Parse(args[0]);
 
@@ -45,10 +45,17 @@ namespace TS_SET_Updater
         {
             if (updateStatus)
             {
-                extWinPos windowPosition = new extWinPos();
-                Rectangle windowRectangle = windowPosition.GetExtWinRectangle(ProcessID);
+                try
+                {
+                    extWinPos windowPosition = new extWinPos();
+                    Rectangle windowRectangle = windowPosition.GetExtWinRectangle(ProcessID);
 
-                this.Location = new Point(windowRectangle.X + (windowRectangle.Width - this.Width) / 2, windowRectangle.Y + (windowRectangle.Height - this.Height) / 2);
+                    this.Location = new Point(windowRectangle.X + (windowRectangle.Width - this.Width) / 2, windowRectangle.Y + (windowRectangle.Height - this.Height) / 2);
+                }
+                catch
+                {
+                    CenterToScreen();
+                }
 
                 Updater();
             }
