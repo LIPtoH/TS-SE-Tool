@@ -636,6 +636,36 @@ namespace TS_SE_Tool.Save.Items
 
                 returnSB.AppendLine(Company.PrintOut(_version, item));
 
+                //--- Delivered Trailer
+
+                if (Company.delivered_trailer != "null")
+                {
+                    string trailerNameless = Company.delivered_trailer;
+
+                    trStart:;
+
+                    Trailer Trailer = SiiNitems[trailerNameless];
+
+                    returnSB.AppendLine(Trailer.PrintOut(_version, trailerNameless));
+
+                    tmpAccList.InsertRange(0, Trailer.accessories);
+
+                    if (Trailer.slave_trailer != "null")
+                    {
+                        trailerNameless = Trailer.slave_trailer;
+                        goto trStart;
+                    }
+
+                    foreach (string accNameless in tmpAccList.Where(x => x != null && x != "null"))
+                    {
+                        returnSB.AppendLine(SiiNitems[accNameless].PrintOut(_version, accNameless));
+                    }
+
+                    tmpAccList.Clear();
+                }
+
+                //--- Job offers
+
                 foreach (string item2 in Company.job_offer.Where(x => x != null && x != "null"))
                 {
                     returnSB.AppendLine(SiiNitems[item2].PrintOut(_version, item2));
