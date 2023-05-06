@@ -606,6 +606,9 @@ namespace TS_SE_Tool
             else
             {
                 e.Cancel = true;
+
+                DialogResult DR = UpdateStatusBarMessage.ShowMessageBox(this, "Save file does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return;
             }
 
@@ -624,6 +627,10 @@ namespace TS_SE_Tool
             else
             {
                 e.Cancel = true;
+
+                DialogResult DR = UpdateStatusBarMessage.ShowMessageBox(this, "Error occured during preprocessing Profile file." + Environment.NewLine +
+                    "Probably New \\ Updated format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return;
             }
             //=== End Profile Info
@@ -641,6 +648,10 @@ namespace TS_SE_Tool
             else
             {
                 e.Cancel = true;
+
+                DialogResult DR = UpdateStatusBarMessage.ShowMessageBox(this, "Error occured during preprocessing Info file." + Environment.NewLine +
+                    "Probably New \\ Updated format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return;
             }
 
@@ -668,6 +679,10 @@ namespace TS_SE_Tool
             else
             {
                 e.Cancel = true;
+
+                DialogResult DR = UpdateStatusBarMessage.ShowMessageBox(this, "Error occured during preprocessing Save file." + Environment.NewLine +
+                    "Probably New \\ Updated Save format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return;
             }
             // End Save file
@@ -819,7 +834,7 @@ namespace TS_SE_Tool
                 ToggleMainControlsAccess(true);
                 ToggleControlsAccess(false);
 
-                UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
+                //UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
 
                 return;
             }
