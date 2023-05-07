@@ -50,6 +50,7 @@ namespace TS_SE_Tool.Save.Items
         internal SCS_Float slave_trailer_placements { get; set; } = 0;
 
         internal bool schedule_transfer_to_hq { get; set; } = false;
+        internal bool schedule_quick_travel { get; set; } = false;
 
         internal int flags { get; set; } = 0;
 
@@ -244,6 +245,12 @@ namespace TS_SE_Tool.Save.Items
                                 break;
                             }
 
+                        case "schedule_quick_travel":
+                            {
+                                schedule_quick_travel = bool.Parse(dataLine);
+                                break;
+                            }
+
                         case "flags":
                             {
                                 flags = int.Parse(dataLine);
@@ -421,6 +428,10 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" trailer_placement: " + trailer_placement.ToString());
             returnSB.AppendLine(" slave_trailer_placements: " + slave_trailer_placements.ToString());
             returnSB.AppendLine(" schedule_transfer_to_hq: " + schedule_transfer_to_hq.ToString().ToLower());
+
+            if (_version >= (byte)saveVTV.v147)
+                returnSB.AppendLine(" schedule_quick_travel: " + schedule_quick_travel.ToString().ToLower());
+
             returnSB.AppendLine(" flags: " + flags.ToString());
             returnSB.AppendLine(" gas_pump_money_debt: " + gas_pump_money_debt.ToString());
             returnSB.AppendLine(" current_job: " + current_job);

@@ -24,6 +24,9 @@ namespace TS_SE_Tool.Save.Items
 
         internal int? reserved_trailer_slot { get; set; } = null;
 
+        internal uint state { get; set; } = 0;
+
+        internal uint state_change_time { get; set; } = 0;
 
         internal Company()
         { }
@@ -115,6 +118,17 @@ namespace TS_SE_Tool.Save.Items
                                 break;
                             }
 
+                        case "state":
+                            {
+                                state = uint.Parse(dataLine);
+                                break;
+                            }
+
+                        case " state_change_time":
+                            {
+                                state_change_time = uint.Parse(dataLine);
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
@@ -152,6 +166,12 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" discovered: " + discovered.ToString().ToLower());
 
             returnSB.AppendLine(" reserved_trailer_slot: " + (reserved_trailer_slot == null ? "nil" : reserved_trailer_slot.ToString()));
+
+            if (_version >= (byte)saveVTV.v146)
+            {
+                returnSB.AppendLine(" state: " + state.ToString());
+                returnSB.AppendLine(" state_change_time: " + state_change_time.ToString());
+            }
 
             returnSB.AppendLine("}");
 

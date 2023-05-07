@@ -299,6 +299,11 @@ namespace TS_SE_Tool.Save.Items
                         return new Oversize_Block_rule_Save(_input);
                     }
 
+                case "police_offence_log":
+                    {
+                        return new Police_offence_Log(_input);
+                    }
+
                 case "police_ctrl":
                     {
                         return new Police_Ctrl(_input);
@@ -818,6 +823,20 @@ namespace TS_SE_Tool.Save.Items
                 }
             }
 
+            //=== Police offence Log
+
+            if (_version >= (byte)saveVTV.v147)
+            {
+                Police_offence_Log Police_offence_Log = SiiNitems[Economy.police_offence_log];
+
+                returnSB.AppendLine(Police_offence_Log.PrintOut(_version, Economy.police_offence_log));
+
+                foreach (string item in Police_offence_Log.detailed_history_entries.Where(x => x != null && x != "null"))
+                {
+                    returnSB.AppendLine(SiiNitems[item].PrintOut(_version, item));
+                }
+            }
+            
             //=== Police Control
 
             returnSB.AppendLine(SiiNitems[Economy.police_ctrl].PrintOut(_version, Economy.police_ctrl));

@@ -50,6 +50,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal string delivery_log { get; set; } = "";
         internal string ferry_log { get; set; } = "";
+        internal string police_offence_log { get; set; } = "";
 
         internal int stored_camera_mode { get; set; } = 0;
         internal int stored_actor_state { get; set; } = 0;
@@ -60,6 +61,10 @@ namespace TS_SE_Tool.Save.Items
         internal int stored_actor_wiper_mode { get; set; } = 0;
         internal int stored_actor_retarder { get; set; } = 0;
         internal int stored_display_mode { get; set; } = 0;
+
+        internal int stored_display_mode_on_dashboard { get; set; } = 0;
+        internal int stored_display_mode_on_gps { get; set; } = 0;
+
         internal int stored_dashboard_map_mode { get; set; } = 0;
         internal int stored_world_map_zoom { get; set; } = 0;
         internal int stored_online_job_id { get; set; } = 0;
@@ -391,6 +396,12 @@ namespace TS_SE_Tool.Save.Items
                                 break;
                             }
 
+                        case "police_offence_log":
+                            {
+                                police_offence_log = dataLine;
+                                break;
+                            }
+
                         case "stored_camera_mode":
                             {
                                 stored_camera_mode = int.Parse(dataLine);
@@ -430,6 +441,18 @@ namespace TS_SE_Tool.Save.Items
                         case "stored_display_mode":
                             {
                                 stored_display_mode = int.Parse(dataLine);
+                                break;
+                            }
+
+                        case "stored_display_mode_on_dashboard":
+                            {
+                                stored_display_mode_on_dashboard = int.Parse(dataLine);
+                                break;
+                            }
+
+                        case "stored_display_mode_on_gps":
+                            {
+                                stored_display_mode_on_gps = int.Parse(dataLine);
                                 break;
                             }
 
@@ -1146,6 +1169,9 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" delivery_log: " + delivery_log);
             returnSB.AppendLine(" ferry_log: " + ferry_log);
 
+            if (_version >= (byte)saveVTV.v147)
+                returnSB.AppendLine(" police_offence_log: " + police_offence_log);
+
             returnSB.AppendLine(" stored_camera_mode: " + stored_camera_mode.ToString());
             returnSB.AppendLine(" stored_actor_state: " + stored_actor_state.ToString());
             returnSB.AppendLine(" stored_high_beam_style: " + stored_high_beam_style.ToString());
@@ -1153,7 +1179,15 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" stored_actor_wiper_mode: " + stored_actor_wiper_mode.ToString());
             returnSB.AppendLine(" stored_actor_retarder: " + stored_actor_retarder.ToString());
 
-            returnSB.AppendLine(" stored_display_mode: " + stored_display_mode.ToString());
+            if (_version < (byte)saveVTV.v146)
+                returnSB.AppendLine(" stored_display_mode: " + stored_display_mode.ToString());
+
+            if (_version >= (byte)saveVTV.v146)
+            {
+                returnSB.AppendLine(" stored_display_mode_on_dashboard: " + stored_display_mode_on_dashboard.ToString());
+                returnSB.AppendLine(" stored_display_mode_on_gps: " + stored_display_mode_on_gps.ToString());
+            }
+
             returnSB.AppendLine(" stored_dashboard_map_mode: " + stored_dashboard_map_mode.ToString());
             returnSB.AppendLine(" stored_world_map_zoom: " + stored_world_map_zoom.ToString());
 
