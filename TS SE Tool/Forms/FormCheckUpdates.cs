@@ -286,23 +286,33 @@ namespace TS_SE_Tool
                 Directory.CreateDirectory("updater");
             }    
 
-            Task t = Task.Run(() => {
-                var url = Web_Utilities.External.linkDownloadVersion;
+            Task t = Task.Run(() => 
+            {
+
                 var filename = Directory.GetCurrentDirectory() + @"\updater\ts.set.newversion.zip";
 
-                try
+                foreach (string url in new[] { Web_Utilities.External.linkDownloadVersion, Web_Utilities.External.linkDownloadVersion2 })
                 {
-                    using (WebClient webClient = new WebClient())
+                    bool available =  Web_Utilities.External.RemoteFileExists(url);
+
+                    if (available)
                     {
-                        webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                        webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                        webClient.DownloadFile(new Uri(url), filename); //DownloadFileTaskAsync
+                        try
+                        {
+                            using (Web_Utilities.WebClientWithTO webClient = new Web_Utilities.WebClientWithTO())
+                            {
+                                webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+                                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+                                webClient.DownloadFile(new Uri(url), filename); //DownloadFileTaskAsync
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+
             });
             t.Wait();
         }

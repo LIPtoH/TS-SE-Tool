@@ -73,7 +73,7 @@ namespace TS_SE_Tool
             //
             textBoxDescription.Text = "";
             textBoxDescription.Text += "This program created by\r\nLIPtoH <" + Utilities.Web_Utilities.External.linkMailDeveloper +
-                                        ">\r\n" + Utilities.Web_Utilities.External.linGithub + "\r\n\r\n";
+                                        ">\r\n" + Utilities.Web_Utilities.External.linkGithub + "\r\n\r\n";
             textBoxDescription.Text += "Tools and projects used in this project:\r\n\r\n";
 
             textBoxDescription.Text += referenciesText;

@@ -143,12 +143,12 @@ namespace TS_SE_Tool
         //Downloads
         private void checkGitHubRelesesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start(Utilities.Web_Utilities.External.linGithubReleases);
+            Process.Start(Utilities.Web_Utilities.External.linkGithubReleases);
         }
 
         private void checkTMPForumToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start(Utilities.Web_Utilities.External.linTMPforum);
+            Process.Start(Utilities.Web_Utilities.External.linkTMPforum);
         }
 
         private void checkSCSForumToolStripMenuItem_Click(object sender, EventArgs e)

@@ -112,12 +112,12 @@ namespace TS_SE_Tool
 
         private void linkSecond_Click(object sender, EventArgs e)
         {
-            Process.Start(Utilities.Web_Utilities.External.linTMPforum);
+            Process.Start(Utilities.Web_Utilities.External.linkTMPforum);
         }
 
         private void linkLabelGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Utilities.Web_Utilities.External.linGithubReleasesLatest);
+            Process.Start(Utilities.Web_Utilities.External.linkGithubReleasesLatest);
         }
 
         private void linkLabelHelpLocalPDF_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

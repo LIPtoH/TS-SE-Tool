@@ -32,26 +32,30 @@ using System.Threading;
 using System.Net.Mime;
 using System.Security.Cryptography;
 using TS_SE_Tool.Utilities;
+using System.Security.Policy;
 
 namespace TS_SE_Tool.Utilities
 {
     public class Web_Utilities
     {
-        public static Web_Utilities External = new Web_Utilities();
+        internal static Web_Utilities External = new Web_Utilities();
 
         internal string linkCheckVersion    = "https://rebrand.ly/TS-SET-CheckVersion";
         internal string linkDownloadVersion = "https://rebrand.ly/TS-SET-Download";
         internal string linkYoutubeTutorial = "https://rebrand.ly/TS-SET-Tutorial";
 
+        internal string linkCheckVersion2 = "https://liptoh.twilightparadox.com/TS-SET-CheckVersion";
+        internal string linkDownloadVersion2 = "https://liptoh.twilightparadox.com/TS-SET-Download";
+
         internal string linkHelpDeveloper = "https://www.paypal.me/LIPtoHCode";
         internal string linkMailDeveloper = "liptoh.codebase@gmail.com";
 
         internal string linkSCSforum = "https://forum.scssoft.com/viewtopic.php?f=34&t=266092";
-        internal string linTMPforum = "https://forum.truckersmp.com/index.php?/topic/79561-ts-saveeditor-tool";
-        internal string linGithub = "https://github.com/LIPtoH/TS-SE-Tool";
+        internal string linkTMPforum = "https://forum.truckersmp.com/index.php?/topic/79561-ts-saveeditor-tool";
+        internal string linkGithub = "https://github.com/LIPtoH/TS-SE-Tool";
 
-        internal string linGithubReleases = "https://github.com/LIPtoH/TS-SE-Tool/releases";
-        internal string linGithubReleasesLatest = "https://github.com/LIPtoH/TS-SE-Tool/releases/latest";
+        internal string linkGithubReleases = "https://github.com/LIPtoH/TS-SE-Tool/releases";
+        internal string linkGithubReleasesLatest = "https://github.com/LIPtoH/TS-SE-Tool/releases/latest";
 
         private static System.Timers.Timer aTimer;
         private static byte atimerCounter = 0;
@@ -74,7 +78,7 @@ namespace TS_SE_Tool.Utilities
             SetTimer(_control);
 
             string[] NewVersion = { "", "" };
-            string newversionData = GetLatestVersionData(linkCheckVersion);
+            string newversionData = GetLatestVersionData();
 
             if (newversionData != null)
             {
@@ -97,20 +101,30 @@ namespace TS_SE_Tool.Utilities
             }
         }
 
-        private string GetLatestVersionData(string url)
+        private string GetLatestVersionData()
         {
             string result = null;
 
-            using (WebClientWithTO client = new WebClientWithTO())
+            foreach(string url in new[] { linkCheckVersion, linkCheckVersion2 })
             {
-                try
-                {
-                    client.Timeout = 5;
-                    result = client.DownloadString(url);
-                }
-                catch { }
+                
+                bool available = RemoteFileExists(url);
 
-                client.Dispose();
+                if (available)
+                {
+                    using (WebClientWithTO client = new WebClientWithTO())
+                    {
+                        client.Timeout_S = 10;
+
+                        try
+                        {
+                            result = client.DownloadString(url);
+                        }
+                        catch { }
+
+                        client.Dispose();
+                    }
+                }
             }
 
             return result;
@@ -164,17 +178,39 @@ namespace TS_SE_Tool.Utilities
             });
         }
 
-        private class WebClientWithTO : WebClient
+        internal class WebClientWithTO : WebClient
         {
-            public UInt16 Timeout { get; set; }
+            public UInt16 Timeout_S { get; set; } = 60;
 
             protected override WebRequest GetWebRequest(Uri uri)
             {
                 WebRequest lWebRequest = base.GetWebRequest(uri);
-                lWebRequest.Timeout = Timeout * 1000;
-                ((HttpWebRequest)lWebRequest).ReadWriteTimeout = Timeout;
+                lWebRequest.Timeout = Timeout_S * 1000;
+                ((HttpWebRequest)lWebRequest).ReadWriteTimeout = Timeout_S;
 
                 return lWebRequest;
+            }
+        }
+
+        internal bool RemoteFileExists(string url)
+        {
+            try
+            {
+                //Creating the HttpWebRequest
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                //Setting the Request method HEAD, you can also use GET too.
+                request.Method = "HEAD";
+                request.Timeout = 5000;
+                //Getting the Web Response.
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                //Returns TRUE if the Status code == 200
+                response.Close();
+                return (response.StatusCode == HttpStatusCode.OK);
+            }
+            catch
+            {
+                //Any exception will returns false.
+                return false;
             }
         }
     }
