@@ -159,10 +159,10 @@ namespace TS_SE_Tool
 
                 ProgSettingsV.ProgramVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-                SupportedSavefileVersionETS2 = new int[] { 61, 62 }; //Supported save version
-                SupportedGameVersionETS2 = "1.43.x - 1.44.x"; //Last game version Tested on
+                SupportedSavefileVersionETS2 = new int[] { 61, 68 }; //Supported save version
+                SupportedGameVersionETS2 = "1.43.x - 1.47.x"; //Last game version Tested on
                 //SupportedSavefileVersionATS;
-                SupportedGameVersionATS = "1.43.x - 1.44.x"; //Last game version Tested on
+                SupportedGameVersionATS = "1.43.x - 1.47.x"; //Last game version Tested on
 
                 comboBoxPrevProfiles.FlatStyle =
                 comboBoxProfiles.FlatStyle =
