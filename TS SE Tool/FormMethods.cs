@@ -164,7 +164,7 @@ namespace TS_SE_Tool
                 //SupportedSavefileVersionATS;
                 SupportedGameVersionATS = "1.43.x - 1.47.x"; //Last game version Tested on
 
-                comboBoxPrevProfiles.FlatStyle =
+                comboBoxRootFolders.FlatStyle =
                 comboBoxProfiles.FlatStyle =
                 comboBoxSaves.FlatStyle = FlatStyle.Flat;
 

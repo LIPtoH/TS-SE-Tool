@@ -69,7 +69,7 @@ namespace TS_SE_Tool
             WorkingProfileName = Utilities.TextUtilities.FromHexToString(WorkingProfilePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last());
 
             //Profile type
-            ProfileType = ((DataTable)ParentForm.comboBoxPrevProfiles.DataSource).Rows[ParentForm.comboBoxPrevProfiles.SelectedIndex].ItemArray[2].ToString();
+            ProfileType = ((DataTable)ParentForm.comboBoxRootFolders.DataSource).Rows[ParentForm.comboBoxRootFolders.SelectedIndex].ItemArray[2].ToString();
 
             labelProfileNameValue.Text = WorkingProfileName;
         }

@@ -227,7 +227,7 @@
             this.buttonMainLoadSave = new System.Windows.Forms.Button();
             this.pictureBoxProfileAvatar = new System.Windows.Forms.PictureBox();
             this.buttonMainAddCustomFolder = new System.Windows.Forms.Button();
-            this.comboBoxPrevProfiles = new System.Windows.Forms.ComboBox();
+            this.comboBoxRootFolders = new System.Windows.Forms.ComboBox();
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
@@ -2664,18 +2664,18 @@
             this.buttonMainAddCustomFolder.UseVisualStyleBackColor = true;
             this.buttonMainAddCustomFolder.Click += new System.EventHandler(this.buttonMainAddCustomFolder_Click);
             // 
-            // comboBoxPrevProfiles
+            // comboBoxRootFolders
             // 
-            this.comboBoxPrevProfiles.BackColor = System.Drawing.SystemColors.Window;
-            this.comboBoxPrevProfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPrevProfiles.Enabled = false;
-            this.comboBoxPrevProfiles.FormattingEnabled = true;
-            this.comboBoxPrevProfiles.Location = new System.Drawing.Point(6, 106);
-            this.comboBoxPrevProfiles.Name = "comboBoxPrevProfiles";
-            this.comboBoxPrevProfiles.Size = new System.Drawing.Size(197, 21);
-            this.comboBoxPrevProfiles.TabIndex = 1;
-            this.comboBoxPrevProfiles.DropDown += new System.EventHandler(this.comboBoxPrevProfiles_DropDown);
-            this.comboBoxPrevProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxPrevProfiles_SelectedIndexChanged);
+            this.comboBoxRootFolders.BackColor = System.Drawing.SystemColors.Window;
+            this.comboBoxRootFolders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRootFolders.Enabled = false;
+            this.comboBoxRootFolders.FormattingEnabled = true;
+            this.comboBoxRootFolders.Location = new System.Drawing.Point(6, 106);
+            this.comboBoxRootFolders.Name = "comboBoxRootFolders";
+            this.comboBoxRootFolders.Size = new System.Drawing.Size(197, 21);
+            this.comboBoxRootFolders.TabIndex = 1;
+            this.comboBoxRootFolders.DropDown += new System.EventHandler(this.comboBoxRootFolders_DropDown);
+            this.comboBoxRootFolders.SelectedIndexChanged += new System.EventHandler(this.comboBoxRootFolders_SelectedIndexChanged);
             // 
             // checkBoxProfilesAndSavesProfileBackups
             // 
@@ -2706,7 +2706,7 @@
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRefreshAll);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.checkBoxProfilesAndSavesProfileBackups);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.pictureBoxProfileAvatar);
-            this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxPrevProfiles);
+            this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxRootFolders);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxProfiles);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.comboBoxSaves);
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesOpenSaveFolder);
@@ -2992,7 +2992,7 @@
         private System.Windows.Forms.GroupBox groupBoxProfileUserColors;
         internal System.Windows.Forms.CheckBox checkBoxFreightMarketRandomDest;
         private System.Windows.Forms.TabPage tabPageConvoyTools;
-        internal System.Windows.Forms.ComboBox comboBoxPrevProfiles;
+        internal System.Windows.Forms.ComboBox comboBoxRootFolders;
         private System.Windows.Forms.CheckBox checkBoxProfilesAndSavesProfileBackups;
         private System.Windows.Forms.TabPage tabPageCompany;
         private System.Windows.Forms.Label labelUserCompanyCompanyName;

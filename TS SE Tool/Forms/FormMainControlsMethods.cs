@@ -202,7 +202,7 @@ namespace TS_SE_Tool
             buttonProfilesAndSavesEditProfile.Enabled = _state;
             buttonProfilesAndSavesRestoreBackup.Enabled = _state;
 
-            comboBoxPrevProfiles.Enabled = _state;
+            comboBoxRootFolders.Enabled = _state;
             comboBoxProfiles.Enabled = _state;
             comboBoxSaves.Enabled = _state;
 
@@ -217,7 +217,7 @@ namespace TS_SE_Tool
 
         private void CheckSaveControls()
         {
-            DataRowView drv = (DataRowView)comboBoxPrevProfiles.SelectedItem;
+            DataRowView drv = (DataRowView)comboBoxRootFolders.SelectedItem;
 
             Font loadButtonFont = buttonMainLoadSave.Font;
 
@@ -267,7 +267,7 @@ namespace TS_SE_Tool
             else
                 ToggleGame("ATS");
 
-            FillAllProfilesPaths();
+            FillRootFoldersPaths();
         }
 
         public void ToggleGame(string _game)
@@ -304,13 +304,14 @@ namespace TS_SE_Tool
         //Profile list
         private void buttonRefreshAll_Click(object sender, EventArgs e)
         {
-            FillAllProfilesPaths();
+            FillRootFoldersPaths();
         }
 
         private void buttonProfilesAndSavesEditProfile_Click(object sender, EventArgs e)
         {
             FormProfileEditor FormWindow = new FormProfileEditor();
             FormWindow.ParentForm = this;
+
             DialogResult t = FormWindow.ShowDialog();
 
             if (t != DialogResult.Cancel)
@@ -319,7 +320,7 @@ namespace TS_SE_Tool
                 buttonMainDecryptSave.Enabled = true;
                 buttonMainLoadSave.Enabled = true;
 
-                FillAllProfilesPaths();
+                FillRootFoldersPaths();
             }
         }
         
@@ -485,30 +486,30 @@ namespace TS_SE_Tool
         //Profile and Saves groupbox
         private void checkBoxProfileBackups_CheckedChanged(object sender, EventArgs e)
         {
-            string sv = comboBoxPrevProfiles.SelectedValue.ToString();
+            string sv = comboBoxRootFolders.SelectedValue.ToString();
 
-            FillAllProfilesPaths();
+            FillRootFoldersPaths();
 
             //if (checkBoxProfilesAndSavesProfileBackups.Checked)
             //{
-            int index = FindByValue(comboBoxPrevProfiles, sv);
+            int index = FindByValue(comboBoxRootFolders, sv);
 
             if (index > -1)
-                comboBoxPrevProfiles.SelectedValue = sv;
+                comboBoxRootFolders.SelectedValue = sv;
             else
-                comboBoxPrevProfiles.SelectedIndex = 0;
+                comboBoxRootFolders.SelectedIndex = 0;
             //}
         }
 
-        public void FillAllProfilesPaths()
+        public void FillRootFoldersPaths()
         {
             try
             {
-                string MyDocumentsPath = "";
-                string RemoteUserdataDirectory = "";
+                string MyDocumentsPath = "",
+                       RemoteUserdataDirectory = "",
+                       SteamError = "", MyDocError = "";
 
-                string SteamError = "", MyDocError = "";
-                bool SteamFolderEx = false, MyDocFolderEx = true;
+                bool SteamFolderExist = false, MyDocFolderExist = true;
 
                 try
                 {
@@ -563,12 +564,12 @@ namespace TS_SE_Tool
 
                                 if (!Directory.Exists(CurrentUserDir + GameID))
                                 {
-                                    SteamError = "Game folder for this game - " + GameType + " in Steam folder does not exist.";
+                                    SteamError = "Game folder for - " + GameType + "game in Steam folder does not exist.";
                                 }
                                 else
                                 {
                                     RemoteUserdataDirectory = CurrentUserDir + GameID + @"\remote";
-                                    SteamFolderEx = true;
+                                    SteamFolderExist = true;
                                 }
                             }
                         }
@@ -577,7 +578,7 @@ namespace TS_SE_Tool
                 catch
                 { }
 
-                if (!SteamFolderEx)
+                if (!SteamFolderExist)
                     IO_Utilities.LogWriter(SteamError);
                 //
 
@@ -585,12 +586,13 @@ namespace TS_SE_Tool
 
                 if (!Directory.Exists(MyDocumentsPath))
                 {
-                    MyDocError = "Folder in \"My documents\" for this game - " + GameType + " does not exist.";
-                    MyDocFolderEx = false;
+                    MyDocError = "Folder in \"My documents\" for - " + GameType + " game does not exist.";
+                    MyDocFolderExist = false;
                     IO_Utilities.LogWriter(MyDocError);
                 }
                 //
 
+                //Setup combobox DataTable
                 DataTable combDT = new DataTable();
                 DataColumn dc = new DataColumn("ProfileID", typeof(string));
                 combDT.Columns.Add(dc);
@@ -601,12 +603,15 @@ namespace TS_SE_Tool
                 dc = new DataColumn("ProfileType", typeof(string));
                 combDT.Columns.Add(dc);
 
+                //Collect Root folders
                 List<string> tempList = new List<string>();
 
-                if (MyDocFolderEx || SteamFolderEx)
+                if (MyDocFolderExist || SteamFolderExist)
                     if (checkBoxProfilesAndSavesProfileBackups.Checked)
                     {
-                        if (MyDocFolderEx)
+                        //If backups selected
+                        //My docs Profiles
+                        if (MyDocFolderExist)
                             foreach (string folder in Directory.GetDirectories(MyDocumentsPath))
                             {
                                 if (Path.GetFileName(folder).StartsWith("profiles")) //Documents
@@ -619,8 +624,8 @@ namespace TS_SE_Tool
                                 }
                             }
 
-                        //string RemoteUserdataDirectory Steam Profiles
-                        if (SteamFolderEx)
+                        //Steam Profiles
+                        if (SteamFolderExist)
                             foreach (string folder in Directory.GetDirectories(RemoteUserdataDirectory))
                             {
                                 if (Path.GetFileName(folder).StartsWith("profiles")) //Steam
@@ -635,8 +640,9 @@ namespace TS_SE_Tool
                     }
                     else
                     {
+                        //Without backups
                         string folder = "";
-                        if (MyDocFolderEx)
+                        if (MyDocFolderExist)
                         {
                             folder = MyDocumentsPath + @"\profiles";
 
@@ -646,7 +652,7 @@ namespace TS_SE_Tool
                                 tempList.Add(folder);
                             }
                         }
-                        if (SteamFolderEx)
+                        if (SteamFolderExist)
                         {
                             folder = RemoteUserdataDirectory + @"\profiles";
 
@@ -678,26 +684,28 @@ namespace TS_SE_Tool
                         }
                     }
 
-                if (!MyDocFolderEx && !SteamFolderEx)
+                if (!MyDocFolderExist && !SteamFolderExist)
                 {
                     IO_Utilities.LogWriter("Standart Save folders does not exist for this game - " + GameType + ". " + MyDocError + " " + SteamError +
                         " Check installation. Start game first (Steam).");
                 }
 
+                //Save Root paths
                 Globals.ProfilesPaths = tempList.ToArray();
 
-                comboBoxPrevProfiles.ValueMember = "ProfileID";
-                comboBoxPrevProfiles.DisplayMember = "ProfileName";
-                comboBoxPrevProfiles.DataSource = combDT;
+                //Populate combobox
+                comboBoxRootFolders.ValueMember = "ProfileID";
+                comboBoxRootFolders.DisplayMember = "ProfileName";
+                comboBoxRootFolders.DataSource = combDT;
 
-                if (comboBoxPrevProfiles.Items.Count > 0)
+                if (comboBoxRootFolders.Items.Count > 0)
                 {
-                    comboBoxPrevProfiles.Enabled = true;
+                    comboBoxRootFolders.Enabled = true;
                 }
                 else
                 {
-                    comboBoxPrevProfiles.SelectedIndex = -1;
-                    comboBoxPrevProfiles.Enabled = false;
+                    comboBoxRootFolders.SelectedIndex = -1;
+                    comboBoxRootFolders.Enabled = false;
 
                     comboBoxProfiles.Enabled = false;
                     comboBoxSaves.Enabled = false;
@@ -712,9 +720,9 @@ namespace TS_SE_Tool
             }
         }
 
-        private void comboBoxPrevProfiles_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxRootFolders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!Directory.Exists(Globals.ProfilesPaths[comboBoxPrevProfiles.SelectedIndex]))            
+            if (!Directory.Exists(Globals.ProfilesPaths[comboBoxRootFolders.SelectedIndex]))            
                 return;            
 
             buttonProfilesAndSavesEditProfile.Enabled = false;
@@ -722,51 +730,52 @@ namespace TS_SE_Tool
             buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
             buttonMainLoadSave.Enabled = false;
 
+            //Populate Profiles
             FillProfiles();
 
-            string sv = comboBoxPrevProfiles.SelectedValue.ToString();
+            string sv = comboBoxRootFolders.SelectedValue.ToString();
 
-            int index = FindByValue(comboBoxPrevProfiles, sv);
+            int index = FindByValue(comboBoxRootFolders, sv);
 
             if (index > -1)
-                comboBoxPrevProfiles.SelectedValue = sv;
+                comboBoxRootFolders.SelectedValue = sv;
             else
-                comboBoxPrevProfiles.SelectedIndex = 0;
+                comboBoxRootFolders.SelectedIndex = 0;
         }
 
-        private void comboBoxPrevProfiles_DropDown(object sender, EventArgs e)
+        private void comboBoxRootFolders_DropDown(object sender, EventArgs e)
         {
-            comboBoxPrevProfiles.SelectedIndexChanged -= comboBoxPrevProfiles_SelectedIndexChanged;
+            comboBoxRootFolders.SelectedIndexChanged -= comboBoxRootFolders_SelectedIndexChanged;
 
-            string sv = comboBoxPrevProfiles.SelectedValue.ToString();
+            string sv = comboBoxRootFolders.SelectedValue.ToString();
 
-            FillAllProfilesPaths();
+            //RePopulate Root folders
+            FillRootFoldersPaths();
 
-            int index = FindByValue(comboBoxPrevProfiles, sv);
+            int index = FindByValue(comboBoxRootFolders, sv);
 
             if (index > -1)
-                comboBoxPrevProfiles.SelectedValue = sv;
+                comboBoxRootFolders.SelectedValue = sv;
             else
-                comboBoxPrevProfiles.SelectedIndex = 0;
+                comboBoxRootFolders.SelectedIndex = 0;
 
-            comboBoxPrevProfiles.SelectedIndexChanged += comboBoxPrevProfiles_SelectedIndexChanged;
+            comboBoxRootFolders.SelectedIndexChanged += comboBoxRootFolders_SelectedIndexChanged;
         }
 
         public void FillProfiles()
         {
             try
             {
-                if (!Directory.Exists(Globals.ProfilesPaths[comboBoxPrevProfiles.SelectedIndex]))
+                if (!Directory.Exists(Globals.ProfilesPaths[comboBoxRootFolders.SelectedIndex]))
                 {
-                    FillAllProfilesPaths();
+                    FillRootFoldersPaths();
                     return;
                 }
 
                 comboBoxProfiles.SelectedIndexChanged -= new EventHandler(comboBoxProfiles_SelectedIndexChanged);
 
-                string ProfileName = "";
-                string SelectedFolder = "";
-                SelectedFolder = comboBoxPrevProfiles.SelectedValue.ToString();
+                string ProfileName = "", 
+                       SelectedFolder = comboBoxRootFolders.SelectedValue.ToString();                
 
                 List<string> includedFiles = new List<string>();
                 includedFiles = Directory.GetFiles(SelectedFolder).Select(Path.GetFileName).ToList();
