@@ -304,19 +304,19 @@ namespace TS_SE_Tool
     public class Globals
     {
         //-----
-        public static string[] ProfilesPaths;
-        public static List<string> ProfilesHex;
+        public static string[] ProfilesPaths = new string[0];
+        public static List<string> ProfilesHex = new List<string>();
         //
-        public static string SelectedProfile;
-        public static string SelectedProfilePath;
+        public static string SelectedProfile = "";
+        public static string SelectedProfilePath = "";
         //----
         public static string[] SavesHex = new string[0];
         //
-        public static string SelectedSave;
-        public static string SelectedSavePath;
+        public static string SelectedSave = "";
+        public static string SelectedSavePath = "";
         //----
-        public static int[] PlayerLevelUps;
-        public static string CurrencyName;
+        public static int[] PlayerLevelUps = new int[0];
+        public static string CurrencyName = "";
     }
 
 }
