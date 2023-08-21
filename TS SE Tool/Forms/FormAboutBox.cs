@@ -55,7 +55,7 @@ namespace TS_SE_Tool
 
             //
             string[][] referencies = { 
-                new string[] { "SII Decrypt", "https://github.com/ncs-sniper/SII_Decrypt" },
+                new string[] {"SII Decrypt", "https://github.com/ncs-sniper/SII_Decrypt"},
                 new string[] {"PsColorPicker", "https://github.com/exectails/PsColorPicker"},
                 new string[] {"SharpZipLib", "https://github.com/icsharpcode/SharpZipLib"},
                 new string[] {"SqlCeBulkCopy", "https://github.com/ErikEJ/SqlCeBulkCopy"},
@@ -68,13 +68,11 @@ namespace TS_SE_Tool
 
             foreach (string[] tmp in referencies)
             {
-                referenciesText += tmp[0] + "\r\n" + tmp[1] + "\r\n\r\n";
+                referenciesText += tmp[0] + Environment.NewLine + tmp[1] + Environment.NewLine + Environment.NewLine;
             }
             //
-            textBoxDescription.Text = "";
-            textBoxDescription.Text += "This program created by\r\nLIPtoH <" + Utilities.Web_Utilities.External.linkMailDeveloper +
-                                        ">\r\n" + Utilities.Web_Utilities.External.linkGithub + "\r\n\r\n";
-            textBoxDescription.Text += "Tools and projects used in this project:\r\n\r\n";
+            textBoxDescription.Text = string.Format(MainForm.HelpTranslateString(this.Name + textBoxDescription.Name),
+                                                     Utilities.Web_Utilities.External.linkMailDeveloper, Utilities.Web_Utilities.External.linkGithub);
 
             textBoxDescription.Text += referenciesText;
             //
@@ -91,8 +89,9 @@ namespace TS_SE_Tool
         private void buttonSupportDeveloper_Click(object sender, EventArgs e)
         {
             string url = Utilities.Web_Utilities.External.linkHelpDeveloper;
-            
-            DialogResult result = MessageBox.Show("This will open " + url + " web-page.\nDo you want to continue?", "Support developer", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,MessageBoxDefaultButton.Button2);
+
+            DialogResult result = MessageBox.Show("This will open " + url + " web-page." + Environment.NewLine + "Do you want to continue?",
+                                                  "Support developer", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
             if (result == DialogResult.Yes)
                 System.Diagnostics.Process.Start(url);
         }
