@@ -93,7 +93,7 @@ namespace TS_SE_Tool
                 HelpTranslateFormMethod(this, toolTipMain);
                 HelpTranslateMenuStripMethod(menuStripMain);
 
-                HelpTranslatContextMenuStripMethod(contextMenuStripMain);                
+                HelpTranslatContextMenuStripMethod(contextMenuStripMain);
 
                 this.ResumeLayout();
 
@@ -167,13 +167,15 @@ namespace TS_SE_Tool
         //Form methods
         private void ToggleControlsAccess(bool _state)
         {
+            //Main Save controls
             buttonMainWriteSave.Enabled = _state;
             buttonMainWriteSave.Visible = _state;
 
             buttonMainCloseSave.Visible = _state;
 
-            foreach (TabPage tp in tabControlMain.TabPages)
-                tp.Enabled = _state;
+            //Main tabs
+            foreach (TabPage tp in tabControlMain.TabPages)            
+                tp.Enabled = _state;            
 
             //Profile
             for (int i = 0; i < 6; i++)
@@ -185,7 +187,7 @@ namespace TS_SE_Tool
                     Bitmap bgimg = new Bitmap(SkillImgS[i], 64, 64);
 
                     if (_state)
-                    tmp[0].BackgroundImage = bgimg;
+                        tmp[0].BackgroundImage = bgimg;
                     else
                         tmp[0].BackgroundImage = Graphics_TSSET.ConvertBitmapToGrayscale(bgimg);
                 }
@@ -217,10 +219,12 @@ namespace TS_SE_Tool
 
         private void CheckSaveControls()
         {
+            // Root
             DataRowView drv = (DataRowView)comboBoxRootFolders.SelectedItem;
 
             Font loadButtonFont = buttonMainLoadSave.Font;
 
+            // Change Load button properties based on Profile type
             if (drv["ProfileType"].ToString() == "steam")
             {
                 buttonMainLoadSave.Enabled = false;
@@ -231,17 +235,20 @@ namespace TS_SE_Tool
             else
             {
                 buttonMainLoadSave.Enabled = true;
-                buttonMainLoadSave.Text = ResourceManagerMain.GetString(buttonMainLoadSave.Name);// Load
+                buttonMainLoadSave.Text = ResourceManagerMain.GetString(buttonMainLoadSave.Name); // Load
 
                 buttonMainLoadSave.Font = new Font(loadButtonFont.FontFamily, 18F, FontStyle.Bold);
             }
 
             //===
-
+            // Save
             drv = (DataRowView)comboBoxSaves.SelectedItem;
 
             string savePath = drv["savePath"].ToString() + @"\game.sii",
                    backupPath = drv["savePath"].ToString() + @"\game_backup.sii";
+
+            //===
+            // Backup button
 
             if (File.Exists(backupPath))
                 buttonProfilesAndSavesRestoreBackup.Enabled = true;
@@ -249,7 +256,7 @@ namespace TS_SE_Tool
                 buttonProfilesAndSavesRestoreBackup.Enabled = false;
 
             //===
-
+            // Decode buton
             sbyte saveFileFormat = GetSaveFileFormat(savePath).saveFileFormat;
 
             if (saveFileFormat == 2 || saveFileFormat == 4)
@@ -268,7 +275,7 @@ namespace TS_SE_Tool
             else
                 ToggleGame("ATS");
 
-            FillRootFoldersPaths();
+            FillRootFoldersPaths(); // Populate with appropriate root folders
         }
 
         public void ToggleGame(string _game)
@@ -290,7 +297,7 @@ namespace TS_SE_Tool
                 }
             }
 
-                GameType = _game;
+            GameType = _game;
         }
 
         private void buttonMainAddCustomFolder_Click(object sender, EventArgs e)
@@ -302,7 +309,7 @@ namespace TS_SE_Tool
         //Profile list
         private void buttonRefreshAll_Click(object sender, EventArgs e)
         {
-            FillRootFoldersPaths();
+            FillRootFoldersPaths(); // RePopulate root folders
         }
 
         private void buttonProfilesAndSavesEditProfile_Click(object sender, EventArgs e)
@@ -318,29 +325,33 @@ namespace TS_SE_Tool
                 buttonMainDecryptSave.Enabled = true;
                 buttonMainLoadSave.Enabled = true;
 
-                FillRootFoldersPaths();
+                FillRootFoldersPaths(); // RePopulate root folders
             }
         }
         
         private void buttonProfilesAndSavesRestoreBackup_Click(object sender, EventArgs e)
         {
+            //Set variables
             string SiiSavePath = Globals.SelectedSavePath + @"\game.sii", 
                    SiiSavePathBackup = Globals.SelectedSavePath + @"\game_backup.sii";
 
+            //If backups exist
             if (File.Exists(SiiSavePathBackup))
             {
                 DialogResult dr = MessageBox.Show("Restoring from backup file will overwrite existing save file." + Environment.NewLine +
                                                   "Select: Yes - Overwrite | No - Swap files | Cancel - Abort restoring.", 
                                                   "Restoring Save file from Backup", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-
+                //If Cancel - exit Method
                 if (dr == DialogResult.Cancel)
                     return;
 
+                //Set variables
                 string SiiInfoPath = Globals.SelectedSavePath + @"\info.sii",
                        SiiInfoPathBackup = Globals.SelectedSavePath + @"\info_backup.sii";
 
                 if (dr == DialogResult.No)
                 {
+                    //Swap
                     SwapFiles(SiiSavePath, SiiSavePathBackup);
 
                     if (File.Exists(SiiInfoPathBackup))
@@ -348,6 +359,7 @@ namespace TS_SE_Tool
                 }
                 else
                 {
+                    //Overwrite
                     File.Copy(SiiSavePathBackup, SiiSavePath, true);
                     File.Delete(SiiSavePathBackup);
 
@@ -358,6 +370,7 @@ namespace TS_SE_Tool
                     }                        
                 }
 
+                //Swap Files Function
                 void SwapFiles(string _firstFile, string _secondFile)
                 {
                     string tmpFile = Directory.GetParent(_firstFile).FullName + "\\tmp";
@@ -374,22 +387,28 @@ namespace TS_SE_Tool
         //Buttons
         private void buttonDecryptSave_Click(object sender, EventArgs e)
         {
+            //Initial State Setup
             SetDefaultValues(false);
             ClearFormControls(true);
 
             ToggleMainControlsAccess(false);
 
+            //Set variables
             Globals.SelectedSavePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             string SiiSavePath = Globals.SelectedSavePath + @"\game.sii";
 
+            //Decrypt
             string[] file = NewDecodeFile(SiiSavePath);
 
+            //Check result
             if (file != null)
             {
                 IO_Utilities.LogWriter("Backing up file to: " + Globals.SelectedSavePath + @"\game_backup.sii");
 
+                //Backup
                 File.Copy(SiiSavePath, Globals.SelectedSavePath + @"\game_backup.sii", true);
 
+                //Write Decrypted file
                 File.WriteAllLines(SiiSavePath, file);
 
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
@@ -397,6 +416,7 @@ namespace TS_SE_Tool
             else
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
 
+            //Unlock controls
             ToggleMainControlsAccess(true);
             buttonMainDecryptSave.Enabled = false;
 
@@ -409,6 +429,7 @@ namespace TS_SE_Tool
 
         private void buttonOpenSaveFolder_Click(object sender, EventArgs e)
         {
+            //Open Save Folder
             if (Directory.Exists(Globals.SavesHex[comboBoxSaves.SelectedIndex]))
                 Process.Start(Globals.SavesHex[comboBoxSaves.SelectedIndex]);
         }
@@ -416,6 +437,7 @@ namespace TS_SE_Tool
         internal static BackgroundWorker workerLoadSaveFile;
         private void LoadSaveFile_Click(object sender, EventArgs e)
         {
+            //Initial State Setup 
             ToggleMainControlsAccess(false);
             ToggleControlsAccess(false);
             ClearFormControls(true);
@@ -423,14 +445,16 @@ namespace TS_SE_Tool
             SetDefaultValues(false);
             ClearJobData();
 
-            //Load save file
+            //Load Save file
 
+            //Set variables
             Globals.SelectedSavePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             Globals.SelectedSave = Globals.SelectedSavePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
             Globals.SelectedProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
             Globals.SelectedProfile = Globals.SelectedProfilePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
+            //Setup BG worker
             workerLoadSaveFile = new BackgroundWorker();
             workerLoadSaveFile.WorkerReportsProgress = true;
 
@@ -438,6 +462,7 @@ namespace TS_SE_Tool
             workerLoadSaveFile.ProgressChanged += worker_ProgressChanged;
             workerLoadSaveFile.RunWorkerCompleted += worker_RunWorkerCompleted;
 
+            //Start BG worker
             workerLoadSaveFile.RunWorkerAsync();
         }
 
@@ -487,7 +512,7 @@ namespace TS_SE_Tool
 
             string sv = comboBoxRootFolders.SelectedValue.ToString();
 
-            FillRootFoldersPaths();
+            FillRootFoldersPaths(); // refresh list as backup entries was deleted\added
 
             int index = FindByValue(comboBoxRootFolders, sv); // try find previous value
 
@@ -500,7 +525,7 @@ namespace TS_SE_Tool
             {
                 comboBoxRootFolders.SelectedIndexChanged += comboBoxRootFolders_SelectedIndexChanged;
                 comboBoxRootFolders.SelectedIndex = 0; // if not - select first in the list
-        }
+            }
         }
 
         public void FillRootFoldersPaths()
@@ -608,6 +633,7 @@ namespace TS_SE_Tool
                 //Collect Root folders
                 List<string> tempList = new List<string>();
 
+                // Standart folders
                 if (MyDocFolderExist || SteamFolderExist)
                     if (checkBoxProfilesAndSavesProfileBackups.Checked)
                     {
@@ -644,6 +670,8 @@ namespace TS_SE_Tool
                     {
                         //Without backups
                         string folder = "";
+
+                        //My docs Profiles
                         if (MyDocFolderExist)
                         {
                             folder = MyDocumentsPath + @"\profiles";
@@ -654,6 +682,8 @@ namespace TS_SE_Tool
                                 tempList.Add(folder);
                             }
                         }
+
+                        //Steam Profiles
                         if (SteamFolderExist)
                         {
                             folder = RemoteUserdataDirectory + @"\profiles";
@@ -665,7 +695,8 @@ namespace TS_SE_Tool
                             }
                         }
                     }
-
+                
+                // Custom folders
                 int cpIndex = 0;
                 if (ProgSettingsV.CustomPaths.Keys.Contains(GameType))
                     foreach (string CustPath in ProgSettingsV.CustomPaths[GameType])
@@ -726,16 +757,16 @@ namespace TS_SE_Tool
 
         private void comboBoxRootFolders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!Directory.Exists(Globals.ProfilesPaths[comboBoxRootFolders.SelectedIndex]))            
-                return;            
+            if (!Directory.Exists(Globals.ProfilesPaths[comboBoxRootFolders.SelectedIndex]))
+                return;
 
+            // Disable save\profile control buttons
             buttonProfilesAndSavesEditProfile.Enabled = false;
             buttonMainDecryptSave.Enabled = false;
             buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
             buttonMainLoadSave.Enabled = false;
 
-            //Populate Profiles
-            FillProfiles();
+            FillProfiles(); // Populate Profiles list
 
         }
 
@@ -743,12 +774,11 @@ namespace TS_SE_Tool
         {
             comboBoxRootFolders.SelectedIndexChanged -= comboBoxRootFolders_SelectedIndexChanged;
 
-            string sv = comboBoxRootFolders.SelectedValue.ToString();
+            string sv = comboBoxRootFolders.SelectedValue.ToString(); //save selected value
 
-            //RePopulate Root folders
-            FillRootFoldersPaths();
+            FillRootFoldersPaths(); // refresh list in case entries was deleted\added
 
-            int index = FindByValue(comboBoxRootFolders, sv);
+            int index = FindByValue(comboBoxRootFolders, sv); // try find previous value
 
             if (index > -1)
             {
@@ -757,7 +787,7 @@ namespace TS_SE_Tool
             }
             else
             {
-            comboBoxRootFolders.SelectedIndexChanged += comboBoxRootFolders_SelectedIndexChanged;
+                comboBoxRootFolders.SelectedIndexChanged += comboBoxRootFolders_SelectedIndexChanged;
                 comboBoxRootFolders.SelectedIndex = 0; // if not - select first in the list
             }
         }
@@ -802,13 +832,13 @@ namespace TS_SE_Tool
                         {
                             ProfileName = Utilities.TextUtilities.FromHexToString(Path.GetFileName(profilePath));
 
-                                if (ProfileName != null)
-                                {
+                            if (ProfileName != null)
+                            {
                                 combDT.Rows.Add(profilePath, ProfileName);
                                 NewProfileHex.Add(profilePath);
-                                }
-                            }                                
+                            }
                         }
+                    }
 
                     Globals.ProfilesHex = NewProfileHex;
 
@@ -873,12 +903,12 @@ namespace TS_SE_Tool
                     }
                     else
                     {
-                        pictureBoxProfileAvatar.Image = MainIcons[0];
+                        pictureBoxProfileAvatar.Image = MainIcons[0]; // placeholder icon
                     }
                 }
                 catch
                 {
-                    pictureBoxProfileAvatar.Image = MainIcons[0];
+                    pictureBoxProfileAvatar.Image = MainIcons[0]; // placeholder icon
                 }
 
                 try
@@ -887,7 +917,7 @@ namespace TS_SE_Tool
                     LoadProfileDataFile(Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii"); // Profile file path
 
                     //Add tooltip to Avatar
-                    toolTipMain.SetToolTip(pictureBoxProfileAvatar, MainSaveFileProfileData.getProfileSummary(PlayerLevelNames));
+                    toolTipMain.SetToolTip(pictureBoxProfileAvatar, MainSaveFileProfileData.getProfileSummary(PlayerLevelNames)); // Profile stats
                 }
                 catch
                 { }
@@ -900,18 +930,18 @@ namespace TS_SE_Tool
             }
 
             if (comboBoxProfiles.SelectedIndex > -1)
-                FillProfileSaves();
+                FillProfileSaves(); // Populate Save folders list
         }
 
         private void comboBoxProfiles_DropDown(object sender, EventArgs e)
         {
-            comboBoxProfiles.SelectedIndexChanged -= comboBoxProfiles_SelectedIndexChanged;
+            comboBoxProfiles.SelectedIndexChanged -= comboBoxProfiles_SelectedIndexChanged; // remove event to prevent unnecessary refreshing
 
-            string sv = comboBoxProfiles.SelectedValue.ToString();
+            string sv = comboBoxProfiles.SelectedValue.ToString(); //save selected value
 
-            FillProfiles();
+            FillProfiles(); // refresh list in case entries was deleted\added
 
-            int index = FindByValue(comboBoxProfiles, sv);
+            int index = FindByValue(comboBoxProfiles, sv); // try find previous value
 
             if (index > -1)
             {
@@ -943,10 +973,11 @@ namespace TS_SE_Tool
 
                     if (Directory.Exists(SelectedSaveFolder))                    
                         Globals.SavesHex = Directory.GetDirectories(SelectedSaveFolder).OrderByDescending(f => new FileInfo(f).LastWriteTime).ToArray();                    
-                    else
+                    else                    
                         Globals.SavesHex = new string[0];                    
                 }
 
+                //Setup combobox DataTable
                 DataTable combDT = new DataTable();
                 DataColumn dc = new DataColumn("savePath", typeof(string));
                 combDT.Columns.Add(dc);
@@ -958,14 +989,16 @@ namespace TS_SE_Tool
                 dcDisplay.Expression = string.Format("IIF(savePath <> 'null', {1}, '-- not found --')", "savePath", "saveName");
                 combDT.Columns.Add(dcDisplay);
 
+                //if save folder contains any folders
                 if (Globals.SavesHex.Length > 0)
                 {
                     bool NotANumber = false;
 
+                    //Check if any of the initial folders is a valid save folder
                     foreach (string saveFolder in Globals.SavesHex)
                     {
                         if (!File.Exists(saveFolder + @"\game.sii") || !File.Exists(saveFolder + @"\info.sii"))
-                            continue;
+                            continue; //if folder does not contains essential files - skip it
 
                         string[] folders = saveFolder.Split(new string[] { "\\" }, StringSplitOptions.None);
 
@@ -1042,9 +1075,10 @@ namespace TS_SE_Tool
 
                     comboBoxSaves.DataSource = combDT;
                 }
-                else
-                {
-                    combDT.Rows.Add("null");
+                else //if zero folders found in "save" folder
+                {                    
+                    combDT.Rows.Add("null"); //Add fake item to indicate zero saves found
+
                     comboBoxSaves.ValueMember = "savePath";
                     comboBoxSaves.DisplayMember = "DisplayMember";
 
@@ -1067,9 +1101,11 @@ namespace TS_SE_Tool
 
         private void comboBoxSaves_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Update save path
             Globals.SelectedSavePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             Globals.SelectedSave = Globals.SelectedSavePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
+            // Update Profile path
             Globals.SelectedProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
             Globals.SelectedProfile = Globals.SelectedProfilePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
 
@@ -1082,9 +1118,9 @@ namespace TS_SE_Tool
 
             string sv = comboBoxSaves.SelectedValue.ToString(); //save selected value
 
-            FillProfileSaves();
+            FillProfileSaves(); // refresh list in case entries was deleted\added
 
-            int index = FindByValue(comboBoxSaves, sv);
+            int index = FindByValue(comboBoxSaves, sv); // try find previous value
 
             if (index > -1)
             {

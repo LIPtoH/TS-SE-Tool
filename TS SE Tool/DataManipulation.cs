@@ -112,8 +112,7 @@ namespace TS_SE_Tool
 
             PrepareDBdata();
 
-            // Output new data for translation
-
+            //Output new data for translation
             SaveCompaniesLng();
             SaveCitiesLng();
             SaveCargoLng();
