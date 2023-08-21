@@ -761,10 +761,8 @@ namespace TS_SE_Tool
             //===
         }
 
-        private void LoadProfileDataFile()
+        private void LoadProfileDataFile(string SiiProfilePath)
         {
-            string SiiProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex] + @"\profile.sii";
-
             //Profile Info
             if (!File.Exists(SiiProfilePath))
             {
