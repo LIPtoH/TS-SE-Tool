@@ -2529,48 +2529,50 @@
             this.contextMenuStripCompanyDriversHire,
             this.contextMenuStripCompanyDriversFire});
             this.contextMenuStripMain.Name = "contextMenuStripFreightMarketJobList";
-            this.contextMenuStripMain.Size = new System.Drawing.Size(181, 114);
+            this.contextMenuStripMain.Size = new System.Drawing.Size(108, 126);
             // 
             // contextMenuStripFreightMarketJobListEdit
             // 
             this.contextMenuStripFreightMarketJobListEdit.Name = "contextMenuStripFreightMarketJobListEdit";
-            this.contextMenuStripFreightMarketJobListEdit.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuStripFreightMarketJobListEdit.Size = new System.Drawing.Size(107, 22);
             this.contextMenuStripFreightMarketJobListEdit.Text = "Edit";
             this.contextMenuStripFreightMarketJobListEdit.Click += new System.EventHandler(this.contextMenuStripFreightMarketJobListEdit_Click);
             // 
-            // contextMenuStripCompanyDriversSeparator
+            // contextMenuStripFreightMarketJobListSeparator
             // 
             this.contextMenuStripFreightMarketJobListSeparator.Name = "contextMenuStripFreightMarketJobListSeparator";
+            this.contextMenuStripFreightMarketJobListSeparator.Size = new System.Drawing.Size(104, 6);
             // 
             // contextMenuStripFreightMarketJobListDelete
             // 
             this.contextMenuStripFreightMarketJobListDelete.Name = "contextMenuStripFreightMarketJobListDelete";
-            this.contextMenuStripFreightMarketJobListDelete.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuStripFreightMarketJobListDelete.Size = new System.Drawing.Size(107, 22);
             this.contextMenuStripFreightMarketJobListDelete.Text = "Delete";
             this.contextMenuStripFreightMarketJobListDelete.Click += new System.EventHandler(this.contextMenuStripFreightMarketJobListDelete_Click);
             // 
             // contextMenuStripCompanyDriversEdit
             // 
             this.contextMenuStripCompanyDriversEdit.Name = "contextMenuStripCompanyDriversEdit";
-            this.contextMenuStripCompanyDriversEdit.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuStripCompanyDriversEdit.Size = new System.Drawing.Size(107, 22);
             this.contextMenuStripCompanyDriversEdit.Text = "Edit";
             this.contextMenuStripCompanyDriversEdit.Click += new System.EventHandler(this.contextMenuStripCompanyDriversEdit_Click);
             // 
             // contextMenuStripCompanyDriversSeparator
             // 
             this.contextMenuStripCompanyDriversSeparator.Name = "contextMenuStripCompanyDriversSeparator";
+            this.contextMenuStripCompanyDriversSeparator.Size = new System.Drawing.Size(104, 6);
             // 
             // contextMenuStripCompanyDriversHire
             // 
             this.contextMenuStripCompanyDriversHire.Name = "contextMenuStripCompanyDriversHire";
-            this.contextMenuStripCompanyDriversHire.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuStripCompanyDriversHire.Size = new System.Drawing.Size(107, 22);
             this.contextMenuStripCompanyDriversHire.Text = "Hire";
             this.contextMenuStripCompanyDriversHire.Click += new System.EventHandler(this.contextMenuStripCompanyDriversHire_Click);
             // 
             // contextMenuStripCompanyDriversFire
             // 
             this.contextMenuStripCompanyDriversFire.Name = "contextMenuStripCompanyDriversFire";
-            this.contextMenuStripCompanyDriversFire.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuStripCompanyDriversFire.Size = new System.Drawing.Size(107, 22);
             this.contextMenuStripCompanyDriversFire.Text = "Fire";
             this.contextMenuStripCompanyDriversFire.Click += new System.EventHandler(this.contextMenuStripCompanyDriversFire_Click);
             // 
@@ -2591,6 +2593,7 @@
             // 
             this.buttonProfilesAndSavesOpenSaveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonProfilesAndSavesOpenSaveFolder.Enabled = false;
+            this.buttonProfilesAndSavesOpenSaveFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonProfilesAndSavesOpenSaveFolder.Location = new System.Drawing.Point(122, 201);
             this.buttonProfilesAndSavesOpenSaveFolder.Name = "buttonProfilesAndSavesOpenSaveFolder";
             this.buttonProfilesAndSavesOpenSaveFolder.Size = new System.Drawing.Size(110, 23);

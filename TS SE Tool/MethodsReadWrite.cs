@@ -254,17 +254,18 @@ namespace TS_SE_Tool
         private void LoadExtImages()
         {
             string[] imgNames, imgPaths;
+
             //=== UI images
 
-            if (true)
-            {
-                imgNames = new string[] { "Language", "github", "SCS", "TMP", "PDF", "YouTube", "ProgramSettings",
-                                            "Settings", "Cross", "Info", "Download",
-                                            "Question", "NetworkCloud", "Reload", "EditList" };
+            imgNames = new string[] { "Language", "github", "SCS", "TMP", "PDF", "YouTube", 
+                                        "ProgramSettings", "Settings", "Cross", "Info", "Download",
+                                        "Question", "NetworkCloud", "Reload", "EditList",
+                                        "Extract"};
 
                 imgPaths = new string[] { @"img\UI\globe.png", @"img\UI\github.png", @"img\UI\SCS.png", @"img\UI\TMP.png", @"img\UI\PDF.png", @"img\UI\YouTube.png",
                                             @"img\UI\pSettings.png", @"img\UI\cogwheel.png", @"img\UI\quit.png", @"img\UI\info.png", @"img\UI\download.png",
-                                            @"img\UI\question.png", @"img\UI\networkCloud.png", @"img\UI\reload.png", @"img\UI\edit.png"};
+                                        @"img\UI\question.png", @"img\UI\networkCloud.png", @"img\UI\reload.png", @"img\UI\edit.png",
+                                        @"img\UI\extract.png"};
 
                 Image[] tmpArray = Graphics_TSSET.ImgFromFileLoader(imgPaths);
 
@@ -278,7 +279,7 @@ namespace TS_SE_Tool
 
                 for (int i = 0; i < imgPaths.Length; i++)
                     ProgUIImgsDict.Add(imgNames[i], tmpArray[i]);
-            }
+            
 
             //=== Game Icons
 

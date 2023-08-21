@@ -274,7 +274,7 @@ namespace TS_SE_Tool
         {
             if (tempSavefileInMemory != null)
             {
-                DialogResult result = MessageBox.Show("Savefile not saved.\nDo you want to discard changes and switch game type?", "Switching game", 
+                DialogResult result = MessageBox.Show("Savefile not saved." + Environment.NewLine + "Do you want to discard changes and switch game type?", "Switching game", 
                     MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.No)
@@ -710,8 +710,9 @@ namespace TS_SE_Tool
                     comboBoxProfiles.Enabled = false;
                     comboBoxSaves.Enabled = false;
 
-                    MessageBox.Show("Standart Save folders does not exist for this game - " + GameType + ".\r\n" + MyDocError + "\r\n" + SteamError +
-                        "\r\nCheck installation, start game and update list or Add Custom paths.");
+                    MessageBox.Show("Standart Save folders does not exist for this game - " + GameType + "." + Environment.NewLine + 
+                                    MyDocError + Environment.NewLine + SteamError + Environment.NewLine +
+                                    "Check game installation, Start game and Refresh profiles list or Add Custom paths.");
                 }
             }
             catch
@@ -1107,7 +1108,6 @@ namespace TS_SE_Tool
                     buttonMainLoadSave.Enabled = false;
 
                     UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_No Save file folders found");
-                    //MessageBox.Show("No Save file folders found");
                 }
             }
             catch

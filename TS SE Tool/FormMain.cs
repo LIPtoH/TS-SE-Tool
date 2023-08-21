@@ -263,15 +263,13 @@ namespace TS_SE_Tool
         {
             DialogResult exitDR;
 
-            if (this.ForseExit)
-            {
+            if (this.ForseExit)            
                 return;
-            }
 
             if (AddedJobsDictionary != null && AddedJobsDictionary.Count > 0)
-                exitDR = MessageBox.Show("You have unsaved changes. Do you really want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo);
+                exitDR = MessageBox.Show("You have unsaved changes."+ Environment.NewLine + "Do you really want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
             else
-                exitDR = MessageBox.Show("Do you really want to close down application?", "Close Application", MessageBoxButtons.YesNo);
+                exitDR = MessageBox.Show("Do you really want to close down application?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
 
             if (exitDR == DialogResult.Yes)
             {

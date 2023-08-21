@@ -480,7 +480,7 @@ namespace TS_SE_Tool
             //
             buttonProfilesAndSavesRefreshAll.BackgroundImage = ProgUIImgsDict["Reload"];
             buttonProfilesAndSavesEditProfile.BackgroundImage = ProgUIImgsDict["EditList"];
-            buttonProfilesAndSavesRestoreBackup.BackgroundImage = ProgUIImgsDict["Reload"];
+            buttonProfilesAndSavesRestoreBackup.BackgroundImage = ProgUIImgsDict["Extract"];
 
             //Tab pages
             tabControlMain.ImageList = TabpagesImages;
