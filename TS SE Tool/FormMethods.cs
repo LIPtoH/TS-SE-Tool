@@ -845,6 +845,19 @@ namespace TS_SE_Tool
             return new string[] { dialogCaption, dialogText };
         }
 
+        internal string HelpTranslateString(string _textLink)
+        {
+            string translatedString = null;
+            try
+            {
+                translatedString = ResourceManagerMain.GetString("string" + _textLink, Thread.CurrentThread.CurrentUICulture);
+                translatedString = translatedString.Replace(@"\r\n", Environment.NewLine);
+            }
+            catch { }
+
+            return translatedString;
+        }
+
         //Correct positions
         private void CorrectControlsPositions()
         {
