@@ -42,17 +42,18 @@ namespace TS_SE_Tool
         //Check if tsset folders exist
         private void CheckTssetFoldersExist()
         {
-            bool foldersExist = true;
+            TssetFoldersExist = true;
 
             string[] folderPaths = new string[] { "libs", "img", "lang", "updater" };
 
             foreach (string path in folderPaths)
             {
                 if (!Directory.Exists(path))
-                    foldersExist = false;
+                {
+                    TssetFoldersExist = false;
+                    break;
+                }
             }
-
-            TssetFoldersExist = foldersExist;
         }
 
         private void LoadExtCountries()
@@ -168,17 +169,17 @@ namespace TS_SE_Tool
                 File.WriteAllLines(defaultFile, txtToWrite, Encoding.UTF8);
             }
 
-            string language = "";
+            string languageFile = "";
 
             if (_ci != "Default")
-                language = _ci += "\\";
+                languageFile = _ci += "\\" + _sourcefile;
 
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + language + _sourcefile))
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + languageFile))
                 return;
 
             try
             {
-                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + language + _sourcefile);
+                string[] tempFile = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\lang\" + languageFile);
 
                 for (int i = 0; i < tempFile.Length; i++)
                 {
@@ -262,23 +263,23 @@ namespace TS_SE_Tool
                                         "Question", "NetworkCloud", "Reload", "EditList",
                                         "Extract"};
 
-                imgPaths = new string[] { @"img\UI\globe.png", @"img\UI\github.png", @"img\UI\SCS.png", @"img\UI\TMP.png", @"img\UI\PDF.png", @"img\UI\YouTube.png",
-                                            @"img\UI\pSettings.png", @"img\UI\cogwheel.png", @"img\UI\quit.png", @"img\UI\info.png", @"img\UI\download.png",
+            imgPaths = new string[] { @"img\UI\globe.png", @"img\UI\github.png", @"img\UI\SCS.png", @"img\UI\TMP.png", @"img\UI\PDF.png", @"img\UI\YouTube.png",
+                                        @"img\UI\pSettings.png", @"img\UI\cogwheel.png", @"img\UI\quit.png", @"img\UI\info.png", @"img\UI\download.png",
                                         @"img\UI\question.png", @"img\UI\networkCloud.png", @"img\UI\reload.png", @"img\UI\edit.png",
                                         @"img\UI\extract.png"};
 
-                Image[] tmpArray = Graphics_TSSET.ImgFromFileLoader(imgPaths);
+            Image[] tmpArray = Graphics_TSSET.ImgFromFileLoader(imgPaths);
 
-                for (int i = 0; i < imgPaths.Length; i++)
-                    ProgUIImgsDict.Add(imgNames[i], tmpArray[i]);
+            for (int i = 0; i < imgPaths.Length; i++)
+                ProgUIImgsDict.Add(imgNames[i], tmpArray[i]);
 
-                imgNames = new string[] { "plus", "minus" };
-                imgPaths = new string[] { @"img\UI\add.dds", @"img\UI\remove.dds"};
+            imgNames = new string[] { "plus", "minus" };
+            imgPaths = new string[] { @"img\UI\add.dds", @"img\UI\remove.dds"};
 
-                tmpArray = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32).images;
+            tmpArray = Graphics_TSSET.ddsImgLoader(imgPaths, 32, 32).images;
 
-                for (int i = 0; i < imgPaths.Length; i++)
-                    ProgUIImgsDict.Add(imgNames[i], tmpArray[i]);
+            for (int i = 0; i < imgPaths.Length; i++)
+                ProgUIImgsDict.Add(imgNames[i], tmpArray[i]);
             
 
             //=== Game Icons
