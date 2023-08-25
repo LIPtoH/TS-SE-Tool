@@ -14,6 +14,16 @@ namespace TS_SE_Tool.Save.DataFormat
         internal SCS_Color()
         { }
 
+        public SCS_Color Clone()
+        {
+            return (SCS_Color) MemberwiseClone();
+        }
+
+        internal SCS_Color(int colorInt)
+        {
+            color = Color.FromArgb(colorInt);
+        }
+
         internal SCS_Color(int alpha, int red, int green, int blue)
         {
             color = Color.FromArgb(alpha, red, green, blue);
@@ -23,8 +33,8 @@ namespace TS_SE_Tool.Save.DataFormat
         {
             if (_input != "0")
             {
-                if (_input == "nil")                
-                    _input = "4294967295";                
+                if (_input == "nil")
+                    _input = "4294967295";
 
                 _input = Utilities.NumericUtilities.IntegerToHexString(Convert.ToUInt32(_input));
 

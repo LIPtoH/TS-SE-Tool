@@ -24,6 +24,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
+using System.Drawing.Imaging;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using JR.Utils.GUI.Forms;
+using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool
 {
@@ -31,11 +36,18 @@ namespace TS_SE_Tool
     {
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
-        Button[] UserColorsB;
+        List<SCS_Color> userColors = FormMain.SiiNunitData.Economy.user_colors.Select(x => x.Clone()).ToList();
+
         CheckBox[] UserColorsCB;
-        Button[] ImportColorsB = new Button[0];
-        CheckBox[] ImportColorsCB = new CheckBox[0];
+
+        Panel[] ImportColorsB = new Panel[0];
         List<Color> ImportedColors = new List<Color>();
+
+        private string nameUC = "UCpanel", nameUCc = "UCcontainer", nameUCcb = "UCcheckbox",
+                       nameIC = "ICpanel", nameICc = "ICcontainer", nameICcb = "ICcheckbox",
+                       newSlotName = "NewSlotUserColor";
+
+        private readonly int width = 48, padding = 6,  offsetL = 4, offsetT = 4, lineThickness = 4;
 
         ushort SaveVersion = 0;
 
@@ -50,9 +62,7 @@ namespace TS_SE_Tool
 
             SaveVersion = MainForm.MainSaveFileInfoData.Version;
 
-            int colorcount = FormMain.SiiNunitData.Economy.user_colors.Count;
-
-            UserColorsB = new Button[colorcount];
+            int colorcount = userColors.Count;
 
             if (SaveVersion >= 49)
                 colorcount = colorcount / 4;
@@ -63,8 +73,24 @@ namespace TS_SE_Tool
 
             PopulateFormControlsk();
 
-            buttonReplaceColors.Enabled = false;
+            buttonApply.Enabled = false;
             groupBoxImportedColors.Visible = false;
+
+            //
+            panelProfileUserColors.VerticalScroll.Enabled = false;
+            panelProfileUserColors.VerticalScroll.Visible = false;
+            panelProfileUserColors.VerticalScroll.Maximum = 0;
+            panelProfileUserColors.HorizontalScroll.Enabled = true;
+            panelProfileUserColors.AutoScroll = true;
+            panelProfileUserColors.HorizontalScroll.LargeChange = (width + padding);
+            panelProfileUserColors.HorizontalScroll.SmallChange = panelProfileUserColors.HorizontalScroll.LargeChange / 2;
+            //
+            panelImportedColors.VerticalScroll.Enabled = false;
+            panelImportedColors.VerticalScroll.Visible = false;
+            panelImportedColors.VerticalScroll.Maximum = 0;
+            panelImportedColors.HorizontalScroll.Enabled = true;
+            panelImportedColors.AutoScroll = true;
+            //
 
             ChangeFormSize(false);
         }
@@ -72,145 +98,253 @@ namespace TS_SE_Tool
         //Create controls
         private void PopulateFormControlsk()
         {
-            CreateUserColorsButtons();
+            CreateUserColorsButtons(0);
             UpdateUserColorsButtons();
         }
 
-        private void CreateUserColorsButtons()
+        private void CreateUserColorsButtons(int start)
         {
-            int padding = 6, width = 48, offsetL = 4, offsetT = 4, colorcount = FormMain.SiiNunitData.Economy.user_colors.Count;
-            //UserColorsList.Count
+            int colorcount = userColors.Count;
 
             if (SaveVersion >= 49)
             {
-                int ucc = FormMain.SiiNunitData.Economy.user_colors.Count / 4;
-                int btnNumber = 0;
-                width = 24;
+                int ucc = userColors.Count / 4;
+                int btnNumber = start * 4;
+                int width2 = width / 2;
 
-                for (int i = 0; i < ucc; i++)
+                int x = 0, y = 0;
+
+                for (int i = start; i < ucc; i++)
                 {
+                    //Parent panel
+                    Panel groupPanel = new Panel();
+
+                    groupPanel.Name = nameUCc + i.ToString();
+
+                    x = offsetL + (width + padding + offsetL) * i;
+                    y = offsetT;
+
+                    groupPanel.Location = new Point(x - panelProfileUserColors.HorizontalScroll.Value, y);
+                    groupPanel.Size = new Size(width + offsetL, width + offsetT);
+
+                    groupPanel.BorderStyle = BorderStyle.None;
+                    groupPanel.BackColor = Color.Black;
+
+                    groupPanel.Enabled = true;
+
+                    groupPanel.DragEnter += groupPanelImport_DragEnter;
+                    groupPanel.DragDrop += groupPanelImport_DragDrop;
+
+                    groupPanel.AllowDrop = true;
+
+                    panelProfileUserColors.Controls.Add(groupPanel);
+
+                    //Checkboxes for export
+                    CheckBox colorCB = new CheckBox();
+                    colorCB.Name = nameUCcb + i.ToString();
+
+                    colorCB.Parent = panelProfileUserColors;
+
+                    colorCB.Size = new Size(11, 11);
+
+                    x = (width - colorCB.Width + offsetL) / 2;
+                    y = width + offsetT * 2;
+
+                    colorCB.Location = new Point(x, y);
+
+                    colorCB.Enabled = false;
+                    colorCB.Checked = false;
+
+                    colorCB.BackColor = Color.FromKnownColor(KnownColor.Control);
+                    colorCB.FlatStyle = FlatStyle.Flat;
+                    colorCB.AutoSize = false;
+
+                    colorCB.Text = null;
+
+                    colorCB.CheckedChanged += new System.EventHandler(this.checkBoxExport_CheckedChanged);
+
+                    groupPanel.Controls.Add(colorCB);
+
+                    groupPanel.Size = new Size(width + offsetL, width + offsetT * 7 / 2 + colorCB.Height);
+
+                    UserColorsCB[i] = colorCB;
+
+                    //Panels for colors
                     for (int j = 0; j < 4; j++)
                     {
                         int multX = 0;
                         if (j == 1 || j == 3)
                             multX = 1;
 
-                        Button colorB = new Button();
-                        panelProfileUserColors.Controls.Add(colorB);
+                        Panel colorP = new Panel();
 
-                        colorB.Name = "buttonUC" + btnNumber.ToString();
-                        colorB.Text = null;
+                        colorP.Name = nameUC + btnNumber.ToString();
 
-                        int x = offsetL + width * multX + i * (width * 2 + padding);
-                        int y = offsetT + width * (j / 2);
+                        x = offsetL / 2 + width2 * multX;
+                        y = offsetT / 2 + width2 * (j / 2);
 
-                        colorB.Location = new Point(x, y);
-                        colorB.Size = new Size(width, width);
-                        colorB.FlatStyle = FlatStyle.Flat;
-                        colorB.Enabled = false;
+                        colorP.Location = new Point(x, y);
+                        colorP.Size = new Size(width2, width2);
 
-                        UserColorsB[btnNumber] = colorB;
+                        colorP.Enabled = true;
+                        colorP.BorderStyle = BorderStyle.None;
+
+                        colorP.DragEnter += panelImport_DragEnter;
+                        colorP.DragDrop += panelImport_DragDrop;
+
+                        colorP.AllowDrop = true;
+
+                        groupPanel.Controls.Add(colorP);
 
                         btnNumber++;
                     }
-
-                    CheckBox colorCB = new CheckBox();
-                    panelProfileUserColors.Controls.Add(colorCB);
-                    colorCB.Parent = panelProfileUserColors;
-
-                    colorCB.FlatStyle = FlatStyle.Flat;
-                    colorCB.Size = new Size(width * 2, width / 2);
-                    colorCB.Name = "checkboxUC" + i.ToString();
-                    colorCB.Checked = false;
-                    colorCB.Text = "";
-                    colorCB.AutoSize = true;
-                    colorCB.Location = new Point(offsetL + (width * 2 - colorCB.Width) / 2 + (width * 2 + padding) * i, offsetT + padding + width * 2);
-                    colorCB.Enabled = false;
-
-                    UserColorsCB[i] = colorCB;
                 }
 
-                panelProfileUserColors.HorizontalScroll.Maximum = 2500; //Virtual width
+                panelProfileUserColors.HorizontalScroll.Maximum = (offsetL + padding * 2 + width) * (ucc - 1); //Virtual width
                 panelProfileUserColors.MouseWheel += new MouseEventHandler(this.panelProfileUserColors_MouseWheel);
             }
             else
             {
                 for (int i = 0; i < colorcount; i++)
                 {
-                    Button colorB = new Button();
-                    panelProfileUserColors.Controls.Add(colorB);
+                    Panel colorB = new Panel();
 
-                    colorB.Name = "buttonUC" + i.ToString();
-                    colorB.Text = null;
-                    colorB.Location = new Point(offsetL + (padding + width) * (i), offsetT);
+                    colorB.Name = nameUC + i.ToString();
+
+                    colorB.Location = new Point(offsetL + i * (padding + width), offsetT);
                     colorB.Size = new Size(width, width);
-                    colorB.FlatStyle = FlatStyle.Flat;
+
+                    colorB.BorderStyle = BorderStyle.None;
+                    colorB.BackColor = Color.Black;
+
                     colorB.Enabled = false;
 
-                    UserColorsB[i] = colorB;
+                    panelProfileUserColors.Controls.Add(colorB);
 
+                    //=== CheckBox's
                     CheckBox colorCB = new CheckBox();
                     panelProfileUserColors.Controls.Add(colorCB);
                     colorCB.Parent = panelProfileUserColors;
 
                     colorCB.FlatStyle = FlatStyle.Flat;
                     colorCB.Size = new Size(width, width / 4);
-                    colorCB.Name = "checkboxUC" + i.ToString();
+                    colorCB.Name = nameUCcb + i.ToString();
                     colorCB.Checked = false;
                     colorCB.Text = "";
                     colorCB.AutoSize = true;
-                    colorCB.Location = new Point(offsetL + (width - colorCB.Width) / 2 + (padding + width) * (i), offsetT + padding + width);
+                    colorCB.Location = new Point(offsetL + (width - colorCB.Width) / 2 + i * (padding + width), offsetT + padding * 2 + width);
 
                     UserColorsCB[i] = colorCB;
                 }
             }
         }
 
-        private void UpdateUserColorsButtons()
+        private void AddNewSlotUserColors()
         {
-            int padding = 6, width = 23;//, colorcount = 8;
+            Image crossIMG = new Bitmap(width, width);
 
-            for (int i = 0; i < FormMain.SiiNunitData.Economy.user_colors.Count; i++)
+            using (var canvas = Graphics.FromImage(crossIMG))
             {
-                Button btn = null;
-                string btnname = "buttonUC" + i.ToString();
+                Pen linePen = new Pen(Color.FromKnownColor(KnownColor.Control), lineThickness);
 
-                if (panelProfileUserColors.Controls.ContainsKey(btnname))
+                canvas.DrawLine(linePen, width / 2, offsetT, width / 2, width - offsetT);
+                canvas.DrawLine(linePen, offsetT, width / 2, width - offsetT, width / 2);
+            }
+
+            //Parent panel
+            Panel groupPanel = new Panel();
+
+            groupPanel.Name = newSlotName;
+            int i = 0;
+
+            if (SaveVersion >= 49)
+                i = userColors.Count / 4;
+
+            int x = offsetL + (width + padding + offsetL) * i;
+            int y = offsetT * 3;
+
+            int xOffset = panelProfileUserColors.AutoScrollPosition.X;
+
+            groupPanel.Location = new Point(x + xOffset, y);
+            groupPanel.Size = new Size(width + offsetL, width + offsetT);
+
+            groupPanel.BorderStyle = BorderStyle.None;
+            groupPanel.BackColor = Color.Black;
+            groupPanel.BackgroundImageLayout = ImageLayout.Center;
+            groupPanel.BackgroundImage = crossIMG;
+
+            groupPanel.Enabled = true;
+
+            groupPanel.DragEnter += newSlotPanelImport_DragEnter;
+            groupPanel.DragDrop += newSlotPanelImport_DragDrop;
+
+            groupPanel.AllowDrop = true;
+
+            panelProfileUserColors.Controls.Add(groupPanel);
+
+            panelProfileUserColors.HorizontalScroll.Maximum += (offsetL + padding * 2 + width); //Virtual width
+        }
+
+        private void MoveNewSlotUserColors()
+        {
+            if (SaveVersion >= 49)
+            {
+                Panel nsp = (Panel)panelProfileUserColors.Controls.Find(newSlotName, true)[0];
+
+                if (userColors.Count() / 4 < 40)
                 {
-                    btn = panelProfileUserColors.Controls[btnname] as Button;
+                    //Move
+                    nsp.Location = new Point(nsp.Location.X + (width + padding + offsetL), nsp.Location.Y);
+
+                    panelProfileUserColors.HorizontalScroll.Value = panelProfileUserColors.HorizontalScroll.Maximum - (width + padding);
                 }
                 else
                 {
-                    btn.Name = "buttonUC" + i.ToString();
-                    btn.Text = null;
-                    btn.Location = new Point(6 + (padding + width) * (i), 19);
-                    btn.Size = new Size(width, 23);
-                    btn.FlatStyle = FlatStyle.Flat;
-                    btn.Enabled = false;
-
-                    btn.Click += new EventHandler(MainForm.SelectColor);
-
-                    panelProfileUserColors.Controls.Add(btn);
+                    //Remove
+                    panelProfileUserColors.Controls.Remove(nsp);
                 }
+            }
+        }
 
-                if (btn != null)
+        private void UpdateUserColorsButtons()
+        {
+            Image crossIMG;
+
+            if (SaveVersion >= 49)            
+                crossIMG = CreateCrossIMG(width / 2, width / 2, lineThickness / 2, padding);
+            else
+                crossIMG = CreateCrossIMG(width, width, lineThickness, padding);
+
+
+            for (int i = 0; i < userColors.Count; i++)
+            {
+                Panel ctrl = null;
+                string ctrlName = nameUC + i.ToString();
+
+                Control[] tmp = panelProfileUserColors.Controls.Find(ctrlName, true);
+
+                if (tmp.Length == 0)
+                    continue;
+
+                ctrl = tmp[0] as Panel;
+
+                if (ctrl != null)
                 {
-                    btn.Enabled = true;
-                    if (FormMain.SiiNunitData.Economy.user_colors[i].color.A == 0)
+                    ctrl.Enabled = true;
+                    if (userColors[i].color.A == 0)
                     {
-                        btn.Text = "X";
-                        btn.BackColor = Color.FromName("Control");
+                        ctrl.BackColor = Color.FromKnownColor(KnownColor.Control);
+
+                        ctrl.BackgroundImage = crossIMG;
                     }
                     else
                     {
-                        btn.Text = "";
-                        btn.BackColor = FormMain.SiiNunitData.Economy.user_colors[i].color;
+                        ctrl.BackColor = userColors[i].color;
 
                         if (SaveVersion >= 49)
                             UserColorsCB[i / 4].Enabled = true;
                         else
                             UserColorsCB[i].Enabled = true;
-
                     }
                 }
             }
@@ -256,41 +390,87 @@ namespace TS_SE_Tool
         //
         private void CreateImportColorsButtons(int _colorcount)
         {
-            int padding = 6, width = 48, offsetL = 4, offsetT = 4, colorcount = _colorcount;//8;
-            //UserColorsList.Count
-            int ucc = FormMain.SiiNunitData.Economy.user_colors.Count / 4;
+            int colorcount = _colorcount, lineThickness = 4;
+
+            int ucc = userColors.Count / 4;
             int btnNumber = 0;
 
-            Array.Resize(ref ImportColorsB, colorcount);
 
             if (SaveVersion >= 49)
                 colorcount = colorcount / 4;
 
-            Array.Resize(ref ImportColorsCB, colorcount);
+            Array.Resize(ref ImportColorsB, colorcount);
 
+            if (SaveVersion >= 49)
+            {
+                lineThickness = lineThickness / 2;
+            }
 
-            panelImportedColors.HorizontalScroll.Maximum = 2500; //Virtual width
-            panelImportedColors.MouseWheel += new MouseEventHandler(this.panelProfileUserColors_MouseWheel);
+            Image crossIMG = CreateCrossIMG(width / 2, width / 2, lineThickness, padding);
+
+            int x = 0, y = 0;
 
             for (int i = 0; i < colorcount; i++)
             {
-                CheckBox chkbox = new CheckBox();
-                panelImportedColors.Controls.Add(chkbox);
-                chkbox.Parent = panelImportedColors;
+                //Parent panel
+                Panel groupPanel = new Panel();
 
-                chkbox.FlatStyle = FlatStyle.Flat;
-                chkbox.Size = new Size(width, width / 4);
-                chkbox.Name = "checkboxIC" + i.ToString();
-                chkbox.Checked = true;
-                chkbox.Text = "";
-                chkbox.AutoSize = true;                
-                chkbox.Location = new Point(offsetL + (width - chkbox.Width) / 2 + (padding + width) * i, offsetT);
+                groupPanel.Name = nameICc + i.ToString();
 
-                ImportColorsCB[i] = chkbox;
+                x = offsetL + (width + padding + offsetL) * i;
+                y = offsetT;
 
+                groupPanel.Location = new Point(x, y);
+                //groupPanel.Size = new Size(width + offsetL, width + offsetT);
+                groupPanel.Size = new Size(width + offsetL, width + offsetT * 4);
+
+                groupPanel.BorderStyle = BorderStyle.None;
+                groupPanel.BackColor = Color.Black;
+
+                groupPanel.Enabled = true;
+
+                groupPanel.MouseDown += groupPanelImport_MouseDown;
+                groupPanel.QueryContinueDrag += panelDragSource_QueryContinueDrag;
+
+                panelImportedColors.Controls.Add(groupPanel);
+
+                ImportColorsB[i] = groupPanel;
+
+                /*
+                //Checkboxes for export
+                CheckBox colorCB = new CheckBox();
+                colorCB.Name = nameICcb + i.ToString();
+
+                colorCB.Parent = panelProfileUserColors;
+
+                colorCB.Size = new Size(11, 11);
+
+                x = (width - colorCB.Width + offsetL) / 2;
+                y = width + offsetT * 2;
+
+                colorCB.Location = new Point(x, y);
+
+                colorCB.Enabled = false;
+                colorCB.Checked = false;
+
+                colorCB.BackColor = Color.FromName("Control");
+                colorCB.FlatStyle = FlatStyle.Flat;
+                colorCB.AutoSize = false;
+
+                colorCB.Text = null;
+
+                groupPanel.Controls.Add(colorCB);
+
+                groupPanel.Size = new Size(width + offsetL, width + offsetT * 7 / 2 + colorCB.Height);
+
+                ImportColorsCB[i] = colorCB;
+
+                */
+
+                //==
                 if (SaveVersion >= 49)
                 {
-                    int widthB = width / 2;
+                    int width2 = width / 2;
 
                     for (int j = 0; j < 4; j++)
                     {
@@ -298,32 +478,44 @@ namespace TS_SE_Tool
                         if (j == 1 || j == 3)
                             multX = 1;
 
-                        Button bttn = new Button();
-                        panelImportedColors.Controls.Add(bttn);
+                        Panel colorP = new Panel();
 
-                        bttn.Name = "buttonIC" + btnNumber.ToString();
+                        colorP.Name = nameIC + btnNumber.ToString();
 
-                        int x = offsetL + widthB * multX + i * (widthB * 2 + padding);
-                        int y = offsetT + widthB * (j / 2) + chkbox.Height + padding;
+                        x = offsetL / 2 + width2 * multX;
+                        y = offsetT / 2 + width2 * (j / 2);
 
-                        bttn.Location = new Point(x, y);
-                        bttn.Size = new Size(widthB, widthB);
-                        bttn.FlatStyle = FlatStyle.Flat;
-                        bttn.Enabled = false;
-                        bttn.BackColor = ImportedColors[btnNumber];
+                        colorP.Location = new Point(x, y);
+                        colorP.Size = new Size(width2, width2);
 
-                        if (bttn.BackColor.A != 0)
-                            bttn.Text = null;
+                        colorP.BorderStyle = BorderStyle.None;
+
+                        if (ImportedColors[btnNumber].A == 0)
+                        {
+                            colorP.Enabled = false;
+
+                            colorP.BackColor = Color.FromKnownColor(KnownColor.Control);
+
+                            colorP.BackgroundImage = crossIMG;
+                        }
                         else
-                            bttn.Text = "X";
+                        {
+                            colorP.Enabled = true;
 
-                        ImportColorsB[btnNumber] = bttn;
+                            colorP.BackColor = ImportedColors[btnNumber];
+
+                            colorP.MouseDown += panelImport_MouseDown;
+                            colorP.QueryContinueDrag += panelDragSource_QueryContinueDrag;
+                        }
+
+                        groupPanel.Controls.Add(colorP);
 
                         btnNumber++;
                     }
                 }
                 else
                 {
+                    /*
                     Button bttn = new Button();
                     panelImportedColors.Controls.Add(bttn);
 
@@ -340,14 +532,233 @@ namespace TS_SE_Tool
                         bttn.Text = "X";
 
                     ImportColorsB[i] = bttn;
+                    */
+                }
+
+                panelImportedColors.HorizontalScroll.Maximum = (offsetL + padding * 2 + width) * (ucc - 1); //Virtual width
+                panelImportedColors.MouseWheel += new MouseEventHandler(this.panelProfileUserColors_MouseWheel);
+            }
+        }
+
+        //==
+
+        private void panelImport_MouseDown(object sender, MouseEventArgs e)
+        {
+            (sender as Panel).DoDragDrop((sender as Panel).BackColor, DragDropEffects.Copy | DragDropEffects.Move);
+        }
+
+        private void panelImport_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent( typeof(Color) ))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void panelImport_DragDrop(object sender, DragEventArgs e)
+        {
+            Color newColor = (Color)e.Data.GetData(typeof(Color));
+
+            (sender as Panel).BackColor = newColor;
+            (sender as Panel).BackgroundImage = null;
+
+            Panel target = sender as Panel;
+
+            string tName = target.Name;
+
+            int? result = ExtractFirstNumber(tName);
+
+            if (result != null)
+                userColors[(int)result].color = newColor;
+        }
+
+        //==
+
+        private void groupPanelImport_MouseDown(object sender, MouseEventArgs e)
+        {
+            Panel source = sender as Panel;
+            List<Panel> pList = source.Controls.OfType<Panel>().ToList();
+
+            List<Color> cList = new List<Color>();
+
+            foreach (Panel cPanel in pList)
+            {
+                if (cPanel.BackgroundImage == null)
+                    cList.Add(cPanel.BackColor);
+                else
+                    cList.Add(Color.FromArgb(0, 0, 0, 0));
+            }
+
+            (sender as Panel).DoDragDrop(cList, DragDropEffects.Copy | DragDropEffects.Move);
+        }
+
+        private void groupPanelImport_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(List<Color>)))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void groupPanelImport_DragDrop(object sender, DragEventArgs e)
+        {
+            List<Color> newColors = (List<Color>)e.Data.GetData(typeof(List<Color>));
+
+            Panel source = sender as Panel;
+            List<Panel> pList = source.Controls.OfType<Panel>().ToList();
+
+            int idx = 0;
+
+            foreach (Color color in newColors)
+            {
+                int? result = ExtractFirstNumber(pList[idx].Name);
+
+                if (result == null)
+                    continue;
+
+                if (color.A != 0)
+                {
+                    userColors[(int)result].color = (Color)color;
+
+                    pList[idx].BackColor = (Color)color;
+                    pList[idx].BackgroundImage = null;
+                }
+                else
+                {
+                    userColors[(int)result].color = Color.FromArgb(0);
+
+                    pList[idx].BackColor = Color.FromKnownColor(KnownColor.Control);
+                    pList[idx].BackgroundImage = CreateCrossIMG(24, 2, 6);
+                }
+
+                idx++;
+            }
+        }
+
+        //==
+        private void newSlotPanelImport_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(List<Color>)) || e.Data.GetDataPresent(typeof(Color)) )
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void newSlotPanelImport_DragDrop(object sender, DragEventArgs e)
+        {
+            //Setup
+            int prev = userColors.Count();
+
+            userColors.AddRange(new SCS_Color[4] { new SCS_Color(0), new SCS_Color(0), new SCS_Color(0), new SCS_Color(0) });
+
+            Array.Resize(ref UserColorsCB, UserColorsCB.Count() + 1);
+
+            //Create regular panel
+            CreateUserColorsButtons(prev / 4);
+
+            Panel nsp = (Panel)panelProfileUserColors.Controls.Find(nameUCc + prev / 4, false)[0];
+
+            if (e.Data.GetDataPresent(typeof(Color)))
+            {
+                e.Data.SetData(new List<Color>() { (Color)e.Data.GetData(typeof(Color)), Color.FromArgb(0), Color.FromArgb(0), Color.FromArgb(0) });
+                //Add single color
+                groupPanelImport_DragDrop(nsp, e);
+                //panelImport_DragDrop(nsp.Controls.Find(nameUC + prev, false)[0], e);
+            }
+            else
+            {
+                //Add colors
+                groupPanelImport_DragDrop(nsp, e);
+            }
+
+
+            //Move new slot
+            MoveNewSlotUserColors();
+
+        }
+
+        //==
+
+        private void panelDragSource_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
+        {
+            // Cancel the drag if the mouse moves off the form.
+            Panel lb = sender as Panel;
+
+            if (lb != null)
+            {
+                Form f = lb.FindForm();
+                // The screenOffset is used to account for any desktop bands 
+                // that may be at the top or left side of the screen when 
+                // determining when to cancel the drag drop operation.
+                Point screenOffset;
+                screenOffset = SystemInformation.WorkingArea.Location;
+
+                // Cancel the drag if the mouse moves off the form. The screenOffset
+                // takes into account any desktop bands that may be at the top or left
+                // side of the screen.
+                if (((Control.MousePosition.X - screenOffset.X) < f.DesktopBounds.Left) ||
+                    ((Control.MousePosition.X - screenOffset.X) > f.DesktopBounds.Right) ||
+                    ((Control.MousePosition.Y - screenOffset.Y) < f.DesktopBounds.Top) ||
+                    ((Control.MousePosition.Y - screenOffset.Y) > f.DesktopBounds.Bottom))
+                {
+                    e.Action = DragAction.Cancel;
                 }
             }
+        }
+
+        //==
+        private void checkBoxExport_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (CheckBox chbox in UserColorsCB)
+            {
+                if (chbox.Checked)
+                {
+                    buttonExport.Enabled = true;
+                    return;
+                }
+            }
+
+            buttonExport.Enabled = false;
+        }
+
+        //==
+
+        private Image CreateCrossIMG(int _width, int _lineThickness, int _padding)
+        {
+            return CreateCrossIMG(_width, _width, _lineThickness, _padding);
+        }
+
+        private Image CreateCrossIMG(int _width, int _height, int _lineThickness, int _padding)
+        {
+            Image crossIMG = new Bitmap(_width, _height);
+
+            using (var canvas = Graphics.FromImage(crossIMG))
+            {
+                Pen linePen = new Pen(Color.FromKnownColor(KnownColor.ControlText), _lineThickness);
+
+                canvas.DrawLine(linePen, _padding, _padding, _width - _padding, _width - _padding);
+                canvas.DrawLine(linePen, _width - _padding, _padding, _padding, _width - _padding);
+            }
+
+            return crossIMG;
         }
 
         private void CorrectControlsPositions()
         {
 
         }
+
+        private static readonly Regex regexDigit = new Regex(@"\d+");
+        static int? ExtractFirstNumber(string text)
+        {
+            var match = regexDigit.Match(text);
+
+            if (match.Success)
+                return Convert.ToInt32(match.Value);
+            else
+                return null;
+        }
+
         //Buttons
         private void buttonExportColors_Click(object sender, EventArgs e)
         {
@@ -363,14 +774,14 @@ namespace TS_SE_Tool
                     {
                         for (int j = 0; j < 4; j++)
                         {
-                            tempData += "\r\n" + FormMain.SiiNunitData.Economy.user_colors[i * 4 + j].color.ToArgb().ToString();
+                            tempData += "\r\n" + userColors[i * 4 + j].color.ToArgb().ToString();
                             temp.Checked = false;
                             ready = true;                            
                         }
                     }
                     else
                     {
-                        tempData += "\r\n" + UserColorsB[i].BackColor.ToArgb().ToString();
+                        tempData += "\r\n" + userColors[i].color.ToArgb().ToString();
                         temp.Checked = false;
                         ready = true;
                     }
@@ -381,22 +792,18 @@ namespace TS_SE_Tool
             if (!ready)
                 return;
 
-            string asd = BitConverter.ToString(Utilities.ZipDataUtilities.zipText(tempData)).Replace("-", "");
-            Clipboard.SetText(asd);
-            MessageBox.Show("Color data has been copied.");
+            string exportData = BitConverter.ToString(Utilities.ZipDataUtilities.zipText(tempData)).Replace("-", "");
+            Clipboard.SetText(exportData);
+
+            FlexibleMessageBox.Show(this, "Color data has been copied", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
         }
 
         private void buttonImportColors_Click(object sender, EventArgs e)
         {
             //Remove imported prev buttons and chkboxes
-            if(ImportColorsB.Length > 0)
+            if (ImportColorsB.Length > 0)
             {
-                foreach(Button t in ImportColorsB)
-                {
-                    t.Dispose();
-                }
-
-                foreach (CheckBox t in ImportColorsCB)
+                foreach (Panel t in ImportColorsB)
                 {
                     t.Dispose();
                 }
@@ -407,7 +814,14 @@ namespace TS_SE_Tool
             //Start import
             try
             {
-                string inputData = Utilities.ZipDataUtilities.unzipText(Clipboard.GetText()); //Get data and unzip
+                //check for gz file format
+                string probGZfile = Clipboard.GetText();
+
+                if (probGZfile.Substring(0, 4).ToUpper() != "1F8B")
+                    return;
+
+                //unzip
+                string inputData = Utilities.ZipDataUtilities.unzipText(probGZfile); //Get data and unzip
 
                 if (inputData == null)
                     return;
@@ -432,11 +846,11 @@ namespace TS_SE_Tool
                         colorCB.Checked = false;
                     }
 
-                    //Show imopted colors section
+                    //Show imported colors section
                     ChangeFormSize(true);                    
 
                     groupBoxImportedColors.Visible = true;
-                    buttonReplaceColors.Enabled = true;
+                    buttonApply.Enabled = true;
 
                     //Enable checkboxes to enable import
                     foreach (CheckBox colorCB in UserColorsCB)
@@ -444,102 +858,27 @@ namespace TS_SE_Tool
                         colorCB.Enabled = true;
                     }
 
-                    buttonExport.Enabled = false; //Disable export button
+                    if (SaveVersion >= 49 && userColors.Count() / 4 < 40)
+                    {
+                        AddNewSlotUserColors();
+                    }
 
-                    MessageBox.Show("Color data  has been inserted.");
+                    FlexibleMessageBox.Show(this, "Color data has been inserted", "Import", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
                 }
                 else
-                    MessageBox.Show("Wrong data. Expected Color data but\r\n" + Lines[0] + "\r\nwas found.");
+                    FlexibleMessageBox.Show(this, "Expected Color data but" + Environment.NewLine + Lines[0] + Environment.NewLine + "was found.",
+                    "Error. Wrong data.", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Something gone wrong.");
+                FlexibleMessageBox.Show(this, "Something gone wrong." + Environment.NewLine + Environment.NewLine + ex.Message,
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
             }
         }
 
-        private void buttonReplaceColors_Click(object sender, EventArgs e)
+        private void buttonApplyChanges_Click(object sender, EventArgs e)
         {
-            if (SaveVersion >= 49)
-            {
-                List<Button> tempBList = new List<Button>();
-                int i = 0, j = 0;
-
-                foreach (CheckBox temp in ImportColorsCB)
-                {
-                    if (temp.Checked)
-                    {
-                        temp.Checked = false;
-                        for(int k = 0; k < 4; k++)
-                        {
-                            tempBList.Add(ImportColorsB[i]);
-                            i++;
-                        }
-                    }
-                    else
-                        i = i + 4;
-                }
-
-                if (tempBList.Count > 0)
-                {
-                    i = 0;
-                    foreach (CheckBox temp in UserColorsCB)
-                    {
-                        if (temp.Checked)
-                        {
-                            if (j < tempBList.Count)
-                            {
-                                for (int k = 0; k < 4; k++)
-                                {
-                                    FormMain.SiiNunitData.Economy.user_colors[i].color = tempBList[j].BackColor;
-
-                                    i++;
-                                    j++;
-                                }
-                            }
-                            temp.Checked = false;
-                        }
-                        else
-                            i = i + 4;
-                    }
-                }
-            }
-            else
-            {
-                List<Button> tempBList = new List<Button>();
-
-                int i = 0, j = 0;
-                foreach (CheckBox temp in ImportColorsCB)
-                {
-                    if (temp.Checked)
-                    {
-                        tempBList.Add(ImportColorsB[i]);
-                        temp.Checked = false;
-                    }
-                    i++;
-                }
-
-                if (tempBList.Count > 0)
-                {
-                    i = 0;
-                    foreach (CheckBox temp in UserColorsCB)
-                    {
-                        if (temp.Checked)
-                        {
-                            if (j < tempBList.Count)
-                            {
-                                FormMain.SiiNunitData.Economy.user_colors[i].color = tempBList[j].BackColor;
-                                j++;
-                            }
-                            temp.Checked = false;
-                        }
-                        i++;
-                    }
-                }
-            }
-
-            UpdateUserColorsButtons();
-
-            buttonExport.Enabled = true;
+            FormMain.SiiNunitData.Economy.user_colors = userColors;
         }
 
         //Change form size
@@ -547,11 +886,13 @@ namespace TS_SE_Tool
         {
             if (_big)
             {
-                this.MaximumSize = new Size(this.Size.Width, 323);
+                this.MaximumSize = new Size(this.Size.Width, 360);
+                tableLayoutPanelMain.RowStyles[2] = new RowStyle(sizeType: SizeType.Percent, 50);
             }
             else
             {
-                this.MaximumSize = new Size(this.Size.Width, 209);
+                this.MaximumSize = new Size(this.Size.Width, 230);
+                tableLayoutPanelMain.RowStyles[2] = new RowStyle(sizeType: SizeType.Percent, 0);
             }
 
             this.Size = new Size(this.Size.Width, this.Size.Height);

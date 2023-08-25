@@ -364,7 +364,7 @@ namespace TS_SE_Tool
                 if (SiiNunitData.Economy.user_colors[_idx].color.A == 0)
                 {
                     _btn.Text = "X";
-                    _btn.BackColor = Color.FromName("Control");
+                    _btn.BackColor = Color.FromKnownColor(KnownColor.Control);
                 }
                 else
                 {
@@ -426,7 +426,7 @@ namespace TS_SE_Tool
                 else
                 {
                     obj.Text = "X";
-                    obj.BackColor = Color.FromName("Control");
+                    obj.BackColor = Color.FromKnownColor(KnownColor.Control);
                 }
             }
 
