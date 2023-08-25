@@ -122,7 +122,7 @@ namespace JR.Utils.GUI.Forms
         /// <returns>The dialog result.</returns>
         public static DialogResult Show(string text)
         {
-            return FlexibleMessageBoxForm.Show(null, text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMessageBoxForm.Show(null, text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, SizeGripStyle.Hide);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace JR.Utils.GUI.Forms
         /// <returns>The dialog result.</returns>
         public static DialogResult Show(IWin32Window owner, string text)
         {
-            return FlexibleMessageBoxForm.Show(owner, text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMessageBoxForm.Show(owner, text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, SizeGripStyle.Hide);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace JR.Utils.GUI.Forms
         /// <returns>The dialog result.</returns>
         public static DialogResult Show(string text, string caption)
         {
-            return FlexibleMessageBoxForm.Show(null, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMessageBoxForm.Show(null, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, SizeGripStyle.Hide);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace JR.Utils.GUI.Forms
         /// <returns>The dialog result.</returns>
         public static DialogResult Show(IWin32Window owner, string text, string caption)
         {
-            return FlexibleMessageBoxForm.Show(owner, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMessageBoxForm.Show(owner, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, SizeGripStyle.Hide);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace JR.Utils.GUI.Forms
         /// <returns>The dialog result.</returns>
         public static DialogResult Show(string text, string caption, MessageBoxButtons buttons)
         {
-            return FlexibleMessageBoxForm.Show(null, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMessageBoxForm.Show(null, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, SizeGripStyle.Hide);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace JR.Utils.GUI.Forms
         /// <returns>The dialog result.</returns>
         public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons)
         {
-            return FlexibleMessageBoxForm.Show(owner, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMessageBoxForm.Show(owner, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, SizeGripStyle.Hide);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace JR.Utils.GUI.Forms
         /// <returns></returns>
         public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
-            return FlexibleMessageBoxForm.Show(null, text, caption, buttons, icon, MessageBoxDefaultButton.Button1);
+            return FlexibleMessageBoxForm.Show(null, text, caption, buttons, icon, MessageBoxDefaultButton.Button1, SizeGripStyle.Hide);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace JR.Utils.GUI.Forms
         /// <returns>The dialog result.</returns>
         public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
-            return FlexibleMessageBoxForm.Show(owner, text, caption, buttons, icon, MessageBoxDefaultButton.Button1);
+            return FlexibleMessageBoxForm.Show(owner, text, caption, buttons, icon, MessageBoxDefaultButton.Button1, SizeGripStyle.Hide);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace JR.Utils.GUI.Forms
         /// <returns>The dialog result.</returns>
         public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
         {
-            return FlexibleMessageBoxForm.Show(null, text, caption, buttons, icon, defaultButton);
+            return FlexibleMessageBoxForm.Show(null, text, caption, buttons, icon, defaultButton, SizeGripStyle.Hide);
         }
 
         /// <summary>
@@ -237,9 +237,39 @@ namespace JR.Utils.GUI.Forms
         /// <returns>The dialog result.</returns>
         public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
         {
-            return FlexibleMessageBoxForm.Show(owner, text, caption, buttons, icon, defaultButton);
+            return FlexibleMessageBoxForm.Show(owner, text, caption, buttons, icon, defaultButton, SizeGripStyle.Hide);
         }
 
+        /// <summary>
+        /// Shows the specified message box.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="caption">The caption.</param>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="icon">The icon.</param>
+        /// <param name="defaultButton">The default button.</param>
+        /// <param name="gripStyle">The grip style.</param>
+        /// <returns>The dialog result.</returns>
+        public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, SizeGripStyle gripStyle)
+        {
+            return FlexibleMessageBoxForm.Show(null, text, caption, buttons, icon, defaultButton, gripStyle);
+        }
+
+        /// <summary>
+        /// Shows the specified message box.
+        /// </summary>
+        /// <param name="owner">The owner.</param>
+        /// <param name="text">The text.</param>
+        /// <param name="caption">The caption.</param>
+        /// <param name="buttons">The buttons.</param>
+        /// <param name="icon">The icon.</param>
+        /// <param name="defaultButton">The default button.</param>
+        /// <param name="gripStyle">The grip style.</param>
+        /// <returns>The dialog result.</returns>
+        public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, SizeGripStyle gripStyle)
+        {
+            return FlexibleMessageBoxForm.Show(owner, text, caption, buttons, icon, defaultButton, gripStyle);
+        }
         #endregion
 
         #region Internal form class
@@ -823,7 +853,7 @@ namespace JR.Utils.GUI.Forms
             /// <param name="icon">The icon.</param>
             /// <param name="defaultButton">The default button.</param>
             /// <returns>The dialog result.</returns>
-            public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
+            public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, SizeGripStyle gripStyle)
             {
                 //Create a new instance of the FlexibleMessageBox form
                 var flexibleMessageBoxForm = new FlexibleMessageBoxForm();
@@ -844,8 +874,16 @@ namespace JR.Utils.GUI.Forms
                 flexibleMessageBoxForm.Font = FONT;
                 flexibleMessageBoxForm.richTextBoxMessage.Font = FONT;
 
+                //Change grip style
+                flexibleMessageBoxForm.SizeGripStyle = gripStyle;
+
                 //Calculate the dialogs start size (Try to auto-size width to show longest text row). Also set the maximum dialog size. 
                 SetDialogSizes(flexibleMessageBoxForm, text, caption);
+
+                if (gripStyle == SizeGripStyle.Hide)
+                {
+                    flexibleMessageBoxForm.FormBorderStyle = FormBorderStyle.Fixed3D;
+                }
 
                 //Set the dialogs start position when given. Otherwise center the dialog on the current screen.
                 SetDialogStartPosition(flexibleMessageBoxForm, owner);

@@ -31,6 +31,7 @@ using System.Deployment.Application;
 using System.Threading;
 
 using TS_SE_Tool.Utilities;
+using JR.Utils.GUI.Forms;
 
 namespace TS_SE_Tool
 {
@@ -267,9 +268,9 @@ namespace TS_SE_Tool
                 return;
 
             if (AddedJobsDictionary != null && AddedJobsDictionary.Count > 0)
-                exitDR = MessageBox.Show("You have unsaved changes."+ Environment.NewLine + "Do you really want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                exitDR = FlexibleMessageBox.Show(this, "You have unsaved changes."+ Environment.NewLine + "Do you really want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
             else
-                exitDR = MessageBox.Show("Do you really want to close down application?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                exitDR = FlexibleMessageBox.Show(this, "Do you really want to close down application?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
 
             if (exitDR == DialogResult.Yes)
             {
