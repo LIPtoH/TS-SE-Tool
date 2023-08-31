@@ -278,9 +278,9 @@ namespace TS_SE_Tool
             combDT.Columns.Add(dc);
 
             DataColumn dcDisplay = new DataColumn("DisplayMember");
-            dcDisplay.Expression = string.Format("IIF(UserTruckNameless <> ''," +
-                                                        " '[' + IIF(TruckState <> '3', IIF(TruckType = '0', 'Q' ,'U') ,'S') +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + IIF(DriverName <> 'null', ' || In use - ' + {3},'')," +
-                                                        "'-- NONE --')",
+            dcDisplay.Expression = string.Format("IIF(UserTruckNameless <> 'null'," +
+                                                " '[' + IIF(TruckState <> '3', IIF(TruckType = '0', 'Q' ,'U') ,'S') +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + IIF(DriverName <> 'null'," +
+                                                " ' || In use - ' + {3},''), '-- NONE --')",
                                                 "TruckType", "GarageName", "TruckName", "DriverName", "TruckState");
             combDT.Columns.Add(dcDisplay);
             //

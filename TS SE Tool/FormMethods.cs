@@ -896,6 +896,8 @@ namespace TS_SE_Tool
                 {
                     string source = temp[0].ToString();
 
+                    if (source != "null")
+                    {
                     var grg = GaragesList.Find(x => x.Vehicles.Contains(source));
 
                     if ((byte)temp["TruckType"] == 1) // Users
@@ -915,7 +917,7 @@ namespace TS_SE_Tool
                     {
                         temp["TruckState"] = 1;
                     }
-
+                }
                 }
 
                 if (savedindex != -1)
