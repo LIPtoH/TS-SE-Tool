@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TS_SE_Tool.Save.Items;
 
 namespace TS_SE_Tool
 {
@@ -45,8 +46,6 @@ namespace TS_SE_Tool
         {
             this.Icon = Properties.Resources.MainIco;
 
-            FillTreeView();
-
             // Clone
             foreach(Garages garage in MainForm.GaragesList)
             {
@@ -59,6 +58,8 @@ namespace TS_SE_Tool
             //dialog result
             buttonSave.DialogResult = DialogResult.OK;
             buttonCancel.DialogResult = DialogResult.Cancel;
+
+            FillTreeView();
         }
 
         private void FillTreeView()
@@ -78,7 +79,7 @@ namespace TS_SE_Tool
             treeViewSavedDrivers.BeginUpdate();
             treeViewSavedDrivers.Nodes.Clear();
 
-            foreach (Garages tempG in MainForm.GaragesList)
+            foreach (Garages tempG in thisGarageList)
             {
                 if (tempG.GarageStatus > 0)
                 {
@@ -141,7 +142,7 @@ namespace TS_SE_Tool
             treeViewSavedTrucks.BeginUpdate();
             treeViewSavedTrucks.Nodes.Clear();
 
-            foreach (Garages tempG in MainForm.GaragesList)
+            foreach (Garages tempG in thisGarageList)
             {
                 if (tempG.GarageStatus > 0)
                 {
@@ -204,7 +205,7 @@ namespace TS_SE_Tool
 
             treeViewSortingDrivers.Nodes.Clear();
 
-            foreach (string tempD in MainForm.extraDrivers)
+            foreach (string tempD in thisExtraDrivers)
             {
                 if (tempD != null)
                 {
@@ -215,8 +216,8 @@ namespace TS_SE_Tool
             treeViewSortingDrivers.EndUpdate();
 
             //Label
-            labelSortingDrivers.Text = "Drivers " + MainForm.extraDrivers.Count(x => x != null).ToString();
-            if (SpareDrvSpaces < MainForm.extraDrivers.Count)
+            labelSortingDrivers.Text = "Drivers " + thisExtraDrivers.Count(x => x != null).ToString();
+            if (SpareDrvSpaces < thisExtraDrivers.Count)
                 labelSortingDrivers.ForeColor = Color.Red;
             else
                 labelSortingDrivers.ForeColor = DefaultForeColor;
@@ -229,7 +230,7 @@ namespace TS_SE_Tool
 
             treeViewSortingTrucks.Nodes.Clear();
 
-            foreach (string tempV in MainForm.extraVehicles)
+            foreach (string tempV in thisExtraVehicles)
             {
                 if (tempV != null)
                 {
@@ -242,8 +243,8 @@ namespace TS_SE_Tool
             treeViewSortingTrucks.EndUpdate();
 
             //Label
-            labelSortingTrucks.Text = "Trucks " + MainForm.extraVehicles.Count(x => x != null).ToString();
-            if (SpareVhcSpaces < MainForm.extraVehicles.Count)
+            labelSortingTrucks.Text = "Trucks " + thisExtraVehicles.Count(x => x != null).ToString();
+            if (SpareVhcSpaces < thisExtraVehicles.Count)
                 labelSortingTrucks.ForeColor = Color.Red;
             else
                 labelSortingTrucks.ForeColor = DefaultForeColor;
@@ -256,11 +257,11 @@ namespace TS_SE_Tool
             //Brand
             foreach (string accLink in MainForm.UserTruckDictionary[_tmptruckname].TruckMainData.accessories)
             {
-                Type t = FormMain.SiiNunitData.SiiNitems[accLink].GetType();
+                Type t = MainForm.SiiNunitData.SiiNitems[accLink].GetType();
 
                 if (t.Name == "Vehicle_Accessory")
                 {
-                    Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)FormMain.SiiNunitData.SiiNitems[accLink];
+                    Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)MainForm.SiiNunitData.SiiNitems[accLink];
                     if (tmp.accType == "basepart")
                     {
                         tmpTruckName = tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
@@ -280,7 +281,7 @@ namespace TS_SE_Tool
 
         private string GetDriverName(string _drivername)
         {
-            if (FormMain.SiiNunitData.Player.drivers[0] == _drivername)
+            if (MainForm.SiiNunitData.Player.drivers[0] == _drivername)
             {
                return Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
             }
@@ -317,7 +318,6 @@ namespace TS_SE_Tool
 
                             foreach (TreeNode node in tempNode.Nodes)
                                 DriverList.Add(node.Name);
-
                         }
                         else
                         {
@@ -326,16 +326,16 @@ namespace TS_SE_Tool
                             DriverList.Add(tempNode.Name);
                         }
 
-                        Garages tempGarage = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == grgName)];
+                        Garages tempGarage = thisGarageList[thisGarageList.FindIndex(x => x.GarageName == grgName)];
 
                         foreach (string entry in DriverList)
                         {
-                            if (entry != "" && entry != FormMain.SiiNunitData.Player.drivers[0])
+                            if (entry != "" && entry != MainForm.SiiNunitData.Player.drivers[0])
                             {
                                 tempGarage.Drivers[tempGarage.Drivers.IndexOf(entry)] = null;
 
-                                MainForm.extraDrivers.Add(entry);
-                                MainForm.extraVehicles.Add(null);
+                                thisExtraDrivers.Add(entry);
+                                thisExtraVehicles.Add(null);
                             }
                         }
                     }
@@ -378,7 +378,7 @@ namespace TS_SE_Tool
                             TruckList.Add(tempNode.Name);
                         }
 
-                        Garages tempGarage = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == grgName)];
+                        Garages tempGarage = thisGarageList[thisGarageList.FindIndex(x => x.GarageName == grgName)];
 
                         foreach(string entry in TruckList)
                         {
@@ -387,8 +387,8 @@ namespace TS_SE_Tool
 
                             tempGarage.Vehicles[tempGarage.Vehicles.IndexOf(entry)] = null;
 
-                            MainForm.extraVehicles.Add(entry);
-                            MainForm.extraDrivers.Add(null);
+                            thisExtraVehicles.Add(entry);
+                            thisExtraDrivers.Add(null);
                         }
                     }
                 }
@@ -419,7 +419,7 @@ namespace TS_SE_Tool
                         if (tempTreeNode != null && tempTreeNode.Parent == null)
                         {
                             string grgName = tempTreeNode.Name;
-                            Garages tempGrg = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == grgName)];
+                            Garages tempGrg = thisGarageList[thisGarageList.FindIndex(x => x.GarageName == grgName)];
 
                             if (tempGrg.GarageStatus != 0)
                             {
@@ -430,7 +430,9 @@ namespace TS_SE_Tool
                                         string driverNL = source_nodes[0].Name;
                                         tempGrg.Drivers[i] = driverNL;
 
-                                        MainForm.extraDrivers[MainForm.extraDrivers.FindIndex(x => x == driverNL)] = null;
+                                        thisExtraDrivers[thisExtraDrivers.FindIndex(x => x == driverNL)] = null;
+
+                                        //==
 
                                         source_nodes.RemoveAt(0);
 
@@ -447,18 +449,20 @@ namespace TS_SE_Tool
                 }
                 else
                 {
-                    foreach (Garages tempG in MainForm.GaragesList)
+                    foreach (Garages tempGrg in thisGarageList)
                     {
-                        if (tempG.GarageStatus != 0)
+                        if (tempGrg.GarageStatus != 0)
                         {
-                            for (int i = 0; i < tempG.Drivers.Count; i++)
+                            for (int i = 0; i < tempGrg.Drivers.Count; i++)
                             {
-                                if (tempG.Drivers[i] == null)
+                                if (tempGrg.Drivers[i] == null)
                                 {
                                     string driverNL = source_nodes[0].Name;
-                                    tempG.Drivers[i] = driverNL;
+                                    tempGrg.Drivers[i] = driverNL;
 
-                                    MainForm.extraDrivers[MainForm.extraDrivers.FindIndex(x => x == driverNL)] = null;
+                                    thisExtraDrivers[thisExtraDrivers.FindIndex(x => x == driverNL)] = null;
+                                    
+                                    //==
 
                                     source_nodes.RemoveAt(0);
 
@@ -496,7 +500,7 @@ namespace TS_SE_Tool
                         if (tempTreeNode != null && tempTreeNode.Parent == null)
                         {
                             string grgName = tempTreeNode.Name;
-                            Garages tempGrg = MainForm.GaragesList[MainForm.GaragesList.FindIndex(x => x.GarageName == grgName)];
+                            Garages tempGrg = thisGarageList[thisGarageList.FindIndex(x => x.GarageName == grgName)];
 
                             if (tempGrg.GarageStatus != 0)
                             {
@@ -507,7 +511,7 @@ namespace TS_SE_Tool
                                         string truckNL = source_nodes[0].Name;
                                         tempGrg.Vehicles[i] = truckNL;
 
-                                        MainForm.extraVehicles[MainForm.extraVehicles.FindIndex(x => x == truckNL)] = null;
+                                        thisExtraVehicles[thisExtraVehicles.FindIndex(x => x == truckNL)] = null;
 
                                         source_nodes.RemoveAt(0);
 
@@ -523,7 +527,7 @@ namespace TS_SE_Tool
                 }
                 else
                 {
-                    foreach (Garages tempGrg in MainForm.GaragesList)
+                    foreach (Garages tempGrg in thisGarageList)
                     {
                         if (tempGrg.GarageStatus != 0)
                         {
@@ -534,7 +538,7 @@ namespace TS_SE_Tool
                                     string truckNL = source_nodes[0].Name;
                                     tempGrg.Vehicles[i] = truckNL;
 
-                                    MainForm.extraVehicles[MainForm.extraVehicles.FindIndex(x => x == truckNL)] = null;
+                                    thisExtraVehicles[thisExtraVehicles.FindIndex(x => x == truckNL)] = null;
 
                                     source_nodes.RemoveAt(0);
 
@@ -610,6 +614,12 @@ namespace TS_SE_Tool
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            Close();
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            //Apply changes
             MainForm.GaragesList = thisGarageList;
 
             MainForm.extraVehicles = thisExtraVehicles;
