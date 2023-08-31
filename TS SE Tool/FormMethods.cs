@@ -898,26 +898,26 @@ namespace TS_SE_Tool
 
                     if (source != "null")
                     {
-                    var grg = GaragesList.Find(x => x.Vehicles.Contains(source));
+                        var grg = GaragesList.Find(x => x.Vehicles.Contains(source));
 
-                    if ((byte)temp["TruckType"] == 1) // Users
-                    {
-                        if (grg != null) // In garage
+                        if ((byte)temp["TruckType"] == 1) // Users
                         {
-                            temp["GarageName"] = grg.GarageNameTranslated;
-                            temp["TruckState"] = 2;
+                            if (grg != null) // In garage
+                            {
+                                temp["GarageName"] = grg.GarageNameTranslated;
+                                temp["TruckState"] = 2;
+                            }
+                            else // Sorting
+                            {
+                                temp["GarageName"] = "Not In Garage";
+                                temp["TruckState"] = 3;
+                            }
                         }
-                        else // Sorting
+                        else
                         {
-                            temp["GarageName"] = "Not In Garage";
-                            temp["TruckState"] = 3;
+                            temp["TruckState"] = 1;
                         }
                     }
-                    else
-                    {
-                        temp["TruckState"] = 1;
-                    }
-                }
                 }
 
                 if (savedindex != -1)
@@ -1366,8 +1366,6 @@ namespace TS_SE_Tool
         //Iterating throught nameless
         internal string GetSpareNameless()
         {
-            SiiNunitData.NamelessControlList.Sort();
-            
             if (namelessLast == "")
             {
                 int i = 1;
@@ -1387,7 +1385,7 @@ namespace TS_SE_Tool
                 } while (true);
             }
 
-            ushort _incr = 48;
+            ushort _incr = 16;
 
             string[] _namelessNumbers = namelessLast.Split(new char[] { '.' });
             ushort[] _namelessNumArray = new ushort[_namelessNumbers.Length];

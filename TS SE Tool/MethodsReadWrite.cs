@@ -847,6 +847,10 @@ namespace TS_SE_Tool
                     "Unidentified blocks in save file", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
+            SiiNunitData.NamelessControlList.Sort();
+            SiiNunitData.NamelessIgnoreList.Sort();
+            SiiNunitData.UnidentifiedBlocks.Sort();
+
             toolStripProgressBarMain.Value = 0;
             //ClearFormControls(false);
 
