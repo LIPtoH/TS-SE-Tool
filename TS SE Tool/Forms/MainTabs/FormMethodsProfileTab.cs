@@ -17,6 +17,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
@@ -115,6 +116,8 @@ namespace TS_SE_Tool
             FormUpdatePlayerLevel();
 
             char[] ADR = Convert.ToString(SiiNunitData.Economy.adr, 2).PadLeft(6, '0').ToCharArray();
+
+            Array.Reverse(ADR);
 
             for (int i = 0; i < ADR.Length; i++)
             {
@@ -658,25 +661,22 @@ namespace TS_SE_Tool
         {
             CheckBox thisbutton = sender as CheckBox;
 
-            byte adrIndex = byte.Parse(thisbutton.Name.Substring(9, 1));
-            char[] ADR = Convert.ToString(SiiNunitData.Economy._playerSkills[0], 2).PadLeft(6, '0').ToCharArray();
-
-            if (thisbutton.Checked)
+            if (TextUtilities.ExtractFirstNumber(thisbutton.Name, out int number))
             {
-                ADR[adrIndex] = '1';
+                char[] ADR = Convert.ToString(SiiNunitData.Economy._playerSkills[0], 2).PadLeft(6, '0').ToCharArray();
 
+                Array.Reverse(ADR);
+
+                if (thisbutton.Checked)
+                    ADR[number] = '1';
+                else
+                    ADR[number] = '0';
+
+                Array.Reverse(ADR);
                 SiiNunitData.Economy._playerSkills[0] = Convert.ToByte(new string(ADR), 2);
-            }
-            else
-            {
-                ADR[adrIndex] = '0';
 
-                string temp = new string(ADR);
-
-                SiiNunitData.Economy._playerSkills[0] = Convert.ToByte(temp.PadLeft(6, '0'), 2);
-            }
-
-            thisbutton.BackgroundImage = SkillImgSBG[1];
+                thisbutton.BackgroundImage = SkillImgSBG[1];
+            }            
         }
 
         private void ADRbutton_CheckedChanged(object sender, EventArgs e)
