@@ -109,7 +109,7 @@ namespace TS_SE_Tool
 
         private DateTime LastModifiedTimestamp; //+
 
-        internal static Save.Items.SiiNunit SiiNunitData;
+        internal Save.Items.SiiNunit SiiNunitData;
 
         public SaveFileProfileData MainSaveFileProfileData;
         internal SaveFileInfoData MainSaveFileInfoData;

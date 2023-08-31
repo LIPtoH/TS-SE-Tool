@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TS_SE_Tool.Save.Items
 {
     internal class SiiNBlockCore
     {
+        private FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+
         internal List<string> UnidentifiedLines = new List<string>();
 
         internal void removeWritenBlock(string _input)
         {
-            FormMain.SiiNunitData.NamelessControlList.Remove(_input);
+            MainForm.SiiNunitData.NamelessControlList.Remove(_input);
         }
 
         internal string WriteUnidentifiedLines()

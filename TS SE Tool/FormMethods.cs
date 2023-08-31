@@ -421,7 +421,6 @@ namespace TS_SE_Tool
             GPSbehindOnline = new Dictionary<string, List<string>>();
             GPSaheadOnline = new Dictionary<string, List<string>>();
 
-            //namelessList = new List<string>();
             namelessLast = "";
             LoopStartCity = "";
             LoopStartCompany = "";
