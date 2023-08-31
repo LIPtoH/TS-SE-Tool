@@ -890,6 +890,39 @@ namespace TS_SE_Tool
                 SiiNunitData.Player.truck_profit_logs.RemoveAt(idx);
 
             }
+
+            //Check hired drivers
+            foreach (string grgNameless in SiiNunitData.Economy.garages)
+            {
+                Save.Items.Garage grg = SiiNunitData.SiiNitems[grgNameless];
+
+                foreach (string drvrNameless in grg.drivers)
+                {
+                    if (drvrNameless != null && drvrNameless != SiiNunitData.Player.drivers[0])
+                    {
+                        string grgName = grgNameless.Split('.')[1];
+                        Driver_AI drvr = SiiNunitData.SiiNitems[drvrNameless];
+
+                        if (String.IsNullOrEmpty(drvr.hometown.Value))
+                        {
+                            drvr.hometown = grgName;
+                            drvr.current_city = grgName;
+                            drvr.training_policy = 1;
+
+                            Economy_event ecEvent = new Economy_event(SiiNunitData.Economy.game_time, drvrNameless, 3);
+
+                            string spareNameless = GetSpareNameless();
+
+                            SiiNunitData.Economy_event_Queue.data.Add(spareNameless);
+                            SiiNunitData.SiiNitems.Add(spareNameless, ecEvent);
+                        }
+                        else
+                        {
+                            drvr.hometown = grgName;
+                        }
+                    }
+                }
+            }
         }
 
         //Sort events by time

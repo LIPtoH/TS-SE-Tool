@@ -17,6 +17,13 @@ namespace TS_SE_Tool.Save.Items
         internal Economy_event()
         { }
 
+        internal Economy_event(uint _time, string _unit_link, int _param)
+        {
+            time = _time;
+            unit_link = _unit_link;
+            param = _param;
+        }
+
         internal Economy_event(string[] _input)
         {
             string tagLine = "", dataLine = "";
