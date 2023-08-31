@@ -29,14 +29,15 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using JR.Utils.GUI.Forms;
 using TS_SE_Tool.Save.DataFormat;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool
 {
     public partial class FormShareUserColors : Form
     {
-        FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
+        private FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
-        List<SCS_Color> userColors = FormMain.SiiNunitData.Economy.user_colors.Select(x => x.Clone()).ToList();
+        List<SCS_Color> userColors;
 
         CheckBox[] UserColorsCB;
 
@@ -62,6 +63,7 @@ namespace TS_SE_Tool
 
             SaveVersion = MainForm.MainSaveFileInfoData.Version;
 
+            userColors = MainForm.SiiNunitData.Economy.user_colors.Select(x => x.Clone()).ToList();
             int colorcount = userColors.Count;
 
             if (SaveVersion >= 49)
@@ -421,7 +423,6 @@ namespace TS_SE_Tool
                 y = offsetT;
 
                 groupPanel.Location = new Point(x, y);
-                //groupPanel.Size = new Size(width + offsetL, width + offsetT);
                 groupPanel.Size = new Size(width + offsetL, width + offsetT * 4);
 
                 groupPanel.BorderStyle = BorderStyle.None;
@@ -435,37 +436,6 @@ namespace TS_SE_Tool
                 panelImportedColors.Controls.Add(groupPanel);
 
                 ImportColorsB[i] = groupPanel;
-
-                /*
-                //Checkboxes for export
-                CheckBox colorCB = new CheckBox();
-                colorCB.Name = nameICcb + i.ToString();
-
-                colorCB.Parent = panelProfileUserColors;
-
-                colorCB.Size = new Size(11, 11);
-
-                x = (width - colorCB.Width + offsetL) / 2;
-                y = width + offsetT * 2;
-
-                colorCB.Location = new Point(x, y);
-
-                colorCB.Enabled = false;
-                colorCB.Checked = false;
-
-                colorCB.BackColor = Color.FromName("Control");
-                colorCB.FlatStyle = FlatStyle.Flat;
-                colorCB.AutoSize = false;
-
-                colorCB.Text = null;
-
-                groupPanel.Controls.Add(colorCB);
-
-                groupPanel.Size = new Size(width + offsetL, width + offsetT * 7 / 2 + colorCB.Height);
-
-                ImportColorsCB[i] = colorCB;
-
-                */
 
                 //==
                 if (SaveVersion >= 49)
@@ -564,12 +534,8 @@ namespace TS_SE_Tool
 
             Panel target = sender as Panel;
 
-            string tName = target.Name;
-
-            int? result = ExtractFirstNumber(tName);
-
-            if (result != null)
-                userColors[(int)result].color = newColor;
+            if (TextUtilities.ExtractFirstNumber(target.Name, out int number))
+                userColors[number].color = newColor;
         }
 
         //==
@@ -611,21 +577,19 @@ namespace TS_SE_Tool
 
             foreach (Color color in newColors)
             {
-                int? result = ExtractFirstNumber(pList[idx].Name);
-
-                if (result == null)
+                if (TextUtilities.ExtractFirstNumber(pList[idx].Name, out int number))
                     continue;
 
                 if (color.A != 0)
                 {
-                    userColors[(int)result].color = (Color)color;
+                    userColors[number].color = (Color)color;
 
                     pList[idx].BackColor = (Color)color;
                     pList[idx].BackgroundImage = null;
                 }
                 else
                 {
-                    userColors[(int)result].color = Color.FromArgb(0);
+                    userColors[number].color = Color.FromArgb(0);
 
                     pList[idx].BackColor = Color.FromKnownColor(KnownColor.Control);
                     pList[idx].BackgroundImage = CreateCrossIMG(24, 2, 6);
@@ -663,14 +627,12 @@ namespace TS_SE_Tool
                 e.Data.SetData(new List<Color>() { (Color)e.Data.GetData(typeof(Color)), Color.FromArgb(0), Color.FromArgb(0), Color.FromArgb(0) });
                 //Add single color
                 groupPanelImport_DragDrop(nsp, e);
-                //panelImport_DragDrop(nsp.Controls.Find(nameUC + prev, false)[0], e);
             }
             else
             {
                 //Add colors
                 groupPanelImport_DragDrop(nsp, e);
             }
-
 
             //Move new slot
             MoveNewSlotUserColors();
@@ -746,17 +708,6 @@ namespace TS_SE_Tool
         private void CorrectControlsPositions()
         {
 
-        }
-
-        private static readonly Regex regexDigit = new Regex(@"\d+");
-        static int? ExtractFirstNumber(string text)
-        {
-            var match = regexDigit.Match(text);
-
-            if (match.Success)
-                return Convert.ToInt32(match.Value);
-            else
-                return null;
         }
 
         //Buttons
@@ -878,7 +829,7 @@ namespace TS_SE_Tool
 
         private void buttonApplyChanges_Click(object sender, EventArgs e)
         {
-            FormMain.SiiNunitData.Economy.user_colors = userColors;
+            MainForm.SiiNunitData.Economy.user_colors = userColors;
         }
 
         //Change form size
