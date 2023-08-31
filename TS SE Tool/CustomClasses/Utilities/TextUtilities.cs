@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TS_SE_Tool.Utilities
@@ -198,6 +199,19 @@ namespace TS_SE_Tool.Utilities
             }            
 
             return (processingResult == "") ? _input : processingResult;
+        }
+
+        private static readonly Regex regexDigit = new Regex(@"\d+");
+        internal static bool ExtractFirstNumber(string _text, out int result)
+        {
+            result = -1;
+
+            var match = regexDigit.Match(_text);
+
+            if (match.Success)
+                result = Convert.ToInt32(match.Value);
+
+            return match.Success;
         }
     }
 }
