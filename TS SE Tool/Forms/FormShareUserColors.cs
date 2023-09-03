@@ -84,8 +84,6 @@ namespace TS_SE_Tool
             panelProfileUserColors.VerticalScroll.Maximum = 0;
             panelProfileUserColors.HorizontalScroll.Enabled = true;
             panelProfileUserColors.AutoScroll = true;
-            panelProfileUserColors.HorizontalScroll.LargeChange = (width + padding);
-            panelProfileUserColors.HorizontalScroll.SmallChange = panelProfileUserColors.HorizontalScroll.LargeChange / 2;
             //
             panelImportedColors.VerticalScroll.Enabled = false;
             panelImportedColors.VerticalScroll.Visible = false;
@@ -201,9 +199,6 @@ namespace TS_SE_Tool
                         btnNumber++;
                     }
                 }
-
-                panelProfileUserColors.HorizontalScroll.Maximum = (offsetL + padding * 2 + width) * (ucc - 1); //Virtual width
-                panelProfileUserColors.MouseWheel += new MouseEventHandler(this.panelProfileUserColors_MouseWheel);
             }
             else
             {
@@ -283,8 +278,6 @@ namespace TS_SE_Tool
             groupPanel.AllowDrop = true;
 
             panelProfileUserColors.Controls.Add(groupPanel);
-
-            panelProfileUserColors.HorizontalScroll.Maximum += (offsetL + padding * 2 + width); //Virtual width
         }
 
         private void MoveNewSlotUserColors()
@@ -298,7 +291,7 @@ namespace TS_SE_Tool
                     //Move
                     nsp.Location = new Point(nsp.Location.X + (width + padding + offsetL), nsp.Location.Y);
 
-                    panelProfileUserColors.HorizontalScroll.Value = panelProfileUserColors.HorizontalScroll.Maximum - (width + padding);
+                    panelProfileUserColors.AutoScrollPosition = new Point((panelProfileUserColors.HorizontalScroll.Maximum + 1 - panelProfileUserColors.Bounds.Width), 0);
                 }
                 else
                 {
@@ -343,6 +336,8 @@ namespace TS_SE_Tool
                     {
                         ctrl.BackColor = userColors[i].color;
 
+                        ctrl.BackgroundImage = null;
+
                         if (SaveVersion >= 49)
                             UserColorsCB[i / 4].Enabled = true;
                         else
@@ -352,43 +347,6 @@ namespace TS_SE_Tool
             }
         }
 
-        private void panelProfileUserColors_MouseWheel(object sender, MouseEventArgs e)
-        {
-            Panel senderPanel = sender as Panel;
-
-            if (e.Delta != 0)
-            {
-                int scroll = 48;
-                int location = Math.Abs(senderPanel.AutoScrollPosition.X);
-
-                if (e.Delta < 0)
-                {
-                    if (location + scroll < senderPanel.HorizontalScroll.Maximum)
-                    {
-                        location += scroll;
-                        senderPanel.HorizontalScroll.Value = location;
-                    }
-                    else
-                    {
-                        location = senderPanel.HorizontalScroll.Maximum;
-                        senderPanel.AutoScrollPosition = new Point(location, 0);
-                    }
-                }
-                else
-                {
-                    if (location - scroll > 0)
-                    {
-                        location -= scroll;
-                        senderPanel.HorizontalScroll.Value = location;
-                    }
-                    else
-                    {
-                        location = 0;
-                        senderPanel.AutoScrollPosition = new Point(location, 0);
-                    }
-                }
-            }
-        }
         //
         private void CreateImportColorsButtons(int _colorcount)
         {
@@ -504,9 +462,6 @@ namespace TS_SE_Tool
                     ImportColorsB[i] = bttn;
                     */
                 }
-
-                panelImportedColors.HorizontalScroll.Maximum = (offsetL + padding * 2 + width) * (ucc - 1); //Virtual width
-                panelImportedColors.MouseWheel += new MouseEventHandler(this.panelProfileUserColors_MouseWheel);
             }
         }
 
@@ -536,6 +491,8 @@ namespace TS_SE_Tool
 
             if (TextUtilities.ExtractFirstNumber(target.Name, out int number))
                 userColors[number].color = newColor;
+
+            buttonApply.Enabled = true;
         }
 
         //==
@@ -575,28 +532,25 @@ namespace TS_SE_Tool
 
             int idx = 0;
 
-            foreach (Color color in newColors)
+            foreach (Panel pnl in pList)
             {
-                if (TextUtilities.ExtractFirstNumber(pList[idx].Name, out int number))
+                if (!TextUtilities.ExtractFirstNumber(pList[idx].Name, out int number))
                     continue;
 
-                if (color.A != 0)
-                {
-                    userColors[number].color = (Color)color;
-
-                    pList[idx].BackColor = (Color)color;
-                    pList[idx].BackgroundImage = null;
-                }
+                if (newColors[idx].A != 0)
+                    userColors[number].color = (Color)newColors[idx];
                 else
-                {
                     userColors[number].color = Color.FromArgb(0);
-
-                    pList[idx].BackColor = Color.FromKnownColor(KnownColor.Control);
-                    pList[idx].BackgroundImage = CreateCrossIMG(24, 2, 6);
-                }
 
                 idx++;
             }
+
+            if (idx > 0)
+                source.Controls.OfType<CheckBox>().ToList()[0].Enabled = true;
+
+            UpdateUserColorsButtons();
+
+            buttonApply.Enabled = true;
         }
 
         //==
@@ -637,6 +591,7 @@ namespace TS_SE_Tool
             //Move new slot
             MoveNewSlotUserColors();
 
+            buttonApply.Enabled = true;
         }
 
         //==
@@ -793,15 +748,12 @@ namespace TS_SE_Tool
 
                     //Uncheck all in existing color list
                     foreach (CheckBox colorCB in UserColorsCB)
-                    {
                         colorCB.Checked = false;
-                    }
 
                     //Show imported colors section
-                    ChangeFormSize(true);                    
+                    ChangeFormSize(true);
 
                     groupBoxImportedColors.Visible = true;
-                    buttonApply.Enabled = true;
 
                     //Enable checkboxes to enable import
                     foreach (CheckBox colorCB in UserColorsCB)
@@ -830,6 +782,8 @@ namespace TS_SE_Tool
         private void buttonApplyChanges_Click(object sender, EventArgs e)
         {
             MainForm.SiiNunitData.Economy.user_colors = userColors;
+
+            buttonApply.Enabled = false;
         }
 
         //Change form size
