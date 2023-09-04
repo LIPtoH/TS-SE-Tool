@@ -69,7 +69,7 @@
             this.labelPlayerLevelNumber = new System.Windows.Forms.Label();
             this.buttonPlayerLevelMinimum = new System.Windows.Forms.Button();
             this.groupBoxProfileSkill = new System.Windows.Forms.GroupBox();
-            this.groupBoxProfileUserColors = new System.Windows.Forms.GroupBox();
+            this.groupBoxProfileUserColorsShort = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanelUserColors = new System.Windows.Forms.TableLayoutPanel();
             this.buttonUserColorsShareColors = new System.Windows.Forms.Button();
             this.panelProfileUserColors = new System.Windows.Forms.Panel();
@@ -251,7 +251,7 @@
             this.tabPageProfile.SuspendLayout();
             this.groupBoxProfilePlayerLevel.SuspendLayout();
             this.panelPlayerLevel.SuspendLayout();
-            this.groupBoxProfileUserColors.SuspendLayout();
+            this.groupBoxProfileUserColorsShort.SuspendLayout();
             this.tableLayoutPanelUserColors.SuspendLayout();
             this.tabPageCompany.SuspendLayout();
             this.tableLayoutPanelCompanyMain.SuspendLayout();
@@ -523,7 +523,7 @@
             // 
             this.tabPageProfile.Controls.Add(this.groupBoxProfilePlayerLevel);
             this.tabPageProfile.Controls.Add(this.groupBoxProfileSkill);
-            this.tabPageProfile.Controls.Add(this.groupBoxProfileUserColors);
+            this.tabPageProfile.Controls.Add(this.groupBoxProfileUserColorsShort);
             this.tabPageProfile.Location = new System.Drawing.Point(4, 28);
             this.tabPageProfile.Name = "tabPageProfile";
             this.tabPageProfile.Padding = new System.Windows.Forms.Padding(3);
@@ -685,16 +685,16 @@
             this.groupBoxProfileSkill.TabStop = false;
             this.groupBoxProfileSkill.Text = "Skills";
             // 
-            // groupBoxProfileUserColors
+            // groupBoxProfileUserColorsShort
             // 
-            this.groupBoxProfileUserColors.Controls.Add(this.tableLayoutPanelUserColors);
-            this.groupBoxProfileUserColors.Location = new System.Drawing.Point(432, 6);
-            this.groupBoxProfileUserColors.Name = "groupBoxProfileUserColors";
-            this.groupBoxProfileUserColors.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBoxProfileUserColors.Size = new System.Drawing.Size(124, 520);
-            this.groupBoxProfileUserColors.TabIndex = 7;
-            this.groupBoxProfileUserColors.TabStop = false;
-            this.groupBoxProfileUserColors.Text = "User colors";
+            this.groupBoxProfileUserColorsShort.Controls.Add(this.tableLayoutPanelUserColors);
+            this.groupBoxProfileUserColorsShort.Location = new System.Drawing.Point(432, 6);
+            this.groupBoxProfileUserColorsShort.Name = "groupBoxProfileUserColorsShort";
+            this.groupBoxProfileUserColorsShort.Padding = new System.Windows.Forms.Padding(0);
+            this.groupBoxProfileUserColorsShort.Size = new System.Drawing.Size(124, 520);
+            this.groupBoxProfileUserColorsShort.TabIndex = 7;
+            this.groupBoxProfileUserColorsShort.TabStop = false;
+            this.groupBoxProfileUserColorsShort.Text = "User colors";
             // 
             // tableLayoutPanelUserColors
             // 
@@ -2872,9 +2872,9 @@
             // buttonMainCloseSave
             // 
             this.buttonMainCloseSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonMainCloseSave.Location = new System.Drawing.Point(141, 381);
+            this.buttonMainCloseSave.Location = new System.Drawing.Point(125, 381);
             this.buttonMainCloseSave.Name = "buttonMainCloseSave";
-            this.buttonMainCloseSave.Size = new System.Drawing.Size(100, 24);
+            this.buttonMainCloseSave.Size = new System.Drawing.Size(116, 24);
             this.buttonMainCloseSave.TabIndex = 23;
             this.buttonMainCloseSave.Text = "Unload";
             this.buttonMainCloseSave.UseVisualStyleBackColor = true;
@@ -2905,7 +2905,7 @@
             this.groupBoxProfilePlayerLevel.ResumeLayout(false);
             this.panelPlayerLevel.ResumeLayout(false);
             this.panelPlayerLevel.PerformLayout();
-            this.groupBoxProfileUserColors.ResumeLayout(false);
+            this.groupBoxProfileUserColorsShort.ResumeLayout(false);
             this.tableLayoutPanelUserColors.ResumeLayout(false);
             this.tabPageCompany.ResumeLayout(false);
             this.tableLayoutPanelCompanyMain.ResumeLayout(false);
@@ -3014,7 +3014,7 @@
         private System.Windows.Forms.Label labelFreightMarketCompanyF;
         private System.Windows.Forms.CheckBox checkBoxFreightMarketFilterDestination;
         private System.Windows.Forms.CheckBox checkBoxFreightMarketFilterSource;
-        private System.Windows.Forms.GroupBox groupBoxProfileUserColors;
+        private System.Windows.Forms.GroupBox groupBoxProfileUserColorsShort;
         internal System.Windows.Forms.CheckBox checkBoxFreightMarketRandomDest;
         private System.Windows.Forms.TabPage tabPageConvoyTools;
         internal System.Windows.Forms.ComboBox comboBoxRootFolders;

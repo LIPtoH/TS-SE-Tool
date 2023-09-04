@@ -166,7 +166,7 @@ namespace TS_SE_Tool
         private void CreateUserColorsButtons()
         {
             int padding = 3, width = 24, height = 24, spacing = 4;
-            int usableSpace = groupBoxProfileUserColors.Bounds.Width;
+            int usableSpace = groupBoxProfileUserColorsShort.Bounds.Width;
                         
             if (MainSaveFileInfoData.Version >= 49)
             {
