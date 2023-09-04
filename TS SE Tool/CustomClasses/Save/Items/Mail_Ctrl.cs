@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TS_SE_Tool.Save.DataFormat;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -16,7 +17,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal List<string> pending_mails { get; set; } = new List<string>();
 
-        internal List<int> pmail_timers { get; set; } = new List<int>();
+        internal List<SCS_Float> pmail_timers { get; set; } = new List<SCS_Float>();
 
         internal Mail_Ctrl()
         { }
@@ -92,15 +93,15 @@ namespace TS_SE_Tool.Save.Items
 
                         case var s when s.StartsWith("pmail_timers["):
                             {
-                                pmail_timers.Add(int.Parse(dataLine));
+                                pmail_timers.Add(dataLine);
                                 break;
                             }
                     }
                 }
                 catch (Exception ex)
                 {
+                    UnidentifiedLines.Add(currentLine);
                     Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
-                    break;
                 }
             }
         }
