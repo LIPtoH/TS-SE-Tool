@@ -459,9 +459,11 @@ namespace TS_SE_Tool
             //Set variables
             Globals.SelectedSavePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             Globals.SelectedSave = Globals.SelectedSavePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+            Globals.SelectedSaveName = GetCustomSaveFilename(Globals.SelectedSavePath);
 
             Globals.SelectedProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
             Globals.SelectedProfile = Globals.SelectedProfilePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+            Globals.SelectedProfileName = Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
 
             //Setup BG worker
             workerLoadSaveFile = new BackgroundWorker();
@@ -1113,10 +1115,12 @@ namespace TS_SE_Tool
             // Update save path
             Globals.SelectedSavePath = Globals.SavesHex[comboBoxSaves.SelectedIndex];
             Globals.SelectedSave = Globals.SelectedSavePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+            Globals.SelectedSaveName = GetCustomSaveFilename(Globals.SelectedSavePath);
 
             // Update Profile path
             Globals.SelectedProfilePath = Globals.ProfilesHex[comboBoxProfiles.SelectedIndex];
             Globals.SelectedProfile = Globals.SelectedProfilePath.Split(new string[] { "\\" }, StringSplitOptions.None).Last();
+            Globals.SelectedProfileName = Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
 
             CheckSaveControls();
         }

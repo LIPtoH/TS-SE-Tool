@@ -311,11 +311,13 @@ namespace TS_SE_Tool
         //
         public static string SelectedProfile = "";
         public static string SelectedProfilePath = "";
+        public static string SelectedProfileName = "";
         //----
         public static string[] SavesHex = new string[0];
         //
         public static string SelectedSave = "";
         public static string SelectedSavePath = "";
+        public static string SelectedSaveName = "";
         //----
         public static int[] PlayerLevelUps = new int[0];
         public static string CurrencyName = "";

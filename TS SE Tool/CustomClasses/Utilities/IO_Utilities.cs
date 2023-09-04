@@ -91,8 +91,10 @@ namespace TS_SE_Tool.Utilities
             {
                 using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\errorlog.log", true))
                 {
-                    writer.WriteLine(AssemblyData.AssemblyProduct + " - " + AssemblyData.AssemblyVersion);
-                    writer.WriteLine(DateTime.Now + "\r\n" + _error + "\r\n");
+                    writer.WriteLine(DateTime.Now + " | " + AssemblyData.AssemblyProduct + " - " + AssemblyData.AssemblyVersion + " | " + 
+                                    Globals.SelectedProfileName + " [ " + Globals.SelectedProfile + " ] >> " + 
+                                    Globals.SelectedSaveName + " [ " + Globals.SelectedSave + " ] ");
+                    writer.WriteLine(_error + Environment.NewLine);
                 }
             }
             catch
