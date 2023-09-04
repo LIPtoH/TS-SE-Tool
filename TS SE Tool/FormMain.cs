@@ -188,6 +188,9 @@ namespace TS_SE_Tool
             IO_Utilities.LogWriter("Form initialized.");
 
             //Program
+            SteamSelectedTimer.Tick += SteamSelectedTimer_Tick;
+            SteamSelectedTimer.Interval = 800;
+
             UpdateStatusBarMessage.OnNewStatusMessage += UpdateStatusBarMessage_OnNewStatusMessage;
             UpdateStatusBarMessage.OnNewMessageBox += ShowMessageBox_OnNewMessageBox;
             this.Icon = Properties.Resources.MainIco;

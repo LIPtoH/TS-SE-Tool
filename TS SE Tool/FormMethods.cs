@@ -25,6 +25,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Diagnostics;
+using System.Timers;
 
 namespace TS_SE_Tool
 {
@@ -873,7 +874,21 @@ namespace TS_SE_Tool
             //Freight Market
             labelFreightMarketDistanceNumbers.Location = new Point( labelFreightMarketDistance.Location.X + labelFreightMarketDistance.Width + 6, labelFreightMarketDistanceNumbers.Location.Y);
         }
-        
+
+        //Timers
+        System.Windows.Forms.Timer SteamSelectedTimer = new System.Windows.Forms.Timer();
+        bool SteamSelectedToggler = false;
+
+        private void SteamSelectedTimer_Tick(object sender, EventArgs e)
+        {
+            if (SteamSelectedToggler)
+                labelHelpText.ForeColor = Color.FromKnownColor(KnownColor.Control);
+            else
+                labelHelpText.ForeColor = Color.FromKnownColor(KnownColor.Red);
+
+            SteamSelectedToggler = !SteamSelectedToggler;
+        }
+
         //Translate CB
 
         private void translateTruckComboBox()

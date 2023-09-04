@@ -218,7 +218,12 @@
             this.buttonConvoyToolsGPSTruckPositionMultySaveCopy = new System.Windows.Forms.Button();
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuStripFreightMarketJobListEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripFreightMarketJobListSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStripFreightMarketJobListDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripCompanyDriversEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripCompanyDriversSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.contextMenuStripCompanyDriversHire = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripCompanyDriversFire = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonMainWriteSave = new System.Windows.Forms.Button();
             this.buttonProfilesAndSavesOpenSaveFolder = new System.Windows.Forms.Button();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
@@ -230,6 +235,7 @@
             this.comboBoxRootFolders = new System.Windows.Forms.ComboBox();
             this.checkBoxProfilesAndSavesProfileBackups = new System.Windows.Forms.CheckBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
+            this.labelHelpText = new System.Windows.Forms.Label();
             this.groupBoxMainProfilesAndSaves = new System.Windows.Forms.GroupBox();
             this.buttonProfilesAndSavesRestoreBackup = new System.Windows.Forms.Button();
             this.buttonProfilesAndSavesEditProfile = new System.Windows.Forms.Button();
@@ -240,11 +246,6 @@
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonMainCloseSave = new System.Windows.Forms.Button();
-            this.contextMenuStripFreightMarketJobListSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.contextMenuStripCompanyDriversEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStripCompanyDriversSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.contextMenuStripCompanyDriversHire = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStripCompanyDriversFire = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -2703,6 +2704,23 @@
             this.toolTipMain.ReshowDelay = 200;
             this.toolTipMain.ShowAlways = true;
             // 
+            // labelHelpText
+            // 
+            this.labelHelpText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelHelpText.AutoSize = true;
+            this.labelHelpText.Cursor = System.Windows.Forms.Cursors.Help;
+            this.labelHelpText.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHelpText.ForeColor = System.Drawing.Color.Red;
+            this.labelHelpText.Location = new System.Drawing.Point(3, 408);
+            this.labelHelpText.Name = "labelHelpText";
+            this.labelHelpText.Size = new System.Drawing.Size(238, 25);
+            this.labelHelpText.TabIndex = 24;
+            this.labelHelpText.Text = "[ Help ? ]";
+            this.labelHelpText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTipMain.SetToolTip(this.labelHelpText, "- Open game.\r\n- In \"Main menu\" select\r\n- \"Edit profile\"\r\n- Turn off \"Use Steam Cl" +
+        "oud\"\r\n- \"Apply\" changes.\r\n- \"Continue game\" in order to move save files.");
+            // 
             // groupBoxMainProfilesAndSaves
             // 
             this.groupBoxMainProfilesAndSaves.Controls.Add(this.buttonProfilesAndSavesRestoreBackup);
@@ -2767,6 +2785,7 @@
             this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel11, 0, 2);
             this.tableLayoutPanel16.Controls.Add(this.buttonMainWriteSave, 0, 5);
             this.tableLayoutPanel16.Controls.Add(this.buttonMainCloseSave, 0, 3);
+            this.tableLayoutPanel16.Controls.Add(this.labelHelpText, 0, 4);
             this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel16.Location = new System.Drawing.Point(585, 1);
             this.tableLayoutPanel16.Margin = new System.Windows.Forms.Padding(1, 1, 5, 1);
@@ -2943,6 +2962,7 @@
             this.groupBoxMainProfilesAndSaves.PerformLayout();
             this.tableLayoutPanel15.ResumeLayout(false);
             this.tableLayoutPanel16.ResumeLayout(false);
+            this.tableLayoutPanel16.PerformLayout();
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
@@ -3169,6 +3189,7 @@
         private System.Windows.Forms.ToolStripSeparator contextMenuStripCompanyDriversSeparator;
         private System.Windows.Forms.ToolStripMenuItem contextMenuStripCompanyDriversHire;
         private System.Windows.Forms.ToolStripMenuItem contextMenuStripCompanyDriversFire;
+        private System.Windows.Forms.Label labelHelpText;
     }
 }
 

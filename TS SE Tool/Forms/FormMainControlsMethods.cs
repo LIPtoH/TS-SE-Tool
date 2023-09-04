@@ -231,6 +231,11 @@ namespace TS_SE_Tool
                 buttonMainLoadSave.Text = ResourceManagerMain.GetString(buttonMainLoadSave.Name + "SteamCloud"); // Disable Steam Cloud
 
                 buttonMainLoadSave.Font = new Font(loadButtonFont.FontFamily, 12f, FontStyle.Bold);
+
+                labelHelpText.Visible = true;
+                SteamSelectedToggler = false;
+                SteamSelectedTimer.Start();
+                SteamSelectedTimer.Enabled = true;
             }
             else
             {
@@ -238,6 +243,10 @@ namespace TS_SE_Tool
                 buttonMainLoadSave.Text = ResourceManagerMain.GetString(buttonMainLoadSave.Name); // Load
 
                 buttonMainLoadSave.Font = new Font(loadButtonFont.FontFamily, 18F, FontStyle.Bold);
+
+                labelHelpText.Visible = false;
+                SteamSelectedTimer.Stop();
+                SteamSelectedTimer.Enabled = false;
             }
 
             //===
