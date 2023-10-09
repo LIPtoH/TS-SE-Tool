@@ -100,5 +100,27 @@ namespace TS_SE_Tool.Utilities
             catch
             { }
         }
+
+        internal static void WritePreviewTOBJ(string _path, string _name, string _pathToTGA)
+        {
+            WritePreviewTOBJ(_path + "\\" + _name + ".tobj", _pathToTGA);
+        }
+
+        internal static void WritePreviewTOBJ(string _pathToTOBJ, string _pathToTGA)
+        {
+            using (BinaryWriter binWriter = new BinaryWriter(File.Open(_pathToTOBJ, FileMode.Create)))
+            {
+                byte[] preview_tobj = new byte[] { 1, 10, 177, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 3, 3, 2, 0, 2, 2, 2, 1, 0, 0, 0, 1, 0, 0 };
+
+                binWriter.Write(preview_tobj);
+
+                byte filePathLength = (byte)_pathToTGA.Length;
+                binWriter.Write(filePathLength);
+
+                binWriter.Write(new byte[] { 0, 0, 0, 0, 0, 0, 0 });
+
+                binWriter.Write(Encoding.UTF8.GetBytes(_pathToTGA));
+            }
+        }
     }
 }
