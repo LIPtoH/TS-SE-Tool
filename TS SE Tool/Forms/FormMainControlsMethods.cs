@@ -330,10 +330,6 @@ namespace TS_SE_Tool
 
             if (t != DialogResult.Cancel)
             {
-                //Refresh
-                buttonMainDecryptSave.Enabled = true;
-                buttonMainLoadSave.Enabled = true;
-
                 FillRootFoldersPaths(); // RePopulate root folders
             }
         }

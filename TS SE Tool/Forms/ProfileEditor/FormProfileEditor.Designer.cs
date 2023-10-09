@@ -54,22 +54,19 @@ namespace TS_SE_Tool
             this.buttonImportSettings = new System.Windows.Forms.Button();
             this.labelSettings = new System.Windows.Forms.Label();
             this.buttonRestoreProfileBackup = new System.Windows.Forms.Button();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonSave = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanelProfileName.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.buttonOK, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanelProfileName, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -211,49 +208,22 @@ namespace TS_SE_Tool
             this.buttonRestoreProfileBackup.UseVisualStyleBackColor = true;
             this.buttonRestoreProfileBackup.Click += new System.EventHandler(this.buttonRestoreProfileBackup_Click);
             // 
-            // tableLayoutPanel4
+            // buttonOK
             // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.buttonSave, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.buttonCancel, 1, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(1, 322);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(1);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(308, 38);
-            this.tableLayoutPanel4.TabIndex = 2;
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonSave.Location = new System.Drawing.Point(3, 3);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(148, 32);
-            this.buttonSave.TabIndex = 1;
-            this.buttonSave.Text = "Save";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonCancel.Location = new System.Drawing.Point(157, 3);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(148, 32);
-            this.buttonCancel.TabIndex = 0;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonOK.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonOK.Location = new System.Drawing.Point(3, 324);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(304, 34);
+            this.buttonOK.TabIndex = 10;
+            this.buttonOK.Text = "Save";
+            this.buttonOK.UseVisualStyleBackColor = true;
             // 
             // FormProfileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(310, 361);
+            this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(326, 400);
@@ -269,7 +239,6 @@ namespace TS_SE_Tool
             this.tableLayoutPanelProfileName.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            this.tableLayoutPanel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -283,12 +252,10 @@ namespace TS_SE_Tool
         private System.Windows.Forms.Button buttonCloneProfile;
         private System.Windows.Forms.Button buttonImportSettings;
         private System.Windows.Forms.Button buttonExportSettings;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelProfileName;
         private System.Windows.Forms.Label labelProfileNameValue;
         private System.Windows.Forms.Label labelSettings;
         private System.Windows.Forms.Button buttonRestoreProfileBackup;
+        private System.Windows.Forms.Button buttonOK;
     }
 }

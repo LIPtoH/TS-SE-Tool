@@ -57,8 +57,7 @@ namespace TS_SE_Tool
                 buttonRestoreProfileBackup.Enabled = false;
 
             //dialog result
-            buttonSave.DialogResult = DialogResult.OK;
-            buttonCancel.DialogResult = DialogResult.Cancel;
+            buttonOK.DialogResult = DialogResult.Cancel;
 
         }
 
@@ -73,11 +72,11 @@ namespace TS_SE_Tool
 
             labelProfileNameValue.Text = WorkingProfileName;
         }
+
         private void FormProfileEditor_Shown(object sender, EventArgs e)
         {
-            buttonCancel.Focus();
+            buttonOK.Focus();
         }
-
 
         private void CorrectControlsPositions()
         {
@@ -113,6 +112,8 @@ namespace TS_SE_Tool
                         labelProfileNameValue.Text = dForm.ReturnNewName;
 
                         MessageBox.Show("New Profile name - " + dForm.ReturnNewName);
+
+                        buttonOK.DialogResult = DialogResult.OK;
                     }
                 }
             }
@@ -133,10 +134,15 @@ namespace TS_SE_Tool
                 {
                     if (dForm.ReturnCloningSuccessful)
                     {
-                        MessageBox.Show("Created new Profiles (" + dForm.ReturnClonedNames.Count.ToString() + "):\r\n\r\n" + string.Join("\r\n", dForm.ReturnClonedNames));
+                        MessageBox.Show("New Profiles created ( " + dForm.ReturnClonedNames.Count.ToString() + " ):" +
+                            Environment.NewLine + Environment.NewLine + string.Join(Environment.NewLine, dForm.ReturnClonedNames));
+
+                        buttonOK.DialogResult = DialogResult.OK;
                     }
                     else
+                    {
                         MessageBox.Show("No profiles created due to duplicating names.");
+                    }   
                 }
             }
         }
@@ -223,11 +229,5 @@ namespace TS_SE_Tool
         {
             this.Close();
         }
-
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
     }
 }
