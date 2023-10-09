@@ -50,6 +50,8 @@ namespace TS_SE_Tool
         private int tbNewNameWidth = 0;
         private int tbNewNameWidthMulty = 0;
 
+        private List<string> existingProfiles = new List<string>();
+
         public FormProfileEditorRenameClone(string _mode)
         {
             InitializeComponent();
@@ -67,7 +69,8 @@ namespace TS_SE_Tool
 
             CorrectControlsPositions();
 
-            indicateCharLimit();
+            if (!indicateCharLimit())
+                buttonAccept.Enabled = false;
         }
 
         //
@@ -197,6 +200,8 @@ namespace TS_SE_Tool
 
         private void textBoxNewName_TextChanged(object sender, EventArgs e)
         {
+            bool apply = true;
+
             //Trim on paste
             if (textBoxNewName.Multiline)
             {
@@ -206,24 +211,53 @@ namespace TS_SE_Tool
 
                 for (int i = 0; i < linecount; i++)
                 {
-                    if(textBoxNewName.Lines[i].Length > NameLengthLimit)
+                    if (textBoxNewName.Lines[i].Length > NameLengthLimit)
                     {
                         tmpLines[i] = textBoxNewName.Lines[i].Substring(0, NameLengthLimit);
                     }
 
                     textBoxNewName.Lines = tmpLines;
                 }
+
+                string[] commonElements = textBoxNewName.Lines.Intersect(existingProfiles).ToArray();
+
+                if (commonElements.Count() > 1)
+                {
+                    errorProvider.SetError(textBoxNewName, "Profiles already exist: " + Environment.NewLine +
+                                                            string.Join(Environment.NewLine, commonElements));
+                    apply = false;
+                }
+                else if (commonElements.Count() > 0)
+                {
+                    errorProvider.SetError(textBoxNewName, "Profile [ " + commonElements[0] + " ] already exist");
+                    apply = false;
+                }
+                else
+                    errorProvider.SetError(textBoxNewName, "");
             }
             else
             {
                 if (textBoxNewName.Text.Length > NameLengthLimit)
                     textBoxNewName.Text = textBoxNewName.Text.Substring(0, NameLengthLimit);
+
+                if (existingProfiles.Contains(textBoxNewName.Text))
+                {
+                    errorProvider.SetError(textBoxNewName, "Profile [ " + textBoxNewName.Text + " ] already exist");
+                    apply = false;
+                }
+                else
+                {
+                    errorProvider.SetError(textBoxNewName, "");
+                }
             }
 
             //
             calculateTextBoxNewNameSize();
+            if (!indicateCharLimit())
+                apply = false;
 
-            indicateCharLimit();
+            buttonAccept.Enabled = apply;
+
         }
 
         //Checkboxes
@@ -253,7 +287,7 @@ namespace TS_SE_Tool
 
             calculateTextBoxNewNameSize();
         }
-        
+
         //Buttons
         private void buttonAccept_Click(object sender, EventArgs e)
         {
@@ -261,24 +295,14 @@ namespace TS_SE_Tool
             {
                 case "rename":
                     {
-                        string NewProfileName = textBoxNewName.Text.Trim(new char[] { ' ' }) , NewFolderName = "", NewFolderPath = "";
+                        string NewProfileName = textBoxNewName.Text.Trim(new char[] { ' ' }), NewFolderName = "", NewFolderPath = "";
                         byte progress = 0;
 
-                        ReturnNewName = NewProfileName;
 
-                        //Get existing folders
-                        string[] existingDirs = Directory.GetDirectories(InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1));
-
-                        List<string> existingDirList = new List<string>();
-
-                        foreach (string dir in existingDirs)
+                        if (NewProfileName != InitialName && !existingProfiles.Contains(NewProfileName))
                         {
-                            //Get name 
-                            existingDirList.Add(Utilities.TextUtilities.FromHexToString(Path.GetFileName(dir)));
-                        }
+                            ReturnNewName = NewProfileName;
 
-                        if (NewProfileName != InitialName || existingDirList.Contains(NewProfileName))
-                        {
                             try
                             {
                                 //New folder name                                
@@ -290,6 +314,7 @@ namespace TS_SE_Tool
                                 //Create folder and copy
                                 Directory.CreateDirectory(NewFolderPath);
                                 progress = 2;
+
                                 Utilities.IO_Utilities.DirectoryCopy(InitialPath, NewFolderPath, true);
                                 progress = 3;
 
@@ -313,6 +338,27 @@ namespace TS_SE_Tool
                                 }
                                 progress = 7;
 
+                                //Iterate through save folders to edit preview.tobj
+                                DirectoryInfo[] dirInfoArray = new DirectoryInfo(NewFolderPath + "\\save").GetDirectories();
+
+                                foreach (DirectoryInfo subdir in dirInfoArray)
+                                {
+                                    FileInfo[] saveFolderFile = subdir.GetFiles();
+                                    foreach (FileInfo fI in saveFolderFile)
+                                    {
+                                        if (fI.Name == "preview.tobj")
+                                        {
+                                            //tobj
+                                            string pathToTGA = "/home/profiles/" + NewFolderName + "/save/" + subdir.Name + "/preview.tga";
+
+                                            Utilities.IO_Utilities.WritePreviewTOBJ(fI.FullName, pathToTGA);
+
+                                            break;
+                                        }
+                                    }
+                                }
+                                progress = 8;
+
                                 //Make backup
                                 if (checkBoxCreateBackup.Checked)
                                 {
@@ -321,11 +367,11 @@ namespace TS_SE_Tool
 
                                     ZipFile.CreateFromDirectory(InitialPath, InitialPath + ".zip");
                                 }
-                                progress = 8;
+                                progress = 9;
 
                                 //Delete old folder
                                 Directory.Delete(InitialPath, true);
-                                progress = 9;
+                                progress = 10;
 
                                 ReturnNewName = NewProfileName;
                                 ReturnRenamedSuccessful = true;
@@ -347,7 +393,7 @@ namespace TS_SE_Tool
                                         MessageBox.Show("Profile not decoded");
                                         goto delete;
                                     case 4:
-                                        MessageBox.Show("Profile hase wrong version/format");
+                                        MessageBox.Show("Profile has wrong version/format");
                                         goto delete;
                                     case 5:
                                         MessageBox.Show("Profile name is not applied");
@@ -356,14 +402,18 @@ namespace TS_SE_Tool
                                         MessageBox.Show("Profile write failed");
                                         goto delete;
                                     case 7:
-                                        MessageBox.Show("Profile backup creation failed. Keeping both versions. Delete old profile manually.");
+                                        MessageBox.Show("Error during save preview fixing");
                                         break;
                                     case 8:
+                                        MessageBox.Show("Profile backup creation failed. Keeping both versions. Delete old profile manually.");
+                                        break;
+                                    case 9:
                                         MessageBox.Show("Deleting old profile failed. Keeping both versions. Delete old profile manually.");
                                         ZipFile.ExtractToDirectory(InitialPath + ".zip", InitialPath);
                                         File.Delete(InitialPath + ".zip");
                                         break;
-                                    delete:
+                                        delete:
+                                        MessageBox.Show("Deleting new Profile.");
                                         Directory.Delete(NewFolderPath);
                                         break;
                                     default:
@@ -373,22 +423,16 @@ namespace TS_SE_Tool
                                 }
                             }
                         }
+                        else
+                        {
+                            DialogResult = DialogResult.Abort;
+                            Close();
+                        }
 
                         break;
                     }
                 case "clone":
                     {
-                        //Get existing folders
-                        string[] existingDirs = Directory.GetDirectories(InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1));
-
-                        List<string> existingDirList = new List<string>();
-
-                        foreach (string dir in existingDirs)
-                        {
-                            //Get name 
-                            existingDirList.Add(Utilities.TextUtilities.FromHexToString(Path.GetFileName(dir)));
-                        }
-
                         foreach (string newfile in textBoxNewName.Lines)
                         {
                             string NewProfileName = "", NewFolderPath = "";
@@ -402,7 +446,7 @@ namespace TS_SE_Tool
 
                                 NewProfileName = newfile.Trim(new char[] { ' ' });
                                 //Check existing folders
-                                if (NewProfileName == InitialName || existingDirList.Contains(NewProfileName))
+                                if (NewProfileName == InitialName || existingProfiles.Contains(NewProfileName))
                                     continue;
 
                                 //New folder
@@ -431,7 +475,7 @@ namespace TS_SE_Tool
                                 fileList.AddRange(Directory.EnumerateFiles(InitialPath, "profile.sii", SearchOption.TopDirectoryOnly).ToList());
 
                                 //Controls
-                                fileList.AddRange(Directory.EnumerateFiles(InitialPath, "controls.sii", SearchOption.TopDirectoryOnly).ToList());                                
+                                fileList.AddRange(Directory.EnumerateFiles(InitialPath, "controls.sii", SearchOption.TopDirectoryOnly).ToList());
 
                                 //CFG
                                 tmpFilelist = Directory.EnumerateFiles(InitialPath, "*.cfg", SearchOption.TopDirectoryOnly).ToArray();
@@ -458,14 +502,33 @@ namespace TS_SE_Tool
                                     FileInfo tFI = new FileInfo(file);  //fileinfo
                                     tFI.CopyTo(temppath, false);        //Copy
                                 }
-
                                 progress = 3;
+
+                                //Decode profile.sii
+                                string[] profileFile = ParentForm.NewDecodeFile(NewFolderPath + "\\profile.sii");
+                                progress = 4;
+
+                                SaveFileProfileData ProfileData = new SaveFileProfileData();
+                                ProfileData.ProcessData(profileFile);
+                                progress = 5;
+
+                                //New name
+                                ProfileData.ProfileName = new Save.DataFormat.SCS_String(NewProfileName);
+                                ProfileData.CreationTime = Utilities.DateTimeUtilities.DateTimeToUnixTimeStamp();
+                                progress = 6;
+
+                                //Write file
+                                using (StreamWriter SW = new StreamWriter(NewFolderPath + "\\profile.sii", false))
+                                {
+                                    ProfileData.WriteToStream(SW);
+                                }
+                                progress = 7;
 
                                 //Create save folder
                                 string NewSaveFolder = NewFolderPath + "\\save";
                                 Directory.CreateDirectory(NewSaveFolder);
 
-                                progress = 4;
+                                progress = 8;
 
                                 //Copy saves
                                 string[] validFileNames = new string[] { "game.sii", "info.sii", "preview.tga", "preview.mat", "preview.tobj" };
@@ -473,39 +536,46 @@ namespace TS_SE_Tool
                                 if (checkBoxFullCloning.Checked)
                                 {
                                     Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\save", NewSaveFolder, true, validFileNames);
+
+                                    //Iterate through save folders to edit preview.tobj
+                                    DirectoryInfo[] dirInfoArray = new DirectoryInfo(NewFolderPath + "\\save").GetDirectories();
+
+                                    foreach (DirectoryInfo subdir in dirInfoArray)
+                                    {
+                                        FileInfo[] saveFolderFile = subdir.GetFiles();
+                                        foreach (FileInfo fI in saveFolderFile)
+                                        {
+                                            if (fI.Name == "preview.tobj")
+                                            {
+                                                //tobj
+                                                string pathToTGA = "/home/profiles/" + NewProfileNameHex + "/save/" + subdir.Name + "/preview.tga";
+
+                                                Utilities.IO_Utilities.WritePreviewTOBJ(fI.FullName, pathToTGA);
+
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                                 else
                                 {
                                     Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\save\\autosave", NewSaveFolder + "\\autosave", false, validFileNames);
                                 }
 
-                                progress = 5;
-
-                                //Decode profile.sii
-                                string[] profileFile = ParentForm.NewDecodeFile(NewFolderPath + "\\profile.sii");
-                                progress = 6;
-
-                                SaveFileProfileData ProfileData = new SaveFileProfileData();
-                                ProfileData.ProcessData(profileFile);
-                                progress = 7;
-
-                                //New name
-                                ProfileData.ProfileName = new Save.DataFormat.SCS_String(NewProfileName);
-                                ProfileData.CreationTime = Utilities.DateTimeUtilities.DateTimeToUnixTimeStamp();
-                                progress = 8;
-
-                                //Write file
-                                using (StreamWriter SW = new StreamWriter(NewFolderPath + "\\profile.sii", false))
-                                {
-                                    ProfileData.WriteToStream(SW);
-                                }
                                 progress = 9;
 
+                                //Clone album
+                                if (Directory.Exists(InitialPath + "\\album"))
+                                    Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\album", NewFolderPath + "\\album", false);
+
+                                progress = 10;
+                                
                                 //Cloned folders
-                                existingDirList.Add(NewProfileName);
+                                existingProfiles.Add(NewProfileName);
                                 ReturnClonedNames.Add(NewProfileName);
                             }
-                            catch {
+                            catch
+                            {
 
                                 switch (progress)
                                 {
@@ -519,35 +589,36 @@ namespace TS_SE_Tool
                                         MessageBox.Show("Directory copy failed");
                                         goto delete;
                                     case 3:
-                                        MessageBox.Show("Directory for saves was not created");
-                                        goto delete;
-                                    case 4:
-                                        MessageBox.Show("Directory with saves copy failed");
-                                        goto delete;
-                                    case 5:
                                         MessageBox.Show("Profile not decoded");
                                         goto delete;
-                                    case 6:
-                                        MessageBox.Show("Profile hase wrong version/format");
+                                    case 4:
+                                        MessageBox.Show("Profile has wrong version/format");
                                         goto delete;
-                                    case 7:
+                                    case 5:
                                         MessageBox.Show("Profile properties was not applied");
                                         goto delete;
-                                    case 8:
+                                    case 6:
                                         MessageBox.Show("Profile write failed");
                                         goto delete;
-                                    delete:
-                                        Directory.Delete(NewFolderPath);
+                                    case 7:
+                                        MessageBox.Show("Directory for saves was not created");
+                                        goto delete;
+                                    case 8:
+                                        MessageBox.Show("Directory with saves copy failed");
+                                        goto delete;
+                                    case 9:
+                                        MessageBox.Show("Album Directory copy failed");                                        
                                         break;
                                     default:
                                         MessageBox.Show("Unexpected error. Deleting new Profile.");
+                                        delete:
                                         Directory.Delete(NewFolderPath);
                                         break;
                                 }
                             }
                         }
 
-                        if(ReturnClonedNames.Count > 0)
+                        if (ReturnClonedNames.Count > 0)
                             ReturnCloningSuccessful = true;
 
                         break;
@@ -562,11 +633,12 @@ namespace TS_SE_Tool
         {
             this.Close();
         }
-        
+
         //Extra
-        private void indicateCharLimit()
+        private bool indicateCharLimit()
         {
             int txtLength = 0;
+            bool apply = true;
 
             if (textBoxNewName.Multiline)
             {
@@ -575,12 +647,19 @@ namespace TS_SE_Tool
                     int currentLine = textBoxNewName.GetLineFromCharIndex(textBoxNewName.SelectionStart);
                     txtLength = textBoxNewName.Lines[currentLine].Length;
                 }
+                else
+                    apply = false;
             }
             else
             {
                 txtLength = textBoxNewName.Text.Length;
+
+                if (txtLength == 0)
+                    apply = false;
             }
-            //
+
+            //===
+
             if (txtLength == 0)
             {
                 labelCharCountLimit.ForeColor = Color.Red;
@@ -598,6 +677,8 @@ namespace TS_SE_Tool
             }
 
             labelCharCountLimit.Text = "[" + txtLength.ToString() + " | " + NameLengthLimit.ToString() + "]";
+
+            return apply;
         }
 
         private void calculateTextBoxNewNameSize()
@@ -652,5 +733,20 @@ namespace TS_SE_Tool
 
         }
 
+        private void FormProfileEditorRenameClone_Load(object sender, EventArgs e)
+        {
+            existingProfiles = Directory.GetDirectories(InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1)).Select(d => new DirectoryInfo(d).Name).ToList();
+
+            existingProfiles = existingProfiles.Where(x => !x.Contains(' ')).ToList();
+
+            List<string> tmp = new List<string>();
+
+            foreach (string name in existingProfiles)
+            {
+                tmp.Add(Utilities.TextUtilities.FromHexToString(name));
+            }
+
+            existingProfiles = tmp.ToList();
+        }
     }
 }

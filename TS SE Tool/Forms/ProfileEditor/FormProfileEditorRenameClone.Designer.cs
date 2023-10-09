@@ -43,6 +43,7 @@ namespace TS_SE_Tool
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAccept = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
@@ -55,10 +56,12 @@ namespace TS_SE_Tool
             this.checkBoxMutiCloning = new System.Windows.Forms.CheckBox();
             this.checkBoxCreateBackup = new System.Windows.Forms.CheckBox();
             this.labelCharCountLimit = new System.Windows.Forms.Label();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanelControls.SuspendLayout();
             this.groupBoxOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -218,6 +221,11 @@ namespace TS_SE_Tool
             this.labelCharCountLimit.Text = "[0/0]";
             this.labelCharCountLimit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // errorProvider
+            // 
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink;
+            this.errorProvider.ContainerControl = this;
+            // 
             // FormProfileEditorRenameClone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,12 +240,14 @@ namespace TS_SE_Tool
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rename Clone Profiles";
+            this.Load += new System.EventHandler(this.FormProfileEditorRenameClone_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanelControls.ResumeLayout(false);
             this.tableLayoutPanelControls.PerformLayout();
             this.groupBoxOptions.ResumeLayout(false);
             this.groupBoxOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -256,5 +266,6 @@ namespace TS_SE_Tool
         private System.Windows.Forms.CheckBox checkBoxMutiCloning;
         private System.Windows.Forms.CheckBox checkBoxFullCloning;
         private System.Windows.Forms.Label labelCharCountLimit;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }
