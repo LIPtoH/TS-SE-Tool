@@ -568,6 +568,32 @@ namespace TS_SE_Tool
             FillVisitedCities(listBoxVisitedCities.TopIndex);
         }
 
+        private void buttonCitiesSelectAll_Click(object sender, EventArgs e)
+        {
+            listBoxVisitedCities.BeginUpdate();
+
+            for (int val = 0; val < listBoxVisitedCities.Items.Count; val++)
+            {
+                listBoxVisitedCities.SetSelected(val, true);
+            }
+
+            listBoxVisitedCities.TopIndex = 0;
+            listBoxVisitedCities.EndUpdate();
+        }
+
+        private void buttonCitiesUnselectAll_Click(object sender, EventArgs e)
+        {
+            listBoxVisitedCities.BeginUpdate();
+
+            for (int val = 0; val < listBoxVisitedCities.Items.Count; val++)
+            {
+                listBoxVisitedCities.SetSelected(val, false);
+            }
+
+            listBoxVisitedCities.TopIndex = 0;
+            listBoxVisitedCities.EndUpdate();
+        }
+
         //Garages
         //Fill
         public void FillGaragesList(int _vindex)
@@ -802,6 +828,32 @@ namespace TS_SE_Tool
 
             FillGaragesList(listBoxGarages.TopIndex);
             FillHQcities();
+        }
+
+        private void buttonUserCompanyGaragesUnselectAll_Click(object sender, EventArgs e)
+        {
+            listBoxGarages.BeginUpdate();
+
+            for (int val = 0; val < listBoxGarages.Items.Count; val++)
+            {
+                listBoxGarages.SetSelected(val, false);
+            }
+
+            listBoxGarages.TopIndex = 0;
+            listBoxGarages.EndUpdate();
+        }
+
+        private void buttonUserCompanyGaragesSelectAll_Click(object sender, EventArgs e)
+        {
+            listBoxGarages.BeginUpdate();
+
+            for (int val = 0; val < listBoxGarages.Items.Count; val++)
+            {
+                listBoxGarages.SetSelected(val, true);
+            }
+
+            listBoxGarages.TopIndex = 0;
+            listBoxGarages.EndUpdate();
         }
 
         private void buttonGaragesUpgrade_Click(object sender, EventArgs e)
