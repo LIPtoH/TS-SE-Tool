@@ -16,6 +16,7 @@ namespace TS_SE_Tool
 
         Save.Items.Vehicle VehicleData;
         internal Dictionary<string, dynamic> Accessories;
+        internal string exportFormatString;
 
         internal FormVehicleEditor(Save.Items.Vehicle _data, Dictionary<string, dynamic> _accessories)
         {
@@ -37,6 +38,7 @@ namespace TS_SE_Tool
         {
             PopulateDataView();
             dataGridViewAccessories.Rows[0].Selected = true;
+            exportFormatString = "TSSET_VehicleAccessory";
         }
 
         private void PopulateDataView()
@@ -102,7 +104,9 @@ namespace TS_SE_Tool
 
             dynamic item = dataGridViewAccessories.Rows[selectedIndex].Cells[2].Value;
 
-            List<string> tmpLST = ((string)item.PrintOut(MainForm.MainSaveFileInfoData.Version, "")).Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            List<string> tmpLST = ((string)((dynamic)dataGridViewAccessories.Rows[selectedIndex].Cells[2].Value)
+                                        .PrintOut(MainForm.MainSaveFileInfoData.Version, ""))
+                                  .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             tmpLST.RemoveAt(0);
             tmpLST.RemoveAt(tmpLST.Count() - 1);
@@ -122,11 +126,11 @@ namespace TS_SE_Tool
 
                 string accName = item.GetType().Name;
 
-                string dialogText = "Delete " + accName.Replace('_', ' ');
+                string dialogText = "Delete " + Utilities.TextUtilities.CapitalizeWord(accName.Replace('_', ' '));
 
                 if (accName == "Vehicle_Accessory")
                 {
-                    dialogText += " " + item.accType;
+                    dialogText += " " + Utilities.TextUtilities.CapitalizeWord(item.accType);
                 }
 
                 dialogText += " ?";
@@ -135,9 +139,7 @@ namespace TS_SE_Tool
 
                 if (dr == DialogResult.Yes)
                 {
-                    string n = (string)senderGrid.Rows[e.RowIndex].Cells[0].Value;
-
-                    Accessories.Remove(n);
+                    Accessories.Remove((string)senderGrid.Rows[e.RowIndex].Cells[0].Value);
                     senderGrid.Rows.RemoveAt(e.RowIndex);
                 }   
             }
@@ -152,35 +154,22 @@ namespace TS_SE_Tool
         //Edit button
         private void buttonEditAccessory_Click(object sender, EventArgs e)
         {
-            changeTextBoxAccessoryDataReadOnlyState(textBoxAccessoryData.ReadOnly);
+            textBoxAccessoryData.ReadOnly = !textBoxAccessoryData.ReadOnly;
+
             changebuttonEditAccessoryState(textBoxAccessoryData.ReadOnly);
 
             if (textBoxAccessoryData.ReadOnly)
             {
+                Save.Items.SiiNunit tmp = new Save.Items.SiiNunit();
+
                 int selectedIndex = dataGridViewAccessories.CurrentCell.RowIndex;
 
-                dynamic item = dataGridViewAccessories.Rows[selectedIndex].Cells[2].Value;
-
-                string accName = item.GetType().Name;
+                string accName = dataGridViewAccessories.Rows[selectedIndex].Cells[2].Value.GetType().Name;
                 string[] dataLines = textBoxAccessoryData.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-                Save.Items.SiiNunit tmp = new Save.Items.SiiNunit();
 
                 dynamic newAccItem = tmp.DetectTag(accName.ToLower(), dataLines);
 
                 dataGridViewAccessories.Rows[selectedIndex].Cells[2].Value = newAccItem;
-            }
-        }
-
-        private void changeTextBoxAccessoryDataReadOnlyState(bool _state)
-        {
-            if (_state)
-            {
-                textBoxAccessoryData.ReadOnly = false;
-            }
-            else
-            {
-                textBoxAccessoryData.ReadOnly = true;
             }
         }
 
@@ -199,8 +188,6 @@ namespace TS_SE_Tool
         //Main buttons        
         private void buttonApply_Click(object sender, EventArgs e)
         {
-
-
             //Close
             DialogResult = DialogResult.OK;
             this.Close();
@@ -216,7 +203,8 @@ namespace TS_SE_Tool
         private void buttonCopy_Click(object sender, EventArgs e)
         {
             Clipboard.Clear();
-            string format = "TSSET_VehicleAccessory" + Environment.NewLine;
+
+            string format = exportFormatString + Environment.NewLine;
 
             // Set data to clipboard
             int selectedIndex = dataGridViewAccessories.CurrentCell.RowIndex;
@@ -229,29 +217,23 @@ namespace TS_SE_Tool
 
         private void buttonPaste_Click(object sender, EventArgs e)
         {
-            string format = "TSSET_VehicleAccessory";
-
             // Get data from clipboard
             string result = null;
-
-            var asd = Clipboard.GetDataObject();
-            var asab = Clipboard.GetFileDropList();
 
             if (Clipboard.ContainsText(TextDataFormat.Text))
                 result = Clipboard.GetText(TextDataFormat.Text);
             else
                 MessageBox.Show("No valid items");
 
-
             if (result != null)
             {
-                List<string> lines = result.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<string> lines = result.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                if (lines[0] != format && lines.Count() > 1)
+                if (lines[0] != exportFormatString || lines.Count() < 4)
                 {
                     MessageBox.Show("Non valid item");
                     return;
-                }   
+                }
 
                 lines.RemoveAt(0);
 
@@ -268,6 +250,5 @@ namespace TS_SE_Tool
                 dataGridViewAccessories.Rows.Add(nameless, GetImageForAccessoryByType(tagLine), newAccItem, "X");
             }
         }
-
     }
 }
