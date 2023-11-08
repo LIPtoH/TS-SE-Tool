@@ -51,6 +51,7 @@ namespace TS_SE_Tool
             this.buttonExport = new System.Windows.Forms.Button();
             this.buttonApply = new System.Windows.Forms.Button();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            this.panelShareColorsHelpDragDrop = new System.Windows.Forms.Panel();
             this.groupBoxProfileUserColors.SuspendLayout();
             this.groupBoxImportedColors.SuspendLayout();
             this.tableLayoutPanelMain.SuspendLayout();
@@ -63,7 +64,7 @@ namespace TS_SE_Tool
             this.groupBoxProfileUserColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxProfileUserColors.Location = new System.Drawing.Point(3, 3);
             this.groupBoxProfileUserColors.Name = "groupBoxProfileUserColors";
-            this.groupBoxProfileUserColors.Size = new System.Drawing.Size(490, 129);
+            this.groupBoxProfileUserColors.Size = new System.Drawing.Size(490, 117);
             this.groupBoxProfileUserColors.TabIndex = 0;
             this.groupBoxProfileUserColors.TabStop = false;
             this.groupBoxProfileUserColors.Text = "User colors";
@@ -73,7 +74,7 @@ namespace TS_SE_Tool
             this.panelProfileUserColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelProfileUserColors.Location = new System.Drawing.Point(3, 16);
             this.panelProfileUserColors.Name = "panelProfileUserColors";
-            this.panelProfileUserColors.Size = new System.Drawing.Size(484, 110);
+            this.panelProfileUserColors.Size = new System.Drawing.Size(484, 98);
             this.panelProfileUserColors.TabIndex = 0;
             // 
             // groupBoxImportedColors
@@ -81,9 +82,9 @@ namespace TS_SE_Tool
             this.tableLayoutPanelMain.SetColumnSpan(this.groupBoxImportedColors, 3);
             this.groupBoxImportedColors.Controls.Add(this.panelImportedColors);
             this.groupBoxImportedColors.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxImportedColors.Location = new System.Drawing.Point(3, 188);
+            this.groupBoxImportedColors.Location = new System.Drawing.Point(3, 201);
             this.groupBoxImportedColors.Name = "groupBoxImportedColors";
-            this.groupBoxImportedColors.Size = new System.Drawing.Size(490, 130);
+            this.groupBoxImportedColors.Size = new System.Drawing.Size(490, 117);
             this.groupBoxImportedColors.TabIndex = 1;
             this.groupBoxImportedColors.TabStop = false;
             this.groupBoxImportedColors.Text = "Imported colors";
@@ -93,13 +94,13 @@ namespace TS_SE_Tool
             this.panelImportedColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelImportedColors.Location = new System.Drawing.Point(3, 16);
             this.panelImportedColors.Name = "panelImportedColors";
-            this.panelImportedColors.Size = new System.Drawing.Size(484, 111);
+            this.panelImportedColors.Size = new System.Drawing.Size(484, 98);
             this.panelImportedColors.TabIndex = 0;
             // 
             // buttonImport
             // 
             this.buttonImport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonImport.Location = new System.Drawing.Point(176, 138);
+            this.buttonImport.Location = new System.Drawing.Point(176, 126);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(167, 44);
             this.buttonImport.TabIndex = 2;
@@ -110,19 +111,19 @@ namespace TS_SE_Tool
             // buttonExport
             // 
             this.buttonExport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonExport.Location = new System.Drawing.Point(3, 138);
+            this.buttonExport.Enabled = false;
+            this.buttonExport.Location = new System.Drawing.Point(3, 126);
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.Size = new System.Drawing.Size(167, 44);
             this.buttonExport.TabIndex = 3;
             this.buttonExport.Text = "Export";
-            this.buttonExport.Enabled = false;
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.buttonExportColors_Click);
             // 
             // buttonApply
             // 
             this.buttonApply.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonApply.Location = new System.Drawing.Point(349, 138);
+            this.buttonApply.Location = new System.Drawing.Point(349, 126);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(144, 44);
             this.buttonApply.TabIndex = 4;
@@ -137,19 +138,31 @@ namespace TS_SE_Tool
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanelMain.Controls.Add(this.groupBoxProfileUserColors, 0, 0);
-            this.tableLayoutPanelMain.Controls.Add(this.groupBoxImportedColors, 0, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.groupBoxImportedColors, 0, 3);
             this.tableLayoutPanelMain.Controls.Add(this.buttonImport, 1, 1);
             this.tableLayoutPanelMain.Controls.Add(this.buttonApply, 2, 1);
             this.tableLayoutPanelMain.Controls.Add(this.buttonExport, 0, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.panelShareColorsHelpDragDrop, 0, 2);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
-            this.tableLayoutPanelMain.RowCount = 3;
+            this.tableLayoutPanelMain.RowCount = 4;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelMain.Size = new System.Drawing.Size(496, 321);
             this.tableLayoutPanelMain.TabIndex = 5;
+            // 
+            // panelShareColorsHelpDragDrop
+            // 
+            this.tableLayoutPanelMain.SetColumnSpan(this.panelShareColorsHelpDragDrop, 3);
+            this.panelShareColorsHelpDragDrop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelShareColorsHelpDragDrop.Location = new System.Drawing.Point(0, 173);
+            this.panelShareColorsHelpDragDrop.Margin = new System.Windows.Forms.Padding(0);
+            this.panelShareColorsHelpDragDrop.Name = "panelShareColorsHelpDragDrop";
+            this.panelShareColorsHelpDragDrop.Size = new System.Drawing.Size(496, 25);
+            this.panelShareColorsHelpDragDrop.TabIndex = 5;
             // 
             // FormShareUserColors
             // 
@@ -181,5 +194,6 @@ namespace TS_SE_Tool
         private System.Windows.Forms.Panel panelProfileUserColors;
         private System.Windows.Forms.Panel panelImportedColors;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
+        private System.Windows.Forms.Panel panelShareColorsHelpDragDrop;
     }
 }

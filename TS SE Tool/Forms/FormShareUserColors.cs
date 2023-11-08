@@ -30,6 +30,7 @@ using System.Text.RegularExpressions;
 using JR.Utils.GUI.Forms;
 using TS_SE_Tool.Save.DataFormat;
 using TS_SE_Tool.Utilities;
+using System.Drawing.Drawing2D;
 
 namespace TS_SE_Tool
 {
@@ -48,6 +49,8 @@ namespace TS_SE_Tool
                        nameIC = "ICpanel", nameICc = "ICcontainer", nameICcb = "ICcheckbox",
                        newSlotName = "NewSlotUserColor";
 
+        private Image dragDropIMG;
+
         private readonly int width = 48, padding = 6,  offsetL = 4, offsetT = 4, lineThickness = 4;
 
         ushort SaveVersion = 0;
@@ -55,15 +58,13 @@ namespace TS_SE_Tool
         public FormShareUserColors()
         {
             InitializeComponent();
+
             this.Icon = Properties.Resources.MainIco;
-
-            MainForm.HelpTranslateControl(this);
-
-            MainForm.HelpTranslateFormMethod(this);
 
             SaveVersion = MainForm.MainSaveFileInfoData.Version;
 
             userColors = MainForm.SiiNunitData.Economy.user_colors.Select(x => x.Clone()).ToList();
+
             int colorcount = userColors.Count;
 
             if (SaveVersion >= 49)
@@ -71,12 +72,13 @@ namespace TS_SE_Tool
 
             UserColorsCB = new CheckBox[colorcount];
 
+            PopulateFormControls();
             CorrectControlsPositions();
+            TranslateForm();
 
-            PopulateFormControlsk();
+            dragDropIMG = Bitmap.FromFile(@"img\UI\test.png");
 
             buttonApply.Enabled = false;
-            groupBoxImportedColors.Visible = false;
 
             //
             panelProfileUserColors.VerticalScroll.Enabled = false;
@@ -96,7 +98,7 @@ namespace TS_SE_Tool
         }
 
         //Create controls
-        private void PopulateFormControlsk()
+        private void PopulateFormControls()
         {
             CreateUserColorsButtons(0);
             UpdateUserColorsButtons();
@@ -347,6 +349,12 @@ namespace TS_SE_Tool
             }
         }
 
+        private void TranslateForm()
+        {
+            MainForm.HelpTranslateControl(this);
+
+            MainForm.HelpTranslateFormMethod(this);
+        }
         //
         private void CreateImportColorsButtons(int _colorcount)
         {
@@ -386,10 +394,15 @@ namespace TS_SE_Tool
                 groupPanel.BorderStyle = BorderStyle.None;
                 groupPanel.BackColor = Color.Black;
 
+                groupPanel.BackgroundImage = dragDropIMG;
+                groupPanel.BackgroundImageLayout = ImageLayout.Stretch;
+
                 groupPanel.Enabled = true;
 
                 groupPanel.MouseDown += groupPanelImport_MouseDown;
                 groupPanel.QueryContinueDrag += panelDragSource_QueryContinueDrag;
+                groupPanel.MouseEnter += groupPanelImport_MouseEnter;
+                groupPanel.MouseLeave += groupPanelImport_MouseLeave;
 
                 panelImportedColors.Controls.Add(groupPanel);
 
@@ -420,7 +433,7 @@ namespace TS_SE_Tool
 
                         if (ImportedColors[btnNumber].A == 0)
                         {
-                            colorP.Enabled = false;
+                            colorP.Enabled = true;
 
                             colorP.BackColor = Color.FromKnownColor(KnownColor.Control);
 
@@ -434,6 +447,8 @@ namespace TS_SE_Tool
 
                             colorP.MouseDown += panelImport_MouseDown;
                             colorP.QueryContinueDrag += panelDragSource_QueryContinueDrag;
+                            colorP.MouseEnter += groupPanelImport_MouseEnter;
+                            colorP.MouseLeave += groupPanelImport_MouseLeave;
                         }
 
                         groupPanel.Controls.Add(colorP);
@@ -466,7 +481,6 @@ namespace TS_SE_Tool
         }
 
         //==
-
         private void panelImport_MouseDown(object sender, MouseEventArgs e)
         {
             (sender as Panel).DoDragDrop((sender as Panel).BackColor, DragDropEffects.Copy | DragDropEffects.Move);
@@ -496,7 +510,6 @@ namespace TS_SE_Tool
         }
 
         //==
-
         private void groupPanelImport_MouseDown(object sender, MouseEventArgs e)
         {
             Panel source = sender as Panel;
@@ -553,6 +566,18 @@ namespace TS_SE_Tool
             buttonApply.Enabled = true;
         }
 
+        private void groupPanelImport_MouseEnter(object sender, EventArgs e)
+        {
+            Panel source = sender as Panel;
+            source.Cursor = Cursors.Hand;
+        }
+
+        private void groupPanelImport_MouseLeave(object sender, EventArgs e)
+        {
+            Panel source = sender as Panel;
+            source.Cursor = Cursors.Default;
+        }
+
         //==
         private void newSlotPanelImport_DragEnter(object sender, DragEventArgs e)
         {
@@ -595,7 +620,6 @@ namespace TS_SE_Tool
         }
 
         //==
-
         private void panelDragSource_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
         {
             // Cancel the drag if the mouse moves off the form.
@@ -639,7 +663,6 @@ namespace TS_SE_Tool
         }
 
         //==
-
         private Image CreateCrossIMG(int _width, int _lineThickness, int _padding)
         {
             return CreateCrossIMG(_width, _width, _lineThickness, _padding);
@@ -753,8 +776,6 @@ namespace TS_SE_Tool
                     //Show imported colors section
                     ChangeFormSize(true);
 
-                    groupBoxImportedColors.Visible = true;
-
                     //Enable checkboxes to enable import
                     foreach (CheckBox colorCB in UserColorsCB)
                     {
@@ -792,15 +813,16 @@ namespace TS_SE_Tool
             if (_big)
             {
                 this.MaximumSize = new Size(this.Size.Width, 360);
-                tableLayoutPanelMain.RowStyles[2] = new RowStyle(sizeType: SizeType.Percent, 50);
+                tableLayoutPanelMain.RowStyles[2] = new RowStyle(sizeType: SizeType.Absolute, 25);
+                tableLayoutPanelMain.RowStyles[3] = new RowStyle(sizeType: SizeType.Percent, 50);
             }
             else
             {
                 this.MaximumSize = new Size(this.Size.Width, 230);
-                tableLayoutPanelMain.RowStyles[2] = new RowStyle(sizeType: SizeType.Percent, 0);
+                tableLayoutPanelMain.RowStyles[2] = new RowStyle(sizeType: SizeType.Absolute, 0);
+                tableLayoutPanelMain.RowStyles[3] = new RowStyle(sizeType: SizeType.Percent, 0);
             }
 
-            this.Size = new Size(this.Size.Width, this.Size.Height);
             this.MinimumSize = this.MaximumSize;
         }
     }
