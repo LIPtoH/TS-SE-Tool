@@ -160,7 +160,7 @@ namespace TS_SE_Tool
 
                 ProgSettingsV.ProgramVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-                SupportedSavefileVersionETS2 = new int[] { 61, 69 }; //Supported save version
+                SupportedSavefileVersionETS2 = new int[] { 61, 70 }; //Supported save version
                 SupportedGameVersionETS2 = "1.43.x - 1.48.x"; //Last game version Tested on
                 //SupportedSavefileVersionATS;
                 SupportedGameVersionATS = "1.43.x - 1.48.x"; //Last game version Tested on
