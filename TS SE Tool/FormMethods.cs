@@ -660,15 +660,34 @@ namespace TS_SE_Tool
 
                     if (translatedString != null && translatedString != "")
                     {
-                        cntrl.Text = translatedString;
+                        if (cntrl.GetType() == typeof(Panel))
+                        {
+                            Bitmap _img = new Bitmap(cntrl.Width, cntrl.Height);
+
+                            using (var canvas = Graphics.FromImage(_img))
+                            {
+                                canvas.SmoothingMode = SmoothingMode.HighQuality;
+                                canvas.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+
+                                StringFormat stringFormat = new StringFormat();
+                                stringFormat.Alignment = StringAlignment.Near;
+                                stringFormat.LineAlignment = StringAlignment.Center;
+
+                                canvas.DrawString(translatedString, this.Font, new SolidBrush(Color.FromKnownColor(KnownColor.ControlText)), new RectangleF(5, 5, cntrl.Width - 10, cntrl.Height - 10), stringFormat);
+                            }
+
+                            cntrl.BackgroundImage = _img;
+                        }
+                        else
+                            cntrl.Text = translatedString;
                     }
 
                     if (_formTooltip != null)
                     {
                         string TolltipString = ResourceManagerMain.GetTooltipString(cntrl.Name, _ci);
 
-                        if (TolltipString == null)                        
-                            TolltipString = ResourceManagerMain.GetTooltipString(cntrl.Name.TrimEnd(charsToTrimTranslation), _ci);                        
+                        if (TolltipString == null)
+                            TolltipString = ResourceManagerMain.GetTooltipString(cntrl.Name.TrimEnd(charsToTrimTranslation), _ci);
 
                         if (TolltipString != null)
                         {
@@ -678,7 +697,7 @@ namespace TS_SE_Tool
                                 number++;
 
                             _formTooltip.SetToolTip(cntrl, String.Format(TolltipString, number));
-                        }   
+                        }
                     }
                 }
                 catch
