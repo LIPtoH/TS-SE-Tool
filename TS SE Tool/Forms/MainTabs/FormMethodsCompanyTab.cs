@@ -877,6 +877,51 @@ namespace TS_SE_Tool
                 translateTruckComboBox();
         }
 
+        private void buttonUserCompanyGaragesSelectAll_Click(object sender, EventArgs e)
+        {
+            ChangeSelectionUserCompanyListboxes(listBoxGarages, true);
+        }
+
+        private void buttonUserCompanyGaragesUnSelectAll_Click(object sender, EventArgs e)
+        {
+            ChangeSelectionUserCompanyListboxes(listBoxGarages, false);
+        }
+
+        private void buttonUserCompanyCitiesSelectAll_Click(object sender, EventArgs e)
+        {
+            ChangeSelectionUserCompanyListboxes(listBoxVisitedCities, true);
+        }
+
+        private void buttonUserCompanyCitiesUnSelectAll_Click(object sender, EventArgs e)
+        {
+            ChangeSelectionUserCompanyListboxes(listBoxVisitedCities, false);
+        }
+        private void buttonUserCompanyDriversSelectAll_Click(object sender, EventArgs e)
+        {
+            ChangeSelectionUserCompanyListboxes(listBoxUserCompanyDrivers, true);
+        }
+
+        private void buttonUserCompanyDriversUnSelectAll_Click(object sender, EventArgs e)
+        {
+            ChangeSelectionUserCompanyListboxes(listBoxUserCompanyDrivers, false);
+        }
+
+        private void ChangeSelectionUserCompanyListboxes(ListBox _target, bool _state)
+        {
+            int idx = _target.TopIndex;
+
+            _target.BeginUpdate();
+
+            for (int i = 0; i < _target.Items.Count; i++)
+            {
+                _target.SetSelected(i, _state);
+            }
+
+            _target.TopIndex = idx;
+
+            _target.EndUpdate();
+        }
+
         // Drivers
         // Populate
         private void PopulateDriversList()

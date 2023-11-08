@@ -95,6 +95,8 @@
             this.buttonUserCompanyGaragesSell = new System.Windows.Forms.Button();
             this.buttonUserCompanyGaragesUpgrade = new System.Windows.Forms.Button();
             this.buttonUserCompanyGaragesManage = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesSelectAll = new System.Windows.Forms.Button();
+            this.buttonUserCompanyGaragesUnSelectAll = new System.Windows.Forms.Button();
             this.panelGarages = new System.Windows.Forms.Panel();
             this.labelUserCompanyGaragesCurrent = new System.Windows.Forms.Label();
             this.labelUserCompanyGaragesDelimetry = new System.Windows.Forms.Label();
@@ -117,6 +119,8 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonUserCompanyCitiesVisit = new System.Windows.Forms.Button();
             this.buttonUserCompanyCitiesUnVisit = new System.Windows.Forms.Button();
+            this.buttonUserCompanyCitiesSelectAll = new System.Windows.Forms.Button();
+            this.buttonUserCompanyCitiesUnSelectAll = new System.Windows.Forms.Button();
             this.panelVisitedCities = new System.Windows.Forms.Panel();
             this.labelUserCompanyVisitedCitiesTotal = new System.Windows.Forms.Label();
             this.labelUserCompanyVisitedCitiesDelimetry = new System.Windows.Forms.Label();
@@ -246,6 +250,8 @@
             this.radioButtonMainGameSwitchATS = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonMainCloseSave = new System.Windows.Forms.Button();
+            this.buttonUserCompanyDriversSelectAll = new System.Windows.Forms.Button();
+            this.buttonUserCompanyDriversUnSelectAll = new System.Windows.Forms.Button();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -952,16 +958,19 @@
             // 
             // tableLayoutPanel6
             // 
-            this.tableLayoutPanel6.ColumnCount = 4;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel6.ColumnCount = 5;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesBuy, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesBuyDowngrade, 1, 1);
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesSell, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesUpgrade, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesManage, 3, 0);
+            this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesSelectAll, 4, 0);
+            this.tableLayoutPanel6.Controls.Add(this.buttonUserCompanyGaragesUnSelectAll, 4, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 321);
             this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(0);
@@ -978,7 +987,7 @@
             this.buttonUserCompanyGaragesBuy.Location = new System.Drawing.Point(3, 3);
             this.buttonUserCompanyGaragesBuy.Name = "buttonUserCompanyGaragesBuy";
             this.tableLayoutPanel6.SetRowSpan(this.buttonUserCompanyGaragesBuy, 2);
-            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(144, 66);
+            this.buttonUserCompanyGaragesBuy.Size = new System.Drawing.Size(178, 66);
             this.buttonUserCompanyGaragesBuy.TabIndex = 23;
             this.buttonUserCompanyGaragesBuy.Text = "Buy";
             this.buttonUserCompanyGaragesBuy.UseVisualStyleBackColor = true;
@@ -987,9 +996,9 @@
             // buttonUserCompanyGaragesBuyDowngrade
             // 
             this.buttonUserCompanyGaragesBuyDowngrade.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesBuyDowngrade.Location = new System.Drawing.Point(153, 39);
+            this.buttonUserCompanyGaragesBuyDowngrade.Location = new System.Drawing.Point(187, 39);
             this.buttonUserCompanyGaragesBuyDowngrade.Name = "buttonUserCompanyGaragesBuyDowngrade";
-            this.buttonUserCompanyGaragesBuyDowngrade.Size = new System.Drawing.Size(138, 30);
+            this.buttonUserCompanyGaragesBuyDowngrade.Size = new System.Drawing.Size(84, 30);
             this.buttonUserCompanyGaragesBuyDowngrade.TabIndex = 25;
             this.buttonUserCompanyGaragesBuyDowngrade.Text = "Downgrade";
             this.buttonUserCompanyGaragesBuyDowngrade.UseVisualStyleBackColor = true;
@@ -998,10 +1007,10 @@
             // buttonUserCompanyGaragesSell
             // 
             this.buttonUserCompanyGaragesSell.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesSell.Location = new System.Drawing.Point(297, 3);
+            this.buttonUserCompanyGaragesSell.Location = new System.Drawing.Point(277, 3);
             this.buttonUserCompanyGaragesSell.Name = "buttonUserCompanyGaragesSell";
             this.tableLayoutPanel6.SetRowSpan(this.buttonUserCompanyGaragesSell, 2);
-            this.buttonUserCompanyGaragesSell.Size = new System.Drawing.Size(144, 66);
+            this.buttonUserCompanyGaragesSell.Size = new System.Drawing.Size(84, 66);
             this.buttonUserCompanyGaragesSell.TabIndex = 28;
             this.buttonUserCompanyGaragesSell.Text = "Sell";
             this.buttonUserCompanyGaragesSell.UseVisualStyleBackColor = true;
@@ -1010,9 +1019,9 @@
             // buttonUserCompanyGaragesUpgrade
             // 
             this.buttonUserCompanyGaragesUpgrade.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesUpgrade.Location = new System.Drawing.Point(153, 3);
+            this.buttonUserCompanyGaragesUpgrade.Location = new System.Drawing.Point(187, 3);
             this.buttonUserCompanyGaragesUpgrade.Name = "buttonUserCompanyGaragesUpgrade";
-            this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(138, 30);
+            this.buttonUserCompanyGaragesUpgrade.Size = new System.Drawing.Size(84, 30);
             this.buttonUserCompanyGaragesUpgrade.TabIndex = 24;
             this.buttonUserCompanyGaragesUpgrade.Text = "Upgrade";
             this.buttonUserCompanyGaragesUpgrade.UseVisualStyleBackColor = true;
@@ -1021,14 +1030,36 @@
             // buttonUserCompanyGaragesManage
             // 
             this.buttonUserCompanyGaragesManage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUserCompanyGaragesManage.Location = new System.Drawing.Point(447, 3);
+            this.buttonUserCompanyGaragesManage.Location = new System.Drawing.Point(367, 3);
             this.buttonUserCompanyGaragesManage.Name = "buttonUserCompanyGaragesManage";
             this.tableLayoutPanel6.SetRowSpan(this.buttonUserCompanyGaragesManage, 2);
-            this.buttonUserCompanyGaragesManage.Size = new System.Drawing.Size(94, 66);
+            this.buttonUserCompanyGaragesManage.Size = new System.Drawing.Size(84, 66);
             this.buttonUserCompanyGaragesManage.TabIndex = 19;
             this.buttonUserCompanyGaragesManage.Text = "Manage";
             this.buttonUserCompanyGaragesManage.UseVisualStyleBackColor = true;
             this.buttonUserCompanyGaragesManage.Click += new System.EventHandler(this.buttonUserCompanyGaragesManage_Click);
+            // 
+            // buttonUserCompanyGaragesSelectAll
+            // 
+            this.buttonUserCompanyGaragesSelectAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyGaragesSelectAll.Location = new System.Drawing.Point(457, 3);
+            this.buttonUserCompanyGaragesSelectAll.Name = "buttonUserCompanyGaragesSelectAll";
+            this.buttonUserCompanyGaragesSelectAll.Size = new System.Drawing.Size(84, 30);
+            this.buttonUserCompanyGaragesSelectAll.TabIndex = 29;
+            this.buttonUserCompanyGaragesSelectAll.Text = "Select All";
+            this.buttonUserCompanyGaragesSelectAll.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesSelectAll.Click += new System.EventHandler(this.buttonUserCompanyGaragesSelectAll_Click);
+            // 
+            // buttonUserCompanyGaragesUnSelectAll
+            // 
+            this.buttonUserCompanyGaragesUnSelectAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyGaragesUnSelectAll.Location = new System.Drawing.Point(457, 39);
+            this.buttonUserCompanyGaragesUnSelectAll.Name = "buttonUserCompanyGaragesUnSelectAll";
+            this.buttonUserCompanyGaragesUnSelectAll.Size = new System.Drawing.Size(84, 30);
+            this.buttonUserCompanyGaragesUnSelectAll.TabIndex = 30;
+            this.buttonUserCompanyGaragesUnSelectAll.Text = "Unselect All";
+            this.buttonUserCompanyGaragesUnSelectAll.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyGaragesUnSelectAll.Click += new System.EventHandler(this.buttonUserCompanyGaragesUnSelectAll_Click);
             // 
             // panelGarages
             // 
@@ -1045,14 +1076,14 @@
             // 
             // labelUserCompanyGaragesCurrent
             // 
-            this.labelUserCompanyGaragesCurrent.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelUserCompanyGaragesCurrent.AutoSize = true;
+            this.labelUserCompanyGaragesCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelUserCompanyGaragesCurrent.Location = new System.Drawing.Point(460, 14);
             this.labelUserCompanyGaragesCurrent.Name = "labelUserCompanyGaragesCurrent";
             this.labelUserCompanyGaragesCurrent.Size = new System.Drawing.Size(25, 13);
             this.labelUserCompanyGaragesCurrent.TabIndex = 22;
             this.labelUserCompanyGaragesCurrent.Text = "000";
-            this.labelUserCompanyGaragesCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelUserCompanyGaragesCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // labelUserCompanyGaragesDelimetry
             // 
@@ -1067,7 +1098,8 @@
             // 
             // labelUserCompanyGaragesTotal
             // 
-            this.labelUserCompanyGaragesTotal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.labelUserCompanyGaragesTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelUserCompanyGaragesTotal.AutoSize = true;
             this.labelUserCompanyGaragesTotal.Location = new System.Drawing.Point(506, 14);
@@ -1075,7 +1107,7 @@
             this.labelUserCompanyGaragesTotal.Size = new System.Drawing.Size(25, 13);
             this.labelUserCompanyGaragesTotal.TabIndex = 19;
             this.labelUserCompanyGaragesTotal.Text = "000";
-            this.labelUserCompanyGaragesTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelUserCompanyGaragesTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelUserCompanyGarages
             // 
@@ -1113,24 +1145,28 @@
             this.tableLayoutPanelCompanyBottomDataDrivers.RowCount = 3;
             this.tableLayoutPanelCompanyBottomDataDrivers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelCompanyBottomDataDrivers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelCompanyBottomDataDrivers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanelCompanyBottomDataDrivers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.tableLayoutPanelCompanyBottomDataDrivers.Size = new System.Drawing.Size(544, 393);
             this.tableLayoutPanelCompanyBottomDataDrivers.TabIndex = 0;
             // 
             // tableLayoutPanelCompanyBottomDataDriversControls
             // 
-            this.tableLayoutPanelCompanyBottomDataDriversControls.ColumnCount = 2;
+            this.tableLayoutPanelCompanyBottomDataDriversControls.ColumnCount = 3;
             this.tableLayoutPanelCompanyBottomDataDriversControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelCompanyBottomDataDriversControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelCompanyBottomDataDriversControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanelCompanyBottomDataDriversControls.Controls.Add(this.buttonUserCompanyDriversHire, 0, 0);
             this.tableLayoutPanelCompanyBottomDataDriversControls.Controls.Add(this.buttonUserCompanyDriversFire, 1, 0);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Controls.Add(this.buttonUserCompanyDriversSelectAll, 2, 0);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Controls.Add(this.buttonUserCompanyDriversUnSelectAll, 2, 1);
             this.tableLayoutPanelCompanyBottomDataDriversControls.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelCompanyBottomDataDriversControls.Location = new System.Drawing.Point(0, 339);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Location = new System.Drawing.Point(0, 321);
             this.tableLayoutPanelCompanyBottomDataDriversControls.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelCompanyBottomDataDriversControls.Name = "tableLayoutPanelCompanyBottomDataDriversControls";
-            this.tableLayoutPanelCompanyBottomDataDriversControls.RowCount = 1;
+            this.tableLayoutPanelCompanyBottomDataDriversControls.RowCount = 2;
             this.tableLayoutPanelCompanyBottomDataDriversControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelCompanyBottomDataDriversControls.Size = new System.Drawing.Size(544, 54);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelCompanyBottomDataDriversControls.Size = new System.Drawing.Size(544, 72);
             this.tableLayoutPanelCompanyBottomDataDriversControls.TabIndex = 22;
             // 
             // buttonUserCompanyDriversHire
@@ -1139,7 +1175,8 @@
             this.buttonUserCompanyDriversHire.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonUserCompanyDriversHire.Location = new System.Drawing.Point(3, 3);
             this.buttonUserCompanyDriversHire.Name = "buttonUserCompanyDriversHire";
-            this.buttonUserCompanyDriversHire.Size = new System.Drawing.Size(266, 48);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.SetRowSpan(this.buttonUserCompanyDriversHire, 2);
+            this.buttonUserCompanyDriversHire.Size = new System.Drawing.Size(221, 66);
             this.buttonUserCompanyDriversHire.TabIndex = 26;
             this.buttonUserCompanyDriversHire.Text = "Hire";
             this.buttonUserCompanyDriversHire.UseVisualStyleBackColor = true;
@@ -1149,9 +1186,10 @@
             // 
             this.buttonUserCompanyDriversFire.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonUserCompanyDriversFire.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonUserCompanyDriversFire.Location = new System.Drawing.Point(275, 3);
+            this.buttonUserCompanyDriversFire.Location = new System.Drawing.Point(230, 3);
             this.buttonUserCompanyDriversFire.Name = "buttonUserCompanyDriversFire";
-            this.buttonUserCompanyDriversFire.Size = new System.Drawing.Size(266, 48);
+            this.tableLayoutPanelCompanyBottomDataDriversControls.SetRowSpan(this.buttonUserCompanyDriversFire, 2);
+            this.buttonUserCompanyDriversFire.Size = new System.Drawing.Size(221, 66);
             this.buttonUserCompanyDriversFire.TabIndex = 27;
             this.buttonUserCompanyDriversFire.Text = "Fire";
             this.buttonUserCompanyDriversFire.UseVisualStyleBackColor = true;
@@ -1193,14 +1231,14 @@
             // 
             // labelUserCompanyDriversCurrent
             // 
-            this.labelUserCompanyDriversCurrent.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelUserCompanyDriversCurrent.AutoSize = true;
+            this.labelUserCompanyDriversCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelUserCompanyDriversCurrent.Location = new System.Drawing.Point(460, 14);
             this.labelUserCompanyDriversCurrent.Name = "labelUserCompanyDriversCurrent";
             this.labelUserCompanyDriversCurrent.Size = new System.Drawing.Size(25, 13);
             this.labelUserCompanyDriversCurrent.TabIndex = 24;
             this.labelUserCompanyDriversCurrent.Text = "000";
-            this.labelUserCompanyDriversCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelUserCompanyDriversCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // labelUserCompanyDrivers
             // 
@@ -1220,7 +1258,7 @@
             this.listBoxUserCompanyDrivers.Location = new System.Drawing.Point(3, 43);
             this.listBoxUserCompanyDrivers.Name = "listBoxUserCompanyDrivers";
             this.listBoxUserCompanyDrivers.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxUserCompanyDrivers.Size = new System.Drawing.Size(538, 293);
+            this.listBoxUserCompanyDrivers.Size = new System.Drawing.Size(538, 275);
             this.listBoxUserCompanyDrivers.TabIndex = 1;
             this.listBoxUserCompanyDrivers.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxUserCompanyDrivers_DrawItem);
             this.listBoxUserCompanyDrivers.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxUserCompanyDrivers_MeasureItem);
@@ -1251,7 +1289,7 @@
             this.tableLayoutPanelCompanyBottomDataVisitedCities.RowCount = 3;
             this.tableLayoutPanelCompanyBottomDataVisitedCities.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelCompanyBottomDataVisitedCities.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelCompanyBottomDataVisitedCities.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanelCompanyBottomDataVisitedCities.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.tableLayoutPanelCompanyBottomDataVisitedCities.Size = new System.Drawing.Size(544, 393);
             this.tableLayoutPanelCompanyBottomDataVisitedCities.TabIndex = 30;
             // 
@@ -1265,25 +1303,29 @@
             this.listBoxVisitedCities.Location = new System.Drawing.Point(3, 43);
             this.listBoxVisitedCities.Name = "listBoxVisitedCities";
             this.listBoxVisitedCities.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxVisitedCities.Size = new System.Drawing.Size(538, 293);
+            this.listBoxVisitedCities.Size = new System.Drawing.Size(538, 275);
             this.listBoxVisitedCities.TabIndex = 19;
             this.listBoxVisitedCities.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxVisitedCities_DrawItem);
             this.listBoxVisitedCities.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBoxVisitedCities_MeasureItem);
             // 
             // tableLayoutPanel5
             // 
-            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesVisit, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesUnVisit, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesSelectAll, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.buttonUserCompanyCitiesUnSelectAll, 2, 1);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 339);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 321);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(544, 54);
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(544, 72);
             this.tableLayoutPanel5.TabIndex = 21;
             // 
             // buttonUserCompanyCitiesVisit
@@ -1292,7 +1334,8 @@
             this.buttonUserCompanyCitiesVisit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonUserCompanyCitiesVisit.Location = new System.Drawing.Point(3, 3);
             this.buttonUserCompanyCitiesVisit.Name = "buttonUserCompanyCitiesVisit";
-            this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(266, 48);
+            this.tableLayoutPanel5.SetRowSpan(this.buttonUserCompanyCitiesVisit, 2);
+            this.buttonUserCompanyCitiesVisit.Size = new System.Drawing.Size(221, 66);
             this.buttonUserCompanyCitiesVisit.TabIndex = 26;
             this.buttonUserCompanyCitiesVisit.Text = "Visit";
             this.buttonUserCompanyCitiesVisit.UseVisualStyleBackColor = true;
@@ -1302,13 +1345,36 @@
             // 
             this.buttonUserCompanyCitiesUnVisit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonUserCompanyCitiesUnVisit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonUserCompanyCitiesUnVisit.Location = new System.Drawing.Point(275, 3);
+            this.buttonUserCompanyCitiesUnVisit.Location = new System.Drawing.Point(230, 3);
             this.buttonUserCompanyCitiesUnVisit.Name = "buttonUserCompanyCitiesUnVisit";
-            this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(266, 48);
+            this.tableLayoutPanel5.SetRowSpan(this.buttonUserCompanyCitiesUnVisit, 2);
+            this.buttonUserCompanyCitiesUnVisit.Size = new System.Drawing.Size(221, 66);
             this.buttonUserCompanyCitiesUnVisit.TabIndex = 27;
             this.buttonUserCompanyCitiesUnVisit.Text = "Unvisit";
             this.buttonUserCompanyCitiesUnVisit.UseVisualStyleBackColor = true;
             this.buttonUserCompanyCitiesUnVisit.Click += new System.EventHandler(this.buttonCitiesUnVisit_Click);
+            // 
+            // buttonUserCompanyCitiesSelectAll
+            // 
+            this.buttonUserCompanyCitiesSelectAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyCitiesSelectAll.Location = new System.Drawing.Point(457, 3);
+            this.buttonUserCompanyCitiesSelectAll.Name = "buttonUserCompanyCitiesSelectAll";
+            this.buttonUserCompanyCitiesSelectAll.Size = new System.Drawing.Size(84, 30);
+            this.buttonUserCompanyCitiesSelectAll.TabIndex = 28;
+            this.buttonUserCompanyCitiesSelectAll.Text = "Select All";
+            this.buttonUserCompanyCitiesSelectAll.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyCitiesSelectAll.Click += new System.EventHandler(this.buttonUserCompanyCitiesSelectAll_Click);
+            // 
+            // buttonUserCompanyCitiesUnSelectAll
+            // 
+            this.buttonUserCompanyCitiesUnSelectAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyCitiesUnSelectAll.Location = new System.Drawing.Point(457, 39);
+            this.buttonUserCompanyCitiesUnSelectAll.Name = "buttonUserCompanyCitiesUnSelectAll";
+            this.buttonUserCompanyCitiesUnSelectAll.Size = new System.Drawing.Size(84, 30);
+            this.buttonUserCompanyCitiesUnSelectAll.TabIndex = 29;
+            this.buttonUserCompanyCitiesUnSelectAll.Text = "Unselect All";
+            this.buttonUserCompanyCitiesUnSelectAll.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyCitiesUnSelectAll.Click += new System.EventHandler(this.buttonUserCompanyCitiesUnSelectAll_Click);
             // 
             // panelVisitedCities
             // 
@@ -1346,14 +1412,14 @@
             // 
             // labelUserCompanyVisitedCitiesCurrent
             // 
-            this.labelUserCompanyVisitedCitiesCurrent.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelUserCompanyVisitedCitiesCurrent.AutoSize = true;
+            this.labelUserCompanyVisitedCitiesCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelUserCompanyVisitedCitiesCurrent.Location = new System.Drawing.Point(460, 14);
             this.labelUserCompanyVisitedCitiesCurrent.Name = "labelUserCompanyVisitedCitiesCurrent";
             this.labelUserCompanyVisitedCitiesCurrent.Size = new System.Drawing.Size(25, 13);
             this.labelUserCompanyVisitedCitiesCurrent.TabIndex = 21;
             this.labelUserCompanyVisitedCitiesCurrent.Text = "000";
-            this.labelUserCompanyVisitedCitiesCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelUserCompanyVisitedCitiesCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // labelUserCompanyVisitedCities
             // 
@@ -2881,6 +2947,28 @@
             this.buttonMainCloseSave.Visible = false;
             this.buttonMainCloseSave.Click += new System.EventHandler(this.buttonMainCloseSave_Click);
             // 
+            // buttonUserCompanyDriversSelectAll
+            // 
+            this.buttonUserCompanyDriversSelectAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyDriversSelectAll.Location = new System.Drawing.Point(457, 3);
+            this.buttonUserCompanyDriversSelectAll.Name = "buttonUserCompanyDriversSelectAll";
+            this.buttonUserCompanyDriversSelectAll.Size = new System.Drawing.Size(84, 30);
+            this.buttonUserCompanyDriversSelectAll.TabIndex = 28;
+            this.buttonUserCompanyDriversSelectAll.Text = "Select All";
+            this.buttonUserCompanyDriversSelectAll.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyDriversSelectAll.Click += new System.EventHandler(this.buttonUserCompanyDriversSelectAll_Click);
+            // 
+            // buttonUserCompanyDriversUnSelectAll
+            // 
+            this.buttonUserCompanyDriversUnSelectAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUserCompanyDriversUnSelectAll.Location = new System.Drawing.Point(457, 39);
+            this.buttonUserCompanyDriversUnSelectAll.Name = "buttonUserCompanyDriversUnSelectAll";
+            this.buttonUserCompanyDriversUnSelectAll.Size = new System.Drawing.Size(84, 30);
+            this.buttonUserCompanyDriversUnSelectAll.TabIndex = 29;
+            this.buttonUserCompanyDriversUnSelectAll.Text = "Unselect All";
+            this.buttonUserCompanyDriversUnSelectAll.UseVisualStyleBackColor = true;
+            this.buttonUserCompanyDriversUnSelectAll.Click += new System.EventHandler(this.buttonUserCompanyDriversUnSelectAll_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3190,6 +3278,12 @@
         private System.Windows.Forms.ToolStripMenuItem contextMenuStripCompanyDriversHire;
         private System.Windows.Forms.ToolStripMenuItem contextMenuStripCompanyDriversFire;
         private System.Windows.Forms.Label labelHelpText;
+        private System.Windows.Forms.Button buttonUserCompanyGaragesSelectAll;
+        private System.Windows.Forms.Button buttonUserCompanyGaragesUnSelectAll;
+        private System.Windows.Forms.Button buttonUserCompanyCitiesSelectAll;
+        private System.Windows.Forms.Button buttonUserCompanyCitiesUnSelectAll;
+        private System.Windows.Forms.Button buttonUserCompanyDriversSelectAll;
+        private System.Windows.Forms.Button buttonUserCompanyDriversUnSelectAll;
     }
 }
 
