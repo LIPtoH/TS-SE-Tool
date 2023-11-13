@@ -82,6 +82,14 @@ namespace TS_SE_Tool.Save.Items
 
         internal List<bool> driver_quit_warned { get; set; } = new List<bool>();
 
+        //v1.49
+
+        internal List<int> driver_flags { get; set; } = new List<int>();
+
+        internal List<int> driver_undrivable_truck_timers { get; set; } = new List<int>();
+
+        //v1.49
+
         #endregion
         internal Player()
         { }
@@ -109,6 +117,8 @@ namespace TS_SE_Tool.Save.Items
                     switch (tagLine)
                     {
                         case "":
+                        case "player":
+                        case "}":
                             {
                                 break;
                             }
@@ -376,11 +386,45 @@ namespace TS_SE_Tool.Save.Items
                                 driver_quit_warned.Add(bool.Parse(dataLine));
                                 break;
                             }
+
+                        //v1.49
+
+                        case "driver_flags":
+                            {
+                                driver_flags.Capacity = int.Parse(dataLine);
+                                break;
+                            }
+
+                        case var s when s.StartsWith("driver_flags["):
+                            {
+                                driver_flags.Add(int.Parse(dataLine));
+                                break;
+                            }
+
+                        case "driver_undrivable_truck_timers":
+                            {
+                                driver_undrivable_truck_timers.Capacity = int.Parse(dataLine);
+                                break;
+                            }
+
+                        case var s when s.StartsWith("driver_undrivable_truck_timers["):
+                            {
+                                driver_undrivable_truck_timers.Add(int.Parse(dataLine));
+                                break;
+                            }
+
+                        //v1.49
+
+                        default:
+                            {
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -458,9 +502,23 @@ namespace TS_SE_Tool.Save.Items
             for (int i = 0; i < drivers.Count; i++)
                 returnSB.AppendLine(" drivers[" + i + "]: " + drivers[i]);
 
+            if (_version >= 71)
+            {
+                returnSB.AppendLine(" driver_flags: " + driver_flags.Count);
+                for (int i = 0; i < driver_flags.Count; i++)
+                    returnSB.AppendLine(" driver_flags[" + i + "]: " + driver_flags[i].ToString());
+            }
+
             returnSB.AppendLine(" driver_readiness_timer: " + driver_readiness_timer.Count);
             for (int i = 0; i < driver_readiness_timer.Count; i++)
                 returnSB.AppendLine(" driver_readiness_timer[" + i + "]: " + driver_readiness_timer[i].ToString());
+
+            if (_version >= 71)
+            {
+                returnSB.AppendLine(" driver_undrivable_truck_timers: " + driver_undrivable_truck_timers.Count);
+                for (int i = 0; i < driver_undrivable_truck_timers.Count; i++)
+                    returnSB.AppendLine(" driver_undrivable_truck_timers[" + i + "]: " + driver_undrivable_truck_timers[i].ToString());
+            }
 
             returnSB.AppendLine(" driver_quit_warned: " + driver_quit_warned.Count);
             for (int i = 0; i < driver_quit_warned.Count; i++)

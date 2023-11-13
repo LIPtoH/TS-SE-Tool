@@ -189,6 +189,12 @@ namespace TS_SE_Tool.Save.Items
         internal int bus_game_time { get; set; } = 0;
         internal int bus_playing_time { get; set; } = 0;
 
+        //v1.49
+
+        internal string used_vehicle_assortment { get; set; } = "";
+
+        //v1.49
+
         #endregion
 
         internal Economy()
@@ -218,6 +224,8 @@ namespace TS_SE_Tool.Save.Items
                     switch (tagLine)
                     {
                         case "":
+                        case "economy":
+                        case "}":
                             {
                                 break;
                             }
@@ -1091,13 +1099,30 @@ namespace TS_SE_Tool.Save.Items
                                 bus_playing_time = int.Parse(dataLine);
                                 break;
                             }
+
+                        //v1.49
+
+                        case "used_vehicle_assortment":
+                            {
+                                used_vehicle_assortment = dataLine;
+                                break;
+                            }
+
+                        //v1.49
+
+                        default:
+                            {
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
+
                 //Populate helping variables
                 setPlayerSkillsArray();
             }
@@ -1336,6 +1361,11 @@ namespace TS_SE_Tool.Save.Items
             for (int i = 0; i < drivers_offer.Count; i++)
                 returnSB.AppendLine(" drivers_offer[" + i + "]: " + drivers_offer[i]);
 
+            if (_version >= 71)
+            {
+                returnSB.AppendLine(" used_vehicle_assortment: " + used_vehicle_assortment);
+            }
+
             returnSB.AppendLine(" freelance_truck_offer: " + freelance_truck_offer);
 
             returnSB.AppendLine(" trucks_bought_online: " + trucks_bought_online.ToString());
@@ -1455,6 +1485,5 @@ namespace TS_SE_Tool.Save.Items
 
             experience_points = experience;
         }
-
     }
 }

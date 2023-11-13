@@ -27,5 +27,9 @@ namespace TS_SE_Tool.Save.Items
         {
             return _message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + _tagLine + " = " + _dataLine;
         }
+        internal string WriteErrorMsg( string _tagLine, string _dataLine)
+        {
+            return this.GetType().Name.ToLower() + " | " + _tagLine + " = " + _dataLine;
+        }
     }
 }

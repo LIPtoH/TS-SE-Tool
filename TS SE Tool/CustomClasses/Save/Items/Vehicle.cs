@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 using TS_SE_Tool.Utilities;
 using TS_SE_Tool.Save.DataFormat;
-using TS_SE_Tool.CustomClasses.Global;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -22,6 +21,22 @@ namespace TS_SE_Tool.Save.Items
         internal SCS_Float      chassis_wear { get; set; } = 0;
 
         internal List<SCS_Float> wheels_wear { get; set; } = new List<SCS_Float>();
+
+        //v1.49
+        internal SCS_Float      engine_wear_unfixable { get; set; } = 0;
+
+        internal SCS_Float      transmission_wear_unfixable { get; set; } = 0;
+
+        internal SCS_Float      cabin_wear_unfixable { get; set; } = 0;
+
+        internal SCS_Float      chassis_wear_unfixable { get; set; } = 0;
+
+        internal List<SCS_Float> wheels_wear_unfixable { get; set; } = new List<SCS_Float>();
+
+        internal uint       integrity_odometer { get; set; } = 0;
+        internal SCS_Float  integrity_odometer_float_part { get; set; } = 0;
+
+        //v1.49
 
         internal List<string> accessories { get; set; } = new List<string>();
 
@@ -90,6 +105,8 @@ namespace TS_SE_Tool.Save.Items
                     switch (tagLine)
                     {
                         case "":
+                        case "vehicle":
+                        case "}":
                             {
                                 break;
                             }
@@ -129,6 +146,58 @@ namespace TS_SE_Tool.Save.Items
                                 wheels_wear.Add(dataLine);
                                 break;
                             }
+
+                        //v1.49
+
+                        case "engine_wear_unfixable":
+                            {
+                                engine_wear_unfixable = dataLine;
+                                break;
+                            }
+
+                        case "transmission_wear_unfixable":
+                            {
+                                transmission_wear_unfixable = dataLine;
+                                break;
+                            }
+
+                        case "cabin_wear_unfixable":
+                            {
+                                cabin_wear_unfixable = dataLine;
+                                break;
+                            }
+
+                        case "chassis_wear_unfixable":
+                            {
+                                chassis_wear_unfixable = dataLine;
+                                break;
+                            }
+
+                        case "wheels_wear_unfixable":
+                            {
+                                wheels_wear_unfixable.Capacity = int.Parse(dataLine);
+                                break;
+                            }
+
+                        case var s when s.StartsWith("wheels_wear_unfixable["):
+                            {
+                                wheels_wear_unfixable.Add(dataLine);
+                                break;
+                            }
+
+                        case "integrity_odometer":
+                            {
+                                integrity_odometer = uint.Parse(dataLine);
+                                break;
+                            }
+
+                        case "integrity_odometer_float_part":
+                            {
+                                integrity_odometer_float_part = dataLine;
+                                break;
+                            }
+
+                        //v1.49
 
                         case "fuel_relative":
                             {
@@ -249,17 +318,23 @@ namespace TS_SE_Tool.Save.Items
                                 trip_time_min = uint.Parse(dataLine);
                                 break;
                             }
-
+                            
                         case "trip_time":
                             {
                                 trip_time = dataLine;
+                                break;
+                            }
+                            
+                        default:
+                            {
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -276,6 +351,13 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" engine_wear: " + engine_wear.ToString());
             returnSB.AppendLine(" transmission_wear: " + transmission_wear.ToString());
             returnSB.AppendLine(" cabin_wear: " + cabin_wear.ToString());
+
+            if (_version >= 71)
+            {
+                returnSB.AppendLine(" engine_wear_unfixable: " + engine_wear_unfixable.ToString());
+                returnSB.AppendLine(" transmission_wear_unfixable: " + transmission_wear_unfixable.ToString());
+                returnSB.AppendLine(" cabin_wear_unfixable: " + cabin_wear_unfixable.ToString());
+            }
 
             returnSB.AppendLine(" fuel_relative: " + fuel_relative.ToString());
 
@@ -299,7 +381,13 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" odometer: " + odometer);
             returnSB.AppendLine(" odometer_float_part: " + odometer_float_part.ToString());
-                       
+
+            if (_version >= 71)
+            {
+                returnSB.AppendLine(" integrity_odometer: " + integrity_odometer); //v71
+                returnSB.AppendLine(" integrity_odometer_float_part: " + integrity_odometer_float_part.ToString()); //v71
+            }
+
             returnSB.AppendLine(" trip_fuel_l: " + trip_fuel_l);
             returnSB.AppendLine(" trip_fuel: " + trip_fuel.ToString());
             returnSB.AppendLine(" trip_distance_km: " + trip_distance_km);
@@ -311,10 +399,21 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" chassis_wear: " + chassis_wear.ToString());
 
+            if (_version >= 71)
+            {
+                returnSB.AppendLine(" chassis_wear_unfixable: " + chassis_wear_unfixable.ToString()); //v71
+            }
+
             returnSB.AppendLine(" wheels_wear: " + wheels_wear.Count);
             for (int i = 0; i < wheels_wear.Count; i++)
                 returnSB.AppendLine(" wheels_wear[" + i + "]: " + wheels_wear[i].ToString());
 
+            if (_version >= 71)
+            {
+                returnSB.AppendLine(" wheels_wear_unfixable: " + wheels_wear_unfixable.Count); //v71
+                for (int i = 0; i < wheels_wear_unfixable.Count; i++)
+                    returnSB.AppendLine(" wheels_wear_unfixable[" + i + "]: " + wheels_wear_unfixable[i].ToString());
+            }
 
             returnSB.AppendLine("}");
 
@@ -325,6 +424,4 @@ namespace TS_SE_Tool.Save.Items
             return returnString;
         }
     }
-
-    
 }

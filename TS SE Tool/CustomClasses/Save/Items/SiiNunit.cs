@@ -115,10 +115,6 @@ namespace TS_SE_Tool.Save.Items
             switch (tagLine)
             {
                 case "":
-                    {
-                        break;
-                    }
-
                 case "}":
                     {
                         break;
@@ -368,6 +364,20 @@ namespace TS_SE_Tool.Save.Items
                     {
                         return new Bus_job_Log(_input);
                     }
+
+                //v1.49
+
+                case "used_vehicle_assortment":
+                    {
+                        return new Used_vehicle_Assortment(_input);
+                    }
+
+                case "used_truck_offer":
+                    {
+                        return new Used_truck_Offer(_input);
+                    }
+
+                //v1.49
 
                 default:
                     {
@@ -872,34 +882,64 @@ namespace TS_SE_Tool.Save.Items
 
             //=== AI Drivers offer
 
-            List<string> AI_Drivers = new List<string>();
+            processAIDrivers(Economy.drivers_offer);
 
-            AI_Drivers.AddRange(Economy.drivers_offer);
-            AI_Drivers.AddRange(Economy.driver_pool);
+            //v1.49
+            //=== Used vehicle Assortment
 
-            foreach (string item in AI_Drivers.Where(x => x != null && x != "null"))
+            if (_version >= 71)
             {
-                Driver_AI Driver_AI = SiiNitems[item];
+                returnSB.AppendLine(SiiNitems[Economy.used_vehicle_assortment].PrintOut(_version, Economy.used_vehicle_assortment));
 
-                returnSB.AppendLine(Driver_AI.PrintOut(_version, item));
-
-                //
-
-                string jobNameless = Driver_AI.driver_job;
-
-                returnSB.AppendLine(SiiNitems[jobNameless].PrintOut(_version, jobNameless));
-
-                //
-
-                string logNameless = Driver_AI.profit_log;
-
-                Profit_log Profit_log = SiiNitems[logNameless];
-
-                returnSB.AppendLine(Profit_log.PrintOut(_version, logNameless));
-
-                foreach (string statNameless in Profit_log.stats_data.Where(x => x != null && x != "null"))
+                foreach (string item in ((Used_vehicle_Assortment)SiiNitems[Economy.used_vehicle_assortment]).trucks.Where(x => x != null && x != "null"))
                 {
-                    returnSB.AppendLine(SiiNitems[statNameless].PrintOut(_version, statNameless));
+                    Used_truck_Offer UTO = SiiNitems[item];
+
+                    returnSB.AppendLine(UTO.PrintOut(_version, item));
+
+                    Vehicle Truck = SiiNitems[UTO.truck];
+
+                    returnSB.AppendLine(Truck.PrintOut(_version, UTO.truck));
+
+                    foreach (string accNameless in Truck.accessories.Where(x => x != null && x != "null"))
+                    {
+                        returnSB.AppendLine(SiiNitems[accNameless].PrintOut(_version, accNameless));
+                    }
+                }
+            }
+
+            //v1.49
+
+            //=== AI Drivers pool
+
+            processAIDrivers(Economy.driver_pool);
+
+            void processAIDrivers(List<string> _ai_drivers)
+            {
+                foreach (string item in _ai_drivers.Where(x => x != null && x != "null"))
+                {
+                    Driver_AI Driver_AI = SiiNitems[item];
+
+                    returnSB.AppendLine(Driver_AI.PrintOut(_version, item));
+
+                    //
+
+                    string jobNameless = Driver_AI.driver_job;
+
+                    returnSB.AppendLine(SiiNitems[jobNameless].PrintOut(_version, jobNameless));
+
+                    //
+
+                    string logNameless = Driver_AI.profit_log;
+
+                    Profit_log Profit_log = SiiNitems[logNameless];
+
+                    returnSB.AppendLine(Profit_log.PrintOut(_version, logNameless));
+
+                    foreach (string statNameless in Profit_log.stats_data.Where(x => x != null && x != "null"))
+                    {
+                        returnSB.AppendLine(SiiNitems[statNameless].PrintOut(_version, statNameless));
+                    }
                 }
             }
 
