@@ -42,7 +42,7 @@ namespace TS_SE_Tool
             Application.OpenForms.OfType<FormMain>().Single().SiiNunitData.NamelessControlList.Remove(_input);
         }
     }
-    
+
     public delegate void AddStatusMessageDelegate(SMStatus _status, string _message, string _option);
     public delegate DialogResult AddStatusMessageBoxDelegate(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons, MessageBoxIcon _icon);
 
@@ -167,10 +167,10 @@ namespace TS_SE_Tool
 
                 ProgSettingsV.ProgramVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-                SupportedSavefileVersionETS2 = new int[] { 61, 70 }; //Supported save version
-                SupportedGameVersionETS2 = "1.43.x - 1.48.x"; //Last game version Tested on
+                SupportedSavefileVersionETS2 = new int[] { 61, 74 }; //Supported save version
+                SupportedGameVersionETS2 = "1.43.x - 1.49.x"; //Last game version Tested on
                 //SupportedSavefileVersionATS;
-                SupportedGameVersionATS = "1.43.x - 1.48.x"; //Last game version Tested on
+                SupportedGameVersionATS = "1.43.x - 1.49.x"; //Last game version Tested on
 
                 comboBoxRootFolders.FlatStyle =
                 comboBoxProfiles.FlatStyle =
@@ -1505,7 +1505,7 @@ namespace TS_SE_Tool
 
             return result;
         }
-        
+
         //end Form methods
     }
 }
