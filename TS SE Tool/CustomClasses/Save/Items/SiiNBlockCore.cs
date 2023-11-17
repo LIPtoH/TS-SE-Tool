@@ -9,13 +9,11 @@ namespace TS_SE_Tool.Save.Items
 {
     internal class SiiNBlockCore
     {
-        private FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
-
         internal List<string> UnidentifiedLines = new List<string>();
 
         internal void removeWritenBlock(string _input)
         {
-            MainForm.SiiNunitData.NamelessControlList.Remove(_input);
+            TSSET_Help.fmRemoveWritenBlock(_input);
         }
 
         internal string WriteUnidentifiedLines()
@@ -27,6 +25,7 @@ namespace TS_SE_Tool.Save.Items
         {
             return _message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + _tagLine + " = " + _dataLine;
         }
+
         internal string WriteErrorMsg( string _tagLine, string _dataLine)
         {
             return this.GetType().Name.ToLower() + " | " + _tagLine + " = " + _dataLine;

@@ -35,6 +35,13 @@ namespace TS_SE_Tool
         Info = 1,
         Error = 2
     }
+    internal class TSSET_Help
+    {
+        internal static void fmRemoveWritenBlock(string _input)
+        {
+            Application.OpenForms.OfType<FormMain>().Single().SiiNunitData.NamelessControlList.Remove(_input);
+        }
+    }
     
     public delegate void AddStatusMessageDelegate(SMStatus _status, string _message, string _option);
     public delegate DialogResult AddStatusMessageBoxDelegate(FormMain _this, string _text, string _caption, MessageBoxButtons _buttons, MessageBoxIcon _icon);
