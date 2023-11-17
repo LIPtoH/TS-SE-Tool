@@ -111,7 +111,7 @@ namespace TS_SE_Tool
 
         internal Save.Items.SiiNunit SiiNunitData;
 
-        public SaveFileProfileData MainSaveFileProfileData;
+        internal SaveFileProfileData MainSaveFileProfileData;
         internal SaveFileInfoData MainSaveFileInfoData;
 
         //
