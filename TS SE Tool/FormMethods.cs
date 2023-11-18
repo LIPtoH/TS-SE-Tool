@@ -637,7 +637,7 @@ namespace TS_SE_Tool
             this.ResumeLayout();
         }
 
-        private void PopulateFormControlsk()
+        private void PopulateFormControls()
         {
             AddTranslationToData();
             

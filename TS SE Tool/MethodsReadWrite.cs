@@ -857,7 +857,7 @@ namespace TS_SE_Tool
             ToggleMainControlsAccess(true);
             ToggleControlsAccess(true);
 
-            PopulateFormControlsk();
+            PopulateFormControls();
 
             IO_Utilities.LogWriter("Successfully completed work with " + Globals.SelectedSavePath + " save file");
 
