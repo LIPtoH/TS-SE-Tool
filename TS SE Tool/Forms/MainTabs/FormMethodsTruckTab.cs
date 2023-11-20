@@ -24,6 +24,7 @@ using System.Globalization;
 
 using TS_SE_Tool.Utilities;
 using TS_SE_Tool.Global;
+using System.Threading;
 
 namespace TS_SE_Tool
 {
@@ -258,6 +259,8 @@ namespace TS_SE_Tool
             if (UserTruckDictionary == null)
                 return;
 
+            // Creating Data table
+
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("UserTruckNameless", typeof(string));
             combDT.Columns.Add(dc);
@@ -277,69 +280,106 @@ namespace TS_SE_Tool
             dc = new DataColumn("TruckState", typeof(byte));
             combDT.Columns.Add(dc);
 
+            CultureInfo ci = Thread.CurrentThread.CurrentUICulture;
+
+            string stringQT = ResourceManagerMain.GetPlainString("QuickJobTruckShort", ci),
+                    stringUT = ResourceManagerMain.GetPlainString("UsersTruckShort", ci),
+                    stringIU = ResourceManagerMain.GetPlainString("InUse", ci),
+                    stringIM = ResourceManagerMain.GetPlainString("ItemMissing", ci);
+
+
             DataColumn dcDisplay = new DataColumn("DisplayMember");
-            dcDisplay.Expression = string.Format("IIF(UserTruckNameless <> 'null'," +
-                                                " '[' + IIF(TruckState <> '3', IIF(TruckType = '0', 'Q' ,'U') ,'S') +'] ' + IIF(GarageName <> '', {1} +' || ','') + {2} + IIF(DriverName <> 'null'," +
-                                                " ' || In use - ' + {3},''), '-- NONE --')",
+            dcDisplay.Expression = string.Format("IIF(UserTruckNameless <> 'null', " +
+                                                "'[' + IIF(TruckState <> '3', IIF(TruckType = '0', '" + stringQT + "' ,'" + stringUT + "') ,'S') +'] ' + " +
+                                                "IIF(GarageName <> '', {1} +' || ','') + " +
+                                                "{2} + IIF(DriverName <> 'null', ' || " + stringIU + " - ' + {3},''), '" + stringIM + "')",
                                                 "TruckType", "GarageName", "TruckName", "DriverName", "TruckState");
             combDT.Columns.Add(dcDisplay);
-            //
 
+            //===
+
+            //Iterate through User trucks
             foreach (KeyValuePair<string, UserCompanyTruckData> UserTruck in UserTruckDictionary)
             {
+                if (String.IsNullOrEmpty(UserTruck.Key))
+                    continue;
+
                 if (UserTruck.Value == null)
+                    continue;
+
+                if (UserTruck.Value.TruckMainData == null)
                     continue;
 
                 if (UserTruck.Value.TruckMainData.accessories.Count == 0)
                     continue;
 
-                string truckname = "undetected", truckNameless = "";
+                //Setup values
+                string truckName = "undetected", 
+                    truckNameless = UserTruck.Key; //link
                 string tmpTruckName = "", tmpGarageName = "", tmpDriverName = "";
-                byte tmpTruckType = 0, tmpTruckState = 0;
-
-                //link
-                truckNameless = UserTruck.Key;
+                byte tmpTruckType = 0, tmpTruckState = 1;
 
                 //Quick job or Bought
                 if (UserTruck.Value.Users)
                 {
                     tmpTruckType = 1;
 
+                    tmpTruckState = 2;
+
                     //Garage
                     tmpGarageName = GaragesList.Find(x => x.Vehicles.Contains(truckNameless)).GarageNameTranslated;
-
-                    tmpTruckState = 2;
                 }
-                else
-                {
-                    tmpTruckType = 0;
-
-                    tmpTruckState = 1;
-                }   
 
                 //Brand
                 foreach (string accLink in UserTruck.Value.TruckMainData.accessories)
                 {
-                    Type t = SiiNunitData.SiiNitems[accLink].GetType();
-
-                    if (t.Name == "Vehicle_Accessory")
-                    {
-                        Save.Items.Vehicle_Accessory tmp = (Save.Items.Vehicle_Accessory)SiiNunitData.SiiNitems[accLink];
-                        if (tmp.accType == "basepart")
+                    if (!String.IsNullOrEmpty(accLink))
+                        if (SiiNunitData.SiiNitems[accLink].GetType().Name == "Vehicle_Accessory")
                         {
-                            truckname = tmp.data_path.Split(new char[] { '"' })[1].Split(new char[] { '/' })[4];
+                            var tmpAcc = (Save.Items.Vehicle_Accessory) SiiNunitData.SiiNitems[accLink];
+
+                            if (tmpAcc.accType == "basepart")
+                            {
+                                if (!String.IsNullOrEmpty(tmpAcc.data_path))
+                                {
+                                    try
+                                    {
+                                        var tmpParts = tmpAcc.data_path.Split(new char[] { '"' }, StringSplitOptions.RemoveEmptyEntries)[0]
+                                        .Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+                                        truckName = tmpParts[tmpParts.Length - 2];
+                                    }
+                                    catch
+                                    { }
+                                }
+
+                                break;
+                            }
                         }
+                }
+
+                if (TruckBrandsLngDict.TryGetValue(truckName, out string truckNameValue))
+                {
+                    if (!String.IsNullOrEmpty(truckNameValue))
+                    {
+                        tmpTruckName = truckNameValue;
+                    }
+                    else
+                    {
+                        tmpTruckName = truckName;
                     }
                 }
-
-                TruckBrandsLngDict.TryGetValue(truckname, out string trucknamevalue);
-
-                if (trucknamevalue != null && trucknamevalue != "")
-                {
-                    tmpTruckName = trucknamevalue;
-                }
                 else
-                    tmpTruckName = truckname;
+                {
+                    var tmpParts = truckName.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (string word in tmpParts)
+                    {
+                        tmpTruckName += Utilities.TextUtilities.CapitalizeWord(word) + " ";
+                    }
+
+                    tmpTruckName = tmpTruckName.TrimEnd(new char[] { ' ' });
+                }    
 
                 //Driver
                 Garages tmpGrg = GaragesList.Where(tX => tX.Vehicles.Contains(truckNameless))?.SingleOrDefault() ?? null;
@@ -353,22 +393,25 @@ namespace TS_SE_Tool
                     tmpDriverName = UserDriverDictionary.Where(tX => tX.Value.AssignedTruck == truckNameless)?.SingleOrDefault().Key ?? "null";
                 }
 
-                if (tmpDriverName != null && tmpDriverName != "null")
+                if (!String.IsNullOrEmpty(tmpDriverName) && tmpDriverName != "null")
+                {
                     if (SiiNunitData.Player.drivers[0] == tmpDriverName || tmpTruckType == 0)
                     {
                         tmpDriverName = "> " + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile);
                     }
                     else
                     {
-                        DriverNames.TryGetValue(tmpDriverName, out string _resultvalue);
-
-                        if (_resultvalue != null && _resultvalue != "")
+                        if (DriverNames.TryGetValue(tmpDriverName, out string _resultvalue))
                         {
-                            tmpDriverName = _resultvalue.TrimStart(new char[] { '+' });
+                            if (!String.IsNullOrEmpty(_resultvalue))
+                            {
+                                tmpDriverName = _resultvalue.TrimStart(new char[] { '+' });
+                            }
                         }
                     }
+                }
 
-                //
+                // Add row
                 combDT.Rows.Add(truckNameless, tmpTruckType, tmpTruckName, tmpGarageName, tmpDriverName, tmpTruckState);
             }
 
