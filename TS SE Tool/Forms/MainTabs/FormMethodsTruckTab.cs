@@ -230,7 +230,7 @@ namespace TS_SE_Tool
             LPpanel.Margin = new Padding(0);
             LPpanel.Name = "TruckLicensePlateIMG";
             LPpanel.BackgroundImageLayout = ImageLayout.Center;
-            LPpanel.BorderStyle = BorderStyle.FixedSingle;
+            LPpanel.BorderStyle = BorderStyle.None;
 
             tableLayoutPanelTruckLP.Controls.Add(LPpanel, 3, 0);
         }
