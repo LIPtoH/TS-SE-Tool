@@ -283,17 +283,17 @@ namespace TS_SE_Tool
             CultureInfo ci = Thread.CurrentThread.CurrentUICulture;
 
             string stringQT = ResourceManagerMain.GetPlainString("QuickJobTruckShort", ci),
-                    stringUT = ResourceManagerMain.GetPlainString("UsersTruckShort", ci),
-                    stringIU = ResourceManagerMain.GetPlainString("InUse", ci),
-                    stringIM = ResourceManagerMain.GetPlainString("ItemMissing", ci);
-
+                   stringUT = ResourceManagerMain.GetPlainString("UsersTruckShort", ci),
+                   stringIU = ResourceManagerMain.GetPlainString("InUse", ci),
+                   stringIM = ResourceManagerMain.GetPlainString("ItemMissing", ci);
 
             DataColumn dcDisplay = new DataColumn("DisplayMember");
-            dcDisplay.Expression = string.Format("IIF(UserTruckNameless <> 'null', " +
-                                                "'[' + IIF(TruckState <> '3', IIF(TruckType = '0', '" + stringQT + "' ,'" + stringUT + "') ,'S') +'] ' + " +
-                                                "IIF(GarageName <> '', {1} +' || ','') + " +
-                                                "{2} + IIF(DriverName <> 'null', ' || " + stringIU + " - ' + {3},''), '" + stringIM + "')",
-                                                "TruckType", "GarageName", "TruckName", "DriverName", "TruckState");
+            dcDisplay.Expression = string.Format(
+                "IIF(UserTruckNameless <> 'null', " +
+                "'[' + IIF(TruckState <> '3', IIF(TruckType = '0', '" + stringQT + "' ,'" + stringUT + "') ,'S') +'] ' + " +
+                "IIF(GarageName <> '', {1} +' || ','') + " +
+                "{2} + IIF(DriverName <> 'null', ' || " + stringIU + " - ' + {3},''), '" + stringIM + "')",
+                "TruckType", "GarageName", "TruckName", "DriverName", "TruckState");
             combDT.Columns.Add(dcDisplay);
 
             //===
@@ -315,7 +315,7 @@ namespace TS_SE_Tool
 
                 //Setup values
                 string truckName = "undetected", 
-                    truckNameless = UserTruck.Key; //link
+                       truckNameless = UserTruck.Key; //link
                 string tmpTruckName = "", tmpGarageName = "", tmpDriverName = "";
                 byte tmpTruckType = 0, tmpTruckState = 1;
 
@@ -379,7 +379,7 @@ namespace TS_SE_Tool
                     }
 
                     tmpTruckName = tmpTruckName.TrimEnd(new char[] { ' ' });
-                }    
+                }
 
                 //Driver
                 Garages tmpGrg = GaragesList.Where(tX => tX.Vehicles.Contains(truckNameless))?.SingleOrDefault() ?? null;
