@@ -76,7 +76,7 @@ namespace TS_SE_Tool
             CorrectControlsPositions();
             TranslateForm();
 
-            dragDropIMG = Bitmap.FromFile(@"img\UI\test.png");
+            dragDropIMG = Bitmap.FromFile(@"img\UI\ucDragDrop.png");
 
             buttonApply.Enabled = false;
 
