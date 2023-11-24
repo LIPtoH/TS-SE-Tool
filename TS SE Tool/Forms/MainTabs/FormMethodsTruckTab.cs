@@ -25,6 +25,8 @@ using System.Globalization;
 using TS_SE_Tool.Utilities;
 using TS_SE_Tool.Global;
 using System.Threading;
+using S16.Drawing;
+using TS_SE_Tool.Save;
 
 namespace TS_SE_Tool
 {
@@ -460,17 +462,21 @@ namespace TS_SE_Tool
 
             //Progres bar
             Panel pbPanel = groupBoxUserTruckTruckDetails.Controls.Find(pnlname, true).FirstOrDefault() as Panel;
-            
+
             //Part name
             Label pnLabel = groupBoxUserTruckTruckDetails.Controls.Find(labelPartName, true).FirstOrDefault() as Label;
-            
+
             //Repair button
             Button repairButton = groupBoxUserTruckTruckDetails.Controls.Find("buttonTruckElRepair" + _number, true).FirstOrDefault() as Button;
 
             if (pbPanel != null)
             {
-                float _wear = 0;
+                float _wear = 0,
+                      _unfixableWear = 0,
+                      _permanentWear = 0;
                 string partType = "";
+
+                // Part wear
 
                 try
                 {
@@ -479,23 +485,58 @@ namespace TS_SE_Tool
                         case 0:
                             partType = "engine";
                             _wear = SelectedUserCompanyTruck.TruckMainData.engine_wear;
+
+                            if (MainSaveFileInfoData.Version > (byte)saveVTV.v148)
+                            {
+                                _unfixableWear = SelectedUserCompanyTruck.TruckMainData.engine_wear_unfixable;
+                            }
+
                             break;
+
                         case 1:
                             partType = "transmission";
                             _wear = SelectedUserCompanyTruck.TruckMainData.transmission_wear;
+
+                            if (MainSaveFileInfoData.Version > (byte)saveVTV.v148)
+                            {
+                                _unfixableWear = SelectedUserCompanyTruck.TruckMainData.transmission_wear_unfixable;
+                            }
+
                             break;
+
                         case 2:
                             partType = "chassis";
                             _wear = SelectedUserCompanyTruck.TruckMainData.chassis_wear;
+
+                            if (MainSaveFileInfoData.Version > (byte)saveVTV.v148)
+                            {
+                                _unfixableWear = SelectedUserCompanyTruck.TruckMainData.chassis_wear_unfixable;
+                            }
+
                             break;
+
                         case 3:
                             partType = "cabin";
                             _wear = SelectedUserCompanyTruck.TruckMainData.cabin_wear;
+
+                            if (MainSaveFileInfoData.Version > (byte)saveVTV.v148)
+                            {
+                                _unfixableWear = SelectedUserCompanyTruck.TruckMainData.cabin_wear_unfixable;
+                            }
+
                             break;
+
                         case 4:
                             partType = "tire";
                             if (SelectedUserCompanyTruck.TruckMainData.wheels_wear.Count > 0)
                                 _wear = SelectedUserCompanyTruck.TruckMainData.wheels_wear.Sum() / SelectedUserCompanyTruck.TruckMainData.wheels_wear.Count;
+
+                            if (MainSaveFileInfoData.Version > (byte)saveVTV.v148)
+                            {
+                                if (SelectedUserCompanyTruck.TruckMainData.wheels_wear_unfixable.Count > 0)
+                                    _unfixableWear = SelectedUserCompanyTruck.TruckMainData.wheels_wear_unfixable.Sum() / SelectedUserCompanyTruck.TruckMainData.wheels_wear_unfixable.Count;
+                            }
+
                             break;
                     }
                 }
@@ -504,6 +545,14 @@ namespace TS_SE_Tool
                     repairButton.Enabled = false;
                     return;
                 }
+
+                // 1.49 
+
+                _permanentWear = (float)SelectedUserCompanyTruck.TruckMainData.integrity_odometer / 5000000;
+
+                //
+
+                // Part name
 
                 if (pnLabel != null)
                 {
@@ -545,39 +594,107 @@ namespace TS_SE_Tool
                     toolTipMain.SetToolTip(pnLabel, pnlText);
                 }
 
-                if (_wear == 0)
+                //
+
+                if (_wear == 0 && _unfixableWear == 0 && _permanentWear == 0)
                     repairButton.Enabled = false;
                 else
                     repairButton.Enabled = true;
 
                 //
-                SolidBrush ppen = new SolidBrush(Graphics_TSSET.GetProgressbarColor(_wear));
 
-                int x = 0, y = 0, pnlwidth = (int)(pbPanel.Width * (1 - _wear));
+                float totalWear = _wear + _unfixableWear + _permanentWear;
 
-                Bitmap progress = new Bitmap(pbPanel.Width, pbPanel.Height);
+                int x = 0, y = 0, 
+                    pnlWidth = (int)(pbPanel.Width * (1 - (totalWear)));
 
-                Graphics g = Graphics.FromImage(progress);
-                g.FillRectangle(ppen, x, y, pnlwidth, pbPanel.Height);
+                Bitmap progressBar = new Bitmap(pbPanel.Width, pbPanel.Height);
 
-                int fontSize = 12;
-                StringFormat sf = new StringFormat();
-                sf.LineAlignment = StringAlignment.Center;
-                sf.Alignment = StringAlignment.Center;
+                using (Graphics g = Graphics.FromImage(progressBar))
+                {
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 
-                GraphicsPath p = new GraphicsPath();
-                p.AddString(
-                    ((int)((1 - _wear) * 100)).ToString() + " %",   // text to draw
-                    FontFamily.GenericSansSerif,                    // or any other font family
-                    (int)FontStyle.Bold,                            // font style (bold, italic, etc.)
-                    g.DpiY * fontSize / 72,                         // em size
-                    new Rectangle(0, 0, pbPanel.Width, pbPanel.Height),     // location where to draw text
-                    sf);                                            // set options here (e.g. center alignment)
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                g.FillPath(Brushes.Black, p);
-                g.DrawPath(Pens.Black, p);
+                    SolidBrush pPen = new SolidBrush(Graphics_TSSET.GetProgressbarColor(totalWear));
+                    g.FillRectangle(pPen, x, y, pnlWidth, pbPanel.Height);
 
-                pbPanel.BackgroundImage = progress;
+                    int pnlWidthFixable = (int)(pbPanel.Width * _wear);
+
+                    using (TextureBrush brush = new TextureBrush(Bitmap.FromFile(@"img\UI\wrench-pattern.png"), WrapMode.Tile))
+                    {
+                        SolidBrush wearPen = new SolidBrush(Color.Yellow);
+                        g.FillRectangle(wearPen, pnlWidth, 0, pnlWidthFixable, pbPanel.Height);
+
+                        brush.TranslateTransform(pnlWidth, -4);
+                        g.FillRectangle(brush, pnlWidth, 0, pnlWidthFixable, pbPanel.Height);
+                    }
+
+                    if (MainSaveFileInfoData.Version > (byte)saveVTV.v148)
+                    {
+                        //1.49
+
+                        int pnlWidthUnfixable = (int)(pbPanel.Width * _unfixableWear);
+
+                        using (TextureBrush brush = new TextureBrush(Bitmap.FromFile(@"img\UI\swap-pattern.png"), WrapMode.Tile))
+                        {
+                            SolidBrush wearPen = new SolidBrush(Color.Orange);
+                            g.FillRectangle(wearPen, pnlWidth + pnlWidthFixable, 0, pnlWidthUnfixable, pbPanel.Height);
+
+                            brush.TranslateTransform(pnlWidth + pnlWidthFixable, 0);
+                            g.FillRectangle(brush, pnlWidth + pnlWidthFixable, 0, pnlWidthUnfixable, pbPanel.Height);
+                        }
+
+
+                        int pnlWidthPermanent = (int)(pbPanel.Width * _permanentWear);
+
+                        using (TextureBrush brush = new TextureBrush(Bitmap.FromFile(@"img\UI\skull-pattern.png"), WrapMode.Tile))
+                        {
+                            SolidBrush wearPen = new SolidBrush(Color.Red);
+                            g.FillRectangle(wearPen, pnlWidth + pnlWidthFixable + pnlWidthUnfixable, 0, pnlWidthPermanent, pbPanel.Height);
+
+                            brush.TranslateTransform(pbPanel.Width - (pnlWidthPermanent), 0);
+                            g.FillRectangle(brush, pbPanel.Width - (pnlWidthPermanent), 0, pnlWidthPermanent, pbPanel.Height);
+                        }
+
+                        //1.49
+                    }
+
+                    int fontSize = 14;
+
+                    string textPercent = ((int)((1 - totalWear) * 100)).ToString() + " %";
+                    Font percentFont = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold);
+
+                    var textSize = g.MeasureString(textPercent, percentFont);
+
+                    // Percent background
+
+                    SolidBrush pbPen = new SolidBrush(Color.FromArgb(200, Color.White));
+                    g.FillRectangle(pbPen, (pbPanel.ClientRectangle.Width - textSize.Width) / 2, 
+                                           (pbPanel.ClientRectangle.Height - textSize.Height) / 2, textSize.Width, textSize.Height);
+
+                    //
+
+                    StringFormat sf = new StringFormat();
+                    sf.LineAlignment = StringAlignment.Center;
+                    sf.Alignment = StringAlignment.Center;
+
+                    GraphicsPath p = new GraphicsPath();
+
+                    p.AddString(
+                        textPercent,                    // text to draw
+                        percentFont.FontFamily,         // or any other font family
+                        (int)percentFont.Style,         // font style (bold, italic, etc.)
+                        fontSize,                       // em size
+                        new Rectangle(0, 0, pbPanel.Width, pbPanel.Height),     // location where to draw text
+                        sf);                            // set options here (e.g. center alignment)
+
+                    g.FillPath(Brushes.Black, p);
+                    g.DrawPath(Pens.Black, p);
+                }
+
+                //===
+
+                pbPanel.BackgroundImage = progressBar;
             }
         }
 
@@ -624,31 +741,48 @@ namespace TS_SE_Tool
                 else
                     refuelTruck.Enabled = true;
 
-
                 SolidBrush ppen = new SolidBrush(Graphics_TSSET.GetProgressbarColor(1 - _fuel));
-                int pnlheight = (int)(pnlfuel.Height * (_fuel)), x = 0, y = pnlfuel.Height - pnlheight;
+                int pnlheight = (int)(pnlfuel.Height * _fuel), 
+                    x = 0, y = pnlfuel.Height - pnlheight;
 
                 Bitmap progress = new Bitmap(pnlfuel.Width, pnlfuel.Height);
 
-                Graphics g = Graphics.FromImage(progress);
-                g.FillRectangle(ppen, x, y, pnlfuel.Width, pnlheight);
+                using (Graphics g = Graphics.FromImage(progress))
+                {
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    g.FillRectangle(ppen, x, y, pnlfuel.Width, pnlheight);
 
-                int fontSize = 10;
-                StringFormat sf = new StringFormat();
-                sf.LineAlignment = StringAlignment.Center;
-                sf.Alignment = StringAlignment.Center;
+                    int fontSize = 14;
 
-                GraphicsPath p = new GraphicsPath();
-                p.AddString(
-                    ((int)(_fuel * 100)).ToString() + " %",             // text to draw
-                    FontFamily.GenericSansSerif,                        // or any other font family
-                    (int)FontStyle.Regular,                             // font style (bold, italic, etc.)
-                    g.DpiY * fontSize / 72,                             // em size
-                    new Rectangle(0, 0, pnlfuel.Width, pnlfuel.Height), // location where to draw text
-                    sf);                                                // set options here (e.g. center alignment)
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                g.FillPath(Brushes.Black, p);
-                g.DrawPath(Pens.Black, p);
+                    string textPercent = ((int)(_fuel * 100)).ToString() + " %";
+                    Font percentFont = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold);
+
+                    var textSize = g.MeasureString(textPercent, percentFont);
+
+                    // Percent background
+
+                    SolidBrush pbPen = new SolidBrush(Color.FromArgb(200, Color.White));
+                    g.FillRectangle(pbPen, (pnlfuel.ClientRectangle.Width - textSize.Width) / 2, (pnlfuel.ClientRectangle.Height - textSize.Height) / 2, textSize.Width, textSize.Height);
+
+                    //
+
+                    StringFormat sf = new StringFormat();
+                    sf.LineAlignment = StringAlignment.Center;
+                    sf.Alignment = StringAlignment.Center;
+
+                    GraphicsPath p = new GraphicsPath();
+
+                    p.AddString(
+                        textPercent,                    // text to draw
+                        percentFont.FontFamily,         // or any other font family
+                        (int)percentFont.Style,         // font style (bold, italic, etc.)
+                        fontSize,                       // em size
+                        new Rectangle(0, 0, pnlfuel.Width, pnlfuel.Height), // location where to draw text
+                        sf);                            // set options here (e.g. center alignment)
+
+                    g.FillPath(Brushes.Black, p);
+                    g.DrawPath(Pens.Black, p);
+                }
 
                 pnlfuel.BackgroundImage = progress;
             }
@@ -834,6 +968,15 @@ namespace TS_SE_Tool
             SelectedUserCompanyTruck.TruckMainData.cabin_wear = 0;
             SelectedUserCompanyTruck.TruckMainData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
 
+            SelectedUserCompanyTruck.TruckMainData.engine_wear_unfixable = 0;
+            SelectedUserCompanyTruck.TruckMainData.transmission_wear_unfixable = 0;
+            SelectedUserCompanyTruck.TruckMainData.chassis_wear_unfixable = 0;
+            SelectedUserCompanyTruck.TruckMainData.cabin_wear_unfixable = 0;
+            SelectedUserCompanyTruck.TruckMainData.wheels_wear_unfixable = new List<Save.DataFormat.SCS_Float>();
+
+            SelectedUserCompanyTruck.TruckMainData.integrity_odometer = 0;
+            SelectedUserCompanyTruck.TruckMainData.integrity_odometer_float_part = 0;
+
             for (byte i = 0; i < 5; i++)
                 UpdateTruckPanelProgressBar(i);
 
@@ -854,18 +997,24 @@ namespace TS_SE_Tool
             {
                 case 0:
                     SelectedUserCompanyTruck.TruckMainData.engine_wear = 0;
+                    SelectedUserCompanyTruck.TruckMainData.engine_wear_unfixable = 0;
+
                     break;
                 case 1:
                     SelectedUserCompanyTruck.TruckMainData.transmission_wear = 0;
+                    SelectedUserCompanyTruck.TruckMainData.transmission_wear_unfixable = 0;
                     break;
                 case 2:
                     SelectedUserCompanyTruck.TruckMainData.chassis_wear = 0;
+                    SelectedUserCompanyTruck.TruckMainData.chassis_wear_unfixable = 0;
                     break;
                 case 3:
                     SelectedUserCompanyTruck.TruckMainData.cabin_wear = 0;
+                    SelectedUserCompanyTruck.TruckMainData.cabin_wear_unfixable = 0;
                     break;
                 case 4:
                     SelectedUserCompanyTruck.TruckMainData.wheels_wear = new List<Save.DataFormat.SCS_Float>();
+                    SelectedUserCompanyTruck.TruckMainData.wheels_wear_unfixable = new List<Save.DataFormat.SCS_Float>();
                     break;
             }
 
