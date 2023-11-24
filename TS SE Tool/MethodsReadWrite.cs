@@ -354,6 +354,12 @@ namespace TS_SE_Tool
                                       @"img\" + GameType + @"\trailer_chassis.dds", @"img\" + GameType + @"\tyres.dds" };
             TrailerPartsImg = Graphics_TSSET.ddsImgLoader(imgPaths, 64, 64).images;
 
+            // integrity progress bar
+
+            imgPaths = new string[] { @"img\UI\wrench-pattern.png", @"img\UI\swap-pattern.png", @"img\UI\skull-pattern.png" };
+
+            VehicleIntegrityPBImg = Graphics_TSSET.ImgFromFileLoader(imgPaths);
+
             // buttons
             imgPaths = new string[] { @"img\UI\Trucks&Trailers\service_ico.dds", @"img\UI\Trucks&Trailers\gas_ico.dds", @"img\UI\customize_p.dds" };
 
