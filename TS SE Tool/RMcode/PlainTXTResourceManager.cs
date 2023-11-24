@@ -28,12 +28,10 @@ namespace TS_SE_Tool
 {
     public class PlainTXTResourceManager : ResourceManager
     {
-        //private string dsn;
         Hashtable MyResourceSets;
 
-        public PlainTXTResourceManager ()//(string _dsn)
+        public PlainTXTResourceManager ()
         {
-            //dsn = _dsn;
             MyResourceSets = new Hashtable();
         }
 
@@ -49,7 +47,7 @@ namespace TS_SE_Tool
             {
                 if(File.Exists(Directory.GetCurrentDirectory() + @"\lang\" + culture.Name + @"\lngfile.txt"))
                 {
-                    rs = new PlainTXTResourceSet(culture);//(dsn, culture);
+                    rs = new PlainTXTResourceSet(culture);
                     MyResourceSets.Add(culture.Name, rs);
                 }
             }
@@ -59,12 +57,22 @@ namespace TS_SE_Tool
 
         internal string GetPlainString(string _input, CultureInfo _currentUIculture)
         {
-            return GetString("string" + _input, _currentUIculture);
+            string result = GetString("string" + _input, _currentUIculture);
+
+            if (String.IsNullOrEmpty(result))
+                return "";
+            else
+                return result;
         }
 
         internal string GetTooltipString(string _input, CultureInfo _currentUIculture)
         {
-            return GetString("tooltip" + _input, _currentUIculture);
+            string result = GetString("tooltip" + _input, _currentUIculture);
+
+            if (String.IsNullOrEmpty(result))
+                return "";
+            else
+                return result;
         }
 
     }
