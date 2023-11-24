@@ -620,7 +620,7 @@ namespace TS_SE_Tool
 
                     int pnlWidthFixable = (int)(pbPanel.Width * _wear);
 
-                    using (TextureBrush brush = new TextureBrush(Bitmap.FromFile(@"img\UI\wrench-pattern.png"), WrapMode.Tile))
+                    using (TextureBrush brush = new TextureBrush(VehicleIntegrityPBImg[0], WrapMode.Tile))
                     {
                         SolidBrush wearPen = new SolidBrush(Color.Yellow);
                         g.FillRectangle(wearPen, pnlWidth, 0, pnlWidthFixable, pbPanel.Height);
@@ -635,7 +635,7 @@ namespace TS_SE_Tool
 
                         int pnlWidthUnfixable = (int)(pbPanel.Width * _unfixableWear);
 
-                        using (TextureBrush brush = new TextureBrush(Bitmap.FromFile(@"img\UI\swap-pattern.png"), WrapMode.Tile))
+                        using (TextureBrush brush = new TextureBrush(VehicleIntegrityPBImg[1], WrapMode.Tile))
                         {
                             SolidBrush wearPen = new SolidBrush(Color.Orange);
                             g.FillRectangle(wearPen, pnlWidth + pnlWidthFixable, 0, pnlWidthUnfixable, pbPanel.Height);
@@ -647,7 +647,7 @@ namespace TS_SE_Tool
 
                         int pnlWidthPermanent = (int)(pbPanel.Width * _permanentWear);
 
-                        using (TextureBrush brush = new TextureBrush(Bitmap.FromFile(@"img\UI\skull-pattern.png"), WrapMode.Tile))
+                        using (TextureBrush brush = new TextureBrush(VehicleIntegrityPBImg[2], WrapMode.Tile))
                         {
                             SolidBrush wearPen = new SolidBrush(Color.Red);
                             g.FillRectangle(wearPen, pnlWidth + pnlWidthFixable + pnlWidthUnfixable, 0, pnlWidthPermanent, pbPanel.Height);
