@@ -221,7 +221,11 @@ namespace TS_SE_Tool
 
             labelCompanyNameSize.Text = textBoxUserCompanyCompanyName.Text.Length.ToString() + " / 20";
 
-            MainSaveFileProfileData.CompanyName = new Save.DataFormat.SCS_String(textBoxUserCompanyCompanyName.Text);
+            if (textBoxUserCompanyCompanyName.Text != MainSaveFileProfileData.CompanyName.Value)
+            {
+                MainSaveFileProfileData.isEdited = true;
+                MainSaveFileProfileData.CompanyName = new Save.DataFormat.SCS_String(textBoxUserCompanyCompanyName.Text);
+            }
         }
 
         private void textBoxUserCompanyCompanyName_Validating(object sender, CancelEventArgs e)

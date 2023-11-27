@@ -33,11 +33,11 @@ namespace TS_SE_Tool
         internal string  UserProfileNameless    { get; set; } = "";
 
         //---
-        public bool     GenederMale         { get; set; } = false;
+        internal bool   GenderMale         { get; set; } = false;
         internal ushort Face                { get; set; } = 0;
         internal string Brand               { get; set; } = "";
 
-        public string   Logo                { get; set; } = "";
+        internal string Logo                { get; set; } = "";
 
         internal SCS_String CompanyName         { get; set; } = "";
 
@@ -45,8 +45,8 @@ namespace TS_SE_Tool
         internal string MapPath             { get; set; } = "";
 
         //---
-        public uint     CachedExperiencePoints  { get; set; } = 0;
-        public uint     CachedDistance          { get; set; } = 0;
+        internal uint   CachedExperiencePoints  { get; set; } = 0;
+        internal uint   CachedDistance          { get; set; } = 0;
 
         //---
         #region UserData
@@ -57,20 +57,20 @@ namespace TS_SE_Tool
         internal string     ud1_WoTLicensePlate     { get; set; } = "";     //1 WoT licenseplate
         internal string     ud2_SomeCheckSum        { get; set; } = "";     //2 ???
         internal byte?      ud3_WoTConnected        { get; set; } = null;   //3 isWoTConnected?
-        public decimal      ud4_RoadsExplored       { get; set; } = 0.0M;   //4 Road explored persentage
-        public uint         ud5_DeliveriesFinished  { get; set; } = 0;      //5 Finished deliveries
-        public uint         ud6_OwnedTrucks         { get; set; } = 0;      //6 Owned trucks count
-        public uint         ud7_OwnedGaradesSmall   { get; set; } = 0;      //7 Small garages 
-        public uint         ud8_OwnedGaradesLarge   { get; set; } = 0;      //8 Large garages
-        public ulong        ud9_GameTimeSpent       { get; set; } = 0;      //9 Game time spent
-        public uint         ud10_RealTimeSpent      { get; set; } = 0;      //10 Real time spent
-        public string       ud11_CurrentTruck       { get; set; } = "";     //11 Current truck //brand.model
-        
-        public List<string> ud12_OwnedTruckList = new List<string>();       //12 Owned trucks //brand.model:count,brand.model:count,...;
+        internal decimal      ud4_RoadsExplored       { get; set; } = 0.0M;   //4 Road explored persentage
+        internal uint         ud5_DeliveriesFinished  { get; set; } = 0;      //5 Finished deliveries
+        internal uint         ud6_OwnedTrucks         { get; set; } = 0;      //6 Owned trucks count
+        internal uint         ud7_OwnedGaradesSmall   { get; set; } = 0;      //7 Small garages 
+        internal uint         ud8_OwnedGaradesLarge   { get; set; } = 0;      //8 Large garages
+        internal ulong        ud9_GameTimeSpent       { get; set; } = 0;      //9 Game time spent
+        internal uint         ud10_RealTimeSpent      { get; set; } = 0;      //10 Real time spent
+        internal string       ud11_CurrentTruck       { get; set; } = "";     //11 Current truck //brand.model
+
+        internal List<string> ud12_OwnedTruckList = new List<string>();       //12 Owned trucks //brand.model:count,brand.model:count,...;
         internal string     ud13_SomeUserData       { get; set; } = "";     //13 ???
         internal uint?      ud14_SomeUserData       { get; set; } = null;   //14 ??? //0
         internal string     ud15_SomeUserData       { get; set; } = "";     //15 ??? //production
-        public uint         ud16_OwnedTrailers      { get; set; } = 0;      //16 Owned trailers
+        internal uint         ud16_OwnedTrailers      { get; set; } = 0;      //16 Owned trailers
 
         #region user data backend
 
@@ -260,11 +260,13 @@ namespace TS_SE_Tool
 
         internal SCS_String ProfileName     { get; set; } = "";
 
-        public uint     CreationTime    { get; set; } = 0;
-        public uint     SaveTime        { get; set; } = 0;
+        internal uint   CreationTime    { get; set; } = 0;
+        internal uint   SaveTime        { get; set; } = 0;
 
         //====
-        
+
+        internal bool isEdited { get; set; } = false;
+
         int unsortedOrder = 0;
 
         Dictionary<int, List<string>> unsortedDataDict = new Dictionary<int, List<string>>();
@@ -363,7 +365,7 @@ namespace TS_SE_Tool
 
                         case "male":
                             {
-                                GenederMale = bool.Parse(dataLine);
+                                GenderMale = bool.Parse(dataLine);
                                 break;
                             }
 
@@ -521,7 +523,7 @@ namespace TS_SE_Tool
             sbResult.AppendLine(" map_path: " + MapPath);
             sbResult.AppendLine(" logo: " + Logo);
             sbResult.AppendLine(" company_name: " + CompanyName.ToString());
-            sbResult.AppendLine(" male: " + GenederMale.ToString().ToLower());
+            sbResult.AppendLine(" male: " + GenderMale.ToString().ToLower());
             sbResult.AppendLine(" cached_experience: " + CachedExperiencePoints.ToString());
             sbResult.AppendLine(" cached_distance: " + CachedDistance.ToString());
 

@@ -996,16 +996,18 @@ namespace TS_SE_Tool
                 File.Copy(SiiSavePath, SiiSavePathBackup, true);
 
                 //Write Profile data
-                using (StreamWriter writer = new StreamWriter(ProfileFolderPath, false))
-                {
-                    writer.Write(MainSaveFileProfileData.PrintOut());
-                }
+                if (MainSaveFileProfileData.isEdited)
+                    using (StreamWriter writer = new StreamWriter(ProfileFolderPath, false))
+                    {
+                        writer.Write(MainSaveFileProfileData.PrintOut());
+                    }
 
                 //Write Info data
-                using (StreamWriter writer = new StreamWriter(SiiInfoPath, false))
-                {
-                    writer.Write(MainSaveFileInfoData.PrintOut());
-                }
+                if (MainSaveFileInfoData.isEdited)
+                    using (StreamWriter writer = new StreamWriter(SiiInfoPath, false))
+                    {
+                        writer.Write(MainSaveFileInfoData.PrintOut());
+                    }
 
                 //Write Save data
                 using (StreamWriter writer = new StreamWriter(SiiSavePath, false))

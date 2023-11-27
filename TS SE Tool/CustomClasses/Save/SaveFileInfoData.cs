@@ -51,6 +51,8 @@ namespace TS_SE_Tool
         internal List<Dependency> Dependencies { get; set; } = new List<Dependency>();
 
         //
+        internal bool isEdited { get; set; } = false;
+
         int unsortedOrder = 0;
 
         Dictionary<int, List<string>> unsortedDataDict = new Dictionary<int, List<string>>();
