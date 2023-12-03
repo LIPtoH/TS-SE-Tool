@@ -682,7 +682,15 @@ namespace TS_SE_Tool
 
                 LastModifiedTimestamp = File.GetLastWriteTime(SiiSavePath);
 
-                NewPrepareData();
+                if (!NewPrepareData())
+                {
+                    e.Cancel = true;
+
+                    DialogResult DR = UpdateStatusBarMessage.ShowMessageBox(this, "Error occured during preparing Save file." + Environment.NewLine +
+                        "Probably New \\ Updated Save format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
+                }
             }
             else
             {

@@ -37,17 +37,24 @@ namespace TS_SE_Tool
 {
     public partial class FormMain : Form
     {
-        private void NewPrepareData()
+        private bool NewPrepareData()
         {
             IO_Utilities.LogWriter("Prepare started");
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_preparing_data");
 
             SiiNunitData = new SiiNunit(tempSavefileInMemory);
 
+            if (SiiNunitData == null)
+            {
+                return false;
+            }
+
             ExtraPrepareStuff();
 
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_operation_finished");
             IO_Utilities.LogWriter("Prepare ended");
+
+            return true;
         }
 
         private void ExtraPrepareStuff()
