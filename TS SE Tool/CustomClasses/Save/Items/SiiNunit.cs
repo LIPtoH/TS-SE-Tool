@@ -97,7 +97,7 @@ namespace TS_SE_Tool.Save.Items
                         workLine = _input[line];
                         Data.Add(workLine);
 
-                    } while (!_input[line].StartsWith("}"));
+                    } while (!_input[line].TrimStart().StartsWith("}"));
 
                     return Data;
                 }
@@ -378,6 +378,21 @@ namespace TS_SE_Tool.Save.Items
                     }
 
                 //v1.49
+
+                case "accessory_hookup_data":
+                    {
+                        return new Accessory_Hookup_data(_input);
+                    }
+
+                case "accessory_hookup_int_data":
+                    {
+                        return new Accessory_Hookup_int_data(_input);
+                    }
+
+                case "flare_blink":
+                    {
+                        return new Flare_blink(_input);
+                    }
 
                 default:
                     {
