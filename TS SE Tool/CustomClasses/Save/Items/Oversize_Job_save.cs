@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 using TS_SE_Tool.Save.DataFormat;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
     class Oversize_Job_save : SiiNBlockCore
     {
+
+        #region variables
+
         internal SCS_Float_3 front_escort_ws_position { get; set; } = new SCS_Float_3();
         internal SCS_Float_3 back_escort_ws_position { get; set; } = new SCS_Float_3();
 
@@ -57,6 +61,8 @@ namespace TS_SE_Tool.Save.Items
 
         internal string offer { get; set; } = "";
 
+        #endregion
+
         internal Oversize_Job_save()
         { }
 
@@ -78,11 +84,14 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
+
                 try
                 {
                     switch (tagLine)
                     {
                         case "":
+                        case "oversize_job_save":
+                        case "}":
                             {
                                 break;
                             }
@@ -249,11 +258,17 @@ namespace TS_SE_Tool.Save.Items
                                 break;
                             }
 
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -316,6 +331,8 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(" map_route_hash[" + i + "]: " + map_route_hash[i].ToString());
 
             returnSB.AppendLine(" offer: " + offer.ToString());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

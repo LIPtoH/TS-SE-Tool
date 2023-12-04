@@ -1112,6 +1112,7 @@ namespace TS_SE_Tool.Save.Items
 
                         default:
                             {
+                                UnidentifiedLines.Add(dataLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
@@ -1361,7 +1362,7 @@ namespace TS_SE_Tool.Save.Items
             for (int i = 0; i < drivers_offer.Count; i++)
                 returnSB.AppendLine(" drivers_offer[" + i + "]: " + drivers_offer[i]);
 
-            if (_version >= 71)
+            if (_version > (byte)saveVTV.v148)
             {
                 returnSB.AppendLine(" used_vehicle_assortment: " + used_vehicle_assortment);
             }
@@ -1407,6 +1408,8 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" bus_game_time: " + bus_game_time.ToString());
             returnSB.AppendLine(" bus_playing_time: " + bus_playing_time.ToString());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

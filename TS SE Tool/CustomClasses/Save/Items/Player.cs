@@ -417,6 +417,7 @@ namespace TS_SE_Tool.Save.Items
 
                         default:
                             {
+                                UnidentifiedLines.Add(dataLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
@@ -523,6 +524,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" driver_quit_warned: " + driver_quit_warned.Count);
             for (int i = 0; i < driver_quit_warned.Count; i++)
                 returnSB.AppendLine(" driver_quit_warned[" + i + "]: " + driver_quit_warned[i].ToString().ToLower());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

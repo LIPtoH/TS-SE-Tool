@@ -327,6 +327,7 @@ namespace TS_SE_Tool.Save.Items
                             
                         default:
                             {
+                                UnidentifiedLines.Add(dataLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
@@ -352,7 +353,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" transmission_wear: " + transmission_wear.ToString());
             returnSB.AppendLine(" cabin_wear: " + cabin_wear.ToString());
 
-            if (_version >= 71)
+            if (_version > (byte)saveVTV.v148)
             {
                 returnSB.AppendLine(" engine_wear_unfixable: " + engine_wear_unfixable.ToString());
                 returnSB.AppendLine(" transmission_wear_unfixable: " + transmission_wear_unfixable.ToString());
@@ -382,7 +383,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" odometer: " + odometer);
             returnSB.AppendLine(" odometer_float_part: " + odometer_float_part.ToString());
 
-            if (_version >= 71)
+            if (_version > (byte)saveVTV.v148)
             {
                 returnSB.AppendLine(" integrity_odometer: " + integrity_odometer); //v71
                 returnSB.AppendLine(" integrity_odometer_float_part: " + integrity_odometer_float_part.ToString()); //v71
@@ -399,7 +400,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" chassis_wear: " + chassis_wear.ToString());
 
-            if (_version >= 71)
+            if (_version > (byte)saveVTV.v148)
             {
                 returnSB.AppendLine(" chassis_wear_unfixable: " + chassis_wear_unfixable.ToString()); //v71
             }
@@ -408,12 +409,14 @@ namespace TS_SE_Tool.Save.Items
             for (int i = 0; i < wheels_wear.Count; i++)
                 returnSB.AppendLine(" wheels_wear[" + i + "]: " + wheels_wear[i].ToString());
 
-            if (_version >= 71)
+            if (_version > (byte)saveVTV.v148)
             {
                 returnSB.AppendLine(" wheels_wear_unfixable: " + wheels_wear_unfixable.Count); //v71
                 for (int i = 0; i < wheels_wear_unfixable.Count; i++)
                     returnSB.AppendLine(" wheels_wear_unfixable[" + i + "]: " + wheels_wear_unfixable[i].ToString());
             }
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

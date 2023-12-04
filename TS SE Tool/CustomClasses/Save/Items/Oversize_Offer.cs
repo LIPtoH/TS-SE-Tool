@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using TS_SE_Tool.Save.DataFormat;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -40,11 +41,14 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
+
                 try
                 {
                     switch (tagLine)
                     {
                         case "":
+                        case "oversize_offer":
+                        case "}":
                             {
                                 break;
                             }
@@ -78,11 +82,18 @@ namespace TS_SE_Tool.Save.Items
                                 outro_cutscene = dataLine;
                                 break;
                             }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -104,6 +115,8 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" intro_cutscene: " + intro_cutscene.ToString());
             returnSB.AppendLine(" outro_cutscene: " + outro_cutscene.ToString());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

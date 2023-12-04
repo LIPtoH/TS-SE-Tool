@@ -76,6 +76,7 @@ namespace TS_SE_Tool.Save.Items
 
                         default:
                             {
+                                UnidentifiedLines.Add(dataLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
@@ -102,6 +103,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" trucks: " + trucks.Count);
             for (int i = 0; i < trucks.Count; i++)
                 returnSB.AppendLine(" trucks[" + i + "]: " + trucks[i]);
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

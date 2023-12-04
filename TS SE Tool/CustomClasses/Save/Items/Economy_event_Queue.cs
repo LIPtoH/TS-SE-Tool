@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -32,24 +33,41 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                        case "economy_event_queue":
+                        case "}":
+                            {
+                                break;
+                            }
 
-                    case "data":
-                        {
-                            data.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "data":
+                            {
+                                data.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("data["):
-                        {
-                            data.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("data["):
+                            {
+                                data.Add(dataLine);
+                                break;
+                            }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
+                    break;
                 }
             }
         }
@@ -69,6 +87,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" data: " + data.Count);
             for (int i = 0; i < data.Count; i++)
                 returnSB.AppendLine(" data[" + i + "]: " + data[i]);
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

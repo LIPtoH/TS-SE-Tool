@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -32,26 +33,39 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                        case "driver_player":
+                        case "}":
+                            {
+                                break;
+                            }
 
-                    case "profit_log":
-                        {
-                            profit_log = dataLine;
-                            break;
-                        }
+                        case "profit_log":
+                            {
+                                profit_log = dataLine;
+                                break;
+                            }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
+                    break;
                 }
             }
         }
 
-        internal string PrintOut(uint _version)
-        {
-            return PrintOut(_version, null);
-        }
         internal string PrintOut(uint _version, string _nameless)
         {
             string returnString = "";
@@ -61,6 +75,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine("driver_player : " + _nameless + " {");
 
             returnSB.AppendLine(" profit_log: " + profit_log);
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

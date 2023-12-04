@@ -87,6 +87,7 @@ namespace TS_SE_Tool.Save.Items
 
                         default:
                             {
+                                UnidentifiedLines.Add(dataLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
@@ -112,6 +113,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" truck: " + truck);
             returnSB.AppendLine(" price: " + price.ToString());
             returnSB.AppendLine(" expiration_game_time: " + expiration_game_time.ToString());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

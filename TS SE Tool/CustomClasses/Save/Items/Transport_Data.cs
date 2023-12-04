@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using TS_SE_Tool.Save.DataFormat;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -43,72 +44,81 @@ namespace TS_SE_Tool.Save.Items
                 }
 
                 try
-                { 
-                switch (tagLine)
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                        case "transport_data":
+                        case "}":
+                            {
+                                break;
+                            }
 
-                    case "distance":
-                        {
-                            distance = int.Parse(dataLine);
-                            break;
-                        }
+                        case "distance":
+                            {
+                                distance = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "time":
-                        {
-                            time = uint.Parse(dataLine);
-                            break;
-                        }
+                        case "time":
+                            {
+                                time = uint.Parse(dataLine);
+                                break;
+                            }
 
-                    case "money":
-                        {
-                            money = int.Parse(dataLine);
-                            break;
-                        }
+                        case "money":
+                            {
+                                money = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case "count_per_adr":
-                        {
-                            count_per_adr.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "count_per_adr":
+                            {
+                                count_per_adr.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("count_per_adr["):
-                        {
-                            count_per_adr.Add(int.Parse(dataLine));
-                            break;
-                        }
+                        case var s when s.StartsWith("count_per_adr["):
+                            {
+                                count_per_adr.Add(int.Parse(dataLine));
+                                break;
+                            }
 
-                    case "docks":
-                        {
-                            docks.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "docks":
+                            {
+                                docks.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("docks["):
-                        {
-                            docks.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("docks["):
+                            {
+                                docks.Add(dataLine);
+                                break;
+                            }
 
-                    case "count_per_dock":
-                        {
-                            count_per_dock.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "count_per_dock":
+                            {
+                                count_per_dock.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("count_per_dock["):
-                        {
-                            count_per_dock.Add(int.Parse(dataLine));
-                            break;
-                        }
+                        case var s when s.StartsWith("count_per_dock["):
+                            {
+                                count_per_dock.Add(int.Parse(dataLine));
+                                break;
+                            }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -137,6 +147,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" count_per_dock: " + count_per_dock.Count);
             for (int i = 0; i < count_per_dock.Count; i++)
                 returnSB.AppendLine(" count_per_dock[" + i + "]: " + count_per_dock[i].ToString());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

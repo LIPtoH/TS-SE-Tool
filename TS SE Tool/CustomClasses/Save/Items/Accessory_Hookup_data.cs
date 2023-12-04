@@ -60,11 +60,14 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
+
                 try
                 {
                     switch (tagLine)
                     {
                         case "":
+                        case "accessory_hookup_data":
+                        case "}":
                             {
                                 break;
                             }
@@ -206,19 +209,14 @@ namespace TS_SE_Tool.Save.Items
                                 steam_inventory_id = dataLine == "nil" ? (ulong?)null : ulong.Parse(dataLine);
                                 break;
                             }
-                            
+
                         default:
                             {
                                 UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
                     }
-                }
-                catch (FormatException ex)
-                {
-                    UnidentifiedLines.Add(currentLine);
-                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
-                    break;
                 }
                 catch (Exception ex)
                 {
@@ -279,8 +277,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" sync_over_network: " + sync_over_network.ToString().ToLower());
 
             returnSB.AppendLine(" steam_inventory_id: " + (steam_inventory_id == null ? "nil" : steam_inventory_id.ToString()));
-            
-            returnSB.AppendLine(WriteUnidentifiedLines());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

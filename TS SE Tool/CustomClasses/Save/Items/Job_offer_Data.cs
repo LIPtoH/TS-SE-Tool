@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using TS_SE_Tool.Utilities;
+using TS_SE_Tool.Save.DataFormat;
+
 namespace TS_SE_Tool.Save.Items
 {
     class Job_offer_Data : SiiNBlockCore
     {
-        internal Save.DataFormat.SCS_String target { get; set; } = "";
+        internal SCS_String target { get; set; } = "";
 
         internal uint? expiration_time { get; set; } = null;
 
@@ -30,7 +33,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal int fill_ratio { get; set; } = 0;
 
-        internal List<DataFormat.SCS_Placement> trailer_place { get; set; } = new List<DataFormat.SCS_Placement>();
+        internal List<SCS_Placement> trailer_place { get; set; } = new List<SCS_Placement>();
 
 
         internal Job_offer_Data()
@@ -54,11 +57,14 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
+
                 try
                 {
                     switch (tagLine)
                     {
                         case "":
+                        case "job_offer_data":
+                        case "}":
                             {
                                 break;
                             }
@@ -146,11 +152,18 @@ namespace TS_SE_Tool.Save.Items
                                 trailer_place.Add(new DataFormat.SCS_Placement(dataLine));
                                 break;
                             }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -185,6 +198,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" trailer_place: " + trailer_place.Count);
             for (int i = 0; i < trailer_place.Count; i++)
                 returnSB.AppendLine(" trailer_place[" + i + "]: " + trailer_place[i]);
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

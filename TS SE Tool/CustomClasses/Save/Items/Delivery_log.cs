@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -41,6 +42,8 @@ namespace TS_SE_Tool.Save.Items
                     switch (tagLine)
                     {
                         case "":
+                        case "delivery_log":
+                        case "}":
                             {
                                 break;
                             }
@@ -68,20 +71,23 @@ namespace TS_SE_Tool.Save.Items
                                 cached_jobs_count = int.Parse(dataLine);
                                 break;
                             }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
         }
 
-        internal string PrintOut(uint _version)
-        {
-            return PrintOut(_version, null);
-        }
         internal string PrintOut(uint _version, string _nameless)
         {
             string returnString = "";
@@ -97,6 +103,8 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(" entries[" + i + "]: " + entries[i]);
 
             returnSB.AppendLine(" cached_jobs_count: " + cached_jobs_count.ToString());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

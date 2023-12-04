@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -40,6 +41,8 @@ namespace TS_SE_Tool.Save.Items
                     switch (tagLine)
                     {
                         case "":
+                        case "profit_log":
+                        case "}":
                             {
                                 break;
                             }
@@ -73,11 +76,18 @@ namespace TS_SE_Tool.Save.Items
                                 history_age = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
                                 break;
                             }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -100,6 +110,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" acc_distance_on_job: " + acc_distance_on_job.ToString());
 
             returnSB.AppendLine(" history_age: " + (history_age == null ? "nil" : history_age.ToString()));
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

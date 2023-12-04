@@ -41,6 +41,8 @@ namespace TS_SE_Tool.Save.Items
                     switch (tagLine)
                     {
                         case "":
+                        case "vehicle_sound_accessory":
+                        case "}":
                             {
                                 break;
                             }
@@ -56,11 +58,18 @@ namespace TS_SE_Tool.Save.Items
                                 refund = uint.Parse(dataLine);
                                 break;
                             }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -76,6 +85,8 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" data_path: " + data_path);
             returnSB.AppendLine(" refund: " + refund.ToString());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

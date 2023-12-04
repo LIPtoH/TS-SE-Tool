@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using TS_SE_Tool.Save.DataFormat;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -38,50 +39,61 @@ namespace TS_SE_Tool.Save.Items
                     dataLine = "";
                 }
 
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                        case "game_progress":
+                        case "}":
+                            {
+                                break;
+                            }
 
-                    case "generic_transports":
-                        {
-                            generic_transports = dataLine;
-                            break;
-                        }
+                        case "generic_transports":
+                            {
+                                generic_transports = dataLine;
+                                break;
+                            }
 
-                    case "undamaged_transports":
-                        {
-                            undamaged_transports = dataLine;
-                            break;
-                        }
+                        case "undamaged_transports":
+                            {
+                                undamaged_transports = dataLine;
+                                break;
+                            }
 
-                    case "clean_transports":
-                        {
-                            clean_transports = dataLine;
-                            break;
-                        }
+                        case "clean_transports":
+                            {
+                                clean_transports = dataLine;
+                                break;
+                            }
 
-                    case "owned_trucks":
-                        {
-                            owned_trucks.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "owned_trucks":
+                            {
+                                owned_trucks.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("owned_trucks["):
-                        {
-                            owned_trucks.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("owned_trucks["):
+                            {
+                                owned_trucks.Add(dataLine);
+                                break;
+                            }
 
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
+                    break;
                 }
             }
-        }
-
-        internal string PrintOut(uint _version)
-        {
-            return PrintOut(_version, null);
         }
 
         internal string PrintOut(uint _version, string _nameless)
@@ -99,6 +111,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" owned_trucks: " + owned_trucks.Count);
             for (int i = 0; i < owned_trucks.Count; i++)
                 returnSB.AppendLine(" owned_trucks[" + i + "]: " + owned_trucks[i]);
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using TS_SE_Tool.Save.DataFormat;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -49,11 +50,14 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
+
                 try
                 {
                     switch (tagLine)
                     {
                         case "":
+                        case "company":
+                        case "}":
                             {
                                 break;
                             }
@@ -124,16 +128,23 @@ namespace TS_SE_Tool.Save.Items
                                 break;
                             }
 
-                        case " state_change_time":
+                        case "state_change_time":
                             {
                                 state_change_time = uint.Parse(dataLine);
+                                break;
+                            }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -172,6 +183,8 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(" state: " + state.ToString());
                 returnSB.AppendLine(" state_change_time: " + state_change_time.ToString());
             }
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

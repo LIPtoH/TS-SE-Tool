@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -33,32 +34,47 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
-
-                switch (tagLine)
+                try
                 {
-                    case "":
-                        {
-                            break;
-                        }
+                    switch (tagLine)
+                    {
+                        case "":
+                        case "oversize_route_offers":
+                        case "}":
+                            {
+                                break;
+                            }
 
-                    case "offers":
-                        {
-                            offers.Capacity = int.Parse(dataLine);
-                            break;
-                        }
+                        case "offers":
+                            {
+                                offers.Capacity = int.Parse(dataLine);
+                                break;
+                            }
 
-                    case var s when s.StartsWith("offers["):
-                        {
-                            offers.Add(dataLine);
-                            break;
-                        }
+                        case var s when s.StartsWith("offers["):
+                            {
+                                offers.Add(dataLine);
+                                break;
+                            }
 
-                    case "route":
-                        {
-                            route = dataLine;
-                            break;
-                        }
+                        case "route":
+                            {
+                                route = dataLine;
+                                break;
+                            }
 
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
+                    break;
                 }
             }
         }
@@ -76,6 +92,8 @@ namespace TS_SE_Tool.Save.Items
                 returnSB.AppendLine(" offers[" + i + "]: " + offers[i]);
 
             returnSB.AppendLine(" route: " + route);
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

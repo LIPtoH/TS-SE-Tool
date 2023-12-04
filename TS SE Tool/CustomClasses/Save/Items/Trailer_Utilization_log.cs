@@ -45,6 +45,8 @@ namespace TS_SE_Tool.Save.Items
                     switch (tagLine)
                     {
                         case "":
+                        case "trailer_utilization_log":
+                        case "}":
                             {
                                 break;
                             }
@@ -78,11 +80,18 @@ namespace TS_SE_Tool.Save.Items
                                 total_transported_weight = dataLine;
                                 break;
                             }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -103,6 +112,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" total_driven_distance_km: " + total_driven_distance_km.ToString());
             returnSB.AppendLine(" total_transported_cargoes: " + total_transported_cargoes.ToString());
             returnSB.AppendLine(" total_transported_weight: " + total_transported_weight.ToString());
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

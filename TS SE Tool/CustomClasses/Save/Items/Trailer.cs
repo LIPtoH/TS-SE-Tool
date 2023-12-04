@@ -226,6 +226,7 @@ namespace TS_SE_Tool.Save.Items
 
                         default:
                             {
+                                UnidentifiedLines.Add(dataLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
@@ -305,6 +306,8 @@ namespace TS_SE_Tool.Save.Items
                 for (int i = 0; i < wheels_wear_unfixable.Count; i++)
                     returnSB.AppendLine(" wheels_wear_unfixable[" + i + "]: " + wheels_wear_unfixable[i].ToString());
             }
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TS_SE_Tool.Utilities;
 
 namespace TS_SE_Tool.Save.Items
 {
@@ -37,6 +38,8 @@ namespace TS_SE_Tool.Save.Items
                     switch (tagLine)
                     {
                         case "":
+                        case "delivery_log_entry":
+                        case "}":
                             {
                                 break;
                             }
@@ -52,11 +55,18 @@ namespace TS_SE_Tool.Save.Items
                                 Params.Add(dataLine);
                                 break;
                             }
+
+                        default:
+                            {
+                                UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Utilities.IO_Utilities.ErrorLogWriter(ex.Message + Environment.NewLine + this.GetType().Name.ToLower() + " | " + tagLine + " = " + dataLine);
+                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
             }
@@ -72,7 +82,9 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" params: " + Params.Count);
             for (int i = 0; i < Params.Count; i++)            
-                returnSB.AppendLine(" params[" + i + "]: " + Params[i]); 
+                returnSB.AppendLine(" params[" + i + "]: " + Params[i]);
+
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 

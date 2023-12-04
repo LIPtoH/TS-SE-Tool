@@ -96,11 +96,14 @@ namespace TS_SE_Tool.Save.Items
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
+
                 try
                 {
                     switch (tagLine)
                     {
                         case "":
+                        case "flare_blink":
+                        case "}":
                             {
                                 break;
                             }
@@ -108,15 +111,10 @@ namespace TS_SE_Tool.Save.Items
                         default:
                             {
                                 UnidentifiedLines.Add(dataLine);
+                                IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
                     }
-                }
-                catch (FormatException ex)
-                {
-                    UnidentifiedLines.Add(currentLine);
-                    IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
-                    break;
                 }
                 catch (Exception ex)
                 {
@@ -124,11 +122,6 @@ namespace TS_SE_Tool.Save.Items
                     break;
                 }
             }
-        }
-
-        internal string PrintOut(uint _version)
-        {
-            return PrintOut(_version, null);
         }
 
         internal string PrintOut(uint _version, string _nameless)
@@ -139,7 +132,7 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine("flare_blink : " + _nameless + " {");
 
-            returnSB.AppendLine(WriteUnidentifiedLines());
+            WriteUnidentifiedLines();
 
             returnSB.AppendLine("}");
 
