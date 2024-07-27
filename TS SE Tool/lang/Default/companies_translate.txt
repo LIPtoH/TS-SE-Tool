@@ -1,0 +1,883 @@
+﻿[Default]
++all;All
+42p_print;42 Print
+aaa;AA - Auto di Alonso
+acc;ACC
+aci;ACI
+aerobalt;AeroBaltica
+aerobalt_ru;AeroBaltica (ru)
+agrominta;Agrominta UAB (Plants)
+agrominta_a;Agrominta UAB (Animals)
+agronord;AgroNord
+aport_abq;ABQ Cargo Center
+aport_an124;AN-124
+aport_pcc;Portland Cargo Central
+aport_phx;Phoenix Freight
+aria_fd_albg;Aria (Aalborg)
+aria_fd_esbj;Aria (Esbjerg)
+aria_fd_jnpg;Aria (Jönköping)
+aria_fd_trbg;Aria (Trelleborg)
+ateria;Ateria
+avs_met_scr;Avalanche Steel
+avs_met_sml;Avalanche Steel
+baltomors_ru;Baltomorsk (ru)
+baltomorsk;Baltomorsk
+batisse_base;Bâtisse (Base)
+batisse_hs;Bâtisse
+batisse_road;Bâtisse (Road work)
+batisse_wind;Bâtisse (Wind turbine)
+bcp;BCP
+bhb_raffin;BHB - La Raffinerie
+bhv;BHV
+bit_rd_grg;Bitumen (Garage)
+bit_rd_svc;Bitumen (Service)
+bit_rd_wrk;Bitumen (Road work)
+bjork;BJÖRK
+blt;BLT
+blt_ru;BLT (ru)
+blt_yacht;Balteus Yachts
+blt_yacht_ru;Balteus Yachts (ru)
+bltmetal;Baltic Metallurgy
+bltmetal_ru;Baltic Metallurgy (ru)
+bn_farm;Bushnell Farms
+boisserie;BOISSERIE J-P
+c_navale;Cantiere Navale
+cargotras;Cargotras
+cemelt_bas;Cemeltex (Foundation pit)
+cemelt_fl_ru;Cemeltex (House) (ru)
+cemelt_fla;Cemeltex (House)
+cemelt_hal;Cemeltex (Hall)
+cemelt_win;Cemeltex (Wind turbine)
+cesare_smar;Cesare Supermercato
+cha_el_mkt;Charged (Market)
+cha_el_whs;Charged (Warehouse)
+chimi;Chimi
+chm_che_plnt;Chemso Ltd. (Plant)
+chm_che_str;Chemso Ltd. (Str)
+cm_min_plnt;Coastline Mining (Plant)
+cm_min_qry;Coastline Mining (Quarry)
+cm_min_str;Coastline Mining (Str)
+cnp;CNP
+comoto;Comoto
+cont_port;Container port
+cont_port_fr;Container port
+cont_port_it;Container port
+cont_port_ru;Container port
+costruzi_bas;Costruzione di Edifici
+costruzi_fla;Costruzione di Edifici (House)
+costruzi_hal;Costruzione di Edifici (Hall)
+costruzi_win;Costruzione di Edifici (Wind turbine)
+dans_jardin;Dans le Jardin
+dg_wd_hrv;Deepgrove (Wood harvest)
+dg_wd_saw1;Deepgrove (Sawmill 2)
+dg_wd_saw;Deepgrove (Sawmill 1)
+domdepo;DomDepo
+domdepo_ru;DomDepo (ru)
+drekkar;Drekkar Trans
+du_farm;Darchelle Uzau
+eco;ÉCO
+ed_mkt;Eddy's
+ee_paper;Estonian Paper AS
+egres;Maatila Egres
+eolo_lines;Eolo Lines
+euroacres;eAcres
+eurogoodies;Euro Goodies
+eviksi;Evikši ZS (Plants)
+eviksi_a;Evikši ZS (Animals)
+exomar;Exomar
+fattoria_f;Fattoria Felice
+fcp;FCP
+fintyre;Finnish Tyres
+fintyre_ru;Finnish Tyres (ru)
+fle;FLE
+fui;FUI SpA
+gal_oil_gst;Gallon Oil (Gas station)
+gal_oil_ref;Gallon Oil (Refinery)
+gal_oil_str;Gallon Oil (Str)
+gallia_ferry;Gallia Ferries
+globeur;Globeur
+gm_chs_plnt;Global Mills
+gm_food_plnt;Global Mills (Food plant)
+gnt;GNT
+gomme_monde;Gomme du Monde
+hds_met_shp;Haddock Shipyard
+hf_wd_pln;Heartwood Furniture
+hms_con_svc;HMS Machinery
+hs_mkt;Home Store (Market)
+hs_whs;Home Store (Warehouse)
+huilant;Huilant
+ibp;IBP
+ika_bohag;IKA Bohag
+ika_ru;IKA (ru)
+ini;Ini
+itcc;ITCC
+kaarfor;Kaarfor
+kamen_ru;Staryj kamen
+kivi;Vanha Kivi
+konstnr;KN KonstNorr (Foundation pit)
+konstnr_br;KN KonstNorr (Bridge)
+konstnr_hs;KN KonstNorr (House)
+konstnr_wind;KN KonstNorr (Wind turbine)
+ladoga;Ladoga Auto
+ladoga_ru;Ladoga Auto (ru)
+lateds;Lateds
+libellula;Libellula
+lintukainen;Lintukainen Oy
+lisette_log;Lisette Logistics
+lkwlog;LKW
+lvr;Latvijas Vagonu Rūpnīca
+marina;Marina bay
+marina_fr;Marina bay
+marina_it;Marina bay
+marmo;Marmo SpA
+mcs_con_sit;Mud Creek slide
+ms_stein;MS Stein
+mvm_carriere;MVM carrière
+nbfc;NBFC
+nch;NCH
+nch_ru;NCH (ru)
+nord_crown;Nordic Crown
+nord_sten;Nordic Stenbrott
+norr_food;Norrfood
+norrsken;NorrskeN
+nos_pat_brg;Nos Pâturages ()
+nos_pat_cf;Nos Pâturages ()
+nos_pat_lhv;Nos Pâturages ()
+nosko;Noskonitta
+ns_chem;NS Chemicals
+ns_chem_ru;NS Chemicals (ru)
+ns_oil;NS Oil
+ns_oil_ru;NS Oil (ru)
+nucleon;Nucléon
+oak_port;Oakland Shippers
+oh_con_hom;Olthon Homes
+onnelik;Õnnelik talu (Plants)
+onnelik_a;Õnnelik talu (Animals)
+piac;PIAC
+pk_medved_ru;PK Medved
+pnp_wd_pln;Page & Price Paper
+pns_con_grg;Plaster & Sons (Garage)
+pns_con_sit1;Plaster & Sons (2)
+pns_con_sit2;Plaster & Sons (3)
+pns_con_sit3;Plaster & Sons (4)
+pns_con_sit;Plaster & Sons (1)
+pns_con_whs;Plaster & Sons (Warehouse)
+polar_fish;Polar fish
+polarislines;Polaris Lines
+posped;Posped
+pp_chimica;PP Chimica Italia
+quadrelli;Quadrelli SpA
+quarry;Stein Bruch
+radus;Radus
+radus_ru;Radus (ru)
+re_train;Rail Export
+renar;Renar Logistik
+renat;Renat
+rosmark;Rosmark
+rosmark_ru;Rosmark (ru)
+sag_tre;SAG&TRE sawmill
+sal;S.A.L. S.R.L.
+sal_fi;SAL
+sanbuilders;SanBuilders
+sc_frm;Sunshine Crops (Farm)
+sc_frm_grg;Sunshine Crops (Garage)
+scania_dlr;Scania (Dealer)
+scania_fac;Scania (Factory)
+sellplan;SellPlan
+severoatm_ru;Severoatom (ru)
+sf_port;Port of SF
+sg_whs;SellGoods
+skoda;Skout
+spinelli;Spinelli
+st_met_whs;Steeler (Warehouse)
+st_met_wrk;Steeler (Metal works)
+stokes;Stokes
+subse;Subse
+suprema;Suprema
+suprema_ru;Suprema (ru)
+te_logistica;TE Logistica
+tesore_gust;Tesoro Gustoso
+tid_mkt;Tidbit
+tradeaux;TradeAUX
+trameri;Trameri
+transinet;Transinet
+tras_med;Trasporti Mediterraneo
+tree_et;TREE-ET wood
+ukko;UKKO Voima
+viljo_paper;Viljo paperitehdas Oy
+viln_paper;VPF Vilniaus Popieriaus Fabrikas
+vitas_pwr;Vitas Power
+vm_car_dlr;Voltison (Dealer)
+vm_car_pln;Voltison (Plant)
+vm_car_whs;Voltison (Warehouse)
+voitureux;Voitureux
+volvo_dlr;Volvo (Dealer)
+volvo_fac;Volvo (Factory)
+vpc;VPC
+wal_food_mkt;Wallbert (Market)
+wal_food_whs;Wallbert (Warehouse)
+wal_mkt;Wallbert (Market)
+wal_whs;Wallbert (Warehouse)
+wgcc;WGCC
+wilnet_trans;Wilnet Transport
+zelenye;Zelenye polya (Plants)
+zelenye_a;Zelenye polya (Animals)
+agregados;
+ai;
+app;
+aria_food;
+balkan_loco;
+baltrak;
+brawen;
+cantera;
+canteras_ds;
+casa_olivera;
+cesta_sl;
+cgla;
+cortica;
+dfh;
+dobr_ferm_bg;
+dulcis;
+elcano_fla;
+elcano_hms;
+engeron;
+eppa;
+fallow;
+han_expo;
+huerta;
+iberatomica;
+imp_otel;
+itcc_scrap;
+kathode;
+kolico;
+krone;
+krone_t;
+lavish_food;
+log_atlan;
+lognstick;
+low_field;
+muromec;
+nos_pat;
+ocean_sol;
+ortiz;
+rimaf;
+rock_eater;
+rt_log;
+rump;
+sanbuild_cem;
+sanbuild_hms;
+scs_paper;
+sirin;
+sporklift;
+st_roza_bg;
+steinbr_str;
+supercesta;
+tdc_auto;
+timberturtle;
+tm_istanbul;
+trainfoundry;
+trans_cab;
+tree_et_log;
+ts_atlas;
+ttk_bg;
+vitas_pwr_co;
+shuttle;
+bn_live_auc;
+dc_car_dlr;
+fb_farm_pln;
+kw_trk_dlr;
+mon_farm;
+pt_trk_dlr;
+usb_food_pln;
+ws_trk_dlr;
+100_zap;
+10reg;
+1kea;
+able;
+adrica;
+aero_elblag;
+afghanaccu;
+afghannacc;
+afrofood;
+agro;
+agrozaural;
+agsfrasers;
+airkoryo;
+airliqui;
+albertheijn;
+aldi_es;
+aldipt;
+aldn;
+alds;
+alko1000;
+almaz_ess;
+almi;
+alsharq;
+alstom;
+altaykoksalt;
+aluprof;
+aluxion;
+aluxion_str;
+anklam_flug;
+aquael;
+arak_hofer;
+arak_lidl;
+arcidom;
+aria_fd_hmse;
+aria_fd_ltrp;
+aria_nordic;
+asbestqsum;
+atransvt;
+atransvtc;
+atriaeesti;
+auchan;
+auchansum;
+audi;
+avtoservis;
+aziyaula;
+bala;
+balkanship;
+banjul_ar;
+barenc;
+batisse;
+baturitm;
+bauhaus;
+baza_st;
+bcp_ru;
+bct;
+belarustorg;
+belbumprom;
+beldrev;
+belfert;
+belhotel;
+belintertr;
+bellesprom;
+belneft;
+belneft_zap1;
+belneft_zap2;
+bertling_log;
+betunia;
+beyneu_air;
+bgdkomsum;
+biedronka;
+biedronka_in;
+bilka;
+biltema;
+bim_in;
+bl1;
+bobr_myaso;
+bochkari;
+boliden;
+bondi;
+bonus;
+bosfir;
+bp_pt;
+bp_retail;
+breger;
+budimex;
+budowa;
+buksir;
+cafe_ess;
+captiglo;
+caquila;
+cargoexpress;
+carref;
+castorama;
+castorama_in;
+ccarrion;
+ccg_bas;
+ccg_fla;
+ccg_hal;
+cecpoil;
+cegielka;
+cemex;
+chadcbt;
+chadsht;
+chinapetraf;
+chongfarm;
+circlek;
+citro;
+citronex;
+cn_tesco;
+cn_xinfood;
+cnp_str;
+cnp_well;
+coca_polar;
+coin;
+compozit;
+continental;
+coop;
+crazy;
+creamery;
+crnodrvo;
+crnodrvo_log;
+ctt;
+cup;
+daf_dlr;
+daf_fac;
+daf_rus;
+dagli;
+dalgroup;
+decathlonpt;
+dellinesum;
+depo;
+deres_auto;
+dhl;
+dhl_pt;
+dia;
+diamant;
+dino;
+dixie;
+dobrocensum;
+domdepo2;
+dpd_pt;
+dragonoil;
+dreams;
+duken_kz;
+dunavia;
+effo;
+egyptairc;
+eimskip;
+eldoha;
+eldorado;
+eleveur;
+elgiganten;
+eliassons;
+enco;
+eni;
+eroski;
+esso;
+eumefa;
+euroacres_ru;
+eurogoodi_ru;
+euroopt;
+europa;
+europcar;
+eurotunnel_1;
+eurotunnel_2;
+expert;
+expo;
+fandwhr;
+fca;
+fermier;
+ferra;
+finist;
+fle_air;
+forfarmers;
+forsikom;
+forum;
+fuel_depot;
+gallia_f_in;
+galp_pt;
+garaz24sum;
+gardshorn;
+gasprom;
+gazprom_zap;
+gazpromns;
+geonjaejig;
+gkz;
+glavstroiy;
+gmkk;
+gnt_auto;
+gospodarstwo;
+gpn_k_sum;
+gpn_t_sum;
+granit;
+green;
+grm;
+handlopex;
+hawesmarket;
+hb_grandi;
+heidel_kz;
+hekla;
+helios;
+henrydom;
+hepcarec;
+homebase;
+hyundaikr;
+iav;
+ice_gla;
+icelandair;
+ikea;
+ikea_dist_pl;
+ikea_pl;
+ikeakorea;
+inter;
+interlam;
+inves1;
+invest;
+ip;
+ir_igsgrp;
+ir_irrea;
+ir_khodro;
+ir_takseez;
+isavia;
+isrfish;
+isrfood;
+istros_av;
+itcc_ru;
+iteco;
+jadranska1;
+jadranska2;
+jastuk;
+jewson;
+jubiley;
+jumbo;
+kaarfor_in;
+kaarfor2;
+kaechonds;
+kaesongir;
+kamiltm;
+karuzela;
+kaufland;
+kazpost;
+kg_aricargo;
+kg_ihlas;
+kg_narodni;
+kg_texha;
+kg_triod;
+kielce_expo;
+kirpzavod;
+kita;
+kiwi;
+klasmann_d;
+komfort;
+konzum;
+koreanair;
+korona;
+kp_taedong;
+kr_aact;
+kr_costco;
+kr_kiamotor;
+kr_lgelec;
+kr_motorola;
+kr_samsung;
+krion;
+kronan;
+ksmsum;
+kublei;
+kuenenagelll;
+kumetsum;
+kwangbok;
+ladasum;
+lafarge;
+lafarge_t;
+lafermedp;
+lagmarket;
+landsvirkjun;
+larus;
+leclerc;
+lentasum;
+lermerlsum;
+leroymerlin;
+leroypt;
+lgdisplay;
+lidl;
+lidl_centrum;
+lidlpt;
+likmerge;
+ljug_handel;
+lkw_walter;
+lkwlog_ru;
+lobo;
+loftorka;
+logistanaf;
+logitrans;
+lotuss;
+lukoil_zap;
+luksum;
+lyalitrans;
+m__prostor;
+m_airoport;
+m_avtodor;
+m_bazaazs;
+m_bazavmf;
+m_elev;
+m_ferma;
+m_kolhoz;
+m_les;
+m_les1;
+m_mag_avto;
+m_mag5;
+m_magnit;
+m_meatg;
+m_mebel;
+m_musor;
+m_oaoluk;
+m_obolsnab;
+m_oboron;
+m_ovochi;
+m_polar_fish;
+m_port;
+m_prostor;
+m_sklad;
+m_spirt;
+m_su155;
+m_terminal;
+m_torgr;
+m_voin;
+m_voins;
+m_voinsr;
+m_xleb;
+m1;
+magnit;
+magniti;
+magnitsum;
+makro;
+mann_wind;
+mannvit;
+marz;
+maspex;
+maxima;
+maxmat;
+mazet;
+mb_rus;
+mcdonalds;
+mediaexpert;
+mediamarkt;
+mega1;
+memaar;
+menologstm;
+mercadona;
+mercedesbenz;
+mercesiegmar;
+metal;
+metro;
+metrosum;
+mgruzsum;
+minimarket3;
+minimarket5;
+minimarket6;
+minimarket7;
+minsk_myaso;
+mlekpol;
+mmk;
+mostostal;
+mts_tel_tm;
+n_nickel;
+n_nickel2;
+n_nickel3;
+n1;
+nacfkor;
+nampooil;
+nampoship;
+nbfc_ru;
+nd;
+neftek;
+netto;
+nordural;
+norr_food2;
+novoneft;
+ns_oil_r1;
+nuuk_piler;
+nuuk_recy;
+obi;
+oblavtotrans;
+obltorgsoyuz;
+obois;
+oboisb;
+oil_gas_ess;
+olis;
+origine;
+orkan;
+orlen_retail;
+orskbecon;
+osobino;
+ot_port;
+othmansd;
+ozonsum;
+palazmetal;
+panpor;
+peksum;
+pen_auto_es;
+petro;
+peugeot1;
+peugeot2;
+pfi;
+pingodoce;
+pk_alfatah;
+pk_fourbros;
+pk_hcsconst;
+pk_ibrahim;
+pk_psoil;
+pk_qse;
+pkn_orlen;
+plastimet;
+pochtasum;
+podlogi_elk;
+polar_fish2;
+polar_oil;
+polarisline1;
+port_blond;
+port_bolun;
+port_isa;
+port_sudavik;
+port_sudur;
+posped_ru;
+prisma;
+psa_ant;
+pyatsum;
+pygumfact;
+q8;
+qazaqgaz;
+raben;
+rdk_invest;
+recheio;
+repsol_pt;
+respect;
+rewe;
+rimi;
+rmk;
+roboty;
+rock_eat_str;
+roex_trans;
+royal_arctic;
+rybackie_elk;
+saab;
+sah_afurdir;
+sainsbury;
+salag;
+salstek;
+samkaup;
+samskip;
+savushkin;
+sawmillforst;
+sazadatm;
+sbhsum;
+sbhsum2;
+scania_rus;
+sdalsayl;
+sdpillog;
+sdpt;
+seaprts;
+seedvault;
+seljaland;
+selpo;
+semkontinent;
+seopyong;
+severmin;
+sfexpress;
+sgautogrp;
+shadmbsum;
+shate_m;
+shawahig;
+shell;
+shell_fac;
+sildarvinn;
+simoes;
+sinuijuport;
+sjcosmofy;
+skn;
+slava;
+sllavia;
+smilesum;
+smyril;
+snb;
+snl;
+sogeasat;
+soteltchad;
+sovavto;
+specstroiy;
+star_oil;
+stroirosgas;
+sudagarlic;
+supernetto;
+svalsat;
+syllurgy;
+syschema;
+szatmari;
+tamoil;
+taobao;
+tartak;
+tatneftsum;
+tauekel;
+tchadia;
+tehmash;
+temir_zholy;
+tesco;
+th_ptt;
+timbursala;
+tj_brik;
+tj_cocacola;
+tj_dunyo;
+tj_nassoji;
+tj_nilullc;
+tj_rohisom;
+tj_talco;
+tj_tcsxpr;
+tm_gov;
+tm_state_uni;
+tmpetrolum;
+tnc;
+tnl;
+tomagrint;
+toom;
+torrestir;
+total_ener;
+totalaf;
+toumaitch;
+tow_truck;
+toyota;
+tradeaux_ru;
+traktrans;
+trameri_ru;
+trans;
+transafriq;
+transnsum;
+transwood;
+tree_et_ru;
+turkmenair;
+turkmengaz;
+turkmenrail;
+tvm;
+tw_pt;
+tyllanal;
+uadorsum;
+ugcc_uz;
+uko_zap;
+unilevr_dist;
+ur_poultry;
+urpelmsum;
+usaidkp;
+uz_analytik;
+uz_ardena;
+uz_bazqorkol;
+uz_bukhbzr;
+uz_conch;
+uz_guzormkt;
+uz_indorama;
+uz_marblest;
+uz_neftegaz;
+uz_sag;
+uz_texha;
+uzbek_nef;
+vegagerdin;
+vegagerdin_r;
+velcom;
+velessum;
+vernsum;
+vesna;
+vesna_mill;
+vest_port;
+villco;
+villco_mkt;
+vilvi;
+vitafoam;
+vitavtociti;
+volvo_rus;
+vsk;
+vsv;
+waberers;
+westtrans;
+willys;
+wurth;
+xxxl;
+yanggakdo;
+yazaki;
+zbyszko;
+zelenye_bey;
+zhenka;
+zlecenie;
+zlin;
+zlvzsum;
+zmk;

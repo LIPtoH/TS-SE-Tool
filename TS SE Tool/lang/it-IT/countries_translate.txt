@@ -1,0 +1,40 @@
+﻿[it-IT]
+belgium;Belgio
+czech;Repubblica Ceca
+denmark;Danimarca
+finland;Finlandia
+france;Francia
+germany;Germania
+hungary;Ungheria
+italy;Italia
+latvia;Lettonia
+lithuania;Lithania
+luxembourg;Lussemburgo
+netherlands;Olanda
+norway;Norvegia
+poland;Polonia
+slovakia;Slovacchia
+switzerland;Svizzera
+turkey;Turchia
+uk;Regno Unito
+andorra;Andorra
+belarus;Bielorussia
+croatia;Croazia
+cyprus;Cipro
+faroe;Isole Faroe
+greece;Grecia
+iceland;Islanda
+iom;Isola di Man
+ireland;Irlanda
+macedonia;Macedonia del Nord
+moldova;Moldavia
+nireland;Irlanda del Nord
+portugal;Portogallo
+spain;Spagna
+ukraine;Ucraina
+egypt;Egitto
+israel;Israele
+jordan;Gordania
+lebanon;Libano
+saudia;Arabia Saudita
+syria;Siria

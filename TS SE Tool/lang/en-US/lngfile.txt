@@ -1,0 +1,183 @@
+﻿[en-US]
+buttonAddCustomPath;Add
+buttonCancel;Cancel
+buttonCargoMarketRandomizeCargoCity;Randomize Cargo list
+buttonCargoMarketRandomizeCargoCompany;Randomize Cargo list
+buttonCargoMarketResetCargoCity;Reset Cargo list
+buttonCargoMarketResetCargoCompany;Reset Cargo list
+buttonChooseFolder;Choose folder
+buttonClearColor;Clear
+buttonConvoyToolsGPSCurrentPositionCopy;Copy current position
+buttonConvoyToolsGPSCurrentPositionPaste;Paste current position
+buttonConvoyToolsGPSStoredGPSPathCopy;Copy GPS path
+buttonConvoyToolsGPSStoredGPSPathPaste;Paste GPS path
+buttonConvoyToolsGPSTruckPositionMultySaveCopy;Copy truck position from multiple saves
+buttonConvoyToolsGPSTruckPositionMultySavePaste;Create multiple saves with different truck positions
+buttonDBClear;Clear
+buttonDBExport;Export
+buttonDBImport;Import
+buttonEditCPlist;Edit list
+buttonExport;Export
+buttonFreightMarketAddJob;Add Job to list
+buttonFreightMarketClearJobList;Clear list
+buttonFreightMarketRandomizeCargo;Random
+buttonImport;Import
+buttonMainAddCustomFolder;Add Custom Folder
+buttonMainDecryptSave;Decrypt
+buttonMainLoadSave;Load
+buttonMainWriteSave;Save
+buttonProfilesAndSavesOpenSaveFolder;Open Folder
+buttonReplaceColors;↑↑↑ Replace ↑↑↑
+buttonSave;Save
+buttonShareTruckTruckDetailsCopy;Copy Truck Datails
+buttonShareTruckTruckDetailsPaste;Paste Truck Datails
+buttonShareTruckTruckPaintCopy;Copy Paint Settings
+buttonShareTruckTruckPaintPaste;Paste Paint Settings
+buttonShareTruckWholeTruckCopy;Copy All Truck Settings
+buttonShareTruckWholeTruckPaste;Paste All Truck Settings
+buttonUserColorsShareColors;Share colors
+buttonUserCompanyCitiesUnVisit;Unvisit
+buttonUserCompanyCitiesVisit;Visit
+buttonUserCompanyGaragesBuy;Buy
+buttonUserCompanyGaragesBuyDowngrade;Downgrade
+buttonUserCompanyGaragesBuyUpgrade;Buy and Upgrade
+buttonUserCompanyGaragesManage;Manage
+buttonUserCompanyGaragesSell;Sell
+buttonUserCompanyGaragesUpgrade;Upgrade
+buttonUserTrailerSelectCurrent;Select Current Trailer
+buttonUserTrailerSwitchCurrent;Set as Current Trailer
+buttonUserTruckSelectCurrent;Current
+buttonUserTruckSwitchCurrent;Switch current Truck to this Truck
+checkBoxFreightMarketFilterDestination;Filter
+checkBoxFreightMarketFilterSource;Filter
+checkBoxProfilesAndSavesProfileBackups;Backups
+error_could_not_complete_jobs_loop;Could not complete jobs loop
+error_could_not_decode_file;Program was unable to decode file
+error_could_not_find_file;Program was unable to find file
+error_could_not_write_to_file;Program was unable to write to file
+error_during_importing_db;Error during importing DataBase
+error_exception;Program exception
+error_file_not_decoded;File not decoded
+error_file_was_modified;File was modified by the game
+error_job_parameters_not_filled;Not all job parameters are filled
+error_save_version_not_detected;Save file version was not detected
+error_sql_exception;DataBase exception
+FormAboutBox;About {0}
+FormAddCustomFolder;Edit Custom folders
+FormColorPicker;Color picker
+FormSettings;Settings
+FormShareUserColors;Share User colors
+groupBoxDataBase;Database
+groupBoxFolderType;Folder type
+groupBoxGameType;Game
+groupBoxImportedColors;Imported colors
+groupBoxMainProfilesAndSaves;Profiles And Saves
+groupBoxProfilePlayerLevel;Player level
+groupBoxProfileSkill;Skills
+groupBoxProfileUserColors;User colors
+groupBoxUserTrailerShareTrailerSettings;Share Trailer Settings
+groupBoxUserTrailerTrailer;Trailer
+groupBoxUserTrailerTrailerDetails;Details
+groupBoxUserTruckShareTruckSettings;Share Truck Settings
+groupBoxUserTruckTruck;Truck
+groupBoxUserTruckTruckDetails;Details
+Kilometers;Kilometers
+labelCargoMarketCity;City
+labelCargoMarketCompany;Company
+labelCargoMarketSource;Source
+labelCity;city
+labelCurrency;Currency
+labelDistance;Distance
+labelDownloadDescription;You can download latest version from
+labelFreightMarketCargo;Cargo
+labelFreightMarketCity;City
+labelFreightMarketCompany;Company
+labelFreightMarketCompanyF;Company
+labelFreightMarketCountryF;Country
+labelFreightMarketDestination;Destination
+labelFreightMarketDistance;Total path length:
+labelFreightMarketFilterMain;Filter
+labelFreightMarketSource;Source
+labelFreightMarketUrgency;Urgency
+labelHowtoDescription;How to use it
+labelJobPickupTime;Cargo relevance time
+labelLoopEvery;Loop every
+labelnew;new
+labelold;old
+labelor;or
+labelProfileSkill1;Long Distance
+labelProfileSkill2;High Value Cargo
+labelProfileSkill3;Fragile Cargo
+labelProfileSkill4;Just-In-Time Delivery
+labelProfileSkill5;Ecodriving
+labelSupportedGameVersions;Supported game versions
+labelTrailerPartNameBody;Body
+labelTrailerPartNameCargo;Cargo
+labelTrailerPartNameChassis;Chassis
+labelTrailerPartNameWheels;Wheels
+labelTruckDetailsFuel;Fuel
+labelTruckPartNameCabin;Cabin
+labelTruckPartNameChassis;Chassis
+labelTruckPartNameEngine;Engine
+labelTruckPartNameTransmission;Transmission
+labelTruckPartNameWheels;Wheels
+labelUserCompanyCompanyName;Company name
+labelUserCompanyGarages;Garages
+labelUserCompanyHQcity;HQ city
+labelUserCompanyMoneyAccount;Account money
+labelUserCompanyVisitedCities;Visited cities
+labelUserTrailerLicensePlate;License plate
+labelUserTruckLicensePlate;License plate
+labelVersion;Version {0} (alpha)
+Large;Large
+message_database_created;Database structure created.
+message_database_missing_creating_db;Database file is missing. Creating Database...
+message_database_missing_creating_db_structure;Database file is missing. Creating Database structure...
+message_decoding_save_file;Decoding save file...
+message_exporting_database;Exporting DataBase...
+message_file_saved;File saved.
+message_importing_database;Importing DataBase...
+message_loading_save_file;Loading save file...
+message_no_matching_cities;No Cities matching filter settings.
+message_operation_finished;Task complete.
+message_preparing_data;Preparing data...
+message_saving_file;Saving file...
+Miles;Miles
+Not owned;Not owned
+radioButtonProfileFolderType;Profile folder
+radioButtonRootFolderType;Root folder
+radioButtonSaveFolderType;Save folder
+radioButtonUnknownFolderType;Unknown
+Small;Small
+tabPageCargoMarket;Cargo Market
+tabPageCompany;Company
+tabPageConvoyTools;Convoy Tools
+tabPageFreightMarket;Freight Market
+tabPageProfile;Profile
+tabPageTrailer;Trailer
+tabPageTruck;Truck
+Tiny;Tiny
+toolStripMenuItemAbout;About
+toolStripMenuItemCreateTrFile;Make translation
+toolStripMenuItemDownload;Download
+toolStripMenuItemExit;Exit
+toolStripMenuItemHelp;Help
+toolStripMenuItemLanguage;Language
+toolStripMenuItemProgram;Program
+toolStripMenuItemSettings;Settings
+tooltipbuttonProfilesAndSavesRefreshAll;Refresh
+unsupportedGameVersionTitle;Unsupported {0} Version {1}
+unsupportedGameVersionText;Your {0} version is currently not supported by this tool.\n\nInstalled Game Version: {1}\n\nCurrently Supported Versions: {2}
+currencyEUR;Euro
+currencyCHF;Swiss Franc
+currencyCZK;Czech Koruna
+currencyGBP;British Pound
+currencyPLN;Polish Zloty
+currencyHUF;Hungarian Forint
+currencyDKK;Danish Krone
+currencySEK;Swedish Krona
+currencyNOK;Norwegian Krone
+currencyRUB;Russian Ruble
+currencyUSD;US Dollar
+currencyCAD;Canadian Dollar
+currencyMXN;Mexican Peso

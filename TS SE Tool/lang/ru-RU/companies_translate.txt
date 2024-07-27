@@ -1,0 +1,69 @@
+﻿[ru-RU]
++all;Все
+aerobalt_ru;АэроБалтика
+agrominta;Agrominta UAB (Растения)
+agrominta_a;Agrominta UAB (Животные)
+baltomors_ru;Балтоморск
+blt_ru;БЛТ
+bltmetal_ru;Балтийская Металлургия
+cemelt_bas;Cemeltex (Котлован)
+cemelt_fl_ru;Цемелтекс (Дом)
+cemelt_fla;Cemeltex (Дом)
+cemelt_hal;Cemeltex (Ангар)
+cemelt_win;Cemeltex (Ветрогенератор)
+cha_el_mkt;Charged (Магазин)
+cha_el_whs;Charged (Склад)
+chm_che_plnt;Chemso Ltd. (Производство)
+chm_che_str;Chemso Ltd. (Str)
+cm_min_plnt;Coastline Mining (Производство)
+cm_min_qry;Coastline Mining (Карьер)
+costruzi_fla;Costruzione di Edifici (Дом)
+costruzi_hal;Costruzione di Edifici (Ангар)
+costruzi_win;Costruzione di Edifici (Ветрогенератор)
+dg_wd_hrv;Deepgrove (Wood harvest)
+dg_wd_saw1;Deepgrove (Лесопилка 2)
+dg_wd_saw;Deepgrove (Лесопилка 1)
+domdepo_ru;Домдепо
+eviksi;Evikši ZS (Растения)
+eviksi_a;Evikši ZS (Животные)
+fintyre_ru;Финские Шины
+gal_oil_gst;Gallon Oil (Заправка)
+gal_oil_ref;Gallon Oil (Переработка)
+gm_food_plnt;Global Mills (Производство)
+hs_mkt;Home Store (Магазин)
+hs_whs;Home Store (Склад)
+ika_ru;ИКА Мебель
+kamen_ru;Старый Камень
+konstnr;KN KonstNorr (Котлован)
+konstnr_br;KN KonstNorr (Мост)
+konstnr_hs;KN KonstNorr (Дом)
+konstnr_wind;KN KonstNorr (Ветрогенератор)
+ladoga_ru;Ладога Авто
+nch_ru;НКХ
+ns_chem_ru;НС Химия
+ns_oil_ru;НС Ойл
+onnelik;Õnnelik talu (Растения)
+onnelik_a;Õnnelik talu (Животные)
+pk_medved_ru;ПК Meдвeдь
+pns_con_grg;Plaster & Sons (Гараж)
+pns_con_whs;Plaster & Sons (Склад)
+radus_ru;Радус
+rosmark_ru;Росмарк
+sc_frm;Sunshine Crops (Ферма)
+sc_frm_grg;Sunshine Crops (Гараж)
+scania_dlr;Scania (Дилер)
+scania_fac;Scania (Завод)
+severoatm_ru;Ceвepoaтoм
+st_met_whs;Steeler (Склад)
+st_met_wrk;Steeler (Сталелитейная)
+suprema_ru;Супpeмa
+vm_car_dlr;Voltison (Дилер)
+vm_car_whs;Voltison (Склад)
+volvo_dlr;Volvo (Дилер)
+volvo_fac;Volvo (Завод)
+wal_food_mkt;Wallbert (Магазин)
+wal_food_whs;Wallbert (Склад)
+wal_mkt;Wallbert (Магазин)
+wal_whs;Wallbert (Склад)
+zelenye;Зелëные Поля (Растения)
+zelenye_a;Зелëные Поля (Животные)

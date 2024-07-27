@@ -1,0 +1,66 @@
+﻿[pl-PL]
+austria;Austria
+belgium;Belgia
+bulgaria;Bułgaria
+czech;Czechy
+denmark;Dania
+estonia;Estonia
+finland;Finlanda
+france;Francja
+germany;Niemcy
+hungary;Węgry
+italy;Włochy
+latvia;Łotwa
+lithuania;Litwa
+luxembourg;Luksemburg
+netherlands;Holandia
+norway;Norwegia
+poland;Polska
+romania;Rumunia
+russia;Rosja
+slovakia;Słowacja
+sweden;Szwecja
+switzerland;Szwajcaria
+turkey;Turcja
+uk;Wielka Brytania
+arizona;Arizona
+california;Kalifornia
+nevada;Nevada
+new_mexico;Nowy Meksyk
+oregon;Oregon
+utah;Utah
+washington;Waszyngton
+aland;Wyspy Alandzkie
+albania;Albania
+andorra;Andora
+belarus;Białoruś
+bosnia;Bośnia i Hercegowina
+croatia;Chorwacja
+cyprus;Cypr
+faroe;Wyspy Owcze
+georgia;Gruzja
+greece;Grecja
+iceland;Islandia
+iom;Wyspa Man
+ireland;Irlandia
+jersey;Jersey
+liecht;Liechtenstein
+macedonia;Macedonia Północna
+mnegro;Czarnogóra
+moldova;Mołdawia
+monaco;Monako
+nireland;Irlandia Północna
+portugal;Portugalia
+serbia;Serbia
+slovenia;Słowenia 
+spain;Hiszpania
+svalbard;Svalbard
+ukraine;Ukraina
+egypt;Egipt
+iraq;Irak
+israel;Izrael
+jordan;Jordania 
+lebanon;Liban
+saudia;Arabia Saudyjska
+syria;Syria
+westbank;Zachodni Brzeg

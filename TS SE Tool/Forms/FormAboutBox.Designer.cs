@@ -13,10 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-namespace TS_SE_Tool
-{
-    partial class FormAboutBox
-    {
+namespace TS_SE_Tool {
+    partial class FormAboutBox {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -25,10 +23,8 @@ namespace TS_SE_Tool
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -40,8 +36,7 @@ namespace TS_SE_Tool
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.labelProductName = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
@@ -91,6 +86,7 @@ namespace TS_SE_Tool
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 58F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(265, 443);
             this.tableLayoutPanel.TabIndex = 0;
             // 
@@ -257,12 +253,12 @@ namespace TS_SE_Tool
         private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.Label labelSupportedGameVersions;
         private System.Windows.Forms.TextBox textBoxDescription;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelProductName;
-        private System.Windows.Forms.Label labelETS2version;
-        private System.Windows.Forms.Label labelATSversion;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button buttonSupportDeveloper;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelETS2version;
+        private System.Windows.Forms.Label labelATSversion;
     }
 }

@@ -9,28 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace TS_SE_Tool
-{
-    public partial class FormLicensePlateEdit : Form
-    {
+namespace TS_SE_Tool {
+    public partial class FormLicensePlateEdit : Form {
         TS_SE_Tool.FormMain MainForm = Application.OpenForms.OfType<TS_SE_Tool.FormMain>().Single();
         public string licenseplatetext = "";
         private bool WindowsSizeState = false;
 
-        public FormLicensePlateEdit(string _licenseplatetext)
-        {
+        public FormLicensePlateEdit(string _licenseplatetext) {
             InitializeComponent();
 
             this.Icon = Utilities.Graphics_TSSET.IconFromImage(MainForm.ProgUIImgsDict["Settings"]);
 
-            try
-            {
+            try {
                 string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
                 if (translatedString != null)
                     this.Text = translatedString;
-            }
-            catch
-            { }
+            } catch { }
 
             this.SuspendLayout();
 
@@ -46,16 +40,14 @@ namespace TS_SE_Tool
 
             textBoxLicensePlateNumber.Text = lpParts[0];
             textBoxLicensePlateCountry.Text = lpParts[1];
-            
+
             this.ResumeLayout();
         }
-        private void FormTruckLicensePlateEdit_Shown(object sender, EventArgs e)
-        {
+        private void FormTruckLicensePlateEdit_Shown(object sender, EventArgs e) {
             buttonCancel.Focus();
         }
 
-        private void CreateControls()
-        {
+        private void CreateControls() {
             this.AcceptButton = buttonOk;
             this.CancelButton = buttonCancel;
 
@@ -65,32 +57,26 @@ namespace TS_SE_Tool
             SetTagHelpText();
         }
 
-        private void ToggleFormSize()
-        {
+        private void ToggleFormSize() {
             Size WinSizeMin = new Size(676, 212),
                  WinSizeMax = new Size(676, 282);
 
-            if (WindowsSizeState)
-            {
+            if (WindowsSizeState) {
                 this.MaximumSize = WinSizeMax;
                 this.MinimumSize = WinSizeMax;
-            }
-            else
-            {
+            } else {
                 this.MinimumSize = WinSizeMin;
                 this.MaximumSize = WinSizeMin;
             }
 
             WindowsSizeState = !WindowsSizeState;
         }
-        private void buttonShowTagHelp_Click(object sender, EventArgs e)
-        {
+        private void buttonShowTagHelp_Click(object sender, EventArgs e) {
             ToggleFormSize();
             ToggleTagHelpText();
         }
 
-        private void SetTagHelpText()
-        {
+        private void SetTagHelpText() {
             labelLicensePlateTagsHelp.Text = "";
             labelLicensePlateTagsHelp2.Text = "";
 
@@ -118,8 +104,7 @@ namespace TS_SE_Tool
 
             string rightText = sb.ToString();
 
-            panel2.Paint += new PaintEventHandler((sender, e) =>
-            {
+            panel2.Paint += new PaintEventHandler((sender, e) => {
                 format.Alignment = StringAlignment.Near;
 
                 e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
@@ -136,30 +121,26 @@ namespace TS_SE_Tool
 
         }
 
-        private void ToggleTagHelpText()
-        {
+        private void ToggleTagHelpText() {
             if (WindowsSizeState)
                 buttonShowTagHelp.Text = "Expand help";
             else
                 buttonShowTagHelp.Text = "Collapse help";
         }
 
-        private void textBoxLicensePlateNumber_TextChanged(object sender, EventArgs e)
-        {
+        private void textBoxLicensePlateNumber_TextChanged(object sender, EventArgs e) {
             licenseplatetext = textBoxLicensePlateNumber.Text + '|' + textBoxLicensePlateCountry.Text;
 
             SCS.SCSLicensePlate thisLP = new SCS.SCSLicensePlate(licenseplatetext, SCS.SCSLicensePlate.LPtype.Truck);
 
-            panelLicensePlatePreview.BackgroundImage = Utilities.Graphics_TSSET.ResizeImage(thisLP.LicensePlateIMG, MainForm.LicensePlateWidth[MainForm.GameType], 32); //ETS - 128x32 or ATS - 128x64
+            panelLicensePlatePreview.BackgroundImage = Utilities.Graphics_TSSET.ResizeImage(thisLP.LicensePlateIMG, MainForm.SelectedGame.LicensePlateWidth, 32); //ETS - 128x32 or ATS - 128x64
         }
 
-        private void buttonOk_Click(object sender, EventArgs e)
-        {
+        private void buttonOk_Click(object sender, EventArgs e) {
             this.Close();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
+        private void buttonCancel_Click(object sender, EventArgs e) {
             this.Close();
         }
 

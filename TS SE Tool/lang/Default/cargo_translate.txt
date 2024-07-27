@@ -1,0 +1,604 @@
+﻿[Default]
+acetylene;Acetylene
+acid;Acid
+air_mails;Air Mails
+aircft_tires;Aircraft Tyres
+aircond;Air Conditioners
+almond;Almond
+ammunition;Ammunition
+apples;Apples
+apples_c;Apples
+aromatics;Aromatics
+arsenic;Arsenic
+asph_miller;Asphalt Miller - Writigen 808
+atl_cod_flt;Atlantic Cod Fillet
+backfl_prev;Backflow Preventers
+barley;Barley
+basil;Basil
+beans;Beans
+beef_meat;Beef
+beverages;Beverages
+beverages_c;Beverages
+big_bag_seed;Big-bags of Seeds
+boiler_parts;Boiler Part (Special)
+boric_acid;Boric Acid
+bottle_water;Bottled Water
+bottles;Empty Bottles
+brake_fluid;Brake Fluid
+brake_pads;Brake Pads
+bricks;Bricks
+bulldozer;Bulldozer
+butter;Butter
+cable;Cables
+cable_reel;Industrial Cable Reel
+can_sardines;Canned Sardines
+canned_beans;Canned Beans
+canned_beef;Canned Beef
+canned_pork;Canned Pork
+canned_tuna;Canned Tuna
+car_balt1;Cars (Baltic 1)
+car_balt2;Cars (Baltic 2)
+car_it;Cars (Italia)
+caravan;Caravan
+carb_water;Carbonated Water
+carbn_pwdr;Carbonated Black Powder
+carbn_pwdr_c;Carbonated Black Powder
+carcomp;Car Component
+carrots;Carrots
+carrots_c;Carrots
+cars_big;Cars Big
+cars_fr;Cars (France)
+cars_mix;Cars Mix
+cars_small;Cars Small
+case600;Crawler Tractor
+cat_785c;Haul Truck Chassis (Special)
+cat627;Scraper
+cauliflower;Cauliflower
+caviar;Caviar
+cement;Cement
+cheese;Cheese
+chem_sorb_c;Chemical Sorbent
+chem_sorbent;Chemical Sorbent
+chemicals;Chemicals
+chewing_gums;Chewing Gums
+chicken_meat;Chicken Meat
+chimney_syst;Chimney Systems
+chlorine;Chlorine
+chocolate;Chocolate
+clothes;Clothes
+clothes_c;Clothes
+coal;Coal
+coconut_milk;Coconut Milk
+coconut_oil;Coconut Oil
+coil;Metal Coil
+colors;Colors
+comp_process;Computer Processors
+computers;Computer
+concen_juice;Concentrate Juices
+concr_beams;Concrete Beams
+concr_beams2;Concrete Beams
+concr_cent;Concrete Centering
+concr_stair;Concrete Stairs
+condensator;Industrial Condensator (Special)
+const_house;Construction Houses
+cont_trees;Containerized Trees
+contamin;Contaminated Material
+copp_rf_gutt;Copper Roof Gutters
+corks;Corks
+cott_cheese;Cottage Cheese
+ctubes;Concrete Tubes
+ctubes_b;Concrete Tubes_b
+curtains;Curtains
+cut_flowers;Cut Flowers
+cyanide;Cyanide
+desinfection;Disinfectant
+diesel;Diesel
+diesel_gen;Diesel Generators
+digger1000;Digger 1000
+digger500;Digger 500
+diggers;Diggers
+dozer;Dozer Crawl - Z35K
+driller;Driller - D-50
+dry_fruit;Dry Fruits
+dry_milk;Dry Milk
+dryers;Dryers
+drymilk;Dry Milk
+dynamite;Dynamite
+elect_wiring;Electrical Wiring
+electro_comp;Electronic Components
+electronics;Electronics
+emp_wine_bar;Empty Wine Barrels
+emp_wine_bot;Empty Wine Bottles
+empty_barr;Empty Barrels
+empty_palet;Empty Pallets
+emptytank;Reservoir Tank
+ethane;Ethane
+ex_bucket;Excavator Bucket (Special)
+excav_soil;Excavated Soil
+excavator;Excavator
+excavator_bucket;Excavator Bucket (Special)
+exhausts_c;Exhaust Systems
+explosives;Explosives
+fertilizer;Fertilizer
+fireworks;Fireworks
+fish_chips;Fish Fingers
+floorpanels;Floor Panels
+flour;Flour
+fluorine;Fluorine
+food;Food
+forklifts;Forklifts
+fresh_fish;Fresh Fish
+froz_octopi;Frozen Octopi
+frozen_food;Frozen Food
+frozen_fruit;Frozen Fruits
+frozen_hake;Frozen Hake
+frozen_veget;Frozen Vegetables
+frsh_herbs;Fresh Herbs
+fruits;Fruits
+fuel_oil;Fuel Oil
+fuel_tanks;Fuel Tanks
+fueltanker;Fuel Tanker
+furniture;Furniture
+garlic;Garlic
+glass;Glass Panels
+glass_packed;Packed Glass
+gnocchi;Gnocchi
+goat_cheese;Goat Cheese
+grain;Grain
+granite_cube;Granite Cubes
+grapes;Grapes
+graph_grease;Graphite Grease
+grass_rolls;Grass Rolls
+gravel;Gravel
+guard_rails;Guard Rails
+gummy_bears;Gummy Bears
+gypsum;Gypsum
+harvest_bins;Harvesting Bins
+hay;Hay
+hchemicals;Hot Chemicals
+heat_exch;Heat Exchanger (Special)
+heat_exchanger;Heat Exchanger (Special)
+helicopter;Helicopter - Ring-429
+hi_volt_cabl;High Voltage Cables
+hipresstank;Pressure Tank
+hmetal;Heavy Metals
+home_acc;Home Accessoires
+honey;Honey
+house_pref;House Prefabs
+househd_appl;Household Appliances
+hwaste;Hospital Waste
+hydrochlor;Hydrochloric Acid
+hydrogen;Hydrogen
+ibc_cont;IBC Containers
+icecream;Ice Cream
+iced_coffee;Canned Iced Coffee
+iron_pipes;Iron Pipes (Big)
+iveco_vans;Cars Braco Vans
+kalmar240;Lift Truck
+kalmar240_s;Lift Truck Chassis
+kerosene;Kerosene
+ketchup;Ketchup
+komatsu155;Bulldozer
+lamb_stom;Lamb Stomachs
+largetubes;Large Tubes
+lattice;Construction Staircase (Special)
+lavender;Lavender
+lead;Lead
+limestone;Limestone
+limonades;Lemonade
+live_catt_fr;Live Cattle (France)
+live_cattle;Live Cattle
+liver_paste;Liver Paste
+locomotive;Locomotive - Vossloh G6
+logs;Logs
+lpg;LPG
+lumber;Lumber
+lumber_b;Lumber_b
+lye;Lye
+m_59_80_r63;Huge Tyres (Special)
+machine_pts;Machine Parts
+magnesium;Magnesium
+maple_syrup;Maple Syrup
+marb_blck;Marble Blocks
+marb_blck2;Marble Blocks_b
+marb_slab;Marble Slab
+mason_jars;Mason Jars
+mbt;Mobile Barrier
+meat;Meat
+med_equip;Medical Equipment
+med_vaccine;Medical Vaccines
+mercuric;Mercuric Acid
+metal_beams;Metal Beams
+metal_cans;Metal Cans
+metal_center;Metal Centering
+metal_pipes;Iron Pipes
+michelin_59_80_r63;Huge Tyres (Special)
+milk;Milk
+mobile_crane;Mobile Crane - Rex-Tex 45
+mondeos;Cars
+moor_buoy;Mooring Buoy
+mortar;Mortar
+moto_tires;Motorcycle Tyres
+motor_oil;Motor Oil
+motor_oil_c;Motor Oil C
+motorcycles;Motorcycles
+mozzarela;Mozzarela
+mtl_coil;Metal Coil
+mystery_box;Massive Tech Part (Special)
+mystery_cyl;High-Tech Device (Special)
+natur_rubber;Natural Rubber
+neon;Neon
+nitrocel;Nitrocellulose
+nitrogen;Nitrogen
+nonalco_beer;Non-alcoholic Beer
+nuts;Nuts
+nylon_cord;Nylon Cord
+office_suppl;Office Supplies
+oil;Oil
+oil_filt_c;Oil Filters
+oil_filters;Oil Filters
+olive_oil;Olive Oil
+olives;Olives
+onion;Onions
+oranges;Oranges
+ore;Ore
+outdr_flr_tl;Outdoor Floor Tiles
+overweight;Low Bed Semi-trailers
+packag_food;Packaged Food
+paper;Office Paper
+pasta;Pasta
+pears;Pears
+peas;Peas
+perfor_frks;Performance Forks
+pesticide;Pesticides
+pesto;Pesto
+pet_food;Pet Food
+pet_food_c;Pet Food
+petrol;Petrol
+phosphor;White Phosphorus
+pilot_boat;Service Boat (Special)
+pipes;Iron Pipes
+plant_substr;Plant Substrate
+plast_film;Plastic Film Rolls
+plast_film_c;Plastic Film Rolls
+plastic_gra;Plastic Granules
+plows;Plows
+plumb_suppl;Plumbing Supplies
+plums;Plums
+pnut_butter;Peanut Butter
+polyst_box;Polystyrene Boxes
+pork_meat;Pork
+post_packag;Post Packages
+pot_flowers;Potted Flowers
+potahydro;Potassium Hydroxide
+potassium;Potassium
+potatoes;Potatoes
+precast_strs;Precast Stairs
+press_sl_val;High Pressure Slide Valves
+princess;Yacht - Queen V39
+propane;Propane
+prosciutto;Prosciutto
+protec_cloth;Protective Clothing
+pumps;Pumps
+radiators;Radiators
+rawmilk;Raw Milk
+re_bars;Reinforcing Bars
+refl_posts;Reflective Posts
+rice;Rice
+rice_c;Rice
+roadroller;Roadroller
+roller;Roller - DYNA CC-2200
+roof_tiles;Roof Tiles
+roofing_felt;Roofing Felt
+rooflights;Rooflights
+rye;Rye
+salm_fillet;Salmon Fillet
+salt_spice_c;Salt & Spices
+salt_spices;Salt & Spices
+sand;Sand
+sandwch_pnls;Sandwich Panels
+sausages;Sausages
+sawpanels;Sawdust Panels
+scaffoldings;Scaffoldings
+scania_tr;Scania Trucks
+scooters;Scooters
+scrap_cars;Scrapped Cars
+scrap_metals;Scrap Metals
+seal_bearing;Sealed Bearings
+sheep_wool;Sheep Wool
+shock_absorb;Shock Absorbers
+silica;Silica
+silo;Giant Silo (Special)
+smokd_eel;Smoked Eel
+smokd_sprats;Smoked Sprats
+sodchlor;Sodium Hypochloride
+sodhydro;Sodium Hydroxide
+sodium;Sodium
+soil;Soil
+solvents;Solvents
+soy_milk;Soy Milk
+spher_valves;Spherical Valves
+sq_tub;Square Tubings
+steel_cord;Steel Cord
+stone_dust;Stone Dust
+stone_wool;Stone Wool
+stones;Stones
+straw_bales;Straw Bales
+sugar;Sugar
+sulfuric;Sulfuric Acid
+tableware;Tableware
+terex3160;All Terrain Crane
+tomatoes;Tomatoes
+toys;Toys
+tracks;Tracks
+tractor;Tractor - RS-666
+tractors;Tractors
+train_part;Train Axles
+train_part2;Train Undercarriage
+transformat;Transformer - PK900
+transformer;Transformer
+transmis;Transmissions
+truck_batt;Truck Batteries
+truck_batt_c;Truck Batteries
+truck_rims;Truck Rims
+truck_rims_c;Truck Rims
+truck_tyres;Truck Tyres
+tube;Gas Pipeline Parts
+tvs;TVs
+tyres;Tyres
+used_battery;Used Car Batteries
+used_pack;Used Packagings
+used_packag;Used Packagings
+used_plast;Used Plastics
+used_plast_c;Used Plastics
+vegetable;Vegetables
+vent_tube;Ventilation Shaft
+ventilation;Ventilation Shaft
+vinegar;Vinegar
+vinegar_c;Vinegar
+volvo_cars;Luxury SUVs
+volvo_tr;Volvo Trucks
+wallpanels;Wall Panels
+watermelons;Watermelons
+wheat;Wheat
+windml_eng;Wind Turbine Nacelle
+windml_tube;Wind Turbine Tower
+wirtgen250;Milling Machine
+wood_bark;Wood Bark
+wooden_beams;Wooden Beams
+wrk_cloth;Work Clothes
+wshavings;Wood Shavings
+yacht;Yacht
+yogurt;Yoghurt
+young_seed;Young Seed
+aljoinery;Aluminium Joinery
+aquariums;Aquariums
+beer;Beer
+canned_fish;Canned Fish
+carengines;Car Engines
+cement_dry;Dry Cement
+circulators;Circulators
+cleaners;Cleaning Agents
+daf_tr;Trucks – DAF
+dairy;Dairy Products
+empty_logs;Empty Log Trailer
+emptybottles;Empty Bottles
+ext_crn_pr;External Corner Profiles
+ext_fil;External Filters
+fl_furn;Flat-Pack Furniture
+gates;Gates
+hardware;Hardware
+junk;Junk
+malt;Malt
+man_tr;Trucks – MAN
+plastic;Plastic
+reindeer;Reindeer Meat
+rubber;Rubber
+seafood;Seafood
+skir_bo;Skirting Boards
+skir_tr;Skirting Trunking
+soap;Personal Hygiene Products
+trans_pr;Transition Profiles
+transmission;Transmissions
+truckengines;Truck Engines
+water;Water
+windows;Windows
+ammonia;
+car_d;
+car_f;
+chlorine_t;
+krone_cool;
+krone_profi;
+krone_profib;
+live_pigs;
+lpg_t;
+olive_tree;
+plast_pipes;
+sulfuric_t;
+vans_fd;
+vans_id;
+vans_vt;
+krone_box;
+alu_ingot;
+alu_profile;
+caravans;
+beverages_t;
+car_ibe;
+conc_juice_t;
+lux_yacht;
+milk_t;
+olive_oil_t;
+soy_milk_t;
+aircraft_eng;
+beet_harvest;
+big_tyres;
+boom_lift;
+boom_lift2;
+buttermilk;
+cans;
+cars_pick_tt;
+cars_pickup;
+cattle;
+conc_barr;
+cott_lint;
+cott_seed;
+dumpster;
+frac_tank;
+fruit_juic_t;
+gen_set;
+generator_c;
+glass_rack;
+grain_b;
+harvester;
+kw_t680;
+lemonade;
+mixtank;
+pellet_afood;
+potatoes_b;
+pt_579;
+salt;
+school_bus;
+soda_ash;
+sugar_beet_b;
+trees;
+util_pole;
+waste_paper;
+ws_49x;
+yard_truck;
+aircon;
+garbage_trck;
+pellet_afd_b;
+pumpjack;
+space_cont;
+abrikos;
+aek;
+appll;
+avtovoz;
+benzin;
+benzin1;
+benzin2;
+benzin3;
+benzin4;
+benzin5;
+benzin6;
+bikes;
+bm_21;
+brevno3;
+brevno4;
+brevno5;
+brevno6;
+brusi;
+btr_90;
+cherryi;
+cistern1;
+cistern2;
+cn_horsemeat;
+dosk1;
+dosk2;
+dp64;
+dvigun;
+eggs;
+g_boat;
+gaz66_tr;
+gorox;
+grecya;
+guns;
+ikea_pl_emtp;
+ikea_pl_furn;
+ikea_pl_hmwr;
+ikea_pl_papr;
+ikea_pl_plst;
+ka_60;
+kabak;
+kamaz;
+kamaz_old;
+kamaz_olz;
+kapusta;
+kirovec_pr;
+km8;
+kolbasko;
+kopcen;
+krasnaikra;
+kraz;
+kraz_pr;
+kraz_tr;
+kraz01;
+kurica;
+m21;
+malina;
+maz_535;
+meatg;
+meats;
+meatt;
+mebel;
+mebel1;
+mebel2;
+mebel3;
+more_prod;
+morkovv;
+mre;
+muka;
+musor;
+musor1;
+musor2;
+musor5;
+nastoik;
+nh_90;
+ochakovo;
+ogurec;
+os_a;
+pastet;
+pelmen;
+pelmsum;
+people;
+perez;
+pili1;
+pili2;
+pili3;
+poleni;
+pomidor;
+prizep;
+prjnik;
+pusto;
+pzrk;
+rjs;
+russka;
+s_boat;
+sahar;
+salo;
+sardel;
+scania_t;
+sibir;
+sigaret;
+sliva;
+spirt;
+suxari;
+svekla;
+t_55;
+to_r;
+topol1;
+topolm1;
+ural;
+ural_d;
+ural_dps;
+ural_m;
+ural_pr;
+ural_tr;
+vol_ew240emh;
+volvo_a25g;
+volvo_bucket;
+volvo_ec220e;
+volvo_l250h;
+volvo_rims;
+volvo_sd160b;
+volvo_t;
+woda;
+wodka;
+xleb;
+zapzast;
+zil_tr;
+zil130_d;
+zil130_pr;
+zil130_tr;
+zil433_d;
+zil433_tr;

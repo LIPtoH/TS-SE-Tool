@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 using TS_SE_Tool.Utilities;
 using TS_SE_Tool.Save.DataFormat;
+using TS_SE_Tool.CustomClasses.Program;
 
-namespace TS_SE_Tool.Save.Items
-{
-    class Economy : SiiNBlockCore
-    {
+namespace TS_SE_Tool.Save.Items {
+    class Economy : SiiNBlockCore {
+        FormMain MainForm = System.Windows.Forms.Application.OpenForms.OfType<FormMain>().Single();
         #region variables
         internal string bank { get; set; } = "";
         internal string player { get; set; } = "";
@@ -197,929 +197,771 @@ namespace TS_SE_Tool.Save.Items
 
         #endregion
 
-        internal Economy()
-        { }
+        internal Economy() { }
 
-        internal Economy(string[] _input)
-        {
+        internal Economy(string[] _input) {
             string tagLine = "", dataLine = "";
 
-            foreach (string currentLine in _input)
-            {
-                if (currentLine.Contains(':'))
-                {
+            foreach (string currentLine in _input) {
+                if (currentLine.Contains(':')) {
                     string[] splittedLine = currentLine.Split(new char[] { ':' }, 2);
 
                     tagLine = splittedLine[0].Trim();
                     dataLine = splittedLine[1].Trim();
-                }
-                else
-                {
+                } else {
                     tagLine = currentLine.Trim();
                     dataLine = "";
                 }
 
-                try
-                {
-                    switch (tagLine)
-                    {
+                try {
+                    switch (tagLine) {
                         case "":
                         case "economy":
-                        case "}":
-                            {
+                        case "}": {
                                 break;
                             }
 
-                        case "bank":
-                            {
+                        case "bank": {
                                 bank = dataLine;
                                 break;
                             }
 
-                        case "player":
-                            {
+                        case "player": {
                                 player = dataLine;
                                 break;
                             }
 
-                        case "companies":
-                            {
+                        case "companies": {
                                 companies.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("companies["):
-                            {
+                        case var s when s.StartsWith("companies["): {
                                 companies.Add(dataLine);
                                 break;
                             }
 
-                        case "garages":
-                            {
+                        case "garages": {
                                 garages.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("garages["):
-                            {
+                        case var s when s.StartsWith("garages["): {
                                 garages.Add(dataLine);
                                 break;
                             }
 
-                        case "garage_ignore_list":
-                            {
+                        case "garage_ignore_list": {
                                 garage_ignore_list.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("garage_ignore_list["):
-                            {
+                        case var s when s.StartsWith("garage_ignore_list["): {
                                 garage_ignore_list.Add(dataLine);
                                 break;
                             }
 
-                        case "game_progress":
-                            {
+                        case "game_progress": {
                                 game_progress = dataLine;
                                 break;
                             }
 
-                        case "event_queue":
-                            {
+                        case "event_queue": {
                                 event_queue = dataLine;
                                 break;
                             }
 
-                        case "mail_ctrl":
-                            {
+                        case "mail_ctrl": {
                                 mail_ctrl = dataLine;
                                 break;
                             }
 
-                        case "oversize_offer_ctrl":
-                            {
+                        case "oversize_offer_ctrl": {
                                 oversize_offer_ctrl = dataLine;
                                 break;
                             }
 
-                        case "game_time":
-                            {
+                        case "game_time": {
                                 game_time = uint.Parse(dataLine);
                                 break;
                             }
 
-                        case "game_time_secs":
-                            {
+                        case "game_time_secs": {
                                 game_time_secs = dataLine;
                                 break;
                             }
 
-                        case "game_time_initial":
-                            {
+                        case "game_time_initial": {
                                 game_time_initial = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "achievements_added":
-                            {
+                        case "achievements_added": {
                                 achievements_added = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "new_game":
-                            {
+                        case "new_game": {
                                 new_game = bool.Parse(dataLine);
                                 break;
                             }
 
-                        case "total_distance":
-                            {
+                        case "total_distance": {
                                 total_distance = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "experience_points":
-                            {
+                        case "experience_points": {
                                 experience_points = uint.Parse(dataLine);
                                 break;
                             }
 
-                        case "adr":
-                            {
+                        case "adr": {
                                 adr = byte.Parse(dataLine);
                                 break;
                             }
 
-                        case "long_dist":
-                            {
+                        case "long_dist": {
                                 long_dist = byte.Parse(dataLine);
                                 break;
                             }
 
-                        case "heavy":
-                            {
+                        case "heavy": {
                                 heavy = byte.Parse(dataLine);
                                 break;
                             }
 
-                        case "fragile":
-                            {
+                        case "fragile": {
                                 fragile = byte.Parse(dataLine);
                                 break;
                             }
 
-                        case "urgent":
-                            {
+                        case "urgent": {
                                 urgent = byte.Parse(dataLine);
                                 break;
                             }
 
-                        case "mechanical":
-                            {
+                        case "mechanical": {
                                 mechanical = byte.Parse(dataLine);
                                 break;
                             }
 
-                        case "user_colors":
-                            {
+                        case "user_colors": {
                                 user_colors.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("user_colors["):
-                            {
+                        case var s when s.StartsWith("user_colors["): {
                                 user_colors.Add(new SCS_Color(dataLine));
                                 break;
                             }
 
-                        case "delivery_log":
-                            {
+                        case "delivery_log": {
                                 delivery_log = dataLine;
                                 break;
                             }
 
-                        case "ferry_log":
-                            {
+                        case "ferry_log": {
                                 ferry_log = dataLine;
                                 break;
                             }
 
-                        case "police_offence_log":
-                            {
+                        case "police_offence_log": {
                                 police_offence_log = dataLine;
                                 break;
                             }
 
-                        case "stored_camera_mode":
-                            {
+                        case "stored_camera_mode": {
                                 stored_camera_mode = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_actor_state":
-                            {
+                        case "stored_actor_state": {
                                 stored_actor_state = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_high_beam_style":
-                            {
+                        case "stored_high_beam_style": {
                                 stored_high_beam_style = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_actor_windows_state":
-                            {
+                        case "stored_actor_windows_state": {
                                 stored_actor_windows_state = new SCS_Float_2(dataLine);
                                 break;
                             }
 
-                        case "stored_actor_wiper_mode":
-                            {
+                        case "stored_actor_wiper_mode": {
                                 stored_actor_wiper_mode = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_actor_retarder":
-                            {
+                        case "stored_actor_retarder": {
                                 stored_actor_retarder = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_display_mode":
-                            {
+                        case "stored_display_mode": {
                                 stored_display_mode = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_display_mode_on_dashboard":
-                            {
+                        case "stored_display_mode_on_dashboard": {
                                 stored_display_mode_on_dashboard = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_display_mode_on_gps":
-                            {
+                        case "stored_display_mode_on_gps": {
                                 stored_display_mode_on_gps = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_dashboard_map_mode":
-                            {
+                        case "stored_dashboard_map_mode": {
                                 stored_dashboard_map_mode = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_world_map_zoom":
-                            {
+                        case "stored_world_map_zoom": {
                                 stored_world_map_zoom = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_online_job_id":
-                            {
+                        case "stored_online_job_id": {
                                 stored_online_job_id = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_online_gps_behind":
-                            {
+                        case "stored_online_gps_behind": {
                                 stored_online_gps_behind.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_online_gps_behind["):
-                            {
+                        case var s when s.StartsWith("stored_online_gps_behind["): {
                                 stored_online_gps_behind.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_online_gps_ahead":
-                            {
+                        case "stored_online_gps_ahead": {
                                 stored_online_gps_ahead.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_online_gps_ahead["):
-                            {
+                        case var s when s.StartsWith("stored_online_gps_ahead["): {
                                 stored_online_gps_ahead.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_online_gps_behind_waypoints":
-                            {
+                        case "stored_online_gps_behind_waypoints": {
                                 stored_online_gps_behind_waypoints.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_online_gps_behind_waypoints["):
-                            {
+                        case var s when s.StartsWith("stored_online_gps_behind_waypoints["): {
                                 stored_online_gps_behind_waypoints.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_online_gps_ahead_waypoints":
-                            {
+                        case "stored_online_gps_ahead_waypoints": {
                                 stored_online_gps_ahead_waypoints.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_online_gps_ahead_waypoints["):
-                            {
+                        case var s when s.StartsWith("stored_online_gps_ahead_waypoints["): {
                                 stored_online_gps_ahead_waypoints.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_online_gps_avoid_waypoints":
-                            {
+                        case "stored_online_gps_avoid_waypoints": {
                                 stored_online_gps_avoid_waypoints.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_online_gps_avoid_waypoints["):
-                            {
+                        case var s when s.StartsWith("stored_online_gps_avoid_waypoints["): {
                                 stored_online_gps_avoid_waypoints.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_special_job":
-                            {
+                        case "stored_special_job": {
                                 stored_special_job = dataLine;
                                 break;
                             }
 
-                        case "police_ctrl":
-                            {
+                        case "police_ctrl": {
                                 police_ctrl = dataLine;
                                 break;
                             }
 
-                        case "stored_map_state":
-                            {
+                        case "stored_map_state": {
                                 stored_map_state = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_gas_pump_money":
-                            {
+                        case "stored_gas_pump_money": {
                                 stored_gas_pump_money = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_weather_change_timer":
-                            {
+                        case "stored_weather_change_timer": {
                                 stored_weather_change_timer = dataLine;
                                 break;
                             }
 
-                        case "stored_current_weather":
-                            {
+                        case "stored_current_weather": {
                                 stored_current_weather = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_rain_wetness":
-                            {
+                        case "stored_rain_wetness": {
                                 stored_rain_wetness = dataLine;
                                 break;
                             }
 
-                        case "time_zone":
-                            {
+                        case "time_zone": {
                                 time_zone = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "time_zone_name":
-                            {
+                        case "time_zone_name": {
                                 time_zone_name = dataLine;
                                 break;
                             }
 
-                        case "last_ferry_position":
-                            {
+                        case "last_ferry_position": {
                                 last_ferry_position = new Vector_3i(dataLine);
                                 break;
                             }
 
-                        case "stored_show_weigh":
-                            {
+                        case "stored_show_weigh": {
                                 stored_show_weigh = bool.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_need_to_weigh":
-                            {
+                        case "stored_need_to_weigh": {
                                 stored_need_to_weigh = bool.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_nav_start_pos":
-                            {
+                        case "stored_nav_start_pos": {
                                 stored_nav_start_pos = new Vector_3i(dataLine);
                                 break;
                             }
 
-                        case "stored_nav_end_pos":
-                            {
+                        case "stored_nav_end_pos": {
                                 stored_nav_end_pos = new Vector_3i(dataLine);
                                 break;
                             }
 
-                        case "stored_gps_behind":
-                            {
+                        case "stored_gps_behind": {
                                 stored_gps_behind.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_gps_behind["):
-                            {
+                        case var s when s.StartsWith("stored_gps_behind["): {
                                 stored_gps_behind.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_gps_ahead":
-                            {
+                        case "stored_gps_ahead": {
                                 stored_gps_ahead.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_gps_ahead["):
-                            {
+                        case var s when s.StartsWith("stored_gps_ahead["): {
                                 stored_gps_ahead.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_gps_behind_waypoints":
-                            {
+                        case "stored_gps_behind_waypoints": {
                                 stored_gps_behind_waypoints.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_gps_behind_waypoints["):
-                            {
+                        case var s when s.StartsWith("stored_gps_behind_waypoints["): {
                                 stored_gps_behind_waypoints.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_gps_ahead_waypoints":
-                            {
+                        case "stored_gps_ahead_waypoints": {
                                 stored_gps_ahead_waypoints.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_gps_ahead_waypoints["):
-                            {
+                        case var s when s.StartsWith("stored_gps_ahead_waypoints["): {
                                 stored_gps_ahead_waypoints.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_gps_avoid_waypoints":
-                            {
+                        case "stored_gps_avoid_waypoints": {
                                 stored_gps_avoid_waypoints.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_gps_avoid_waypoints["):
-                            {
+                        case var s when s.StartsWith("stored_gps_avoid_waypoints["): {
                                 stored_gps_avoid_waypoints.Add(dataLine);
                                 break;
                             }
 
-                        case "stored_start_tollgate_pos":
-                            {
+                        case "stored_start_tollgate_pos": {
                                 stored_start_tollgate_pos = new Vector_3i(dataLine);
                                 break;
-                            }                            
+                            }
 
-                        case "stored_tutorial_state":
-                            {
+                        case "stored_tutorial_state": {
                                 stored_tutorial_state = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "stored_map_actions":
-                            {
+                        case "stored_map_actions": {
                                 stored_map_actions.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("stored_map_actions["):
-                            {
+                        case var s when s.StartsWith("stored_map_actions["): {
                                 stored_map_actions.Add(dataLine);
                                 break;
                             }
 
-                        case "clean_distance_counter":
-                            {
+                        case "clean_distance_counter": {
                                 clean_distance_counter = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "clean_distance_max":
-                            {
+                        case "clean_distance_max": {
                                 clean_distance_max = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "no_cargo_damage_distance_counter":
-                            {
+                        case "no_cargo_damage_distance_counter": {
                                 no_cargo_damage_distance_counter = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "no_cargo_damage_distance_max":
-                            {
+                        case "no_cargo_damage_distance_max": {
                                 no_cargo_damage_distance_max = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "no_violation_distance_counter":
-                            {
+                        case "no_violation_distance_counter": {
                                 no_violation_distance_counter = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "no_violation_distance_max":
-                            {
+                        case "no_violation_distance_max": {
                                 no_violation_distance_max = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "total_real_time":
-                            {
+                        case "total_real_time": {
                                 total_real_time = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "real_time_seconds":
-                            {
+                        case "real_time_seconds": {
                                 real_time_seconds = dataLine;
                                 break;
                             }
 
-                        case "visited_cities":
-                            {
+                        case "visited_cities": {
                                 visited_cities.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("visited_cities["):
-                            {
+                        case var s when s.StartsWith("visited_cities["): {
                                 visited_cities.Add(dataLine);
                                 break;
                             }
 
-                        case "visited_cities_count":
-                            {
+                        case "visited_cities_count": {
                                 visited_cities_count.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("visited_cities_count["):
-                            {
+                        case var s when s.StartsWith("visited_cities_count["): {
                                 visited_cities_count.Add(int.Parse(dataLine));
                                 break;
                             }
 
-                        case "last_visited_city":
-                            {
+                        case "last_visited_city": {
                                 last_visited_city = dataLine;
                                 break;
                             }
 
-                        case "discovered_cutscene_items":
-                            {
+                        case "discovered_cutscene_items": {
                                 discovered_cutscene_items.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("discovered_cutscene_items["):
-                            {
+                        case var s when s.StartsWith("discovered_cutscene_items["): {
                                 discovered_cutscene_items.Add(UInt64.Parse(dataLine));
                                 break;
                             }
 
-                        case "discovered_cutscene_items_states":
-                            {
+                        case "discovered_cutscene_items_states": {
                                 discovered_cutscene_items_states.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("discovered_cutscene_items_states["):
-                            {
+                        case var s when s.StartsWith("discovered_cutscene_items_states["): {
                                 discovered_cutscene_items_states.Add(int.Parse(dataLine));
                                 break;
                             }
 
-                        case "unlocked_dealers":
-                            {
+                        case "unlocked_dealers": {
                                 unlocked_dealers.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("unlocked_dealers["):
-                            {
+                        case var s when s.StartsWith("unlocked_dealers["): {
                                 unlocked_dealers.Add(dataLine);
                                 break;
                             }
 
-                        case "unlocked_recruitments":
-                            {
+                        case "unlocked_recruitments": {
                                 unlocked_recruitments.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("unlocked_recruitments["):
-                            {
+                        case var s when s.StartsWith("unlocked_recruitments["): {
                                 unlocked_recruitments.Add(dataLine);
                                 break;
                             }
 
-                        case "total_screeshot_count":
-                            {
+                        case "total_screeshot_count": {
                                 total_screeshot_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "undamaged_cargo_row":
-                            {
+                        case "undamaged_cargo_row": {
                                 undamaged_cargo_row = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "service_visit_count":
-                            {
+                        case "service_visit_count": {
                                 service_visit_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "last_service_pos":
-                            {
+                        case "last_service_pos": {
                                 last_service_pos = new SCS_Float_3(dataLine);
                                 break;
                             }
 
-                        case "gas_station_visit_count":
-                            {
+                        case "gas_station_visit_count": {
                                 gas_station_visit_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "last_gas_station_pos":
-                            {
+                        case "last_gas_station_pos": {
                                 last_gas_station_pos = new SCS_Float_3(dataLine);
                                 break;
                             }
 
-                        case "emergency_call_count":
-                            {
+                        case "emergency_call_count": {
                                 emergency_call_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "ai_crash_count":
-                            {
+                        case "ai_crash_count": {
                                 ai_crash_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "truck_color_change_count":
-                            {
+                        case "truck_color_change_count": {
                                 truck_color_change_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "red_light_fine_count":
-                            {
+                        case "red_light_fine_count": {
                                 red_light_fine_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "cancelled_job_count":
-                            {
+                        case "cancelled_job_count": {
                                 cancelled_job_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "total_fuel_litres":
-                            {
+                        case "total_fuel_litres": {
                                 total_fuel_litres = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "total_fuel_price":
-                            {
+                        case "total_fuel_price": {
                                 total_fuel_price = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "transported_cargo_types":
-                            {
+                        case "transported_cargo_types": {
                                 transported_cargo_types.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("transported_cargo_types["):
-                            {
+                        case var s when s.StartsWith("transported_cargo_types["): {
                                 transported_cargo_types.Add(dataLine);
                                 break;
                             }
 
-                        case "achieved_feats":
-                            {
+                        case "achieved_feats": {
                                 achieved_feats = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "discovered_roads":
-                            {
+                        case "discovered_roads": {
                                 discovered_roads = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "discovered_items":
-                            {
+                        case "discovered_items": {
                                 discovered_items.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("discovered_items["):
-                            {
+                        case var s when s.StartsWith("discovered_items["): {
                                 discovered_items.Add(UInt64.Parse(dataLine));
                                 break;
                             }
 
-                        case "drivers_offer":
-                            {
+                        case "drivers_offer": {
                                 drivers_offer.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("drivers_offer["):
-                            {
+                        case var s when s.StartsWith("drivers_offer["): {
                                 drivers_offer.Add(dataLine);
                                 break;
                             }
 
-                        case "freelance_truck_offer":
-                            {
+                        case "freelance_truck_offer": {
                                 freelance_truck_offer = dataLine;
                                 break;
                             }
 
-                        case "trucks_bought_online":
-                            {
+                        case "trucks_bought_online": {
                                 trucks_bought_online = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "special_cargo_timer":
-                            {
+                        case "special_cargo_timer": {
                                 special_cargo_timer = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "screen_access_list":
-                            {
+                        case "screen_access_list": {
                                 screen_access_list.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("screen_access_list["):
-                            {
+                        case var s when s.StartsWith("screen_access_list["): {
                                 screen_access_list.Add(dataLine);
                                 break;
                             }
 
-                        case "driver_pool":
-                            {
+                        case "driver_pool": {
                                 driver_pool.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("driver_pool["):
-                            {
+                        case var s when s.StartsWith("driver_pool["): {
                                 driver_pool.Add(dataLine);
                                 break;
                             }
 
-                        case "registry":
-                            {
+                        case "registry": {
                                 registry = dataLine;
                                 break;
                             }
 
-                        case "company_jobs_invitation_sent":
-                            {
+                        case "company_jobs_invitation_sent": {
                                 company_jobs_invitation_sent = bool.Parse(dataLine);
                                 break;
                             }
 
-                        case "company_check_hash":
-                            {
+                        case "company_check_hash": {
                                 company_check_hash = UInt64.Parse(dataLine);
                                 break;
                             }
 
-                        case "relations":
-                            {
+                        case "relations": {
                                 relations.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("relations["):
-                            {
+                        case var s when s.StartsWith("relations["): {
                                 relations.Add(int.Parse(dataLine));
                                 break;
                             }
 
-                        case "bus_stops":
-                            {
+                        case "bus_stops": {
                                 bus_stops.Capacity = int.Parse(dataLine);
                                 break;
                             }
 
-                        case var s when s.StartsWith("bus_stops["):
-                            {
+                        case var s when s.StartsWith("bus_stops["): {
                                 bus_stops.Add(dataLine);
                                 break;
                             }
 
-                        case "bus_job_log":
-                            {
+                        case "bus_job_log": {
                                 bus_job_log = dataLine;
                                 break;
                             }
 
-                        case "bus_experience_points":
-                            {
+                        case "bus_experience_points": {
                                 bus_experience_points = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "bus_total_distance":
-                            {
+                        case "bus_total_distance": {
                                 bus_total_distance = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "bus_finished_job_count":
-                            {
+                        case "bus_finished_job_count": {
                                 bus_finished_job_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "bus_cancelled_job_count":
-                            {
+                        case "bus_cancelled_job_count": {
                                 bus_cancelled_job_count = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "bus_total_passengers":
-                            {
+                        case "bus_total_passengers": {
                                 bus_total_passengers = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "bus_total_stops":
-                            {
+                        case "bus_total_stops": {
                                 bus_total_stops = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "bus_game_time":
-                            {
+                        case "bus_game_time": {
                                 bus_game_time = int.Parse(dataLine);
                                 break;
                             }
 
-                        case "bus_playing_time":
-                            {
+                        case "bus_playing_time": {
                                 bus_playing_time = int.Parse(dataLine);
                                 break;
                             }
 
                         //v1.49
 
-                        case "used_vehicle_assortment":
-                            {
+                        case "used_vehicle_assortment": {
                                 used_vehicle_assortment = dataLine;
                                 break;
                             }
 
                         //v1.49
 
-                        default:
-                            {
+                        default: {
                                 UnidentifiedLines.Add(dataLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
                     }
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
                     break;
                 }
@@ -1129,13 +971,11 @@ namespace TS_SE_Tool.Save.Items
             }
         }
 
-        internal string PrintOut(uint _version)
-        {
+        internal string PrintOut(uint _version) {
             return PrintOut(_version, null);
         }
 
-        internal string PrintOut(uint _version, string _nameless)
-        {
+        internal string PrintOut(uint _version, string _nameless) {
             //get data from helping variables
             getPlayerSkillsFromArray();
 
@@ -1208,8 +1048,7 @@ namespace TS_SE_Tool.Save.Items
             if (_version < (byte)saveVTV.v146)
                 returnSB.AppendLine(" stored_display_mode: " + stored_display_mode.ToString());
 
-            if (_version >= (byte)saveVTV.v146)
-            {
+            if (_version >= (byte)saveVTV.v146) {
                 returnSB.AppendLine(" stored_display_mode_on_dashboard: " + stored_display_mode_on_dashboard.ToString());
                 returnSB.AppendLine(" stored_display_mode_on_gps: " + stored_display_mode_on_gps.ToString());
             }
@@ -1362,8 +1201,7 @@ namespace TS_SE_Tool.Save.Items
             for (int i = 0; i < drivers_offer.Count; i++)
                 returnSB.AppendLine(" drivers_offer[" + i + "]: " + drivers_offer[i]);
 
-            if (_version > (byte)saveVTV.v148)
-            {
+            if (_version > (byte)saveVTV.v148) {
                 returnSB.AppendLine(" used_vehicle_assortment: " + used_vehicle_assortment);
             }
 
@@ -1421,13 +1259,11 @@ namespace TS_SE_Tool.Save.Items
         }
 
         //Methods Support
-        internal void setPlayerSkillsArray()
-        {
-            _playerSkills = new byte[6] { adr, long_dist, heavy, fragile, urgent, mechanical};
+        internal void setPlayerSkillsArray() {
+            _playerSkills = new byte[6] { adr, long_dist, heavy, fragile, urgent, mechanical };
         }
 
-        internal void getPlayerSkillsFromArray()
-        {
+        internal void getPlayerSkillsFromArray() {
             adr = _playerSkills[0];
             long_dist = _playerSkills[1];
             heavy = _playerSkills[2];
@@ -1436,13 +1272,11 @@ namespace TS_SE_Tool.Save.Items
             mechanical = _playerSkills[5];
         }
 
-        internal int[] getPlayerLvl()
-        {
-            int currentLvl = 0, lvlThreshhold = 0, 
-                finalThreshhold = Globals.PlayerLevelUps[Globals.PlayerLevelUps.Length - 1];
+        internal int[] getPlayerLvl() {
+            int currentLvl = 0, lvlThreshhold = 0,
+                finalThreshhold = MainForm.SelectedGame.PlayerLevelUps[MainForm.SelectedGame.PlayerLevelUps.Count - 1];
 
-            foreach (int lvlstep in Globals.PlayerLevelUps)
-            {
+            foreach (int lvlstep in MainForm.SelectedGame.PlayerLevelUps) {
                 lvlThreshhold += lvlstep;
 
                 if (experience_points < lvlThreshhold)
@@ -1451,8 +1285,7 @@ namespace TS_SE_Tool.Save.Items
                     currentLvl++;
             }
 
-            do
-            {
+            do {
                 lvlThreshhold += finalThreshhold;
 
                 if (experience_points < lvlThreshhold)
@@ -1463,8 +1296,7 @@ namespace TS_SE_Tool.Save.Items
             } while (true);
         }
 
-        internal void setPlayerExp(int _plLvl)
-        {
+        internal void setPlayerExp(int _plLvl) {
             uint experience = 0;
 
             if (_plLvl < 0)
@@ -1473,18 +1305,17 @@ namespace TS_SE_Tool.Save.Items
             if (_plLvl > 150)
                 _plLvl = 150;
 
-            for (int i = 0; i < _plLvl; i++)
-            {
-                if (i < Globals.PlayerLevelUps.Length)
-                    experience += (uint)Globals.PlayerLevelUps[i];
+            for (int i = 0; i < _plLvl; i++) {
+                if (i < MainForm.SelectedGame.PlayerLevelUps.Count)
+                    experience += (uint)MainForm.SelectedGame.PlayerLevelUps[i];
                 else
-                    experience += (uint)Globals.PlayerLevelUps[Globals.PlayerLevelUps.Length - 1];
+                    experience += (uint)MainForm.SelectedGame.PlayerLevelUps[MainForm.SelectedGame.PlayerLevelUps.Count - 1];
             }
 
-            if (_plLvl < Globals.PlayerLevelUps.Length)
-                experience += (uint)Globals.PlayerLevelUps[_plLvl] - 1;
+            if (_plLvl < MainForm.SelectedGame.PlayerLevelUps.Count)
+                experience += (uint)MainForm.SelectedGame.PlayerLevelUps[_plLvl] - 1;
             else
-                experience += (uint)Globals.PlayerLevelUps[Globals.PlayerLevelUps.Length - 1] - 1;
+                experience += (uint)MainForm.SelectedGame.PlayerLevelUps[MainForm.SelectedGame.PlayerLevelUps.Count - 1] - 1;
 
             experience_points = experience;
         }

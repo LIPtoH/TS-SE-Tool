@@ -1,0 +1,363 @@
+﻿[ja-JP]
+acetylene;アセチレン
+acid;酸
+air_mails;エアメール
+aircft_tires;航空機用タイヤ
+aircond;空調機器
+almond;アーモンド
+ammunition;弾薬
+apples;リンゴ
+apples_c;リンゴ
+aromatics;芳香族炭化水素
+arsenic;ヒ素
+asph_miller;アスファルト切削機
+atl_cod_flt;タイセイヨウダラの切り身
+backfl_prev;逆流防止装置
+barley;大麦
+basil;バジル
+beans;豆
+beef_meat;牛肉
+beverages;飲料
+beverages_c;飲料
+big_bag_seed;大袋種子
+boiler_parts;ボイラーパーツ (特殊)
+boric_acid;ホウ酸
+bottle_water;水のボトル
+bottles;空のボトル
+brake_fluid;ブレーキフルード
+brake_pads;ブレーキパッド
+bricks;レンガ
+bulldozer;ブルドーザー
+butter;バター
+cable;ケーブル
+cable_reel;工業用ケーブルリール
+can_sardines;イワシの缶詰
+canned_beans;豆の缶詰
+canned_beef;牛肉の缶詰
+canned_pork;豚肉の缶詰
+canned_tuna;ツナ缶
+car_balt1;自動車 (Baltic 1)
+car_balt2;自動車 (Baltic 2)
+car_it;自動車 (イタリア)
+carb_water;炭酸水
+carbn_pwdr;炭素微粒子（カーボンブラック）
+carbn_pwdr_c;炭素微粒子（カーボンブラック）
+carcomp;自動車部品
+carrots;人参
+carrots_c;人参
+cars_big;自動車 (大きい)
+cars_fr;自動車 (フランス)
+cars_mix;自動車 (混合)
+cars_small;自動車 (小さい)
+case600;クローラトラクタ
+cat_785c;重ダンプトラック　シャーシ (特殊)
+cat627;スクレーパー
+cauliflower;カリフラワー
+caviar;キャビア
+cement;セメント
+cheese;チーズ
+chem_sorb_c;化学吸着剤
+chem_sorbent;化学吸着剤
+chemicals;化学製品
+chewing_gums;チューイングガム
+chicken_meat;鶏肉
+chimney_syst;煙突排煙装置
+chlorine;塩素
+chocolate;チョコレート
+clothes;衣類
+clothes_c;衣類
+coal;石炭
+coconut_milk;ココナッツミルク
+coconut_oil;ココナッツオイル
+coil;金属コイル
+colors;ペンキ
+comp_process;コンピュータープロセッサ
+computers;コンピューター
+concen_juice;濃縮果汁ジュース
+concr_beams;コンクリート梁
+concr_beams2;コンクリート梁
+concr_cent;コンクリート型枠
+concr_stair;コンクリート階段
+condensator;工業用コンデンサー (特殊)
+const_house;完成済みプレハブ住宅
+cont_trees;鉢植えの木
+contamin;汚染物質
+copp_rf_gutt;銅製の雨どい
+corks;コルク
+cott_cheese;カッテージチーズ
+ctubes;コンクリートチューブ
+ctubes_b;コンクリートチューブ
+curtains;カーテン
+cut_flowers;切り花
+cyanide;シアン化物
+desinfection;消毒剤
+diesel;軽油
+diesel_gen;ディーゼル発電機
+dozer;ブルドーザー - Z35K
+driller;ドリラー - D-50
+dry_fruit;ドライフルーツ
+dry_milk;粉ミルク
+dryers;乾燥機
+drymilk;粉ミルク
+dynamite;ダイナマイト
+elect_wiring;電線
+electro_comp;電子部品
+electronics;電子機器
+emp_wine_bar;空のワイン樽
+emp_wine_bot;空のワインボトル
+empty_barr;空の樽
+empty_palet;空パレット
+emptytank;リザーバータンク
+ethane;エタン
+ex_bucket;油圧ショベル　バケット (特殊)
+excav_soil;掘削土
+excavator;油圧ショベル
+excavator_bucket;油圧ショベル　バケット (特殊)
+exhausts_c;排気装置
+explosives;爆発物
+fertilizer;肥料
+fireworks;花火
+fish_chips;白身魚のフライ
+floorpanels;フロアパネル
+flour;小麦粉
+fluorine;フッ素
+food;加工食品
+forklifts;フォークリフト
+fresh_fish;鮮魚
+froz_octopi;冷凍のタコ
+frozen_food;冷凍食品
+frozen_fruit;冷凍フルーツ
+frozen_hake;冷凍メルルーサ
+frozen_veget;冷凍野菜
+frsh_herbs;フレッシュハーブ
+fruits;フルーツ
+fuel_oil;重油
+fuel_tanks;燃料タンク
+fueltanker;フューエルタンカー
+furniture;家具
+garlic;ニンニク
+glass;ガラスパネル
+glass_packed;ガラス製品
+gnocchi;ニョッキ（パスタ）
+goat_cheese;ヤギのチーズ
+grain;穀物
+granite_cube;花崗岩のキューブ
+grapes;ブドウ
+graph_grease;グラファイト　グリース
+grass_rolls;グラスロール
+gravel;砂利
+guard_rails;ガードレール
+gummy_bears;熊のグミ
+gypsum;石膏
+harvest_bins;収穫コンテナ
+hay;藁のペール
+hchemicals;高熱化学製品
+heat_exch;熱交換器 (特殊)
+heat_exchanger;熱交換器 (特殊)
+helicopter;ヘリコプター - Ring-429
+hi_volt_cabl;高圧ケーブル
+hipresstank;プレッシャータンク
+hmetal;重金属
+home_acc;家庭用アクセサリー
+honey;蜂蜜
+house_pref;プレハブ住宅
+househd_appl;家庭用品
+hwaste;医療系廃棄物
+hydrochlor;塩酸
+hydrogen;水素
+ibc_cont;IBCコンテナ
+icecream;アイスクリーム
+iced_coffee;アイスコーヒー缶
+iron_pipes;鉄パイプ
+iveco_vans;Bracoバン
+kalmar240;リーチスタッカー
+kalmar240_s;リーチスタッカー　シャーシ
+kerosene;灯油
+ketchup;ケチャップ
+komatsu155;ブルドーザー
+lamb_stom;ラムの胃袋
+largetubes;大型チューブ
+lattice;建設用階段 (特殊)
+lavender;ラベンダー
+lead;鉛
+limestone;石灰岩
+limonades;レモネード
+live_catt_fr;牛 (フランス)
+live_cattle;牛
+liver_paste;レバーペースト
+locomotive;機関車 - Vossloh G6
+logs;丸太
+lumber;木材
+lumber_b;木材
+lye;灰汁
+m_59_80_r63;重ダンプトラック　巨大タイヤ (特殊)
+machine_pts;機械部品
+magnesium;マグネシウム
+maple_syrup;メープルシロップ
+marb_blck;大理石ブロック
+marb_blck2;大理石ブロック
+marb_slab;大理石板
+mason_jars;メイソンジャー
+mbt;移動式バリア
+meat;食肉
+med_equip;医療機器
+med_vaccine;医療ワクチン
+mercuric;塩化第二水銀
+metal_beams;鉄骨梁
+metal_cans;金属缶
+metal_center;円錐型金属カバー
+metal_pipes;鉄パイプ
+michelin_59_80_r63;重ダンプトラック　巨大タイヤ (特殊)
+milk;牛乳
+mobile_crane;移動式クレーン - Rex-Tex 45
+mondeos;乗用車
+moor_buoy;係留ブイ
+mortar;モルタル
+moto_tires;二輪車用タイヤ
+motor_oil;自動車用オイル
+motor_oil_c;自動車用オイル
+motorcycles;二輪車
+mozzarela;モッツァレラチーズ
+mtl_coil;金属コイル
+mystery_box;大規模ハイテクパーツ (特殊)
+mystery_cyl;ハイテクデバイス (特殊)
+natur_rubber;天然ゴム
+neon;ネオン
+nitrocel;ニトロセルロース
+nitrogen;窒素
+nonalco_beer;ノンアルコールビール
+nuts;クルミ
+nylon_cord;ナイロンコード
+office_suppl;事務用品
+oil;オイル
+oil_filt_c;オイルフィルター
+oil_filters;オイルフィルター
+olive_oil;オリーブオイル
+olives;オリーブ
+onion;玉ねぎ
+oranges;オレンジ
+ore;鉱石
+outdr_flr_tl;屋外用フロアタイル
+overweight;低床セミトレーラー
+packag_food;加工食品
+paper;事務用紙
+pasta;パスタ
+pears;洋梨
+peas;エンドウ豆
+perfor_frks;二輪車用フロントフォーク
+pesticide;農薬
+pesto;ペスト　ジェノヴェーゼ
+pet_food;ペットフード
+pet_food_c;ペットフード
+petrol;ガソリン
+phosphor;白リン弾
+pilot_boat;サービスボート (特殊)
+pipes;鉄パイプ
+plant_substr;ソイル（土壌）
+plast_film;プラスチックフィルムロール
+plast_film_c;プラスチックフィルムロール
+plastic_gra;粉末プラスティック
+plows;プラウ
+plumb_suppl;配管資材
+plums;プラム
+pnut_butter;ピーナッツバター
+polyst_box;ポリスチレンボックス
+pork_meat;豚肉
+post_packag;郵便小包
+pot_flowers;鉢植え
+potahydro;水酸化カリウム
+potassium;カリウム
+potatoes;ポテト
+precast_strs;成型済みの階段
+princess;ヨット - クイーンV39
+propane;プロパン
+protec_cloth;防護服
+radiators;ラジエーター
+rawmilk;生乳
+re_bars;鋼棒
+refl_posts;反射板ポスト
+rice;米
+rice_c;米
+roadroller;ロードローラー
+roller;ロードローラー - DYNA CC-2200
+roof_tiles;屋根瓦
+roofing_felt;屋根用フェルト
+rooflights;天窓
+rye;ライムギ
+salm_fillet;サケの切り身
+salt_spice_c;塩&香辛料
+salt_spices;塩&香辛料
+sand;砂
+sandwch_pnls;サンドイッチパネル
+sausages;ソーセージ
+sawpanels;おがくずパネル
+scaffoldings;足場材
+scania_tr;トラック - Scania
+scooters;スクーター
+scrap_cars;スクラップ自動車
+scrap_metals;屑鉄
+sheep_wool;羊毛
+shock_absorb;ショックアブソーバー
+silica;二酸化ケイ素
+silo;巨大サイロ (特殊)
+smokd_eel;ウナギの燻製
+smokd_sprats;スプラットの燻製
+sodchlor;次亜塩素酸ナトリウム
+sodhydro;水酸化ナトリウム
+sodium;ナトリウム
+soil;掘削土
+solvents;溶剤
+soy_milk;豆乳
+sq_tub;角型鋼管
+steel_cord;スチールコード
+stone_dust;石粉
+stone_wool;ロックウール
+stones;石
+straw_bales;藁のペール
+sugar;砂糖
+sulfuric;硫酸
+tableware;食器
+terex3160;オールテレーンクレーン
+tomatoes;トマト
+toys;おもちゃ
+tracks;無限軌道
+tractor;トラクター - RS-666
+tractors;トラクター
+train_part;鉄道の輪軸
+train_part2;鉄道の台車
+transformat;トランス - PK900
+transformer;トランス
+transmis;変速機
+truck_batt;トラック用バッテリー
+truck_batt_c;トラック用バッテリー
+truck_rims;トラック用ホイール
+truck_rims_c;トラック用ホイール
+truck_tyres;トラック用タイヤ
+tube;ガスパイプラインパーツ
+tvs;テレビ
+tyres;タイヤ
+used_battery;使用済み自動車用バッテリー
+used_pack;使用済み梱包材
+used_packag;使用済み梱包材
+used_plast;使用済みプラスチック
+used_plast_c;使用済みプラスチック
+vegetable;野菜
+vent_tube;換気シャフト
+ventilation;換気シャフト
+vinegar;西洋酢
+vinegar_c;西洋酢
+volvo_cars;高級SUV
+volvo_tr;トラック - Volvo
+wallpanels;壁パネル
+watermelons;スイカ
+wheat;小麦
+windml_eng;風力タービン　ナセル
+windml_tube;風力タービン　タワー
+wirtgen250;旋盤
+wood_bark;木の樹皮
+wooden_beams;木の梁
+wrk_cloth;作業着
+wshavings;木くず
+yacht;ヨット
+yogurt;ヨーグルト
+young_seed;稚苗

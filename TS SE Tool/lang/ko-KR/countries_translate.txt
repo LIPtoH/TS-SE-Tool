@@ -1,0 +1,68 @@
+﻿[ko-KR]
++all;모두
++unsorted;정렬안함
+austria;오스트리아
+belgium;벨기에
+bulgaria;불가리아
+czech;체코 공화국
+denmark;덴마크
+estonia;에스토니아
+finland;핀란드
+france;프랑스
+germany;독일
+hungary;헝가리
+italy;이탈리아
+latvia;라트비아
+lithuania;리투아니아
+luxembourg;룩셈부르크
+netherlands;네덜란드
+norway;노르웨이
+poland;폴란드
+romania;루마니아
+russia;러시아
+slovakia;슬로바키아
+sweden;스웨덴
+switzerland;스위스
+turkey;터키
+uk;영국
+arizona;애리조나
+california;캘리포니아
+nevada;네바다
+new_mexico;뉴멕시코
+oregon;오리건
+utah;유타
+washington;워싱턴
+aland;올란드
+albania;알바니아
+andorra;안도라
+belarus;벨라루스
+bosnia;보스니아 헤르체코비나
+croatia;크로아티아
+cyprus;키프로스
+faroe;페로 제도
+georgia;조지아
+greece;그리스
+iceland;아이슬란드
+iom;맨 섬
+ireland;아일랜드
+jersey;저지
+liecht;리히텐슈타인
+macedonia;마케도니아
+mnegro;몬테네그로
+moldova;몰도바
+monaco;모나코
+nireland;북 아일랜드
+portugal;포르투갈
+serbia;세르비아
+slovenia;슬로베니아
+spain;스페인
+svalbard;스발바르
+ukraine;우크라이나
+egypt;이집트
+iraq;이라크
+israel;이스라엘
+jordan;요르단
+lebanon;레바논
+saudia;사우디 아라비아
+syria;시리아
+westbank;웨스트 뱅크

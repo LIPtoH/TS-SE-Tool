@@ -25,10 +25,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 
-namespace TS_SE_Tool
-{
-    public partial class FormAddCustomFolder : Form
-    {
+namespace TS_SE_Tool {
+    public partial class FormAddCustomFolder : Form {
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
         private string SelectedfolderPath;
@@ -37,8 +35,7 @@ namespace TS_SE_Tool
         private string GameType = "";
         private bool CustomPathChanged = false;
 
-        public FormAddCustomFolder()
-        {
+        public FormAddCustomFolder() {
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
 
@@ -48,11 +45,9 @@ namespace TS_SE_Tool
 
             ChangeCustomPathListVisibility();
             CustomPathsArr = new Dictionary<string, List<string>>();//(MainForm.ProgSettingsV.CustomPaths);
-            foreach (KeyValuePair<string, List<string>> k1 in MainForm.ProgSettingsV.CustomPaths)
-            {
+            foreach (KeyValuePair<string, List<string>> k1 in MainForm.ProgSettingsV.CustomPaths) {
                 List<string> tmp = new List<string>();
-                foreach (string k2 in k1.Value)
-                {
+                foreach (string k2 in k1.Value) {
                     tmp.Add(k2);
                 }
                 CustomPathsArr.Add(k1.Key, tmp);
@@ -61,18 +56,15 @@ namespace TS_SE_Tool
             radioButtonGameTypeETS2.Checked = true;
         }
         //Buttons
-        private void buttonChooseFolder_Click(object sender, EventArgs e)
-        {
+        private void buttonChooseFolder_Click(object sender, EventArgs e) {
             // Show the FolderBrowserDialog.            
             DialogResult result = folderBrowserDialogAddCustomFolder.ShowDialog();
-            if (result == DialogResult.OK)
-            {
+            if (result == DialogResult.OK) {
                 SelectedfolderPath = folderBrowserDialogAddCustomFolder.SelectedPath;
                 labelCustomPathDir.Text = SelectedfolderPath;
 
                 List<string> includedFolders = new List<string>();
-                foreach (string tFolder in Directory.GetDirectories(SelectedfolderPath))
-                {
+                foreach (string tFolder in Directory.GetDirectories(SelectedfolderPath)) {
                     includedFolders.Add(GetDirectoryName2(tFolder));
                 }
 
@@ -83,16 +75,13 @@ namespace TS_SE_Tool
                 bool GameSFrootFolder = false, GameSFprofileFolder = false, GameSFsaveFolder = false;
 
                 //Determinate folder type
-                if (includedFolders.Contains("profiles"))
-                {
+                if (includedFolders.Contains("profiles")) {
                     GameSFrootFolder = true;
                 }
-                if (includedFiles.Contains("profile.sii"))
-                {
+                if (includedFiles.Contains("profile.sii")) {
                     GameSFprofileFolder = true;
                 }
-                if (includedFiles.Contains("game.sii"))
-                {
+                if (includedFiles.Contains("game.sii")) {
                     GameSFsaveFolder = true;
                 }
 
@@ -100,44 +89,35 @@ namespace TS_SE_Tool
                 radioButtonProfileFolderType.Checked = GameSFprofileFolder;
                 radioButtonSaveFolderType.Checked = GameSFsaveFolder;
 
-                if (radioButtonRootFolderType.Checked || radioButtonProfileFolderType.Checked || radioButtonSaveFolderType.Checked)
-                {
+                if (radioButtonRootFolderType.Checked || radioButtonProfileFolderType.Checked || radioButtonSaveFolderType.Checked) {
                     buttonAddCustomPath.Enabled = true;
                     groupBoxFolderType.Enabled = true;
                 }
             }
         }
 
-        private void buttonEditCPlist_Click(object sender, EventArgs e)
-        {
+        private void buttonEditCPlist_Click(object sender, EventArgs e) {
             ChangeCustomPathListVisibility();
         }
 
-        private void buttonAddCustomPath_Click(object sender, EventArgs e)
-        {
-            if (CustomPathsArr.Keys.Contains(GameType))
-            {
-                if (CustomPathsArr[GameType].Contains(SelectedfolderPath))
-                {
+        private void buttonAddCustomPath_Click(object sender, EventArgs e) {
+            if (CustomPathsArr.Keys.Contains(GameType)) {
+                if (CustomPathsArr[GameType].Contains(SelectedfolderPath)) {
                     MessageBox.Show("Path " + SelectedfolderPath + " already added to the " + GameType + " list", "Path exist in the list", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                else
-                {
+                } else {
                     CustomPathsArr[GameType].Add(SelectedfolderPath);
                     CustomPathChanged = true;
                     if (ListOpen)
                         UpdatedataGridView();
                     MessageBox.Show("Path " + SelectedfolderPath + " added to the " + GameType + " list", "Custom path", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            else
-            {
+            } else {
                 List<string> tmp = new List<string>();
                 tmp.Add(SelectedfolderPath);
                 CustomPathsArr.Add(GameType, tmp);
                 CustomPathChanged = true;
                 if (ListOpen)
-                        UpdatedataGridView();
+                    UpdatedataGridView();
                 MessageBox.Show("Path " + SelectedfolderPath + " added to the " + GameType + " list", "Custom path", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
@@ -150,24 +130,21 @@ namespace TS_SE_Tool
             buttonSave.Enabled = true;
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
+        private void buttonSave_Click(object sender, EventArgs e) {
             MainForm.ProgSettingsV.CustomPaths = new Dictionary<string, List<string>>(CustomPathsArr);
             CustomPathChanged = false;
             buttonSave.Enabled = false;
         }
         //Radio button
-        private void radioButtonFolderType_CheckedChanged(object sender, EventArgs e)
-        {
+        private void radioButtonFolderType_CheckedChanged(object sender, EventArgs e) {
             RadioButton a = sender as RadioButton;
-            if(a.Checked & a.Name != "radioButton4" & (radioButtonGameTypeETS2.Checked || radioButtonGameTypeATS.Checked))
+            if (a.Checked & a.Name != "radioButton4" & (radioButtonGameTypeETS2.Checked || radioButtonGameTypeATS.Checked))
                 buttonAddCustomPath.Enabled = true;
             else
                 buttonAddCustomPath.Enabled = false;
         }
 
-        private void radioButtonGameType_CheckedChanged(object sender, EventArgs e)
-        {
+        private void radioButtonGameType_CheckedChanged(object sender, EventArgs e) {
             if (radioButtonGameTypeETS2.Checked)
                 GameType = "ETS2";
             else
@@ -177,10 +154,8 @@ namespace TS_SE_Tool
                 UpdatedataGridView();
         }
         //Methods
-        private void ChangeCustomPathListVisibility()
-        {
-            if (ListOpen)
-            {
+        private void ChangeCustomPathListVisibility() {
+            if (ListOpen) {
                 tableLayoutPanel1.ColumnStyles[2].Width = 0;
                 int w = 390;
                 this.MinimumSize = new Size(w, this.Height);
@@ -194,21 +169,16 @@ namespace TS_SE_Tool
 
                 ListOpen = false;
 
-                try
-                {
+                try {
                     string translatedString = MainForm.ResourceManagerMain.GetString(buttonEditCPlist.Name, Thread.CurrentThread.CurrentUICulture);
                     if (translatedString != null)
                         buttonEditCPlist.Text = translatedString + " ▶";
                     else
                         buttonEditCPlist.Text = "Edit list" + " ▶";
 
+                } catch {
                 }
-                catch
-                {
-                }
-            }
-            else
-            {
+            } else {
                 tableLayoutPanel1.ColumnStyles[2].Width = 300;
                 int w = 690;
                 this.MaximumSize = new Size(w, this.Height);
@@ -222,32 +192,27 @@ namespace TS_SE_Tool
 
                 ListOpen = true;
 
-                try
-                {
+                try {
                     string translatedString = MainForm.ResourceManagerMain.GetString(buttonEditCPlist.Name, Thread.CurrentThread.CurrentUICulture);
                     if (translatedString != null)
                         buttonEditCPlist.Text = translatedString + " ◀";
                     else
                         buttonEditCPlist.Text = "Edit list" + " ◀";
 
-                }
-                catch
-                {
+                } catch {
                 }
 
                 UpdatedataGridView();
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex == dataGridView1.NewRowIndex || e.RowIndex < 0)
                 return;
 
             var senderGrid = (DataGridView)sender;
 
-            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
-            {
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0) {
                 CustomPathChanged = true;
                 string tmp = senderGrid[1, e.RowIndex].Value.ToString();
                 CustomPathsArr[GameType].Remove(tmp);
@@ -259,16 +224,13 @@ namespace TS_SE_Tool
             }
         }
 
-        private void UpdatedataGridView()
-        {
+        private void UpdatedataGridView() {
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("Path", typeof(string));
             combDT.Columns.Add(dc);
 
-            if (CustomPathsArr.Keys.Contains(GameType))
-            {
-                foreach (string path in CustomPathsArr[GameType])
-                {
+            if (CustomPathsArr.Keys.Contains(GameType)) {
+                foreach (string path in CustomPathsArr[GameType]) {
                     combDT.Rows.Add(path);
                 }
             }
@@ -276,19 +238,14 @@ namespace TS_SE_Tool
             dataGridView1.DataSource = combDT;
         }
 
-        private void FormAddCustomFolder_FormClosing(object sender, FormClosingEventArgs e)
-        {
+        private void FormAddCustomFolder_FormClosing(object sender, FormClosingEventArgs e) {
             DialogResult exitDR = DialogResult.No;
 
-            if (CustomPathChanged)
-            {
+            if (CustomPathChanged) {
                 exitDR = MessageBox.Show("You have unsaved changes.\r\nDo you really want to close dialogue without saving?", "Dialogue close", MessageBoxButtons.YesNo);
 
-                if (exitDR == DialogResult.Yes)
-                {
-                }
-                else
-                {
+                if (exitDR == DialogResult.Yes) {
+                } else {
                     e.Cancel = true;
                     Activate();
                 }
@@ -296,17 +253,13 @@ namespace TS_SE_Tool
         }
 
         //Extra
-        static string GetDirectoryName2(string f)
-        {
-            try
-            {
+        static string GetDirectoryName2(string f) {
+            try {
                 return f.Substring(f.LastIndexOf('\\') + 1, f.Length - f.LastIndexOf('\\') - 1);
-            }
-            catch
-            {
+            } catch {
                 return string.Empty;
             }
         }
-        
+
     }
 }

@@ -1,0 +1,68 @@
+﻿[Default]
++all;All
++unsorted;Unsorted
+austria;Austria
+belgium;Belgium
+bulgaria;Bulgaria
+czech;Czech Republic
+denmark;Denmark
+estonia;Estonia
+finland;Finland
+france;France
+germany;Germany
+hungary;Hungary
+italy;Italy
+latvia;Latvia
+lithuania;Lithuania
+luxembourg;Luxembourg
+netherlands;Netherlands
+norway;Norway
+poland;Poland
+romania;Romania
+russia;Russia
+slovakia;Slovakia
+sweden;Sweden
+switzerland;Switzerland
+turkey;Turkey
+uk;United Kingdom
+arizona;Arizona
+california;California
+nevada;Nevada
+new_mexico;New Mexico
+oregon;Oregon
+utah;Utah
+washington;Washington
+aland;Aland Island
+albania;Albania
+andorra;Andora
+belarus;Belarus
+bosnia;Bosnia Herzegovina
+croatia;Croatia
+cyprus;Cyprus
+faroe;Faroe Islands
+georgia;Georgia
+greece;Greece
+iceland;Iceland
+iom;Isle of Man
+ireland;Ireland
+jersey;Jersey
+liecht;Lichtenstein
+macedonia;North Macedonia
+mnegro;Montenegro
+moldova;Moldovia
+monaco;Monaco
+nireland;Northern Ireland
+portugal;Portugal
+serbia;Serbia
+slovenia;Slovenia
+spain;Spain
+svalbard;Svarlbard
+ukraine;Ukraine
+egypt;Egypt
+iraq;Iraq
+israel;Israel
+jordan;Jordan
+lebanon;Lebanon
+saudia;Saudi Arabia
+syria;Syria
+westbank;West Bank

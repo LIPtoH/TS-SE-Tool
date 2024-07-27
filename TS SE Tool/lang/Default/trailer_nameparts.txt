@@ -1,0 +1,33 @@
+#ETS2
+scs;SCS
+krone;Krone
+schwmuller;Schwarzmüller
+#ATS
+#ETS
+scs_box;STD
+scs_container;CNT
+scs_flatbed;FLB
+scs_log;LOG
+krone_box_liner;Box Liner
+krone_cool_liner;Cool Liner
+krone_dry_liner;Dry Liner
+krone_profi_liner;Profi Liner
+krone_profi_liner_hd;Profi Liner HD
+#ATS
+scs_box;A-KRB-18
+scs_bulkfeed;A-SYK-19
+scs_chipvan;A-STP-19
+scs_container;A-KNT-19
+scs_flatbed;A-PLO-18
+scs_grainhopper;A-SYP-19
+scs_log;A-KLN-19
+#ETS
+container;Container Carrier
+curtainside;Curtainsider
+dryvan;Dry Freighter
+flatbed;Flatbed
+flatbed_brck;Brick
+flatbed_cont;Flatbed / Container
+insulated;Insulated
+log;Log
+refrigerated;Refrigerated

@@ -23,16 +23,15 @@ using System.Diagnostics;
 using TS_SE_Tool.Utilities;
 using System.Configuration;
 
-namespace TS_SE_Tool
-{
-    static class Program
-    {
+namespace TS_SE_Tool {
+    static class Program {
+        internal static string ErrorHeader = $"An application error occurred. Please contact the Developer at {Web_Utilities.External.linkMailDeveloper}. Information can be found in \"{System.IO.Directory.GetCurrentDirectory()}\\errorlog.log\".";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
-        {
+        static void Main() {
             // Add the event handler for handling UI thread exceptions to the event
             Application.ThreadException += new ThreadExceptionEventHandler(UIThreadException);
 
@@ -55,27 +54,20 @@ namespace TS_SE_Tool
 
         // Handle the UI exceptions by showing a dialog box, and asking the user whether
         // or not they wish to abort execution.
-        private static void UIThreadException(object sender, ThreadExceptionEventArgs t)
-        {
+        private static void UIThreadException(object sender, ThreadExceptionEventArgs t) {
             DialogResult result = DialogResult.Cancel;
-            try
-            {
+            try {
                 Exception ex = t.Exception;
 
-                string errorMsg = "An application error occurred. Please contact the Developer at " + Utilities.Web_Utilities.External.linkMailDeveloper + " . Information can be found in \" Errorlog \" file.";
+                string errorMsg = ErrorHeader;
 
                 IO_Utilities.ErrorLogWriter(ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);
 
                 result = MessageBox.Show(errorMsg, "Windows Forms Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Stop);
-            }
-            catch
-            {
-                try
-                {
+            } catch {
+                try {
                     MessageBox.Show("Fatal Windows Forms Error", "Fatal Windows Forms Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Stop);
-                }
-                finally
-                {
+                } finally {
                     Application.Exit();
                 }
             }
@@ -89,27 +81,20 @@ namespace TS_SE_Tool
         // or not they wish to abort execution.
         // NOTE: This exception cannot be kept from terminating the application - it can only 
         // log the event, and inform the user about it. 
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            try
-            {
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) {
+            try {
                 Exception ex = (Exception)e.ExceptionObject;
 
-                string errorMsg = "An application error occurred. Please contact the Developer at " + Utilities.Web_Utilities.External.linkMailDeveloper + " . Information can be found in \" Errorlog \" file.";
+                string errorMsg = ErrorHeader;
 
                 MessageBox.Show(errorMsg, "Non-UI Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                 IO_Utilities.ErrorLogWriter(ex.Message + "\n\nStack Trace:\n" + ex.StackTrace);
-            }
-            catch (Exception exc)
-            {
-                try
-                {
-                    MessageBox.Show("Fatal Non-UI Error. Could not write the error to the event log.\r\nReason: " 
+            } catch (Exception exc) {
+                try {
+                    MessageBox.Show("Fatal Non-UI Error. Could not write the error to the event log.\r\nReason: "
                         + exc.Message, "Fatal Non-UI Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-                finally
-                {
+                } finally {
                     Application.Exit();
                 }
             }

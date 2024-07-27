@@ -1,0 +1,4 @@
+﻿[pt-BR]
+0;Padrão
+1;Importante
+2;Urgente

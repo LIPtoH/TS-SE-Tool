@@ -33,19 +33,15 @@ using ErikEJ.SqlCe;
 using TS_SE_Tool.Utilities;
 using TS_SE_Tool.Save.Items;
 
-namespace TS_SE_Tool
-{
-    public partial class FormMain : Form
-    {
-        private bool NewPrepareData()
-        {
+namespace TS_SE_Tool {
+    public partial class FormMain : Form {
+        private bool NewPrepareData() {
             IO_Utilities.LogWriter("Prepare started");
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_preparing_data");
 
             SiiNunitData = new SiiNunit(tempSavefileInMemory);
 
-            if (SiiNunitData == null)
-            {
+            if (SiiNunitData == null) {
                 return false;
             }
 
@@ -57,8 +53,7 @@ namespace TS_SE_Tool
             return true;
         }
 
-        private void ExtraPrepareStuff()
-        {
+        private void ExtraPrepareStuff() {
             workerLoadSaveFile.ReportProgress(80);
 
             //namelessList.Sort();
@@ -74,8 +69,7 @@ namespace TS_SE_Tool
             //ExportnamelessList();
 
             //Exclude company from city if no jobs assigned by game
-            foreach (City city in CitiesList)
-            {
+            foreach (City city in CitiesList) {
                 city.ExcludeCompany();
                 if (VisitedCities.Exists(x => x.Name == city.CityName))
                     city.Visited = true;
@@ -92,13 +86,11 @@ namespace TS_SE_Tool
             HeavyCargoList = HeavyCargoList.Distinct().ToList(); //Delete duplicates
 
             //Set country to city
-            foreach (City tempcity in CitiesList)
-            {
+            foreach (City tempcity in CitiesList) {
                 string country = CountryDictionary.GetCountry(tempcity.CityName);
                 tempcity.Country = country;
 
-                if ((country != null) && (country != ""))
-                {
+                if ((country != null) && (country != "")) {
                     CountriesList.Add(country);
                 }
             }
@@ -108,8 +100,7 @@ namespace TS_SE_Tool
             CountryDictionary.SaveDictionaryFile(); //Save country-city list to file
 
             //Filter garages
-            foreach (City tempcity in from x in CitiesList where !x.Disabled select x)
-            {
+            foreach (City tempcity in from x in CitiesList where !x.Disabled select x) {
                 Garages tmpgrg = GaragesList.Find(x => x.GarageName == tempcity.CityName);
                 if (tmpgrg != null)
                     tmpgrg.IgnoreStatus = false;
@@ -132,14 +123,11 @@ namespace TS_SE_Tool
             workerLoadSaveFile.ReportProgress(100);
         }
 
-        private void CheckSaveInfoData()
-        {
+        private void CheckSaveInfoData() {
             MainSaveFileInfoData.ProcessData(tempInfoFileInMemory);
 
-            if (MainSaveFileInfoData.Version > 0)
-            {
-                if (MainSaveFileInfoData.Version > SupportedSavefileVersionETS2[1])
-                {
+            if (MainSaveFileInfoData.Version > 0) {
+                if (MainSaveFileInfoData.Version > SelectedGame.SupportedSaveFileVersions[1]) {
                     string dialogCaption = "", dialogText = "";
                     string[] returnValues = HelpTranslateDialog("UnsupportedVersion");
 
@@ -147,15 +135,13 @@ namespace TS_SE_Tool
 
                     DialogResult DR = UpdateStatusBarMessage.ShowMessageBox(this, dialogText, returnValues[0], MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                    if (DR == DialogResult.No)
-                    {
+                    if (DR == DialogResult.No) {
                         InfoDepContinue = false;
                         return;
                     }
                 }
 
-                if (MainSaveFileInfoData.Version < SupportedSavefileVersionETS2[0])
-                {
+                if (MainSaveFileInfoData.Version < SelectedGame.SupportedSaveFileVersions[0]) {
                     string dialogCaption = "", dialogText = "";
                     string[] returnValues = HelpTranslateDialog("NoBackwardCompatibility");
 
@@ -163,19 +149,15 @@ namespace TS_SE_Tool
 
                     DialogResult DR = UpdateStatusBarMessage.ShowMessageBox(this, dialogText, returnValues[0], MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                    if (DR == DialogResult.OK)
-                    {
+                    if (DR == DialogResult.OK) {
                         InfoDepContinue = false;
                         return;
                     }
                 }
-            }
-            else if (MainSaveFileInfoData.Version == 0)
-            {
+            } else if (MainSaveFileInfoData.Version == 0) {
                 DialogResult result = UpdateStatusBarMessage.ShowMessageBox(this, "Savefile version was not recognised." + Environment.NewLine + "Do you want to continue?", "Version not recognised", MessageBoxButtons.YesNo);
 
-                if (result == DialogResult.No)
-                {
+                if (result == DialogResult.No) {
                     InfoDepContinue = false;
                     return;
                 }
@@ -187,39 +169,31 @@ namespace TS_SE_Tool
             GetDataFromDatabase("Dependencies");
 
             //Check dependencies
-            if (DBDependencies.Count == 0)
-            {
+            if (DBDependencies.Count == 0) {
                 InsertDataIntoDatabase("Dependencies");
                 InfoDepContinue = true;
-            }
-            else
-            {
+            } else {
                 List<string> tmpSFdep = MainSaveFileInfoData.Dependencies.Where(x => x.RawDepType != "rdlc").Select(x => x.Raw.Value).ToList();
 
                 List<string> dbdep = DBDependencies.Except(tmpSFdep).ToList();
                 List<string> sfdep = tmpSFdep.Except(DBDependencies).ToList();
 
-                if (dbdep.Count > 0 || sfdep.Count > 0)
-                {
+                if (dbdep.Count > 0 || sfdep.Count > 0) {
                     string dbdepstr = "", sfdepstr = "";
 
-                    if (dbdep.Count > 0)
-                    {
+                    if (dbdep.Count > 0) {
                         dbdepstr += "\r\nDependencies only in Database (" + dbdep.Count.ToString() + ") will be Deleted:\r\n";
                         int i = 0;
-                        foreach (string temp in dbdep)
-                        {
+                        foreach (string temp in dbdep) {
                             i++;
                             dbdepstr += i.ToString() + ") " + temp + "\r\n";
                         }
                     }
 
-                    if (sfdep.Count > 0)
-                    {
+                    if (sfdep.Count > 0) {
                         sfdepstr += "\r\nDependencies only in Save file (" + sfdep.Count.ToString() + ") will be Added:\r\n";
                         int i = 0;
-                        foreach (string temp in sfdep)
-                        {
+                        foreach (string temp in sfdep) {
                             i++;
                             sfdepstr += i.ToString() + ") " + temp + "\r\n"; ;
                         }
@@ -232,20 +206,15 @@ namespace TS_SE_Tool
                         dbdepstr + Environment.NewLine + sfdepstr, "Dependencies conflict",
                         MessageBoxButtons.YesNo);
 
-                    if (r == DialogResult.Yes)
-                    {
+                    if (r == DialogResult.Yes) {
                         //Update Dependencies
                         InsertDataIntoDatabase("Dependencies");
                         InfoDepContinue = true;
-                    }
-                    else
-                    {
+                    } else {
                         //Stop opening save
                         InfoDepContinue = false;
                     }
-                }
-                else
-                {
+                } else {
                     InfoDepContinue = true;
                 }
             }
@@ -256,8 +225,7 @@ namespace TS_SE_Tool
             LoadCachedExternalCargoData("def");
 
             if (MainSaveFileInfoData.Dependencies.Count > 0)
-                foreach (Dependency tDepend in MainSaveFileInfoData.Dependencies)
-                {
+                foreach (Dependency tDepend in MainSaveFileInfoData.Dependencies) {
                     LoadCachedExternalCargoData(tDepend.DepLoadID);
                 }
 
@@ -265,63 +233,47 @@ namespace TS_SE_Tool
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_save_version_not_detected");
         }
 
-        public string GetCustomSaveFilename(string _tempSaveFilePath)
-        {
+        public string GetCustomSaveFilename(string _tempSaveFilePath) {
             string chunkOfline;
 
             string tempSiiInfoPath = _tempSaveFilePath + @"\info.sii";
             string[] tempFile = null;
 
-            if (!File.Exists(tempSiiInfoPath))
-            {
+            if (!File.Exists(tempSiiInfoPath)) {
                 IO_Utilities.LogWriter("File does not exist in " + tempSiiInfoPath);
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_find_file");
-            }
-            else
-            {
+            } else {
                 FileDecoded = false;
-                try
-                {
+                try {
                     int decodeAttempt = 0;
-                    while (decodeAttempt < 5)
-                    {
+                    while (decodeAttempt < 5) {
                         tempFile = NewDecodeFile(tempSiiInfoPath, false);
 
-                        if (FileDecoded)
-                        {
+                        if (FileDecoded) {
                             break;
                         }
 
                         decodeAttempt++;
                     }
 
-                    if (decodeAttempt == 5)
-                    {
+                    if (decodeAttempt == 5) {
                         IO_Utilities.LogWriter("Could not decrypt after 5 attempts");
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_could_not_decode_file");
                     }
-                }
-                catch
-                {
+                } catch {
                     IO_Utilities.LogWriter("Could not read: " + tempSiiInfoPath);
                 }
 
-                if ((tempFile == null) || (tempFile[0] != "SiiNunit"))
-                {
+                if ((tempFile == null) || (tempFile[0] != "SiiNunit")) {
                     IO_Utilities.LogWriter("Wrongly decoded Info file or wrong file format");
                     UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_not_decoded");
-                }
-                else if (tempFile != null)
-                {
-                    for (int line = 0; line < tempFile.Length; line++)
-                    {
-                        if (tempFile[line].StartsWith(" name:"))
-                        {
+                } else if (tempFile != null) {
+                    for (int line = 0; line < tempFile.Length; line++) {
+                        if (tempFile[line].StartsWith(" name:")) {
                             chunkOfline = tempFile[line];
                             string CustomName = chunkOfline.Split(new char[] { ' ' }, 3)[2];
 
-                            if (CustomName.StartsWith("\""))
-                            {
+                            if (CustomName.StartsWith("\"")) {
                                 CustomName = CustomName.Substring(1, CustomName.Length - 2);
                             }
 
@@ -335,21 +287,17 @@ namespace TS_SE_Tool
         }
 
         //Remove broken color sets
-        private void PrepareUserColors()
-        {
+        private void PrepareUserColors() {
             if (MainSaveFileInfoData.Version < 49)
                 return;
 
             int setcount = SiiNunitData.Economy.user_colors.Count() / 4;
 
             //iterate through sets
-            for (int i = 0; i < setcount; i++)
-            {
-                if (SiiNunitData.Economy.user_colors[4 * i].color.A == 0)
-                {
+            for (int i = 0; i < setcount; i++) {
+                if (SiiNunitData.Economy.user_colors[4 * i].color.A == 0) {
                     //clear color set
-                    for (int j = 1; j < 4; j++)
-                    {
+                    for (int j = 1; j < 4; j++) {
                         SiiNunitData.Economy.user_colors[4 * i + j] = new Save.DataFormat.SCS_Color(0, 0, 0, 0);
                     }
                     continue;
@@ -360,12 +308,10 @@ namespace TS_SE_Tool
         }
 
         //
-        private void PrepareCitiesInitial()
-        {
+        private void PrepareCitiesInitial() {
             string[] chunks;
 
-            foreach (string company in SiiNunitData.Economy.companies)
-            {
+            foreach (string company in SiiNunitData.Economy.companies) {
                 chunks = company.Split(new char[] { '.' });
 
                 string cityname = chunks[3], companyname = chunks[2];
@@ -374,16 +320,14 @@ namespace TS_SE_Tool
                     continue;
 
                 //Add City to List from companies list
-                if (CitiesList.Where(x => x.CityName == cityname).Count() == 0)
-                {
+                if (CitiesList.Where(x => x.CityName == cityname).Count() == 0) {
                     CitiesList.Add(new City(cityname));
                 }
 
                 CompaniesList.Add(companyname); //add company to list
 
                 //Add Company to City from companies list                            
-                foreach (City tempcity in CitiesList.FindAll(x => x.CityName == cityname))
-                {
+                foreach (City tempcity in CitiesList.FindAll(x => x.CityName == cityname)) {
                     tempcity.AddCompany(companyname);
 
                     Save.Items.Company tempcompany = (Save.Items.Company)SiiNunitData.SiiNitems[company];
@@ -395,10 +339,8 @@ namespace TS_SE_Tool
             }
         }
 
-        private void PrepareGaragesInitial()
-        {
-            foreach (string garage in SiiNunitData.Economy.garages)
-            {
+        private void PrepareGaragesInitial() {
+            foreach (string garage in SiiNunitData.Economy.garages) {
                 string garageName = garage.Split(new char[] { '.' })[1];
 
                 Save.Items.Garage tmpSiiNGarage = SiiNunitData.SiiNitems[garage];
@@ -413,52 +355,43 @@ namespace TS_SE_Tool
             }
         }
 
-        private void PrepareVisitedCitiesInitial()
-        {
+        private void PrepareVisitedCitiesInitial() {
             int cityid = 0;
-            foreach (string city in SiiNunitData.Economy.visited_cities)
-            {
+            foreach (string city in SiiNunitData.Economy.visited_cities) {
                 VisitedCities.Add(new VisitedCity(city, SiiNunitData.Economy.visited_cities_count[cityid], true));
                 cityid++;
             }
         }
 
-        private void PreparePlayerDictionariesInitial()
-        {
-            foreach (string trck in SiiNunitData.Player.trucks)
-            {
+        private void PreparePlayerDictionariesInitial() {
+            foreach (string trck in SiiNunitData.Player.trucks) {
                 UserTruckDictionary.Add(trck, new UserCompanyTruckData());
 
                 UserTruckDictionary[trck].TruckMainData = SiiNunitData.SiiNitems[trck];
             }
 
             //
-            foreach (string trlr in SiiNunitData.Player.trailers)
-            {
+            foreach (string trlr in SiiNunitData.Player.trailers) {
                 UserTrailerDictionary.Add(trlr, new UserCompanyTrailerData());
                 UserTrailerDictionary[trlr].TrailerMainData = SiiNunitData.SiiNitems[trlr];
             }
 
             //
-            foreach (string trlrDef in SiiNunitData.Player.trailer_defs)
-            {
+            foreach (string trlrDef in SiiNunitData.Player.trailer_defs) {
                 UserTrailerDefDictionary.Add(trlrDef, SiiNunitData.SiiNitems[trlrDef]);
             }
 
             //
-            if (SiiNunitData.Player_Job != null)
-            {
+            if (SiiNunitData.Player_Job != null) {
                 string jobtrck = SiiNunitData.Player_Job.company_truck;
-                if (jobtrck != "null")
-                {
+                if (jobtrck != "null") {
                     UserTruckDictionary.Add(jobtrck, new UserCompanyTruckData());
                     UserTruckDictionary[jobtrck].TruckMainData = SiiNunitData.SiiNitems[jobtrck];
                     UserTruckDictionary[jobtrck].Users = false;
                 }
 
                 string jobtrlr = SiiNunitData.Player_Job.company_trailer;
-                if (jobtrlr != "null")
-                {
+                if (jobtrlr != "null") {
                     UserTrailerDictionary.Add(jobtrlr, new UserCompanyTrailerData());
                     UserTrailerDictionary[jobtrlr].TrailerMainData = SiiNunitData.SiiNitems[jobtrlr];
                     UserTrailerDictionary[jobtrlr].Users = false;
@@ -466,20 +399,16 @@ namespace TS_SE_Tool
             }
 
             //
-            for(int i = 0; i < SiiNunitData.Player.drivers.Count; i++)
-            {
+            for (int i = 0; i < SiiNunitData.Player.drivers.Count; i++) {
                 UserCompanyDriverData DrData = new UserCompanyDriverData();
                 string drvr = SiiNunitData.Player.drivers[i];
 
-                if (i == 0)
-                {
+                if (i == 0) {
                     Save.Items.Player dr = (Save.Items.Player)SiiNunitData.Player;
 
                     DrData.AssignedTruck = dr.assigned_truck;
                     DrData.AssignedTrailer = dr.assigned_trailer;
-                }
-                else
-                {
+                } else {
                     Save.Items.Driver_AI dr = (Save.Items.Driver_AI)SiiNunitData.SiiNitems[drvr];
 
                     DrData.AssignedTruck = dr.assigned_truck;
@@ -490,51 +419,40 @@ namespace TS_SE_Tool
             }
         }
 
-        private void PrepareGPSInitial()
-        {
+        private void PrepareGPSInitial() {
             //GPS
             //Online
-            foreach (string entry in SiiNunitData.Economy.stored_online_gps_behind_waypoints)
-            {
+            foreach (string entry in SiiNunitData.Economy.stored_online_gps_behind_waypoints) {
                 GPSbehindOnline.Add(entry, new List<string>());
             }
 
-            foreach (string entry in SiiNunitData.Economy.stored_online_gps_ahead_waypoints)
-            {
+            foreach (string entry in SiiNunitData.Economy.stored_online_gps_ahead_waypoints) {
                 GPSaheadOnline.Add(entry, new List<string>());
             }
 
             //Offline
             //Normal
-            foreach (string entry in SiiNunitData.Economy.stored_gps_behind_waypoints)
-            {
+            foreach (string entry in SiiNunitData.Economy.stored_gps_behind_waypoints) {
                 GPSbehind.Add(entry, new List<string>());
             }
 
-            foreach (string entry in SiiNunitData.Economy.stored_gps_ahead_waypoints)
-            {
+            foreach (string entry in SiiNunitData.Economy.stored_gps_ahead_waypoints) {
                 GPSahead.Add(entry, new List<string>());
             }
             //Avoid
-            foreach (string entry in SiiNunitData.Economy.stored_gps_avoid_waypoints)
-            {
+            foreach (string entry in SiiNunitData.Economy.stored_gps_avoid_waypoints) {
                 GPSAvoid.Add(entry, new List<string>());
             }
         }
 
-        private void PrepareVisitedCitiesWrite()
-        {
-            foreach (City city in CitiesList)
-            {
+        private void PrepareVisitedCitiesWrite() {
+            foreach (City city in CitiesList) {
                 VisitedCity temp = VisitedCities.Find(x => x.Name == city.CityName);
 
-                if (temp != null)
-                {
+                if (temp != null) {
                     if (!city.Visited)
                         VisitedCities[VisitedCities.IndexOf(temp)].VisitCount = 0;
-                }
-                else
-                {
+                } else {
                     if (city.Visited)
                         VisitedCities.Add(new VisitedCity(city.CityName, 1, true));
                     else
@@ -542,20 +460,14 @@ namespace TS_SE_Tool
                 }
             }
 
-            foreach (VisitedCity vc in VisitedCities)
-            {
-                if (vc.Visited)
-                {
-                    if (!SiiNunitData.Economy.visited_cities.Contains(vc.Name))
-                    {
+            foreach (VisitedCity vc in VisitedCities) {
+                if (vc.Visited) {
+                    if (!SiiNunitData.Economy.visited_cities.Contains(vc.Name)) {
                         SiiNunitData.Economy.visited_cities.Add(vc.Name);
                         SiiNunitData.Economy.visited_cities_count.Add(vc.VisitCount);
                     }
-                }
-                else
-                {
-                    if (SiiNunitData.Economy.visited_cities.Contains(vc.Name))
-                    {
+                } else {
+                    if (SiiNunitData.Economy.visited_cities.Contains(vc.Name)) {
                         int idx = SiiNunitData.Economy.visited_cities.IndexOf(vc.Name);
 
                         SiiNunitData.Economy.visited_cities.RemoveAt(idx);
@@ -566,18 +478,15 @@ namespace TS_SE_Tool
 
         }
 
-        private void PrepareCargoTrailerDefsVariantsLists()
-        {
-            foreach (string company in SiiNunitData.Economy.companies)
-            {
+        private void PrepareCargoTrailerDefsVariantsLists() {
+            foreach (string company in SiiNunitData.Economy.companies) {
                 Save.Items.Company tmpCompany = SiiNunitData.SiiNitems[company];
 
                 //
                 int cargotype = 0, units_count = 0;
                 string cargo = "", trailervariant = "", trailerdefinition = "", company_truck = "";
 
-                foreach (string job_offer in tmpCompany.job_offer)
-                {
+                foreach (string job_offer in tmpCompany.job_offer) {
                     Save.Items.Job_offer_Data tmpJob_offer_Data = SiiNunitData.SiiNitems[job_offer];
 
                     if (tmpJob_offer_Data.cargo == "null")
@@ -598,12 +507,9 @@ namespace TS_SE_Tool
 
                     //===
 
-                    if (company_truck.Contains("\"heavy"))
-                    {
+                    if (company_truck.Contains("\"heavy")) {
                         cargotype = 1;
-                    }
-                    else if (company_truck.Contains("\"double"))
-                    {
+                    } else if (company_truck.Contains("\"double")) {
                         cargotype = 2;
                     }
 
@@ -621,38 +527,27 @@ namespace TS_SE_Tool
 
                     Cargo tempCargo = CargoesList.Find(x => x.CargoName == cargo);
 
-                    if (tempCargo == null)
-                    {
+                    if (tempCargo == null) {
                         CargoesList.Add(new Cargo(cargo, cargotype, trailerdefinition, units_count));
-                    }
-                    else
-                    {
+                    } else {
                         List<TrailerDefinition> tmpTDlist = tempCargo.TrailerDefList;
 
-                        if (!tmpTDlist.Exists(x => x.DefName == trailerdefinition && x.CargoType == cargotype))
-                        {
+                        if (!tmpTDlist.Exists(x => x.DefName == trailerdefinition && x.CargoType == cargotype)) {
                             tmpTDlist.Add(new TrailerDefinition(trailerdefinition, cargotype, units_count));
-                        }
-                        else
-                        {
+                        } else {
                             TrailerDefinition tmpTDitem = tmpTDlist.Find(x => x.DefName == trailerdefinition && x.CargoType == cargotype);
 
-                            if (!tmpTDitem.CargoLoadVariants.Exists(x => x.UnitsCount == units_count)) 
-                            {
+                            if (!tmpTDitem.CargoLoadVariants.Exists(x => x.UnitsCount == units_count)) {
                                 tmpTDitem.CargoLoadVariants.Add(new CargoLoadVariants(units_count));
                             }
                         }
                     }
 
-                    if (!TrailerDefinitionVariants.ContainsKey(trailerdefinition))
-                    {
+                    if (!TrailerDefinitionVariants.ContainsKey(trailerdefinition)) {
                         List<string> tmp = new List<string> { trailervariant };
                         TrailerDefinitionVariants.Add(trailerdefinition, tmp);
-                    }
-                    else
-                    {
-                        if (!TrailerDefinitionVariants[trailerdefinition].Contains(trailervariant))
-                        {
+                    } else {
+                        if (!TrailerDefinitionVariants[trailerdefinition].Contains(trailervariant)) {
                             TrailerDefinitionVariants[trailerdefinition].Add(trailervariant);
                         }
                     }
@@ -661,8 +556,7 @@ namespace TS_SE_Tool
             }
         }
 
-        private void PrepareDBdata()
-        {
+        private void PrepareDBdata() {
             // Get Data From Database
 
             GetDataFromDatabase("CargoesTable");
@@ -674,7 +568,7 @@ namespace TS_SE_Tool
             InsertDataIntoDatabase("CompaniesTable");
             InsertDataIntoDatabase("TrucksTable");
             InsertDataIntoDatabase("TrailerTables");
-            
+
             InsertDataIntoDatabase("CargoesTable");
 
             InsertDataIntoDatabase("DistancesTable");
@@ -684,35 +578,28 @@ namespace TS_SE_Tool
         }
 
         //Apply new garage size and Copy extra items to temp Lists
-        private void PrepareGarages()
-        {
+        private void PrepareGarages() {
             List<string> extraTrailers = new List<string>();
 
-            foreach (Garages tempGarage in GaragesList)
-            {
+            foreach (Garages tempGarage in GaragesList) {
                 int capacity = 0;
 
-                switch (tempGarage.GarageStatus)
-                {
-                    case 2:
-                        {
+                switch (tempGarage.GarageStatus) {
+                    case 2: {
                             capacity = 3;
                             break;
                         }
-                    case 3:
-                        {
+                    case 3: {
                             capacity = 5;
                             break;
                         }
-                    case 6:
-                        {
+                    case 6: {
                             capacity = 1;
                             break;
                         }
                 }
 
-                if (capacity == 0)
-                {
+                if (capacity == 0) {
                     //Move
                     extraVehicles.AddRange(tempGarage.Vehicles);
                     extraDrivers.AddRange(tempGarage.Drivers);
@@ -722,21 +609,16 @@ namespace TS_SE_Tool
                     tempGarage.Vehicles.Clear();
                     tempGarage.Drivers.Clear();
                     tempGarage.Trailers.Clear();
-                }
-                else
-                {
+                } else {
                     int cur = tempGarage.Vehicles.Count;
 
-                    if (capacity < cur)
-                    {
+                    if (capacity < cur) {
                         extraVehicles.AddRange(tempGarage.Vehicles.GetRange(capacity, cur - capacity));
                         extraDrivers.AddRange(tempGarage.Drivers.GetRange(capacity, cur - capacity));
 
                         tempGarage.Vehicles.RemoveRange(capacity, cur - capacity);
                         tempGarage.Drivers.RemoveRange(capacity, cur - capacity);
-                    }
-                    else if (capacity > cur)
-                    {
+                    } else if (capacity > cur) {
                         string rstr = null;
                         tempGarage.Vehicles.AddRange(Enumerable.Repeat(rstr, capacity - cur));
                         tempGarage.Drivers.AddRange(Enumerable.Repeat(rstr, capacity - cur));
@@ -745,8 +627,7 @@ namespace TS_SE_Tool
             }
 
             //Move extra trailers to HQ garage
-            if (extraTrailers.Count > 0)
-            {
+            if (extraTrailers.Count > 0) {
                 GaragesList[GaragesList.FindIndex(x => x.GarageName == SiiNunitData.Player.hq_city)].Trailers.AddRange(extraTrailers);
                 extraTrailers.Clear();
             }
@@ -754,20 +635,16 @@ namespace TS_SE_Tool
             //Remove empty records from lists
             int iV = extraDrivers.Count();
 
-            for (int i = iV - 1; i >= 0; i--)
-            {
-                if (extraVehicles[i] == extraDrivers[i])
-                {
+            for (int i = iV - 1; i >= 0; i--) {
+                if (extraVehicles[i] == extraDrivers[i]) {
                     extraVehicles.RemoveAt(i);
                     extraDrivers.RemoveAt(i);
                 }
             }
 
             //Unallocated Drivers
-            if (extraDrivers.Count() > 0)
-            {
-                if (extraDrivers.Contains(SiiNunitData.Player.drivers[0]))
-                {
+            if (extraDrivers.Count() > 0) {
+                if (extraDrivers.Contains(SiiNunitData.Player.drivers[0])) {
                     Garages tmpG = new Garages(SiiNunitData.Player.hq_city);
 
                     int hqIdx = GaragesList.IndexOf(tmpG);
@@ -775,27 +652,20 @@ namespace TS_SE_Tool
 
                     int DrvIdx, VhcIdx;
 
-                    while (true)
-                    {
+                    while (true) {
                         DrvIdx = GaragesList[hqIdx].Drivers.FindIndex(sIdx, x => x == null);
                         VhcIdx = GaragesList[hqIdx].Vehicles.FindIndex(sIdx, x => x == null);
-                        
-                        if (DrvIdx > -1 && VhcIdx > -1)
-                        {
-                            if (DrvIdx == VhcIdx)
-                            {
+
+                        if (DrvIdx > -1 && VhcIdx > -1) {
+                            if (DrvIdx == VhcIdx) {
                                 break;
-                            }
-                            else
-                            {
+                            } else {
                                 if (DrvIdx > VhcIdx)
                                     sIdx = DrvIdx;
                                 else
                                     sIdx = VhcIdx;
                             }
-                        }
-                        else
-                        {
+                        } else {
                             DrvIdx = 0;
                             break;
                         }
@@ -815,10 +685,8 @@ namespace TS_SE_Tool
             }
         }
 
-        private void PrepareGaragesWrite()
-        {
-            foreach (string grg in SiiNunitData.Economy.garages)
-            {
+        private void PrepareGaragesWrite() {
+            foreach (string grg in SiiNunitData.Economy.garages) {
                 Save.Items.Garage siiGarage = SiiNunitData.SiiNitems[grg];
                 Garages prgrGarage = GaragesList.Find(x => x.GarageName == grg.Split(new char[] { '.' })[1]);
 
@@ -829,14 +697,11 @@ namespace TS_SE_Tool
             }
         }
 
-        private void PrepareCompaniesJobWrite()
-        {
-            foreach (KeyValuePair<string, List<JobAdded>> cmp in AddedJobsDictionary)
-            {
+        private void PrepareCompaniesJobWrite() {
+            foreach (KeyValuePair<string, List<JobAdded>> cmp in AddedJobsDictionary) {
                 Save.Items.Company siiCompany = SiiNunitData.SiiNitems[cmp.Key];
 
-                for (int i = 0; i < cmp.Value.Count; i++)
-                {
+                for (int i = 0; i < cmp.Value.Count; i++) {
                     JobAdded job = cmp.Value.ElementAt(i);
 
                     string jobId = siiCompany.job_offer[i];
@@ -860,14 +725,11 @@ namespace TS_SE_Tool
         }
 
         //Rearrange extra User Drivers to glogal Driver pool
-        private void PrepareDriversTrucksWrite()
-        {
+        private void PrepareDriversTrucksWrite() {
             extraDrivers.RemoveAll(x => x == null);
 
-            foreach (string tmp in extraDrivers)
-            {
-                if (tmp != null)
-                {
+            foreach (string tmp in extraDrivers) {
+                if (tmp != null) {
                     int idx = 0;
 
                     idx = SiiNunitData.Player.drivers.IndexOf(tmp);
@@ -884,8 +746,7 @@ namespace TS_SE_Tool
 
             extraVehicles.RemoveAll(x => x == null);
 
-            foreach (string tmp in extraVehicles)
-            {
+            foreach (string tmp in extraVehicles) {
                 int idx = 0;
 
                 idx = SiiNunitData.Player.trucks.IndexOf(tmp);
@@ -899,19 +760,15 @@ namespace TS_SE_Tool
             }
 
             //Check hired drivers
-            foreach (string grgNameless in SiiNunitData.Economy.garages)
-            {
+            foreach (string grgNameless in SiiNunitData.Economy.garages) {
                 Save.Items.Garage grg = SiiNunitData.SiiNitems[grgNameless];
 
-                foreach (string drvrNameless in grg.drivers)
-                {
-                    if (drvrNameless != null && drvrNameless != SiiNunitData.Player.drivers[0])
-                    {
+                foreach (string drvrNameless in grg.drivers) {
+                    if (drvrNameless != null && drvrNameless != SiiNunitData.Player.drivers[0]) {
                         string grgName = grgNameless.Split('.')[1];
                         Driver_AI drvr = SiiNunitData.SiiNitems[drvrNameless];
 
-                        if (String.IsNullOrEmpty(drvr.hometown.Value))
-                        {
+                        if (String.IsNullOrEmpty(drvr.hometown.Value)) {
                             drvr.hometown = grgName;
                             drvr.current_city = grgName;
                             drvr.training_policy = 1;
@@ -922,9 +779,7 @@ namespace TS_SE_Tool
 
                             SiiNunitData.Economy_event_Queue.data.Add(spareNameless);
                             SiiNunitData.SiiNitems.Add(spareNameless, ecEvent);
-                        }
-                        else
-                        {
+                        } else {
                             drvr.hometown = grgName;
                         }
                     }
@@ -933,19 +788,15 @@ namespace TS_SE_Tool
         }
 
         //Sort events by time
-        private void PrepareEvents()
-        {
+        private void PrepareEvents() {
             Dictionary<string, Economy_event> timeList = new Dictionary<string, Economy_event>();
 
-            foreach (string ecEventLink in SiiNunitData.Economy_event_Queue.data)
-            {
+            foreach (string ecEventLink in SiiNunitData.Economy_event_Queue.data) {
                 Economy_event ecEvent = ((Economy_event)SiiNunitData.SiiNitems[ecEventLink]);
                 string cmpLink = ecEvent.unit_link;
 
-                if (AddedJobsDictionary.ContainsKey(cmpLink))
-                {
-                    if (ecEvent.param < AddedJobsDictionary[cmpLink].Count)
-                    {
+                if (AddedJobsDictionary.ContainsKey(cmpLink)) {
+                    if (ecEvent.param < AddedJobsDictionary[cmpLink].Count) {
                         ecEvent.time = AddedJobsDictionary[cmpLink].ElementAt(ecEvent.param).ExpirationTime;
                     }
                 }
@@ -960,21 +811,18 @@ namespace TS_SE_Tool
             newQueue.AddRange(sortedDict.Select(x => x.Key));
 
             SiiNunitData.Economy_event_Queue.data = newQueue;
-            
+
         }
 
         //Create DB
-        private void CreateDatabase(string fileName)
-        {
+        private void CreateDatabase(string fileName) {
             string connectionString;
 
-            if(!Directory.Exists("dbs"))
-            {
+            if (!Directory.Exists("dbs")) {
                 Directory.CreateDirectory("dbs");
             }
 
-            if (!File.Exists(fileName))
-            {
+            if (!File.Exists(fileName)) {
                 //Create
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "message_database_missing_creating_db");
 
@@ -987,16 +835,13 @@ namespace TS_SE_Tool
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_database_created");
 
                 CreateDatabaseStructure();
-            }
-            else
-            {
+            } else {
                 //Update
                 UpdateDatabaseVersion();
             }
         }
         //Create DB structure
-        private void CreateDatabaseStructure()
-        {
+        private void CreateDatabaseStructure() {
             UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "message_database_missing_creating_db_structure");
 
             string sql = "", DBVersion = "";
@@ -1008,7 +853,7 @@ namespace TS_SE_Tool
 
             sql += "CREATE TABLE DatabaseDetails (ID_DBline INT IDENTITY(1,1) PRIMARY KEY, GameName NVARCHAR(8) NOT NULL, SaveVersion INT NOT NULL, ProfileName NVARCHAR(128) NOT NULL, " +
                 "V1 numeric(4,0) NOT NULL, V2 numeric(4,0) NOT NULL, V3 numeric(4,0) NOT NULL, V4 numeric(4,0) NOT NULL, ReadableName NVARCHAR(30) NOT NULL);";
-            sql += "INSERT INTO [DatabaseDetails] (GameName, SaveVersion, ProfileName, V1, V2, V3, V4, ReadableName) VALUES ('" + GameType + "', 0, '" + Globals.SelectedProfile + "','" +
+            sql += "INSERT INTO [DatabaseDetails] (GameName, SaveVersion, ProfileName, V1, V2, V3, V4, ReadableName) VALUES ('" + SelectedGame.Type + "', 0, '" + Globals.SelectedProfile + "','" +
                 splitDBver[0] + "','" + splitDBver[1] + "','" + splitDBver[2] + "','" + splitDBver[3] + "','" + Utilities.TextUtilities.FromHexToString(Globals.SelectedProfile) + "');";
             //
             sql += "CREATE TABLE Dependencies (ID_dep INT IDENTITY(1,1) PRIMARY KEY, Dependency NVARCHAR(256) NOT NULL);";
@@ -1073,12 +918,11 @@ namespace TS_SE_Tool
             //
 
 
-            UpdateDatabase( sql.Split(';') );
+            UpdateDatabase(sql.Split(';'));
         }
 
         //Update DB version
-        private void UpdateDatabaseVersion()
-        {
+        private void UpdateDatabaseVersion() {
             string DBVersion = "", commandText = "";
             string DBVersionNew = "", sql = "";
 
@@ -1093,105 +937,87 @@ namespace TS_SE_Tool
 
             bool oldDBversion = false;
 
-            try
-            {
+            try {
                 commandText = "SELECT column_name FROM Information_SCHEMA.columns WHERE table_name = 'DatabaseDetails' AND column_name = 'DBVersion';";
                 reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                while (reader.Read())
-                {
+                while (reader.Read()) {
                     if (reader[0].ToString() == "DBVersion")
                         oldDBversion = true;
                 }
-            }
-            catch { }
+            } catch { }
 
-            if (oldDBversion)
-            {
-                try
-                {
+            if (oldDBversion) {
+                try {
                     commandText = "SELECT DBVersion FROM [DatabaseDetails];";
                     reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
                     while (reader.Read())
                         DBVersion = reader["DBVersion"].ToString();
 
-                }
-                catch { }
-            }
-            else
-            {
-                try
-                {
+                } catch { }
+            } else {
+                try {
                     commandText = "SELECT V1, V2, V3, V4 FROM [DatabaseDetails];";
                     reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
                     while (reader.Read())
                         DBVersion = reader["V1"].ToString() + "." + reader["V2"].ToString() + "." + reader["V3"].ToString() + "." + reader["V4"].ToString();
-                }
-                catch { }
+                } catch { }
             }
 
             DBconnection.Close();
             //
 
-            switch (DBVersion)
-            {
-                case "0.1.6":
-                    {
+            switch (DBVersion) {
+                case "0.1.6": {
                         goto label016;
                     }
-                case "0.2.0":
-                    {
+                case "0.2.0": {
                         goto label020;
                     }
-                case "0.2.6":
-                    {
+                case "0.2.6": {
                         goto label026;
                     }
-                case "0.2.6.2":
-                    {
+                case "0.2.6.2": {
                         goto label0266;
                     }
-                case "0.2.6.6":
-                    {
+                case "0.2.6.6": {
                         goto label0360;
                     }
-                case "0.3.6.0":
-                    {
+                case "0.3.6.0": {
                         goto labelskip;
                     }
-                default:
-                    {
+                default: {
                         return;
                     }
             }
 
-            //0.1.6
-            label016:
+        //0.1.6
+        label016:
 
             sql = "ALTER TABLE [Dependencies] ALTER COLUMN Dependency NVARCHAR(256) NOT NULL;";
             UpdateDatabase(sql);
-            //
+        //
 
-            //0.2.0
-            label020:
+        //0.2.0
+        label020:
 
             sql = "ALTER TABLE [DatabaseDetails] ALTER COLUMN ProfileName NVARCHAR(128) NOT NULL;";
             UpdateDatabase(sql);
 
             sql = "UPDATE [DatabaseDetails] SET ProfileName = '" + Globals.SelectedProfile + "' " + "WHERE ID_DBline = 1;";
             UpdateDatabase(sql);
-            //
+        //
 
-            //0.2.6
-            label026:
+        //0.2.6
+        label026:
 
             UpdateDatabase("DELETE FROM DatabaseDetails WHERE ID_DBline > 1;");
-            //
+        //
 
-            //0.2.6.6
-            label0266:
+        //0.2.6.6
+        label0266:
 
             sql = "ALTER TABLE DatabaseDetails DROP COLUMN DBVersion;";
             UpdateDatabase(sql);
@@ -1209,10 +1035,10 @@ namespace TS_SE_Tool
             sql += "ALTER TABLE [DatabaseDetails] ALTER COLUMN [ReadableName] NVARCHAR(30) NOT NULL;";
 
             UpdateDatabase(sql.Split(';'));
-            //
+        //
 
-            //0.3.6.0
-            label0360:
+        //0.3.6.0
+        label0360:
             sql = "";
 
             sql += "CREATE TABLE tempBulkCargoesToTrailerDefinitionTable (ID INT IDENTITY(1,1) PRIMARY KEY, CargoName NVARCHAR(32) NOT NULL, TrailerDefinitionName NVARCHAR(64) NOT NULL, CargoType INT NOT NULL);";
@@ -1220,7 +1046,7 @@ namespace TS_SE_Tool
 
             sql += "CREATE TABLE tempBulkTrailerDefinitionVariants (ID_trailerDtV INT IDENTITY(1,1) PRIMARY KEY, TrailerDefinitionName NVARCHAR(64) NOT NULL, TrailerVariantName NVARCHAR(32) NOT NULL);";
             sql += "CREATE TABLE tempTrailerDefinitionVariants (ID_trailerDtV INT IDENTITY(1,1) PRIMARY KEY, TrailerDefinitionID INT NOT NULL, TrailerVariantID INT NOT NULL);";
-            
+
             sql += "CREATE UNIQUE INDEX [Idx_Uniq] ON [CitysTable] ([CityName]);";
             sql += "CREATE UNIQUE INDEX [Idx_Uniq] ON [CompaniesTable] ([CompanyName]);";
             sql += "CREATE UNIQUE INDEX [Idx_Uniq] ON [CargoesTable] ([CargoName]);";
@@ -1233,63 +1059,47 @@ namespace TS_SE_Tool
             sql = "UPDATE [DatabaseDetails] SET V1 = '" + splitDBver[0] + "', V2 = '" + splitDBver[1] + "', V3 = '" + splitDBver[2] + "', V4 = '" + splitDBver[3] + "' WHERE ID_DBline = 1;";
             UpdateDatabase(sql);
 
-            //END
-            labelskip:;
+        //END
+        labelskip:;
 
         }
 
         //Help function for DB update
-        private void UpdateDatabase(string _sql_string)
-        {
+        private void UpdateDatabase(string _sql_string) {
             if (DBconnection.State == ConnectionState.Closed)
                 DBconnection.Open();
-            try
-            {
+            try {
                 SqlCeCommand command = DBconnection.CreateCommand();
                 command.CommandText = _sql_string;
                 command.ExecuteNonQuery();
-            }
-            catch (SqlCeException sqlexception)
-            {
+            } catch (SqlCeException sqlexception) {
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
                 MessageBox.Show(sqlexception.Message + "\r\n" + _sql_string, "SQL Exception. Update DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                 MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
+            } finally {
                 DBconnection.Close();
             }
         }
 
-        private void UpdateDatabase(string[] _sql_strings)
-        {
+        private void UpdateDatabase(string[] _sql_strings) {
             if (DBconnection.State == ConnectionState.Closed)
                 DBconnection.Open();
 
             SqlCeCommand cmd;
 
-            foreach (string sqlline in _sql_strings)
-            {
-                if (sqlline != "")
-                {
+            foreach (string sqlline in _sql_strings) {
+                if (sqlline != "") {
                     cmd = new SqlCeCommand(sqlline, DBconnection);
 
-                    try
-                    {
+                    try {
                         cmd.ExecuteNonQuery();
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_database_created");
-                    }
-                    catch (SqlCeException sqlexception)
-                    {
+                    } catch (SqlCeException sqlexception) {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
                         MessageBox.Show(sqlexception.Message, "SQL Exception. Create DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                         MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -1298,12 +1108,10 @@ namespace TS_SE_Tool
 
             DBconnection.Close();
         }
-        
+
         //Load distances from database
-        private void GetAllDistancesFromDB()
-        {
-            try
-            {
+        private void GetAllDistancesFromDB() {
+            try {
                 RouteList.ClearList(); //Clears existing list in program
 
                 DBconnection.Open();
@@ -1318,23 +1126,18 @@ namespace TS_SE_Tool
 
                 SqlCeDataReader reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                while (reader.Read())
-                {
+                while (reader.Read()) {
                     RouteList.AddRoute(reader["SourceCityName"].ToString(), reader["SourceCompanyName"].ToString(), reader["DestinationCityName"].ToString(), reader["DestinationCompanyName"].ToString(),
                         reader["Distance"].ToString(), reader["FerryTime"].ToString(), reader["FerryPrice"].ToString());
                 }
 
                 DBconnection.Close();
-            }
-            catch (SqlCeException sqlexception)
-            {
+            } catch (SqlCeException sqlexception) {
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
                 MessageBox.Show(sqlexception.Message, "SQL Exception. Load all Distances", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 IO_Utilities.LogWriter("Getting Data went wrong");
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                 MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -1345,14 +1148,10 @@ namespace TS_SE_Tool
         }
 
         //Upload to DB
-        private void InsertDataIntoDatabase(string _targetTable)
-        {
-            switch (_targetTable)
-            {
-                case "Dependencies":
-                    {
-                        if (MainSaveFileInfoData.Dependencies != null && MainSaveFileInfoData.Dependencies.Count() > 0)
-                        {
+        private void InsertDataIntoDatabase(string _targetTable) {
+            switch (_targetTable) {
+                case "Dependencies": {
+                        if (MainSaveFileInfoData.Dependencies != null && MainSaveFileInfoData.Dependencies.Count() > 0) {
                             string SQLCommandCMD = "";
                             bool first = true;
 
@@ -1360,26 +1159,20 @@ namespace TS_SE_Tool
 
                             List<string> uniqueDependencies = DBDependencies.Except(gameplayDependencies).ToList();
 
-                            if (uniqueDependencies != null && uniqueDependencies.Count() > 0)
-                            {
+                            if (uniqueDependencies != null && uniqueDependencies.Count() > 0) {
                                 SQLCommandCMD += "DELETE FROM [Dependencies] WHERE Dependency IN (";
 
-                                foreach (string tempitem in uniqueDependencies)
-                                {
-                                    if (!first)
-                                    {
+                                foreach (string tempitem in uniqueDependencies) {
+                                    if (!first) {
                                         SQLCommandCMD += " , ";
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         first = false;
                                     }
 
                                     string sqlstr = tempitem;
                                     int apoIndex = 0;
 
-                                    while (true)
-                                    {
+                                    while (true) {
                                         apoIndex = sqlstr.IndexOf("'", apoIndex);
 
                                         if (apoIndex > -1)
@@ -1399,27 +1192,21 @@ namespace TS_SE_Tool
 
                             uniqueDependencies = gameplayDependencies.Except(DBDependencies).ToList();
 
-                            if (uniqueDependencies != null && uniqueDependencies.Count() > 0)
-                            {
+                            if (uniqueDependencies != null && uniqueDependencies.Count() > 0) {
                                 SQLCommandCMD = "INSERT INTO [Dependencies] (Dependency) ";
                                 first = true;
 
-                                foreach (string tempitem in uniqueDependencies)
-                                {
-                                    if (!first)
-                                    {
+                                foreach (string tempitem in uniqueDependencies) {
+                                    if (!first) {
                                         SQLCommandCMD += " UNION ALL ";
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         first = false;
                                     }
 
                                     string sqlstr = tempitem;
                                     int apoIndex = 0;
 
-                                    while (true)
-                                    {
+                                    while (true) {
                                         apoIndex = sqlstr.IndexOf("'", apoIndex);
 
                                         if (apoIndex > -1)
@@ -1439,8 +1226,7 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                case "TrailerTables":
-                    {
+                case "TrailerTables": {
                         string SQLCommandCMD = "";
                         bool first = true;
 
@@ -1455,31 +1241,23 @@ namespace TS_SE_Tool
 
                         List<string> tmpLST = TrailerDefinitionVariants.Select(x => x.Key).ToList();
 
-                        if (TrailerDefinitionListDB.Count() > 0)
-                        {
+                        if (TrailerDefinitionListDB.Count() > 0) {
                             TrailerDefinitionListDiff = tmpLST.Except(TrailerDefinitionListDB).ToList();
                             TrailerDefinitionListDB.AddRange(TrailerDefinitionListDiff);
-                        }
-                        else
-                        {
+                        } else {
                             TrailerDefinitionListDB.AddRange(tmpLST);
                             TrailerDefinitionListDiff = TrailerDefinitionListDB;
                         }
 
                         //---
-                        if (TrailerDefinitionListDiff != null && TrailerDefinitionListDiff.Count() > 0)
-                        {
+                        if (TrailerDefinitionListDiff != null && TrailerDefinitionListDiff.Count() > 0) {
                             SQLCommandCMD = "INSERT INTO [TrailerDefinitionTable] (TrailerDefinitionName) ";
                             first = true;
 
-                            foreach (string tempDefVar in TrailerDefinitionListDiff)
-                            {
-                                if (!first)
-                                {
+                            foreach (string tempDefVar in TrailerDefinitionListDiff) {
+                                if (!first) {
                                     SQLCommandCMD += " UNION ALL ";
-                                }
-                                else
-                                {
+                                } else {
                                     first = false;
                                 }
 
@@ -1498,32 +1276,24 @@ namespace TS_SE_Tool
 
                         List<string> TrailerVariantsListDiff = new List<string>();
 
-                        if (TrailerVariantsListDB.Count() > 0)
-                        {
+                        if (TrailerVariantsListDB.Count() > 0) {
                             TrailerVariantsListDiff = TrailerVariants.Except(TrailerVariantsListDB).ToList();
                             TrailerVariantsListDB.AddRange(TrailerVariantsListDiff);
-                        }
-                        else
-                        {
+                        } else {
                             TrailerVariantsListDB.AddRange(TrailerVariants);
                             TrailerVariantsListDiff = TrailerVariantsListDB;
                         }
 
                         //---
 
-                        if (TrailerVariantsListDiff != null && TrailerVariantsListDiff.Count() > 0)
-                        {
+                        if (TrailerVariantsListDiff != null && TrailerVariantsListDiff.Count() > 0) {
                             SQLCommandCMD = "INSERT INTO [TrailerVariantTable] (TrailerVariantName) ";
                             first = true;
 
-                            foreach (string tempVar in TrailerVariantsListDiff)
-                            {
-                                if (!first)
-                                {
+                            foreach (string tempVar in TrailerVariantsListDiff) {
+                                if (!first) {
                                     SQLCommandCMD += " UNION ALL ";
-                                }
-                                else
-                                {
+                                } else {
                                     first = false;
                                 }
 
@@ -1546,23 +1316,18 @@ namespace TS_SE_Tool
                         GetDataFromDatabase("TrailerDefinitionVariants");
 
                         //=== Populate
-                        foreach (KeyValuePair<string, List<string>> tempDefVar in TrailerDefinitionVariants)
-                        {
+                        foreach (KeyValuePair<string, List<string>> tempDefVar in TrailerDefinitionVariants) {
                             string _definition = tempDefVar.Key;
 
                             List<string> newVariants = new List<string>();
 
-                            if (TrailerDefinitionVariantsDB.ContainsKey(_definition))
-                            {
+                            if (TrailerDefinitionVariantsDB.ContainsKey(_definition)) {
                                 newVariants = TrailerDefinitionVariants[_definition].Except(TrailerDefinitionVariantsDB[_definition]).ToList();
-                            }
-                            else
-                            {
+                            } else {
                                 newVariants = TrailerDefinitionVariants[_definition];
                             }
 
-                            if (newVariants.Count() > 0)
-                            {
+                            if (newVariants.Count() > 0) {
                                 for (int i = 0; i < newVariants.Count(); i++)
                                     tmpTable.Rows.Add(_definition, newVariants[i]);
                             }
@@ -1570,8 +1335,7 @@ namespace TS_SE_Tool
 
                         //=== Bulk upload
 
-                        using (SqlCeBulkCopy bc = new SqlCeBulkCopy(DBconnection))
-                        {
+                        using (SqlCeBulkCopy bc = new SqlCeBulkCopy(DBconnection)) {
                             bc.DestinationTableName = "tempBulkTrailerDefinitionVariants";
                             bc.WriteToServer(tmpTable);
                         }
@@ -1599,15 +1363,14 @@ namespace TS_SE_Tool
                         //=== Clear tables
 
                         UpdateDatabase("DELETE FROM [tempBulkTrailerDefinitionVariants]");
-                        UpdateDatabase("DELETE FROM [tempTrailerDefinitionVariants]");                        
+                        UpdateDatabase("DELETE FROM [tempTrailerDefinitionVariants]");
 
                         #endregion
 
                         break;
                     }
 
-                case "CargoesTable":
-                    {
+                case "CargoesTable": {
                         string updatecommandText = "";
                         bool first = true;
 
@@ -1628,48 +1391,38 @@ namespace TS_SE_Tool
 
                         List<string> CargoesListDiff = new List<string>();
 
-                        if (CargoesListDB.Count() > 0)
-                        {
+                        if (CargoesListDB.Count() > 0) {
                             CargoComparer _cargoComparer = new CargoComparer();
 
-                            foreach(Cargo val in CargoesList.Except(CargoesListDB, _cargoComparer))
-                            {
+                            foreach (Cargo val in CargoesList.Except(CargoesListDB, _cargoComparer)) {
                                 CargoDefVarDiffList.Add((Cargo)val.Clone());
                             }
 
                             Predicate<Cargo> tempCargoPred = null;
 
-                            foreach (Cargo tempCargo in CargoDefVarDiffList)
-                            {
+                            foreach (Cargo tempCargo in CargoDefVarDiffList) {
                                 tempCargoPred = x => x.CargoName == tempCargo.CargoName;
 
                                 int listDBindex = CargoesListDB.FindIndex(tempCargoPred);
                                 int listDIFFindex = CargoDefVarDiffList.FindIndex(tempCargoPred);
 
-                                if (listDBindex != -1)
-                                {
+                                if (listDBindex != -1) {
                                     CargoesListDB[listDBindex].TrailerDefList.AddRange(tempCargo.TrailerDefList);
 
                                     CargoesListDB[listDBindex].TrailerDefList = CargoesListDB[listDBindex].TrailerDefList.Distinct().ToList();
 
                                     CargoDefVarDiffList[listDIFFindex].TrailerDefList = CargoDefVarDiffList[listDIFFindex].TrailerDefList.Except(CargoesListDB[listDBindex].TrailerDefList).ToList();
-                                }
-                                else
-                                {
+                                } else {
                                     CargoesListDB.Add(new Cargo(tempCargo.CargoName, tempCargo.TrailerDefList));
                                 }
                             }
-                        }
-                        else
-                        {
+                        } else {
                             CargoesListDB = CargoesList;
                             CargoDefVarDiffList = CargoesList;
                         }
 
-                        foreach (Cargo cargo in CargoDefVarDiffList)
-                        {
-                            if (cargo.TrailerDefList.Count != 0)
-                            {
+                        foreach (Cargo cargo in CargoDefVarDiffList) {
+                            if (cargo.TrailerDefList.Count != 0) {
                                 tmpCargoList.Add(cargo);
                             }
                         }
@@ -1679,14 +1432,12 @@ namespace TS_SE_Tool
                         CargoesListDiff = CargoesList.Select(x => x.CargoName).ToList().Except(CargoesListDB.Select(x => x.CargoName)).ToList();
 
                         //=== CARGO
-                        if (CargoesListDiff != null && CargoesListDiff.Count() > 0)
-                        {
+                        if (CargoesListDiff != null && CargoesListDiff.Count() > 0) {
                             //=== Add Cargo to Database
                             updatecommandText = "INSERT INTO [CargoesTable] (CargoName) ";
                             first = true;
 
-                            foreach (string cargoItem in CargoesListDiff)
-                            {
+                            foreach (string cargoItem in CargoesListDiff) {
                                 if (!first)
                                     updatecommandText += " UNION ALL ";
                                 else
@@ -1699,18 +1450,15 @@ namespace TS_SE_Tool
                         }
 
 
-                        if (CargoDefVarDiffList != null && CargoDefVarDiffList.Count() > 0)
-                        {
-                            foreach (Cargo cargoItem in CargoDefVarDiffList)
-                            {
+                        if (CargoDefVarDiffList != null && CargoDefVarDiffList.Count() > 0) {
+                            foreach (Cargo cargoItem in CargoDefVarDiffList) {
                                 // Bulk DataTable populate
                                 foreach (TrailerDefinition tempDefVar in cargoItem.TrailerDefList)
                                     BulkDatatabler.Rows.Add(cargoItem.CargoName, tempDefVar.DefName, tempDefVar.CargoType);
                             }
 
                             //=== Bulk Add
-                            using (SqlCeBulkCopy bc = new SqlCeBulkCopy(DBconnection))
-                            {
+                            using (SqlCeBulkCopy bc = new SqlCeBulkCopy(DBconnection)) {
                                 bc.DestinationTableName = "tempBulkCargoesToTrailerDefinitionTable";
                                 bc.WriteToServer(BulkDatatabler);
                             }
@@ -1746,42 +1494,32 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                case "CitysTable":
-                    {
+                case "CitysTable": {
                         List<string> CitiesListDiff = new List<string>();
 
-                        if (CitiesListDB.Count() > 0)
-                        {
-                            foreach (string tempCity in CitiesListDB)
-                            {
+                        if (CitiesListDB.Count() > 0) {
+                            foreach (string tempCity in CitiesListDB) {
                                 if (CitiesList.Where(x => x.CityName == tempCity) == null)
                                     CitiesListDiff.Add(tempCity);
                             }
 
                             if (CitiesListDiff != null)
                                 CitiesListDB.AddRange(CitiesListDiff);
-                        }
-                        else
-                        {
+                        } else {
                             CitiesListDB.AddRange(CitiesList.Select(x => x.CityName));
                             CitiesListDiff = CitiesListDB;
                         }
 
-                        if (CitiesListDiff != null && CitiesListDiff.Count() > 0)
-                        {
+                        if (CitiesListDiff != null && CitiesListDiff.Count() > 0) {
                             string SQLCommandCMD = "";
                             SQLCommandCMD += "INSERT INTO [CitysTable] (CityName) ";
 
                             bool first = true;
 
-                            foreach (string tempcity in CitiesListDiff)
-                            {
-                                if (!first)
-                                {
+                            foreach (string tempcity in CitiesListDiff) {
+                                if (!first) {
                                     SQLCommandCMD += " UNION ALL ";
-                                }
-                                else
-                                {
+                                } else {
                                     first = false;
                                 }
 
@@ -1794,41 +1532,31 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                case "CompaniesTable":
-                    {
+                case "CompaniesTable": {
                         List<string> CompaniesListDiff = new List<string>();
 
-                        if (CompaniesListDB.Count() > 0)
-                        {
-                            foreach (string tempCompany in CompaniesListDB)
-                            {
+                        if (CompaniesListDB.Count() > 0) {
+                            foreach (string tempCompany in CompaniesListDB) {
                                 if (CompaniesList.Where(x => x == tempCompany) == null)
                                     CompaniesListDiff.Add(tempCompany);
                             }
 
                             CompaniesListDB.AddRange(CompaniesListDiff);
-                        }
-                        else
-                        {
+                        } else {
                             CompaniesListDB = CompaniesList;
                             CompaniesListDiff = CompaniesList;
                         }
 
-                        if (CompaniesListDiff != null && CompaniesListDiff.Count() > 0)
-                        {
+                        if (CompaniesListDiff != null && CompaniesListDiff.Count() > 0) {
                             string SQLCommandCMD = "";
                             SQLCommandCMD += "INSERT INTO [CompaniesTable] (CompanyName) ";
 
                             bool first = true;
 
-                            foreach (string tempitem in CompaniesListDiff)
-                            {
-                                if (!first)
-                                {
+                            foreach (string tempitem in CompaniesListDiff) {
+                                if (!first) {
                                     SQLCommandCMD += " UNION ALL ";
-                                }
-                                else
-                                {
+                                } else {
                                     first = false;
                                 }
 
@@ -1840,37 +1568,28 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                case "TrucksTable":
-                    {
+                case "TrucksTable": {
                         List<CompanyTruck> CompanyTruckListDiff = new List<CompanyTruck>();
 
-                        if (CompanyTruckListDB.Count() > 0)
-                        {
+                        if (CompanyTruckListDB.Count() > 0) {
                             CompanyTruckListDiff = CompanyTruckList.Except(CompanyTruckListDB, new CompanyTruckComparer()).ToList();
 
                             CompanyTruckListDB.AddRange(CompanyTruckListDiff);
-                        }
-                        else
-                        {
+                        } else {
                             CompanyTruckListDB = CompanyTruckList;
                             CompanyTruckListDiff = CompanyTruckList;
                         }
 
-                        if (CompanyTruckListDiff != null && CompanyTruckListDiff.Count() > 0)
-                        {
+                        if (CompanyTruckListDiff != null && CompanyTruckListDiff.Count() > 0) {
                             string SQLCommandCMD = "";
                             SQLCommandCMD += "INSERT INTO [TrucksTable] (TruckName, TruckType) ";
 
                             bool first = true;
 
-                            foreach (CompanyTruck tempitem in CompanyTruckListDiff)
-                            {
-                                if (!first)
-                                {
+                            foreach (CompanyTruck tempitem in CompanyTruckListDiff) {
+                                if (!first) {
                                     SQLCommandCMD += " UNION ALL ";
-                                }
-                                else
-                                {
+                                } else {
                                     first = false;
                                 }
 
@@ -1882,8 +1601,7 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                case "DistancesTable":
-                    { 
+                case "DistancesTable": {
                         //=== Create tmpTable
                         DataTable tmpTable = new DataTable();
 
@@ -1897,10 +1615,8 @@ namespace TS_SE_Tool
 
                         //=== Populate
 
-                        foreach (string companyNameless in SiiNunitData.Economy.companies)
-                        {
-                            foreach (string jobofferNameless in ((Save.Items.Company)SiiNunitData.SiiNitems[companyNameless]).job_offer)
-                            {
+                        foreach (string companyNameless in SiiNunitData.Economy.companies) {
+                            foreach (string jobofferNameless in ((Save.Items.Company)SiiNunitData.SiiNitems[companyNameless]).job_offer) {
                                 Save.Items.Job_offer_Data joData = ((Save.Items.Job_offer_Data)SiiNunitData.SiiNitems[jobofferNameless]);
 
                                 if (string.IsNullOrEmpty(joData.target.Value))
@@ -1918,8 +1634,7 @@ namespace TS_SE_Tool
 
                         //=== Bulk upload
 
-                        using (SqlCeBulkCopy bc = new SqlCeBulkCopy(DBconnection))
-                        {
+                        using (SqlCeBulkCopy bc = new SqlCeBulkCopy(DBconnection)) {
                             bc.DestinationTableName = "tempBulkDistancesTable";
                             bc.WriteToServer(tmpTable);
                         }
@@ -1944,8 +1659,7 @@ namespace TS_SE_Tool
 
                         int rowsUpdate = 0;
 
-                        while (sqlreader.Read())
-                        {
+                        while (sqlreader.Read()) {
                             string updatecommandText = "UPDATE [DistancesTable] SET Distance = '" + sqlreader["Distance"].ToString() + "', " +
                                 "FerryTime = '" + sqlreader["FerryTime"].ToString() + "', " +
                                 "FerryPrice = '" + sqlreader["FerryPrice"].ToString() + "' " +
@@ -1956,19 +1670,15 @@ namespace TS_SE_Tool
 
                             int _rowsupdated = -1;
 
-                            try
-                            {
+                            try {
                                 SqlCeCommand command = DBconnection.CreateCommand();
                                 command.CommandText = updatecommandText;
                                 _rowsupdated = command.ExecuteNonQuery();
-                            }
-                            catch (SqlCeException sqlexception)
-                            {
+                            } catch (SqlCeException sqlexception) {
                                 MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
 
-                            if (_rowsupdated == 0)
-                            {
+                            if (_rowsupdated == 0) {
                                 updatecommandText = "INSERT INTO [DistancesTable] (SourceCityID, SourceCompanyID, DestinationCityID, DestinationCompanyID, Distance, FerryTime, FerryPrice) " +
                                     "VALUES('" +
                                     sqlreader["SourceCityID"].ToString() + "', '" +
@@ -1999,29 +1709,24 @@ namespace TS_SE_Tool
 
         }
         //Load from DB
-        private void GetDataFromDatabase(string _targetTable)
-        {
+        private void GetDataFromDatabase(string _targetTable) {
             SqlCeDataReader reader = null;
 
-            try
-            {
+            try {
                 if (DBconnection.State == ConnectionState.Closed)
                     DBconnection.Open();
 
                 int totalrecord = 0;
 
-                switch (_targetTable)
-                {
-                    case "Dependencies":
-                        {
+                switch (_targetTable) {
+                    case "Dependencies": {
                             DBDependencies.Clear();
 
                             string commandText = "SELECT Dependency FROM [Dependencies];";
 
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                            while (reader.Read())
-                            {
+                            while (reader.Read()) {
                                 DBDependencies.Add(reader["Dependency"].ToString());
                             }
 
@@ -2030,43 +1735,34 @@ namespace TS_SE_Tool
                             break;
                         }
 
-                    case "CargoesTable":
-                        {
+                    case "CargoesTable": {
                             CargoesListDB.Clear();
-                            
+
                             string commandText = "SELECT ID_cargo, CargoName FROM [CargoesTable];";
 
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                            while (reader.Read())
-                            {
+                            while (reader.Read()) {
                                 List<TrailerDefinition> tempDefVars = new List<TrailerDefinition>();
 
                                 commandText = "SELECT TrailerDefinitionID, CargoType FROM [CargoesToTrailerDefinitionTable] WHERE CargoID = '" + reader["ID_cargo"].ToString() + "';";
 
-                                try
-                                {
+                                try {
                                     SqlCeDataReader reader2 = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
                                     Dictionary<string, int> tempVar = new Dictionary<string, int>();
 
-                                    while (reader2.Read())
-                                    {
+                                    while (reader2.Read()) {
                                         commandText = "SELECT TrailerDefinitionName FROM [TrailerDefinitionTable] WHERE ID_trailerD = '" + reader2["TrailerDefinitionID"].ToString() + "';";
-                                        
+
                                         SqlCeDataReader reader3 = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
-                                        while (reader3.Read())
-                                        {
+                                        while (reader3.Read()) {
                                             tempDefVars.Add(new TrailerDefinition(reader3["TrailerDefinitionName"].ToString(), int.Parse(reader2["CargoType"].ToString()), "1"));
                                         }
                                     }
-                                }
-                                catch (SqlCeException ex)
-                                {
+                                } catch (SqlCeException ex) {
                                     string avsd = ex.Message;
-                                }
-                                catch (Exception ex)
-                                {
+                                } catch (Exception ex) {
                                     string avsd = ex.Message;
                                 }
 
@@ -2078,16 +1774,14 @@ namespace TS_SE_Tool
                             break;
                         }
 
-                    case "CitysTable":
-                        {
+                    case "CitysTable": {
                             CitiesListDB.Clear();
 
                             string commandText = "SELECT CityName FROM [CitysTable];";
 
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                            while (reader.Read())
-                            {
+                            while (reader.Read()) {
                                 CitiesListDB.Add(reader["CityName"].ToString());
                             }
 
@@ -2096,16 +1790,14 @@ namespace TS_SE_Tool
                             break;
                         }
 
-                    case "CompaniesTable":
-                        {
+                    case "CompaniesTable": {
                             CompaniesListDB.Clear();
 
                             string commandText = "SELECT CompanyName FROM [CompaniesTable];";
 
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                            while (reader.Read())
-                            {
+                            while (reader.Read()) {
                                 CompaniesListDB.Add(reader["CompanyName"].ToString());
                             }
 
@@ -2114,16 +1806,14 @@ namespace TS_SE_Tool
                             break;
                         }
 
-                    case "TrucksTable":
-                        {
+                    case "TrucksTable": {
                             CompanyTruckListDB.Clear();
 
                             string commandText = "SELECT TruckName, TruckType FROM [TrucksTable];";
 
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                            while (reader.Read())
-                            {
+                            while (reader.Read()) {
                                 CompanyTruckListDB.Add(new CompanyTruck(reader["TruckName"].ToString(), int.Parse(reader["TruckType"].ToString())));
                             }
 
@@ -2132,16 +1822,14 @@ namespace TS_SE_Tool
                             break;
                         }
 
-                    case "TrailerDefinition":
-                        {
+                    case "TrailerDefinition": {
                             TrailerDefinitionListDB.Clear();
 
                             string commandText = "SELECT TrailerDefinitionName FROM [TrailerDefinitionTable];";
 
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                            while (reader.Read())
-                            {
+                            while (reader.Read()) {
                                 TrailerDefinitionListDB.Add(reader["TrailerDefinitionName"].ToString());
                             }
 
@@ -2150,16 +1838,14 @@ namespace TS_SE_Tool
                             break;
                         }
 
-                    case "TrailerVariants":
-                        {
+                    case "TrailerVariants": {
                             TrailerVariantsListDB.Clear();
 
                             string commandText = "SELECT TrailerVariantName FROM [TrailerVariantTable];";
 
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                            while (reader.Read())
-                            {
+                            while (reader.Read()) {
                                 TrailerVariantsListDB.Add(reader["TrailerVariantName"].ToString());
                             }
 
@@ -2168,8 +1854,7 @@ namespace TS_SE_Tool
                             break;
                         }
 
-                    case "TrailerDefinitionVariants":
-                        {
+                    case "TrailerDefinitionVariants": {
                             TrailerDefinitionVariantsDB.Clear();
 
                             string commandText = "SELECT TrailerDefinitionTable.TrailerDefinitionName, TrailerVariantTable.TrailerVariantName " +
@@ -2179,12 +1864,10 @@ namespace TS_SE_Tool
 
                             reader = new SqlCeCommand(commandText, DBconnection).ExecuteReader();
 
-                            while (reader.Read())
-                            {
+                            while (reader.Read()) {
                                 string DefinitionName = reader["TrailerDefinitionName"].ToString();
 
-                                if (!TrailerDefinitionVariantsDB.ContainsKey(DefinitionName))
-                                {
+                                if (!TrailerDefinitionVariantsDB.ContainsKey(DefinitionName)) {
                                     TrailerDefinitionVariantsDB.Add(DefinitionName, new List<string>());
                                 }
 
@@ -2198,13 +1881,9 @@ namespace TS_SE_Tool
                 }
 
                 IO_Utilities.LogWriter("Loaded " + totalrecord + " entries from " + _targetTable + " table.");
-            }
-            catch
-            {
+            } catch {
                 IO_Utilities.LogWriter("Missing " + DBconnection.DataSource + " file");
-            }
-            finally
-            {
+            } finally {
                 if (reader != null)
                     reader.Close();
 
@@ -2215,8 +1894,7 @@ namespace TS_SE_Tool
 
         //External Data
 
-        private void ExtDataCreateDatabase(string _dbname)
-        {
+        private void ExtDataCreateDatabase(string _dbname) {
             string connectionString;
 
             string fileName = _dbname;
@@ -2225,13 +1903,11 @@ namespace TS_SE_Tool
             string first = _dbname.Substring(0, index);
             string second = _dbname.Substring(index + 1);
 
-            if (!Directory.Exists(first))
-            {
+            if (!Directory.Exists(first)) {
                 Directory.CreateDirectory(first);
             }
 
-            if (File.Exists(fileName))
-            {
+            if (File.Exists(fileName)) {
                 File.Delete(fileName);
             }
 
@@ -2243,16 +1919,14 @@ namespace TS_SE_Tool
             ExtDataCreateDatabaseStructure(fileName);
         }
 
-        private void ExtDataCreateDatabaseStructure(string _fileName)
-        {
+        private void ExtDataCreateDatabaseStructure(string _fileName) {
             SqlCeConnection tDBconnection;
             tDBconnection = new SqlCeConnection("Data Source = " + _fileName + ";");
 
-            if (tDBconnection.State == ConnectionState.Closed)
-            {
+            if (tDBconnection.State == ConnectionState.Closed) {
                 tDBconnection.Open();
             }
-            
+
             SqlCeCommand cmd;
 
             string sql = "";
@@ -2279,24 +1953,17 @@ namespace TS_SE_Tool
 
             string[] linesArray = sql.Split(';');
 
-            foreach (string sqlline in linesArray)
-            {
-                if (sqlline != "")
-                {
+            foreach (string sqlline in linesArray) {
+                if (sqlline != "") {
                     cmd = new SqlCeCommand(sqlline, tDBconnection);
 
-                    try
-                    {
+                    try {
                         cmd.ExecuteNonQuery();
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_database_created");
-                    }
-                    catch (SqlCeException sqlexception)
-                    {
+                    } catch (SqlCeException sqlexception) {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_sql_exception");
                         MessageBox.Show(sqlexception.Message, "SQL Exception. Ext Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_exception");
                         MessageBox.Show(ex.Message, "Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -2306,20 +1973,16 @@ namespace TS_SE_Tool
             tDBconnection.Close();
         }
 
-        private void ExtDataInsertDataIntoDatabase(string _dbname, string _targetTable, object _data)
-        {
-            switch (_targetTable)
-            {
-                case "CargoesTable":
-                    {
+        private void ExtDataInsertDataIntoDatabase(string _dbname, string _targetTable, object _data) {
+            switch (_targetTable) {
+                case "CargoesTable": {
                         List<ExtCargo> extCargolist = _data as List<ExtCargo>;
 
                         SqlCeConnection tDBconnection;
                         string _fileName = _dbname;//Directory.GetCurrentDirectory() + @"\gameref\ETS\cache\" + _dbname + ".sdf";
                         tDBconnection = new SqlCeConnection("Data Source = " + _fileName + ";");
 
-                        if (tDBconnection.State == ConnectionState.Closed)
-                        {
+                        if (tDBconnection.State == ConnectionState.Closed) {
                             tDBconnection.Open();
                         }
 
@@ -2328,35 +1991,29 @@ namespace TS_SE_Tool
 
                         List<string> tempBodyTypes = new List<string>();
 
-                        foreach (ExtCargo tempcargo in extCargolist)
-                        {
+                        foreach (ExtCargo tempcargo in extCargolist) {
                             tempBodyTypes.AddRange(tempcargo.BodyTypes);
                         }
 
                         tempBodyTypes = tempBodyTypes.Distinct().ToList();
 
-                        foreach (string tempBody in tempBodyTypes)
-                        {
+                        foreach (string tempBody in tempBodyTypes) {
                             updatecommandText = "INSERT INTO [BodyTypesTable] (BodyTypeName) " +
                                                 "VALUES('" +
                                                 tempBody + "');";
 
                             //SqlCeCommand command = DBconnection.CreateCommand();
-                            try
-                            {
+                            try {
                                 command.CommandText = updatecommandText;
                                 command.ExecuteNonQuery();
-                            }
-                            catch (SqlCeException sqlexception)
-                            {
+                            } catch (SqlCeException sqlexception) {
                                 MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
 
                         int CargoID = 1;
 
-                        foreach (ExtCargo tempcargo in extCargolist)
-                        {
+                        foreach (ExtCargo tempcargo in extCargolist) {
                             byte valuable = 0, overweight = 0;
                             if (tempcargo.Valuable)
                                 valuable = 1;
@@ -2375,19 +2032,15 @@ namespace TS_SE_Tool
                                                 overweight + ");";
 
                             //SqlCeCommand command = DBconnection.CreateCommand();
-                            try
-                            {
+                            try {
                                 command.CommandText = updatecommandText;
                                 //command.Connection.Open();
                                 command.ExecuteNonQuery();
-                            }
-                            catch (SqlCeException sqlexception)
-                            {
+                            } catch (SqlCeException sqlexception) {
                                 MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
 
-                            foreach (string body_types in tempcargo.BodyTypes)
-                            {
+                            foreach (string body_types in tempcargo.BodyTypes) {
                                 updatecommandText = "SELECT ID_bodytype FROM [BodyTypesTable] WHERE BodyTypeName = '" + body_types + "' ";
                                 command.CommandText = updatecommandText;
 
@@ -2396,8 +2049,7 @@ namespace TS_SE_Tool
 
                                 int BodyTypeID = -1;
 
-                                while (readerDef.Read())
-                                {
+                                while (readerDef.Read()) {
                                     BodyTypeID = int.Parse(readerDef["ID_bodytype"].ToString());
                                 }
                                 //command.Connection.Close();
@@ -2407,14 +2059,11 @@ namespace TS_SE_Tool
                                                 CargoID + ", " +
                                                 BodyTypeID + ");";
 
-                                try
-                                {
+                                try {
                                     command.CommandText = updatecommandText;
                                     //command.Connection.Open();
                                     command.ExecuteNonQuery();
-                                }
-                                catch (SqlCeException sqlexception)
-                                {
+                                } catch (SqlCeException sqlexception) {
                                     MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
@@ -2427,16 +2076,14 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                case "CompaniesTable":
-                    {
+                case "CompaniesTable": {
                         List<ExtCompany> extCompanylist = _data as List<ExtCompany>;
 
                         SqlCeConnection tDBconnection;
                         string _fileName = _dbname;//Directory.GetCurrentDirectory() + @"\gameref\ETS\cache\" + _dbname + ".sdf";
                         tDBconnection = new SqlCeConnection("Data Source = " + _fileName + ";");
 
-                        if (tDBconnection.State == ConnectionState.Closed)
-                        {
+                        if (tDBconnection.State == ConnectionState.Closed) {
                             tDBconnection.Open();
                         }
 
@@ -2446,8 +2093,7 @@ namespace TS_SE_Tool
                         List<string> tempCompanies = new List<string>();
 
 
-                        foreach (ExtCompany tempCompany in extCompanylist)
-                        {
+                        foreach (ExtCompany tempCompany in extCompanylist) {
                             tempCompanies.AddRange(tempCompany.inCargo);
                             tempCompanies.AddRange(tempCompany.outCargo);
                         }
@@ -2459,36 +2105,28 @@ namespace TS_SE_Tool
                         command.CommandText = updatecommandText;
                         command.Parameters.Add("@inputText", SqlDbType.NVarChar);
 
-                        foreach (string tempCompany in tempCompanies)
-                        {
+                        foreach (string tempCompany in tempCompanies) {
                             //updatecommandText += "VALUES('" + tempCompany + "') ";
-                            try
-                            {
+                            try {
                                 command.Parameters[0].Value = tempCompany;
                                 command.ExecuteNonQuery();
                                 //command.CommandText = updatecommandText;
                                 //command.ExecuteNonQuery();
-                            }
-                            catch (SqlCeException sqlexception)
-                            {
+                            } catch (SqlCeException sqlexception) {
                                 MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
 
-                        foreach (ExtCompany tempCompany in extCompanylist)
-                        {
+                        foreach (ExtCompany tempCompany in extCompanylist) {
                             updatecommandText = "INSERT INTO [CompaniesTable] (CompanyName) " +
                                                 "VALUES('" +
                                                 tempCompany.CompanyName + "');";
 
                             //SqlCeCommand command = DBconnection.CreateCommand();
-                            try
-                            {
+                            try {
                                 command.CommandText = updatecommandText;
                                 command.ExecuteNonQuery();
-                            }
-                            catch (SqlCeException sqlexception)
-                            {
+                            } catch (SqlCeException sqlexception) {
                                 MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
 
@@ -2500,89 +2138,70 @@ namespace TS_SE_Tool
 
                             int CompanyID = -1;
 
-                            while (readerDef.Read())
-                            {
+                            while (readerDef.Read()) {
                                 CompanyID = int.Parse(readerDef["ID_company"].ToString());
                             }
 
-                            foreach (string tempcargo in tempCompany.inCargo)
-                            {
+                            foreach (string tempcargo in tempCompany.inCargo) {
                                 updatecommandText = "SELECT ID_cargo FROM [AllCargoesTable] WHERE CargoName = '" + tempcargo + "' ";
                                 command.CommandText = updatecommandText;
 
                                 //command.Connection.Open();
                                 int CargoID = -1;
-                                try
-                                {
+                                try {
                                     SqlCeDataReader readerCargo = command.ExecuteReader();
 
-                                    while (readerCargo.Read())
-                                    {
+                                    while (readerCargo.Read()) {
                                         CargoID = int.Parse(readerCargo["ID_cargo"].ToString());
                                     }
-                                    if (CargoID != -1)
-                                    {
+                                    if (CargoID != -1) {
                                         updatecommandText = "INSERT INTO [CompaniesCargoesInTable] (CompanyID, CargoID) " +
                                                             "VALUES(" +
                                                             CompanyID + ", " +
                                                             CargoID + ");";
-                                        try
-                                        {
+                                        try {
                                             command.CommandText = updatecommandText;
                                             //command.Connection.Open();
                                             command.ExecuteNonQuery();
-                                        }
-                                        catch (SqlCeException sqlexception)
-                                        {
+                                        } catch (SqlCeException sqlexception) {
                                             MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         }
                                     }
 
-                                }
-                                catch (SqlCeException sqlexception)
-                                {
+                                } catch (SqlCeException sqlexception) {
                                     MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
 
 
                             }
 
-                            foreach (string tempcargo in tempCompany.outCargo)
-                            {
+                            foreach (string tempcargo in tempCompany.outCargo) {
                                 updatecommandText = "SELECT ID_cargo FROM [AllCargoesTable] WHERE CargoName = '" + tempcargo + "' ";
                                 command.CommandText = updatecommandText;
 
                                 //command.Connection.Open();
                                 int CargoID = -1;
-                                try
-                                {
+                                try {
                                     SqlCeDataReader readerCargo = command.ExecuteReader();
 
-                                    while (readerCargo.Read())
-                                    {
+                                    while (readerCargo.Read()) {
                                         CargoID = int.Parse(readerCargo["ID_cargo"].ToString());
                                     }
-                                    if (CargoID != -1)
-                                    {
+                                    if (CargoID != -1) {
                                         updatecommandText = "INSERT INTO [CompaniesCargoesOutTable] (CompanyID, CargoID) " +
                                                             "VALUES(" +
                                                             CompanyID + ", " +
                                                             CargoID + ");";
-                                        try
-                                        {
+                                        try {
                                             command.CommandText = updatecommandText;
                                             //command.Connection.Open();
                                             command.ExecuteNonQuery();
-                                        }
-                                        catch (SqlCeException sqlexception)
-                                        {
+                                        } catch (SqlCeException sqlexception) {
                                             MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         }
                                     }
 
-                                }
-                                catch (SqlCeException sqlexception)
-                                {
+                                } catch (SqlCeException sqlexception) {
                                     MessageBox.Show(sqlexception.Message + " | " + sqlexception.ErrorCode, "SQL Exception.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
 
@@ -2598,22 +2217,19 @@ namespace TS_SE_Tool
             }
         }
 
-        private void LoadCachedExternalCargoData(string _dbname)
-        {
+        private void LoadCachedExternalCargoData(string _dbname) {
             SqlCeDataReader reader = null, reader2 = null;
 
-            try
-            {
+            try {
                 SqlCeConnection tDBconnection;
-                string _fileName = Directory.GetCurrentDirectory() + @"\gameref\cache\" + GameType + "\\" + _dbname + ".sdf";
+                string _fileName = Directory.GetCurrentDirectory() + @"\gameref\cache\" + SelectedGame.Type + "\\" + _dbname + ".sdf";
 
                 if (!File.Exists(_fileName))
                     return;
 
                 tDBconnection = new SqlCeConnection("Data Source = " + _fileName + ";");
 
-                if (tDBconnection.State == ConnectionState.Closed)
-                {
+                if (tDBconnection.State == ConnectionState.Closed) {
                     tDBconnection.Open();
                 }
 
@@ -2621,8 +2237,7 @@ namespace TS_SE_Tool
 
                 reader = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
 
-                while (reader.Read())
-                {
+                while (reader.Read()) {
                     ExtCargo tempExtCargo = new ExtCargo(reader["CargoName"].ToString());
 
                     tempExtCargo.Fragility = decimal.Parse(reader["Fragility"].ToString());
@@ -2647,8 +2262,7 @@ namespace TS_SE_Tool
 
                     reader2 = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
 
-                    while (reader2.Read())
-                    {
+                    while (reader2.Read()) {
                         tempExtCargo.BodyTypes.Add(reader2["BodyTypeName"].ToString());
                     }
 
@@ -2659,42 +2273,34 @@ namespace TS_SE_Tool
 
                 reader = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
 
-                while (reader.Read())
-                {
+                while (reader.Read()) {
                     int compindex = ExternalCompanies.FindIndex(x => x.CompanyName == reader["CompanyName"].ToString());
 
-                    if (compindex == -1)
-                    {
+                    if (compindex == -1) {
                         ExtCompany tempExtCompany = new ExtCompany(reader["CompanyName"].ToString());
 
                         commandText = "SELECT AllCargoesTable.CargoName FROM [CompaniesCargoesOutTable] INNER JOIN [AllCargoesTable] ON AllCargoesTable.ID_cargo = CompaniesCargoesOutTable.CargoID WHERE CompaniesCargoesOutTable.CompanyID = '" + reader["ID_company"].ToString() + "';";
 
                         reader2 = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
 
-                        while (reader2.Read())
-                        {
+                        while (reader2.Read()) {
                             tempExtCompany.outCargo.Add(reader2["CargoName"].ToString());
                         }
 
                         ExternalCompanies.Add(tempExtCompany);
-                    }
-                    else
-                    {
+                    } else {
                         commandText = "SELECT AllCargoesTable.CargoName FROM [CompaniesCargoesOutTable] INNER JOIN [AllCargoesTable] ON AllCargoesTable.ID_cargo = CompaniesCargoesOutTable.CargoID WHERE CompaniesCargoesOutTable.CompanyID = '" + reader["ID_company"].ToString() + "';";
 
                         reader2 = new SqlCeCommand(commandText, tDBconnection).ExecuteReader();
 
-                        while (reader2.Read())
-                        {
+                        while (reader2.Read()) {
                             ExternalCompanies[compindex].outCargo.Add(reader2["CargoName"].ToString());
                         }
                     }
                 }
 
                 tDBconnection.Close();
-            }
-            catch
-            { }
+            } catch { }
         }
     }
 }

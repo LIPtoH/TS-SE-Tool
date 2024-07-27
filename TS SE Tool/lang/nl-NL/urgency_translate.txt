@@ -1,0 +1,4 @@
+﻿[nl-NL]
+0;Standaard
+1;Belangrijk
+2;Dringend

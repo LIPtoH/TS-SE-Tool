@@ -1,0 +1,354 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ErikEJ.SqlCe40</name>
+    </assembly>
+    <members>
+        <member name="T:ErikEJ.SqlCe.ISqlCeBulkCopyInsertAdapter">
+            <summary>
+            Interface used by the adapters so we are able to remove the duplicate code.
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCe.ISqlCeBulkCopyInsertAdapter.FieldName(System.Int32)">
+            <summary>
+            The name of the field at the ordinal
+            </summary>
+            <param name="column"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErikEJ.SqlCe.ISqlCeBulkCopyInsertAdapter.Get(System.Int32)">
+            <summary>
+            Get by the column Id (replacement for this[int i]
+            </summary>
+            <param name="column"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErikEJ.SqlCe.ISqlCeBulkCopyInsertAdapter.Read">
+            <summary>
+            Move to the next row
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErikEJ.SqlCe.ISqlCeBulkCopyInsertAdapter.SkipRow">
+            <summary>
+            Skip the current row
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ErikEJ.SqlCe.SqlCeBulkCopy">
+            <summary>
+            Lets you efficiently bulk load a SQL Server Compact table with data from another source.
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.#ctor(System.Data.SqlServerCe.SqlCeConnection)">
+            <summary>
+            Initializes a new instance of the SqlCeBulkCopy class using the specified open instance of SqlCeConnection. 
+            </summary>
+            <param name="connection"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.#ctor(System.Data.SqlServerCe.SqlCeConnection,System.Data.SqlServerCe.SqlCeTransaction)">
+            <summary>
+            Initializes a new instance of the SqlCeBulkCopy class using the specified open instance of SqlCeConnection and the specified active SqlCeTransaction.
+            </summary>
+            <param name="connection"></param>
+            <param name="transaction"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.#ctor(System.Data.SqlServerCe.SqlCeConnection,ErikEJ.SqlCe.SqlCeBulkCopyOptions)">
+            <summary>
+            Creates a new instance of the SqlCeBulkCopy class, using the specified connection and options
+            </summary>
+            <param name="connection"></param>
+            <param name="copyOptions"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.#ctor(System.Data.SqlServerCe.SqlCeConnection,ErikEJ.SqlCe.SqlCeBulkCopyOptions,System.Data.SqlServerCe.SqlCeTransaction)">
+            <summary>
+            Initializes a new instance of the SqlCeBulkCopy class, using the specified connection, transaction and options.
+            </summary>
+            <param name="connection"></param>
+            <param name="transaction"></param>
+            <param name="copyOptions"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the SqlCeBulkCopy class using the specified connection string.
+            </summary>
+            <param name="connectionString"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.#ctor(System.String,ErikEJ.SqlCe.SqlCeBulkCopyOptions)">
+            <summary>
+            Initializes a new instance of the SqlCeBulkCopy class, using the specified connection string and options
+            </summary>
+            <param name="connectionString"></param>
+            <param name="copyOptions"></param>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeBulkCopy.DestinationTableName">
+            <summary>
+            Name of the destination table in the SQL Server Compact database.
+            </summary>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeBulkCopy.ColumnMappings">
+            <summary>
+            Returns a collection of SqlCeBulkCopyColumnMapping items. Column mappings define the relationships between columns in the data source and columns in the destination.
+            </summary>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeBulkCopy.BatchSize">
+            <summary>
+            The integer value of the BatchSize property, or zero if no value has been set.
+            In this implementation not used.
+            </summary>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeBulkCopy.BulkCopyTimeout">
+            <summary>
+            The integer value of the BulkCopyTimeout property.
+            In this implementation not used.
+            </summary>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeBulkCopy.NotifyAfter">
+            <summary>
+            Defines the number of rows to be processed before generating a notification event. 
+            </summary>
+        </member>
+        <member name="E:ErikEJ.SqlCe.SqlCeBulkCopy.RowsCopied">
+            <summary>
+            Occurs every time that the number of rows specified by the NotifyAfter property have been processed. 
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.Close">
+            <summary>
+            Closes the SqlCeBulkCopy instance. 
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.WriteToServer(System.Data.DataTable)">
+            <summary>
+            Copies all rows in the supplied DataTable to a destination table specified by the DestinationTableName property of the SqlCeBulkCopy object. 
+            </summary>
+            <param name="table"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.WriteToServer(System.Data.DataTable,System.Data.DataRowState)">
+            <summary>
+            Copies only rows that match the supplied row state in the supplied DataTable to a destination table specified by the DestinationTableName property of the SqlCeBulkCopy object. 
+            </summary>
+            <param name="table"></param>
+            <param name="rowState"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.WriteToServer(System.Data.IDataReader)">
+            <summary>
+            Copies all rows in the supplied IDataReader to a destination table specified by the DestinationTableName property of the SqlBulkCopy object. 
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.WriteToServer``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Copies all rows in the supplied IEnumerable&lt;> to a destination table specified by the DestinationTableName property of the SqlBulkCopy object.
+            </summary>
+            <param name="collection">IEnumerable&lt;>. For IEnumerable use other constructor and specify type.</param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.WriteToServer(System.Collections.IEnumerable,System.Type)">
+            <summary>
+            Copies all rows in the supplied IEnumerable to a destination table specified by the DestinationTableName property of the SqlBulkCopy object.
+            Use other constructor for IEnumerable&lt;>
+            </summary>
+            <param name="collection"></param>
+            <param name="elementType"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.Dispose(System.Boolean)">
+            <summary>
+            Release resources owned by this instance
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.Dispose">
+            <summary>
+            Release resources owned by this instance
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopy.Finalize">
+            <summary>
+            Release resources owned by this instance
+            </summary>
+        </member>
+        <member name="T:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping">
+            <summary>
+            Defines the mapping between a column in a SqlCeBulkCopy instance's data source and a column in the instance's destination table.
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping.#ctor">
+            <summary>
+            Default constructor that initializes a new SqlCeBulkCopyColumnMapping object. 
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates a new column mapping, using column ordinals to refer to source and destination columns. 
+            </summary>
+            <param name="sourceColumnOrdinal"></param>
+            <param name="destinationOrdinal"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping.#ctor(System.Int32,System.String)">
+            <summary>
+            Creates a new column mapping, using a column ordinal to refer to the source column and a column name for the target column. 
+            </summary>
+            <param name="sourceColumnOrdinal"></param>
+            <param name="destinationColumn"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping.#ctor(System.String,System.Int32)">
+            <summary>
+            Creates a new column mapping, using a column name to refer to the source column and a column ordinal for the target column. 
+            </summary>
+            <param name="sourceColumn"></param>
+            <param name="destinationOrdinal"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new column mapping, using column names to refer to source and destination columns. 
+            </summary>
+            <param name="sourceColumn"></param>
+            <param name="destinationColumn"></param>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping.DestinationColumn">
+            <summary>
+            Name of the column being mapped in the destination database table. 
+            </summary>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping.DestinationOrdinal">
+            <summary>
+            Ordinal value of the destination column within the destination table. 
+            </summary>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping.SourceColumn">
+            <summary>
+            Name of the column being mapped in the data source.
+            </summary>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeBulkCopyColumnMapping.SourceOrdinal">
+            <summary>
+            The ordinal position of the source column within the data source. 
+            </summary>
+        </member>
+        <member name="T:ErikEJ.SqlCe.SqlCeBulkCopyColumnMappingCollection">
+            <summary>
+            Collection of SqlCeBulkCopyColumnMapping objects 
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopyColumnMappingCollection.Add(System.String,System.String)">
+            <summary>
+            Add a new ColumnMapping
+            </summary>
+            <param name="sourceColumn"></param>
+            <param name="destinationColumn"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopyColumnMappingCollection.Add(System.Int32,System.Int32)">
+            <summary>
+            Add a new ColumnMapping
+            </summary>
+            <param name="sourceColumnIndex"></param>
+            <param name="destinationColumnIndex"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopyColumnMappingCollection.Add(System.Int32,System.String)">
+            <summary>
+            Add a new ColumnMapping
+            </summary>
+            <param name="sourceColumnIndex"></param>
+            <param name="destinationColumn"></param>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeBulkCopyColumnMappingCollection.Add(System.String,System.Int32)">
+            <summary>
+            Add a new ColumnMapping
+            </summary>
+            <param name="sourceColumn"></param>
+            <param name="destinationColumnIndex"></param>
+        </member>
+        <member name="T:ErikEJ.SqlCe.SqlCeBulkCopyOptions">
+            <summary>
+            Bitwise flag that specifies one or more options to use with an instance of SqlCeBulkCopy.
+            This enumeration has a FlagsAttribute attribute that allows a bitwise combination of its member values.
+            </summary>
+        </member>
+        <member name="F:ErikEJ.SqlCe.SqlCeBulkCopyOptions.Default">
+            <summary>
+            No options enabled
+            </summary>
+        </member>
+        <member name="F:ErikEJ.SqlCe.SqlCeBulkCopyOptions.KeepIdentity">
+            <summary>
+            Preserve source identity values. When not specified, identity values are assigned by the destination.
+            This is implemented by using 'SET IDENTITY_INSERT [table] ON' when enabled
+            NOTICE: If you use a SqlCeTransaction in the class constructor, re-seeding of the target table will not take place. 
+            You can re-seed manually by running Compact on the database, or executing:
+            ALTER TABLE [MyTable] ALTER COLUMN [MyIdentityCol] IDENTITY (9999,1);
+            (where 9999 is the value after the highest value in use)
+            </summary>
+        </member>
+        <member name="F:ErikEJ.SqlCe.SqlCeBulkCopyOptions.DisableConstraints">
+            <summary>
+            Removes foreign key constraints while data is being inserted. Will reapply the constraints once insert process is completed.
+            </summary>
+        </member>
+        <member name="F:ErikEJ.SqlCe.SqlCeBulkCopyOptions.KeepNulls">
+            <summary>
+            Preserve null values in the destination table regardless of the settings for default values. When not specified, null values are replaced by default values where applicable.
+            </summary>
+        </member>
+        <member name="T:ErikEJ.SqlCe.SqlCeBulkCopyTableHelpers">
+            <summary>
+            Helpers for queries against sql ce for things like schema and auto id columns
+            </summary>
+        </member>
+        <member name="T:ErikEJ.SqlCe.SqlCeRowsCopiedEventArgs">
+            <summary>
+            Represents the set of arguments passed to the SqlCeRowsCopiedEventHandler.
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCe.SqlCeRowsCopiedEventArgs.#ctor(System.Int64)">
+            <summary>
+            Represents the set of arguments passed to the SqlCeRowsCopiedEventHandler.
+            </summary>
+            <param name="rowsCopied"></param>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeRowsCopiedEventArgs.RowsCopied">
+            <summary>
+            Gets a value that returns the number of rows copied during the current bulk copy operation. 
+            </summary>
+        </member>
+        <member name="P:ErikEJ.SqlCe.SqlCeRowsCopiedEventArgs.Abort">
+            <summary>
+            Gets or sets a value that indicates whether the bulk copy operation should be aborted. 
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCeScripting.DBRepository.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ErikEJ.SqlCeScripting.DBRepository"/> class.
+            </summary>
+            <param name="connectionString">The connection string.</param>
+        </member>
+        <member name="M:ErikEJ.SqlCeScripting.DBRepository.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:ErikEJ.SqlCeScripting.DBRepository.GetAllTableNames">
+            <summary>
+            Gets all table names.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErikEJ.SqlCeScripting.DBRepository.GetAllForeignKeys">
+            <summary>
+            Gets all foreign keys.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ErikEJ.SqlCeScripting.Generator">
+            <summary>
+            Class for generating scripts
+            Use the GeneratedScript property to get the resulting script
+            </summary>
+        </member>
+        <member name="P:ErikEJ.SqlCeScripting.Generator.GeneratedScript">
+            <summary>
+            Gets the generated script.
+            </summary>
+            <value>The generated script.</value>
+        </member>
+    </members>
+</doc>

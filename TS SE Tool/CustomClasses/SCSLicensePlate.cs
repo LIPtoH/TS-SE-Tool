@@ -24,10 +24,8 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-namespace TS_SE_Tool.SCS
-{
-    class SCSLicensePlate
-    {
+namespace TS_SE_Tool.SCS {
+    class SCSLicensePlate {
         static FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
         //
         //
@@ -46,7 +44,7 @@ namespace TS_SE_Tool.SCS
         //
         //Fixed variables
         private decimal scaleXmult = 3.2m, scaleYmult = 3.2m;
-        private Dictionary<string, int> baseLeftOffset = new Dictionary<string, int> {{ "ETS2", 228 }, { "ATS", 256 }};
+        private Dictionary<string, int> baseLeftOffset = new Dictionary<string, int> { { "ETS2", 228 }, { "ATS", 256 } };
         private Dictionary<string, int> baseAllignOffset = new Dictionary<string, int> { { "ETS2", 52 }, { "ATS", 0 } };
         private Dictionary<string, int> baseTopOffset = new Dictionary<string, int> { { "ETS2", -2 }, { "ATS", 8 } };
         //
@@ -62,24 +60,22 @@ namespace TS_SE_Tool.SCS
         //
         LPtype LicensePlateType = LPtype.Truck;
 
-        internal enum LPtype : byte
-        {
+        internal enum LPtype : byte {
             Truck = 0,
             Trailer = 1
         }
 
-        public SCSLicensePlate(string _input, LPtype _type)
-        {
+        public SCSLicensePlate(string _input, LPtype _type) {
             SourceText = _input;
             LicensePlateType = _type;
 
             ValidLPtext = CheckSourceText();
 
-            leftOffset = baseAllignOffset[MainForm.GameType];
-            allignOffset = baseLeftOffset[MainForm.GameType];
+            leftOffset = baseAllignOffset[MainForm.SelectedGame.Type];
+            allignOffset = baseLeftOffset[MainForm.SelectedGame.Type];
 
             //Load Font data
-            string fontDataPath = @"img\" + MainForm.GameType + @"\lpFont\" + SourceLPCountry + @".font";
+            string fontDataPath = @"img\" + MainForm.SelectedGame.Type + @"\lpFont\" + SourceLPCountry + @".font";
 
             if (File.Exists(fontDataPath))
                 CreateFontMap(fontDataPath);
@@ -88,37 +84,29 @@ namespace TS_SE_Tool.SCS
             Create();
         }
 
-        public void Reset()
-        {
+        public void Reset() {
             ValidLPtext = CheckSourceText();
             Create();
         }
 
-        public void UpdateCustom(string _input)
-        {
+        public void UpdateCustom(string _input) {
             ValidLPtext = CheckSourceText();
             Create();
         }
 
-        internal bool CheckSourceText()
-        {
-            try
-            {
+        internal bool CheckSourceText() {
+            try {
                 SourceLPText = SourceText.Split(new char[] { '|' })[0];
                 SourceLPCountry = SourceText.Split(new char[] { '|' })[1].Trim(new char[] { '_', ' ' });
-            }
-            catch
-            {
+            } catch {
                 return false;
             }
 
             return true;
         }
 
-        public void Create()
-        {
-            if (!ValidLPtext)
-            {
+        public void Create() {
+            if (!ValidLPtext) {
                 LicensePlateTXT = "NON VALID FORMAT";
                 DrawWarning(LicensePlateTXT);
                 return;
@@ -137,12 +125,10 @@ namespace TS_SE_Tool.SCS
             else
                 platePriority = new string[] { "trailer", "rear", "front" };
 
-            string folderPath = @"img\" + MainForm.GameType + @"\lp\" + SourceLPCountry + @"\", IMGpath = "";
+            string folderPath = @"img\" + MainForm.SelectedGame.Type + @"\lp\" + SourceLPCountry + @"\", IMGpath = "";
 
-            foreach (string plate in platePriority)
-            {
-                if (File.Exists(folderPath + plate + @".dds"))
-                {
+            foreach (string plate in platePriority) {
+                if (File.Exists(folderPath + plate + @".dds")) {
                     IMGpath = folderPath + plate + @".dds";
                     break;
                 }
@@ -155,8 +141,7 @@ namespace TS_SE_Tool.SCS
 
             Dictionary<UInt16, SCSFontLetter> thisFontMap = new Dictionary<ushort, SCSFontLetter>();
 
-            if (ValidLPcountry)
-            {
+            if (ValidLPcountry) {
                 //Load BG image
                 Image BGImg = Utilities.Graphics_TSSET.ddsImgLoader(IMGpath).images[0];
 
@@ -173,8 +158,7 @@ namespace TS_SE_Tool.SCS
                 Image LicensePlateBGImg = SimpleResizeImage(BGImg, BGImg.Width * 4, BGImg.Height * 4);
 
                 //Draw BG
-                using (var canvas = Graphics.FromImage(LicensePlateIMG))
-                {
+                using (var canvas = Graphics.FromImage(LicensePlateIMG)) {
                     canvas.DrawImage(LicensePlateBGImg, 0, 0);
                 }
                 //
@@ -184,30 +168,24 @@ namespace TS_SE_Tool.SCS
 
             UInt16 prevLetterUTF = 0;
 
-            for (int i = 0; i < lpLength; i++)
-            {
+            for (int i = 0; i < lpLength; i++) {
                 string letter = _lpText.Substring(i, 1);
                 string tag = "";
 
-                if (letter == "<")
-                {
+                if (letter == "<") {
                     int arrowIdxClose = _lpText.IndexOf('>', i + 1),
                         arrowIdxOpen = _lpText.IndexOf('<', i + 1);
 
-                    if (arrowIdxClose != -1 && (arrowIdxOpen == -1 || arrowIdxClose < arrowIdxOpen) )
-                    {
+                    if (arrowIdxClose != -1 && (arrowIdxOpen == -1 || arrowIdxClose < arrowIdxOpen)) {
                         string tagtext = _lpText.Substring(i + 1, _lpText.IndexOf('>', i + 1) - i - 1).Trim(new char[] { ' ' });
 
                         //Detect tag type
                         int tagend = tagtext.IndexOf(' ');
                         int blockend = tagtext.Length - 1;
 
-                        if (tagend != -1 && blockend > tagend)
-                        {
+                        if (tagend != -1 && blockend > tagend) {
                             tag = tagtext.Substring(0, tagend);
-                        }
-                        else if (tagend == -1)
-                        {
+                        } else if (tagend == -1) {
                             tag = tagtext.Substring(0, ++blockend);
                         }
 
@@ -219,21 +197,16 @@ namespace TS_SE_Tool.SCS
                         i = i + skip;
                         continue;
                     }
-                }
-                else
-                {
-                    if (ValidLPcountry)
-                    {
+                } else {
+                    if (ValidLPcountry) {
                         byte[] utf8bytes = Encoding.UTF8.GetBytes(letter);
                         ushort utf8number = utf8bytes[0];
 
-                        if (thisFontMap.ContainsKey(utf8number))
-                        {
+                        if (thisFontMap.ContainsKey(utf8number)) {
                             decimal combXScale = scaleXmult * fontXscale * fontSupSubScale;
                             decimal combYScale = scaleYmult * fontYscale * fontSupSubScale;
 
-                            if (thisFontMap[utf8number].LetterImage != null)
-                            {
+                            if (thisFontMap[utf8number].LetterImage != null) {
                                 Int16 Kern = 0;
                                 if (thisFontMap[utf8number].Kerning != null)
                                     if (thisFontMap[utf8number].Kerning.ContainsKey(prevLetterUTF))
@@ -258,8 +231,7 @@ namespace TS_SE_Tool.SCS
                                     tmpLetterImage = ReColor(tmpLetterImage, FontColor);
                                 //
 
-                                using (var canvas = Graphics.FromImage(LPtextBitmap))
-                                {
+                                using (var canvas = Graphics.FromImage(LPtextBitmap)) {
                                     canvas.InterpolationMode = InterpolationMode.NearestNeighbor;
                                     canvas.SmoothingMode = SmoothingMode.HighQuality;
 
@@ -278,9 +250,7 @@ namespace TS_SE_Tool.SCS
 
                             if (cursorPos > rightMostPos)
                                 rightMostPos = cursorPos;
-                        }
-                        else if (utf8number == 46)
-                        {
+                        } else if (utf8number == 46) {
                             cursorPos += 4;
 
                             if (cursorPos > rightMostPos)
@@ -290,9 +260,7 @@ namespace TS_SE_Tool.SCS
                         LicensePlateTXT += letter;
 
                         prevLetterUTF = Encoding.UTF8.GetBytes(letter)[0];
-                    }
-                    else
-                    {
+                    } else {
                         //MakeText
                         LicensePlateTXT += letter;
                     }
@@ -303,19 +271,15 @@ namespace TS_SE_Tool.SCS
             DrawTextToLP();
         }
 
-        private void DrawTextToLP()
-        {
-            using (var canvas = Graphics.FromImage(LicensePlateIMG))
-            {
-                canvas.DrawImage(LPtextBitmap, leftOffset + allignOffset - (rightMostPos / 2), baseTopOffset[MainForm.GameType] - BaseLine - (TopMostPxl - BaseLine) + (LicensePlateIMG.Height / 2 - (DownMostPxl - TopMostPxl) / 2)); //Draw from center
+        private void DrawTextToLP() {
+            using (var canvas = Graphics.FromImage(LicensePlateIMG)) {
+                canvas.DrawImage(LPtextBitmap, leftOffset + allignOffset - (rightMostPos / 2), baseTopOffset[MainForm.SelectedGame.Type] - BaseLine - (TopMostPxl - BaseLine) + (LicensePlateIMG.Height / 2 - (DownMostPxl - TopMostPxl) / 2)); //Draw from center
             }
         }
 
-        private void DrawWarning(string _input)
-        {
+        private void DrawWarning(string _input) {
             //Draw text
-            using (var canvas = Graphics.FromImage(LicensePlateIMG))
-            {
+            using (var canvas = Graphics.FromImage(LicensePlateIMG)) {
                 canvas.SmoothingMode = SmoothingMode.HighQuality;
 
                 Point point1 = new Point(0, 0);
@@ -329,8 +293,7 @@ namespace TS_SE_Tool.SCS
 
                 Pen linesPen = new Pen(Color.DarkOrange, 10);
 
-                for (int i = 0; i < LicensePlateIMG.Width + LicensePlateIMG.Height; i++)
-                {
+                for (int i = 0; i < LicensePlateIMG.Width + LicensePlateIMG.Height; i++) {
                     Point p1 = new Point(i, -10);
                     Point p2 = new Point(i - LicensePlateIMG.Height, LicensePlateIMG.Height + 10);
 
@@ -344,7 +307,7 @@ namespace TS_SE_Tool.SCS
                 stringFormat.LineAlignment = StringAlignment.Center;
 
                 GraphicsPath p = new GraphicsPath();
-                p.AddString( _input, FontFamily.GenericMonospace, (int)FontStyle.Bold, canvas.DpiY * 40 / 72,
+                p.AddString(_input, FontFamily.GenericMonospace, (int)FontStyle.Bold, canvas.DpiY * 40 / 72,
                     new RectangleF(0, 0, LicensePlateIMG.Width, LicensePlateIMG.Height), stringFormat);
 
                 Pen outlinePen = new Pen(Color.Black, 10);
@@ -355,29 +318,25 @@ namespace TS_SE_Tool.SCS
             }
         }
 
-        private void DetectTag(string _tag, string _tagtext)
-        {
+        private void DetectTag(string _tag, string _tagtext) {
             int datapos = 0, eqpos = 0, spacepos = 0;
 
-            switch (_tag)
-            {
-                case "offset":
-                    {
+            switch (_tag) {
+                case "offset": {
                         if (!ValidLPcountry)
                             break;
 
                         datapos = _tagtext.IndexOf("hshift");
 
-                        if (datapos != -1)                        
+                        if (datapos != -1)
                             cursorPos += (int)Math.Round(processData() * 3.2);
 
                         datapos = _tagtext.IndexOf("vshift");
 
-                        if (datapos != -1)                        
-                            vshift += processData();                        
+                        if (datapos != -1)
+                            vshift += processData();
 
-                        int processData()
-                        {
+                        int processData() {
                             eqpos = _tagtext.IndexOf('=', datapos) + 1;
                             spacepos = _tagtext.IndexOf(' ', eqpos);
 
@@ -386,10 +345,8 @@ namespace TS_SE_Tool.SCS
 
                             string Number = _tagtext.Substring(eqpos, spacepos - eqpos);
 
-                            if (Number != "")
-                            {
-                                if (int.TryParse(Number, out int res))
-                                {
+                            if (Number != "") {
+                                if (int.TryParse(Number, out int res)) {
                                     return res;
                                 }
                             }
@@ -400,8 +357,7 @@ namespace TS_SE_Tool.SCS
                         break;
                     }
 
-                case "img":
-                    {
+                case "img": {
                         LicensePlateTXT += " ";
                         //
                         if (!ValidLPcountry)
@@ -430,7 +386,7 @@ namespace TS_SE_Tool.SCS
 
                         if (imgwidth < 0)
                             break;
-                        
+
                         //
                         datapos = _tagtext.IndexOf("height");
 
@@ -440,8 +396,7 @@ namespace TS_SE_Tool.SCS
                         if (imgheight < 0)
                             break;
 
-                        int processData()
-                        {
+                        int processData() {
                             eqpos = _tagtext.IndexOf('=', datapos) + 1;
                             spacepos = _tagtext.IndexOf(' ', eqpos);
 
@@ -450,10 +405,8 @@ namespace TS_SE_Tool.SCS
 
                             string Number = _tagtext.Substring(eqpos, spacepos - eqpos);
 
-                            if (Number != "")
-                            {
-                                if (int.TryParse(Number, out int res))
-                                {
+                            if (Number != "") {
+                                if (int.TryParse(Number, out int res)) {
                                     return res;
                                 }
                             }
@@ -467,8 +420,7 @@ namespace TS_SE_Tool.SCS
                         string imgpath = gameFilepathMat.Substring(0, gameFilepathMat.LastIndexOf('/') + 1);
 
                         //Side detect
-                        if (gameFilepathMat.IndexOf("$SIDE$") != 1)
-                        {
+                        if (gameFilepathMat.IndexOf("$SIDE$") != 1) {
                             string side = "front";
 
                             if (LicensePlateType == LPtype.Trailer)
@@ -479,30 +431,26 @@ namespace TS_SE_Tool.SCS
 
                         //TOBJ
                         string tobjFilepath = "";
-                        string imgToLoadMat = @"img\" + MainForm.GameType + @"\lp" + gameFilepathMat;
+                        string imgToLoadMat = @"img\" + MainForm.SelectedGame.Type + @"\lp" + gameFilepathMat;
 
-                        if (File.Exists(imgToLoadMat))
-                        {
+                        if (File.Exists(imgToLoadMat)) {
                             tobjFilepath = new SCSfiles.fileMAT(imgToLoadMat).texture;
-                        }
-                        else
+                        } else
                             break;
 
                         //DDS
                         string gameFilepathDds = "";
-                        string imgToLoadTobj = @"img\" + MainForm.GameType + @"\lp" + imgpath + tobjFilepath;
+                        string imgToLoadTobj = @"img\" + MainForm.SelectedGame.Type + @"\lp" + imgpath + tobjFilepath;
 
-                        if (File.Exists(imgToLoadTobj))
-                        {
+                        if (File.Exists(imgToLoadTobj)) {
                             gameFilepathDds = new SCSfiles.fileTOBJ(imgToLoadTobj).texture_path;
-                        }
-                        else
+                        } else
                             break;
 
                         string ddsFilepath = gameFilepathDds.Split(new string[] { "/material/ui/lp" }, StringSplitOptions.RemoveEmptyEntries).Last();
 
                         //Load img
-                        string tmpImgPath = @"img\" + MainForm.GameType + @"\lp" + ddsFilepath;
+                        string tmpImgPath = @"img\" + MainForm.SelectedGame.Type + @"\lp" + ddsFilepath;
                         var tmpTuple = Utilities.Graphics_TSSET.ddsImgLoader(new string[] { tmpImgPath });
 
                         Image tmpImg;
@@ -513,17 +461,14 @@ namespace TS_SE_Tool.SCS
                             tmpImg = null;
 
                         //Draw img
-                        if (tmpImg != null)
-                        {
+                        if (tmpImg != null) {
                             int imgSpacing = 0;
 
-                            if (imgwidth == 0)
-                            {
+                            if (imgwidth == 0) {
                                 imgwidth = tmpImg.Width;
                             }
 
-                            if (imgheight == 0)
-                            {
+                            if (imgheight == 0) {
                                 imgheight = tmpImg.Height;
                             }
 
@@ -538,8 +483,7 @@ namespace TS_SE_Tool.SCS
                             if (yPoint + lettetHeight > DownMostPxl)
                                 DownMostPxl = yPoint + lettetHeight;
 
-                            using (var canvas = Graphics.FromImage(LPtextBitmap))
-                            {
+                            using (var canvas = Graphics.FromImage(LPtextBitmap)) {
                                 canvas.InterpolationMode = InterpolationMode.NearestNeighbor;
                                 canvas.SmoothingMode = SmoothingMode.HighQuality;
 
@@ -561,24 +505,22 @@ namespace TS_SE_Tool.SCS
                         break;
                     }
 
-                case "font":
-                    {
+                case "font": {
                         if (!ValidLPcountry)
                             break;
 
                         //<font xscale=0.8 yscale=0.8>
                         datapos = _tagtext.IndexOf("xscale");
 
-                        if (datapos != -1)                        
-                            fontXscale = processData();                        
+                        if (datapos != -1)
+                            fontXscale = processData();
 
                         datapos = _tagtext.IndexOf("yscale");
 
-                        if (datapos != -1)                        
-                            fontYscale = processData();                        
+                        if (datapos != -1)
+                            fontYscale = processData();
 
-                        decimal processData()
-                        {
+                        decimal processData() {
                             eqpos = _tagtext.IndexOf('=', datapos) + 1;
                             spacepos = _tagtext.IndexOf(' ', eqpos);
 
@@ -587,10 +529,8 @@ namespace TS_SE_Tool.SCS
 
                             string Number = _tagtext.Substring(eqpos, spacepos - eqpos);
 
-                            if (Number != "")
-                            {
-                                if (decimal.TryParse(Number, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal res))
-                                {
+                            if (Number != "") {
+                                if (decimal.TryParse(Number, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal res)) {
                                     return res;
                                 }
                             }
@@ -601,23 +541,20 @@ namespace TS_SE_Tool.SCS
                         break;
                     }
 
-                case "/font":
-                    {
+                case "/font": {
                         fontXscale = 1;
                         fontYscale = 1;
 
                         break;
                     }
 
-                case "color":
-                    {
+                case "color": {
                         if (!ValidLPcountry)
                             break;
 
                         //value = FF0009C5 A B G R
                         datapos = _tagtext.IndexOf("value");
-                        if (datapos != -1)
-                        {
+                        if (datapos != -1) {
                             eqpos = _tagtext.IndexOf('=', datapos) + 1;
                             spacepos = _tagtext.IndexOf(' ', datapos);
 
@@ -626,8 +563,7 @@ namespace TS_SE_Tool.SCS
 
                             string hexScsColorString = _tagtext.Substring(eqpos, spacepos - eqpos);
 
-                            if (hexScsColorString.Length == 8)
-                            {
+                            if (hexScsColorString.Length == 8) {
                                 int[] hexColorParts = SplitNConvertSSCHexColor(hexScsColorString, 2).ToArray();
 
                                 int tmpAlpha = hexColorParts[0], tmpRed = hexColorParts[3], tmpGreen = hexColorParts[2], tmpBlue = hexColorParts[1];
@@ -639,8 +575,7 @@ namespace TS_SE_Tool.SCS
                         break;
                     }
 
-                case "align":
-                    {
+                case "align": {
                         if (!ValidLPcountry)
                             break;
 
@@ -659,12 +594,10 @@ namespace TS_SE_Tool.SCS
                         else
                             datapos = _tagtext.IndexOf("right");
 
-                        if (datapos != -1)
-                        {
+                        if (datapos != -1) {
                             eqpos = _tagtext.IndexOf('=', datapos);
 
-                            if (eqpos != -1 && eqpos >= datapos + 4) 
-                            {
+                            if (eqpos != -1 && eqpos >= datapos + 4) {
                                 eqpos++;
 
                                 spacepos = _tagtext.IndexOf(' ', eqpos);
@@ -674,14 +607,12 @@ namespace TS_SE_Tool.SCS
 
                                 string offsetNumber = _tagtext.Substring(eqpos, spacepos - eqpos);
 
-                                if (offsetNumber != "")
-                                {
-                                    if (int.TryParse(offsetNumber, out int res))
-                                    {
+                                if (offsetNumber != "") {
+                                    if (int.TryParse(offsetNumber, out int res)) {
                                         allignOffset = (int)Math.Round(res * 1.6, 0);
 
                                         if (left)
-                                            leftOffset = baseAllignOffset[MainForm.GameType] + 232;
+                                            leftOffset = baseAllignOffset[MainForm.SelectedGame.Type] + 232;
                                     }
                                 }
                             }
@@ -690,8 +621,7 @@ namespace TS_SE_Tool.SCS
                         break;
                     }
 
-                case "/align":
-                    {
+                case "/align": {
                         if (!ValidLPcountry)
                             break;
 
@@ -703,13 +633,12 @@ namespace TS_SE_Tool.SCS
                         cursorPos = 0;
                         rightMostPos = cursorPos;
 
-                        allignOffset = baseLeftOffset[MainForm.GameType];
+                        allignOffset = baseLeftOffset[MainForm.SelectedGame.Type];
 
                         break;
                     }
 
-                case "ret":
-                    {
+                case "ret": {
                         LicensePlateTXT += " ";
                         //
                         if (!ValidLPcountry)
@@ -724,31 +653,27 @@ namespace TS_SE_Tool.SCS
                         break;
                     }
 
-                case "sup":
-                    {
+                case "sup": {
                         // 75% size 44% up
                         fontSupSubScale = 0.6m;
                         vshift += 2;
                         break;
                     }
 
-                case "/sup":
-                    {
+                case "/sup": {
                         fontSupSubScale = 1m;
                         vshift -= 2;
                         break;
                     }
 
-                case "sub":
-                    {
+                case "sub": {
                         // 75% size 16% down
                         fontSupSubScale = 0.75m;
                         vshift -= 5;
                         break;
                     }
 
-                case "/sub":
-                    {
+                case "/sub": {
                         fontSupSubScale = 1m;
                         vshift += 5;
                         break;
@@ -756,8 +681,7 @@ namespace TS_SE_Tool.SCS
             }
         }
 
-        private void CreateFontMap(string _fontDataPath)
-        {
+        private void CreateFontMap(string _fontDataPath) {
             if (!File.Exists(_fontDataPath))
                 return;
 
@@ -766,7 +690,7 @@ namespace TS_SE_Tool.SCS
                 return;
 
             //Game type
-            string gametype = MainForm.GameType;
+            string gametype = MainForm.SelectedGame.Type;
             string IMGpath = "";
 
             //Img Font map
@@ -775,12 +699,10 @@ namespace TS_SE_Tool.SCS
             string fontimg = "";
 
             //Read
-            try
-            {
+            try {
                 string[] tempFile = File.ReadAllLines(_fontDataPath);
 
-                for (int i = 0; i < tempFile.Length; i++)
-                {
+                for (int i = 0; i < tempFile.Length; i++) {
                     string line = tempFile[i];
                     //line_spacing: 0  # suggested number of pixels to put between lines
 
@@ -789,16 +711,14 @@ namespace TS_SE_Tool.SCS
                     //Font image to load
                     //Can be multiple imgs
                     //image:/font/license_plate/netherlands_0.mat, 128, 128
-                    if (line.StartsWith("image:"))
-                    {
+                    if (line.StartsWith("image:")) {
                         string info = line.Split(new char[] { ':' }, 2)[1];
 
                         fontimg = info.Split(new char[] { ',' }, 3)[0].Split(new char[] { '/' }).Last().Split(new char[] { '.' }, 2)[0];
                     }
 
                     //Letters map
-                    if (line.StartsWith("x"))
-                    {
+                    if (line.StartsWith("x")) {
                         string info = line.Split(new char[] { '#' }, 2)[0];
 
                         string[] dataparts = info.Remove(0, 1).Split(new char[] { ',' }, 9);
@@ -811,22 +731,19 @@ namespace TS_SE_Tool.SCS
                     //Kerning
                     //kern: x0059, x0042, -2      # 'Y' -> 'B'
                     //kern: x0059, x0054, -1      # 'Y' -> 'T'
-                    if (line.StartsWith("kern:"))
-                    {
+                    if (line.StartsWith("kern:")) {
                         string[] dataparts = line.Split(new char[] { ':', '#' })[1].Trim(' ').Split(new char[] { ',' });
 
                         UInt16 targetL = Convert.ToUInt16(dataparts[1].Trim(' ').Remove(0, 1), 16), prevL = Convert.ToUInt16(dataparts[0].Trim(' ').Remove(0, 1), 16);
                         Int16 Kern = Convert.ToInt16(dataparts[2]);
 
-                        if(thisFontMap[targetL].Kerning == null)
+                        if (thisFontMap[targetL].Kerning == null)
                             thisFontMap[targetL].Kerning = new Dictionary<ushort, short>();
 
                         thisFontMap[targetL].Kerning.Add(prevL, Kern);
                     }
                 }
-            }
-            catch
-            {
+            } catch {
                 //FormMain.LogWriter("Font file is missing");
             }
 
@@ -841,12 +758,8 @@ namespace TS_SE_Tool.SCS
                 return;
 
             //Create font map
-            foreach (KeyValuePair< UInt16, SCSFontLetter> letter in thisFontMap)
-            {
-                if (letter.Value.Width == 0 || letter.Value.Height == 0)
-                { }
-                else
-                {
+            foreach (KeyValuePair<UInt16, SCSFontLetter> letter in thisFontMap) {
+                if (letter.Value.Width == 0 || letter.Value.Height == 0) { } else {
                     Rectangle rect = new Rectangle(letter.Value.P_x, letter.Value.P_y, letter.Value.Width, letter.Value.Height);
 
                     Bitmap tmpLetter = new Bitmap(FontImg).Clone(rect, PixelFormat.Format32bppArgb);
@@ -857,15 +770,13 @@ namespace TS_SE_Tool.SCS
 
             MainForm.GlobalFontMap.Add(SourceLPCountry, thisFontMap);
         }
-        
-        public static Image SimpleResizeImage(Image _inputImage, int _newWidth, int _newHeight)
-        {
+
+        public static Image SimpleResizeImage(Image _inputImage, int _newWidth, int _newHeight) {
             //Image newImage = new Bitmap(_inputImage, _newWidth, _newHeight);
 
             Image newImage = new Bitmap(_newWidth, _newHeight);
 
-            using (var canvas = Graphics.FromImage(newImage))
-            {
+            using (var canvas = Graphics.FromImage(newImage)) {
                 canvas.InterpolationMode = InterpolationMode.Bicubic;
                 canvas.SmoothingMode = SmoothingMode.HighQuality;
 
@@ -881,19 +792,15 @@ namespace TS_SE_Tool.SCS
             return newImage;
         }
 
-        static IEnumerable<int> SplitNConvertSSCHexColor(string str, int chunkSize)
-        {
+        static IEnumerable<int> SplitNConvertSSCHexColor(string str, int chunkSize) {
             return Enumerable.Range(0, str.Length / chunkSize).Select(i => Convert.ToInt32(str.Substring(i * chunkSize, chunkSize), 16));
         }
 
-        private Image ReColor(Image _inpulLetter, Color _newColor )
-        {
+        private Image ReColor(Image _inpulLetter, Color _newColor) {
             Bitmap tmp = new Bitmap(_inpulLetter);
 
-            for (int y = 0; y < _inpulLetter.Height; y++)
-            {
-                for (int x = 0; x < _inpulLetter.Width; x++)
-                {
+            for (int y = 0; y < _inpulLetter.Height; y++) {
+                for (int x = 0; x < _inpulLetter.Width; x++) {
                     tmp.SetPixel(x, y, Color.FromArgb(tmp.GetPixel(x, y).A, _newColor.R, _newColor.G, _newColor.B));
                 }
             }

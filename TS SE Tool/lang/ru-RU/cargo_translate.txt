@@ -1,0 +1,323 @@
+﻿[ru-RU]
+acetylene;Ацетилен
+acid;Кислота
+air_mails;Авиапочта
+aircft_tires;Шины для самолетов
+aircond;Кондиционеры
+almond;Миндаль
+ammunition;Военное снаряжение
+apples;Яблоки
+apples_c;Яблоки
+aromatics;Углеводороды
+arsenic;Мышьяк
+asph_miller;Фрезерная машина Writigen 808
+atl_cod_flt;Филе атлантической трески
+backfl_prev;Обратные клапаны
+barley;Ячмень
+basil;Базилик
+beans;Бобы
+beef_meat;Говядина
+beverages;Напитки
+beverages_c;Напитки
+beverages_t;Напитки
+big_bag_seed;Зерно в биг-бэгах
+boric_acid;Борная кислота
+bottle_water;Бутилированная вода
+brake_fluid;Тормозная жидкость
+brake_pads;Тормозные колодки
+bricks;Кирпичи
+bulldozer;Бульдозер
+cable_reel;Кабельная катушка
+can_sardines;Консервированные сардины
+canned_beans;Консервированные бобы
+canned_beef;Тушеная говядина
+canned_pork;Тушеная свинина
+canned_tuna;Консервированный тунец
+car_balt1;Автомобили (Балтика 1)
+car_balt2;Автомобили (Балтика 2)
+car_ibe;Автомобили (Иберия)
+car_it;Автомобили (Италия)
+carb_water;Газированная вода
+carbn_pwdr;Углеродный порошок
+carbn_pwdr_c;Углеродный порошок
+carcomp;Автозапчасти
+carrots;Морковь
+carrots_c;Морковь
+cars_big;Автомобили (Большие)
+cars_fr;Автомобили (Франция)
+cars_mix;Автомобили (Разные)
+cars_small;Автомобили (Небольшие)
+cauliflower;Цветная капуста
+caviar;Икра
+cement;Цемент
+cheese;Сыр
+chem_sorb_c;Химические сорбенты
+chem_sorbent;Химические сорбенты
+chemicals;Химикаты
+chewing_gums;Жевательная резинка
+chicken_meat;Куриное мясо
+chimney_syst;Дымоходные системы
+chlorine;Хлор
+chocolate;Шоколад
+clothes;Одежда
+clothes_c;Одежда
+coal;Уголь
+coconut_milk;Кокосовое молоко
+coconut_oil;Кокосовое масло
+comp_process;Компьютерные процессоры
+computers;Компьютеры
+conc_juice_t;Концентрированный сок
+concen_juice;Концентрированные соки
+concr_beams2;Бетонные плиты
+concr_beams;Бетонные плиты
+concr_cent;Бетонные кольца
+concr_stair;Бетонные лестницы
+cont_trees;Деревья в контейнерах
+contamin;Инфицированное сырье
+copp_rf_gutt;Медные водосточные системы
+corks;Пробки
+cott_cheese;Творог
+cut_flowers;Срезанные цветы
+cyanide;Цианиды
+desinfection;Очистной комплекс
+diesel;Дизельное топливо
+diesel_gen;Дизельные генераторы
+digger1000;Фронтальный погрузчик
+digger500;Экскаватор-погрузчик
+diggers;Погрузчики
+dozer;Бульдозер Z35K
+driller;Бурильщик D-50
+dry_milk;Сухое молоко
+dryers;Сушильные машины
+drymilk;Сухое молоко
+dynamite;Динамит
+elect_wiring;Электропроводка
+electro_comp;Электронные компоненты
+electronics;Электроника
+emp_wine_bar;Винные бочки
+emp_wine_bot;Винные бутылки
+empty_barr;Пустые бочки
+empty_palet;Пустые палеты
+ethane;Этан
+excav_soil;Вынутый грунт
+excavator;Экскаватор
+exhausts_c;Выхлопные системы
+explosives;Взрывчатые материалы
+fertilizer;Удобрения
+fireworks;Фейерверки
+fish_chips;Рыбные палочки
+floorpanels;Бетонные плиты
+flour;Мука
+fluorine;Фтор
+food;Упакованные продукты
+forklifts;Автопогрузчики
+fresh_fish;Свежая рыба
+froz_octopi;Замороженный осьминог
+frozen_food;Замороженные продукты
+frozen_hake;Замороженный хек
+frsh_herbs;Свежие травы
+fuel_oil;Мазут
+fuel_tanks;Топливные баки
+furniture;Мебель
+garlic;Чеснок
+glass;Листовое стекло
+gnocchi;Ньокки
+goat_cheese;Козий сыр
+granite_cube;Гранитные блоки
+grapes;Виноград
+graph_grease;Графитовая смазка
+grass_rolls;Рулонный газон
+gravel;Гравий
+guard_rails;Отбойники
+gummy_bears;Мармелад
+gypsum;Гипс
+harvest_bins;Контейнеры для урожая
+hchemicals;Горячие химикаты
+helicopter;Вертолёт Ring-429
+hi_volt_cabl;Кабели высокого напряжения
+hipresstank;Резервуары
+hmetal;Тяжелые металлы
+home_acc;Аксессуары для дома
+honey;Мёд
+househd_appl;Бытовая техника
+hwaste;Медицинские отходы
+hydrochlor;Соляная кислота
+hydrogen;Водород
+ibc_cont;Контейнеры Еврокуб
+icecream;Мороженое
+iced_coffee;Холодный кофе в банках
+iveco_vans;Фургоны Braco
+kerosene;Керосин
+ketchup;Кетчуп
+lamb_stom;Фасованный бараний рубец
+largetubes;Большие трубы
+lavender;Лаванда
+lead;Свинец
+limestone;Известняк
+limonades;Лимонад
+live_catt_fr;Живой скот (Франция)
+live_cattle;Живой скот
+liver_paste;Консервированный паштет
+locomotive;Локомотив Vossloh G6
+logs;Брёвна
+lpg;Пропан-Бутан
+lumber;Пиломатериалы
+lumber_b;Пиломатериалы
+lux_yacht;Яхта Queen V39
+machine_pts;Автозапчасти
+magnesium;Магний
+maple_syrup;Кленовый сироп
+marb_blck2;Мраморные блоки
+marb_blck;Мраморные блоки
+marb_slab;Мраморные плиты
+mason_jars;Стеклянные банки
+med_equip;Медицинское оборудование
+med_vaccine;Медицинские вакцины
+mercuric;Хлорид ртути
+metal_beams;Металлические балки
+metal_cans;Жестяная тара
+metal_center;Металлический сегмент
+milk;Молоко
+milk_t;Молоко
+mobile_crane;Автокран Rex-Tex 45
+moto_tires;Мотоциклетные шины
+motor_oil;Моторное масло
+motor_oil_c;Моторное масло
+motorcycles;Мотоциклы
+mozzarela;Моцарелла
+natur_rubber;Природный каучук
+neon;Неон
+nitrocel;Нитроцеллюлоза
+nitrogen;Азот
+nonalco_beer;Безалкогольное пиво
+nuts;Орехи
+nylon_cord;Нейлоновый шнур
+office_suppl;Канцтовары
+oil;Масло
+oil_filt_c;Топливные фильтры
+oil_filters;Топливные фильтры
+olive_oil;Оливковое масло
+olive_oil_t;Оливковое масло
+olives;Оливки
+onion;Репчатый лук
+oranges;Апельсины
+ore;Руда
+outdr_flr_tl;Тротуарный камень
+packag_food;Упакованные продукты
+paper;Офисная бумага
+pasta;Макароны
+pears;Груши
+peas;Горох
+perfor_frks;Мотоциклетные вилки
+pesticide;Пестициды
+pesto;Песто
+pet_food;Корма для животных
+pet_food_c;Корма для животных
+petrol;Бензин
+phosphor;Белый фосфор
+pipes;Железные трубы
+plant_substr;Органические субстраты
+plast_film;Упаковочная плёнка
+plast_film_c;Упаковочная плёнка
+plastic_gra;Пластиковые гранулы
+plumb_suppl;Сантехнические товары
+plums;Сливы
+pnut_butter;Арахисовое масло
+polyst_box;Полистироловая продукция
+pork_meat;Свинина
+post_packag;Почта
+pot_flowers;Комнатные цветы
+potahydro;Гидроксид калия
+potassium;Калий
+potatoes;Картофель
+precast_strs;Железобетонные лестницы
+press_sl_val;Клапаны высокого давления
+princess;Яхта Queen V39
+propane;Пропан
+prosciutto;Прошутто
+protec_cloth;Защитная одежда
+pumps;Насосы
+radiators;Радиаторы
+re_bars;Арматура
+refl_posts;Светоотражающие столбы
+rice;Рис
+rice_c;Рис
+roadroller;Дорожный каток
+roller;Каток DYNA CC-2200
+roof_tiles;Черепица
+roofing_felt;Толь
+rooflights;Зенитные фонари
+rye;Рожь
+salm_fillet;Филе лосося
+salt_spice_c;Соль и специи
+salt_spices;Соль и специи
+sand;Песок
+sandwch_pnls;Сэндвич-панели
+sausages;Колбасы
+sawpanels;ДСП
+scaffoldings;Строительные леса
+scania_tr;Грузовики Scania
+scooters;Скутеры
+scrap_metals;Металлолом
+seal_bearing;Подшипники
+sheep_wool;Овечья шерсть
+shock_absorb;Амортизаторы
+silica;Двуокись кремния
+smokd_eel;Копчёный угорь
+smokd_sprats;Шпроты
+sodchlor;Гипохлорит натрия
+sodhydro;Гидроксид натрия
+sodium;Натрий
+solvents;Растворители
+soy_milk;Соевое молоко
+soy_milk_t;Соевое молоко
+spher_valves;Шаровые краны
+sq_tub;Квадратные трубы
+steel_cord;Металлокорд
+stone_dust;Минеральный порошок
+stone_wool;Каменная вата
+stones;Камни
+straw_bales;Тюки соломы
+sugar;Сахар
+sulfuric;Серная кислота
+tableware;Посуда
+tomatoes;Томаты
+toys;Игрушки
+tracks;Гусеницы
+tractor;Трактор RS-666
+tractors;Тракторы
+train_part2;Тележки поезда
+train_part;Колёсные пары
+transformat;Трансформатор PK900
+transmis;Коробки передач
+truck_batt;Грузовые аккумуляторы
+truck_batt_c;Грузовые аккумуляторы
+truck_rims;Грузовые диски
+truck_rims_c;Грузовые диски
+truck_tyres;Грузовые шины
+tube;Детали трубопровода
+tvs;Телевизоры
+tyres;Шины
+used_battery;Отработанные аккумуляторы
+used_pack;Картонная тара
+used_packag;Картонная тара
+used_plast;Пластиковая тара
+used_plast_c;Пластиковая тара
+vent_tube;Вентиляционная труба
+ventilation;Вентиляционная труба
+vinegar;Уксус
+vinegar_c;Уксус
+volvo_cars;Престижные внедорожники
+volvo_tr;Грузовики Volvo
+wallpanels;Стеновые панели
+watermelons;Арбузы
+wheat;Пшеница
+windml_eng;Гондола ветрогенератора
+windml_tube;Башня ветрогенератора
+wood_bark;Древесная кора
+wooden_beams;Деревянные балки
+wrk_cloth;Рабочая одежда
+wshavings;Деревянная стружка
+yacht;Яхта
+yogurt;Йогурт
+young_seed;Саженцы

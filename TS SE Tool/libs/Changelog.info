@@ -1,0 +1,466 @@
+Update | 0.3.11.0
+
+Added Save blocks introduced with 1.49 update
+Updated Info & Profile files handling
+Updated Trucks & Trailers lists populating
+Updated Integrity Displaying & Fixing for Trucks & Trailers with 1.49 system
+Fixed Missing icon for Drag&Drop when Sharing colors
+
+//-------------------------//
+
+Update | 0.3.10.1
+
+Added Preview and Album Copying when Cloning profiles
+Added Translatable panels (Drawing Text)
+Added Group Drag&Drop functionality for Color sharing
+Added Buttons for mass selection of items in the lists of Garages, Drivers and Cities to visit
+Fixed Error in Vehicle editor when pasting bad data
+
+
+Update | 0.3.10.0
+
+Added Drag&Drop functionality for Color sharing form
+Added Help tooltip if [S]teamcloud profile selected
+Updated Dialogs to be centered based on main window
+Updated Icon for Backup restore option
+Fixed Uninitialized Globals variables Error
+Fixed Reverse order of ADR skills
+Fixed Incorrect display if there is no items in Trucks Combobox
+Fixed Error when Hiring Drivers
+Fixed mail_ctrl Wrong variable format Error
+And other improvements
+
+
+Update | 0.3.9.1
+
+Fixed police_offence_log_entry missing
+
+
+Update | 0.3.9.0
+
+Updated SII_Decrypt for 1.47
+Updated Save blocks for 1.47
+Updated Updater internals
+Fixed bad window centering
+
+
+Update | 0.3.8.1
+Cleanup & optimization
+
+
+Update | 0.3.8.0
+
+Added Drivers list on Company tab (Right click on a Driver to Hire, Fire or Edit)
+Added Driver editor for AI drivers (Skills)
+Updated UI images
+Fixed Error when Checking for Player driver Existing in Sorting list
+
+
+Update | 0.3.7.2
+
+Fixed Restoring from backup function was not affecting Info file
+Fixed Save Writing Error when Selected job was Special transport
+
+
+Update | 0.3.7.1
+
+Updated Garage manager. Changes can be Canceled
+Updated Visuals for Trucks & Trailers dropdown lists. Sorting by type (Quick job, User owned, in Sorting list), Garage and Truck name
+Fixed Trucks Removed from Garages was still exporting to Save file
+
+
+Update | 0.3.7.0
+
+Added Vehicle editor for Trucks
+Updated Save blocks processing
+Updated DDS Texture loader
+Updated Truck & Trailer form visuals behavior
+Updated Getting Spare nameless (Vehicle editor)
+Fixed Database error due wrong Trailer variants list processing
+Fixed Error while Repairing Double\Triple trailers
+Cleanup & optimization
+
+
+Update | 0.3.6.1
+
+Updated Freight market Distance calculation & Better Cargo names in Cargo list
+Updated DDS Texture loader
+Fixed Updater checking for TS SET running state
+Cleanup & optimization
+
+
+Update | 0.3.6.0
+
+Updated Database structure
+Fixed Routes saving in Database
+Fixed Font files availability check
+Fixed Save items Data format errors
+
+
+Update | 0.3.5.0
+
+Added License plate Editor
+Fixed Save items Data format errors
+
+
+Update | 0.3.4.0
+
+Updated Garages manager
+Updated Company tab Account money editing and Manage button
+Fixed Profile name trimming when Renaming or Cloning
+
+
+Update | 0.3.3.1
+
+Fixed Company tab Visited cities & Garages Get Country name Error
+
+
+Update | 0.3.3.0
+
+Added Ability to change Company name
+Added Ability to change HQ
+Added new Save blocks
+Updated Company tab Visuals for Visited cities & Garages
+Fixed Error when Creating new Database
+
+
+Update | 0.3.2.0
+
+Added Restore save from backup button
+Added Unload save button
+Updated Switch Trucks function
+Updated DDS Image loader
+Updated Save file write procedure
+Fixed Save items Data format errors
+
+
+Update | 0.3.1.0
+
+Updated Path search for Freight market
+Updated Trailer tab functions
+Updated SCS Float output format
+Updated Text render in comboboxes on Freight market tab
+Fixed Saving & Applying Settings
+
+
+Update | 0.3.0.0
+
+Finished Save & Load systems to work with the new save-blocks system
+
+
+Update | 0.2.7.5
+
+Fixed Save items Data format errors
+Fixed Error if Truck or Trailer accessory missing
+
+
+Update | 0.2.7.4
+
+Updated Dropdown save list if Save has an Empty save name
+Updated GPS Read & Write
+Updated Program settings Splash screen auto-update check interval
+
+
+Update | 0.2.7.3
+
+Updated Trucks functionality for 1.43
+Updated Trailers functionality for 1.43
+Fixed Database version check
+Restricted old saves loading (prior 1.43)
+
+
+Update | 0.2.7.2
+
+Fixed Float numbers handling
+
+
+Update | 0.2.7.1
+
+Rework for 1.43 update
+Updated Supported versions (only 61)
+Updated Settings menu
+Fixed DB version check
+Restricted Steam cloud saves load
+
+
+Update | 0.2.7.0
+
+Updated Links for Updater
+
+
+Update | 0.2.6.8
+
+Updated Profile data Processing
+Updated save Info data Processing
+
+
+Update | 0.2.6.7
+
+Validated for 1.42 (version 56)
+Updated SII_Decrypt library with 1.42 support
+
+
+Update | 0.2.6.6
+
+Updated Profile data Processing
+Updated save Info data Processing
+Fixed Profile Cloning
+Fixed CC Import Empty clipboard Error
+
+
+Update | 0.2.6.5
+
+Updated Acoount money editing
+Fixed Negative money error
+Fixed Hex <-> Decimal conversion
+
+
+Update | 0.2.6.4
+
+Fixed Links detection for Slave trailers
+Fixed Repair buttons Visual bug after Switching save
+
+
+Update | 0.2.6.3
+
+Validated for 1.41 (version 55)
+Updated Profile data file Output
+Updated Info file Output
+Updated Truck & Trailer parts discovery
+
+
+Update | 0.2.6.2
+
+Fixed Database details update
+Fixed Form splash
+
+
+Update | 0.2.6.1
+
+Updated Profile & Save selection
+Fixed version check
+
+
+Update | 0.2.6.0
+
+Updated Update search mechanism
+Updated crash messages Added Dev mail
+Updated About form
+Updated translation mechanism
+Added Export & Import settings form
+Fixed Database (truncate error)
+Fixed hex to string decode error
+
+
+Update | 0.2.5.4
+
+Validated for 53 version
+Fixed various errors
+
+
+Update | 0.2.5.3
+
+Validated for 51 version
+Fixed error log writer
+
+
+Update | 0.2.5.2
+
+Updated UI on Truck and Trailer tabs
+Added Indication for Vehicles in use
+Fixed error if Trailer misses parts
+
+
+Update | 0.2.5.1
+
+Fixed Steam cloud saves discovery
+
+
+Update | 0.2.5.0
+
+Added logging for OS detection and Profiles discovery errors
+Added license plate rendering
+Updated UI on Truck and Trailer tabs
+Updated UI in Profile editor (Rename and Cloning)
+Fixed Profile editor errors
+
+
+Update | 0.2.4.2
+
+Fixed DB bugs
+
+
+Update | 0.2.4.1
+
+Updated translation
+Fixed bugs
+
+
+Update | 0.2.4.0
+
+Added startup logging
+Updated User colors handling
+Updated translation system
+Fixed bugs
+
+
+Update | 0.2.3.2
+
+Added option to load and edit unverified versions
+Updated Truck & Trailer tabs UI
+Cleanup & optimization
+
+
+Update | 0.2.3.0
+
+Added Profile manager (Rename & Clone)
+Updated UI
+Cleanup & optimization
+
+
+Update | 0.2.2.10
+
+Curency setting now separated (ETS2/ATS)
+Updated SII_Decrypt.dll for 1.37
+Updated visuals
+Cleanup & optimization
+
+
+Update | 0.2.2.9
+
+Fixed bugs
+General cleanup
+
+
+Update | 0.2.2.8
+
+Updated UI
+Validated for 45 version
+Fixed bugs
+
+
+Update | 0.2.2.7
+
+Updated UI
+Updated translation
+Fixed bugs
+
+
+Update | 0.2.2.6
+
+Added Program settings
+Added Version checker
+Added Updater
+Added Error handler
+Updated Color picker
+Updated translation
+Fixed bugs in FM and CM tab
+
+
+Update | 0.2.2.4
+
+.NET Framework 4.7.2
+Updated UI
+Updated translation
+Updated translation system
+Minor bug fixes and updates
+
+
+Update | 0.2.2.2
+
+Updated UI
+Updated translation
+Minor bug fixes and clenup
+
+
+Update | 0.2.2
+
+Added ability to Share Convoy Control spots
+Updated UI
+Fixed FM cargo availability time
+Minor bug fixes
+
+
+Update | 0.2.1
+
+SII_Decrypt changed from exe to dll to work with files in memory and minimize disk access
+Added ability to Add Custom paths
+Added ability to Edit Freight market jobs
+Added ability to Sell garages
+Added Garage manager menu to sort Drivers and Trucks
+Added support for latest ATS savefile version
+Created HowTo PDF and Video
+Numerous bug fixes
+
+
+Update | 0.2.0.3
+
+Updated UI (720p compatibility)
+Improved Profiles and Saves search
+
+
+Update | 0.2.0.2
+
+Added 1.35 OB (need testing)
+Fixed DB error
+Fixed localization errors
+Updated UI
+
+
+Update | 0.2.0.1
+
+Fixed DB error
+Fixed localization errors
+
+
+Update | 0.2.0
+
+Fixed various errors
+Separeted DBs files (by Game and Profile)
+Reworked part of UI
+Added localization strings
+
+
+Update | 0.1.5
+
+Fixed GPS related errors resulting in not loading save file
+Fixed GPS route sharing (now you don't need existing path in save file)
+Fixed distances mesuring units not loading on startup
+Added prompt on game type changing
+Added basic Trailer edit
+Added ability to search for QJ and FM Trucks and Trailers
+
+
+Update | 0.1.4.1
+
+Fixed game change button bug
+Small UI fixes
+
+
+Update | 0.1.4
+
+Fixed long database operations on save file load (auto fix)
+Added ability to translate rest of UI (Cities, Countries)
+Added game files cache (Cargo)
+
+
+Update | 0.1.3.1
+
+Fixed error with getting data for sharing GPS
+Enabled ability to Buy and\or Upgrade Garages
+
+
+Update | 0.1.3
+
+Added User paint Sharing
+Added GPS Sharing options (Truck position, GPS route) (testing needed)
+Added Basic Cargo Market Tools
+Redone translation structure
+
+
+Update | 0.1.2
+
+Added searching for Steam cloud Save files
+Fixed crash on loading non existing Company Logos
+Fixed crash on saving (visited cities beed not prepared correctly)
+Fixed empty lines for cities and companies

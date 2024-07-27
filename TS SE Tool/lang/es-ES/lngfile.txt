@@ -1,0 +1,134 @@
+﻿[es-ES]
+buttonCargoMarketRandomizeCargoCity;Aleatorizar lista de cargas
+buttonCargoMarketRandomizeCargoCompany;Aleatorizar lista de cargas
+buttonCargoMarketResetCargoCity;Reiniciar lista de cargas
+buttonCargoMarketResetCargoCompany;Reiniciar lista de cargas
+buttonConvoyToolsGPSCurrentPositionCopy;Copiar dirección actual
+buttonConvoyToolsGPSCurrentPositionPaste;Pegar dirección actual
+buttonConvoyToolsGPSStoredGPSPathCopy;Copiar ruta de GPS
+buttonConvoyToolsGPSStoredGPSPathPaste;Pegar ruta de GPS
+buttonFreightMarketAddJob;Añadir trabajo a la lista
+buttonFreightMarketClearJobList;Limpiar lista
+buttonFreightMarketRandomizeCargo;Al azar
+buttonMainAddCustomFolder;Agregar carpeta personalizada
+buttonMainDecryptSave;Descifrar
+buttonMainLoadSave;Cargar
+buttonMainWriteSave;Guardar
+buttonProfilesAndSavesOpenSaveFolder;Abrir carpeta
+buttonShareTruckTruckDetailsCopy;Copiar detalles del camión
+buttonShareTruckTruckDetailsPaste;Pegar detalles del camión
+buttonShareTruckTruckPaintCopy;Copiar ajustes de pintura
+buttonShareTruckTruckPaintPaste;Pegar ajustes de pintura
+buttonShareTruckWholeTruckCopy;Copiar todos los ajustes del camión
+buttonShareTruckWholeTruckPaste;Pegar todos los ajustes del camión
+buttonUserColorsShareColors;Compartir colores
+buttonUserCompanyCitiesUnVisit;Sin visitar
+buttonUserCompanyCitiesVisit;Visitada
+buttonUserCompanyGaragesBuy;Comprar
+buttonUserCompanyGaragesBuyUpgrade;Comprar y Mejorar
+buttonUserCompanyGaragesSell;Vender
+buttonUserCompanyGaragesUpgrade;Mejorar
+buttonUserTrailerSelectCurrent;Seleccionar Tráiler actual
+buttonUserTrailerSwitchCurrent;Establecer como Tráiler actual
+buttonUserTruckSelectCurrent;Actual
+buttonUserTruckSwitchCurrent;Cambiar camión actual a este camión
+checkBoxFreightMarketFilterDestination;Filtrar
+checkBoxFreightMarketFilterSource;Filtrar
+checkBoxFreightMarketRandomDest;Al azar
+error_could_not_complete_jobs_loop;No se pudieron completar los bucles de trabajo
+error_could_not_decode_file;No se pudo descifrar el archivo
+error_could_not_find_file;No se pudo encontrar el archivo
+error_could_not_write_to_file;No se puedo escribir el archivo
+error_during_importing_db;Error al importar base de datos
+error_exception;Excepción encontrada
+error_file_not_decoded;Archivo no descifrado
+error_file_was_modified;Archivo fue modificado por el juego
+error_job_parameters_not_filled;Llene todos los parámetros necesarios
+error_save_version_not_detected;Versión de archivo de guardado no detectada
+groupBoxMainProfilesAndSaves;Perfiles y partidas
+groupBoxProfilePlayerLevel;Nivel
+groupBoxProfileSkill;Habilidades
+groupBoxProfileUserColors;Colores
+groupBoxUserTrailerTrailer;Tráiler
+groupBoxUserTrailerTrailerDetails;Detalles
+groupBoxUserTruckShareTruckSettings;Compartir detalles del camión
+groupBoxUserTruckTruck;Camión
+groupBoxUserTruckTruckDetails;Detalles
+labelCargoMarketCity;Ciudad
+labelCargoMarketCompany;Compañía
+labelCargoMarketSource;Origen
+labelCity;ciudad
+labelFreightMarketCargo;Carga
+labelFreightMarketCity;Ciudad
+labelFreightMarketCompany;Compañía
+labelFreightMarketCompanyF;Compañía
+labelFreightMarketCountryF;País
+labelFreightMarketDestination;Destino
+labelFreightMarketDistance;Distancia total:
+labelFreightMarketFilterMain;Filtrar
+labelFreightMarketSource;Origen
+labelFreightMarketUrgency;Urgencia
+labelProfileSkill1;Larga distancia
+labelProfileSkill2;Mercancía de gran valor
+labelProfileSkill3;Mercancía frágil
+labelProfileSkill4;Entrega a tiempo
+labelProfileSkill5;Conducción económica
+labelTrailerPartNameBody;Cuerpo
+labelTrailerPartNameCargo;Carga
+labelTrailerPartNameChassis;Chasis
+labelTrailerPartNameWheels;Ruedas
+labelTruckDetailsFuel;Combustible
+labelTruckPartNameCabin;Cabina
+labelTruckPartNameChassis;Chasis
+labelTruckPartNameEngine;Motor
+labelTruckPartNameTransmission;Transmisión
+labelTruckPartNameWheels;Ruedas
+labelUserCompanyCompanyName;Nombre de Compañía
+labelUserCompanyGarages;Garajes
+labelUserCompanyHQcity;Ciudad sede
+labelUserCompanyMoneyAccount;Dinero en cuenta
+labelUserCompanyVisitedCities;Ciudades visitadas
+labelUserTrailerLicensePlate;Placa
+labelUserTruckLicensePlate;Placa
+message_database_created;Estructura de base de datos creada.
+message_database_missing_creating_db;No se encontró la base de datos. Creando base de datos...
+message_database_missing_creating_db_structure;No se encontró la base de datos. Creando estructura de base de datos...
+message_decoding_save_file;Descifrando archivo...
+message_exporting_database;Exportando Base de Datos...
+message_file_saved;Archivo guardado.
+message_importing_database;Importando Base de Datos...
+message_loading_save_file;Cargando archivo...
+message_no_matching_cities;No hay ciudades que coincidan con los filtros actuales.
+message_operation_finished;Tarea completada.
+message_preparing_data;Preparando datos...
+message_saving_file;Guardando archivo...
+tabPageCargoMarket;Mercado de Mercancías
+tabPageCompany;Compañía
+tabPageConvoyTools;Herramientas de Convoy
+tabPageFreightMarket;Mercado de Transportes
+tabPageProfile;Perfil
+tabPageTrailer;Tráiler
+tabPageTruck;Camión
+toolStripMenuItemAbout;Acerca de
+toolStripMenuItemCreateTrFile;Hacer una traducción
+toolStripMenuItemExit;Salir
+toolStripMenuItemHelp;Ayuda
+toolStripMenuItemLanguage;Idioma
+toolStripMenuItemProgram;Programa
+toolStripMenuItemSettings;Ajustes
+tooltipbuttonProfilesAndSavesRefreshAll;Refrescar
+currencyEUR;Euro
+currencyCHF;Franco Suizo
+currencyCZK;Corona Checa
+currencyGBP;Libra Estadounidense
+currencyPLN;Zloty Polaco
+currencyHUF;Forint Húngaro
+currencyDKK;Krone Danesa
+currencySEK;Krona Sueca
+currencyNOK;Krone Noruega
+currencyRUB;Rublo Ruso
+currencyUSD;Dólar de los Estados Unidos
+currencyCAD;Dólar Canadiense
+currencyMXN;Peso Mexicano
+unsupportedGameVersionTitle;Versión {0} No Soportada {1}
+unsupportedGameVersionText;La versión {0} que tienes instalada actualmente no es compatible con esta herramienta.\n\nVersión del Juego Instalada: {1}\n\nVersiones Actualmente Soportadas: {2}

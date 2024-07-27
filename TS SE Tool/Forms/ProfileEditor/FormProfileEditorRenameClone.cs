@@ -26,10 +26,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Threading;
 
-namespace TS_SE_Tool
-{
-    public partial class FormProfileEditorRenameClone : Form
-    {
+namespace TS_SE_Tool {
+    public partial class FormProfileEditorRenameClone : Form {
         public string ReturnNewName { get; set; }
         public List<string> ReturnClonedNames { get; set; } = new List<string>();
         public bool ReturnRenamedSuccessful { get; set; } = false;
@@ -52,8 +50,7 @@ namespace TS_SE_Tool
 
         private List<string> existingProfiles = new List<string>();
 
-        public FormProfileEditorRenameClone(string _mode)
-        {
+        public FormProfileEditorRenameClone(string _mode) {
             InitializeComponent();
             this.Icon = Properties.Resources.MainIco;
 
@@ -62,8 +59,7 @@ namespace TS_SE_Tool
             SetupForm();
         }
 
-        private void SetupForm()
-        {
+        private void SetupForm() {
             PrepareForm();
             TranslateForm();
 
@@ -74,22 +70,18 @@ namespace TS_SE_Tool
         }
 
         //
-        private void TranslateForm()
-        {
+        private void TranslateForm() {
             MainForm.HelpTranslateFormMethod(this);
 
             string controlsNewNames = "";
 
-            switch (FormMode)
-            {
-                case "rename":
-                    {
+            switch (FormMode) {
+                case "rename": {
                         controlsNewNames = "Renaming";
 
                         break;
                     }
-                case "clone":
-                    {
+                case "clone": {
                         controlsNewNames = "Cloning";
 
                         break;
@@ -101,12 +93,9 @@ namespace TS_SE_Tool
         }
 
         //
-        private void PrepareForm()
-        {
-            switch (FormMode)
-            {
-                case "rename":
-                    {
+        private void PrepareForm() {
+            switch (FormMode) {
+                case "rename": {
                         textBoxNewName.MaxLength = NameLengthLimit;
 
                         checkBoxMutiCloning.Visible = false;
@@ -114,8 +103,7 @@ namespace TS_SE_Tool
 
                         break;
                     }
-                case "clone":
-                    {
+                case "clone": {
                         checkBoxCreateBackup.Visible = false;
 
                         checkBoxFullCloning.Location = checkBoxMutiCloning.Location;
@@ -127,8 +115,7 @@ namespace TS_SE_Tool
         }
 
         //
-        private void CorrectControlsPositions()
-        {
+        private void CorrectControlsPositions() {
             //Group box and label width
             tableLayoutPanelControls.ColumnStyles[0].Width = 6 + ((labelNewName.PreferredWidth > groupBoxOptions.PreferredSize.Width) ? labelNewName.PreferredWidth : groupBoxOptions.PreferredSize.Width);
 
@@ -137,8 +124,7 @@ namespace TS_SE_Tool
             //
             if (tcolwidth - 6 >= textBoxNewNameWidthMin)
                 textBoxNewName.Width = tcolwidth;
-            else
-            {
+            else {
                 this.Width += textBoxNewNameWidthMin - tcolwidth + 6;
                 textBoxNewName.Width = textBoxNewNameWidthMin;
             }
@@ -149,12 +135,10 @@ namespace TS_SE_Tool
         }
 
         //Name textbox events
-        private void textBoxNewName_KeyDown(object sender, KeyEventArgs e)
-        {
+        private void textBoxNewName_KeyDown(object sender, KeyEventArgs e) {
             if (textBoxNewName.Text.Length == 0) return;
 
-            if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Back || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down || e.KeyCode == Keys.Home || e.KeyCode == Keys.End || e.KeyCode == Keys.PageDown || e.KeyCode == Keys.PageUp || e.KeyCode == Keys.Delete)
-            {
+            if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Back || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down || e.KeyCode == Keys.Home || e.KeyCode == Keys.End || e.KeyCode == Keys.PageDown || e.KeyCode == Keys.PageUp || e.KeyCode == Keys.Delete) {
                 e.Handled = false;
                 aboveLimitLength = false;
                 return;
@@ -172,47 +156,39 @@ namespace TS_SE_Tool
             aboveLimitLength = (temp.Length < NameLengthLimit) ? false : true;
         }
 
-        private void textBoxNewName_KeyUp(object sender, KeyEventArgs e)
-        {
+        private void textBoxNewName_KeyUp(object sender, KeyEventArgs e) {
             indicateCharLimit();
         }
 
-        private void textBoxNewName_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        private void textBoxNewName_KeyPress(object sender, KeyPressEventArgs e) {
             //Filter
             char[] forbidenChars = { '\\', '|' };
 
             char tmpChar = e.KeyChar;
-            if (forbidenChars.Contains(tmpChar))
-            {
+            if (forbidenChars.Contains(tmpChar)) {
                 e.Handled = true;
             }
 
             //charLimit();
 
             // Check for the flag being set in the KeyDown event
-            if (aboveLimitLength == true)
-            {
+            if (aboveLimitLength == true) {
                 // Stop the character from being entered into the control
                 e.Handled = true;
             }
         }
 
-        private void textBoxNewName_TextChanged(object sender, EventArgs e)
-        {
+        private void textBoxNewName_TextChanged(object sender, EventArgs e) {
             bool apply = true;
 
             //Trim on paste
-            if (textBoxNewName.Multiline)
-            {
+            if (textBoxNewName.Multiline) {
                 int linecount = textBoxNewName.Lines.Length;
 
                 var tmpLines = textBoxNewName.Lines;
 
-                for (int i = 0; i < linecount; i++)
-                {
-                    if (textBoxNewName.Lines[i].Length > NameLengthLimit)
-                    {
+                for (int i = 0; i < linecount; i++) {
+                    if (textBoxNewName.Lines[i].Length > NameLengthLimit) {
                         tmpLines[i] = textBoxNewName.Lines[i].Substring(0, NameLengthLimit);
                     }
 
@@ -221,32 +197,23 @@ namespace TS_SE_Tool
 
                 string[] commonElements = textBoxNewName.Lines.Intersect(existingProfiles).ToArray();
 
-                if (commonElements.Count() > 1)
-                {
+                if (commonElements.Count() > 1) {
                     errorProvider.SetError(textBoxNewName, "Profiles already exist: " + Environment.NewLine +
                                                             string.Join(Environment.NewLine, commonElements));
                     apply = false;
-                }
-                else if (commonElements.Count() > 0)
-                {
+                } else if (commonElements.Count() > 0) {
                     errorProvider.SetError(textBoxNewName, "Profile [ " + commonElements[0] + " ] already exist");
                     apply = false;
-                }
-                else
+                } else
                     errorProvider.SetError(textBoxNewName, "");
-            }
-            else
-            {
+            } else {
                 if (textBoxNewName.Text.Length > NameLengthLimit)
                     textBoxNewName.Text = textBoxNewName.Text.Substring(0, NameLengthLimit);
 
-                if (existingProfiles.Contains(textBoxNewName.Text))
-                {
+                if (existingProfiles.Contains(textBoxNewName.Text)) {
                     errorProvider.SetError(textBoxNewName, "Profile [ " + textBoxNewName.Text + " ] already exist");
                     apply = false;
-                }
-                else
-                {
+                } else {
                     errorProvider.SetError(textBoxNewName, "");
                 }
             }
@@ -261,10 +228,8 @@ namespace TS_SE_Tool
         }
 
         //Checkboxes
-        private void checkBoxMutiCloning_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxMutiCloning.Checked)
-            {
+        private void checkBoxMutiCloning_CheckedChanged(object sender, EventArgs e) {
+            if (checkBoxMutiCloning.Checked) {
                 textBoxNewName.Multiline = true;
                 textBoxNewName.ScrollBars = ScrollBars.Vertical;
 
@@ -277,9 +242,7 @@ namespace TS_SE_Tool
                     textBoxNewName.Height = tNewheight;
                 else
                     textBoxNewName.Height = tminHeight;
-            }
-            else
-            {
+            } else {
                 textBoxNewName.Multiline = false;
                 textBoxNewName.ScrollBars = ScrollBars.None;
                 textBoxNewName.Text = (textBoxNewName.Lines.Count() != 0) ? textBoxNewName.Lines[0] : "";
@@ -289,22 +252,17 @@ namespace TS_SE_Tool
         }
 
         //Buttons
-        private void buttonAccept_Click(object sender, EventArgs e)
-        {
-            switch (FormMode)
-            {
-                case "rename":
-                    {
+        private void buttonAccept_Click(object sender, EventArgs e) {
+            switch (FormMode) {
+                case "rename": {
                         string NewProfileName = textBoxNewName.Text.Trim(new char[] { ' ' }), NewFolderName = "", NewFolderPath = "";
                         byte progress = 0;
 
 
-                        if (NewProfileName != InitialName && !existingProfiles.Contains(NewProfileName))
-                        {
+                        if (NewProfileName != InitialName && !existingProfiles.Contains(NewProfileName)) {
                             ReturnNewName = NewProfileName;
 
-                            try
-                            {
+                            try {
                                 //New folder name                                
                                 NewFolderName = Utilities.TextUtilities.FromStringToHex(NewProfileName);
                                 NewFolderPath = InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1) + NewFolderName;
@@ -323,7 +281,7 @@ namespace TS_SE_Tool
                                 string[] profileFile = tF.NewDecodeFile(NewFolderPath + "\\profile.sii");
                                 progress = 4;
 
-                                SaveFileProfileData ProfileData = new SaveFileProfileData();
+                                SaveFileProfileData ProfileData = new SaveFileProfileData(MainForm.SelectedGame);
                                 ProfileData.ProcessData(profileFile);
                                 progress = 5;
 
@@ -332,8 +290,7 @@ namespace TS_SE_Tool
                                 progress = 6;
 
                                 //Write file
-                                using (StreamWriter SW = new StreamWriter(NewFolderPath + "\\profile.sii", false))
-                                {
+                                using (StreamWriter SW = new StreamWriter(NewFolderPath + "\\profile.sii", false)) {
                                     ProfileData.WriteToStream(SW);
                                 }
                                 progress = 7;
@@ -341,13 +298,10 @@ namespace TS_SE_Tool
                                 //Iterate through save folders to edit preview.tobj
                                 DirectoryInfo[] dirInfoArray = new DirectoryInfo(NewFolderPath + "\\save").GetDirectories();
 
-                                foreach (DirectoryInfo subdir in dirInfoArray)
-                                {
+                                foreach (DirectoryInfo subdir in dirInfoArray) {
                                     FileInfo[] saveFolderFile = subdir.GetFiles();
-                                    foreach (FileInfo fI in saveFolderFile)
-                                    {
-                                        if (fI.Name == "preview.tobj")
-                                        {
+                                    foreach (FileInfo fI in saveFolderFile) {
+                                        if (fI.Name == "preview.tobj") {
                                             //tobj
                                             string pathToTGA = "/home/profiles/" + NewFolderName + "/save/" + subdir.Name + "/preview.tga";
 
@@ -360,8 +314,7 @@ namespace TS_SE_Tool
                                 progress = 8;
 
                                 //Make backup
-                                if (checkBoxCreateBackup.Checked)
-                                {
+                                if (checkBoxCreateBackup.Checked) {
                                     if (File.Exists(InitialPath + ".zip"))
                                         File.Delete(InitialPath + ".zip");
 
@@ -375,11 +328,8 @@ namespace TS_SE_Tool
 
                                 ReturnNewName = NewProfileName;
                                 ReturnRenamedSuccessful = true;
-                            }
-                            catch
-                            {
-                                switch (progress)
-                                {
+                            } catch {
+                                switch (progress) {
                                     case 0:
                                         MessageBox.Show("Create new folder name failed");
                                         break;
@@ -412,7 +362,7 @@ namespace TS_SE_Tool
                                         ZipFile.ExtractToDirectory(InitialPath + ".zip", InitialPath);
                                         File.Delete(InitialPath + ".zip");
                                         break;
-                                        delete:
+                                    delete:
                                         MessageBox.Show("Deleting new Profile.");
                                         Directory.Delete(NewFolderPath);
                                         break;
@@ -422,24 +372,19 @@ namespace TS_SE_Tool
                                         break;
                                 }
                             }
-                        }
-                        else
-                        {
+                        } else {
                             DialogResult = DialogResult.Abort;
                             Close();
                         }
 
                         break;
                     }
-                case "clone":
-                    {
-                        foreach (string newfile in textBoxNewName.Lines)
-                        {
+                case "clone": {
+                        foreach (string newfile in textBoxNewName.Lines) {
                             string NewProfileName = "", NewFolderPath = "";
                             byte progress = 0;
 
-                            try
-                            {
+                            try {
                                 //Check empty lines
                                 if (newfile.Length == 0 || newfile.Trim(new char[] { ' ' }).Length == 0)
                                     continue;
@@ -479,8 +424,7 @@ namespace TS_SE_Tool
 
                                 //CFG
                                 tmpFilelist = Directory.EnumerateFiles(InitialPath, "*.cfg", SearchOption.TopDirectoryOnly).ToArray();
-                                foreach (string file in tmpFilelist)
-                                {
+                                foreach (string file in tmpFilelist) {
                                     if (Path.GetFileName(file).Equals("config.cfg") || Path.GetFileName(file).Equals("config_local.cfg"))
                                         fileList.Add(file);
                                 }
@@ -488,15 +432,13 @@ namespace TS_SE_Tool
                                 //SII gearbox layout
                                 tmpFilelist = Directory.EnumerateFiles(InitialPath, "*.sii", SearchOption.TopDirectoryOnly).ToArray();
 
-                                foreach (string file in tmpFilelist)
-                                {
+                                foreach (string file in tmpFilelist) {
                                     if (Path.GetFileName(file).StartsWith("gearbox_layout_"))
                                         fileList.Add(file);
                                 }
 
                                 //Iterate files
-                                foreach (string file in fileList)
-                                {
+                                foreach (string file in fileList) {
                                     string temppath = Path.Combine(NewFolderPath, Path.GetFileName(file)); //new file path with name
 
                                     FileInfo tFI = new FileInfo(file);  //fileinfo
@@ -508,7 +450,7 @@ namespace TS_SE_Tool
                                 string[] profileFile = ParentForm.NewDecodeFile(NewFolderPath + "\\profile.sii");
                                 progress = 4;
 
-                                SaveFileProfileData ProfileData = new SaveFileProfileData();
+                                SaveFileProfileData ProfileData = new SaveFileProfileData(MainForm.SelectedGame);
                                 ProfileData.ProcessData(profileFile);
                                 progress = 5;
 
@@ -518,8 +460,7 @@ namespace TS_SE_Tool
                                 progress = 6;
 
                                 //Write file
-                                using (StreamWriter SW = new StreamWriter(NewFolderPath + "\\profile.sii", false))
-                                {
+                                using (StreamWriter SW = new StreamWriter(NewFolderPath + "\\profile.sii", false)) {
                                     ProfileData.WriteToStream(SW);
                                 }
                                 progress = 7;
@@ -533,20 +474,16 @@ namespace TS_SE_Tool
                                 //Copy saves
                                 string[] validFileNames = new string[] { "game.sii", "info.sii", "preview.tga", "preview.mat", "preview.tobj" };
 
-                                if (checkBoxFullCloning.Checked)
-                                {
+                                if (checkBoxFullCloning.Checked) {
                                     Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\save", NewSaveFolder, true, validFileNames);
 
                                     //Iterate through save folders to edit preview.tobj
                                     DirectoryInfo[] dirInfoArray = new DirectoryInfo(NewFolderPath + "\\save").GetDirectories();
 
-                                    foreach (DirectoryInfo subdir in dirInfoArray)
-                                    {
+                                    foreach (DirectoryInfo subdir in dirInfoArray) {
                                         FileInfo[] saveFolderFile = subdir.GetFiles();
-                                        foreach (FileInfo fI in saveFolderFile)
-                                        {
-                                            if (fI.Name == "preview.tobj")
-                                            {
+                                        foreach (FileInfo fI in saveFolderFile) {
+                                            if (fI.Name == "preview.tobj") {
                                                 //tobj
                                                 string pathToTGA = "/home/profiles/" + NewProfileNameHex + "/save/" + subdir.Name + "/preview.tga";
 
@@ -556,9 +493,7 @@ namespace TS_SE_Tool
                                             }
                                         }
                                     }
-                                }
-                                else
-                                {
+                                } else {
                                     Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\save\\autosave", NewSaveFolder + "\\autosave", false, validFileNames);
                                 }
 
@@ -569,16 +504,13 @@ namespace TS_SE_Tool
                                     Utilities.IO_Utilities.DirectoryCopy(InitialPath + "\\album", NewFolderPath + "\\album", false);
 
                                 progress = 10;
-                                
+
                                 //Cloned folders
                                 existingProfiles.Add(NewProfileName);
                                 ReturnClonedNames.Add(NewProfileName);
-                            }
-                            catch
-                            {
+                            } catch {
 
-                                switch (progress)
-                                {
+                                switch (progress) {
                                     case 0:
                                         MessageBox.Show("Create new folder name failed");
                                         break;
@@ -607,11 +539,11 @@ namespace TS_SE_Tool
                                         MessageBox.Show("Directory with saves copy failed");
                                         goto delete;
                                     case 9:
-                                        MessageBox.Show("Album Directory copy failed");                                        
+                                        MessageBox.Show("Album Directory copy failed");
                                         break;
                                     default:
                                         MessageBox.Show("Unexpected error. Deleting new Profile.");
-                                        delete:
+                                    delete:
                                         Directory.Delete(NewFolderPath);
                                         break;
                                 }
@@ -629,29 +561,22 @@ namespace TS_SE_Tool
             Close();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
+        private void buttonCancel_Click(object sender, EventArgs e) {
             this.Close();
         }
 
         //Extra
-        private bool indicateCharLimit()
-        {
+        private bool indicateCharLimit() {
             int txtLength = 0;
             bool apply = true;
 
-            if (textBoxNewName.Multiline)
-            {
-                if (textBoxNewName.Lines.Length > 0)
-                {
+            if (textBoxNewName.Multiline) {
+                if (textBoxNewName.Lines.Length > 0) {
                     int currentLine = textBoxNewName.GetLineFromCharIndex(textBoxNewName.SelectionStart);
                     txtLength = textBoxNewName.Lines[currentLine].Length;
-                }
-                else
+                } else
                     apply = false;
-            }
-            else
-            {
+            } else {
                 txtLength = textBoxNewName.Text.Length;
 
                 if (txtLength == 0)
@@ -660,18 +585,13 @@ namespace TS_SE_Tool
 
             //===
 
-            if (txtLength == 0)
-            {
+            if (txtLength == 0) {
                 labelCharCountLimit.ForeColor = Color.Red;
                 labelCharCountLimit.Font = new Font(labelCharCountLimit.Font, FontStyle.Bold);
-            }
-            else if (txtLength >= NameLengthLimit)
-            {
+            } else if (txtLength >= NameLengthLimit) {
                 labelCharCountLimit.ForeColor = Color.Red;
                 labelCharCountLimit.Font = new Font(labelCharCountLimit.Font, FontStyle.Bold);
-            }
-            else
-            {
+            } else {
                 labelCharCountLimit.ForeColor = Color.DarkGreen;
                 labelCharCountLimit.Font = new Font(labelCharCountLimit.Font, FontStyle.Regular);
             }
@@ -681,12 +601,10 @@ namespace TS_SE_Tool
             return apply;
         }
 
-        private void calculateTextBoxNewNameSize()
-        {
+        private void calculateTextBoxNewNameSize() {
             int extraM = 25;
 
-            if (textBoxNewName.Multiline)
-            {
+            if (textBoxNewName.Multiline) {
                 int tNewheight = textBoxNewName.Font.Height * (textBoxNewName.Lines.Count() + 1) + 7;
                 int tminHeight = textBoxNewName.Font.Height * 3 + 7;
 
@@ -702,8 +620,7 @@ namespace TS_SE_Tool
 
                 tbNewNameWidthMulty = 0;
 
-                foreach (string newfile in textBoxNewName.Lines)
-                {
+                foreach (string newfile in textBoxNewName.Lines) {
                     if (newfile.Length == 0 || newfile.Trim(new char[] { ' ' }) == "")
                         continue;
 
@@ -718,9 +635,7 @@ namespace TS_SE_Tool
                     this.Width = FormWidthMin + tbNewNameWidthMulty - textBoxNewNameWidthMin + extraM + SystemInformation.VerticalScrollBarWidth;
                 else
                     this.Width = FormWidthMin + SystemInformation.VerticalScrollBarWidth;
-            }
-            else
-            {
+            } else {
                 Graphics gr = CreateGraphics();
                 SizeF tSize = gr.MeasureString(textBoxNewName.Text, textBoxNewName.Font);
                 tbNewNameWidth = (int)Math.Ceiling(Convert.ToDouble(tSize.Width));
@@ -733,16 +648,14 @@ namespace TS_SE_Tool
 
         }
 
-        private void FormProfileEditorRenameClone_Load(object sender, EventArgs e)
-        {
+        private void FormProfileEditorRenameClone_Load(object sender, EventArgs e) {
             existingProfiles = Directory.GetDirectories(InitialPath.Remove(InitialPath.LastIndexOf('\\') + 1)).Select(d => new DirectoryInfo(d).Name).ToList();
 
             existingProfiles = existingProfiles.Where(x => !x.Contains(' ')).ToList();
 
             List<string> tmp = new List<string>();
 
-            foreach (string name in existingProfiles)
-            {
+            foreach (string name in existingProfiles) {
                 tmp.Add(Utilities.TextUtilities.FromHexToString(name));
             }
 

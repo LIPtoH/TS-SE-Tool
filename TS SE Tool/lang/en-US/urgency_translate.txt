@@ -1,0 +1,4 @@
+﻿[en-US]
+0;Standard
+1;Important
+2;Urgent

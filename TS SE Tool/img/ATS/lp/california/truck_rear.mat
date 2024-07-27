@@ -1,0 +1,5 @@
+material : "ui"
+{
+	texture : "truck_front.tobj"
+	texture_name : "texture"
+}

@@ -1,0 +1,161 @@
+﻿[nl-NL]
+buttonAddCustomPath;Toevoegen
+buttonCancel;Annuleren
+buttonCargoMarketRandomizeCargoCity;Willekeurige Vrachtlijst
+buttonCargoMarketRandomizeCargoCompany;Willekeurige Vrachtlijst
+buttonCargoMarketResetCargoCity;Reset Vrachtlijst
+buttonCargoMarketResetCargoCompany;Reset Vrachtlijst
+buttonChooseFolder;Kies map
+buttonConvoyToolsGPSCurrentPositionCopy;Kopieer huidige positie
+buttonConvoyToolsGPSCurrentPositionPaste;Plak huidige positie
+buttonConvoyToolsGPSStoredGPSPathCopy;Kopieer GPS pad
+buttonConvoyToolsGPSStoredGPSPathPaste;Plak GPS pad
+buttonConvoyToolsGPSTruckPositionMultySaveCopy;Kopieer truck positie van meerdere opslagbestanden
+buttonConvoyToolsGPSTruckPositionMultySavePaste;Maak meerdere opslagbestanden met verschillende truck posities
+buttonDBExport;Exporteren
+buttonDBImport;Importeren
+buttonEditCPlist;Wijzig lijst
+buttonExport;Exporteren
+buttonFreightMarketAddJob;Voeg Job toe aan lijst
+buttonFreightMarketClearJobList;Lijst legen
+buttonImport;Importeren
+buttonMainAddCustomFolder;Aangepaste map toevoegen
+buttonMainDecryptSave;Decoderen
+buttonMainLoadSave;Laden
+buttonMainWriteSave;Opslaan
+buttonProfilesAndSavesOpenSaveFolder;Open Map
+buttonReplaceColors;↑↑↑ Vervangen ↑↑↑
+buttonSave;Opslaan
+buttonShareTruckTruckDetailsCopy;Kopieer Truck Datails
+buttonShareTruckTruckDetailsPaste;Plak Truck Details
+buttonShareTruckTruckPaintCopy;Kopieer Verf Instellingen
+buttonShareTruckTruckPaintPaste;Plak Verf Instellingen
+buttonShareTruckWholeTruckCopy;Kopieer Alle Truck Instellingen
+buttonShareTruckWholeTruckPaste;Plak Alle Truck Instellingen
+buttonUserColorsShareColors;Deel kleuren
+buttonUserCompanyCitiesUnVisit;Niet bezoeken
+buttonUserCompanyCitiesVisit;Bezoeken
+buttonUserCompanyGaragesBuy;Koop
+buttonUserCompanyGaragesBuyUpgrade;Kopen en Upgraden
+buttonUserCompanyGaragesManageBeheer
+buttonUserCompanyGaragesSell;Verkoop
+buttonUserTrailerSelectCurrent;Selecteer Huidige Trailer
+buttonUserTrailerSwitchCurrent;Instellen als Huidige Trailer
+buttonUserTruckSelectCurrent;Huidige
+buttonUserTruckSwitchCurrent;Wissel huidige Truck naar deze Truck
+error_could_not_complete_jobs_loop;Kon Jobs loop niet afmaken
+error_could_not_decode_file;Programma kon bestand niet decoderen
+error_could_not_find_file;Programma kon bestand niet vinden
+error_could_not_write_to_file;Programma kon niet naar bestand schrijven
+error_during_importing_db;Fout tijdens importeren van DataBase
+error_exception;Programma Uitzondering
+error_file_not_decoded;Bestand niet gedecodeerd
+error_file_was_modified;Bestand was veranderd door spel
+error_job_parameters_not_filled;Niet alle job parameters zijn ingevuld
+error_save_version_not_detected;Opslagbestandversie niet gevonden
+error_sql_exception;DataBase Uitzondering
+FormAboutBox;Over {0}
+FormAddCustomFolder;Wijzig Aangepaste mappen
+FormColorPicker;Kleurenkiezer
+FormSettings;Instellingen
+FormShareUserColors;Deel Gebruikerskleuren
+groupBoxFolderType;Maptype
+groupBoxImportedColors;Geïmporteerde kleuren
+groupBoxMainProfilesAndSaves;Profielen en Opslagbestanden
+groupBoxProfilePlayerLevel;Spelersniveau
+groupBoxProfileSkill;Vaardigheden
+groupBoxProfileUserColors;Gebruikerskleuren
+groupBoxUserTrailerShareTrailerSettings;Deel Trailer Instellingen
+groupBoxUserTruckShareTruckSettings;Details Truck Instellingen
+labelCargoMarketCity;Stad
+labelCargoMarketCompany;Bedrijf
+labelCargoMarketSource;Afkomst
+labelCity;Stad
+labelCurrency;Valuta
+labelDistance;Afstand
+labelDownloadDescription;De laatste versie is te krijgen bij
+labelFreightMarketCargo;Vracht
+labelFreightMarketCity;Stad
+labelFreightMarketCompany;Bedrijf
+labelFreightMarketCompanyF;Bedrijf
+labelFreightMarketCountryF;Land
+labelFreightMarketDestination;Bestemming
+labelFreightMarketDistance;Totale afstand:
+labelFreightMarketSource;Afkomst
+labelFreightMarketUrgency;Urgentie
+labelHowtoDescription;Hoe te gebruiken
+labelJobPickupTime;Vracht tijd
+labelLoopEvery;Loop voor elke
+labelnew;nieuw
+labelold;oud
+labelor;of
+labelProfileSkill1;Lange afstand
+labelProfileSkill2;Waardevolle vracht
+labelProfileSkill3;Breekbare vracht
+labelProfileSkill4;Just-In-Time Levering
+labelProfileSkill5;Milieuvriendelijk rijden
+labelSupportedGameVersions;Ondersteunde spelversies
+labelTrailerPartNameBody;Opbouw
+labelTrailerPartNameCargo;Vracht
+labelTrailerPartNameWheels;Wielen
+labelTruckDetailsFuel;Brandstof
+labelTruckPartNameCabin;Cabine
+labelTruckPartNameEngine;Motor
+labelTruckPartNameTransmission;Versnellingsbak
+labelTruckPartNameWheels;Wielen
+labelUserCompanyCompanyName;Bedrijfsnaam
+labelUserCompanyHQcity;HQ Stad
+labelUserCompanyMoneyAccount;Bankrekening
+labelUserCompanyVisitedCities;Bezochte steden
+labelUserTrailerLicensePlate;Kentekenplaat
+labelUserTruckLicensePlate;Kentekenplaat
+labelVersion;Versie {0} (alpha)
+message_database_created;Databasestructuur gemaakt.
+message_database_missing_creating_db;Databasebestand niet aanwezig. Database aanmaken...
+message_database_missing_creating_db_structure;Databasebestand is niet aanwezig. Databasestructuur aanmaken...
+message_decoding_save_file;Opslagbestand decoderen...
+message_exporting_database;DataBase exporteren...
+message_file_saved;Bestand opgeslagen.
+message_importing_database;DataBase importeren...
+message_loading_save_file;Opslagbestand laden...
+message_no_matching_cities;Geen steden gevonden met filterinstellingen.
+message_operation_finished;Taak volbracht.
+message_preparing_data;Data voorbereiden...
+message_saving_file;Bestand opslaan...
+radioButtonProfileFolderType;Profielmap
+radioButtonRootFolderType;Root map
+radioButtonSaveFolderType;Opslagmap
+radioButtonUnknownFolderType;Onbekend
+stringKilometers;Kilometers
+stringLarge;Groot
+stringMiles;Mijl
+stringNot owned;Niet in bezit
+stringSmall;Klein
+stringTiny;Minuscuul
+tabPageCargoMarket;Ladingmarkt
+tabPageCompany;Bedrijf
+tabPageConvoyTools;Konvooien
+tabPageFreightMarket;Vrachtencentrum
+tabPageProfile;Profiel
+toolStripMenuItemAbout;Over
+toolStripMenuItemCreateTrFile;Maak vertaling
+toolStripMenuItemExit;Afsluiten
+toolStripMenuItemLanguage;Taal
+toolStripMenuItemProgram;Programma
+toolStripMenuItemSettings;Instellingen
+tooltipbuttonProfilesAndSavesRefreshAll;Verversen
+currencyEUR;Euro
+currencyCHF; Zwitsers Frank
+currencyCZK; Tsjechische Kroon
+currencyGBP; Britse Pond
+currencyPLN; Poolse Złoty
+currencyHUF; Hongaarse Forint
+currencyDKK; Deense Krone
+currencySEK; Zweedse Kroon
+currencyNOK; Noorse Krone
+currencyRUB; Russische Roebel
+currencyUSD; Amerikaanse Dollar
+currencyCAD; Canadese Dollar
+currencyMXN; Mexicaanse Peso
+unsupportedGameVersionTitle;Ondersteunde {0} Versie {1}
+unsupportedGameVersionText;De door u geïnstalleerde {0} versie wordt momenteel niet ondersteund door dit hulpmiddel.\n\nGeïnstalleerde Spelversie: {1}\n\nMomenteel Ondersteunde Versies: {2}

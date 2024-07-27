@@ -32,25 +32,20 @@ using System.Threading;
 
 using TS_SE_Tool.Utilities;
 using JR.Utils.GUI.Forms;
+using Narod.SteamGameFinder;
+using TS_SE_Tool.Forms;
+using TS_SE_Tool.CustomClasses.Program;
 
-namespace TS_SE_Tool
-{
-    public partial class FormMain : Form
-    {
+namespace TS_SE_Tool {
+    public partial class FormMain : Form {
         #region  Accesslevels
-
-        internal int[] SupportedSavefileVersionETS2; //Program
-        internal string SupportedGameVersionETS2;//Program
-        //internal int SupportedSavefileVersionATS;
-        internal string SupportedGameVersionATS;//Program
+        internal SupportedGame SelectedGame;
 
         private int JobsAmountAdded;//process result
 
         private int[] UrgencyArray;//Program
 
         public bool FileDecoded;  //+
-
-        internal string GameType;//Program
 
         private string LoopStartCity;//Program
         private string LoopStartCompany;//Program
@@ -120,7 +115,7 @@ namespace TS_SE_Tool
         private Random RandomValue;//Program
 
         private CountryDictionary CountryDictionary;//Program
-        private Dictionary<string,Country> CountriesDataList;
+        private Dictionary<string, Country> CountriesDataList;
 
         private Routes RouteList;//Program DB
 
@@ -148,8 +143,16 @@ namespace TS_SE_Tool
 
         private Image RepairImg, RefuelImg, CustomizeImg; //Program
 
-        internal Image[] MainIcons, ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img, 
+        internal Image[] MainIcons, ADRImgS, ADRImgSGrey, SkillImgSBG, SkillImgS, GaragesImg, GaragesHQImg, CitiesImg, UrgencyImg, CargoTypeImg, CargoType2Img,
             TruckPartsImg, TrailerPartsImg, VehicleIntegrityPBImg, GameIconeImg, AccessoriesImg; //Program
+
+        private void modsToolStripMenuItem_Click(object sender, EventArgs e) {
+            new FormModManager(SelectedGame).Show();
+        }
+
+        private void gameToolStripMenuItem_Click(object sender, EventArgs e) {
+            new FormPluginManager(SelectedGame).Show();
+        }
 
         internal Dictionary<string, Image> ProgUIImgsDict;
 
@@ -164,25 +167,14 @@ namespace TS_SE_Tool
         internal double WeightMultiplier = 1; //Program
         const double kg_to_lb = 2.20462262185; //Program
 
-        public Dictionary<string, List<string>> CurrencyDictFormat;
-        public Dictionary<string, double> CurrencyDictConversion;
-
-        public Dictionary<string, List<string>> CurrencyDictFormatETS2 = new Dictionary<string, List<string>>();
-        public Dictionary<string, double> CurrencyDictConversionETS2 = new Dictionary<string, double>();
-
-        public Dictionary<string, List<string>> CurrencyDictFormatATS = new Dictionary<string, List<string>>();
-        public Dictionary<string, double> CurrencyDictConversionATS = new Dictionary<string, double>();
-
         internal Dictionary<string, Dictionary<UInt16, SCS.SCSFontLetter>> GlobalFontMap;
-        internal Dictionary<string, byte> LicensePlateWidth;
 
         internal bool TssetFoldersExist = false;
         internal bool ForseExit = false;
 
         #endregion
 
-        public FormMain()
-        {
+        public FormMain() {
             IO_Utilities.LogWriter("Initializing form...");
             InitializeComponent();
             IO_Utilities.LogWriter("Form initialized.");
@@ -195,6 +187,14 @@ namespace TS_SE_Tool
             UpdateStatusBarMessage.OnNewMessageBox += ShowMessageBox_OnNewMessageBox;
             this.Icon = Properties.Resources.MainIco;
             this.Text += " [ " + AssemblyData.AssemblyVersion + " ]";
+
+            IO_Utilities.LogWriter("Getting Supported Games...");
+            Globals.Initialize(); //Globals.SteamDir = new SteamGameLocator().getSteamInstallLocation().Cast<DirectoryInfo>().FirstOrDefault();
+            IO_Utilities.LogWriter($"Done: {Globals.SupportedGames.ToJson()}");
+
+            //IO_Utilities.LogWriter("Getting Game Paths...");
+            //Globals.SteamDir = new SteamGameLocator().getSteamInstallLocation().Cast<DirectoryInfo>().FirstOrDefault();
+            //IO_Utilities.LogWriter("Done.");
 
             SetDefaultValues(true);
             IO_Utilities.LogWriter("Loading config...");
@@ -237,18 +237,14 @@ namespace TS_SE_Tool
             IO_Utilities.LogWriter("Caching finished.");
         }
 
-        private void FormMain_Shown(object sender, EventArgs e)
-        {
+        private void FormMain_Shown(object sender, EventArgs e) {
             IO_Utilities.LogWriter("Opening form...");
-            try
-            {
+            try {
                 IO_Utilities.LogWriter("Done.");
 
                 if (Properties.Settings.Default.ShowSplashOnStartup || Properties.Settings.Default.CheckUpdatesOnStartup)
-                    OpenSplashScreen();                
-            }
-            catch
-            {
+                    OpenSplashScreen();
+            } catch {
                 IO_Utilities.LogWriter("Done. Settings error.");
 
                 OpenSplashScreen();
@@ -256,44 +252,41 @@ namespace TS_SE_Tool
 
             DetectGame();
 
-            void OpenSplashScreen()
-            {
+            if (Globals.SupportedGames.Get("ETS2").Installed) radioButtonMainGameSwitchETS.Enabled = true;
+            if (Globals.SupportedGames.Get("ATS").Installed) radioButtonMainGameSwitchATS.Enabled = true;
+
+            void OpenSplashScreen() {
                 FormSplash WindowSplash = new FormSplash();
                 WindowSplash.ShowDialog();
             }
         }
 
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
             DialogResult exitDR;
 
-            if (this.ForseExit)            
+            if (this.ForseExit)
                 return;
 
             if (AddedJobsDictionary != null && AddedJobsDictionary.Count > 0)
-                exitDR = FlexibleMessageBox.Show(this, "You have unsaved changes."+ Environment.NewLine + "Do you really want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                exitDR = FlexibleMessageBox.Show(this, "You have unsaved changes." + Environment.NewLine + "Do you really want to close down application?", "Close Application without saving changes", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
             else
                 exitDR = FlexibleMessageBox.Show(this, "Do you really want to close down application?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
 
-            if (exitDR == DialogResult.Yes)
-            {
+            if (exitDR == DialogResult.Yes) {
                 ProgSettingsV.WriteConfigToFile();
-            }
-            else
-            {
+            } else {
                 e.Cancel = true;
                 Activate();
             }
         }
 
-        private void makeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void makeToolStripMenuItem_Click(object sender, EventArgs e) {
             //Set default culture
             string sysCI = CultureInfo.InstalledUICulture.Name;
 
             string folderPath = Directory.GetCurrentDirectory() + @"\lang\" + sysCI;
 
-            if(!Directory.Exists(folderPath))
+            if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
             Process.Start(folderPath);
@@ -303,11 +296,11 @@ namespace TS_SE_Tool
         }
     }
 
-    public class Globals
-    {
+    public static class Globals {
+        public static List<SupportedGame> SupportedGames = new();
         //-----
-        public static string[] ProfilesPaths = new string[0];
-        public static List<string> ProfilesHex = new List<string>();
+        public static List<DirectoryInfo> ProfileDirs = new();
+        public static List<string> ProfilesHex = new();
         //
         public static string SelectedProfile = "";
         public static string SelectedProfilePath = "";
@@ -319,8 +312,62 @@ namespace TS_SE_Tool
         public static string SelectedSavePath = "";
         public static string SelectedSaveName = "";
         //----
-        public static int[] PlayerLevelUps = new int[0];
         public static string CurrencyName = "";
+        //
+        public static SteamGameLocator SteamGameLocator = new SteamGameLocator();
+        public static bool SteamInstalled { get => SteamGameLocator.getIsSteamInstalled(); }
+        public static DirectoryInfo SteamDir { get => new DirectoryInfo(SteamGameLocator.getSteamInstallLocation()); }
+        public static DirectoryInfo GetLatestSteamUserDataDir() => SteamDir.Combine("userdata").GetDirectories().OrderByDescending(d => d.LastWriteTimeUtc).First(d => d.Name.All(char.IsDigit));
+        public static DirectoryInfo DocumentsDir = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)); // todo: make dynamic
+
+        public static void Initialize() {
+            SupportedGames.Clear();
+            SupportedGames.Add(
+                new SupportedGame() {
+                    SteamAppId = 227300,
+                    Type = "ETS2",
+                    Name = "Euro Truck Simulator 2",
+                    ExecutableName = "eurotrucks2.exe",
+                    MinSupportedGameVersion = new Version(1, 43),
+                    MaxSupportedGameVersion = new Version(1, 49),
+                    SupportedSaveFileVersions = new() { 61, 74 },
+                    LicensePlateWidth = 128,
+                    PlayerLevelUps = new() {200, 500, 700, 900, 1000, 1100, 1300, 1600, 1700, 2100, 2300, 2600, 2700,
+                    2900, 3000, 3100, 3400, 3700, 4000, 4300, 4600, 4700, 4900, 5200, 5700, 5900, 6000, 6200, 6600, 6800},
+                    Currencies = new() {
+                         new Currency("EUR", 1, new() { "", "€", "" }),
+                         new Currency("CHF", 1.142, new() { "", "", " CHF" }),
+                         new Currency("CZK", 25.88, new() { "", "", " Kč" }),
+                         new Currency("GBP", 0.875, new() { "", "£", "" }),
+                         new Currency("PLN", 4.317, new() { "", "", " zł" }),
+                         new Currency("HUF", 325.3, new() { "", "", " Ft" }),
+                         new Currency("DKK", 7.46, new() { "", "", " kr" }),
+                         new Currency("SEK", 10.52, new() { "", "", " kr" }),
+                          new Currency("NOK", 9.51, new() { "", "", " kr" }),
+                         new Currency("RUB", 77.05, new() { "", "₽", "" })
+                    }
+                });
+            SupportedGames.Add(
+                new SupportedGame() {
+                    SteamAppId = 270880,
+                    Type = "ATS",
+                    Name = "American Truck Simulator",
+                    ExecutableName = "amtrucks.exe",
+                    MinSupportedGameVersion = new Version(1, 43),
+                    MaxSupportedGameVersion = new Version(1, 49),
+                    LicensePlateWidth = 64,
+                    PlayerLevelUps = new() {200, 500, 700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300, 2500, 2700,
+                    2900, 3100, 3300, 3500, 3700, 4000, 4300, 4600, 4900, 5200, 5500, 5800, 6100, 6400, 6700, 7000, 7300},
+                    Currencies = new() {
+                           new Currency("USD", 1, new() { "", "$", "" }),
+                           new Currency("CAD", 1.3, new() { "", "$", "" }),
+                           new Currency("MXN", 18.69, new() { "", "$", "" }),
+                           new Currency("EUR", 0.856, new() { "", "€", "" })
+                    }
+                });
+        }
     }
+
+
 
 }

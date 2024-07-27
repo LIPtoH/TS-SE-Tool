@@ -1,0 +1,272 @@
+﻿[ko-KR]
+buttonAccept;수락
+buttonAddCustomPath;추가
+buttonAddUserColor;+ 슬롯
+buttonApply;적용
+buttonCancel;취소
+buttonCargoMarketRandomizeCargoCity;랜덤 화물 도시
+buttonCargoMarketRandomizeCargoCompany;화물 회사 랜덤
+buttonCargoMarketResetCargoCity;화물 도시 초기화
+buttonCargoMarketResetCargoCompany;화물 회사 초기화
+buttonChooseFolder;폴더 선택
+buttonClearColor;취소
+buttonCloneProfile;프로필 복제
+buttonConvoyToolsGPSCurrentPositionCopy;사용자 위치 복사
+buttonConvoyToolsGPSCurrentPositionPaste;사용자 위치 붙여넣기
+buttonConvoyToolsGPSStoredGPSPathCopy;GPS 경로 복사
+buttonConvoyToolsGPSStoredGPSPathPaste;GPS 경로 붙여넣기
+buttonConvoyToolsGPSTruckPositionMultySaveCopy;여러 저장에서 트럭 위치 복사
+buttonConvoyToolsGPSTruckPositionMultySavePaste;다른 트럭 위치로 여러 저장 생성
+buttonDBClear;취소
+buttonDBExport;내보내기
+buttonDBImport;들여오기
+buttonEditCPlist;리스트 수정
+buttonExport;내보내기
+buttonExportSettings;내보내기
+buttonFreightMarketAddJob;작업 추가
+buttonFreightMarketClearJobList;작업 취소
+buttonFreightMarketRandomizeCargo;랜덤
+buttonImport;불러오기
+buttonImportSettings;불러오기
+buttonMainAddCustomFolder;사용자 폴더 추가
+buttonMainCloseSave;언로드
+buttonMainDecryptSave;암호 해독
+buttonMainGameSwitchATS;ATS
+buttonMainGameSwitchETS;ETS2
+buttonMainLoadSave;불러오기
+buttonMainLoadSaveSteamCloud;스팀 클라우드 비활성화
+buttonMainWriteSave;저장
+buttonPlayerLevelMaximum;최대 >>
+buttonPlayerLevelMinimum;<< 최소
+buttonProfilesAndSavesOpenSaveFolder;폴더 열기
+buttonRenameProfile;프로필 이름 변경
+buttonReplaceColors;↑↑↑ 교체 ↑↑↑
+buttonRestoreProfileBackup;프로필 백업 복원
+buttonSave;저장
+buttonSelectFile;파일 선택 ...
+buttonShareTruckTruckDetailsCopy;트럭 세부사항 복사
+buttonShareTruckTruckDetailsPaste;트럭 세부사항 붙여넣기
+buttonShareTruckTruckPaintCopy;페인트 복사
+buttonShareTruckTruckPaintPaste;페인트 붙여넣기
+buttonShareTruckWholeTruckCopy;모든 트럭 설정 복사
+buttonShareTruckWholeTruckPaste;모든 트럭 설정 붙여넣기
+buttonUserColorsShareColors;색 공유
+buttonUserCompanyCitiesUnVisit;방문안함
+buttonUserCompanyCitiesVisit;방문함
+buttonUserCompanyGaragesBuy;차고 구매
+buttonUserCompanyGaragesBuyDowngrade;차고 다운그레이드
+buttonUserCompanyGaragesBuyUpgrade;차고 업그레이드
+buttonUserCompanyGaragesManage;차고 매니저
+buttonUserCompanyGaragesSell;차고 판매
+buttonUserCompanyGaragesUpgrade;차고 업그레이드
+buttonUserTrailerSelectCurrent;현재 트레일러 선택
+buttonUserTrailerSwitchCurrent;현재 트레일러 교체
+buttonUserTruckSelectCurrent;현재 트럭 선택
+buttonUserTruckSwitchCurrent;현재 트럭 교체
+checkBoxCreateBackup;백업 .zip 파일 만들기
+checkBoxFreightMarketFilterDestination;필터 대상
+checkBoxFreightMarketFilterSource;필터 소스
+checkBoxFreightMarketRandomDest;무작위 목적지
+checkBoxFullCloning;모든 세이브 복제
+checkBoxMutiCloning;멀티 복제
+checkBoxProfilesAndSavesProfileBackups;프로필 백업
+dialogCaptionNoBackwardCompatibility;이전 버전과의 호환성 없음
+dialogCaptionUnsupportedVersion;테스트되지 않은 저장 파일 버전
+dialogTextNoBackwardCompatibility;저장 파일 버전 {0} 너무 오래되었다.\r\n이 버전의 프로그램은 작업할 수 없습니다..\r\n(저장 파일의 암호를 해독하고 언제든지 수동으로 편집할 수 있습니다.)
+dialogTextUnsupportedVersion;저장 파일 버전 {0} 테스트되지 않음.\r\n진행할 수 있습니다, 저장 후 세이브 파일을 손상시킬 수 있습니다.\r\n이 경우 자동 저장 대신 수동 저장을 사용하십시오!\r\n\r\n이 세이브 파일을 로드하시겠습니까?
+error_could_not_complete_jobs_loop;작업 루프를 완료할 수 없습니다.
+error_could_not_decode_file;프로그램이 파일을 디코딩할 수 없습니다
+error_could_not_find_file;프로그램이 파일을 찾을 수 없습니다
+error_could_not_write_to_file;프로그램이 파일에 쓸 수 없습니다.
+error_during_importing_db;데이터베이스를 가져오는 동안 오류가 발생했습니다.
+error_exception;프로그램 예외
+error_file_not_decoded;파일이 디코딩되지 않음
+error_file_was_modified;게임에서 파일을 수정
+error_job_parameters_not_filled;모든 작업 매개변수가 채워지지 않았습니다.
+error_save_version_not_detected;저장 파일 버전이 감지되지 않았습니다.
+error_sql_exception;데이터베이스 예외
+FormAboutBox;정보 {0}
+FormAddCustomFolder;사용자 폴더 수정
+FormColorPicker;색 선택기
+FormLicensePlateEdit;번호판 편집기
+FormProfileEditor;포로필 매니저
+FormProfileEditorRenameCloneCloning;복제
+FormProfileEditorRenameCloneRenaming;이름 변경
+FormProfileEditorSettingsImportExportExporting;다음에서 내보내기 {0}
+FormProfileEditorSettingsImportExportImporting;다음으로 가져오기 {0}
+FormProgramSettings;프로그램 설정
+FormSettings;설정
+FormShareUserColors;사용자 색 공유
+groupBoxDataBase;데이터베이스
+groupBoxFolderType;폴더 종류
+groupBoxGameType;게임
+groupBoxImportedColors;색 가져요기
+groupBoxMainProfilesAndSaves;프로필 및 저장
+groupBoxOptions;옵션
+groupBoxProfilePlayerLevel;플레이어 레벨
+groupBoxProfileSkill;스킬
+groupBoxProfileUserColors;사용자 색
+groupBoxSelectFileExporting;.zip 파일로 압축
+groupBoxSelectFileImporting;.zip 파일로 부터
+groupBoxTargetProfileExporting;...에 넣다
+groupBoxTargetProfileImporting;...에서 가져오기
+groupBoxUserTrailerShareTrailerSettings;트레일러 설정 공유
+groupBoxUserTrailerTrailer;트레일러
+groupBoxUserTrailerTrailerDetails;세부사항
+groupBoxUserTruckShareTruckSettings;트럭 설정 공유
+groupBoxUserTruckTruck;트럭
+groupBoxUserTruckTruckDetails;세부사항
+labelCargoMarketCity;도시
+labelCargoMarketCompany;회사
+labelCargoMarketSource;소스
+labelCheckUpdatesOnStartup;시작 시 업데이트 확인
+labelCity;도시
+labelCountry;국가
+labelCurrency;화폐
+labelDayShort;D
+labelDistance;거리
+labelDownloadDescription;최신 버전을 다운로드할 수 있습니다.
+labelFreightMarketCargo;화물
+labelFreightMarketCity;도시
+labelFreightMarketCompany;회사
+labelFreightMarketCompanyF;회사
+labelFreightMarketCountryF;나라
+labelFreightMarketDestination;목적지
+labelFreightMarketDistance;전체 경로 길이:
+labelFreightMarketFilterMain;필터
+labelFreightMarketSource;출처
+labelFreightMarketTrailer;트레일러
+labelFreightMarketUrgency;중요도
+labelHourShort;h
+labelHowtoDescription;사용 방법
+labelJobPickupTime;화물 관련 시간
+labelLicensePlate;번호판
+labelLoopEvery;루프 간격
+labelnew;신형
+labelNewNameCloning;복제된 프로필의 이름:
+labelNewNameRenaming;새 프로필 이름:
+labelold;구형
+labelOr;- OR -
+labelor;or
+labelProfileName;프로필 이름:
+labelProfileSkill0;ADR
+labelProfileSkill1;장거리
+labelProfileSkill2;고부가가치 화물
+labelProfileSkill3;깨지기 쉬운 화물
+labelProfileSkill4;정시 배송
+labelProfileSkill5;친환경 운전
+labelSettings;설정
+labelShowSplashOnStartup;시작 시 시작 화면 표시
+labelSupportedGameVersions;지원되는 게임 버전
+labelTrailerPartNameBody;바디
+labelTrailerPartNameCargo;화물
+labelTrailerPartNameChassis;샤시
+labelTrailerPartNameWheels;휠
+labelTruckDetailsFuel;연료
+labelTruckPartNameCabin;캐빈
+labelTruckPartNameChassis;샤시
+labelTruckPartNameEngine;엔진
+labelTruckPartNameTransmission;변속기
+labelTruckPartNameWheels;휠
+labelUserCompanyCompanyName;회사 이름
+labelUserCompanyGarages;차고
+labelUserCompanyHQcity;본사
+labelUserCompanyMoneyAccount;돈
+labelUserCompanyVisitedCities;방문 도시
+labelUserTrailerLicensePlate;트레일러 번호판
+labelUserTruckLicensePlate;트럭 번호판
+labelVersion;버전 {0} (알파)
+labelWeight;중량
+message_database_created;데이터베이스 구조가 생성.
+message_database_missing_creating_db;데이터베이스 파일이 없습니다. 데이터베이스 생성...
+message_database_missing_creating_db_structure;데이터베이스 파일이 없습니다. 데이터베이스 구조 생성...
+message_decoding_save_file;세이브 파일 디코딩...
+message_exporting_database;데이터베이스 내보내기...
+message_file_saved;파일 저장.
+message_importing_database;데이터베이스 불러오기...
+message_loading_save_file;세이브파일 불러오기...
+message_no_matching_cities;필터 설정과 일치하는 도시가 없습니다..
+message_operation_finished;작업 완료.
+message_preparing_data;데이터 준비...
+message_saving_file;파일 저장...
+radioButtonProfileFolderType;프로필 폴더
+radioButtonRootFolderType;루트 폴더
+radioButtonSaveFolderType;저장 폴더
+radioButtonUnknownFolderType;알려지지 않음
+stringCargoContainer;(Container)
+stringDriverShort;D
+stringKilograms;kg
+stringKilometers;Km
+stringKilometersShort;km
+stringLarge;대형
+stringMiles;mile
+stringMilesShort;mi
+stringNot owned;소유 안함
+stringPounds;lb
+stringSmall;소형
+stringTiny;초소형
+stringTrailerShort;T
+stringVehicleShort;V
+tabPageCargoMarket;화물 시장
+tabPageCompany;회사
+tabPageConvoyTools;콘보이 툴
+tabPageFreightMarket;배송 시장
+tabPageProfile;프로필
+tabPageTrailer;트레일러
+tabPageTruck;트럭
+toolStripMenuItemAbout;정보
+toolStripMenuItemCheckUpdates;업데이트 확인
+toolStripMenuItemCreateTrFile;번역 만들기
+toolStripMenuItemDownload;다운로드
+toolStripMenuItemExit;닫기
+toolStripMenuItemHelp;도움말
+toolStripMenuItemLanguage;언어
+toolStripMenuItemLocalPDF;로컬 PDF 파일
+toolStripMenuItemProgram;프로그램
+toolStripMenuItemProgramSettings;프로그램 설정
+toolStripMenuItemSettings;설정
+toolStripMenuItemTutorial;사용 방법
+toolStripMenuItemYouTubeVideo;YouTube 영상
+tooltipbuttonADR0;폭발물
+tooltipbuttonADR1;가스
+tooltipbuttonADR2;가연성 액체
+tooltipbuttonADR3;가연성 고체
+tooltipbuttonADR4;독성 및 전염성 물질
+tooltipbuttonADR5;부식성 물질
+tooltipbuttonPlayerLevelMaximum;150 레벨
+tooltipbuttonPlayerLevelMinimum;0 레벨
+tooltipbuttonProfilesAndSavesEditProfile;프로필 매니저
+tooltipbuttonProfilesAndSavesRefreshAll;새로고침
+tooltipbuttonProfilesAndSavesRestoreBackup;백업에서 복원
+tooltipbuttonSkill;{0} 레벨
+tooltipbuttonTrailerElRepair;이 부분 수리
+tooltipbuttonTrailerLicensePlateEdit;번호판 수정
+tooltipbuttonTrailerRepair;전체 트레일러 수리
+tooltipbuttonTruckElRepair;이 부분 수리
+tooltipbuttonTruckLicensePlateEdit;번호판 수정
+tooltipbuttonTruckReFuel;트럭 연료 보급
+tooltipbuttonTruckRepair;전체 트럭 수리
+tooltipbuttonUserCompanyGaragesManage;매니저
+tooltipcomboBoxPrevProfiles;[L] - 로컬 저장\r\n[S] - 스팀 (불러오기 전용)\r\n[C] - 커스텀
+tooltiplabelJobPickupTime;화물이 시장에서 사라질 때까지 시간\r\n(모든 화물에 추가)
+tooltipprofileSkillsPanel0;ADR
+tooltipprofileSkillsPanel1;장거리
+tooltipprofileSkillsPanel2;고부가가치 화물
+tooltipprofileSkillsPanel3;깨지기 쉬운 화물
+tooltipprofileSkillsPanel4;정시 배송
+tooltipprofileSkillsPanel5;연비 운전
+currencyEUR;유로
+currencyCHF;스위스 프랑
+currencyCZK;체코 크로나
+currencyGBP;파운드
+currencyPLN;폴란드 즈워티
+currencyHUF;헝가리 포린트
+currencyDKK;덴마크 크로네
+currencySEK;스웨덴 크로네
+currencyNOK;노르웨이 크로네
+currencyRUB;러시아 루블
+currencyUSD;미국 달러
+currencyCAD;캐나다 달러
+currencyMXN;멕시코 페소
+unsupportedGameVersionTitle;지원되지 않는 {0} 버전 {1}
+unsupportedGameVersionText;당신이 설치한 현재 {0} 버전은 이 도구에 의해 지원되지 않습니다.\n\n설치된 게임 버전: {1}\n\n현재 지원되는 버전: {2}

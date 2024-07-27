@@ -1,0 +1,4 @@
+﻿[tr-TR]
+0;Standart
+1;Önemli
+2;Acil

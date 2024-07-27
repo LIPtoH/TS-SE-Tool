@@ -1,0 +1,55 @@
+﻿[tr-TR]
+austria;Avusturya
+belgium;Belçika
+bulgaria;Bulgaristan
+czech;Çekya
+denmark;Danimarka
+estonia;Estonya
+finland;Finlandiya
+france;Fransa
+germany;Almanya
+hungary;Macaristan
+italy;İtalya
+latvia;Letonya
+lithuania;Litvanya
+luxembourg;Lüksemburg
+netherlands;Hollanda
+norway;Norveç
+poland;Polonya
+romania;Romanya
+russia;Russya
+slovakia;Slovakya
+sweden;İsveç
+switzerland;İsviçre
+turkey;Turkiye
+uk;Birleşik Krallık
+california;Kaliforniya
+albania;Arnavutluk
+bosnia;Bosna Hersek
+croatia;Hırvatistan
+cyprus;Kıbrıs
+faroe;Faroe Adaları
+georgia;Gürcistan
+greece;Yunanistan
+iceland;İzlanda
+iom;Man Adası
+ireland;İrlanda
+liecht;Liechtenstein
+macedonia;Kuzey Makedonya
+mnegro;Karadağ
+moldova;Moldova
+nireland;Kuzey İrlanda
+portugal;Portekiz
+serbia;Sırbistan
+slovenia;Slovenya
+spain;İspanya
+svalbard;Svalbard
+ukraine;Ukrayna
+egypt;Mısır
+iraq;Irak
+israel;İsrail
+jordan;Ürdün
+lebanon;Lübnan
+saudia;Suudi Arabistan
+syria;Suriye
+westbank;Batı Şeria

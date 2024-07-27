@@ -1,0 +1,47 @@
+﻿[pt-BR]
++all;Todos
++unsorted;Não classificado
+austria;Áustria
+belgium;Bélgica
+bulgaria;Bulgária
+czech;Tcheca
+denmark;Dinamarca
+estonia;Estônia
+finland;Finlândia
+france;França
+germany;Alemanha
+hungary;Hungria
+italy;Itália
+latvia;Letônia
+lithuania;Lituânia
+luxembourg;Luxemburgo
+netherlands;Holanda
+norway;Noruega
+poland;Polônia
+romania;Romênia
+russia;Rússia
+slovakia;Eslováquia
+sweden;Suécia
+switzerland;Suíça
+turkey;Turquia
+uk;Reino Unido
+arizona;Arizona
+california;Califórnia
+nevada;Nevada
+new_mexico;Novo México
+oregon;Oregon
+utah;Utah
+washington;Washington
+aland;Ilhas de Aland
+andorra;Andorra
+belarus;Bielorrússia
+croatia;Croácia
+faroe;Ilhas Faroé
+iceland;Islândia
+ireland;Irlanda
+liecht;Liechtenstein
+moldova;Moldávia
+serbia;Sérvia
+slovenia;Eslovênia
+spain;Espanha
+ukraine;Ucrânia

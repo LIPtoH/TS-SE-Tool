@@ -1,0 +1,4 @@
+material : "ui.white_font" {
+	texture : "/font/license_plate/austria_0.tobj"
+	texture_name : "texture"
+}

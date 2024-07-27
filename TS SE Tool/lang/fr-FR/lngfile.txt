@@ -1,0 +1,169 @@
+﻿[fr-FR]
+buttonAddCustomPath;Ajouter
+buttonCancel;Annuler
+buttonCargoMarketRandomizeCargoCity;Liste aléatoire des cargaisons
+buttonCargoMarketRandomizeCargoCompany;Liste aléatoire des cargaisons
+buttonCargoMarketResetCargoCity;Réinitialiser la liste des cargaisons
+buttonCargoMarketResetCargoCompany;Réinitialiser la liste des cargaisons
+buttonChooseFolder;Choisir le dossier
+buttonClearColor;Effacer la couleur
+buttonConvoyToolsGPSCurrentPositionCopy;Copier la position actuelle
+buttonConvoyToolsGPSCurrentPositionPaste;Coller la position actuelle
+buttonConvoyToolsGPSStoredGPSPathCopy;Copier la route GPS
+buttonConvoyToolsGPSStoredGPSPathPaste;Coller la route GPS
+buttonConvoyToolsGPSTruckPositionMultySaveCopy;Copiez la position du camion à partir de plusieurs sauvegardes
+buttonConvoyToolsGPSTruckPositionMultySavePaste;Créez plusieurs sauvegardes avec différentes positions de camion
+buttonDBClear;Effacer
+buttonDBExport;Exporter
+buttonDBImport;Importer
+buttonEditCPlist;Modifier la liste
+buttonExport;Exporter
+buttonFreightMarketAddJob;Ajouter un travail à la liste
+buttonFreightMarketClearJobList;Effacer la liste
+buttonFreightMarketRandomizeCargo;Aléatoire
+buttonImport;Importer
+buttonMainAddCustomFolder;Ajouter un dossier personnalisé
+buttonMainDecryptSave;Décrypter
+buttonMainLoadSave;Charger
+buttonMainWriteSave;Sauvegarder
+buttonProfilesAndSavesOpenSaveFolder;Ouvrir le dossier
+buttonReplaceColors;↑↑↑ Remplacer ↑↑↑
+buttonSave;Sauvegarder
+buttonShareTruckTruckDetailsCopy;Copier les détails du camion
+buttonShareTruckTruckDetailsPaste;Coller les détails du camion
+buttonShareTruckTruckPaintCopy;Copier les paramètres de peinture
+buttonShareTruckTruckPaintPaste;Coller les paramètres de peinture
+buttonShareTruckWholeTruckCopy;Copier tous les paramètres du camion
+buttonShareTruckWholeTruckPaste;Coller tous les paramètres du camion
+buttonUserColorsShareColors;Partager les couleurs
+buttonUserCompanyCitiesUnVisit;Non visité
+buttonUserCompanyCitiesVisit;Visité
+buttonUserCompanyGaragesBuy;Acheter
+buttonUserCompanyGaragesBuyDowngrade;Rétrograder
+buttonUserCompanyGaragesBuyUpgrade;Acheter et améliorer
+buttonUserCompanyGaragesManage;Gérer
+buttonUserCompanyGaragesSell;Vendre
+buttonUserCompanyGaragesUpgrade;Améliorer
+buttonUserTrailerSelectCurrent;Sélectionner la remorque actuelle
+buttonUserTrailerSwitchCurrent;Remplacer la remorque actuelle par cette remorque
+buttonUserTruckSelectCurrent;Sélectionner le camion actuel
+buttonUserTruckSwitchCurrent;Remplacer le camion actuel par ce camion
+checkBoxFreightMarketFilterDestination;Filtrer
+checkBoxFreightMarketFilterSource;Filtrer
+checkBoxProfilesAndSavesProfileBackups;Sauvegardes
+error_could_not_complete_jobs_loop;Impossible de terminer la boucle des travaux
+error_could_not_decode_file;Le programme n'a pas pu décoder le fichier
+error_could_not_find_file;Le programme n'a pas pu trouver le fichier
+error_could_not_write_to_file;Le programme n'a pas pu écrire dans le fichier
+error_during_importing_db;Erreur lors de l'importation de la base de données
+error_exception;Exception de programme
+error_file_not_decoded;Fichier non décodé
+error_file_was_modified;Le fichier a été modifié par le jeu
+error_job_parameters_not_filled;Tous les paramètres du travail ne sont pas remplis
+error_save_version_not_detected;La version du fichier d'enregistrement n'a pas été détectée
+FormAddCustomFolder;Modifier les dossiers personnalisés
+FormColorPicker;Pipette de couleurs
+FormSettings;Réglages
+FormShareUserColors;Partager les couleurs de l'utilisateur
+groupBoxFolderType;Type de dossier
+groupBoxGameType;Jeu
+groupBoxImportedColors;Couleurs importées
+groupBoxMainProfilesAndSaves;Profils Et Sauvegardes
+groupBoxProfilePlayerLevel;Niveau du joueur
+groupBoxProfileSkill;Compétences
+groupBoxProfileUserColors;Couleurs utilisateur
+groupBoxUserTrailerShareTrailerSettings;Partager les paramètres de la remorque
+groupBoxUserTrailerTrailer;Remorque
+groupBoxUserTrailerTrailerDetails;Détails
+groupBoxUserTruckShareTruckSettings;Partager les paramètres du camion
+groupBoxUserTruckTruck;Camion
+groupBoxUserTruckTruckDetails;Détails
+Kilometers;Kilomètres
+labelCargoMarketCity;Ville
+labelCargoMarketCompany;Compagnie
+labelCity;Ville
+labelCurrency;Monnaie
+labelDownloadDescription;Vous pouvez télécharger la dernière version depuis
+labelFreightMarketCargo;Cargaison
+labelFreightMarketCity;Ville
+labelFreightMarketCompany;Compagnie
+labelFreightMarketCompanyF;Compagnie
+labelFreightMarketCountryF;Pays
+labelFreightMarketDistance;Longueur totale du trajet:
+labelFreightMarketFilterMain;Filtrer
+labelFreightMarketSource;Origine
+labelFreightMarketUrgency;Urgence
+labelHowtoDescription;Comment l'utiliser
+labelJobPickupTime;Heure de prise en charge de la cargaison
+labelLoopEvery;Boucle tous les
+labelnew;Nouveau
+labelold;Ancien
+labelor;ou
+labelProfileSkill1;Longue distance
+labelProfileSkill2;Cargaison haute valeur
+labelProfileSkill3;Cargaison fragile
+labelProfileSkill4;Livraison juste à temps
+labelProfileSkill5;Eco-conduite
+labelSupportedGameVersions;Versions de jeu prises en charge
+labelTrailerPartNameBody;Type
+labelTrailerPartNameCargo;Cargaison
+labelTrailerPartNameWheels;Roues
+labelTruckPartNameCabin;Cabine
+labelTruckPartNameEngine;Moteur
+labelTruckPartNameWheels;Roues
+labelUserCompanyCompanyName;Nom de la compagnie
+labelUserCompanyHQcity;Ville du siège
+labelUserCompanyMoneyAccount;Compte en banque
+labelUserCompanyVisitedCities;Villes visitées
+labelUserTrailerLicensePlate;Immatriculation
+labelUserTruckLicensePlate;Immatriculation
+Large;Grand
+message_database_created;Structure database créée.
+message_database_missing_creating_db;Le fichier de données est manquant. Création des données...
+message_database_missing_creating_db_structure;Le fichier de données est manquant. Création de la structure...
+message_decoding_save_file;Décodage fichier de sauvegarde...
+message_exporting_database;Exportation des données...
+message_file_saved;Fichier sauvegardé.
+message_importing_database;Importation des données...
+message_loading_save_file;Chargement fichier de sauvegarde...
+message_no_matching_cities;Pas de ville correspondant au filtre.
+message_operation_finished;Tâche terminée.
+message_preparing_data;Préparation des données...
+message_saving_file;Sauvegarde du fichier...
+Not owned;Non possédé
+radioButtonProfileFolderType;Dossier profil
+radioButtonRootFolderType;Dossier racine
+radioButtonSaveFolderType;Sauvegarder le dossier
+radioButtonUnknownFolderType;Inconnu
+Small;Petit
+tabPageCargoMarket;Offres de traction
+tabPageCompany;Compagnie
+tabPageConvoyTools;Outils Convoi
+tabPageFreightMarket;Offres de fret
+tabPageProfile;Profil
+tabPageTrailer;Remorque
+tabPageTruck;Camion
+Tiny;Minuscule
+toolStripMenuItemCreateTrFile;Rédiger une traduction
+toolStripMenuItemDownload;Télécharger
+toolStripMenuItemExit;Quitter
+toolStripMenuItemHelp;Aide
+toolStripMenuItemLanguage;Langue
+toolStripMenuItemProgram;Programme
+toolStripMenuItemSettings;Réglages
+tooltipbuttonProfilesAndSavesRefreshAll;Rafraîchir
+currencyEUR;Euro
+currencyCHF;Franc Suisse
+currencyCZK;Couronne Tchèque
+currencyGBP;Livre Sterling
+currencyPLN;Złoty Polonais
+currencyHUF;Forint Hongrois
+currencyDKK;Krone Danoise
+currencySEK;Krona Suédoise
+currencyNOK;Krone Norvégienne
+currencyRUB;Rouble Russe
+currencyUSD;Dollar Américain
+currencyCAD;Dollar Canadien
+currencyMXN;Peso Mexicain
+unsupportedGameVersionTitle;Version {0} Non Supportée {1}
+unsupportedGameVersionText;Votre version {0} n'est actuellement pas prise en charge par cet outil.\n\nVersion du Jeu Installée: {1}\n\nVersions Actuellement Supportées: {2}

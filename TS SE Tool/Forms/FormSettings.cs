@@ -25,29 +25,24 @@ using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
 using System.Threading;
+using TS_SE_Tool.CustomClasses.Program;
 
-namespace TS_SE_Tool
-{
-    public partial class FormSettings : Form
-    {
+namespace TS_SE_Tool {
+    public partial class FormSettings : Form {
         FormMain MainForm = Application.OpenForms.OfType<FormMain>().Single();
 
-        public FormSettings()
-        {
+        public FormSettings() {
             InitializeComponent();
 
-            this.Icon = Utilities.Graphics_TSSET.IconFromImage(MainForm.ProgUIImgsDict["Settings"]);            
+            this.Icon = Utilities.Graphics_TSSET.IconFromImage(MainForm.ProgUIImgsDict["Settings"]);
 
             this.SuspendLayout();
 
-            try
-            {
+            try {
                 string translatedString = MainForm.ResourceManagerMain.GetString(this.Name, Thread.CurrentThread.CurrentUICulture);
                 if (translatedString != null)
                     this.Text = translatedString;
-            }
-            catch
-            { }
+            } catch { }
 
             MainForm.HelpTranslateFormMethod(this, toolTip);
 
@@ -57,8 +52,7 @@ namespace TS_SE_Tool
             PopulateControls();
         }
 
-        private void CorrectControlsPositions()
-        {
+        private void CorrectControlsPositions() {
             //Longest setting string
             int longeststr = 0, margin = 6;
 
@@ -87,12 +81,10 @@ namespace TS_SE_Tool
             CorrectControlsPositionsMover(Controllist, longeststr, margin);
         }
 
-        private int CorrectControlsPositionsLoongest(Control[] _inputList)
-        {
+        private int CorrectControlsPositionsLoongest(Control[] _inputList) {
             int longeststr = 0;
 
-            foreach (Control c in _inputList)
-            {
+            foreach (Control c in _inputList) {
                 Label temp = c as Label;
                 if (c.Width > longeststr)
                     longeststr = c.Width + c.Location.X;
@@ -101,14 +93,11 @@ namespace TS_SE_Tool
             return longeststr;
         }
 
-        private void CorrectControlsPositionsMover(Control[][] _Controllist, int _longeststr, int _margin)
-        {
-            foreach (Control[] cc in _Controllist)
-            {
+        private void CorrectControlsPositionsMover(Control[][] _Controllist, int _longeststr, int _margin) {
+            foreach (Control[] cc in _Controllist) {
                 int margincount = 2, startX = _longeststr;
 
-                foreach (Control c in cc)
-                {
+                foreach (Control c in cc) {
                     c.Location = new Point(startX + _margin * margincount, c.Location.Y);
                     startX += c.Width;
                     margincount++;
@@ -116,8 +105,7 @@ namespace TS_SE_Tool
             }
         }
 
-        private void PopulateControls()
-        {
+        private void PopulateControls() {
             bool _fixSettings = false;
             DataTable combDT;
 
@@ -128,16 +116,12 @@ namespace TS_SE_Tool
 
             Dictionary<string, string> DistanceMesNames = new Dictionary<string, string> { { "km", "Kilometers" }, { "mi", "Miles" } };
 
-            foreach (KeyValuePair<string, string> tempitem in DistanceMesNames)
-            {
+            foreach (KeyValuePair<string, string> tempitem in DistanceMesNames) {
                 string value = MainForm.ResourceManagerMain.GetString(tempitem.Value, Thread.CurrentThread.CurrentUICulture);
 
-                if (value != null && value != "")
-                {
+                if (value != null && value != "") {
                     combDT.Rows.Add(tempitem.Key, value);
-                }
-                else
-                {
+                } else {
                     combDT.Rows.Add(tempitem.Key, tempitem.Value);
                 }
             }
@@ -147,8 +131,7 @@ namespace TS_SE_Tool
             comboBoxSettingDistanceMesSelect.DataSource = combDT;
             comboBoxSettingDistanceMesSelect.SelectedValue = MainForm.ProgSettingsV.DistanceMes;
 
-            if (comboBoxSettingDistanceMesSelect.SelectedValue == null)
-            {
+            if (comboBoxSettingDistanceMesSelect.SelectedValue == null) {
                 _fixSettings = true;
                 comboBoxSettingDistanceMesSelect.SelectedIndex = 0;
             }
@@ -161,16 +144,12 @@ namespace TS_SE_Tool
 
             Dictionary<string, string> WeightMesNames = new Dictionary<string, string> { { "kg", "Kilograms" }, { "lb", "Pounds" } };
 
-            foreach (KeyValuePair<string, string> tempitem in WeightMesNames)
-            {
+            foreach (KeyValuePair<string, string> tempitem in WeightMesNames) {
                 string value = MainForm.ResourceManagerMain.GetString(tempitem.Value, Thread.CurrentThread.CurrentUICulture);
 
-                if (value != null && value != "")
-                {
+                if (value != null && value != "") {
                     combDT.Rows.Add(tempitem.Key, value);
-                }
-                else
-                {
+                } else {
                     combDT.Rows.Add(tempitem.Key, tempitem.Value);
                 }
             }
@@ -180,8 +159,7 @@ namespace TS_SE_Tool
             comboBoxWeightMesSelect.DataSource = combDT;
             comboBoxWeightMesSelect.SelectedValue = MainForm.ProgSettingsV.WeightMes;
 
-            if (comboBoxWeightMesSelect.SelectedValue == null)
-            {
+            if (comboBoxWeightMesSelect.SelectedValue == null) {
                 _fixSettings = true;
                 comboBoxWeightMesSelect.SelectedIndex = 0;
             }
@@ -192,18 +170,14 @@ namespace TS_SE_Tool
             combDT = new DataTable();
             combDT.Columns.Add("ID");
             combDT.Columns.Add("CurrencyDisplayName");
+            var game = Globals.SupportedGames.Get("ETS2");
+            foreach (var currency in game.Currencies) {
+                var value = MainForm.ResourceManagerMain.GetString($"currency{currency.Name}", Thread.CurrentThread.CurrentUICulture);
 
-            foreach (KeyValuePair<string, double> tempitem in MainForm.CurrencyDictConversionETS2)
-            {
-                string value = MainForm.ResourceManagerMain.GetString(tempitem.Key, Thread.CurrentThread.CurrentUICulture);
-
-                if (value != null && value != "")
-                {
-                    combDT.Rows.Add(tempitem.Key, value);
-                }
-                else
-                {
-                    combDT.Rows.Add(tempitem.Key, tempitem.Key);
+                if (!string.IsNullOrWhiteSpace(value)) {
+                    combDT.Rows.Add(currency.Name, value);
+                } else {
+                    combDT.Rows.Add(currency.Name, currency.Name);
                 }
             }
 
@@ -212,8 +186,7 @@ namespace TS_SE_Tool
             comboBoxSettingCurrencySelectETS2.DataSource = combDT;
             comboBoxSettingCurrencySelectETS2.SelectedValue = MainForm.ProgSettingsV.CurrencyMesETS2;
 
-            if (comboBoxSettingCurrencySelectETS2.SelectedValue == null)
-            {
+            if (comboBoxSettingCurrencySelectETS2.SelectedValue == null) {
                 _fixSettings = true;
                 comboBoxSettingCurrencySelectETS2.SelectedIndex = 0;
             }
@@ -222,17 +195,14 @@ namespace TS_SE_Tool
             combDT.Columns.Add("ID");
             combDT.Columns.Add("CurrencyDisplayName");
 
-            foreach (KeyValuePair<string, double> tempitem in MainForm.CurrencyDictConversionATS)
-            {
-                string value = MainForm.ResourceManagerMain.GetString(tempitem.Key, Thread.CurrentThread.CurrentUICulture);
+            game = Globals.SupportedGames.Get("ATS");
+            foreach (var currency in game.Currencies) {
+                var value = MainForm.ResourceManagerMain.GetString($"currency{currency.Name}", Thread.CurrentThread.CurrentUICulture);
 
-                if (value != null && value != "")
-                {
-                    combDT.Rows.Add(tempitem.Key, value);
-                }
-                else
-                {
-                    combDT.Rows.Add(tempitem.Key, tempitem.Key);
+                if (!string.IsNullOrWhiteSpace(value)) {
+                    combDT.Rows.Add(currency.Name, value);
+                } else {
+                    combDT.Rows.Add(currency.Name, currency.Name);
                 }
             }
 
@@ -241,8 +211,7 @@ namespace TS_SE_Tool
             comboBoxSettingCurrencySelectATS.DataSource = combDT;
             comboBoxSettingCurrencySelectATS.SelectedValue = MainForm.ProgSettingsV.CurrencyMesATS;
 
-            if (comboBoxSettingCurrencySelectATS.SelectedValue == null)
-            {
+            if (comboBoxSettingCurrencySelectATS.SelectedValue == null) {
                 _fixSettings = true;
                 comboBoxSettingCurrencySelectATS.SelectedIndex = 0;
             }
@@ -258,51 +227,40 @@ namespace TS_SE_Tool
             if (_fixSettings)
                 PrepareSettingsAndSave();
         }
-        
+
         //Events
-        
+
         //Pickup window
-        private void numericUpDownSettingPickTimeD_ValueChanged(object sender, EventArgs e)
-        {
+        private void numericUpDownSettingPickTimeD_ValueChanged(object sender, EventArgs e) {
             numericUpDownSettingPickTimeH.Value = 0;
         }
 
-        private void numericUpDownSettingPickTimeH_ValueChanged(object sender, EventArgs e)
-        {
+        private void numericUpDownSettingPickTimeH_ValueChanged(object sender, EventArgs e) {
 
-            if (numericUpDownSettingPickTimeH.Value == 24)
-            {
+            if (numericUpDownSettingPickTimeH.Value == 24) {
                 numericUpDownSettingPickTimeD.Value++;
                 numericUpDownSettingPickTimeH.Value = 0;
-            }
-            else if (numericUpDownSettingPickTimeH.Value == -1)
-            {
-                if(numericUpDownSettingPickTimeD.Value > 0)
-                {
+            } else if (numericUpDownSettingPickTimeH.Value == -1) {
+                if (numericUpDownSettingPickTimeD.Value > 0) {
                     numericUpDownSettingPickTimeD.Value--;
                     numericUpDownSettingPickTimeH.Value = 0;
-                }
-                else
-                {
+                } else {
                     numericUpDownSettingPickTimeH.Value = 0;
                 }
             }
         }
 
         //
-        private void numericUpDownSettingLoopCitys_ValueChanged(object sender, EventArgs e)
-        {
+        private void numericUpDownSettingLoopCitys_ValueChanged(object sender, EventArgs e) {
             MainForm.ProgSettingsV.LoopEvery = Convert.ToByte(numericUpDownSettingLoopCitys.Value);
         }
 
         //Buttons
-        private void buttonSettingSave_Click(object sender, EventArgs e)
-        {
+        private void buttonSettingSave_Click(object sender, EventArgs e) {
             PrepareSettingsAndSave();
         }
 
-        private void PrepareSettingsAndSave()
-        {
+        private void PrepareSettingsAndSave() {
             MainForm.ProgSettingsV.DistanceMes = comboBoxSettingDistanceMesSelect.SelectedValue.ToString();
             MainForm.ProgSettingsV.WeightMes = comboBoxWeightMesSelect.SelectedValue.ToString();
             MainForm.ProgSettingsV.CurrencyMesETS2 = comboBoxSettingCurrencySelectETS2.SelectedValue.ToString();
@@ -312,18 +270,14 @@ namespace TS_SE_Tool
 
             MainForm.ProgSettingsV.WriteConfigToFile();
 
-            if (MainForm.GameType == "ETS2")
-            {
+            if (MainForm.SelectedGame.Type == "ETS2") {
                 Globals.CurrencyName = MainForm.ProgSettingsV.CurrencyMesETS2;
-            }
-            else
-            {
+            } else {
                 Globals.CurrencyName = MainForm.ProgSettingsV.CurrencyMesATS;
             }
         }
 
-        private void buttonSettingCancel_Click(object sender, EventArgs e)
-        {
+        private void buttonSettingCancel_Click(object sender, EventArgs e) {
             this.Close();
         }
     }

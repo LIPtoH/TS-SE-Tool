@@ -1,0 +1,25 @@
+#ETS2
+daf.xf;DAF XF105
+daf.xf_euro6;DAF XF
+iveco.hiway;Iveco Hi-Way
+iveco.stralis;Iveco Stralis
+man.tgx;MAN TGX
+man.tgx_euro6;MAN TGX Euro 6
+mercedes.actros;Mercedes Actros
+mercedes.actros2014;Mercedes New Actros
+renault.magnum;Renault Magnum
+renault.premium;Renault Premium
+renault.t;Renault T
+scania.r;Scania R 2009
+scania.r_2016;Scania R
+scania.s_2016;Scania S
+scania.streamline;Scania Streamline
+volvo.fh16;Volvo FH16 2009
+volvo.fh16_2012;Volvo FH 2012
+#ATS
+intnational.lonestar;International LoneStar
+kenworth.t680;Kenworth T680
+kenworth.w900;Kenworth W900
+peterbilt.389;Peterbilt 389
+peterbilt.579;Peterbilt 579
+volvo.vnl;Volvo VNL

@@ -1,0 +1,4 @@
+﻿[it-IT]
+0;Standard
+1;Importante
+2;Urgente

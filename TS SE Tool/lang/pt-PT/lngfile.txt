@@ -1,0 +1,129 @@
+﻿[pt-PT]
+buttonCargoMarketRandomizeCargoCity;Lista de Carga aleatoria
+buttonCargoMarketRandomizeCargoCompany;Lista de Carga aleatoria
+buttonCargoMarketResetCargoCity;Reset da lista de Cargas
+buttonCargoMarketResetCargoCompany;Reset da lista de Cargas
+buttonConvoyToolsGPSCurrentPositionCopy;Copiar posicao currente
+buttonConvoyToolsGPSCurrentPositionPaste;Colar posicao currente
+buttonConvoyToolsGPSStoredGPSPathCopy;Copiar rota do GPS
+buttonConvoyToolsGPSStoredGPSPathPaste;Colar rota do GPS
+buttonConvoyToolsGPSTruckPositionMultySaveCopy;Copiar posicao currente do camiao de varios saves
+buttonConvoyToolsGPSTruckPositionMultySavePaste;Criando varios saves com as posicoes do camiao
+buttonFreightMarketAddJob;Adicionar trabalho a lista
+buttonFreightMarketClearJobList;Limpar Lista
+buttonFreightMarketRandomizeCargo;Aleatorio
+buttonMainAddCustomFolder;Adicionar pasta personalizada
+buttonMainDecryptSave;Decifrando
+buttonMainLoadSave;Carregar
+buttonMainWriteSave;Guardar
+buttonProfilesAndSavesOpenSaveFolder;Abrir Pasta
+buttonShareTruckTruckDetailsCopy;Copiar detalhes do Camiao
+buttonShareTruckTruckDetailsPaste;Colar detalhes do Camiao
+buttonShareTruckTruckPaintCopy;Copiar detalhes da pintura
+buttonShareTruckTruckPaintPaste;Colar detalhes da pintura
+buttonShareTruckWholeTruckCopy;Copiar todos os detalhes do camiao
+buttonShareTruckWholeTruckPaste;Colar todos os detalhes do camiao
+buttonUserColorsShareColors;Partilhar cores
+buttonUserCompanyCitiesUnVisit;Por visitar
+buttonUserCompanyCitiesVisit;Visitado
+buttonUserCompanyGaragesBuy;Comprar
+buttonUserCompanyGaragesBuyUpgrade;Comprar e fazer upgrade
+buttonUserCompanyGaragesSell;Vender
+buttonUserTrailerSelectCurrent;Selecionar reboque actual
+buttonUserTrailerSwitchCurrent;Por como reboque actual
+buttonUserTruckSelectCurrent;Actual
+buttonUserTruckSwitchCurrent;Mudar de camiao actual para este camiao
+checkBoxFreightMarketFilterDestination;Filtro
+checkBoxFreightMarketFilterSource;Filtro
+error_could_not_complete_jobs_loop;Nao foi possivel completar os trabalhos
+error_could_not_decode_file;Programa nao conseguiu descodificar o ficheiro
+error_could_not_find_file;Programa nao encontrou o ficheiro
+error_could_not_write_to_file;Programa nao conseguiu escrever no ficheiro
+error_during_importing_db;Erro durante a exportacao da database
+error_exception;Programa excepcao
+error_file_not_decoded;Ficheiro nao descodificado
+error_file_was_modified;Ficheiro foi modificado pelo jogo
+error_job_parameters_not_filled;Nem todos os parametros da carga estao prenchidos
+error_save_version_not_detected;Versao do save nao foi detectada
+error_sql_exception;DataBase excepcao
+groupBoxMainProfilesAndSaves;Perfis e saves
+groupBoxProfilePlayerLevel;Nivel do Jogador
+groupBoxProfileUserColors;Cores do User
+groupBoxUserTrailerTrailer;Reboque
+groupBoxUserTrailerTrailerDetails;Detalhes
+groupBoxUserTruckShareTruckSettings;Partilhar detalhes do camiao
+groupBoxUserTruckTruck;Camiao
+groupBoxUserTruckTruckDetails;Detalhes
+labelCargoMarketCity;Cidade
+labelCargoMarketCompany;Empresa
+labelCargoMarketSource;Fonte
+labelCity;cidade
+labelFreightMarketCargo;Carga
+labelFreightMarketCity;Cidade
+labelFreightMarketCompany;Empresa
+labelFreightMarketCompanyF;Empresa
+labelFreightMarketCountryF;Pais
+labelFreightMarketDestination;Destino
+labelFreightMarketDistance;Distancia total do caminho:
+labelFreightMarketFilterMain;Filtro
+labelFreightMarketSource;Fonte
+labelFreightMarketUrgency;Urgencia
+labelProfileSkill1;Distancia Longa
+labelProfileSkill2;Carga de Alto Valor
+labelProfileSkill3;Carga Fragil
+labelProfileSkill4;Entrega mesmo a tempo
+labelProfileSkill5;Conducao economica
+labelTrailerPartNameBody;Corpo
+labelTrailerPartNameCargo;Carga
+labelTrailerPartNameWheels;Rodas
+labelTruckDetailsFuel;Combustivel
+labelTruckPartNameEngine;Motor
+labelTruckPartNameTransmission;Transmissao
+labelTruckPartNameWheels;Rodas
+labelUserCompanyCompanyName;Nome da empresa
+labelUserCompanyGarages;Garagens
+labelUserCompanyHQcity;HQ Cidade
+labelUserCompanyMoneyAccount;Dinheiro da Conta
+labelUserCompanyVisitedCities;Cidades Visitadas
+labelUserTrailerLicensePlate;Matricula
+labelUserTruckLicensePlate;Matricula
+message_database_created;Database estrutura criada.
+message_database_missing_creating_db;Database ficheiro em falta. Criando Database...
+message_database_missing_creating_db_structure;Database ficheiro em falta. Criando estrutura da database...
+message_decoding_save_file;Descondificando o save...
+message_exporting_database;Exportando DataBase...
+message_file_saved;Ficheiro guardado.
+message_importing_database;Importando DataBase...
+message_loading_save_file;Carregando ficheiro...
+message_no_matching_cities;Cidades nao correspondem a filtragem.
+message_operation_finished;Tarefa completada.
+message_preparing_data;Preparando data...
+message_saving_file;Guardando ficheiro...
+tabPageCompany;Empresa
+tabPageConvoyTools;Ferramentas de Comboio
+tabPageProfile;Perfil
+tabPageTrailer;Reboqe
+tabPageTruck;Camiao
+toolStripMenuItemAbout;Sobre
+toolStripMenuItemCreateTrFile;Fazer traducao
+toolStripMenuItemExit;Sair
+toolStripMenuItemHelp;Ajuda
+toolStripMenuItemLanguage;Linguagem
+toolStripMenuItemProgram;Programa
+toolStripMenuItemSettings;Opcoes
+tooltipbuttonProfilesAndSavesRefreshAll;Actualizar
+currencyEUR;Euro
+currencyCHF;Francos Suíços
+currencyCZK;Coroa Tcheca
+currencyGBP;Libras Esterlinas
+currencyPLN;Złotów Polako
+currencyHUF;Forints Húngaros
+currencyDKK;Krones Dinamarquesas
+currencySEK;Kronas Suecas
+currencyNOK;Kronas Noruegas
+currencyRUB;Rublos Russos
+currencyUSD;Dólares Americanos
+currencyCAD;Dólares Canadenses
+currencyMXN;Pesos Mexicanos
+unsupportedGameVersionTitle;Versão {0} Não Apoiada {1}
+unsupportedGameVersionText;A versão {0} do seu jogo que está atualmente instalada não é suportada por esta ferramenta.\n\nVersão do Jogo Instalada: {1}\n\nVersões Atualmente Suportadas: {2}

@@ -1,0 +1,68 @@
+﻿[ru-RU]
++all;Все
++unsorted;Неотсортированные
+austria;Австрия
+belgium;Бельгия
+bulgaria;Болгария
+czech;Чeшская Респyблика
+denmark;Дания
+estonia;Эстония
+finland;Финляндия
+france;Франция
+germany;Германия
+hungary;Венгрия
+italy;Италия
+latvia;Латвия
+lithuania;Литва
+luxembourg;Люксембург
+netherlands;Нидерланды
+norway;Норвегия
+poland;Польша
+romania;Румыния
+russia;Россия
+slovakia;Словакия
+sweden;Швеция
+switzerland;Швейцария
+turkey;Турция
+uk;Великобритания
+arizona;Аризона
+california;Калифорния
+nevada;Невада
+new_mexico;Нью-Мексико
+oregon;Орегон
+utah;Юта
+washington;Вашингтон
+aland;Аландские о-ва
+albania;Албания
+andorra;Андора
+belarus;Беларусь
+bosnia;Босния и Герцеговина
+croatia;Хорватия
+cyprus;Республика Кипр
+faroe;Фарерские о-ва
+georgia;Грузия
+greece;Греция
+iceland;Исландия
+iom;Остров Мэн
+ireland;Ирландия
+jersey;Джерси (остров)
+liecht;Лихтенштейн
+macedonia;Северная Македония
+mnegro;Черногория
+moldova;Молдавия
+monaco;Монако
+nireland;Северная Ирландия
+portugal;Португалия
+serbia;Сербия
+slovenia;Словения
+spain;Испания
+svalbard;Шпицберген
+ukraine;Украина
+egypt;Египeт
+iraq;Ирак
+israel;Израиль
+jordan;Иордания
+lebanon;Ливан
+saudia;Саудовская Аравия
+syria;Сирия
+westbank;Западный берег р. Иордан

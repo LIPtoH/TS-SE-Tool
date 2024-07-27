@@ -1,0 +1,4 @@
+﻿[pl-PL]
+0;Zwykła
+1;Ważna
+2;Pilna

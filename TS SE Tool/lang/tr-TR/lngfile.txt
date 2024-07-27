@@ -1,0 +1,181 @@
+﻿[tr-TR]
+buttonAddCustomPath;Ekle
+buttonCancel;İptal
+buttonCargoMarketRandomizeCargoCity;Rastgele kargo listesi
+buttonCargoMarketRandomizeCargoCompany;Rastgele kargo listesi
+buttonCargoMarketResetCargoCity;Kargo listesini sıfırla
+buttonCargoMarketResetCargoCompany;Kargo listesini sıfırla
+buttonChooseFolder;Klasör Seç
+buttonClearColor;Temizle
+buttonConvoyToolsGPSCurrentPositionCopy;Mevcut pozisyonu kopyala
+buttonConvoyToolsGPSCurrentPositionPaste;Mevcut pozisyonu yapıştır
+buttonConvoyToolsGPSStoredGPSPathCopy;GPS yolunu kopyala
+buttonConvoyToolsGPSStoredGPSPathPaste;GPS yolunu yapıştır
+buttonConvoyToolsGPSTruckPositionMultySaveCopy;Birden fazla kayıttan kamyon pozisyonunu kopyala
+buttonConvoyToolsGPSTruckPositionMultySavePaste;Farklı kamyon konumlarıyla birden fazla kayıt oluştur
+buttonDBClear;Temizle
+buttonDBExport;Dışa Aktar
+buttonDBImport;İçe Aktar
+buttonEditCPlist;Listeyi düzenle
+buttonExport;Dışa Aktar
+buttonFreightMarketAddJob;İşi listeye ekle
+buttonFreightMarketClearJobList;Listeyi temizle
+buttonFreightMarketRandomizeCargo;Rastgele
+buttonImport;İçe Aktar
+buttonMainAddCustomFolder;Özel Klasör Ekle
+buttonMainDecryptSave;Şifre Çöz
+buttonMainLoadSave;Yükle
+buttonMainWriteSave;Kaydet
+buttonProfilesAndSavesOpenSaveFolder;Klasörü Aç
+buttonReplaceColors;↑↑↑ Değiştir ↑↑↑
+buttonSave;Kayıt
+buttonShareTruckTruckDetailsCopy;Kamyon ayrıntılarını kopyala
+buttonShareTruckTruckDetailsPaste;Kamyon ayrıntılarını yapıştır
+buttonShareTruckTruckPaintCopy;Boya ayarlarını kopyala
+buttonShareTruckTruckPaintPaste;Boya ayarlarını yapıştır
+buttonShareTruckWholeTruckCopy;Tüm Kamyon Ayarlarını Kopyala
+buttonShareTruckWholeTruckPaste;Tüm Kamyon Ayarlarını Yapıştır
+buttonUserColorsShareColors;Renkleri Paylaş
+buttonUserCompanyCitiesUnVisit;Ziyaret Edilmemiş
+buttonUserCompanyCitiesVisit;Ziyaret Edilmiş
+buttonUserCompanyGaragesBuy;Satın Al
+buttonUserCompanyGaragesBuyDowngrade;Seviye Düşür
+buttonUserCompanyGaragesBuyUpgrade;Satın Al ve Geliştir
+buttonUserCompanyGaragesManage;Yönet
+buttonUserCompanyGaragesSell;Sat
+buttonUserCompanyGaragesUpgrade;Geliştir
+buttonUserTrailerSelectCurrent;Varsayılan Dorseyi Seç
+buttonUserTrailerSwitchCurrent;Varsayılan Dorse Olarak Ayarla
+buttonUserTruckSelectCurrent;Varsayılan
+buttonUserTruckSwitchCurrent;Varsayılan Kamyonu bu Kamyonla değiştir
+checkBoxFreightMarketFilterDestination;Filtre
+checkBoxFreightMarketFilterSource;Filtre
+checkBoxProfilesAndSavesProfileBackups;Yedekler
+error_could_not_complete_jobs_loop;İş döngüsü tamamlanamadı
+error_could_not_decode_file;Program dosyanın kodunu çözemedi
+error_could_not_find_file;Program dosya bulamadı
+error_could_not_write_to_file;Program dosyaya yazamadı
+error_during_importing_db;Veritabanı içe aktarılırken hata oluştu
+error_exception;Program istisnası
+error_file_not_decoded;Dosya kodu çözülmedi
+error_file_was_modified;Dosya oyun tarafından değiştirildi
+error_job_parameters_not_filled;Tüm iş parametreleri doldurulmadı
+error_save_version_not_detected;Kayıt edilen dosya sürümü algılanamadı
+error_sql_exception;Veritabanı istisnası
+FormAboutBox;Hakkında {0}
+FormAddCustomFolder;Özel klasörleri düzenle
+FormColorPicker;Renk seçici
+FormSettings;Ayarlar
+FormShareUserColors;Oyuncu renklerini paylaş
+groupBoxDataBase;Veritabanı
+groupBoxFolderType;Klasör tipi
+groupBoxGameType;Oyun
+groupBoxImportedColors;İthal Renkler
+groupBoxMainProfilesAndSaves;Profiller ve Kayıtlar
+groupBoxProfilePlayerLevel;Oyuncu Seviyesi
+groupBoxProfileSkill;Kariyer
+groupBoxProfileUserColors;Kullanıcı Renkleri
+groupBoxUserTrailerShareTrailerSettings;Dosdya ayarlarını paylaş
+groupBoxUserTrailerTrailer;Dorse
+groupBoxUserTrailerTrailerDetails;Ayrıntılar
+groupBoxUserTruckShareTruckSettings;Kamyon ayarlarını paylaş
+groupBoxUserTruckTruck;Kamyon
+groupBoxUserTruckTruckDetails;Ayrıntılar
+Kilometers;Kilometre
+labelCargoMarketCity;Şehir
+labelCargoMarketCompany;Şirket
+labelCargoMarketSource;Kaynak
+labelCity;şehir
+labelCurrency;Para Birimi
+labelDistance;Mesafe
+labelDownloadDescription;En son sürümü şu adresten indirebilirsiniz:
+labelFreightMarketCargo;kargo
+labelFreightMarketCity;şehir
+labelFreightMarketCompany;Şirket
+labelFreightMarketCompanyF;Şirket
+labelFreightMarketCountryF;Ülke
+labelFreightMarketDestination;Hedef
+labelFreightMarketDistance;Toplam yol uzunluğu:
+labelFreightMarketFilterMain;Filtre
+labelFreightMarketSource;Kaynak
+labelFreightMarketUrgency;Acil
+labelHowtoDescription;Bu nasıl kullanılır?
+labelJobPickupTime;Kargo İlgi Süresi
+labelLoopEvery;Döngü yap
+labelnew;yeni
+labelold;eski
+labelor;veya
+labelProfileSkill1;Uzun Mesafe
+labelProfileSkill2;Yüksek Değerli Kargo
+labelProfileSkill3;Hassas Kargo
+labelProfileSkill4;Zamanında Teslimat
+labelProfileSkill5;Ekonomik Sürüş
+labelSupportedGameVersions;Desteklenen oyun sürümleri
+labelTrailerPartNameBody;Gövde
+labelTrailerPartNameCargo;Kargo
+labelTrailerPartNameChassis;Şasi
+labelTrailerPartNameWheels;Tekerlekler
+labelTruckDetailsFuel;Yakıt
+labelTruckPartNameCabin;Kabin
+labelTruckPartNameChassis;Şaşi
+labelTruckPartNameEngine;Motor
+labelTruckPartNameTransmission;Vites
+labelTruckPartNameWheels;Tekerlekler
+labelUserCompanyCompanyName;Şirket Adı
+labelUserCompanyGarages;Garajlar
+labelUserCompanyHQcity;Genel Merkez
+labelUserCompanyMoneyAccount;Hesaptaki Para
+labelUserCompanyVisitedCities;Ziyaret edilmiş şehirler
+labelUserTrailerLicensePlate;Plaka
+labelUserTruckLicensePlate;Plaka
+Large;Büyük
+message_database_created;Veritabanı yapısı oluşturuldu.
+message_database_missing_creating_db;Database file is missing. Veritabanı oluşturuluyor...
+message_database_missing_creating_db_structure;Veritabanı dosyası eksik. Veritabanı yapısı oluşturuluyor...
+message_decoding_save_file;Kayıt dosyası çözülüyor...
+message_exporting_database;Veritabanı dışa aktarılıyor...
+message_file_saved;Dosya kayır edildi.
+message_importing_database;Veritabanı içe aktarılıyor...
+message_loading_save_file;Kayıt dosyası yükleniyor...
+message_no_matching_cities;Filtre ayarlarıyla eşleşen şehir yok.
+message_operation_finished;Görev tamamlandı.
+message_preparing_data;Veriler hazırlanıyor...
+message_saving_file;Dosya kaydediliyor...
+Miles;Mil
+Not owned;Sahipsiz
+radioButtonProfileFolderType;Profil Klasöri
+radioButtonRootFolderType;Kök Klasör
+radioButtonSaveFolderType;Kayıt Klasöri
+radioButtonUnknownFolderType;Bilinmeyen
+Small;Küçük
+tabPageCargoMarket;Kargo Pazarı
+tabPageCompany;Şirket
+tabPageConvoyTools;Konvoy Araçları
+tabPageFreightMarket;Yük Pazarı
+tabPageProfile;Profil
+tabPageTrailer;Dorse
+tabPageTruck;Kamyon
+Tiny;Çok Küçük
+toolStripMenuItemAbout;Hakkında
+toolStripMenuItemCreateTrFile;Çeviri Yap
+toolStripMenuItemDownload;İndir
+toolStripMenuItemExit;Çıkış
+toolStripMenuItemHelp;Yardım
+toolStripMenuItemLanguage;Dil
+toolStripMenuItemSettings;Ayarlar
+tooltipbuttonProfilesAndSavesRefreshAll;Tazele
+currencyEUR;Euro
+currencyCHF;İsviçre Frangı
+currencyCZK;Çek Cumhuriyeti Kuruşu
+currencyGBP;İngiliz Sterlini
+currencyPLN;Polonya Zlotisi
+currencyHUF;Macaristan Forinti
+currencyDKK;Danimarka Kroonu
+currencySEK;İsveç Kronası
+currencyNOK;Norveç Kroonu
+currencyRUB;Rusya Rublesi
+currencyUSD;Amerika Doları
+currencyCAD;Kanada Doları
+currencyMXN;Meksika Pesosu
+unsupportedGameVersionTitle;Desteklenmeyen {0} Versiyonu {1}
+unsupportedGameVersionText;Yüklü olan {0} versiyonunuz şu anki bu araç tarafından desteklenmiyor.\n\nYüklü Oyun Versiyonu: {1}\n\nŞu Anki Desteklenen Versiyonlar: {2}

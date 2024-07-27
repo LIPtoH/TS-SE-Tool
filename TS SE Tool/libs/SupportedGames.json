@@ -1,0 +1,251 @@
+{
+  "ETS2": {
+    "SteamAppId": 227300,
+    "Type": "ETS2",
+    "Name": "Euro Truck Simulator 2",
+    "ExecutableName": "eurotrucks2.exe",
+    "MinSupportedGameVersion": "1.43",
+    "MaxSupportedGameVersion": "1.49",
+    "SupportedSaveFileVersions": [
+      61,
+      74
+    ],
+    "Installed": true,
+    "SteamUserDataDir": "C:\\Program Files (x86)\\Steam\\userdata\\62180933\\227300",
+    "SteamRemoteDir": "C:\\Program Files (x86)\\Steam\\userdata\\62180933\\227300\\remote",
+    "GameDir": "G:\\SteamLibrary\\steamapps\\common\\Euro Truck Simulator 2",
+    "Executable": "G:\\SteamLibrary\\steamapps\\common\\Euro Truck Simulator 2\\bin\\win_x64\\eurotrucks2.exe",
+    "LastUpdated": "2024-07-24T16:47:49.75146+02:00",
+    "Version": "1.50.4.1",
+    "IsSupported": false,
+    "PluginDirs": [
+      "G:\\SteamLibrary\\steamapps\\common\\Euro Truck Simulator 2\\bin\\win_x64\\plugins",
+      "G:\\SteamLibrary\\steamapps\\common\\Euro Truck Simulator 2\\bin\\win_x86\\plugins"
+    ],
+    "DocumentsDir": "D:\\Documents\\Euro Truck Simulator 2",
+    "ModsDir": "D:\\Documents\\Euro Truck Simulator 2\\mod",
+    "Processes": [],
+    "IsRunning": false,
+    "LicensePlateWidth": 128,
+    "PlayerLevelUps": [
+      200,
+      500,
+      700,
+      900,
+      1000,
+      1100,
+      1300,
+      1600,
+      1700,
+      2100,
+      2300,
+      2600,
+      2700,
+      2900,
+      3000,
+      3100,
+      3400,
+      3700,
+      4000,
+      4300,
+      4600,
+      4700,
+      4900,
+      5200,
+      5700,
+      5900,
+      6000,
+      6200,
+      6600,
+      6800
+    ],
+    "Currencies": {
+      "EUR": {
+        "Name": "EUR",
+        "ConversionRate": 1,
+        "FormatSymbols": [
+          "",
+          "\u20AC",
+          ""
+        ]
+      },
+      "CHF": {
+        "Name": "CHF",
+        "ConversionRate": 1.1419999999999999,
+        "FormatSymbols": [
+          "",
+          "",
+          " CHF"
+        ]
+      },
+      "CZK": {
+        "Name": "CZK",
+        "ConversionRate": 25.879999999999999,
+        "FormatSymbols": [
+          "",
+          "",
+          " K\u010D"
+        ]
+      },
+      "GBP": {
+        "Name": "GBP",
+        "ConversionRate": 0.875,
+        "FormatSymbols": [
+          "",
+          "\u00A3",
+          ""
+        ]
+      },
+      "PLN": {
+        "Name": "PLN",
+        "ConversionRate": 4.3170000000000002,
+        "FormatSymbols": [
+          "",
+          "",
+          " z\u0142"
+        ]
+      },
+      "HUF": {
+        "Name": "HUF",
+        "ConversionRate": 325.30000000000001,
+        "FormatSymbols": [
+          "",
+          "",
+          " Ft"
+        ]
+      },
+      "DKK": {
+        "Name": "DKK",
+        "ConversionRate": 7.46,
+        "FormatSymbols": [
+          "",
+          "",
+          " kr"
+        ]
+      },
+      "SEK": {
+        "Name": "SEK",
+        "ConversionRate": 10.52,
+        "FormatSymbols": [
+          "",
+          "",
+          " kr"
+        ]
+      },
+      "NOK": {
+        "Name": "NOK",
+        "ConversionRate": 9.5099999999999998,
+        "FormatSymbols": [
+          "",
+          "",
+          " kr"
+        ]
+      },
+      "RUB": {
+        "Name": "RUB",
+        "ConversionRate": 77.049999999999997,
+        "FormatSymbols": [
+          "",
+          "\u20BD",
+          ""
+        ]
+      }
+    }
+  },
+  "ATS": {
+    "SteamAppId": 270880,
+    "Type": "ATS",
+    "Name": "American Truck Simulator",
+    "ExecutableName": "amtrucks.exe",
+    "MinSupportedGameVersion": "1.43",
+    "MaxSupportedGameVersion": "1.49",
+    "SupportedSaveFileVersions": [],
+    "Installed": true,
+    "SteamUserDataDir": "C:\\Program Files (x86)\\Steam\\userdata\\62180933\\270880",
+    "SteamRemoteDir": "C:\\Program Files (x86)\\Steam\\userdata\\62180933\\270880\\remote",
+    "GameDir": "G:\\SteamLibrary\\steamapps\\common\\American Truck Simulator",
+    "Executable": "G:\\SteamLibrary\\steamapps\\common\\American Truck Simulator\\bin\\win_x64\\amtrucks.exe",
+    "LastUpdated": "2024-07-27T12:41:28.8622429+02:00",
+    "Version": "1.50.1.1029",
+    "IsSupported": false,
+    "PluginDirs": [
+      "G:\\SteamLibrary\\steamapps\\common\\American Truck Simulator\\bin\\win_x64\\plugins",
+      "G:\\SteamLibrary\\steamapps\\common\\American Truck Simulator\\bin\\win_x86\\plugins"
+    ],
+    "DocumentsDir": "D:\\Documents\\American Truck Simulator",
+    "ModsDir": "D:\\Documents\\American Truck Simulator\\mod",
+    "Processes": [],
+    "IsRunning": false,
+    "LicensePlateWidth": 64,
+    "PlayerLevelUps": [
+      200,
+      500,
+      700,
+      900,
+      1100,
+      1300,
+      1500,
+      1700,
+      1900,
+      2100,
+      2300,
+      2500,
+      2700,
+      2900,
+      3100,
+      3300,
+      3500,
+      3700,
+      4000,
+      4300,
+      4600,
+      4900,
+      5200,
+      5500,
+      5800,
+      6100,
+      6400,
+      6700,
+      7000,
+      7300
+    ],
+    "Currencies": {
+      "USD": {
+        "Name": "USD",
+        "ConversionRate": 1,
+        "FormatSymbols": [
+          "",
+          "$",
+          ""
+        ]
+      },
+      "CAD": {
+        "Name": "CAD",
+        "ConversionRate": 1.3,
+        "FormatSymbols": [
+          "",
+          "$",
+          ""
+        ]
+      },
+      "MXN": {
+        "Name": "MXN",
+        "ConversionRate": 18.690000000000001,
+        "FormatSymbols": [
+          "",
+          "$",
+          ""
+        ]
+      },
+      "EUR": {
+        "Name": "EUR",
+        "ConversionRate": 0.85599999999999998,
+        "FormatSymbols": [
+          "",
+          "\u20AC",
+          ""
+        ]
+      }
+    }
+  }
+}

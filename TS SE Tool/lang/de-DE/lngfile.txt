@@ -1,0 +1,97 @@
+﻿[de-DE]
+buttonCargoMarketResetCargoCity;Reset Fracht Markt
+buttonCargoMarketResetCargoCompany;Reset Fracht Markt
+buttonConvoyToolsGPSStoredGPSPathCopy;GPS pfad kopieren
+buttonConvoyToolsGPSStoredGPSPathPaste;GPS pfad einfügen
+buttonFreightMarketClearJobList;Leere Liste
+buttonFreightMarketRandomizeCargo;Zufall
+buttonMainDecryptSave;Decodieren
+buttonMainLoadSave;Laden
+buttonMainWriteSave;Speichern
+buttonProfilesAndSavesOpenSaveFolder;Öffne Ordner
+buttonShareTruckTruckPaintCopy;Kopiere Farb einstelungen
+buttonShareTruckTruckPaintPaste;Farbe einfügen
+buttonUserColorsShareColors;Teile Farben
+buttonUserCompanyCitiesUnVisit;Nicht besucht
+buttonUserCompanyCitiesVisit;Besucht
+buttonUserCompanyGaragesBuy;Kaufen
+buttonUserCompanyGaragesBuyUpgrade;Kaufen und Upgraden
+buttonUserCompanyGaragesSell;Verkaufen
+buttonUserTrailerSelectCurrent;Wähle aktuellen Trailer
+buttonUserTrailerSwitchCurrent;Setzte Aktuellen Trailer
+buttonUserTruckSelectCurrent;Aktuell
+buttonUserTruckSwitchCurrent;Wechel aktuellen Truck zu diesem
+error_could_not_complete_jobs_loop;Jobeschleife konnte nicht abgeschlossen werden
+error_could_not_decode_file;Das Programm konnte die Datei nicht decodieren
+error_could_not_find_file;Das Programm konnte die Datei nicht finden
+error_could_not_write_to_file;Das Programm konnte die Datei nicht schreiben
+error_during_importing_db;Fehler beim Importieren der Datenbank
+error_exception;Programmausnahme
+error_file_not_decoded;Datei nicht decodiert
+error_file_was_modified;Die Datei wurde vom Spiel geändert
+error_job_parameters_not_filled;Nicht alle Jobparameter sind gefüllt
+error_save_version_not_detected;Version der Sicherungsdatei wurde nicht gefunden
+groupBoxMainProfilesAndSaves;Profile und Speicherdaten
+groupBoxProfileUserColors;User colors
+groupBoxUserTruckShareTruckSettings;Teile Truck Einstellungen
+labelCargoMarketCity;Stadt
+labelCargoMarketCompany;Firma
+labelCargoMarketSource;Quelle
+labelCity;stadt
+labelFreightMarketCargo;Fracht
+labelFreightMarketCity;Stadt
+labelFreightMarketCompany;Firma
+labelFreightMarketCompanyF;Firma
+labelFreightMarketCountryF;Land
+labelFreightMarketDestination;Ziel
+labelFreightMarketDistance;Gesamtlänge:
+labelFreightMarketSource;Quelle
+labelFreightMarketUrgency;Dringlichkeit
+labelProfileSkill1;Lange Auträge
+labelProfileSkill2;Teure Frachten
+labelProfileSkill3;Zerbrechliche Frachte
+labelProfileSkill4;Just-In-Time Lieferung
+labelProfileSkill5;Umweltbewusstes Fahren
+labelTrailerPartNameCargo;Fracht
+labelTrailerPartNameChassis;Aufbau
+labelTrailerPartNameWheels;Reifen
+labelTruckDetailsFuel;Tank
+labelTruckPartNameCabin;Kabine
+labelTruckPartNameChassis;Aufbau
+labelTruckPartNameEngine;Motor
+labelTruckPartNameTransmission;Getriebe
+labelTruckPartNameWheels;Reifen
+labelUserCompanyCompanyName;Firmen Name
+labelUserCompanyGarages;Garagen
+labelUserCompanyHQcity;Heimatstadt
+labelUserCompanyMoneyAccount;Geld
+labelUserCompanyVisitedCities;Besuchte Städte
+labelUserTrailerLicensePlate;Kennzeichen
+labelUserTruckLicensePlate;Kennzeichen
+message_file_saved;Datei Gespeichert.
+message_saving_file;Speicher Datei...
+tabPageCargoMarket;Fracht Markt
+tabPageCompany;Firma
+tabPageFreightMarket;Fracht Markt
+toolStripMenuItemAbout;Über
+toolStripMenuItemCreateTrFile;Übersetzen
+toolStripMenuItemExit;Beenden
+toolStripMenuItemHelp;Hilfe
+toolStripMenuItemLanguage;Sprache
+toolStripMenuItemSettings;Einstellungen
+tooltipbuttonProfilesAndSavesRefreshAll;Aktualisieren
+currencyEUR;Euro
+currencyCHF;Schweizer Franken
+currencyCZK;Tschechische Krone
+currencyGBP;Britisches Pfund
+currencyPLN;Polnischer Zloty
+currencyHUF;Ungarischer Forint
+currencyDKK;Dänischer Krone
+currencySEK;Schwedische Krona
+currencyNOK;Norwegische Krone
+currencyRUB;Russischer Rubel
+currencyUSD;US-Dollar
+currencyCAD;Kanadischer Dollar
+currencyMXN;Mexikanischer Peso
+unsupportedGameVersionTitle;Nicht unterstützte {0} Version {1}
+unsupportedGameVersionText;Die von Ihnen installierte {0} Version ist derzeit nicht mit diesem Tool kompatibel.\n\nInstallierter Spielversion: {1}\n\nAktuell unterstützte Versionen: {2}

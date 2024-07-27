@@ -1,0 +1,31 @@
+﻿[pt-BR]
+amsterdam;Amsterdã
+berlin;Berlim
+brno;Bruno
+brussel;Bruxelas
+geneve;Genebra
+hamburg;Hamburgo
+koln;Colônia
+london;Londres
+luxembourg;Luxemburgo
+magdeburg;Magdeburgo
+milano;Milão
+munchen;Munique
+nurnberg;Nuremberg
+prague;Praga
+rotterdam;Roterdã
+strasbourg;Estrasburgo
+torino;Turim
+wien;Viena
+zurich;Zurique
+warszawa;Warsaw
+goteborg;Gothenburg
+kobenhavn;Copenhagen
+stockholm;Estocolmo
+laurent;São Lourenço
+marseille;Marselha
+bologna;Bolonha
+firenze;Florença
+genova;Gênova
+napoli;Nápoles
+petersburg;São Petersburgo

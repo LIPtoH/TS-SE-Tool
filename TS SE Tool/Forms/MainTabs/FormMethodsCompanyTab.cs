@@ -24,40 +24,32 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using TS_SE_Tool.CustomClasses.Program;
 
-namespace TS_SE_Tool
-{
-    public partial class FormMain
-    {
+namespace TS_SE_Tool {
+    public partial class FormMain {
         //User Company tab
 
-        private void CreateCompanyPanelControls()
-        {
+        private void CreateCompanyPanelControls() {
             buttonUserCompanyGaragesManage.Text = "";
             buttonUserCompanyGaragesManage.BackgroundImage = CustomizeImg;
             buttonUserCompanyGaragesManage.BackgroundImageLayout = ImageLayout.Center;
         }
 
-        private void tableLayoutPanel2_EnabledChanged(object sender, EventArgs e)
-        {
+        private void tableLayoutPanel2_EnabledChanged(object sender, EventArgs e) {
             ToggleVisualUserCompanyControls(tableLayoutPanelCompanyMain.Enabled);
         }
 
-        private void ToggleVisualUserCompanyControls(bool _state)
-        {
+        private void ToggleVisualUserCompanyControls(bool _state) {
             Control tmpControl;
 
             string[] buttons = { "buttonUserCompanyGaragesManage" };
             Image[] images = { CustomizeImg };
 
-            for (int i = 0; i < buttons.Count(); i++)
-            {
-                try
-                {
+            for (int i = 0; i < buttons.Count(); i++) {
+                try {
                     tmpControl = tabControlMain.TabPages["tabPageCompany"].Controls.Find(buttons[i], true)[0];
-                }
-                catch
-                {
+                } catch {
                     break;
                 }
 
@@ -68,9 +60,8 @@ namespace TS_SE_Tool
             }
         }
 
-        private void FillFormCompanyControls()
-        {
-            pictureBoxCompanyLogo.Image = Utilities.Graphics_TSSET.ddsImgLoader(@"img\" + GameType + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds", 94, 94).images[0];
+        private void FillFormCompanyControls() {
+            pictureBoxCompanyLogo.Image = Utilities.Graphics_TSSET.ddsImgLoader(@"img\" + SelectedGame.Type + @"\player_logo\" + MainSaveFileProfileData.Logo + ".dds", 94, 94).images[0];
 
             textBoxUserCompanyCompanyName.Text = MainSaveFileProfileData.CompanyName.Value;
 
@@ -83,10 +74,9 @@ namespace TS_SE_Tool
             PopulateDriversList();
         }
 
-        public void FillAccountMoneyTB()
-        {
+        public void FillAccountMoneyTB() {
             //
-            Int64 valueBefore = (long)Math.Floor(SiiNunitData.Bank.money_account * CurrencyDictConversion[Globals.CurrencyName]);
+            Int64 valueBefore = (long)Math.Floor(SiiNunitData.Bank.money_account * SelectedGame.Currencies.Get(Globals.CurrencyName).ConversionRate);
 
             textBoxUserCompanyMoneyAccount.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
 
@@ -95,8 +85,7 @@ namespace TS_SE_Tool
             this.ActiveControl = null;
         }
 
-        private void FillHQcities()
-        {
+        private void FillHQcities() {
             DataTable combDT = new DataTable();
             DataColumn dc = new DataColumn("City", typeof(string));
             combDT.Columns.Add(dc);
@@ -107,8 +96,7 @@ namespace TS_SE_Tool
             //start filling
 
             //fill source and destination cities
-            foreach (Garages garage in from x in GaragesList where x.GarageStatus != 0 && !x.IgnoreStatus select x)
-            {
+            foreach (Garages garage in from x in GaragesList where x.GarageStatus != 0 && !x.IgnoreStatus select x) {
                 combDT.Rows.Add(garage.GarageName, garage.GarageNameTranslated);
             }
 
@@ -123,10 +111,8 @@ namespace TS_SE_Tool
             comboBoxUserCompanyHQcity.SelectedIndexChanged += comboBoxUserCompanyHQcity_SelectedIndexChanged;
         }
 
-        private void comboBoxUserCompanyHQcity_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxUserCompanyHQcity.SelectedValue != null)
-            {
+        private void comboBoxUserCompanyHQcity_SelectedIndexChanged(object sender, EventArgs e) {
+            if (comboBoxUserCompanyHQcity.SelectedValue != null) {
                 string prevHQ = SiiNunitData.Player.hq_city, newHQ = comboBoxUserCompanyHQcity.SelectedValue.ToString();
 
                 Garages prevGarage = GaragesList.Where(x => x.GarageName == prevHQ).First(),
@@ -144,26 +130,21 @@ namespace TS_SE_Tool
                 //Check for spare slots
                 int spareSlots = -1;
 
-                for (int i = 0; i < newGarage.Drivers.Count; i++)
-                {
-                    if (newGarage.Drivers[i] == newGarage.Vehicles[i])
-                    {
+                for (int i = 0; i < newGarage.Drivers.Count; i++) {
+                    if (newGarage.Drivers[i] == newGarage.Vehicles[i]) {
                         spareSlots = i;
                         break;
                     }
                 }
 
-                if (spareSlots > -1)
-                {
+                if (spareSlots > -1) {
                     //Move
                     newGarage.Drivers[spareSlots] = tmpDrvr;
                     newGarage.Vehicles[spareSlots] = tmpVhcl;
 
                     prevGarage.Drivers[prevSlotIdx] = null;
                     prevGarage.Vehicles[prevSlotIdx] = null;
-                }
-                else
-                {
+                } else {
                     //Swap
                     prevGarage.Drivers[prevSlotIdx] = tmpDrvr;
                     prevGarage.Vehicles[prevSlotIdx] = tmpVhcl;
@@ -176,20 +157,16 @@ namespace TS_SE_Tool
             }
         }
 
-        private void textBoxUserCompanyCompanyName_TextChanged(object sender, EventArgs e)
-        {
-            if (textBoxUserCompanyCompanyName.Text.Length > 20)
-            {
+        private void textBoxUserCompanyCompanyName_TextChanged(object sender, EventArgs e) {
+            if (textBoxUserCompanyCompanyName.Text.Length > 20) {
                 textBoxUserCompanyCompanyName.Text = textBoxUserCompanyCompanyName.Text.Remove(20);
                 textBoxUserCompanyCompanyName.Select(20, 0);
             }
 
             int txtLength = textBoxUserCompanyCompanyName.Text.Length;
 
-            switch (txtLength)
-            {
-                case 0:
-                    {
+            switch (txtLength) {
+                case 0: {
                         labelUserCompanyCompanyName.ForeColor = Color.Red;
 
                         labelCompanyNameSize.ForeColor = Color.Red;
@@ -198,8 +175,7 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                case 20:
-                    {
+                case 20: {
                         labelUserCompanyCompanyName.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
 
                         labelCompanyNameSize.ForeColor = Color.DarkGreen;
@@ -208,8 +184,7 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                default:
-                    {
+                default: {
                         labelUserCompanyCompanyName.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
 
                         labelCompanyNameSize.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
@@ -221,29 +196,25 @@ namespace TS_SE_Tool
 
             labelCompanyNameSize.Text = textBoxUserCompanyCompanyName.Text.Length.ToString() + " / 20";
 
-            if (textBoxUserCompanyCompanyName.Text != MainSaveFileProfileData.CompanyName.Value)
-            {
+            if (textBoxUserCompanyCompanyName.Text != MainSaveFileProfileData.CompanyName.Value) {
                 MainSaveFileProfileData.isEdited = true;
                 MainSaveFileProfileData.CompanyName = new Save.DataFormat.SCS_String(textBoxUserCompanyCompanyName.Text);
             }
         }
 
-        private void textBoxUserCompanyCompanyName_Validating(object sender, CancelEventArgs e)
-        {
+        private void textBoxUserCompanyCompanyName_Validating(object sender, CancelEventArgs e) {
             TextBox txtbx = sender as TextBox;
 
             if (txtbx.ReadOnly == false)
-                if (txtbx.TextLength == 0)
-                {
+                if (txtbx.TextLength == 0) {
                     // Cancel the event and select the text to be corrected by the user.
                     MessageBox.Show("Company name is empty." + Environment.NewLine + "It must contain at least 1 letter. ", "Company name", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     e.Cancel = true;
                 }
         }
 
-        private void textBoxUserCompanyMoneyAccount_Enter(object sender, EventArgs e)
-        {
-            Int64 valueBefore = (long)Math.Floor(SiiNunitData.Bank.money_account * CurrencyDictConversion[Globals.CurrencyName]);
+        private void textBoxUserCompanyMoneyAccount_Enter(object sender, EventArgs e) {
+            Int64 valueBefore = (long)Math.Floor(SiiNunitData.Bank.money_account * SelectedGame.Currencies.Get(Globals.CurrencyName).ConversionRate);
 
             textBoxUserCompanyMoneyAccount.Text = String.Format(CultureInfo.CurrentCulture, "{0:N0}", valueBefore);
 
@@ -256,10 +227,8 @@ namespace TS_SE_Tool
 
         bool MoneyAccountEntered = false;
 
-        private void textBoxUserCompanyMoneyAccount_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (MoneyAccountEntered)
-            {
+        private void textBoxUserCompanyMoneyAccount_MouseClick(object sender, MouseEventArgs e) {
+            if (MoneyAccountEntered) {
                 int selbefore = textBoxUserCompanyMoneyAccount.SelectionStart;
 
                 var charIndex = textBoxUserCompanyMoneyAccount.GetCharIndexFromPosition(e.Location);
@@ -274,10 +243,10 @@ namespace TS_SE_Tool
 
                 string newtext = "";
 
-                if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
-                    newtext += CurrencyDictFormat[Globals.CurrencyName][0] + "-";
+                if (SelectedGame.Currencies.Get(Globals.CurrencyName).FormatSymbols[0] != "")
+                    newtext += SelectedGame.Currencies.Get(Globals.CurrencyName).FormatSymbols[0] + "-";
 
-                newtext += CurrencyDictFormat[Globals.CurrencyName][1];
+                newtext += SelectedGame.Currencies.Get(Globals.CurrencyName).FormatSymbols[1];
 
                 textBoxUserCompanyMoneyAccount.SelectionStart = selbefore - newtext.Length;
 
@@ -285,13 +254,11 @@ namespace TS_SE_Tool
             }
         }
 
-        private void textBoxUserCompanyMoneyAccount_Validating(object sender, CancelEventArgs e)
-        {
+        private void textBoxUserCompanyMoneyAccount_Validating(object sender, CancelEventArgs e) {
 
         }
 
-        private void textBoxUserCompanyMoneyAccount_Leave(object sender, EventArgs e)
-        {
+        private void textBoxUserCompanyMoneyAccount_Leave(object sender, EventArgs e) {
             textBoxUserCompanyMoneyAccount.KeyPress -= textBoxMoneyAccount_KeyPress;
             textBoxUserCompanyMoneyAccount.TextChanged -= textBoxMoneyAccount_TextChanged;
 
@@ -299,35 +266,30 @@ namespace TS_SE_Tool
             if (!Int64.TryParse(textBoxUserCompanyMoneyAccount.Text, NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign, CultureInfo.CurrentCulture, out long newValue))
                 return;
 
-            SiiNunitData.Bank.money_account = (long)Math.Round(newValue / CurrencyDictConversion[Globals.CurrencyName]);
+            SiiNunitData.Bank.money_account = (long)Math.Round(newValue / SelectedGame.Currencies.Get(Globals.CurrencyName).ConversionRate);
 
             //[sign1] - [sign2] 1.234,- [sign3]
             string newtext = "";
-            if (CurrencyDictFormat[Globals.CurrencyName][0] != "")
-                newtext += CurrencyDictFormat[Globals.CurrencyName][0] + "-";
+            if (SelectedGame.Currencies.Get(Globals.CurrencyName).FormatSymbols[0] != "")
+                newtext += SelectedGame.Currencies.Get(Globals.CurrencyName).FormatSymbols[0] + "-";
 
-            newtext += CurrencyDictFormat[Globals.CurrencyName][1] + String.Format(CultureInfo.CurrentCulture, "{0:N0}", newValue) + ",-" + CurrencyDictFormat[Globals.CurrencyName][2];
+            newtext += SelectedGame.Currencies.Get(Globals.CurrencyName).FormatSymbols[1] + String.Format(CultureInfo.CurrentCulture, "{0:N0}", newValue) + ",-" + SelectedGame.Currencies.Get(Globals.CurrencyName).FormatSymbols[2];
             //
 
             textBoxUserCompanyMoneyAccount.Text = newtext;
         }
 
-        private void textBoxMoneyAccount_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        private void textBoxMoneyAccount_KeyPress(object sender, KeyPressEventArgs e) {
             TextBox textBoxAccountMoney = sender as TextBox;
 
-            if (!string.IsNullOrEmpty(textBoxAccountMoney.Text))
-            {
-                if (!Char.IsDigit(e.KeyChar))
-                {
-                    if (e.KeyChar == (char)Keys.Enter)
-                    {
+            if (!string.IsNullOrEmpty(textBoxAccountMoney.Text)) {
+                if (!Char.IsDigit(e.KeyChar)) {
+                    if (e.KeyChar == (char)Keys.Enter) {
                         this.ActiveControl = null;
                         return;
                     }
 
-                    if (e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Delete || e.KeyChar == (char)'-')
-                    {
+                    if (e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Delete || e.KeyChar == (char)'-') {
                         return;
                     }
 
@@ -336,20 +298,17 @@ namespace TS_SE_Tool
             }
         }
 
-        private void textBoxMoneyAccount_TextChanged(object sender, EventArgs e)
-        {
+        private void textBoxMoneyAccount_TextChanged(object sender, EventArgs e) {
             TextBox textBoxAccountMoney = sender as TextBox;
 
             string newtext = "";
 
-            if (!string.IsNullOrEmpty(textBoxAccountMoney.Text))
-            {
+            if (!string.IsNullOrEmpty(textBoxAccountMoney.Text)) {
                 int selectionStart = textBoxAccountMoney.SelectionStart;
 
                 string onlyDigits = textBoxAccountMoney.Text;
 
-                if (!Int64.TryParse(onlyDigits, NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign, CultureInfo.CurrentCulture, out long valueBefore))
-                {
+                if (!Int64.TryParse(onlyDigits, NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign, CultureInfo.CurrentCulture, out long valueBefore)) {
                     valueBefore = 0;
                 }
 
@@ -372,15 +331,12 @@ namespace TS_SE_Tool
 
                 int cSpaceDiff = 0, txtDiff = txtBefore.Length - txtAfter.Length;
 
-                if (txtDiff <= 0)
-                {
+                if (txtDiff <= 0) {
                     if (cSpace1 >= cSpace2)
                         cSpaceDiff = cSpace1 - cSpace2;
                     else
                         cSpaceDiff = cSpace2 - cSpace1;
-                }
-                else
-                {
+                } else {
                     if (cSpace1 <= cSpace2)
                         cSpaceDiff = cSpace1 - cSpace2;
                     else
@@ -388,17 +344,14 @@ namespace TS_SE_Tool
                 }
 
                 textBoxAccountMoney.SelectionStart = selectionStart + cSpaceDiff;
-            }
-            else
-            {
+            } else {
                 textBoxAccountMoney.Text = "0";
             }
         }
 
         //Visited cities
         //Fill
-        public void FillVisitedCities(int _vindex)
-        {
+        public void FillVisitedCities(int _vindex) {
             listBoxVisitedCities.BeginUpdate();
             listBoxVisitedCities.Items.Clear();
 
@@ -406,8 +359,7 @@ namespace TS_SE_Tool
                 return;
 
             int vicited = 0;
-            foreach (City vc in from x in CitiesList where !x.Disabled select x)
-            {
+            foreach (City vc in from x in CitiesList where !x.Disabled select x) {
                 if (vc.Visited)
                     vicited++;
 
@@ -425,14 +377,12 @@ namespace TS_SE_Tool
         private int VisitedCitiesItemMargin = 3;
         private const float VisitedCitiesPictureHeight = 32;
 
-        private void listBoxVisitedCities_MeasureItem(object sender, MeasureItemEventArgs e)
-        {
+        private void listBoxVisitedCities_MeasureItem(object sender, MeasureItemEventArgs e) {
             // Get the ListBox and the item.
             e.ItemHeight = (int)(VisitedCitiesPictureHeight + 2 * VisitedCitiesItemMargin);
         }
 
-        private void listBoxVisitedCities_DrawItem(object sender, DrawItemEventArgs e)
-        {
+        private void listBoxVisitedCities_DrawItem(object sender, DrawItemEventArgs e) {
             // Get the ListBox and the item.
             ListBox lst = sender as ListBox;
 
@@ -498,8 +448,7 @@ namespace TS_SE_Tool
 
             //=== Country
 
-            if (!string.IsNullOrEmpty(countryName))
-            {
+            if (!string.IsNullOrEmpty(countryName)) {
                 txt = "[ ";
 
                 if (CountriesDataList.ContainsKey(countryName))
@@ -508,9 +457,7 @@ namespace TS_SE_Tool
                     txt += countryName.First();
 
                 txt += " ]";
-            }
-            else
-            {
+            } else {
                 txt = "[ - - ]";
             }
 
@@ -531,19 +478,14 @@ namespace TS_SE_Tool
             e.DrawFocusRectangle();
         }
         //Buttons
-        private void buttonCitiesVisit_Click(object sender, EventArgs e)
-        {
-            if (listBoxVisitedCities.SelectedItems.Count == 0)
-            {
-                foreach (City city in listBoxVisitedCities.Items)
-                {
+        private void buttonCitiesVisit_Click(object sender, EventArgs e) {
+            if (listBoxVisitedCities.SelectedItems.Count == 0) {
+                foreach (City city in listBoxVisitedCities.Items) {
                     if (!city.Visited)
                         city.Visited = true;
                 }
-            }
-            else
-                foreach (City city in listBoxVisitedCities.SelectedItems)
-                {
+            } else
+                foreach (City city in listBoxVisitedCities.SelectedItems) {
                     if (!city.Visited)
                         city.Visited = true;
                 }
@@ -552,19 +494,14 @@ namespace TS_SE_Tool
             FillVisitedCities(listBoxVisitedCities.TopIndex);
         }
 
-        private void buttonCitiesUnVisit_Click(object sender, EventArgs e)
-        {
-            if (listBoxVisitedCities.SelectedItems.Count == 0)
-            {
-                foreach (City city in listBoxVisitedCities.Items)
-                {
+        private void buttonCitiesUnVisit_Click(object sender, EventArgs e) {
+            if (listBoxVisitedCities.SelectedItems.Count == 0) {
+                foreach (City city in listBoxVisitedCities.Items) {
                     if (city.Visited)
                         city.Visited = false;
                 }
-            }
-            else
-                foreach (City city in listBoxVisitedCities.SelectedItems)
-                {
+            } else
+                foreach (City city in listBoxVisitedCities.SelectedItems) {
                     if (city.Visited)
                         city.Visited = false;
                 }
@@ -574,8 +511,7 @@ namespace TS_SE_Tool
 
         //Garages
         //Fill
-        public void FillGaragesList(int _vindex)
-        {
+        public void FillGaragesList(int _vindex) {
             listBoxGarages.BeginUpdate();
             listBoxGarages.Items.Clear();
 
@@ -583,8 +519,7 @@ namespace TS_SE_Tool
                 return;
 
             int grgs = 0;
-            foreach (Garages garage in from x in GaragesList where !x.IgnoreStatus select x)
-            {
+            foreach (Garages garage in from x in GaragesList where !x.IgnoreStatus select x) {
                 listBoxGarages.Items.Add(garage);
 
                 if (garage.GarageStatus != 0)
@@ -602,14 +537,12 @@ namespace TS_SE_Tool
         private int GarageItemMargin = 3;
         private const float GaragePictureHeight = 32;
 
-        private void listBoxGarages_MeasureItem(object sender, MeasureItemEventArgs e)
-        {
+        private void listBoxGarages_MeasureItem(object sender, MeasureItemEventArgs e) {
             // Get the ListBox and the item.
             e.ItemHeight = (int)(GaragePictureHeight + 2 * GarageItemMargin);
         }
 
-        private void listBoxGarages_DrawItem(object sender, DrawItemEventArgs e)
-        {
+        private void listBoxGarages_DrawItem(object sender, DrawItemEventArgs e) {
             if (e.Index == -1)
                 return;
 
@@ -684,8 +617,7 @@ namespace TS_SE_Tool
 
             //=== Country
 
-            if (!string.IsNullOrEmpty(countryName))
-            {
+            if (!string.IsNullOrEmpty(countryName)) {
                 txt = "[ ";
 
                 if (CountriesDataList.ContainsKey(countryName))
@@ -695,9 +627,7 @@ namespace TS_SE_Tool
 
                 txt += " ]";
 
-            }
-            else
-            {
+            } else {
                 txt = "[ - - ]";
             }
 
@@ -732,8 +662,7 @@ namespace TS_SE_Tool
 
             //=== Vehicles & Drivers
 
-            if (grg.GarageStatus != 0)
-            {
+            if (grg.GarageStatus != 0) {
                 int curVeh = 0, curDr = 0;
 
                 foreach (string temp in grg.Vehicles)
@@ -771,15 +700,13 @@ namespace TS_SE_Tool
         }
 
         //Buttons
-        private void buttonUserCompanyGaragesManage_Click(object sender, EventArgs e)
-        {
+        private void buttonUserCompanyGaragesManage_Click(object sender, EventArgs e) {
             PrepareGarages();
 
             FormGaragesSoldContent testDialog = new FormGaragesSoldContent();
             DialogResult dr = testDialog.ShowDialog(this);
 
-            if (dr == DialogResult.OK)
-            {
+            if (dr == DialogResult.OK) {
                 FillGaragesList(listBoxGarages.TopIndex);
 
                 translateTruckComboBox();
@@ -787,8 +714,7 @@ namespace TS_SE_Tool
             }
         }
 
-        private void buttonGaragesBuy_Click(object sender, EventArgs e)
-        {
+        private void buttonGaragesBuy_Click(object sender, EventArgs e) {
             List<Garages> tmp;
 
             if (listBoxGarages.SelectedItems.Count == 0)
@@ -796,8 +722,7 @@ namespace TS_SE_Tool
             else
                 tmp = listBoxGarages.SelectedItems.Cast<Garages>().ToList();
 
-            foreach (Garages garage in tmp)
-            {
+            foreach (Garages garage in tmp) {
                 if (garage.GarageStatus == 0)
                     garage.GarageStatus = 2;
             }
@@ -808,8 +733,7 @@ namespace TS_SE_Tool
             FillHQcities();
         }
 
-        private void buttonGaragesUpgrade_Click(object sender, EventArgs e)
-        {
+        private void buttonGaragesUpgrade_Click(object sender, EventArgs e) {
             List<Garages> tmp;
 
             if (listBoxGarages.SelectedItems.Count == 0)
@@ -817,8 +741,7 @@ namespace TS_SE_Tool
             else
                 tmp = listBoxGarages.SelectedItems.Cast<Garages>().ToList();
 
-            foreach (Garages garage in tmp)
-            {
+            foreach (Garages garage in tmp) {
                 if (garage.GarageStatus == 2)
                     garage.GarageStatus = 3;
                 else if (garage.GarageStatus == 6)
@@ -830,8 +753,7 @@ namespace TS_SE_Tool
             FillGaragesList(listBoxGarages.TopIndex);
         }
 
-        private void buttonGaragesDowngrade_Click(object sender, EventArgs e)
-        {
+        private void buttonGaragesDowngrade_Click(object sender, EventArgs e) {
             List<Garages> tmp;
 
             if (listBoxGarages.SelectedItems.Count == 0)
@@ -839,8 +761,7 @@ namespace TS_SE_Tool
             else
                 tmp = listBoxGarages.SelectedItems.Cast<Garages>().ToList();
 
-            foreach (Garages garage in tmp)
-            {
+            foreach (Garages garage in tmp) {
                 if (garage.GarageStatus == 3)
                     garage.GarageStatus = 2;
                 else if (garage.GarageName == comboBoxUserCompanyHQcity.SelectedValue.ToString())
@@ -855,8 +776,7 @@ namespace TS_SE_Tool
                 translateTruckComboBox();
         }
 
-        private void buttonGaragesSell_Click(object sender, EventArgs e)
-        {
+        private void buttonGaragesSell_Click(object sender, EventArgs e) {
             List<Garages> tmp;
 
             if (listBoxGarages.SelectedItems.Count == 0)
@@ -864,8 +784,7 @@ namespace TS_SE_Tool
             else
                 tmp = listBoxGarages.SelectedItems.Cast<Garages>().ToList();
 
-            foreach (Garages garage in tmp)
-            {
+            foreach (Garages garage in tmp) {
                 if (garage.GarageName == SiiNunitData.Player.hq_city)
                     garage.GarageStatus = 6;
                 else
@@ -881,43 +800,35 @@ namespace TS_SE_Tool
                 translateTruckComboBox();
         }
 
-        private void buttonUserCompanyGaragesSelectAll_Click(object sender, EventArgs e)
-        {
+        private void buttonUserCompanyGaragesSelectAll_Click(object sender, EventArgs e) {
             ChangeSelectionUserCompanyListboxes(listBoxGarages, true);
         }
 
-        private void buttonUserCompanyGaragesUnSelectAll_Click(object sender, EventArgs e)
-        {
+        private void buttonUserCompanyGaragesUnSelectAll_Click(object sender, EventArgs e) {
             ChangeSelectionUserCompanyListboxes(listBoxGarages, false);
         }
 
-        private void buttonUserCompanyCitiesSelectAll_Click(object sender, EventArgs e)
-        {
+        private void buttonUserCompanyCitiesSelectAll_Click(object sender, EventArgs e) {
             ChangeSelectionUserCompanyListboxes(listBoxVisitedCities, true);
         }
 
-        private void buttonUserCompanyCitiesUnSelectAll_Click(object sender, EventArgs e)
-        {
+        private void buttonUserCompanyCitiesUnSelectAll_Click(object sender, EventArgs e) {
             ChangeSelectionUserCompanyListboxes(listBoxVisitedCities, false);
         }
-        private void buttonUserCompanyDriversSelectAll_Click(object sender, EventArgs e)
-        {
+        private void buttonUserCompanyDriversSelectAll_Click(object sender, EventArgs e) {
             ChangeSelectionUserCompanyListboxes(listBoxUserCompanyDrivers, true);
         }
 
-        private void buttonUserCompanyDriversUnSelectAll_Click(object sender, EventArgs e)
-        {
+        private void buttonUserCompanyDriversUnSelectAll_Click(object sender, EventArgs e) {
             ChangeSelectionUserCompanyListboxes(listBoxUserCompanyDrivers, false);
         }
 
-        private void ChangeSelectionUserCompanyListboxes(ListBox _target, bool _state)
-        {
+        private void ChangeSelectionUserCompanyListboxes(ListBox _target, bool _state) {
             int idx = _target.TopIndex;
 
             _target.BeginUpdate();
 
-            for (int i = 0; i < _target.Items.Count; i++)
-            {
+            for (int i = 0; i < _target.Items.Count; i++) {
                 _target.SetSelected(i, _state);
             }
 
@@ -928,23 +839,19 @@ namespace TS_SE_Tool
 
         // Drivers
         // Populate
-        private void PopulateDriversList()
-        {
+        private void PopulateDriversList() {
             List<Driver> driversList = new List<Driver>();
 
             // Staff
-            foreach (string driver in SiiNunitData.Player.drivers)
-            {
+            foreach (string driver in SiiNunitData.Player.drivers) {
                 Driver driverInList = new Driver();
 
                 driverInList.driverNameless = driver;
 
                 string drvrType = SiiNunitData.SiiNitems[driver].GetType().Name;
 
-                switch(drvrType)
-                {
-                    case "Driver_Player":
-                        {
+                switch (drvrType) {
+                    case "Driver_Player": {
                             driverInList.state = Driver.driverState.Player;
 
                             driverInList.adr = SiiNunitData.Economy.adr;
@@ -956,8 +863,7 @@ namespace TS_SE_Tool
 
                             break;
                         }
-                    case "Driver_AI":
-                        {
+                    case "Driver_AI": {
                             driverInList.state = Driver.driverState.Driver;
 
                             Save.Items.Driver_AI dr = SiiNunitData.SiiNitems[driver];
@@ -976,8 +882,7 @@ namespace TS_SE_Tool
                 driversList.Add(driverInList);
             }
 
-            foreach (string driver in SiiNunitData.Player.dismissed_drivers)
-            {
+            foreach (string driver in SiiNunitData.Player.dismissed_drivers) {
                 Driver driverInList = new Driver();
 
                 driverInList.driverNameless = driver;
@@ -1001,8 +906,7 @@ namespace TS_SE_Tool
             driverPoolList = driverPoolList.Select(s => new { fullStr = s, splitStr = s.Split('.') })
                 .OrderBy(x => int.Parse(x.splitStr[1])).Select(x => x.fullStr).ToList();
 
-            foreach (string driver in driverPoolList)
-            {
+            foreach (string driver in driverPoolList) {
                 Driver driverInList = new Driver();
 
                 driverInList.driverNameless = driver;
@@ -1034,14 +938,12 @@ namespace TS_SE_Tool
         }
 
         // Draw
-        private void listBoxUserCompanyDrivers_MeasureItem(object sender, MeasureItemEventArgs e)
-        {
+        private void listBoxUserCompanyDrivers_MeasureItem(object sender, MeasureItemEventArgs e) {
             // Get the ListBox and the item.
             e.ItemHeight = (int)(GaragePictureHeight + 2 * GarageItemMargin);
         }
 
-        private void listBoxUserCompanyDrivers_DrawItem(object sender, DrawItemEventArgs e)
-        {
+        private void listBoxUserCompanyDrivers_DrawItem(object sender, DrawItemEventArgs e) {
             // Get the ListBox and the item.
             ListBox lst = sender as ListBox;
 
@@ -1074,10 +976,8 @@ namespace TS_SE_Tool
 
             // Icon
 
-            switch(driver.state)
-            {
-                case Driver.driverState.Player:
-                    {
+            switch (driver.state) {
+                case Driver.driverState.Player: {
                         itemIcon = CitiesImg[3];
 
                         driverName += "=> ";
@@ -1085,14 +985,12 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                case Driver.driverState.Driver:
-                    {
+                case Driver.driverState.Driver: {
                         itemIcon = CitiesImg[1];
                         break;
                     }
 
-                case Driver.driverState.DismissedDriver:
-                    {
+                case Driver.driverState.DismissedDriver: {
                         itemIcon = CitiesImg[2];
 
                         driverName += "[X] ";
@@ -1100,8 +998,7 @@ namespace TS_SE_Tool
                         break;
                     }
 
-                case Driver.driverState.FreeDriver:
-                    {
+                case Driver.driverState.FreeDriver: {
                         itemIcon = CitiesImg[0];
                         break;
                     }
@@ -1144,10 +1041,8 @@ namespace TS_SE_Tool
             drawSkillIcons(driver.long_dist);
             drawSkillIcons((byte)numberOfSetBits(driver.adr));
 
-            void drawSkillIcons(byte _lvl)
-            {
-                if (_lvl != 0)
-                {
+            void drawSkillIcons(byte _lvl) {
+                if (_lvl != 0) {
                     itemIcon = SkillImgS[idx];
 
                     source_rect = new RectangleF(0, 0, itemIcon.Width, itemIcon.Height);
@@ -1181,8 +1076,7 @@ namespace TS_SE_Tool
                 idx--;
             }
 
-            int numberOfSetBits(byte v)
-            {
+            int numberOfSetBits(byte v) {
                 int i = 0; // store the total here
 
                 i = (v & 0x55555555) + ((v >> 1) & 0x55555555);
@@ -1198,17 +1092,13 @@ namespace TS_SE_Tool
             e.DrawFocusRectangle();
         }
 
-        private void listBoxUserCompanyDrivers_MouseDown(object sender, MouseEventArgs e)
-        {
+        private void listBoxUserCompanyDrivers_MouseDown(object sender, MouseEventArgs e) {
 
-            if (e.Button == MouseButtons.Right)
-            {
-                if (listBoxUserCompanyDrivers.Items.Count != 0)
-                {
+            if (e.Button == MouseButtons.Right) {
+                if (listBoxUserCompanyDrivers.Items.Count != 0) {
                     Rectangle rect = listBoxUserCompanyDrivers.GetItemRectangle(listBoxUserCompanyDrivers.Items.Count - 1);
 
-                    if (e.Y < rect.Bottom)
-                    {
+                    if (e.Y < rect.Bottom) {
                         contextMenuStripMainStateChange("CompanyDriversList");
 
                         contextMenuStripMain.Show(listBoxUserCompanyDrivers, e.Location);
@@ -1217,25 +1107,21 @@ namespace TS_SE_Tool
 
                         Driver selectedItem = (Driver)listBoxUserCompanyDrivers.Items[index];
 
-                        switch (selectedItem.state)
-                        {
-                            case Driver.driverState.Player:
-                                {
+                        switch (selectedItem.state) {
+                            case Driver.driverState.Player: {
                                     contextMenuStripCompanyDriversHire.Enabled = false;
                                     contextMenuStripCompanyDriversFire.Enabled = false;
                                     break;
                                 }
 
-                            case Driver.driverState.Driver:
-                                {
+                            case Driver.driverState.Driver: {
                                     contextMenuStripCompanyDriversHire.Enabled = false;
                                     contextMenuStripCompanyDriversFire.Enabled = true;
                                     break;
                                 }
 
                             case Driver.driverState.DismissedDriver:
-                            case Driver.driverState.FreeDriver:
-                                {
+                            case Driver.driverState.FreeDriver: {
                                     contextMenuStripCompanyDriversHire.Enabled = true;
                                     contextMenuStripCompanyDriversFire.Enabled = false;
                                     break;
@@ -1248,14 +1134,11 @@ namespace TS_SE_Tool
                 }
             }
 
-            if (e.Button == MouseButtons.Left)
-            {
-                if (listBoxUserCompanyDrivers.Items.Count != 0)
-                {
+            if (e.Button == MouseButtons.Left) {
+                if (listBoxUserCompanyDrivers.Items.Count != 0) {
                     Rectangle rect = listBoxUserCompanyDrivers.GetItemRectangle(listBoxUserCompanyDrivers.Items.Count - 1);
 
-                    if (e.Y > rect.Bottom)
-                    {
+                    if (e.Y > rect.Bottom) {
 
                     }
                 }
@@ -1264,8 +1147,7 @@ namespace TS_SE_Tool
 
         // Events
 
-        private void CompanyDriverHireEvent()
-        {
+        private void CompanyDriverHireEvent() {
             List<Driver> tmpList;
 
             ListBox sourceLB = listBoxUserCompanyDrivers;
@@ -1275,12 +1157,9 @@ namespace TS_SE_Tool
             else
                 tmpList = sourceLB.SelectedItems.Cast<Driver>().ToList();
 
-            foreach (Driver item in tmpList)
-            {
-                if (item.state == Driver.driverState.FreeDriver || item.state == Driver.driverState.DismissedDriver)
-                {
-                    if (!extraDrivers.Contains(item.driverNameless))
-                    {
+            foreach (Driver item in tmpList) {
+                if (item.state == Driver.driverState.FreeDriver || item.state == Driver.driverState.DismissedDriver) {
+                    if (!extraDrivers.Contains(item.driverNameless)) {
                         extraDrivers.Add(item.driverNameless);
                         extraVehicles.Add(null);
                     }
@@ -1303,8 +1182,7 @@ namespace TS_SE_Tool
             UpdateDriverListTotals(sourceLB);
         }
 
-        private void CompanyDriverFireEvent()
-        {
+        private void CompanyDriverFireEvent() {
             List<Driver> tmpList;
 
             ListBox sourceLB = listBoxUserCompanyDrivers;
@@ -1314,12 +1192,9 @@ namespace TS_SE_Tool
             else
                 tmpList = sourceLB.SelectedItems.Cast<Driver>().ToList();
 
-            foreach (Driver item in tmpList)
-            {
-                if (item.state == Driver.driverState.Driver)
-                {
-                    if (extraDrivers.Contains(item.driverNameless))
-                    {
+            foreach (Driver item in tmpList) {
+                if (item.state == Driver.driverState.Driver) {
+                    if (extraDrivers.Contains(item.driverNameless)) {
                         int idx = extraDrivers.IndexOf(item.driverNameless);
 
                         extraDrivers.RemoveAt(idx);
@@ -1328,8 +1203,7 @@ namespace TS_SE_Tool
 
                     Garages tmpGarage = GaragesList.Where(x => x.Drivers.Contains(item.driverNameless)).SingleOrDefault();
 
-                    if (tmpGarage != null)
-                    {
+                    if (tmpGarage != null) {
                         List<string> tmpDrvrs = tmpGarage.Drivers;
 
                         int tmpIdx = tmpDrvrs.IndexOf(item.driverNameless);
@@ -1343,8 +1217,7 @@ namespace TS_SE_Tool
 
                     // Check if job is active
 
-                    if (driverJobInfo.cargo == "null")
-                    {
+                    if (driverJobInfo.cargo == "null") {
                         int drvrIdx = SiiNunitData.Player.drivers.IndexOf(item.driverNameless);
 
                         SiiNunitData.Player.drivers.RemoveAt(drvrIdx);
@@ -1354,9 +1227,7 @@ namespace TS_SE_Tool
                         SiiNunitData.Economy.driver_pool.Add(item.driverNameless);
 
                         item.state = Driver.driverState.FreeDriver;
-                    }
-                    else
-                    {
+                    } else {
                         SiiNunitData.Player.dismissed_drivers.Add(item.driverNameless);
 
                         item.state = Driver.driverState.DismissedDriver;
@@ -1367,8 +1238,7 @@ namespace TS_SE_Tool
             UpdateDriverListTotals(sourceLB);
         }
 
-        private void UpdateDriverListTotals(ListBox sourceLB)
-        {
+        private void UpdateDriverListTotals(ListBox sourceLB) {
             List<Driver> tmpList = sourceLB.Items.Cast<Driver>().ToList();
 
             int currentStaff = tmpList.Count(x => x.state < Driver.driverState.FreeDriver);
@@ -1383,28 +1253,23 @@ namespace TS_SE_Tool
             FillGaragesList(listBoxGarages.TopIndex);
         }
 
-        private void buttonUserCompanyDriversHire_Click(object sender, EventArgs e)
-        {
+        private void buttonUserCompanyDriversHire_Click(object sender, EventArgs e) {
             CompanyDriverHireEvent();
         }
 
-        private void buttonUserCompanyDriversFire_Click(object sender, EventArgs e)
-        {
+        private void buttonUserCompanyDriversFire_Click(object sender, EventArgs e) {
             CompanyDriverFireEvent();
         }
 
-        private void contextMenuStripCompanyDriversEdit_Click(object sender, EventArgs e)
-        {
+        private void contextMenuStripCompanyDriversEdit_Click(object sender, EventArgs e) {
             Driver selectedItem = (Driver)listBoxUserCompanyDrivers.SelectedItem;
 
             if (selectedItem.state == Driver.driverState.Player)
                 tabControlMain.SelectedIndex = 0;
-            else
-            {
+            else {
                 FormAIDriverEditor driverEditor = new FormAIDriverEditor(selectedItem);
 
-                if (driverEditor.ShowDialog(this) == DialogResult.OK)
-                {
+                if (driverEditor.ShowDialog(this) == DialogResult.OK) {
                     // Update listbox
 
                     Driver tmpDriver = driverEditor.driverData;
@@ -1427,13 +1292,11 @@ namespace TS_SE_Tool
             }
         }
 
-        private void contextMenuStripCompanyDriversHire_Click(object sender, EventArgs e)
-        {
+        private void contextMenuStripCompanyDriversHire_Click(object sender, EventArgs e) {
             CompanyDriverHireEvent();
         }
 
-        private void contextMenuStripCompanyDriversFire_Click(object sender, EventArgs e)
-        {
+        private void contextMenuStripCompanyDriversFire_Click(object sender, EventArgs e) {
             CompanyDriverFireEvent();
         }
 

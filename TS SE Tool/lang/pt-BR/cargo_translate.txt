@@ -1,0 +1,373 @@
+﻿[pt-BR]
+acetylene;Acetileno
+acid;Ácido
+air_mails;Correio aéreo
+aircft_tires;Pneus para aeronaves
+aircond;Arcondicionado
+almond;Amêndoa
+ammunition;Munição
+apples;Maçãs
+apples_c;Maçãs
+aromatics;Aromatico
+arsenic;Arsênico
+asph_miller;Moedor de Asfalto - Writigen 808
+atl_cod_flt;Filé de bacalhau do Atlântico
+backfl_prev;Preventores de Retorno
+barley;Cevada
+basil;Manjericão
+beans;Feijões
+beef_meat;Carne
+beverages;Bebidas
+beverages_c;Bebidas
+big_bag_seed;Sacos grandes de sementes
+boiler_parts;Peça da caldeira (especial)
+boric_acid;Ácido bórico
+bottle_water;Água engarrafada
+bottles;Garrafas vazias
+brake_fluid;Fluido de freio
+brake_pads;Pastilhas de freio
+bricks;Tijolos
+bulldozer;Escavadeira
+butter;Manteiga
+cable;Cabos
+cable_reel;Carretel de cabo industrial
+can_sardines;Sardinhas enlatadas
+canned_beans;Feijões enlatados
+canned_beef;Carne enlatada
+canned_pork;Carne de porco enlatada
+canned_tuna;Atum enlatado
+car_balt1;Carros (Báltico 1)
+car_balt2;Carros (Báltico 2)
+car_it;Carros (Itália)
+caravan;Reboque
+carb_water;Água com gás
+carbn_pwdr;Carbono em pó
+carbn_pwdr_c;Carbono em pó
+carcomp;Componentes de carro
+carrots;Cenouras
+carrots_c;Cenouras
+cars_big;Carros grandes
+cars_fr;Carros (França)
+cars_mix;Carros mistos
+cars_small;Carros pequenos
+case600;Trator de esteiras
+cat_785c;Raspador
+cat627;Chassi de caminhão de transporte (Especial)
+cauliflower;Couve-flor
+caviar;Caviar
+cement;Cimento
+cheese;Queijo
+chem_sorb_c;Sorbente químico
+chem_sorbent;Sorbente químico
+chemicals;Produtos quimicos
+chewing_gums;Pastilhas elásticas
+chicken_meat;Carne de frango
+chimney_syst;Sistemas de chaminé
+chlorine;Cloro
+chocolate;Chocolate
+clothes;Roupas
+clothes_c;Roupas
+coal;Carvão
+coconut_milk;Leite de côco
+coconut_oil;Óleo de côco
+coil;Bobina de metal
+colors;Cores
+comp_process;Processadores de computador
+computers;Computador
+concen_juice;Sucos concentrados
+concr_beams;Vigas de concreto
+concr_beams2;Vigas de concreto
+concr_cent;Centralização de concreto
+concr_stair;Escadas em concreto
+condensator;Capacitor industrial (Especial)
+const_house;Materiais de construção
+cont_trees;Árvores em contêineres
+contamin;Material contaminado
+copp_rf_gutt;Calhas pluviais em cobre
+corks;Cortiças
+cott_cheese;Queijo tipo cottage
+ctubes;Tubos de concreto
+ctubes_b;Tubos de concreto_b
+curtains;Cortinas
+cut_flowers;Flores cortadas
+cyanide;Cianeto
+desinfection;Desinfetante
+diesel;Diesel
+diesel_gen;Geradores a diesel
+digger1000;Escavadeira 1000
+digger500;Escavadeira 500
+diggers;Escavadeiras
+dozer;Trator de esteira - Z35K
+driller;Perfurador - D-50
+dry_fruit;Frutas secas
+dry_milk;Leite em pó
+dryers;Secadoras
+drymilk;Leite em pó
+dynamite;Dinamite
+elect_wiring;Fiação elétrica
+electro_comp;Componentes eletrônicos
+electronics;Eletrônicos
+emp_wine_bar;Barris de vinho vazios
+emp_wine_bot;Garrafas de vinho vazias
+empty_barr;Barris vazios
+empty_palet;Paletes vazias
+emptytank;Tanque reservatório
+ethane;Etano
+ex_bucket;Caçamba para escavadeira (Especial)
+excav_soil;Solo escavado
+excavator;Escavadeira
+excavator_bucket;Caçamba para escavadeira (Especial)
+exhausts_c;Sistemas de exaustão
+explosives;Explosivos
+fertilizer;Fertilizante
+fireworks;Fogos de artifício
+fish_chips;Palito de peixe
+floorpanels;Painéis de piso
+flour;Farinha
+fluorine;Flúor
+food;Alimentos
+forklifts;Empilhadeiras
+fresh_fish;Peixe fresco
+froz_octopi;Polvo congelado
+frozen_food;Comida congelada
+frozen_fruit;Frutas congeladas
+frozen_hake;Merluza congelada
+frozen_veget;Vegetais congelados
+frsh_herbs;Ervas frescas
+fruits;Frutas
+fuel_oil;Óleo combustível
+fuel_tanks;Tanques de combustível
+fueltanker;Petroleiro
+furniture;Mobília
+garlic;Alho
+glass;Painéis de vidro
+glass_packed;Vidro embalado
+gnocchi;Nhoque
+goat_cheese;Queijo de cabra
+grain;Grão
+granite_cube;Cubos de granito
+grapes;Uvas
+graph_grease;Graxa de grafite
+grass_rolls;Rolos de grama
+gravel;Cascalho
+guard_rails;Corrimão
+gummy_bears;Gomas
+gypsum;Gesso
+harvest_bins;Caixas de colheita
+hay;Feno
+hchemicals;Produtos químicos quentes
+heat_exch;Permutador de calor (Especial)
+heat_exchanger;Permutador de calor (Especial)
+helicopter;Helicóptero - Ring-429
+hi_volt_cabl;Cabos de alta tensão
+hipresstank;Tanque de pressão
+hmetal;Metais pesados
+home_acc;Acessórios para casa
+honey;Mel
+house_pref;Casa pré-fabricada
+househd_appl;Electrodomésticos
+hwaste;Resíduos hospitalares
+hydrochlor;Ácido clorídrico
+hydrogen;Hidrogênio
+ibc_cont;Contentores IBC
+icecream;Sorvete
+iced_coffee;Café gelado enlatado
+iron_pipes;Tubos de ferro
+iveco_vans;Vans
+kalmar240;Empilhadeira
+kalmar240_s;Chassi de empilhadeira
+kerosene;Querosene
+ketchup;Ketchup
+komatsu155;Escavadeira
+lamb_stom;Buchos de cordeiro
+largetubes;Tubos grandes
+lattice;Escada para construção (Especial)
+lavender;Lavanda
+lead;Chumbo
+limestone;Calcário
+limonades;Limonada
+live_catt_fr;Gado vivo (França)
+live_cattle;Gado vivo
+liver_paste;Pasta de fígado
+locomotive;Locomotiva - Vossloh G6
+logs;Tronco cortado
+lpg;Gás liquefeito de petróleo
+lumber;Madeira
+lumber_b;Madeira_b
+lye;Detergente
+m_59_80_r63;Pneus enormes (Especiais)
+machine_pts;Peças de máquinas
+magnesium;Magnésio
+maple_syrup;Aminoácidos
+marb_blck;Blocos de mármore_b
+marb_blck2;Blocos de mármore
+marb_slab;Laje de mármore
+mason_jars;Pote de conserva
+mbt;Barreira móvel
+meat;Carne
+med_equip;Equipamento médico
+med_vaccine;Vacinas médicas
+mercuric;Ácido mercúrico
+metal_beams;Vigas de metal
+metal_cans;Latas de metal
+metal_center;Centro de metal
+metal_pipes;Tubos de ferro_b
+michelin_59_80_r63;Pneus enormes (Especiais)
+milk;Leite
+mobile_crane;Guindaste móvel - Rex-Tex 45
+mondeos;Carros
+moor_buoy;Boia de amarração
+mortar;Argamassa
+moto_tires;Pneus para motos
+motor_oil;Óleo de motor
+motor_oil_c;Óleo de motor C
+motorcycles;Motocicletas
+mozzarela;Mussarela
+mtl_coil;Bobina de metal
+mystery_box;Peça tecnológica maciça (Especial)
+mystery_cyl;Dispositivo de alta tecnologia (Especial)
+natur_rubber;Borracha natural
+neon;Néon
+nitrocel;Nitrocelulose
+nitrogen;Nitrogênio
+nonalco_beer;Cerveja sem álcool
+nuts;Nozes
+nylon_cord;Cordão de nylon
+office_suppl;Material de escritório
+oil;Oil
+oil_filt_c;Filtros de óleo
+oil_filters;Filtros de óleo
+olive_oil;Azeite de oliva
+olives;Azeitonas
+onion;Cebolas
+oranges;Laranjas
+ore;Minério
+outdr_flr_tl;Telhas de assoalho exteriores
+overweight;Semi-reboques baixos
+packag_food;Comida embalada
+paper;Papel de escritório
+pasta;Macarrão
+pears;Peras
+peas;Ervilhas
+perfor_frks;Garfo amortecedor
+pesticide;Pesticidas
+pesto;Pesto
+pet_food;Alimentos para animais
+pet_food_c;Alimentos para animais
+petrol;Gasolina
+phosphor;Fósforo branco
+pilot_boat;Barco de serviço (Especial)
+pipes;Tubos de ferro
+plant_substr;Substrato vegetal
+plast_film;Rolos de filme plástico
+plast_film_c;Rolos de filme plástico
+plastic_gra;Grânulos de plástico
+plows;Arados
+plumb_suppl;Acessórios para canalizações
+plums;Ameixas
+pnut_butter;Manteiga de amendoim
+polyst_box;Caixas de poliestireno
+pork_meat;Carne de porco
+post_packag;Pacotes de correio
+pot_flowers;Flores em vasos
+potahydro;Hidróxido de potássio
+potassium;Potássio
+potatoes;Batatas
+precast_strs;Escadas pré-fabricadas
+press_sl_val;Válvulas de corrediça de alta pressão
+princess;Iate - Queen V39
+propane;Propano
+prosciutto;Presunto
+protec_cloth;Roupa de proteção
+pumps;Bombas
+radiators;Radiadores
+rawmilk;Leite cru
+re_bars;Barras de reforço
+refl_posts;Poste refletivo
+rice;Arroz
+rice_c;Arroz
+roadroller;Cilindro
+roller;Cilindro - DYNA CC-2200
+roof_tiles;Telhas
+roofing_felt;Feltro
+rooflights;Iluminação zenital
+rye;Centeio
+salm_fillet;Filé de salmão
+salt_spice_c;Sal e especiarias
+salt_spices;Sal e especiarias
+sand;Areia
+sandwch_pnls;Telhado de painéis sanduíche
+sausages;Salsicha
+sawpanels;Painéis de serragem
+scaffoldings;Andaimes
+scania_tr;Caminhões Scania
+scooters;Mobiletes
+scrap_cars;Carros sucateados
+scrap_metals;Sucatas de metal
+seal_bearing;Rolamentos vedados
+sheep_wool;Lã de ovelha
+shock_absorb;Amortecedores
+silica;Sílica
+silo;Silo gigante (Especial)
+smokd_eel;Enguia defumada
+smokd_sprats;Arenques defumados
+sodchlor;Hipoclorito de sódio
+sodhydro;Hidróxido de sódio
+sodium;Sódio
+soil;Solo
+solvents;Solventes
+soy_milk;Leite de soja
+spher_valves;Válvulas esféricas
+sq_tub;Tubos quadrados
+steel_cord;Cabo de aço
+stone_dust;Pó de pedra
+stone_wool;Lã de pedra
+stones;Pedras
+straw_bales;Fardos de palha
+sugar;Açúcar
+sulfuric;Ácido sulfúrico
+tableware;Louça
+terex3160;Guindaste todo-o-terreno
+tomatoes;Tomates
+toys;Brinquedos
+tracks;Esteiras
+tractor;Trator - RS-666
+tractors;Tratores
+train_part;Material rodante do trem
+train_part2;Eixos de trem
+transformat;Transformador - PK900
+transformer;Transformador
+transmis;Transmissões
+truck_batt;Baterias de caminhão
+truck_batt_c;Baterias de caminhão
+truck_rims;Jantes para camião
+truck_rims_c;Jantes para camião
+truck_tyres;Pneus para caminhões
+tube;Peças de gasodutos
+tvs;Televisores
+tyres;Pneus
+used_battery;Baterias de carro usado
+used_pack;Embalagens usadas
+used_packag;Embalagens usadas
+used_plast;Plásticos usados
+used_plast_c;Plásticos usados
+vegetable;Legumes
+vent_tube;Poço de ventilação
+ventilation;Poço de ventilação
+vinegar;Vinagre
+vinegar_c;Vinagre
+volvo_cars;SUVs de luxo
+volvo_tr;Caminhões Volvo
+wallpanels;Painéis de parede
+watermelons;Melancias
+wheat;Trigo
+windml_eng;Nacele da turbina eólica
+windml_tube;Torre de turbina eólica
+wirtgen250;Fresadora
+wood_bark;Casca de madeira
+wooden_beams;Vigas de madeira
+wrk_cloth;Roupas de trabalho
+wshavings;Aparas de madeira
+yacht;Iate
+yogurt;Iogurte
+young_seed;Mudas
