@@ -49,7 +49,7 @@ namespace TS_SE_Tool
                     {
                         FileDecoded = true;
                         string BigS = Encoding.UTF8.GetString(fileDataInBytes);
-                        return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                        return BigS.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
                     }
                 case 2:
                     // "SIIDEC_RESULT_FORMAT_ENCRYPTED";
@@ -82,7 +82,7 @@ namespace TS_SE_Tool
 
                             FileDecoded = true;
                             string BigS = Encoding.UTF8.GetString(newFileData);
-                            return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                            return BigS.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
 
                         }
 
@@ -121,7 +121,7 @@ namespace TS_SE_Tool
 
                             FileDecoded = true;
                             string BigS = Encoding.UTF8.GetString(newFileData);
-                            return BigS.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                            return BigS.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
                         }
                         return null;
                     }
