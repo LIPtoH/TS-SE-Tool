@@ -110,7 +110,7 @@ namespace TS_SE_Tool.Save.Items
 
                         default:
                             {
-                                UnidentifiedLines.Add(dataLine);
+                                UnidentifiedLines.Add(currentLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
@@ -119,7 +119,7 @@ namespace TS_SE_Tool.Save.Items
                 catch (Exception ex)
                 {
                     IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
-                    break;
+                    continue;
                 }
             }
         }
@@ -148,7 +148,7 @@ namespace TS_SE_Tool.Save.Items
             for (int i = 0; i < count_per_dock.Count; i++)
                 returnSB.AppendLine(" count_per_dock[" + i + "]: " + count_per_dock[i].ToString());
 
-            WriteUnidentifiedLines();
+            returnSB.Append(WriteUnidentifiedLines());
 
             returnSB.AppendLine("}");
 

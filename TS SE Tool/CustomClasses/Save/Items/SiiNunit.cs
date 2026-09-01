@@ -21,6 +21,15 @@ namespace TS_SE_Tool.Save.Items
 
         internal List<string> NamelessIgnoreList = new List<string>();
 
+        //Set while PrintOut runs outside the UI (headless self-test) so that
+        //SiiNBlockCore.removeWritenBlock still has a list to tick blocks off.
+        internal static List<string> HeadlessWrittenBlocks = null;
+
+        //Block bodies exactly as they were read from the save, keyed by nameless id.
+        //Used by OriginalBlockMerge so attributes this build does not know about
+        //(newer savefile versions) survive a write.
+        internal Dictionary<string, List<string>> OriginalBlockBodies = new Dictionary<string, List<string>>();
+
         internal Economy Economy
         {
             get => (Economy)SiiNitems[EconomyNameless];
@@ -79,7 +88,13 @@ namespace TS_SE_Tool.Save.Items
 
                 NamelessControlList.Add(nameless);
 
-                SiiNitems.Add(nameless, DetectTag(nameless, tagLine, GetLines().ToArray()));
+                string[] blockLines = GetLines().ToArray();
+
+                //keep the body verbatim (header and closing brace excluded)
+                if (blockLines.Length > 2 && !OriginalBlockBodies.ContainsKey(nameless))
+                    OriginalBlockBodies.Add(nameless, blockLines.Skip(1).Take(blockLines.Length - 2).ToList());
+
+                SiiNitems.Add(nameless, DetectTag(nameless, tagLine, blockLines));
 
                 continue;
 
@@ -413,6 +428,9 @@ namespace TS_SE_Tool.Save.Items
         internal string PrintOut(uint _version)
         {
             string returnString = "";
+
+            if (System.Windows.Forms.Application.OpenForms.Count == 0)
+                HeadlessWrittenBlocks = NamelessControlList;
 
             StringBuilder returnSB = new StringBuilder();
 
@@ -1002,7 +1020,8 @@ namespace TS_SE_Tool.Save.Items
             
             returnSB.Append("}");
 
-            returnString = returnSB.ToString();
+            //Put back everything this build does not model - see OriginalBlockMerge.
+            returnString = OriginalBlockMerge.Apply(returnSB.ToString(), OriginalBlockBodies);
 
             return returnString;
         }

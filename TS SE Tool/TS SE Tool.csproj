@@ -201,6 +201,8 @@
     <Compile Include="CustomClasses\Save\Items\Profit_log_Entry.cs" />
     <Compile Include="CustomClasses\Save\Items\Registry.cs" />
     <Compile Include="CustomClasses\Save\Items\SiiNBlockCore.cs" />
+    <Compile Include="CustomClasses\Diagnostics\SelfTest.cs" />
+    <Compile Include="CustomClasses\Save\Items\OriginalBlockMerge.cs" />
     <Compile Include="CustomClasses\Save\Items\SiiNunit.cs" />
     <Compile Include="CustomClasses\Save\Items\Trailer.cs" />
     <Compile Include="CustomClasses\Save\ItemsExtra\UserCompanyTrailerData.cs" />

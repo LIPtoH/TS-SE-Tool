@@ -68,7 +68,7 @@ namespace TS_SE_Tool.Save.Items
 
                         default:
                             {
-                                UnidentifiedLines.Add(dataLine);
+                                UnidentifiedLines.Add(currentLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
@@ -77,7 +77,7 @@ namespace TS_SE_Tool.Save.Items
                 catch (Exception ex)
                 {
                     IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
-                    break;
+                    continue;
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" parent_trajectory_uid: " + parent_trajectory_uid.ToString());
             returnSB.AppendLine(" parent_trajectory_idx: " + parent_trajectory_idx.ToString());
 
-            WriteUnidentifiedLines();
+            returnSB.Append(WriteUnidentifiedLines());
 
             returnSB.AppendLine("}");
 

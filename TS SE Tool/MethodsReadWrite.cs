@@ -887,8 +887,37 @@ namespace TS_SE_Tool
                 ToggleMainControlsAccess(true);
                 ToggleControlsAccess(true);
 
-                IO_Utilities.ErrorLogWriter("Error during Writing save file" + Environment.NewLine + e.Error.Message +  Environment.NewLine + e.Error.StackTrace);
-                MessageBox.Show("Something went wrong during Writing Save file", "Error during Writing save file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string details = DescribeException(e.Error);
+
+                IO_Utilities.ErrorLogWriter("Error during Writing save file" + Environment.NewLine + details);
+
+                string[] failedDialog = HelpTranslateDialogOrDefault("SaveWriteFailed",
+                    "Error during Writing save file",
+                    "Something went wrong during Writing Save file." + Environment.NewLine +
+                    "The save file itself was NOT modified." + Environment.NewLine + Environment.NewLine +
+                    "{0}" + Environment.NewLine +
+                    "Full details were appended to errorlog.log");
+
+                MessageBox.Show(string.Format(failedDialog[1], details), failedDialog[0],
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
+            if (SaveWriteSkipped)
+            {
+                ToggleMainControlsAccess(true);
+                ToggleControlsAccess(true);
+
+                toolStripProgressBarMain.Value = 0;
+
+                string[] skippedDialog = HelpTranslateDialogOrDefault("SaveNotWritten",
+                    "Save file NOT written",
+                    "The save file on disk changed after it was loaded, so nothing was written." + Environment.NewLine +
+                    "Reload the save and redo your changes.");
+
+                MessageBox.Show(skippedDialog[1], skippedDialog[0],
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 return;
             }
@@ -964,6 +993,65 @@ namespace TS_SE_Tool
             }
         }
 
+        //Set by NewWrireSaveFile when it deliberately writes nothing.
+        private bool SaveWriteSkipped = false;
+
+        /// <summary>
+        /// Caption and text for a dialog, falling back to the supplied English strings
+        /// when the active language pack does not carry the keys yet.
+        /// </summary>
+        private string[] HelpTranslateDialogOrDefault(string _dialogName, string _defaultCaption, string _defaultText)
+        {
+            string[] translated = HelpTranslateDialog(_dialogName);
+
+            return new string[]
+            {
+                string.IsNullOrEmpty(translated[0]) ? _defaultCaption : translated[0],
+                string.IsNullOrEmpty(translated[1]) ? _defaultText : Regex.Unescape(translated[1])
+            };
+        }
+
+        /// <summary>
+        /// Full exception detail - type, message, offending method and stack - for every
+        /// level of the InnerException chain.
+        /// </summary>
+        internal static string DescribeException(Exception _ex)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (Exception ex = _ex; ex != null; ex = ex.InnerException)
+            {
+                sb.AppendLine(ex.GetType().FullName + ": " + ex.Message);
+
+                if (ex.TargetSite != null)
+                    sb.AppendLine("  at " + ex.TargetSite.DeclaringType + "." + ex.TargetSite.Name);
+
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                    sb.AppendLine(ex.StackTrace);
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Writes to a sibling temporary file first and only then swaps it in, so an
+        /// interrupted or failing write can never leave a truncated save behind.
+        /// </summary>
+        private static void WriteTextFileAtomic(string _path, string _content)
+        {
+            string tempPath = _path + ".tsset_tmp";
+
+            using (StreamWriter writer = new StreamWriter(tempPath, false))
+            {
+                writer.Write(_content);
+            }
+
+            if (File.Exists(_path))
+                File.Delete(_path);
+
+            File.Move(tempPath, _path);
+        }
+
         //button_save_file
         private void NewWrireSaveFile(object sender, DoWorkEventArgs e)
         {
@@ -977,9 +1065,14 @@ namespace TS_SE_Tool
             {
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Error, "error_file_was_modified");
                 IO_Utilities.LogWriter("Save game was modified - reload file to prevent progress loss");
+
+                //Nothing was written - do not let RunWorkerCompleted report success.
+                SaveWriteSkipped = true;
             }
             else
             {
+                SaveWriteSkipped = false;
+
                 //Prepare
                 PrepareEvents();
 
@@ -994,6 +1087,18 @@ namespace TS_SE_Tool
 
                 PrintAddedJobs();
 
+                //Serialise EVERYTHING first.
+                //Opening a StreamWriter truncates the target immediately, so building the
+                //text inside the using() meant that any serialiser exception left game.sii
+                //on disk as a 0 byte file. Never touch a file before its replacement
+                //content exists.
+                string profileText = MainSaveFileProfileData.isEdited ? MainSaveFileProfileData.PrintOut() : null;
+                string infoText = MainSaveFileInfoData.isEdited ? MainSaveFileInfoData.PrintOut() : null;
+                string saveText = SiiNunitData.PrintOut(MainSaveFileInfoData.Version);
+
+                if (string.IsNullOrEmpty(saveText))
+                    throw new InvalidOperationException("Serialised game.sii is empty - refusing to overwrite the save file.");
+
                 //Backup
                 string ProfileFolderPathBackup = Globals.SelectedProfilePath + "\\profile_backup.sii";
                 string SiiInfoPathBackup = Globals.SelectedSavePath + "\\info_backup.sii";
@@ -1004,24 +1109,15 @@ namespace TS_SE_Tool
                 File.Copy(SiiSavePath, SiiSavePathBackup, true);
 
                 //Write Profile data
-                if (MainSaveFileProfileData.isEdited)
-                    using (StreamWriter writer = new StreamWriter(ProfileFolderPath, false))
-                    {
-                        writer.Write(MainSaveFileProfileData.PrintOut());
-                    }
+                if (profileText != null)
+                    WriteTextFileAtomic(ProfileFolderPath, profileText);
 
                 //Write Info data
-                if (MainSaveFileInfoData.isEdited)
-                    using (StreamWriter writer = new StreamWriter(SiiInfoPath, false))
-                    {
-                        writer.Write(MainSaveFileInfoData.PrintOut());
-                    }
+                if (infoText != null)
+                    WriteTextFileAtomic(SiiInfoPath, infoText);
 
                 //Write Save data
-                using (StreamWriter writer = new StreamWriter(SiiSavePath, false))
-                {
-                    writer.Write(SiiNunitData.PrintOut(MainSaveFileInfoData.Version));
-                }
+                WriteTextFileAtomic(SiiSavePath, saveText);
 
                 UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Info, "message_file_saved");                
             }

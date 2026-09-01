@@ -29,7 +29,9 @@ namespace TS_SE_Tool.Save.Items
 
         internal SCS_Float game_time_secs { get; set; } = 0;
 
-        internal int game_time_initial { get; set; } = 0;
+        //Savefile v97 writes "nil" here when the game has not stamped an initial game
+        //time yet. Kept as raw text so both that and any number round-trip exactly.
+        internal string game_time_initial { get; set; } = "0";
         internal int achievements_added { get; set; } = 0;
 
         internal bool new_game { get; set; } = false;
@@ -316,7 +318,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "game_time_initial":
                             {
-                                game_time_initial = int.Parse(dataLine);
+                                game_time_initial = dataLine;
                                 break;
                             }
 
@@ -1112,7 +1114,7 @@ namespace TS_SE_Tool.Save.Items
 
                         default:
                             {
-                                UnidentifiedLines.Add(dataLine);
+                                UnidentifiedLines.Add(currentLine);
                                 IO_Utilities.ErrorLogWriter(WriteErrorMsg(tagLine, dataLine));
                                 break;
                             }
@@ -1121,7 +1123,7 @@ namespace TS_SE_Tool.Save.Items
                 catch (Exception ex)
                 {
                     IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
-                    break;
+                    continue;
                 }
 
                 //Populate helping variables
@@ -1171,7 +1173,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" game_time: " + game_time.ToString());
             returnSB.AppendLine(" game_time_secs: " + game_time_secs.ToString());
 
-            returnSB.AppendLine(" game_time_initial: " + game_time_initial.ToString());
+            returnSB.AppendLine(" game_time_initial: " + game_time_initial);
 
             returnSB.AppendLine(" achievements_added: " + achievements_added.ToString());
 
@@ -1409,7 +1411,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" bus_game_time: " + bus_game_time.ToString());
             returnSB.AppendLine(" bus_playing_time: " + bus_playing_time.ToString());
 
-            WriteUnidentifiedLines();
+            returnSB.Append(WriteUnidentifiedLines());
 
             returnSB.AppendLine("}");
 

@@ -18,7 +18,12 @@ namespace TS_SE_Tool.Save.Items
 
         internal string WriteUnidentifiedLines()
         {
-            return String.Join(Environment.NewLine, UnidentifiedLines);
+            //Must terminate with a newline, otherwise the closing brace the caller appends
+            //right after would end up glued to the last preserved line.
+            if (UnidentifiedLines.Count == 0)
+                return "";
+
+            return String.Join(Environment.NewLine, UnidentifiedLines) + Environment.NewLine;
         }
 
         internal string WriteErrorMsg(string _message, string _tagLine, string _dataLine)

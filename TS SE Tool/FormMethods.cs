@@ -39,7 +39,14 @@ namespace TS_SE_Tool
     {
         internal static void fmRemoveWritenBlock(string _input)
         {
-            Application.OpenForms.OfType<FormMain>().Single().SiiNunitData.NamelessControlList.Remove(_input);
+            //FirstOrDefault instead of Single: the serialiser also runs from the
+            //headless self-test harness, where no FormMain is open.
+            FormMain mainForm = Application.OpenForms.OfType<FormMain>().FirstOrDefault();
+
+            if (mainForm != null)
+                mainForm.SiiNunitData.NamelessControlList.Remove(_input);
+            else
+                Save.Items.SiiNunit.HeadlessWrittenBlocks?.Remove(_input);
         }
     }
 
@@ -167,10 +174,14 @@ namespace TS_SE_Tool
 
                 ProgSettingsV.ProgramVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-                SupportedSavefileVersionETS2 = new int[] { 61, 74 }; //Supported save version
+                //Upper bound raised to 97 only after savefile v97 was verified to survive a
+                //load -> write -> reload cycle line for line (see OriginalBlockMerge).
+                //Attributes newer than this build are preserved rather than dropped, so the
+                //versions in between are structurally safe as well.
+                SupportedSavefileVersionETS2 = new int[] { 61, 97 }; //Supported save version
                 SupportedGameVersionETS2 = "1.43.x - 1.49.x"; //Last game version Tested on
                 //SupportedSavefileVersionATS;
-                SupportedGameVersionATS = "1.43.x - 1.49.x"; //Last game version Tested on
+                SupportedGameVersionATS = "1.43.x - 1.5x (savefile 97)"; //Last game version Tested on
 
                 comboBoxRootFolders.FlatStyle =
                 comboBoxProfiles.FlatStyle =

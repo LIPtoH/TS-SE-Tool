@@ -498,7 +498,7 @@ namespace TS_SE_Tool
                 catch (Exception ex)
                 {
                     IO_Utilities.ErrorLogWriter(WriteErrorMsg(ex.Message, tagLine, dataLine));
-                    break;
+                    continue;
                 }
             }
         }
@@ -538,7 +538,10 @@ namespace TS_SE_Tool
                     if (this.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.NonPublic) != null)
                         sbResult.AppendLine(" user_data[" + i.ToString() + "]: " + this[propertyName]);
                     else
-                        sbResult.AppendLine(user_data_array[i]);
+                        //user_data_array holds the value only, not the whole line. Savefile
+                        //v97 grew user_data past the 17 slots this build models, and writing
+                        //the bare value produced a malformed profile.sii.
+                        sbResult.AppendLine(" user_data[" + i.ToString() + "]: " + (user_data_array[i] ?? "\"\""));
                 }
 
             sbResult.AppendLine(" active_mods: " + ActiveMods.Capacity.ToString());

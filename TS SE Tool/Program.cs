@@ -33,6 +33,15 @@ namespace TS_SE_Tool
         [STAThread]
         static void Main()
         {
+            // Headless diagnostic mode - see CustomClasses\Diagnostics\SelfTest.cs
+            string[] cmdArgs = Environment.GetCommandLineArgs().Skip(1).ToArray();
+
+            if (cmdArgs.Length > 0 && cmdArgs[0] == "--selftest")
+            {
+                Environment.ExitCode = Diagnostics.SelfTest.Run(cmdArgs);
+                return;
+            }
+
             // Add the event handler for handling UI thread exceptions to the event
             Application.ThreadException += new ThreadExceptionEventHandler(UIThreadException);
 
