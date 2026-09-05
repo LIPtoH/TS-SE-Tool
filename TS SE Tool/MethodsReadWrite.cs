@@ -860,10 +860,11 @@ namespace TS_SE_Tool
         {
             if (SiiNunitData.UnidentifiedBlocks.Count > 0)
             {
-                MessageBox.Show("Some of the blocks in save file was not recognized and it may affect Program behavior." + Environment.NewLine + Environment.NewLine +
-                    "Please contact Developer via e-mail <" + Utilities.Web_Utilities.External.linkMailDeveloper + ">" + Environment.NewLine + Environment.NewLine +
-                    "Information can be found in error.log file.",
-                    "Unidentified blocks in save file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Utilities.IO_Utilities.LogWriter(
+                    "Save contains " +
+                    SiiNunitData.UnidentifiedBlocks.Count +
+                    " unidentified block(s). They will be preserved."
+                );
             }
 
             toolStripProgressBarMain.Value = 0;

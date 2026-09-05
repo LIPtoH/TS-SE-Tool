@@ -17,6 +17,8 @@ namespace TS_SE_Tool.Save.Items
         internal string data_path { get; set; } = "";
         internal uint refund { get; set; } = 0;
 
+        internal string paint_color { get; set; } = null;
+
 
         internal Vehicle_Addon_Accessory()
         { }
@@ -84,6 +86,11 @@ namespace TS_SE_Tool.Save.Items
                                 refund = uint.Parse(dataLine);
                                 break;
                             }
+                        case "paint_color":
+                            {
+                                paint_color = dataLine;
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
@@ -109,6 +116,9 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" slot_hookup: " + slot_hookup.Count);
             for (int i = 0; i < slot_hookup.Count; i++)
                 returnSB.AppendLine(" slot_hookup[" + i + "]: " + slot_hookup[i]);
+
+            if (paint_color != null)
+                returnSB.AppendLine(" paint_color: " + paint_color);
 
             returnSB.AppendLine(" data_path: " + data_path);
             returnSB.AppendLine(" refund: " + refund.ToString());

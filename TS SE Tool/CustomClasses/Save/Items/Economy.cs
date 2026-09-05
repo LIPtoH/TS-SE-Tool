@@ -13,6 +13,17 @@ namespace TS_SE_Tool.Save.Items
     class Economy : SiiNBlockCore
     {
         #region variables
+        // Preserve fields introduced by newer game versions that this class does not edit yet.
+        internal List<string> passthrough_lines { get; set; } = new List<string>();
+        internal bool stored_display_mode_present { get; set; } = false;
+        internal bool stored_tutorial_state_present { get; set; } = false;
+        internal bool bus_total_distance_present { get; set; } = false;
+        internal bool bus_finished_job_count_present { get; set; } = false;
+        internal bool bus_cancelled_job_count_present { get; set; } = false;
+        internal bool bus_total_passengers_present { get; set; } = false;
+        internal bool bus_total_stops_present { get; set; } = false;
+        internal bool bus_game_time_present { get; set; } = false;
+        internal bool bus_playing_time_present { get; set; } = false;
         internal string bank { get; set; } = "";
         internal string player { get; set; } = "";
 
@@ -29,7 +40,7 @@ namespace TS_SE_Tool.Save.Items
 
         internal SCS_Float game_time_secs { get; set; } = 0;
 
-        internal int game_time_initial { get; set; } = 0;
+        internal int? game_time_initial { get; set; } = null;
         internal int achievements_added { get; set; } = 0;
 
         internal bool new_game { get; set; } = false;
@@ -303,7 +314,7 @@ namespace TS_SE_Tool.Save.Items
 
                         case "game_time_initial":
                             {
-                                game_time_initial = int.Parse(dataLine);
+                                game_time_initial = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
                                 break;
                             }
 
@@ -430,6 +441,7 @@ namespace TS_SE_Tool.Save.Items
                         case "stored_display_mode":
                             {
                                 stored_display_mode = int.Parse(dataLine);
+                                stored_display_mode_present = true;
                                 break;
                             }
 
@@ -664,6 +676,7 @@ namespace TS_SE_Tool.Save.Items
                         case "stored_tutorial_state":
                             {
                                 stored_tutorial_state = int.Parse(dataLine);
+                                stored_tutorial_state_present = true;
                                 break;
                             }
 
@@ -1030,42 +1043,61 @@ namespace TS_SE_Tool.Save.Items
                         case "bus_total_distance":
                             {
                                 bus_total_distance = int.Parse(dataLine);
+                                bus_total_distance_present = true;
                                 break;
                             }
 
                         case "bus_finished_job_count":
                             {
                                 bus_finished_job_count = int.Parse(dataLine);
+                                bus_finished_job_count_present = true;
                                 break;
                             }
 
                         case "bus_cancelled_job_count":
                             {
                                 bus_cancelled_job_count = int.Parse(dataLine);
+                                bus_cancelled_job_count_present = true;
                                 break;
                             }
 
                         case "bus_total_passengers":
                             {
                                 bus_total_passengers = int.Parse(dataLine);
+                                bus_total_passengers_present = true;
                                 break;
                             }
 
                         case "bus_total_stops":
                             {
                                 bus_total_stops = int.Parse(dataLine);
+                                bus_total_stops_present = true;
                                 break;
                             }
 
                         case "bus_game_time":
                             {
                                 bus_game_time = int.Parse(dataLine);
+                                bus_game_time_present = true;
                                 break;
                             }
 
                         case "bus_playing_time":
                             {
                                 bus_playing_time = int.Parse(dataLine);
+                                bus_playing_time_present = true;
+                                break;
+                            }
+
+                        default:
+                            {
+                                if (!string.IsNullOrWhiteSpace(currentLine) &&
+                                    tagLine != "economy" &&
+                                    tagLine != "}")
+                                {
+                                    passthrough_lines.Add(currentLine);
+                                }
+
                                 break;
                             }
                     }
@@ -1122,7 +1154,7 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" game_time: " + game_time.ToString());
             returnSB.AppendLine(" game_time_secs: " + game_time_secs.ToString());
 
-            returnSB.AppendLine(" game_time_initial: " + game_time_initial.ToString());
+            returnSB.AppendLine(" game_time_initial: " + (game_time_initial.HasValue ? game_time_initial.Value.ToString() : "nil"));
 
             returnSB.AppendLine(" achievements_added: " + achievements_added.ToString());
 
@@ -1153,7 +1185,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" stored_actor_wiper_mode: " + stored_actor_wiper_mode.ToString());
             returnSB.AppendLine(" stored_actor_retarder: " + stored_actor_retarder.ToString());
 
-            returnSB.AppendLine(" stored_display_mode: " + stored_display_mode.ToString());
+            if (stored_display_mode_present)
+                returnSB.AppendLine(" stored_display_mode: " + stored_display_mode.ToString());
             returnSB.AppendLine(" stored_dashboard_map_mode: " + stored_dashboard_map_mode.ToString());
             returnSB.AppendLine(" stored_world_map_zoom: " + stored_world_map_zoom.ToString());
 
@@ -1223,7 +1256,8 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" stored_start_tollgate_pos: " + stored_start_tollgate_pos.ToString());
 
-            returnSB.AppendLine(" stored_tutorial_state: " + stored_tutorial_state.ToString());
+            if (stored_tutorial_state_present)
+                returnSB.AppendLine(" stored_tutorial_state: " + stored_tutorial_state.ToString());
 
             returnSB.AppendLine(" stored_map_actions: " + stored_map_actions.Count);
             for (int i = 0; i < stored_map_actions.Count; i++)
@@ -1333,16 +1367,26 @@ namespace TS_SE_Tool.Save.Items
 
             returnSB.AppendLine(" bus_experience_points: " + bus_experience_points.ToString());
 
-            returnSB.AppendLine(" bus_total_distance: " + bus_total_distance.ToString());
+            if (bus_total_distance_present)
+                returnSB.AppendLine(" bus_total_distance: " + bus_total_distance.ToString());
 
-            returnSB.AppendLine(" bus_finished_job_count: " + bus_finished_job_count.ToString());
-            returnSB.AppendLine(" bus_cancelled_job_count: " + bus_cancelled_job_count.ToString());
+            if (bus_finished_job_count_present)
+                returnSB.AppendLine(" bus_finished_job_count: " + bus_finished_job_count.ToString());
+            if (bus_cancelled_job_count_present)
+                returnSB.AppendLine(" bus_cancelled_job_count: " + bus_cancelled_job_count.ToString());
 
-            returnSB.AppendLine(" bus_total_passengers: " + bus_total_passengers.ToString());
-            returnSB.AppendLine(" bus_total_stops: " + bus_total_stops.ToString());
+            if (bus_total_passengers_present)
+                returnSB.AppendLine(" bus_total_passengers: " + bus_total_passengers.ToString());
+            if (bus_total_stops_present)
+                returnSB.AppendLine(" bus_total_stops: " + bus_total_stops.ToString());
 
-            returnSB.AppendLine(" bus_game_time: " + bus_game_time.ToString());
-            returnSB.AppendLine(" bus_playing_time: " + bus_playing_time.ToString());
+            if (bus_game_time_present)
+                returnSB.AppendLine(" bus_game_time: " + bus_game_time.ToString());
+            if (bus_playing_time_present)
+                returnSB.AppendLine(" bus_playing_time: " + bus_playing_time.ToString());
+
+            foreach (string line in passthrough_lines)
+                returnSB.AppendLine(line);
 
             returnSB.AppendLine("}");
 

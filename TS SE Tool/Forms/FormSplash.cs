@@ -53,6 +53,9 @@ namespace TS_SE_Tool
                 labelVersion.Text = String.Format(translatedString, Utilities.AssemblyData.AssemblyVersion);
             else
                 labelVersion.Text = String.Format("{0} (alpha)", Utilities.AssemblyData.AssemblyVersion);
+
+            // 1.61 compatibility credit
+            this.Text = "TS SE Tool - Community Compatibility Build";
         }
 
         private void FormSplash_Load(object sender, EventArgs e)
@@ -109,12 +112,12 @@ namespace TS_SE_Tool
         //Links
         private void linkFirst_Click(object sender, EventArgs e)
         {
-            Process.Start(Utilities.Web_Utilities.External.linkSCSforum);
+            Process.Start(Utilities.Web_Utilities.External.linNewGithub);
         }
 
         private void linkSecond_Click(object sender, EventArgs e)
         {
-            Process.Start(Utilities.Web_Utilities.External.linTMPforum);
+            Process.Start(Utilities.Web_Utilities.External.linGithub);
         }
 
         private void linkLabelGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

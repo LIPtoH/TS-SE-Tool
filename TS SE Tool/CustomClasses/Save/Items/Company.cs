@@ -24,6 +24,8 @@ namespace TS_SE_Tool.Save.Items
 
         internal int? reserved_trailer_slot { get; set; } = null;
 
+        internal int? state { get; set; } = null;
+
 
         internal Company()
         { }
@@ -114,6 +116,11 @@ namespace TS_SE_Tool.Save.Items
                                 reserved_trailer_slot = dataLine == "nil" ? (int?)null : int.Parse(dataLine);
                                 break;
                             }
+                        case "state":
+                            {
+                                state = int.Parse(dataLine);
+                                break;
+                            }
 
                     }
                 }
@@ -152,6 +159,9 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" discovered: " + discovered.ToString().ToLower());
 
             returnSB.AppendLine(" reserved_trailer_slot: " + (reserved_trailer_slot == null ? "nil" : reserved_trailer_slot.ToString()));
+
+            if (state.HasValue)
+                returnSB.AppendLine(" state: " + state.Value.ToString());
 
             returnSB.AppendLine("}");
 

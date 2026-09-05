@@ -50,7 +50,6 @@ namespace TS_SE_Tool
             this.labelVersion = new System.Windows.Forms.Label();
             this.labelDownloadDescription = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelor = new System.Windows.Forms.Label();
             this.linkSecond = new System.Windows.Forms.LinkLabel();
             this.linkFirst = new System.Windows.Forms.LinkLabel();
             this.labelHowtoDescription = new System.Windows.Forms.Label();
@@ -59,7 +58,6 @@ namespace TS_SE_Tool
             this.linkLabelHelpYouTube = new System.Windows.Forms.LinkLabel();
             this.labelor2 = new System.Windows.Forms.Label();
             this.linkLabelNewVersion = new System.Windows.Forms.LinkLabel();
-            this.linkLabelGitHub = new System.Windows.Forms.LinkLabel();
             this.buttonSupport = new System.Windows.Forms.Button();
             this.labelSupportDev = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
@@ -105,7 +103,6 @@ namespace TS_SE_Tool
             this.tableLayoutPanel2.Controls.Add(this.labelHowtoDescription, 0, 7);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 8);
             this.tableLayoutPanel2.Controls.Add(this.linkLabelNewVersion, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.linkLabelGitHub, 0, 6);
             this.tableLayoutPanel2.Controls.Add(this.buttonSupport, 0, 10);
             this.tableLayoutPanel2.Controls.Add(this.labelSupportDev, 0, 9);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -159,7 +156,7 @@ namespace TS_SE_Tool
             this.labelDownloadDescription.Name = "labelDownloadDescription";
             this.labelDownloadDescription.Size = new System.Drawing.Size(254, 13);
             this.labelDownloadDescription.TabIndex = 2;
-            this.labelDownloadDescription.Text = "You can download latest version from";
+            this.labelDownloadDescription.Text = "Compatibility fixes by RUSPLANE ";
             this.labelDownloadDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel4
@@ -168,7 +165,6 @@ namespace TS_SE_Tool
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel4.Controls.Add(this.labelor, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.linkSecond, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.linkFirst, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -179,17 +175,6 @@ namespace TS_SE_Tool
             this.tableLayoutPanel4.Size = new System.Drawing.Size(254, 24);
             this.tableLayoutPanel4.TabIndex = 8;
             // 
-            // labelor
-            // 
-            this.labelor.AutoSize = true;
-            this.labelor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelor.Location = new System.Drawing.Point(104, 0);
-            this.labelor.Name = "labelor";
-            this.labelor.Size = new System.Drawing.Size(44, 24);
-            this.labelor.TabIndex = 5;
-            this.labelor.Text = "or";
-            this.labelor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // linkSecond
             // 
             this.linkSecond.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -198,7 +183,7 @@ namespace TS_SE_Tool
             this.linkSecond.Size = new System.Drawing.Size(97, 24);
             this.linkSecond.TabIndex = 4;
             this.linkSecond.TabStop = true;
-            this.linkSecond.Text = "TruckersMP Forum";
+            this.linkSecond.Text = "Original GitHub";
             this.linkSecond.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkSecond.Click += new System.EventHandler(this.linkSecond_Click);
             // 
@@ -206,12 +191,12 @@ namespace TS_SE_Tool
             // 
             this.linkFirst.AutoSize = true;
             this.linkFirst.Dock = System.Windows.Forms.DockStyle.Right;
-            this.linkFirst.Location = new System.Drawing.Point(38, 0);
+            this.linkFirst.Location = new System.Drawing.Point(14, 0);
             this.linkFirst.Name = "linkFirst";
-            this.linkFirst.Size = new System.Drawing.Size(60, 24);
+            this.linkFirst.Size = new System.Drawing.Size(84, 24);
             this.linkFirst.TabIndex = 3;
             this.linkFirst.TabStop = true;
-            this.linkFirst.Text = "SCS Forum";
+            this.linkFirst.Text = "Updated GitHub";
             this.linkFirst.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkFirst.Click += new System.EventHandler(this.linkFirst_Click);
             // 
@@ -290,19 +275,6 @@ namespace TS_SE_Tool
             this.linkLabelNewVersion.Text = "VersionCheck";
             this.linkLabelNewVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // linkLabelGitHub
-            // 
-            this.linkLabelGitHub.AutoSize = true;
-            this.linkLabelGitHub.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabelGitHub.Location = new System.Drawing.Point(3, 160);
-            this.linkLabelGitHub.Name = "linkLabelGitHub";
-            this.linkLabelGitHub.Size = new System.Drawing.Size(254, 30);
-            this.linkLabelGitHub.TabIndex = 10;
-            this.linkLabelGitHub.TabStop = true;
-            this.linkLabelGitHub.Text = "GitHub";
-            this.linkLabelGitHub.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabelGitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGitHub_LinkClicked);
-            // 
             // buttonSupport
             // 
             this.buttonSupport.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -324,7 +296,7 @@ namespace TS_SE_Tool
             this.labelSupportDev.Name = "labelSupportDev";
             this.labelSupportDev.Size = new System.Drawing.Size(254, 13);
             this.labelSupportDev.TabIndex = 12;
-            this.labelSupportDev.Text = "Help Developer";
+            this.labelSupportDev.Text = "Support Original Developer";
             this.labelSupportDev.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormSplash
@@ -362,7 +334,6 @@ namespace TS_SE_Tool
         private System.Windows.Forms.Label labelDownloadDescription;
         private System.Windows.Forms.LinkLabel linkFirst;
         private System.Windows.Forms.LinkLabel linkSecond;
-        private System.Windows.Forms.Label labelor;
         private System.Windows.Forms.Label labelHowtoDescription;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.LinkLabel linkLabelHelpLocalPDF;
@@ -370,7 +341,6 @@ namespace TS_SE_Tool
         private System.Windows.Forms.Label labelor2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.LinkLabel linkLabelNewVersion;
-        private System.Windows.Forms.LinkLabel linkLabelGitHub;
         private System.Windows.Forms.Button buttonSupport;
         private System.Windows.Forms.Label labelSupportDev;
     }

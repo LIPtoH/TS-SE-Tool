@@ -28,6 +28,8 @@ namespace TS_SE_Tool.Save.Items
         internal int units_count { get; set; } = 0;
         internal int fill_ratio { get; set; } = 0;
 
+        internal string car { get; set; } = null;
+
         internal Job_Info()
         { }
 
@@ -141,6 +143,11 @@ namespace TS_SE_Tool.Save.Items
                                 fill_ratio = int.Parse(dataLine);
                                 break;
                             }
+                        case "car":
+                            {
+                                car = dataLine;
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
@@ -179,6 +186,9 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" urgency: " + (urgency == null ? "nil" : urgency.ToString()));
 
             returnSB.AppendLine(" special: " + special);
+
+            if (car != null)
+                returnSB.AppendLine(" car: " + car);
 
             returnSB.AppendLine(" units_count: " + units_count.ToString());
             returnSB.AppendLine(" fill_ratio: " + fill_ratio.ToString());

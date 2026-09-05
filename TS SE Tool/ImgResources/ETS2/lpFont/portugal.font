@@ -1,0 +1,68 @@
+# SCS Font
+# Max width: 14
+# Max advance: 17
+# Typical height 'above the line': 22 (height of letter 'M')
+# Max pixels 'above the line': 22
+# Max pixels 'below the line': 1
+
+vert_span:23  # max difference between lowest and highest pixel in any two glyphs
+line_spacing:0  # suggested number of pixels to put between lines
+
+default_scale:1.000000  # default font scale in reference resolution
+
+image:/font/license_plate/portugal_0.mat, 128, 128
+
+# P_x: starting column of glyph rectangle in the font bitmap
+# P_y: starting row of glyph rectangle in the font bitmap
+# W: width of the glyph rectangle
+# H: height of the glyph rectangle
+# L: left offset of the rectangle when placing it relative to current 'pen position'
+#    (negative value can be thought of as 'hard' kerning, but is used at the beginning of line too!)
+# T: top offset of the rectangle when placing it relative to current 'pen position'
+#    (the 'pen' is expected to be at the level of topmost pixel of highest glyph)
+# A: advance of the 'pen' for rendering of the following glyph
+# I: image index
+
+#NUM,    P_x, P_y,  W,  H,  L,  T,  A,  I     # character / glyph name
+
+x0020,  117,   71,  0,  0,  0, 22, 13,  0     # ' ' / 'SPACE'
+x002d,  113,   71,  3,  3,  4, 10, 11,  0     # '-' / 'HYPHEN-MINUS'
+x0030,   16,    1, 13, 22,  0,  0, 16,  0     # '0' / 'DIGIT ZERO'
+x0031,   30,    1,  6, 22,  0,  0,  9,  0     # '1' / 'DIGIT ONE'
+x0032,   37,    1, 13, 22,  0,  0, 16,  0     # '2' / 'DIGIT TWO'
+x0033,   51,    1, 13, 22, -1,  0, 15,  0     # '3' / 'DIGIT THREE'
+x0034,   65,    1, 12, 22,  0,  0, 15,  0     # '4' / 'DIGIT FOUR'
+x0035,   78,    1, 13, 22,  0,  0, 16,  0     # '5' / 'DIGIT FIVE'
+x0036,   92,    1, 13, 22,  0,  0, 16,  0     # '6' / 'DIGIT SIX'
+x0037,  106,    1, 14, 22,  0,  0, 17,  0     # '7' / 'DIGIT SEVEN'
+x0038,    1,   25, 13, 22,  0,  0, 16,  0     # '8' / 'DIGIT EIGHT'
+x0039,   15,   25, 13, 22,  0,  0, 16,  0     # '9' / 'DIGIT NINE'
+x0041,   29,   25, 13, 22,  0,  0, 16,  0     # 'A' / 'LATIN CAPITAL LETTER A'
+x0042,   43,   25, 13, 22,  0,  0, 16,  0     # 'B' / 'LATIN CAPITAL LETTER B'
+x0043,   57,   25, 12, 22,  0,  0, 15,  0     # 'C' / 'LATIN CAPITAL LETTER C'
+x0044,   70,   25, 13, 22,  0,  0, 16,  0     # 'D' / 'LATIN CAPITAL LETTER D'
+x0045,   84,   25, 13, 22,  0,  0, 15,  0     # 'E' / 'LATIN CAPITAL LETTER E'
+x0046,   98,   25, 13, 22,  0,  0, 15,  0     # 'F' / 'LATIN CAPITAL LETTER F'
+x0047,  112,   25, 13, 22,  0,  0, 16,  0     # 'G' / 'LATIN CAPITAL LETTER G'
+x0048,    1,   48, 13, 22,  0,  0, 16,  0     # 'H' / 'LATIN CAPITAL LETTER H'
+x0049,  121,    1,  3, 22,  0,  0,  6,  0     # 'I' / 'LATIN CAPITAL LETTER I'
+x004a,   15,   48, 13, 22,  0,  0, 16,  0     # 'J' / 'LATIN CAPITAL LETTER J'
+x004b,   29,   48, 13, 22,  0,  0, 15,  0     # 'K' / 'LATIN CAPITAL LETTER K'
+x004c,   43,   48, 13, 22,  0,  0, 15,  0     # 'L' / 'LATIN CAPITAL LETTER L'
+x004d,   57,   48, 13, 22,  0,  0, 16,  0     # 'M' / 'LATIN CAPITAL LETTER M'
+x004e,   71,   48, 13, 22,  0,  0, 16,  0     # 'N' / 'LATIN CAPITAL LETTER N'
+x004f,   85,   48, 13, 22,  0,  0, 16,  0     # 'O' / 'LATIN CAPITAL LETTER O'
+x0050,   99,   48, 12, 22,  0,  0, 15,  0     # 'P' / 'LATIN CAPITAL LETTER P'
+x0051,    1,    1, 14, 23,  0,  0, 16,  0     # 'Q' / 'LATIN CAPITAL LETTER Q'
+x0052,  112,   48, 12, 22,  0,  0, 15,  0     # 'R' / 'LATIN CAPITAL LETTER R'
+x0053,    1,   71, 13, 22,  0,  0, 16,  0     # 'S' / 'LATIN CAPITAL LETTER S'
+x0054,   15,   71, 12, 22,  0,  0, 15,  0     # 'T' / 'LATIN CAPITAL LETTER T'
+x0055,   28,   71, 13, 22,  0,  0, 16,  0     # 'U' / 'LATIN CAPITAL LETTER U'
+x0056,   42,   71, 13, 22,  0,  0, 16,  0     # 'V' / 'LATIN CAPITAL LETTER V'
+x0057,   56,   71, 14, 22,  0,  0, 16,  0     # 'W' / 'LATIN CAPITAL LETTER W'
+x0058,   71,   71, 13, 22,  0,  0, 16,  0     # 'X' / 'LATIN CAPITAL LETTER X'
+x0059,   85,   71, 13, 22,  1,  0, 17,  0     # 'Y' / 'LATIN CAPITAL LETTER Y'
+x005a,   99,   71, 13, 22,  0,  0, 16,  0     # 'Z' / 'LATIN CAPITAL LETTER Z'
+
+# kerning...
+

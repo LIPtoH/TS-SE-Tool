@@ -49,9 +49,10 @@ namespace TS_SE_Tool.Utilities
         internal string linkSCSforum = "https://forum.scssoft.com/viewtopic.php?f=34&t=266092";
         internal string linTMPforum = "https://forum.truckersmp.com/index.php?/topic/79561-ts-saveeditor-tool";
         internal string linGithub = "https://github.com/LIPtoH/TS-SE-Tool";
+        internal string linNewGithub = "https://github.com/RussianAirplane/TS-SE-Tool";
 
-        internal string linGithubReleases = "https://github.com/LIPtoH/TS-SE-Tool/releases";
-        internal string linGithubReleasesLatest = "https://github.com/LIPtoH/TS-SE-Tool/releases/latest";
+        internal string linGithubReleases = "https://github.com/RussianAirplane/TS-SE-Tool/releases";
+        internal string linGithubReleasesLatest = "https://github.com/RussianAirplane/TS-SE-Tool/releases/latest";
 
         private static System.Timers.Timer aTimer;
         private static byte atimerCounter = 0;

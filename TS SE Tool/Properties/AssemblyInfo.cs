@@ -21,11 +21,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("TS SE Tool")]
-[assembly: AssemblyDescription("Small tool for editing save files of Euro Truck Simulator 2 and American Truck Simulator")]
+[assembly: AssemblyDescription("Save editor for Euro Truck Simulator 2 and American Truck Simulator. Original project by LIPtoH; compatibility maintenance by rusplane.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TS SE Tool")]
-[assembly: AssemblyCopyright("Copyright © 2016 - 2022")]
+[assembly: AssemblyCopyright("Original project © 2016-2022 LIPtoH; compatibility fixes © 2026 rusplane")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -47,5 +47,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.3.1.0")]
-[assembly: AssemblyFileVersion("0.3.1.0")]
+[assembly: AssemblyVersion("0.4.0.0")]
+[assembly: AssemblyFileVersion("0.4.0.0")]

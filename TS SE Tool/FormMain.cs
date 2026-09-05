@@ -38,10 +38,11 @@ namespace TS_SE_Tool
     {
         #region  Accesslevels
 
-        internal int[] SupportedSavefileVersionETS2; //Program
-        internal string SupportedGameVersionETS2;//Program
-        //internal int SupportedSavefileVersionATS;
-        internal string SupportedGameVersionATS;//Program
+        internal int[] SupportedSavefileVersionETS2;
+        internal int[] SupportedSavefileVersionATS;
+
+        internal string SupportedGameVersionETS2;
+        internal string SupportedGameVersionATS;
 
         private int JobsAmountAdded;//process result
 

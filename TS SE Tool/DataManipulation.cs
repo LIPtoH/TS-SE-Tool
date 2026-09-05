@@ -116,50 +116,81 @@ namespace TS_SE_Tool
 
         private void CheckSaveInfoData()
         {
-            MainSaveFileInfoData.ProcessData(tempInfoFileInMemory);            
+            MainSaveFileInfoData.ProcessData(tempInfoFileInMemory);
 
             if (MainSaveFileInfoData.Version > 0)
             {
-                if (MainSaveFileInfoData.Version > SupportedSavefileVersionETS2[1])
+                int[] supportedVersions =
+                    GameType == "ATS"
+                        ? SupportedSavefileVersionATS
+                        : SupportedSavefileVersionETS2;
+
+                if (MainSaveFileInfoData.Version > supportedVersions[1])
                 {
-                    string dialogCaption = "", dialogText = "";
                     string[] returnValues = HelpTranslateDialog("UnsupportedVersion");
 
-                    dialogText = Regex.Unescape(String.Format(returnValues[1], MainSaveFileInfoData.Version));
+                    if (returnValues.Length < 2 ||
+                        string.IsNullOrWhiteSpace(returnValues[0]) ||
+                        string.IsNullOrWhiteSpace(returnValues[1]))
+                    {
+                        returnValues = new[]
+                        {
+                            "Unsupported save version",
+                            "Save version {0} is newer than the version officially supported by this build.\nDo you want to continue?"
+                        };
+                    }
 
-                    var DR = MessageBox.Show(dialogText, returnValues[0],
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    string dialogText = Regex.Unescape(
+                        String.Format(returnValues[1], MainSaveFileInfoData.Version)
+                    );
+
+                    var DR = MessageBox.Show(
+                        dialogText,
+                        returnValues[0],
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
 
                     if (DR == DialogResult.No)
                     {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
-
                         ToggleMainControlsAccess(true);
-
                         buttonMainWriteSave.Enabled = false;
-
                         return;
                     }
                 }
 
-                if (MainSaveFileInfoData.Version < SupportedSavefileVersionETS2[0])
+                if (MainSaveFileInfoData.Version < supportedVersions[0])
                 {
-                    string dialogCaption = "", dialogText = "";
                     string[] returnValues = HelpTranslateDialog("NoBackwardCompatibility");
 
-                    dialogText = Regex.Unescape(String.Format(returnValues[1], MainSaveFileInfoData.Version));
+                    if (returnValues.Length < 2 ||
+                        string.IsNullOrWhiteSpace(returnValues[0]) ||
+                        string.IsNullOrWhiteSpace(returnValues[1]))
+                    {
+                        returnValues = new[]
+                        {
+                            "Unsupported save version",
+                            "Save version {0} is older than the minimum version supported by this build.\nDo you want to continue?"
+                        };
+                    }
 
-                    var DR = MessageBox.Show(dialogText, returnValues[0],
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    string dialogText = Regex.Unescape(
+                        String.Format(returnValues[1], MainSaveFileInfoData.Version)
+                    );
 
-                    if (DR == DialogResult.OK)
+                    var DR = MessageBox.Show(
+                        dialogText,
+                        returnValues[0],
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    if (DR == DialogResult.No)
                     {
                         UpdateStatusBarMessage.ShowStatusMessage(SMStatus.Clear);
-
                         ToggleMainControlsAccess(true);
-
                         buttonMainWriteSave.Enabled = false;
-
                         return;
                     }
                 }

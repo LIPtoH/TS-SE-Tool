@@ -418,7 +418,48 @@ namespace TS_SE_Tool.Save.Items
 
                             break;
                         }
-                        
+                    case "player_vehicles":
+                        {
+                            SiiNitems.Add(nameless, new Player_Vehicles(GetLines().ToArray()));
+                            break;
+                        }
+
+                    case "police_offence_log":
+                        {
+                            SiiNitems.Add(nameless, new Police_Offence_Log(GetLines().ToArray()));
+                            break;
+                        }
+
+                    case "police_offence_log_entry":
+                        {
+                            SiiNitems.Add(nameless, new Police_Offence_Log_Entry(GetLines().ToArray()));
+                            break;
+                        }
+
+                    case "used_vehicle_assortment":
+                        {
+                            SiiNitems.Add(nameless, new Used_Vehicle_Assortment(GetLines().ToArray()));
+                            break;
+                        }
+
+                    case "used_truck_offer":
+                        {
+                            SiiNitems.Add(nameless, new Used_Truck_Offer(GetLines().ToArray()));
+                            break;
+                        }
+
+                    case "car_job_log":
+                        {
+                            SiiNitems.Add(nameless, new Car_Job_Log(GetLines().ToArray()));
+                            break;
+                        }
+
+                    case "car_job_generator":
+                        {
+                            SiiNitems.Add(nameless, new Car_Job_Generator(GetLines().ToArray()));
+                            break;
+                        }
+
                     default:
                         {
                             List<string> tmpNewBlockLines = GetLines();
@@ -893,6 +934,24 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(Bus_job_Log.PrintOut(0, Economy.bus_job_log));
 
             foreach (string item in Bus_job_Log.entries.Where(x => x != null && x != "null"))
+            {
+                returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
+            }
+
+            //=== ETS2 / ATS 1.61 blocks
+
+            List<string> new161Blocks = NamelessControlList
+                .Where(x =>
+                    SiiNitems[x] is Player_Vehicles ||
+                    SiiNitems[x] is Police_Offence_Log ||
+                    SiiNitems[x] is Police_Offence_Log_Entry ||
+                    SiiNitems[x] is Used_Vehicle_Assortment ||
+                    SiiNitems[x] is Used_Truck_Offer ||
+                    SiiNitems[x] is Car_Job_Log ||
+                    SiiNitems[x] is Car_Job_Generator)
+                .ToList();
+
+            foreach (string item in new161Blocks)
             {
                 returnSB.AppendLine(SiiNitems[item].PrintOut(0, item));
             }

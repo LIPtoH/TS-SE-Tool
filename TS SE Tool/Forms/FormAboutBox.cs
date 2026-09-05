@@ -70,9 +70,19 @@ namespace TS_SE_Tool
             }
             //
             textBoxDescription.Text = "";
-            textBoxDescription.Text += "This program created by\r\nLIPtoH <" + Utilities.Web_Utilities.External.linkMailDeveloper +
-                                        ">\r\n" + Utilities.Web_Utilities.External.linGithub + "\r\n\r\n";
-            textBoxDescription.Text += "Tools and projects used in this project:\r\n\r\n";
+
+            textBoxDescription.Text +=
+                "Original project created by\r\n" +
+                "LIPtoH <" + Utilities.Web_Utilities.External.linkMailDeveloper + ">\r\n" +
+                Utilities.Web_Utilities.External.linGithub + "\r\n\r\n";
+
+            textBoxDescription.Text +=
+                "Compatibility maintenance\r\n" +
+                "Compatibility fixes by RUSPLANE\r\n" +
+                "https://rusplane.dev\r\n\r\n";
+
+            textBoxDescription.Text +=
+                "Tools and projects used in this project:\r\n\r\n";
 
             textBoxDescription.Text += referenciesText;
             //

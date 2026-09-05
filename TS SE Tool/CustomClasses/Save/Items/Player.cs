@@ -13,6 +13,9 @@ namespace TS_SE_Tool.Save.Items
     class Player : SiiNBlockCore
     {
         #region variables
+        // Preserve fields introduced by newer game versions that this class does not edit yet.
+        internal List<string> passthrough_lines { get; set; } = new List<string>();
+        internal bool sleeping_count_present { get; set; } = false;
         internal string hq_city { get; set; } = "";
 
         internal List<string> trailers { get; set; } = new List<string>();
@@ -283,6 +286,7 @@ namespace TS_SE_Tool.Save.Items
                         case "sleeping_count":
                             {
                                 sleeping_count = int.Parse(dataLine);
+                                sleeping_count_present = true;
                                 break;
                             }
 
@@ -369,6 +373,18 @@ namespace TS_SE_Tool.Save.Items
                                 driver_quit_warned.Add(bool.Parse(dataLine));
                                 break;
                             }
+
+                        default:
+                            {
+                                if (!string.IsNullOrWhiteSpace(currentLine) &&
+                                    tagLine != "player" &&
+                                    tagLine != "}")
+                                {
+                                    passthrough_lines.Add(currentLine);
+                                }
+
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
@@ -427,7 +443,8 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" current_bus_job: " + current_bus_job);
             returnSB.AppendLine(" selected_job: " + selected_job);
             returnSB.AppendLine(" driving_time: " + driving_time.ToString());
-            returnSB.AppendLine(" sleeping_count: " + sleeping_count.ToString());
+            if (sleeping_count_present)
+                returnSB.AppendLine(" sleeping_count: " + sleeping_count.ToString());
             returnSB.AppendLine(" free_roam_distance: " + free_roam_distance.ToString());
             returnSB.AppendLine(" discovary_distance: " + discovary_distance.ToString());
 
@@ -454,6 +471,9 @@ namespace TS_SE_Tool.Save.Items
             returnSB.AppendLine(" driver_quit_warned: " + driver_quit_warned.Count);
             for (int i = 0; i < driver_quit_warned.Count; i++)
                 returnSB.AppendLine(" driver_quit_warned[" + i + "]: " + driver_quit_warned[i].ToString().ToLower());
+
+            foreach (string line in passthrough_lines)
+                returnSB.AppendLine(line);
 
             returnSB.AppendLine("}");
 

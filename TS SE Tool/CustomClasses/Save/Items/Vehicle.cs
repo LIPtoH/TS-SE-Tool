@@ -13,6 +13,8 @@ namespace TS_SE_Tool.Save.Items
     class Vehicle : SiiNBlockCore
     {
         #region variables
+        // Preserve fields introduced by newer game versions that this class does not edit yet.
+        internal List<string> passthrough_lines { get; set; } = new List<string>();
         internal SCS_Float      engine_wear { get; set; } = 0;
 
         internal SCS_Float      transmission_wear { get; set; } = 0;
@@ -255,6 +257,20 @@ namespace TS_SE_Tool.Save.Items
                                 trip_time = dataLine;
                                 break;
                             }
+
+                        default:
+                            {
+                                // Preserve unknown/new fields, but NEVER preserve
+                                // the block header or closing brace.
+                                if (!string.IsNullOrWhiteSpace(currentLine) &&
+                                    tagLine != "vehicle" &&
+                                    tagLine != "}")
+                                {
+                                    passthrough_lines.Add(currentLine);
+                                }
+
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex)
@@ -315,6 +331,9 @@ namespace TS_SE_Tool.Save.Items
             for (int i = 0; i < wheels_wear.Count; i++)
                 returnSB.AppendLine(" wheels_wear[" + i + "]: " + wheels_wear[i].ToString());
 
+
+            foreach (string line in passthrough_lines)
+                returnSB.AppendLine(line);
 
             returnSB.AppendLine("}");
 
